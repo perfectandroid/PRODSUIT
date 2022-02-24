@@ -1,9 +1,12 @@
 package com.perfect.prodsuit.Helper
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.perfect.prodsuit.View.Activity.SplashActivity
 import java.io.IOException
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -15,6 +18,7 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 object Config {
+
     val CERT_NAME = "static-vm.pem"
     val BASE_URL = "https://202.164.150.65:14263/MuttatheMullaAPI/api/"  //DEVELOPMENT
 
@@ -67,6 +71,7 @@ object Config {
         NoSuchAlgorithmException::class,
         KeyManagementException::class
     )
+
     fun getSSLSocketFactory(context: Context): SSLSocketFactory {
         val cf = CertificateFactory.getInstance("X.509")
         //  InputStream caInput = getResources().openRawResource(Common.getCertificateAssetName());
@@ -86,7 +91,6 @@ object Config {
         return sslContext.socketFactory
     }
 
-
     object Utils {
         fun hideSoftKeyBoard(context: Context, view: View) {
             try {
@@ -96,6 +100,16 @@ object Config {
                 // TODO: handle exception
                 e.printStackTrace()
             }
+        }
+    }
+
+    object ConnectivityUtils {
+        @SuppressLint("MissingPermission")
+        fun isConnected(context: Context): Boolean {
+            val connectivityManager = context.applicationContext.getSystemService(
+                Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.perfect.prodsuit.Helper.ConnectivityUtils
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         var btnClick = findViewById(R.id.btnClick) as Button
 
         btnClick.setOnClickListener {
-            when(ConnectivityUtils.isConnected(this)) {
+            when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
                      loginActivityViewModel.getUser(this)!!.observe(this, Observer { serviceSetterGetter ->
                        val msg = serviceSetterGetter.message
