@@ -17,7 +17,6 @@ import java.util.*
 
 object LoginActivityRepository {
 
-
     val loginSetterGetter = MutableLiveData<LoginModel>()
 
     fun getServicesApiCall(context: Context): MutableLiveData<LoginModel> {
@@ -64,7 +63,6 @@ object LoginActivityRepository {
                         val jObject = JSONObject(response.body())
                         val users = ArrayList<LoginModel>()
                         users.add(LoginModel(response.body()))
-
                         val msg = users[0].message
                         loginSetterGetter.value = LoginModel(msg)
                     } catch (e: Exception) {
@@ -79,7 +77,6 @@ object LoginActivityRepository {
             e.printStackTrace()
         }
     }
-
 
 }
 

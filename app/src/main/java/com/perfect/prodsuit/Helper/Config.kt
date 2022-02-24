@@ -24,7 +24,6 @@ object Config {
 
     const val SHARED_PREF = "loginsession"
 
-
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
     }
@@ -64,14 +63,7 @@ object Config {
         })
     }
 
-    @Throws(
-        CertificateException::class,
-        KeyStoreException::class,
-        IOException::class,
-        NoSuchAlgorithmException::class,
-        KeyManagementException::class
-    )
-
+    @Throws(CertificateException::class,  KeyStoreException::class,IOException::class, NoSuchAlgorithmException::class, KeyManagementException::class )
     fun getSSLSocketFactory(context: Context): SSLSocketFactory {
         val cf = CertificateFactory.getInstance("X.509")
         //  InputStream caInput = getResources().openRawResource(Common.getCertificateAssetName());

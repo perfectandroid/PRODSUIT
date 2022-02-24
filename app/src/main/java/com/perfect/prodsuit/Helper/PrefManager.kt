@@ -7,8 +7,6 @@ import android.content.SharedPreferences.Editor
 class PrefManager(var _context: Context) {
     var pref: SharedPreferences
     var editor: Editor
-
-    // shared pref mode  
     var PRIVATE_MODE = 0
 
     var isFirstTimeLaunch: Boolean
@@ -19,7 +17,6 @@ class PrefManager(var _context: Context) {
         }
 
     companion object {
-        // Shared preferences file name  
         private const val PREF_NAME = "welcome"
         private const val IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch"
     }
@@ -28,4 +25,5 @@ class PrefManager(var _context: Context) {
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         editor = pref.edit()
     }
+
 }
