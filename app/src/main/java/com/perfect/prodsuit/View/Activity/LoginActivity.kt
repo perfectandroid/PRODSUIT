@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Button
@@ -44,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
                                var jobj = jObject.getJSONObject("UserLoginInfodet")
                                //var jsonArray = jobj.getJSONArray("LoanApplicationListDetails")
                                tvdata.text = jobj.getString("User_ID")
+
+
                            } else {
                                tvdata.text = jObject.getString("EXMessage")
 
@@ -54,6 +57,14 @@ class LoginActivity : AppCompatActivity() {
 
 
             })
+
+
+
+                    val i = Intent(this@LoginActivity, OTPActivity::class.java)
+                    startActivity(i)
+                    finish()
+
+
                 }
                 false -> {
                     Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG).show()
