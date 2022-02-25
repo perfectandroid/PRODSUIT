@@ -31,9 +31,9 @@ class LoginActivity : AppCompatActivity() {
 
 
         var tvdata = findViewById(R.id.tvdata) as TextView
-        var btnClick = findViewById(R.id.btnClick) as Button
+        var btlogin = findViewById(R.id.btlogin) as Button
 
-        btnClick.setOnClickListener {
+        btlogin.setOnClickListener {
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
                      loginActivityViewModel.getUser(this)!!.observe(this, Observer { serviceSetterGetter ->

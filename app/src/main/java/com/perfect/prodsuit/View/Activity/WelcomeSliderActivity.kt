@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -32,13 +31,11 @@ class WelcomeSliderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Checking for first time launch - before calling setContentView()
         prefManager = PrefManager(this)
         if (!prefManager!!.isFirstTimeLaunch) {
             launchHomeScreen()
             finish()
         }
-        // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -48,25 +45,19 @@ class WelcomeSliderActivity : AppCompatActivity() {
         dotsLayout = findViewById(R.id.layoutDots) as LinearLayout
         btnSkip = findViewById(R.id.btn_skip) as TextView
         btnNext = findViewById(R.id.btn_next) as TextView
-        // layouts of all welcome sliders
-        // add few more layouts if you want
         layouts = intArrayOf(
             R.layout.welcome_slide1,
             R.layout.welcome_slide2,
             R.layout.welcome_slide3
         )
 
-        // adding bottom dots
         addBottomDots(0)
-        // making notification bar transparent
         changeStatusBarColor()
         myViewPagerAdapter = MyViewPagerAdapter()
         viewPager!!.adapter = myViewPagerAdapter
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
         btnSkip!!.setOnClickListener { launchHomeScreen() }
         btnNext!!.setOnClickListener {
-            // checking for last page
-            // if last page home screen will be launched
             val current = getItem(+1)
             if (current < layouts.size) {
                 // move to next screen
@@ -98,19 +89,14 @@ class WelcomeSliderActivity : AppCompatActivity() {
 
     private fun launchHomeScreen() {
         prefManager!!.isFirstTimeLaunch = false
-       // startActivity(Intent(this@WelcomeSliderActivity, WelcomeActivity::class.java))
         startActivity(Intent(this@WelcomeSliderActivity, WelcomeActivity::class.java))
         finish()
     }
 
-    //  viewpager change listener
     var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageSelected(position: Int) {
             addBottomDots(position)
-
-            // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.size - 1) {
-                // last page. make button text to GOT IT
                 btnNext!!.text = "GOT IT"
                 btnSkip!!.visibility = View.GONE
             } else {
@@ -119,7 +105,6 @@ class WelcomeSliderActivity : AppCompatActivity() {
                 btnSkip!!.visibility = View.VISIBLE
             }
         }
-
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
         override fun onPageScrollStateChanged(arg0: Int) {}
     }

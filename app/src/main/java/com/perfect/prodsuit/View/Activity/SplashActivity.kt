@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
                             "loginsession",
                             null
                         )!!.isEmpty() && Loginpref.getString("loginsession", null) == "Yes") {
-                        val i = Intent(this@SplashActivity, LoginActivity::class.java)
+                        val i = Intent(this@SplashActivity, MpinActivity::class.java)
                         startActivity(i)
                         finish()
                     } else if (Loginpref.getString("loginsession", null) != null && !Loginpref.getString(
