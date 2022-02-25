@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.perfect.prodsuit.R
 
+
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private var drawer_layout: DrawerLayout? = null
@@ -60,11 +61,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.nav_contact -> {
             }
+            R.id.nav_rateus -> {
+            }
             R.id.nav_share -> {
             }
             R.id.nav_logout -> {
             }
             R.id.nav_quit -> {
+
             }
         }
         drawer_layout!!.closeDrawer(GravityCompat.START)
