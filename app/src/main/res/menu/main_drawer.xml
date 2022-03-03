@@ -4,37 +4,46 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
+            android:fontFamily="@font/myfont"
             android:title="Profile"/>
         <item
             android:id="@+id/nav_changempin"
             android:icon="@drawable/ic_mpin"
+            android:fontFamily="@font/myfont"
             android:title="Change Mpin"/>
     </group>
-    <item android:title="Settings">
+    <item android:title="Settings"
+        android:fontFamily="@font/myfont">
         <menu>
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_about"
+                android:fontFamily="@font/myfont"
                 android:title="About us"/>
             <item
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_contact"
+                android:fontFamily="@font/myfont"
                 android:title="Contact us"/>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share"
+                android:fontFamily="@font/myfont"
                 android:title="Share"/>
             <item
                 android:id="@+id/nav_rateus"
                 android:icon="@drawable/ic_rate"
+                android:fontFamily="@font/myfont"
                 android:title="Rate us"/>
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
+                android:fontFamily="@font/myfont"
                 android:title="Logout"/>
             <item
                 android:id="@+id/nav_quit"
                 android:icon="@drawable/ic_quit"
+                android:fontFamily="@font/myfont"
                 android:title="Quit"/>
         </menu>
     </item>
