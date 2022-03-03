@@ -12,8 +12,9 @@
 
 
     <color name="colorPrimary">#E8465F</color>
-    <color name="colorPrimaryDark">#F12E4C</color>
-    <color name="colorPrimaryExtraDark">#F1072B</color>
+    <color name="colorPrimaryDark">#E10426</color>
+<!--    <color name="colorPrimaryDark">#F12E4C</color>-->
+    <color name="colorPrimaryExtraDark">#A8031D</color>
     <color name="colorAccent">#ED724B</color>
 
 

@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -58,8 +59,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             R.id.nav_changempin -> {
             }
             R.id.nav_about -> {
+                val i = Intent(this@HomeActivity, AboutUsActivity::class.java)
+                startActivity(i)
             }
             R.id.nav_contact -> {
+                val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
+                startActivity(i)
             }
             R.id.nav_rateus -> {
             }
