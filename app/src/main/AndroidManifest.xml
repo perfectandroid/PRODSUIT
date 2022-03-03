@@ -14,7 +14,12 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT">
-        <activity android:name=".View.Activity.HomeActivity"
+        <activity android:name=".View.Activity.AboutUsActivity"></activity>
+        <activity android:name=".View.Activity.ContactUsActivity" />
+        <activity android:name=".View.Activity.ChangePinActivity" />
+        <activity android:name=".View.Activity.ProfileActivity" />
+        <activity
+            android:name=".View.Activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
