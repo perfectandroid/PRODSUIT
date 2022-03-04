@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:id="@+id/rl_main"
+    android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_horizontal"
+            android:text="Reset mPin"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+            android:text="Enter old &amp; new password to reset your mPin"
+            android:fontFamily="@font/myfont"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_horizontal" />
+        <EditText
+            android:id="@+id/etxt_oldpin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Old mPin"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/et_bggrey"
+            android:maxLength="6"
+            android:gravity="center"
+            android:inputType="number"
+            android:fontFamily="@font/myfont"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2.5dp"/>
+        <EditText
+            android:id="@+id/etxt_newpin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter New mPin"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/et_bggrey"
+            android:maxLength="6"
+            android:gravity="center"
+            android:inputType="number"
+            android:fontFamily="@font/myfont"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="2.5dp"/>
+        <EditText
+            android:id="@+id/etxt_confirmnewpin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm New mPin"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/et_bggrey"
+            android:maxLength="6"
+            android:gravity="center"
+            android:inputType="number"
+            android:fontFamily="@font/myfont"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="15dp"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/btnreset"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                    android:padding="2dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                android:fontFamily="@font/myfont"
+                    android:background="@drawable/btn_bggrey"
+                    android:text="Reset" />
+            <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_bgcolour"
+                    android:padding="2dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:text="Submit" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

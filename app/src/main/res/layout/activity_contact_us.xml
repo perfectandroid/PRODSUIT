@@ -69,60 +69,112 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvLicense"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:layout_weight="7"
+                            android:background="@drawable/ic_arrow_right_white" />
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/greylight"
+                            android:gravity="center_vertical"
+                            android:hint="Name"
+                            android:paddingLeft="10dp"
+                            app:fontFamily="@font/myfont"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:layout_weight="7"
+                            android:background="@drawable/ic_arrow_right_white" />
+
+                        <EditText
+                            android:id="@+id/et_subject"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/greylight"
+                            android:gravity="center_vertical"
+                            android:hint="Subject"
+                            android:paddingLeft="10dp"
+                            app:fontFamily="@font/myfont"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:layout_weight="7"
+                            android:background="@drawable/ic_arrow_right_white" />
+
+                        <EditText
+                            android:id="@+id/et_msg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/greylight"
+                            android:gravity="center_vertical"
+                            android:hint="Message"
+                            app:fontFamily="@font/myfont"
+                            android:paddingLeft="10dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnOk"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="Licenced By"/>
-
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/applogo"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvtechpartner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:layout_marginLeft="80dp"
                         android:layout_marginTop="20dp"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:text="Technology Partner"/>
-
-
-
+                        android:layout_marginRight="80dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/btn_bgcolour"
+                        android:text="OK"
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/myfont"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--                android:background="@drawable/bhnpressed"-->
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/white"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:src="@drawable/companylogo"/>
             </LinearLayout>
 
         </LinearLayout>

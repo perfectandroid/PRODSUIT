@@ -34,4 +34,10 @@
     <style name="Theme.PRODSUIT.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PRODSUIT.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomTextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/myfont</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
