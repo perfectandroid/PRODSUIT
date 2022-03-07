@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+        android:background="@drawable/whitebg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/rl_main">
 
     <LinearLayout
@@ -37,12 +36,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/mpinlogo"/>
+            android:src="@drawable/otpbg"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,6 +62,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
+                android:textStyle="bold"
                 android:text="Enter 6 - Digit MPIN"
                 android:textColor="@color/black"
                 android:fontFamily="@font/myfont"
@@ -75,10 +78,11 @@
             <EditText
                 android:id="@+id/et_1"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:fontFamily="@font/myfont"
                 android:inputType="numberPassword"
@@ -88,11 +92,12 @@
             <EditText
                 android:id="@+id/et_2"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -102,11 +107,12 @@
             <EditText
                 android:id="@+id/et_3"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -116,11 +122,12 @@
             <EditText
                 android:id="@+id/et_4"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -130,11 +137,12 @@
             <EditText
                 android:id="@+id/et_5"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -144,11 +152,12 @@
             <EditText
                 android:id="@+id/et_6"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"

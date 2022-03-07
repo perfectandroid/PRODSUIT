@@ -1,15 +1,18 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import javax.net.ssl.*
 
@@ -102,9 +105,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         when(v.id){
             R.id.tvLogout->{
                 try {
-
-                   // doLogout()
-
+                    doLogout()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -500,6 +501,36 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    private fun doLogout() {
+        try {
+            val dialog1 = Dialog(this)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog1 .setCancelable(false)
+            dialog1 .setContentView(R.layout.logout_popup)
+            dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+
+            val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
+            val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
+            btn_No.setOnClickListener {
+                dialog1 .dismiss()
+            }
+            btn_Yes.setOnClickListener {
+                dialog1.dismiss()
+                dologoutchanges()
+                startActivity(Intent(this@MpinActivity, WelcomeActivity::class.java))
+            }
+            dialog1.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun dologoutchanges() {
+        val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
+        val loginEditer = loginSP.edit()
+        loginEditer.putString("loginsession", "No")
+        loginEditer.commit()
+    }
 
 }
 

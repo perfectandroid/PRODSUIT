@@ -65,5 +65,5 @@ dependencies {
 
 
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
-
+    implementation 'com.rom4ek:arcnavigationview:1.0.3'
 }

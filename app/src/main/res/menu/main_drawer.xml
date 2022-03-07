@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/dot_dark_screen3"
             android:title="Profile"/>
         <item
             android:id="@+id/nav_changempin"
             android:icon="@drawable/ic_mpin"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/green"
             android:title="Change Mpin"/>
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_about"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/dot_dark_screen4"
             android:title="About us"/>
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_contact"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/red"
             android:title="Contact us"/>
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_share"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/dot_dark_screen1"
             android:title="Share"/>
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/purple_500"
             android:title="Logout"/>
         <item
             android:id="@+id/nav_quit"
             android:icon="@drawable/ic_quit"
             android:fontFamily="@font/myfont"
+            app:iconTint="@color/colorPrimaryExtraDark"
             android:title="Quit"/>
     </group>
 </menu>

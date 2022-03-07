@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@drawable/whitebg"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:id="@+id/rl_main">
 
     <LinearLayout
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -39,6 +38,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
                 android:text="OTP VERIFICATION"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:fontFamily="@font/myfont"
                 android:textSize="20dp" />
@@ -53,24 +53,26 @@
             <EditText
                 android:id="@+id/et_1"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:fontFamily="@font/myfont"
                 android:inputType="numberPassword"
                 android:maxLength="1"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textColorHint="#fff"/>
             <EditText
                 android:id="@+id/et_2"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -80,11 +82,12 @@
             <EditText
                 android:id="@+id/et_3"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -94,11 +97,12 @@
             <EditText
                 android:id="@+id/et_4"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -108,11 +112,12 @@
             <EditText
                 android:id="@+id/et_5"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -122,11 +127,12 @@
             <EditText
                 android:id="@+id/et_6"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="1dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 android:layout_weight=".75"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/squareborder"
                 android:gravity="center"
                 android:inputType="numberPassword"
                 android:maxLength="1"
@@ -144,7 +150,8 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginBottom="5dp"
     android:layout_marginLeft="30dp"
     android:layout_marginRight="30dp"
     android:orientation="vertical">
@@ -369,52 +376,5 @@
 
     </LinearLayout>
 
-
-
-  <!--  <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginBottom="40dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:orientation="vertical">
-
-                    <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/white"
-                                    android:orientation="vertical">
-
-
-                                <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="bottom">
-
-
-                                </RelativeLayout>
-
-
-                            </LinearLayout>
-
-
-                </LinearLayout>
-            </ScrollView>
-        </RelativeLayout>
-    </LinearLayout>-->
 </LinearLayout>
 

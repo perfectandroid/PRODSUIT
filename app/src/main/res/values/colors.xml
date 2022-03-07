@@ -35,6 +35,9 @@
     <color name="dot_light_screen3">#e4b5fc</color>
     <color name="red">#E91E1E</color>
     <color name="redDark">#7E1212</color>
+    <color name="blue">#03A9F4</color>
+    <color name="green">#4CAF50</color>
+    <color name="yellow">#FFEB3B</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
