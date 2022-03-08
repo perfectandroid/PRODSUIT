@@ -24,13 +24,11 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
     }
 
     private fun setRegViews() {
-
-        et_name = findViewById<EditText>(R.id.et_name)
-        et_subject = findViewById<EditText>(R.id.et_subject)
-        et_msg = findViewById<EditText>(R.id.et_msg)
-        imback = findViewById<ImageView>(R.id.imback)
-        btnOk = findViewById<Button>(R.id.btnOk)
-
+        et_name = findViewById(R.id.et_name)
+        et_subject = findViewById(R.id.et_subject)
+        et_msg = findViewById(R.id.et_msg)
+        imback = findViewById(R.id.imback)
+        btnOk = findViewById(R.id.btnOk)
         btnOk!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
     }
@@ -54,7 +52,6 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         val to = "pssappfeedback@gmail.com"
         val subject = subject
         val message = msg
-
         val intent = Intent(Intent.ACTION_SEND)
         val addressees = arrayOf(to)
         intent.putExtra(Intent.EXTRA_EMAIL, addressees)

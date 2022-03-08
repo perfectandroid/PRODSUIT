@@ -4,13 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <LinearLayout
         android:id="@+id/layoutDots"
         android:layout_width="match_parent"
@@ -19,15 +16,12 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
-
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:alpha=".5"
         android:layout_above="@id/layoutDots" />
-
     <TextView
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
@@ -41,7 +35,6 @@
         android:text="NEXT"
         app:fontFamily="@font/myfont"
         android:textColor="@color/white" />
-
     <TextView
         android:id="@+id/btn_skip"
         android:layout_width="wrap_content"
@@ -55,7 +48,4 @@
         android:text="SKIP"
         app:fontFamily="@font/myfont"
         android:textColor="@color/white" />
-
-
-
 </RelativeLayout>

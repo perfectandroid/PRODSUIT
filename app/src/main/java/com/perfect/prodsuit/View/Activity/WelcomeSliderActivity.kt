@@ -50,7 +50,6 @@ class WelcomeSliderActivity : AppCompatActivity() {
             R.layout.welcome_slide2,
             R.layout.welcome_slide3
         )
-
         addBottomDots(0)
         changeStatusBarColor()
         myViewPagerAdapter = MyViewPagerAdapter()
@@ -154,4 +153,5 @@ class WelcomeSliderActivity : AppCompatActivity() {
             container.removeView(view)
         }
     }
+
 }

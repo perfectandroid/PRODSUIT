@@ -17,7 +17,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
 
     var show : Boolean = false
     private var progressDialog: ProgressDialog? = null
-
     private var one: TextView? = null
     private var two: TextView? = null
     private var three: TextView? = null
@@ -34,9 +33,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
     private var et_4: EditText? = null
     private var et_5: EditText? = null
     private var et_6: EditText? = null
-
     private var imgShowPin: ImageView? = null
-
     private var showPin: LinearLayout? = null
     private var clear: LinearLayout? = null
 
@@ -45,7 +42,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_otp)
-
         setRegViews()
     }
 
@@ -61,19 +57,15 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         eight = findViewById<TextView>(R.id.eight)
         nine = findViewById<TextView>(R.id.nine)
         zero = findViewById<TextView>(R.id.zero)
-
         et_1 = findViewById<EditText>(R.id.et_1)
         et_2 = findViewById<EditText>(R.id.et_2)
         et_3 = findViewById<EditText>(R.id.et_3)
         et_4 = findViewById<EditText>(R.id.et_4)
         et_5 = findViewById<EditText>(R.id.et_5)
         et_6 = findViewById<EditText>(R.id.et_6)
-
         showPin = findViewById<LinearLayout>(R.id.showPin)
         clear = findViewById<LinearLayout>(R.id.clear)
-
         imgShowPin = findViewById<ImageView>(R.id.imgShowPin)
-
         one!!.setOnClickListener(this)
         two!!.setOnClickListener(this)
         three!!.setOnClickListener(this)
@@ -86,7 +78,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         zero!!.setOnClickListener(this)
         clear!!.setOnClickListener(this)
         showPin!!.setOnClickListener(this)
-
         et_1!!.isEnabled = false
         et_2!!.isEnabled = false
         et_3!!.isEnabled = false
@@ -127,7 +118,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                     et_1!!.setText("1")
                 }
             }
-
             R.id.two-> {
                 if(et_1!!.length()==1) {
                     if (et_2!!.length() == 1) {
@@ -137,7 +127,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("2")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("2")
@@ -168,7 +157,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("3")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("3")
@@ -229,7 +217,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("5")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("5")
@@ -260,8 +247,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("6")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("6")
@@ -292,8 +277,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("7")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("7")
@@ -324,8 +307,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("8")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("8")
@@ -356,8 +337,6 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("9")
                                     OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("9")
@@ -469,30 +448,23 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
-
         }
     }
 
-
     private fun OTPVerification(Mpin:String) {
-
         val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF,0)
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "Yes")
         loginEditer.commit()
-
         val i = Intent(this@OTPActivity, HomeActivity::class.java)
         startActivity(i)
         finish()
     }
 
-
     private fun invalidPin(dialog: DialogInterface) {
         progressDialog!!.dismiss()
         dialog.dismiss()
     }
-
-
 
 }
 

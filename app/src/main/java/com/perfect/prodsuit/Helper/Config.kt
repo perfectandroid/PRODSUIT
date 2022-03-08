@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import com.perfect.prodsuit.View.Activity.SplashActivity
 import java.io.IOException
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -21,7 +20,6 @@ object Config {
 
     val CERT_NAME = "static-vm.pem"
     val BASE_URL = "https://202.164.150.65:14263/MuttatheMullaAPI/api/"  //DEVELOPMENT
-
     const val SHARED_PREF = "loginsession"
 
     fun getHostnameVerifier(): HostnameVerifier {
@@ -34,7 +32,6 @@ object Config {
             override fun getAcceptedIssuers(): Array<X509Certificate> {
                 return originalTrustManager.acceptedIssuers
             }
-
             override fun checkClientTrusted(certs: Array<X509Certificate>?, authType: String) {
                 try {
                     if (certs != null && certs.size > 0) {
@@ -45,9 +42,7 @@ object Config {
                 } catch (e: CertificateException) {
                     Log.w("checkClientTrusted", e.toString())
                 }
-
             }
-
             override fun checkServerTrusted(certs: Array<X509Certificate>?, authType: String) {
                 try {
                     if (certs != null && certs.size > 0) {
@@ -58,7 +53,6 @@ object Config {
                 } catch (e: CertificateException) {
                     Log.w("checkServerTrusted", e.toString())
                 }
-
             }
         })
     }
@@ -66,8 +60,6 @@ object Config {
     @Throws(CertificateException::class,  KeyStoreException::class,IOException::class, NoSuchAlgorithmException::class, KeyManagementException::class )
     fun getSSLSocketFactory(context: Context): SSLSocketFactory {
         val cf = CertificateFactory.getInstance("X.509")
-        //  InputStream caInput = getResources().openRawResource(Common.getCertificateAssetName());
-        // File path: app\src\main\res\raw\your_cert.cer
         val caInput = context!!.assets.open(CERT_NAME)
         val ca = cf.generateCertificate(caInput)
         caInput.close()
@@ -89,7 +81,6 @@ object Config {
                 val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm?.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             } catch (e: Exception) {
-                // TODO: handle exception
                 e.printStackTrace()
             }
         }
@@ -104,4 +95,5 @@ object Config {
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
     }
+
 }

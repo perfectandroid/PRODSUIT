@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 
 class PrefManager(var _context: Context) {
+
     var pref: SharedPreferences
     var editor: Editor
     var PRIVATE_MODE = 0

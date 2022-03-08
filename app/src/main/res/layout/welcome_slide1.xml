@@ -49,8 +49,6 @@
                 app:fontFamily="@font/myfont"
                 android:text="Send or receive money without any trouble with this app’s fund transfer channels. We make transferring funds from your Bank account very simple and convenient. In fact, there are various options that we provide for transferring your funds online."
                 android:textColor="@color/black"/>
-
         </LinearLayout>
     </ScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

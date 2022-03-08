@@ -8,40 +8,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
     <include
         layout="@layout/activity_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-<!--
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@drawable/sidemenubg"
-        app:headerLayout="@layout/nav_header_main"
-        app:itemTextAppearance="@style/CustomTextStyle"
-        app:itemIconTint="@color/colorPrimaryExtraDark"
-        app:menu="@menu/main_drawer">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:clickable="true"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:tint="@color/white"
-                android:src="@drawable/companylogo" />
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
--->
     <com.rom4ek.arcnavigationview.ArcNavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -70,5 +40,4 @@
                 android:src="@drawable/companylogo" />
         </LinearLayout>
     </com.rom4ek.arcnavigationview.ArcNavigationView>
-
 </androidx.drawerlayout.widget.DrawerLayout>

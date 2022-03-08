@@ -29,21 +29,16 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     var signInButton: SignInButton? = null
     private var googleApiClient: GoogleApiClient? = null
     private val RC_SIGN_IN = 1
-
     var strName: String? = null
     var strEmail: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-
         context = this@LoginActivity
         loginActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
-
-
         var tvdata = findViewById(R.id.tvdata) as TextView
         var btlogin = findViewById(R.id.btlogin) as Button
-
         btlogin.setOnClickListener {
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
@@ -57,11 +52,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                     var jobj = jObject.getJSONObject("UserLoginInfodet")
                                     //var jsonArray = jobj.getJSONArray("LoanApplicationListDetails")
                                     tvdata.text = jobj.getString("User_ID")
-
-
                                 } else {
                                     tvdata.text = jObject.getString("EXMessage")
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -70,16 +62,10 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
-
-
                         })
-
-
                     val i = Intent(this@LoginActivity, OTPActivity::class.java)
                     startActivity(i)
                     finish()
-
-
                 }
                 false -> {
                     Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -87,8 +73,6 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                 }
             }
         }
-
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
@@ -96,15 +80,12 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             .enableAutoManage(this, this)
             .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
             .build()
-
         signInButton = findViewById<View>(R.id.sign_in_button) as SignInButton
         signInButton!!.setOnClickListener {
             val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(intent, RC_SIGN_IN)
         }
-
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -119,13 +100,12 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val account = result.signInAccount
             strName=account!!.displayName
             strEmail=account.email
-
           //  login(account!!.displayName, account.email)
         } else {
             Toast.makeText(applicationContext, "Sign in cancel", Toast.LENGTH_LONG).show()
         }
     }
 
-
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
+
 }

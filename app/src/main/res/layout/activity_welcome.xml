@@ -16,7 +16,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">
-
                 <ImageView
                     android:id="@+id/imwelcome"
                     android:layout_width="230dp"
@@ -27,7 +26,6 @@
                     android:layout_gravity="center"
                     android:background="@drawable/welcomelogo"
                     android:layout_marginBottom="10dp"/>
-
                 <ImageView
                     android:id="@+id/tvHeader2"
                     android:layout_width="wrap_content"
@@ -45,7 +43,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/welcomepagebottombg"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +57,6 @@
                     android:text="Welcome Back"
                     app:fontFamily="@font/myfont"
                     android:textColor="@color/white"/>
-
                 <TextView
                     android:id="@+id/tvdescriptn3"
                     android:layout_width="wrap_content"
@@ -74,7 +70,6 @@
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     app:fontFamily="@font/myfont" />
-
                 <Button
                     android:id="@+id/btgetStarted"
                     android:layout_width="match_parent"
@@ -89,8 +84,6 @@
                     android:textColor="@color/colorPrimaryDark"
                     app:fontFamily="@font/myfont"
                     android:background="@drawable/btn_bg"/>
-
             </LinearLayout>
-
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

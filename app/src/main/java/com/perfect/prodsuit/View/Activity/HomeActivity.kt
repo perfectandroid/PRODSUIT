@@ -4,11 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.style.TypefaceSpan
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -19,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -34,14 +30,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun setRegViews() {
-        drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        nav_view = findViewById<NavigationView>(R.id.nav_view)
-        btn_menu = findViewById<ImageView>(R.id.btn_menu)
-
+        drawer_layout = findViewById(R.id.drawer_layout)
+        nav_view = findViewById(R.id.nav_view)
+        btn_menu = findViewById(R.id.btn_menu)
         btn_menu!!.setOnClickListener(this)
         nav_view!!.setNavigationItemSelectedListener(this)
         nav_view!!.setItemIconTintList(null);
-
     }
 
     override fun onClick(v: View?) {
@@ -53,16 +47,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     drawer_layout!!.openDrawer(GravityCompat.START)
                 }
             }
-
-
         }
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
             R.id.nav_profile -> {
+                val i = Intent(this@HomeActivity, ProfileActivity::class.java)
+                startActivity(i)
             }
             R.id.nav_changempin -> {
                 changeMpin()
@@ -96,8 +88,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         return true
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -117,7 +107,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             dialog1 .setCancelable(false)
             dialog1 .setContentView(R.layout.logout_popup)
             dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
-
             val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
             val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
             btn_No.setOnClickListener {
@@ -172,15 +161,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog1 .setCancelable(true)
             dialog1 .setContentView(R.layout.changepin_popup)
-           // dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
             val btnreset = dialog1 .findViewById(R.id.btnreset) as Button
             val btnSubmit = dialog1 .findViewById(R.id.btnSubmit) as Button
-
             val etxt_oldpin = dialog1 .findViewById(R.id.etxt_oldpin) as EditText
             val etxt_newpin = dialog1 .findViewById(R.id.etxt_newpin) as EditText
             val etxt_confirmnewpin = dialog1 .findViewById(R.id.etxt_confirmnewpin) as EditText
             btnSubmit.setOnClickListener {
-
                 if (etxt_oldpin!!.text.toString() == null || etxt_oldpin!!.text.toString().isEmpty()) {
                     etxt_oldpin!!.setError("Please Enter Your Old mPin.")
                 }
@@ -223,7 +209,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
         quit()
     }
 

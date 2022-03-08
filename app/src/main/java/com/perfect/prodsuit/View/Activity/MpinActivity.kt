@@ -20,7 +20,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
 
     var show : Boolean = false
     private var progressDialog: ProgressDialog? = null
-
     private var one: TextView? = null
     private var two: TextView? = null
     private var three: TextView? = null
@@ -38,9 +37,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var et_4: EditText? = null
     private var et_5: EditText? = null
     private var et_6: EditText? = null
-
     private var imgShowPin: ImageView? = null
-
     private var showPin: LinearLayout? = null
     private var clear: LinearLayout? = null
 
@@ -49,7 +46,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_mpin)
-
         setRegViews()
     }
 
@@ -66,19 +62,15 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         eight = findViewById<TextView>(R.id.eight)
         nine = findViewById<TextView>(R.id.nine)
         zero = findViewById<TextView>(R.id.zero)
-
         et_1 = findViewById<EditText>(R.id.et_1)
         et_2 = findViewById<EditText>(R.id.et_2)
         et_3 = findViewById<EditText>(R.id.et_3)
         et_4 = findViewById<EditText>(R.id.et_4)
         et_5 = findViewById<EditText>(R.id.et_5)
         et_6 = findViewById<EditText>(R.id.et_6)
-
         showPin = findViewById<LinearLayout>(R.id.showPin)
         clear = findViewById<LinearLayout>(R.id.clear)
-
         imgShowPin = findViewById<ImageView>(R.id.imgShowPin)
-
         tvLogout!!.setOnClickListener(this)
         one!!.setOnClickListener(this)
         two!!.setOnClickListener(this)
@@ -92,7 +84,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         zero!!.setOnClickListener(this)
         clear!!.setOnClickListener(this)
         showPin!!.setOnClickListener(this)
-
         et_1!!.isEnabled = false
         et_2!!.isEnabled = false
         et_3!!.isEnabled = false
@@ -140,7 +131,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                     et_1!!.setText("1")
                 }
             }
-
             R.id.two-> {
                 if(et_1!!.length()==1) {
                     if (et_2!!.length() == 1) {
@@ -150,7 +140,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("2")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("2")
@@ -181,7 +170,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("3")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("3")
@@ -242,7 +230,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("5")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
                                 }
                                 else {
                                     et_5!!.setText("5")
@@ -273,8 +260,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("6")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("6")
@@ -305,8 +290,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("7")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("7")
@@ -337,8 +320,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("8")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("8")
@@ -369,8 +350,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("9")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
-
-
                                 }
                                 else {
                                     et_5!!.setText("9")
@@ -482,24 +461,19 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
-
         }
     }
 
-
     private fun MpinVerification(Mpin:String) {
-
         val i = Intent(this@MpinActivity, HomeActivity::class.java)
         startActivity(i)
         finish()
     }
 
-
     private fun invalidPin(dialog: DialogInterface) {
         progressDialog!!.dismiss()
         dialog.dismiss()
     }
-
 
     private fun doLogout() {
         try {
@@ -508,7 +482,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             dialog1 .setCancelable(false)
             dialog1 .setContentView(R.layout.logout_popup)
             dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
-
             val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
             val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
             btn_No.setOnClickListener {

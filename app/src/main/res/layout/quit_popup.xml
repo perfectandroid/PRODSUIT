@@ -4,75 +4,70 @@
     android:layout_height="match_parent"
     android:id="@+id/rl_main"
     android:orientation="vertical">
-
- <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginTop="20dp"
-     android:layout_marginBottom="10dp"
-     android:orientation="vertical"
-     android:padding="20dp">
-
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:fontFamily="@font/myfont"
-      android:gravity="center_horizontal"
-      android:text="Confirmation"
-      android:textAlignment="center"
-      android:textAppearance="@style/TextAppearance.AppCompat.Large"
-      android:textColor="@color/black"
-      android:textStyle="bold"
-      android:textSize="18sp" />
-
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:layout_marginBottom="15dp"
-      android:textColor="@color/black"
-      android:textSize="15sp"
-      android:text="Do you want to quit?"
-      android:fontFamily="@font/myfont"
-      android:textAlignment="center"
-      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-      android:gravity="center_horizontal" />
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal"
-      android:layout_margin="5dp"
-      android:gravity="center">
-
-   <Button
-       android:id="@+id/btn_Yes"
-       android:layout_width="match_parent"
-       android:layout_height="40dp"
-       android:layout_gravity="center"
-       android:layout_margin="5dp"
-       android:textSize="15dp"
-       android:padding="2dp"
-       android:layout_weight="2"
-       android:textAllCaps="false"
-       android:fontFamily="@font/myfont"
-       android:background="@drawable/btn_bggrey"
-       android:text="Yes" />
-   <Button
-       android:id="@+id/btn_No"
-       android:layout_width="match_parent"
-       android:layout_height="40dp"
-       android:layout_gravity="center"
-       android:layout_margin="5dp"
-       android:textSize="15dp"
-       android:textColor="@color/white"
-       android:fontFamily="@font/myfont"
-       android:background="@drawable/btn_bgcolour"
-       android:padding="2dp"
-       android:layout_weight="1"
-       android:textAllCaps="false"
-       android:text="No, cancel please." />
-  </LinearLayout>
-
- </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_horizontal"
+            android:text="Confirmation"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:text="Do you want to quit?"
+            android:fontFamily="@font/myfont"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_Yes"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:padding="2dp"
+                android:layout_weight="2"
+                android:textAllCaps="false"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_bggrey"
+                android:text="Yes" />
+            <Button
+                android:id="@+id/btn_No"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_bgcolour"
+                android:padding="2dp"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:text="No, cancel please." />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
