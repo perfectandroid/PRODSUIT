@@ -5,22 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/loginbgmain"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/loginbgmain"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/loginbg"
-                android:layout_weight="3">
+                android:layout_weight="1.5">
                <ImageView
                     android:id="@+id/imback"
                     android:layout_width="60dp"
@@ -41,7 +42,7 @@
                     android:justificationMode="inter_word"
                     android:text="Mscore is the mobile app to perform all the common banking facilities for Co-operative Banks. This Mobile Application from Perfect Software Solutions (CLT) Pvt Ltd is very well designed benefiting both Banks &amp; Customers equally. Mscore is an up-to-date app which strictly follows all the guidelines which makes Banking much Simpler &amp; Superior."
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="15dp" />
                 <TextView
                     android:id="@+id/tvVersionid"
                     android:layout_width="wrap_content"
@@ -79,6 +80,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/myfont"
                         android:text="Licenced By"/>
                     <ImageView
                         android:layout_width="200dp"
@@ -100,6 +102,7 @@
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
                         android:textSize="18dp"
                         android:text="Technology Partner"/>
                </LinearLayout>
@@ -113,7 +116,14 @@
                     android:src="@drawable/companylogo"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/chipNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            app:cnb_menuResource="@menu/navbottom_item" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

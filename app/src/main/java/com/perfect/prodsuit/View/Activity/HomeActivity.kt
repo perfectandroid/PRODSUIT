@@ -13,7 +13,9 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
@@ -22,11 +24,39 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
+    private var chipNavigationBar: ChipNavigationBar? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homemain)
         setRegViews()
+        bottombarnav()
+    }
+
+    private fun bottombarnav() {
+        chipNavigationBar = findViewById(R.id.chipNavigation)
+        chipNavigationBar!!.setItemSelected(R.id.home, true)
+        chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener{
+            override fun onItemSelected(i: Int) {
+                when (i) {
+                    R.id.home -> {
+                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
+                        startActivity(i)
+                    }
+                    R.id.profile -> {
+                        val i = Intent(this@HomeActivity, ProfileActivity::class.java)
+                        startActivity(i)
+                    }
+                    R.id.logout -> {
+                        doLogout()
+                    }
+                    R.id.quit -> {
+                        quit()
+                    }
+                }
+            }
+        })
     }
 
     private fun setRegViews() {
@@ -213,3 +243,5 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
 }
+
+

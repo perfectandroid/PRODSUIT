@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.perfect.prodsuit"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0.0"
@@ -57,4 +57,7 @@ dependencies {
     def logging_version = "4.3.1"
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'com.rom4ek:arcnavigationview:1.0.3'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.3.2'
 }

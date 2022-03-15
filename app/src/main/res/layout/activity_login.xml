@@ -4,129 +4,142 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/loginbgmain"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/loginbg"
-            android:layout_weight="1.5">
-            <ImageView
-                android:layout_width="300dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="20dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/whiteapplogo"/>
-            <TextView
-                android:id="@+id/tvdescriptn3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="Please login to your account by entering your credentials, we will sent you OTP to verify."
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                app:fontFamily="@font/myfont" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/transparentbg"
-            android:layout_weight="1.5">
+            android:background="@drawable/loginbgmain"
+            android:orientation="vertical">
             <LinearLayout
-                android:orientation="horizontal"
-                android:background="@drawable/btn_bg2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="20dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/loginbg"
+                android:layout_weight="1.5">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/india"
+                    android:layout_width="300dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_margin="10dp"/>
+                    android:padding="20dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/whiteapplogo"/>
                 <TextView
+                    android:id="@+id/tvdescriptn3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+91"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="18dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/myfont"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey"/>
-                <EditText
-                    android:id="@+id/etxt_mob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Mobile Number"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:text="Please login to your account by entering your credentials, we will sent you OTP to verify."
+                    android:textColor="@color/white"
                     android:textSize="18dp"
-                    android:layout_gravity="center"
-                    android:background="@color/color_activity_transparent"
-                    android:maxLength="10"
-                    android:gravity="center"
-                    android:inputType="phone"
-                    android:fontFamily="@font/myfont"
-                    android:textColorHint="@color/grey"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    app:fontFamily="@font/myfont" />
             </LinearLayout>
-            <Button
-                android:id="@+id/btlogin"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Continue"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_bg3"
-                android:fontFamily="@font/myfont"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvdata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:text=" ---------- OR ---------- "
-                android:layout_gravity="center"
-                android:textColor="#000000"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center"
-                app:colorScheme="dark" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/transparentbg"
+                android:layout_weight="1.5">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:background="@drawable/btn_bg2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="20dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/india"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_margin="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+91"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/myfont"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey"/>
+                    <EditText
+                        android:id="@+id/etxt_mob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Mobile Number"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"
+                        android:background="@color/color_activity_transparent"
+                        android:maxLength="10"
+                        android:gravity="center"
+                        android:inputType="phone"
+                        android:fontFamily="@font/myfont"
+                        android:textColorHint="@color/grey"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Continue"
+                    android:textStyle="bold"
+
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_bg3"
+                    android:fontFamily="@font/myfont"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="35dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:text=" ---------- OR ---------- "
+                    android:layout_gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center"
+                    app:colorScheme="dark" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/progress"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="visible"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

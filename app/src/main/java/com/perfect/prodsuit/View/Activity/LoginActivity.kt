@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
@@ -27,6 +29,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     lateinit var context: Context
     lateinit var loginActivityViewModel: LoginActivityViewModel
     var signInButton: SignInButton? = null
+    var progress: ImageView? = null
     private var googleApiClient: GoogleApiClient? = null
     private val RC_SIGN_IN = 1
     var strName: String? = null
@@ -39,9 +42,13 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         loginActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         var tvdata = findViewById(R.id.tvdata) as TextView
         var btlogin = findViewById(R.id.btlogin) as Button
+         progress = findViewById(R.id.progress)
+        Glide.with(this).load(R.drawable.progressgif).into(progress!!);
+
         btlogin.setOnClickListener {
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
+                    progress!!.visibility=View.VISIBLE
                     loginActivityViewModel.getUser(this)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
@@ -66,10 +73,13 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                     val i = Intent(this@LoginActivity, OTPActivity::class.java)
                     startActivity(i)
                     finish()
+                    progress!!.visibility=View.INVISIBLE
                 }
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+                   Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG).show()
+
+
+
                 }
             }
         }
