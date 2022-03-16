@@ -2,6 +2,7 @@ package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -44,6 +45,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         var btlogin = findViewById(R.id.btlogin) as Button
          progress = findViewById(R.id.progress)
         Glide.with(this).load(R.drawable.progressgif).into(progress!!);
+
+
 
         btlogin.setOnClickListener {
             when(Config.ConnectivityUtils.isConnected(this)) {

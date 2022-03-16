@@ -33,6 +33,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginRight="15dp"
         android:text="NEXT"
+        android:textSize="15dp"
         app:fontFamily="@font/myfont"
         android:textColor="@color/white" />
     <TextView
@@ -46,6 +47,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:text="SKIP"
+        android:textSize="15dp"
         app:fontFamily="@font/myfont"
         android:textColor="@color/white" />
 </RelativeLayout>
