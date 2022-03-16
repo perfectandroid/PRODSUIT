@@ -2,11 +2,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@drawable/homemainbg"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/homemainbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-        <LinearLayout
+     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"
@@ -229,7 +230,8 @@ android:background="@drawable/homemainbg"
                                 android:scaleType="fitXY"
                                 android:padding="2dp"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/dashboard"/>
+                                android:tint="@color/white"
+                                android:src="@drawable/notificationbellicon"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
@@ -243,7 +245,6 @@ android:background="@drawable/homemainbg"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -253,5 +254,6 @@ android:background="@drawable/homemainbg"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/color_activity_transparent"
-        app:cnb_menuResource="@menu/navbottom_item" />
+        app:cnb_menuResource="@menu/navbottom_item"
+        app:cnb_textAppearance="@style/CustomTextStyle"/>
 </RelativeLayout>

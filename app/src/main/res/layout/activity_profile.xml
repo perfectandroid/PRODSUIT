@@ -273,6 +273,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
-            app:cnb_menuResource="@menu/navbottom_item" />
+            app:cnb_menuResource="@menu/navbottom_item"
+            app:cnb_textAppearance="@style/CustomTextStyle" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

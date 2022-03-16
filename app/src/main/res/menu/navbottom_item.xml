@@ -9,8 +9,7 @@
         app:cnb_backgroundColor="@color/colorPrimary"
         app:iconTint="@color/colorPrimaryExtraDark"
         app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff"
-        android:fontFamily="@font/myfont" />
+        app:cnb_textColor="#ffffff" />
 
     <item
         android:id="@+id/profile"
@@ -19,8 +18,7 @@
         app:cnb_backgroundColor="@color/colorPrimary"
         app:iconTint="@color/colorPrimaryExtraDark"
         app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff"
-        android:fontFamily="@font/myfont" />
+        app:cnb_textColor="#ffffff" />
 
     <item
         android:id="@+id/logout"
@@ -29,8 +27,7 @@
         app:cnb_backgroundColor="@color/colorPrimary"
         app:iconTint="@color/colorPrimaryExtraDark"
         app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff"
-        android:fontFamily="@font/myfont" />
+        app:cnb_textColor="#ffffff"/>
 
     <item
         android:id="@+id/quit"
@@ -39,6 +36,5 @@
         app:cnb_backgroundColor="@color/colorPrimary"
         app:iconTint="@color/colorPrimaryExtraDark"
         app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff"
-        android:fontFamily="@font/myfont" />
+        app:cnb_textColor="#ffffff" />
 </menu>
