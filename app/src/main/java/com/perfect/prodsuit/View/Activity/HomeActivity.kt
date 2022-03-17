@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -24,6 +25,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
+    private var llservice: LinearLayout? = null
+    private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
 
@@ -63,7 +66,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         drawer_layout = findViewById(R.id.drawer_layout)
         nav_view = findViewById(R.id.nav_view)
         btn_menu = findViewById(R.id.btn_menu)
+        lllead = findViewById(R.id.lllead)
+        llservice = findViewById(R.id.llservice)
         btn_menu!!.setOnClickListener(this)
+        lllead!!.setOnClickListener(this)
+        llservice!!.setOnClickListener(this)
         nav_view!!.setNavigationItemSelectedListener(this)
         nav_view!!.setItemIconTintList(null);
     }
@@ -76,6 +83,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 } else {
                     drawer_layout!!.openDrawer(GravityCompat.START)
                 }
+            }
+            R.id.llservice -> {
+                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
+                startActivity(i)
+            }
+            R.id.lllead -> {
+                val i = Intent(this@HomeActivity, LeadActivity::class.java)
+                startActivity(i)
             }
         }
     }

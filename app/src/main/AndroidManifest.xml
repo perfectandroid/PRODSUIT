@@ -15,9 +15,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT">
         <activity
-            android:name=".View.Activity.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.PRODSUIT.NoActionBar"></activity>
+            android:name=".View.Activity.LeadActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.LeadGenerationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.LeadManagemnetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.ServiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.AboutUsActivity"
             android:screenOrientation="portrait"

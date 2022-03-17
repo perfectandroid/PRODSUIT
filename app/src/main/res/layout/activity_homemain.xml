@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@drawable/sidemenubg"
+        android:background="@drawable/navbg"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextAppearance="@style/CustomTextStyle"
         app:itemIconTint="@color/colorPrimaryExtraDark"
