@@ -9,14 +9,13 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
 class ServiceActivity : AppCompatActivity() , View.OnClickListener {
+
     private var chipNavigationBar: ChipNavigationBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +28,6 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View) {
@@ -119,4 +117,5 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
             e.printStackTrace()
         }
     }
+
 }

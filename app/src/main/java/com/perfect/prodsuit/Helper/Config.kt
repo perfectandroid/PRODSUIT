@@ -21,7 +21,6 @@ object Config {
     val CERT_NAME = "static-vm.pem"
     val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
 
-
     const val SHARED_PREF = "loginsession"
 
     fun getHostnameVerifier(): HostnameVerifier {

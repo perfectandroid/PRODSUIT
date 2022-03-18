@@ -29,7 +29,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homemain)
@@ -131,18 +130,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
         drawer_layout!!.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun doLogout() {

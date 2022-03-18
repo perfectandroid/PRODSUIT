@@ -18,6 +18,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
 class LeadActivity : AppCompatActivity() , View.OnClickListener {
+
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llleadgeneration: LinearLayout? = null
     private var llleadmanagement: LinearLayout? = null
@@ -36,7 +37,6 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
         llleadgeneration!!.setOnClickListener(this)
         llleadmanagement = findViewById<LinearLayout>(R.id.llleadmanagement)
         llleadmanagement!!.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View) {
@@ -134,4 +134,5 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             e.printStackTrace()
         }
     }
+
 }

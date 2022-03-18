@@ -17,6 +17,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
 class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
+
     private var chipNavigationBar: ChipNavigationBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,6 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
         val tvVersionid = findViewById<TextView>(R.id.tvVersionid)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-
         tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
     }
 
@@ -121,4 +121,5 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
             e.printStackTrace()
         }
     }
+
 }

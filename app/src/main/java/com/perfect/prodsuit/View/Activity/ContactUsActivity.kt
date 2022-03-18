@@ -18,7 +18,6 @@ import com.perfect.prodsuit.R
 class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
 
     private var chipNavigationBar: ChipNavigationBar? = null
-
     private var et_name: EditText? = null
     private var et_subject: EditText? = null
     private var et_msg: EditText? = null

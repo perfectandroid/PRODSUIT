@@ -60,10 +60,9 @@ object SplashresellerActivityRepository {
                     Response<String>
                 ) {
                     try {
-                        /val jObject = JSONObject(response.body())
+                        //val jObject = JSONObject(response.body())
                         val users = ArrayList<ResellerModel>()
                         users.add(ResellerModel(response.body()))
-
                         val msg = users[0].message
                         resellerSetterGetter.value = ResellerModel(msg)
                     } catch (e: Exception) {

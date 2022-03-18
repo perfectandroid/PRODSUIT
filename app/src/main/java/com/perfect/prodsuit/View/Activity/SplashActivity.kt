@@ -17,12 +17,12 @@ class SplashActivity : AppCompatActivity() {
 
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
     lateinit var context: Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
         splashresellerActivityViewModel = ViewModelProvider(this).get(SplashresellerActivityViewModel::class.java)
-
         getResellerData()
     }
 
@@ -36,13 +36,10 @@ class SplashActivity : AppCompatActivity() {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-
                                     //var jobj = jObject.getJSONObject("UserLoginInfodet")
                                     //var jsonArray = jobj.getJSONArray("LoanApplicationListDetails")
                                     //tvdata.text = jobj.getString("User_ID")
-
                                         doSplash()
-
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@SplashActivity,
@@ -67,7 +64,8 @@ class SplashActivity : AppCompatActivity() {
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG).show()
             }
-        }    }
+        }
+    }
 
     private fun doSplash() {
         val background = object : Thread() {

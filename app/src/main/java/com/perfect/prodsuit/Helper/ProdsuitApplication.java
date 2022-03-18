@@ -1,10 +1,8 @@
 package com.perfect.prodsuit.Helper;
 
 import android.util.Base64;
-
 import java.io.ByteArrayOutputStream;
 import java.security.spec.KeySpec;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -15,12 +13,11 @@ public class ProdsuitApplication {
 
     public static String encryptStart(String encypt) throws Exception {
         String te = encypt;
-
         String encrypted = encrypt(te);
         return encrypted;
     }
+
     private static String encrypt(String inputText) throws Exception {
-       // String s = "Agentscr";
         String s = "PssErp22";
         byte[] keyValue = s.getBytes("US-ASCII");
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -34,8 +31,6 @@ public class ProdsuitApplication {
         } catch (Exception e) {
             System.out.println("Exception .. " + e.getMessage());
         }
-
         return new String(Base64.encode(bout.toByteArray(), Base64.DEFAULT), "ASCII");
-
     }
 }
