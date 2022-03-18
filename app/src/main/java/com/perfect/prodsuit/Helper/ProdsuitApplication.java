@@ -20,7 +20,8 @@ public class ProdsuitApplication {
         return encrypted;
     }
     private static String encrypt(String inputText) throws Exception {
-        String s = "Agentscr";
+       // String s = "Agentscr";
+        String s = "PssErp22";
         byte[] keyValue = s.getBytes("US-ASCII");
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try {

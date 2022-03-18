@@ -22,11 +22,11 @@ object SplashresellerActivityRepository {
     val resellerSetterGetter = MutableLiveData<ResellerModel>()
 
     fun getServicesApiCall(context: Context): MutableLiveData<ResellerModel> {
-        doLogin(context)
+        doReseller(context)
         return resellerSetterGetter
     }
 
-    private fun doLogin(context: Context) {
+    private fun doReseller(context: Context) {
         try {
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -60,7 +60,7 @@ object SplashresellerActivityRepository {
                     Response<String>
                 ) {
                     try {
-                        val jObject = JSONObject(response.body())
+                        /val jObject = JSONObject(response.body())
                         val users = ArrayList<ResellerModel>()
                         users.add(ResellerModel(response.body()))
 
