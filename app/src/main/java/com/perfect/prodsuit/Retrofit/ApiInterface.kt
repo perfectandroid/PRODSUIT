@@ -10,4 +10,7 @@ interface ApiInterface {
     @POST("MuttatheMulla/UserLogin")
     fun getLogin(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ResellerDetails")
+    fun getResellerData(@Body body: RequestBody): Call<String>
+
 }
