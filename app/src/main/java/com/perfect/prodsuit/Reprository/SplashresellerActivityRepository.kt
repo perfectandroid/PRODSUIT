@@ -28,6 +28,7 @@ object SplashresellerActivityRepository {
 
     private fun doReseller(context: Context) {
         try {
+            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -36,7 +37,7 @@ object SplashresellerActivityRepository {
                 .setLenient()
                 .create()
             val retrofit = Retrofit.Builder()
-                .baseUrl(Config.BASE_URL)
+                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
@@ -44,8 +45,9 @@ object SplashresellerActivityRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("1"))
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(context.getString(R.string.BankKey)))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -60,7 +62,7 @@ object SplashresellerActivityRepository {
                     Response<String>
                 ) {
                     try {
-                        //val jObject = JSONObject(response.body())
+                        val jObject = JSONObject(response.body())
                         val users = ArrayList<ResellerModel>()
                         users.add(ResellerModel(response.body()))
                         val msg = users[0].message

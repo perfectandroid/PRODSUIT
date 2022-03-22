@@ -33,6 +33,7 @@ object OTPActivityRepository {
 
     private fun doOTPVerification(context: Context) {
         try {
+            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
@@ -47,7 +48,7 @@ object OTPActivityRepository {
                 .setLenient()
                 .create()
             val retrofit = Retrofit.Builder()
-                .baseUrl(Config.BASE_URL)
+                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
@@ -57,10 +58,11 @@ object OTPActivityRepository {
             try {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(context.getString(R.string.BankKey)))
                 requestObject1.put("OTP", ProdsuitApplication.encryptStart(OTPActivity.strMOTP))
             } catch (e: Exception) {
                 e.printStackTrace()

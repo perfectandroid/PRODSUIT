@@ -15,6 +15,9 @@ import org.json.JSONObject
 
 class SplashActivity : AppCompatActivity() {
 
+    val CERT_NAME = "static-vm.pem"
+    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
+    val BANK_KEY = "-500"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
     lateinit var context: Context
 
@@ -24,6 +27,21 @@ class SplashActivity : AppCompatActivity() {
         context = this@SplashActivity
         splashresellerActivityViewModel = ViewModelProvider(this).get(SplashresellerActivityViewModel::class.java)
         getResellerData()
+
+        val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
+        val BASE_URLEditer = BASE_URLSP.edit()
+        BASE_URLEditer.putString("BASE_URL", BASE_URL)
+        BASE_URLEditer.commit()
+
+        val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
+        val CERT_NAMEEditer = CERT_NAMESP.edit()
+        CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
+        CERT_NAMEEditer.commit()
+
+        val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
+        val BANK_KEYEditer = BANK_KEYESP.edit()
+        BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
+        BANK_KEYEditer.commit()
     }
 
     private fun getResellerData() {

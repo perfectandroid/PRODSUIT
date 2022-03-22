@@ -18,9 +18,6 @@ import javax.net.ssl.*
 
 object Config {
 
-    val CERT_NAME = "static-vm.pem"
-    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
-
     const val SHARED_PREF = "loginsession"
     const val SHARED_PREF1 = "FK_Employee"
     const val SHARED_PREF2 = "UserName"
@@ -28,6 +25,9 @@ object Config {
     const val SHARED_PREF4 = "MobileNumber"
     const val SHARED_PREF5 = "Token"
     const val SHARED_PREF6 = "Email"
+    const val SHARED_PREF7 = "BASE_URL"
+    const val SHARED_PREF8 = "CERT_NAME"
+    const val SHARED_PREF9 = "BANK_KEY"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
@@ -67,7 +67,8 @@ object Config {
     @Throws(CertificateException::class,  KeyStoreException::class,IOException::class, NoSuchAlgorithmException::class, KeyManagementException::class )
     fun getSSLSocketFactory(context: Context): SSLSocketFactory {
         val cf = CertificateFactory.getInstance("X.509")
-        val caInput = context!!.assets.open(CERT_NAME)
+        val CERT_NAMESP = context.getSharedPreferences(SHARED_PREF8, 0)
+        val caInput = context!!.assets.open(CERT_NAMESP.getString("CERT_NAME", null)!!)
         val ca = cf.generateCertificate(caInput)
         caInput.close()
         val keyStore = KeyStore.getInstance("BKS")

@@ -31,6 +31,7 @@ object LoginActivityRepository {
 
     private fun doLogin(context: Context) {
         try {
+            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
@@ -45,7 +46,7 @@ object LoginActivityRepository {
                 .setLenient()
                 .create()
             val retrofit = Retrofit.Builder()
-                .baseUrl(Config.BASE_URL)
+                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
@@ -53,8 +54,9 @@ object LoginActivityRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("2"))
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(context.getString(R.string.BankKey)))
                 requestObject1.put("MobileNumber", ProdsuitApplication.encryptStart(strEPhone))
             } catch (e: Exception) {
                 e.printStackTrace()
