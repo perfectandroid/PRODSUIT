@@ -16,4 +16,10 @@ interface ApiInterface {
     @POST("UserValidations/Verification")
     fun getOtpverification(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/SetMPIN")
+    fun getSetMPIN(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ChangeMPIN")
+    fun getChangeMPIN(@Body body: RequestBody): Call<String>
+
 }

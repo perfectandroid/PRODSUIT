@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,12 +19,14 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Reprository.OTPActivityRepository
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
 import java.util.*
 
 class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedListener {
 
+    private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var loginActivityViewModel: LoginActivityViewModel
     var signInButton: SignInButton? = null
@@ -75,7 +78,12 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             Companion.strEPhone = etxt_mob!!.text.toString()
             when (Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
-                    // progress!!.visibility=View.VISIBLE
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, etxt_mob!!)
                     loginActivityViewModel.getUser(this)!!.observe(
                         this,
@@ -156,7 +164,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                 ).show()
                             }
                         })
-                    // progress!!.visibility=View.INVISIBLE
+                    progressDialog!!.dismiss()
                 }
                 false -> {
                     Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)

@@ -1,12 +1,15 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,14 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
-import com.perfect.prodsuit.Viewmodel.OTPActivityViewModel
+import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
 import org.json.JSONObject
 
-class OTPActivity : AppCompatActivity(), View.OnClickListener {
+class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var context: Context
-    lateinit var otpActivityViewModel: OTPActivityViewModel
+    lateinit var setmpinActivityViewModel: SetMpinActivityViewModel
     var show : Boolean = false
     private var progressDialog: ProgressDialog? = null
     private var one: TextView? = null
@@ -50,10 +52,10 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_otp)
+        setContentView(R.layout.activity_setmpin)
         setRegViews()
-        context = this@OTPActivity
-        otpActivityViewModel = ViewModelProvider(this).get(OTPActivityViewModel::class.java)
+        context = this@SetMpinActivity
+        setmpinActivityViewModel = ViewModelProvider(this).get(SetMpinActivityViewModel::class.java)
     }
 
     private fun setRegViews() {
@@ -106,7 +108,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("1")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -136,7 +138,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("2")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -166,7 +168,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("3")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -196,7 +198,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("4")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -226,7 +228,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("5")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -256,7 +258,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("6")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -286,7 +288,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("7")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -316,7 +318,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("8")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -346,7 +348,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("9")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -376,7 +378,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                             if (et_4!!.length() == 1) {
                                 if (et_5!!.length() == 1) {
                                     et_6!!.setText("0")
-                                    OTPVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
+                                    SetMpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
                                 }
                                 else {
@@ -463,106 +465,11 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        var strMOTP= ""
+        var strMPIN= ""
     }
 
-    private fun OTPVerification(Mpin:String) {
-        strMOTP = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                otpActivityViewModel.getOTP(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                var jobj = jObject.getJSONObject("UserLoginDetails")
-                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF1,
-                                    0
-                                )
-                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
-                                FK_EmployeeEditer.putString(
-                                    "FK_Employee",
-                                    jobj.getString("FK_Employee")
-                                )
-                                FK_EmployeeEditer.commit()
-                                val UserNameSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF2,
-                                    0
-                                )
-                                val UserNameEditer = UserNameSP.edit()
-                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
-                                UserNameEditer.commit()
-                                val AddressSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF3,
-                                    0
-                                )
-                                val AddressEditer = AddressSP.edit()
-                                AddressEditer.putString("Address", jobj.getString("Address"))
-                                AddressEditer.commit()
-                                val MobileNumberSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF4,
-                                    0
-                                )
-                                val MobileNumberEditer = MobileNumberSP.edit()
-                                MobileNumberEditer.putString(
-                                    "MobileNumber",
-                                    jobj.getString("MobileNumber")
-                                )
-                                MobileNumberEditer.commit()
-                                val TokenSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF5,
-                                    0
-                                )
-                                val TokenEditer = TokenSP.edit()
-                                TokenEditer.putString("Token", jobj.getString("Token"))
-                                TokenEditer.commit()
-                                val EmailSP = applicationContext.getSharedPreferences(
-                                    Config.SHARED_PREF6,
-                                    0
-                                )
-                                val EmailEditer = EmailSP.edit()
-                                EmailEditer.putString("Email", jobj.getString("Email"))
-                                EmailEditer.commit()
-                                val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
-                                startActivity(i)
-                                finish()
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@OTPActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                                clearAll()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
+    private fun SetMpinVerification(Mpin:String) {
+        confirmMpin()
     }
 
     private fun clearAll() {
@@ -574,6 +481,88 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         et_6!!.text.clear()
     }
 
+    private fun confirmMpin() {
+        try {
+            val dialog1 = Dialog(this)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog1 .setCancelable(false)
+            dialog1 .setContentView(R.layout.confirmmpin_popup)
+          //  dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+            val btn_Yes = dialog1 .findViewById(R.id.btn_Yes) as Button
+            val btn_No = dialog1 .findViewById(R.id.btn_No) as Button
+            btn_No.setOnClickListener {
+                dialog1 .dismiss()
+            }
+            btn_Yes.setOnClickListener {
+                dialog1.dismiss()
+                strMPIN = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
+                when (Config.ConnectivityUtils.isConnected(this)) {
+                    true -> {
+                        progressDialog = ProgressDialog(context, R.style.Progress)
+                        progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                        progressDialog!!.setCancelable(false)
+                        progressDialog!!.setIndeterminate(true)
+                        progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                        progressDialog!!.show()
+                        setmpinActivityViewModel.setMpin(this)!!.observe(
+                            this,
+                            Observer { serviceSetterGetter ->
+                                val msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        var jobj = jObject.getJSONObject("MPINDetails")
+                                        val builder = AlertDialog.Builder(
+                                            this@SetMpinActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jobj.getString("ResponseMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF,0)
+                                            val loginEditer = loginSP.edit()
+                                            loginEditer.putString("loginsession", "Yes")
+                                            loginEditer.commit()
+                                            val i = Intent(this@SetMpinActivity, HomeActivity::class.java)
+                                            startActivity(i)
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@SetMpinActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                        clearAll()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            })
+                        progressDialog!!.dismiss()
+                    }
+                    false -> {
+                        Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+            }
+            dialog1.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
 
 

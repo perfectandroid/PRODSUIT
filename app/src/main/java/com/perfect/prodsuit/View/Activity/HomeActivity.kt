@@ -2,26 +2,32 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationBarView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
+import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
+import org.json.JSONObject
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    lateinit var context: Context
+    lateinit var changempinViewModel: ChangeMpinViewModel
+    private var progressDialog: ProgressDialog? = null
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
@@ -227,6 +233,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     etxt_confirmnewpin.setError("Please Enter 6 digit mPin")
                 }else{
                     dialog1 .dismiss()
+                    changempinverficationcode(etxt_oldpin!!.text.toString(),etxt_newpin!!.text.toString())
                 }
             }
             btnreset.setOnClickListener {
@@ -239,6 +246,72 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             e.printStackTrace()
         }
     }
+
+    companion object {
+        var strOldMPIN= ""
+        var strNewMPIN= ""
+    }
+
+    private fun changempinverficationcode(oldPin: String, newPin: String) {
+
+        context = this@HomeActivity
+        changempinViewModel = ViewModelProvider(this).get(ChangeMpinViewModel::class.java)
+        strOldMPIN = oldPin
+        strNewMPIN = newPin
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                changempinViewModel.changeMpin(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                var jobj = jObject.getJSONObject("MPINDetails")
+
+                                val builder = AlertDialog.Builder(
+                                    this@HomeActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jobj.getString("ResponseMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@HomeActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }    }
 
     override fun onBackPressed() {
         quit()

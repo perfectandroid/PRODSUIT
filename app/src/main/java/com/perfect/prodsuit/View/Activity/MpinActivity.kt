@@ -1,7 +1,9 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +14,13 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
+import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
+import org.json.JSONObject
 import javax.net.ssl.*
 
 class MpinActivity : AppCompatActivity(), View.OnClickListener {
@@ -40,6 +47,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var imgShowPin: ImageView? = null
     private var showPin: LinearLayout? = null
     private var clear: LinearLayout? = null
+    lateinit var context: Context
+    lateinit var mpinActivityViewModel: MpinActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +56,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_mpin)
         setRegViews()
+        context = this@MpinActivity
+        mpinActivityViewModel = ViewModelProvider(this).get(MpinActivityViewModel::class.java)
     }
 
     private fun setRegViews() {
@@ -464,15 +475,70 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun MpinVerification(Mpin:String) {
-        val i = Intent(this@MpinActivity, HomeActivity::class.java)
-        startActivity(i)
-        finish()
+
+    companion object {
+        var strMPIN= ""
     }
 
-    private fun invalidPin(dialog: DialogInterface) {
-        progressDialog!!.dismiss()
-        dialog.dismiss()
+    private fun MpinVerification(Mpin:String) {
+        strMPIN = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                mpinActivityViewModel.veryfyMpin(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                var jobj = jObject.getJSONObject("UserLoginDetails")
+                                val builder = AlertDialog.Builder(
+                                    this@MpinActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jobj.getString("ResponseMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    val i = Intent(this@MpinActivity, HomeActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@MpinActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                                clearAll()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     private fun doLogout() {
@@ -503,6 +569,15 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+    }
+
+    private fun clearAll() {
+        et_1!!.text.clear()
+        et_2!!.text.clear()
+        et_3!!.text.clear()
+        et_4!!.text.clear()
+        et_5!!.text.clear()
+        et_6!!.text.clear()
     }
 
 }
