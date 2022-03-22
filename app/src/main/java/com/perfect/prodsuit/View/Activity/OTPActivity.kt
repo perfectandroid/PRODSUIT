@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +11,19 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
+import com.perfect.prodsuit.Viewmodel.OTPActivityViewModel
+import org.json.JSONObject
 
 class OTPActivity : AppCompatActivity(), View.OnClickListener {
 
+    lateinit var context: Context
+    lateinit var otpActivityViewModel: OTPActivityViewModel
     var show : Boolean = false
     private var progressDialog: ProgressDialog? = null
     private var one: TextView? = null
@@ -43,6 +52,8 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_otp)
         setRegViews()
+        context = this@OTPActivity
+        otpActivityViewModel = ViewModelProvider(this).get(OTPActivityViewModel::class.java)
     }
 
     private fun setRegViews() {
@@ -451,14 +462,106 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    companion object {
+        var strMOTP= ""
+    }
+
     private fun OTPVerification(Mpin:String) {
-        val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF,0)
-        val loginEditer = loginSP.edit()
-        loginEditer.putString("loginsession", "Yes")
-        loginEditer.commit()
-        val i = Intent(this@OTPActivity, HomeActivity::class.java)
-        startActivity(i)
-        finish()
+        strMOTP = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                // progress!!.visibility=View.VISIBLE
+              //  Config.Utils.hideSoftKeyBoard(this, etxt_mob!!)
+                otpActivityViewModel.getOTP(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF,0)
+                                val loginEditer = loginSP.edit()
+                                loginEditer.putString("loginsession", "Yes")
+                                loginEditer.commit()
+                                var jobj = jObject.getJSONObject("UserLoginDetails")
+                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF1,
+                                    0
+                                )
+                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
+                                FK_EmployeeEditer.putString(
+                                    "FK_Employee",
+                                    jobj.getString("FK_Employee")
+                                )
+                                FK_EmployeeEditer.commit()
+                                val UserNameSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF2,
+                                    0
+                                )
+                                val UserNameEditer = UserNameSP.edit()
+                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
+                                UserNameEditer.commit()
+                                val AddressSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF3,
+                                    0
+                                )
+                                val AddressEditer = AddressSP.edit()
+                                AddressEditer.putString("Address", jobj.getString("Address"))
+                                AddressEditer.commit()
+                                val MobileNumberSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF4,
+                                    0
+                                )
+                                val MobileNumberEditer = MobileNumberSP.edit()
+                                MobileNumberEditer.putString(
+                                    "MobileNumber",
+                                    jobj.getString("MobileNumber")
+                                )
+                                MobileNumberEditer.commit()
+                                val TokenSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF5,
+                                    0
+                                )
+                                val TokenEditer = TokenSP.edit()
+                                TokenEditer.putString("Token", jobj.getString("Token"))
+                                TokenEditer.commit()
+                                val EmailSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF6,
+                                    0
+                                )
+                                val EmailEditer = EmailSP.edit()
+                                EmailEditer.putString("Email", jobj.getString("Email"))
+                                EmailEditer.commit()
+                                val i = Intent(this@OTPActivity, HomeActivity::class.java)
+                                startActivity(i)
+                                finish()
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@OTPActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                // progress!!.visibility=View.INVISIBLE
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     private fun invalidPin(dialog: DialogInterface) {

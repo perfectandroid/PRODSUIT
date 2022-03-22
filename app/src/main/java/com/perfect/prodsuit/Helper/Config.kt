@@ -22,6 +22,12 @@ object Config {
     val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
 
     const val SHARED_PREF = "loginsession"
+    const val SHARED_PREF1 = "FK_Employee"
+    const val SHARED_PREF2 = "UserName"
+    const val SHARED_PREF3 = "Address"
+    const val SHARED_PREF4 = "MobileNumber"
+    const val SHARED_PREF5 = "Token"
+    const val SHARED_PREF6 = "Email"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
