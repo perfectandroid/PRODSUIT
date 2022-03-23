@@ -26,7 +26,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
         splashresellerActivityViewModel = ViewModelProvider(this).get(SplashresellerActivityViewModel::class.java)
-        getResellerData()
         val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
         val BASE_URLEditer = BASE_URLSP.edit()
         BASE_URLEditer.putString("BASE_URL", BASE_URL)
@@ -39,6 +38,7 @@ class SplashActivity : AppCompatActivity() {
         val BANK_KEYEditer = BANK_KEYESP.edit()
         BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
         BANK_KEYEditer.commit()
+        getResellerData()
     }
 
     private fun getResellerData() {
@@ -51,9 +51,6 @@ class SplashActivity : AppCompatActivity() {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                    //var jobj = jObject.getJSONObject("UserLoginInfodet")
-                                    //var jsonArray = jobj.getJSONArray("LoanApplicationListDetails")
-                                    //tvdata.text = jobj.getString("User_ID")
                                         doSplash()
                                 } else {
                                     val builder = AlertDialog.Builder(
@@ -88,7 +85,8 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     Thread.sleep((4 * 1000).toLong())
                     val Loginpref = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
-                    if (Loginpref.getString("loginsession", null) == null) {
+                    val loginstatus =Loginpref.getString("loginsession", null)
+                    if (Loginpref.getString("loginsession", null) == null|| Loginpref.getString("loginsession", null)!!.isEmpty()) {
                         val i = Intent(this@SplashActivity, WelcomeSliderActivity::class.java)
                         startActivity(i)
                         finish()

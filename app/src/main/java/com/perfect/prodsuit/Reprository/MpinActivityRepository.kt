@@ -8,10 +8,8 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.MpinModel
-import com.perfect.prodsuit.Model.SetMpinModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.MpinActivity
-import com.perfect.prodsuit.View.Activity.SetMpinActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject

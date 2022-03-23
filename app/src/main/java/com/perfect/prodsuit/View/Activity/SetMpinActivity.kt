@@ -4,18 +4,15 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
-import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
@@ -487,7 +484,6 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog1 .setCancelable(false)
             dialog1 .setContentView(R.layout.confirmmpin_popup)
-          //  dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
             val btn_Yes = dialog1 .findViewById(R.id.btn_Yes) as Button
             val btn_No = dialog1 .findViewById(R.id.btn_No) as Button
             btn_No.setOnClickListener {
@@ -563,6 +559,7 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
     }
+
 }
 
 

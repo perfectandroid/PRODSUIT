@@ -7,10 +7,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LoginModel
 import com.perfect.prodsuit.Model.OTPModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LoginActivity.Companion.strEPhone
 import com.perfect.prodsuit.View.Activity.OTPActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
