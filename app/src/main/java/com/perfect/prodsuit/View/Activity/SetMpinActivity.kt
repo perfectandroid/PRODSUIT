@@ -508,16 +508,22 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         var jobj = jObject.getJSONObject("MPINDetails")
+
                                         val builder = AlertDialog.Builder(
                                             this@SetMpinActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jobj.getString("ResponseMessage"))
                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            val Mobilepref = applicationContext.getSharedPreferences(Config.SHARED_PREF4, 0)
                                             val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF,0)
                                             val loginEditer = loginSP.edit()
                                             loginEditer.putString("loginsession", "Yes")
                                             loginEditer.commit()
+                                            val LoginmobilenumberSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14,0)
+                                            val LoginmobilenumberEditer = LoginmobilenumberSP.edit()
+                                            LoginmobilenumberEditer.putString("Loginmobilenumber",Mobilepref.getString("MobileNumber", null))
+                                            LoginmobilenumberEditer.commit()
                                             val i = Intent(this@SetMpinActivity, HomeActivity::class.java)
                                             startActivity(i)
                                             finish()
