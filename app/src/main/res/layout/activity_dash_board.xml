@@ -11,59 +11,75 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/imback"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:background="@color/color_activity_transparent"
+                android:padding="10dp"
+                android:tint="@color/black"
+                android:src="@drawable/icback"
+                tools:ignore="UseAppTint" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:text="Dashboard"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:tint="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/myfont" />
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp">
+            android:layout_above="@+id/chipNavigation"
+            android:layout_below="@+id/llback">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/imback"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="left"
-                        android:background="@color/color_activity_transparent"
-                        android:padding="10dp"
-                        android:tint="@color/black"
-                        android:src="@drawable/icback"
-                        tools:ignore="UseAppTint" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="left"
-                        android:text="Dashboard"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:tint="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/myfont" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/chart1"
                         android:layout_width="match_parent"
                         android:layout_height="225dp"
-                        android:visibility="visible"/>
+                        android:layout_alignParentTop="true"
+                        android:visibility="visible">
+
+
+                    </com.github.mikephil.charting.charts.LineChart>
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/barChart"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="500dp"
+                        android:layout_margin="32dp"
+                        android:visibility="visible" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
                         android:layout_margin="32dp"
                         android:visibility="visible"/>
 
