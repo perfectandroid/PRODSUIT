@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT">
         <activity
+            android:name=".View.Activity.CustomerSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.DashBoardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -93,9 +98,7 @@
             android:name=".View.Activity.SetMpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-<!--        SplashActivity-->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- SplashActivity -->
         <activity
             android:name=".View.Activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -105,7 +108,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

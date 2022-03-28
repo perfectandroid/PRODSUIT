@@ -180,6 +180,7 @@
                                     android:padding="10dp"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
+                                    android:id="@+id/llCustomer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="5dp"
@@ -200,11 +201,12 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
+                                        android:id="@+id/txtcustomer"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="left"
-                                        android:text="Select Customer"
+                                        android:hint="Select Customer"
                                         android:textColor="@color/black"
                                         android:textSize="18dp"
                                         android:textStyle="bold"
@@ -276,6 +278,7 @@
                                     android:padding="10dp"
                                     android:src="@drawable/terminal"/>
                                 <LinearLayout
+                                    android:id="@+id/llTerminal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="5dp"

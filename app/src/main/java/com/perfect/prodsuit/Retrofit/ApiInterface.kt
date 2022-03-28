@@ -22,4 +22,7 @@ interface ApiInterface {
     @POST("UserValidations/ChangeMPIN")
     fun getChangeMPIN(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CustomerDetails")
+    fun getCustomerDetails(@Body body: RequestBody): Call<String>
+
 }
