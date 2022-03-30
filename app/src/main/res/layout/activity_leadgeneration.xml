@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey"
+    android:background="@drawable/navbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -75,12 +75,12 @@
                 android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="2.5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadgeninputbg"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -116,7 +116,7 @@
                                         android:gravity="left"
                                         android:text="12-03-2022"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
@@ -124,12 +124,12 @@
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="80dp"
                                 android:layout_marginLeft="2.5dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadgeninputbg"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:background="@color/color_activity_transparent"
@@ -165,27 +165,25 @@
                                         android:gravity="left"
                                         android:text="Calicut"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="2.5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadgeninputbg"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -221,7 +219,7 @@
                                         android:gravity="left"
                                         android:text="Select Customer"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
@@ -229,12 +227,12 @@
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="80dp"
                                 android:layout_marginLeft="2.5dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadgeninputbg"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -270,123 +268,136 @@
                                         android:gravity="left"
                                         android:text="Select Product"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/leadselect_bg"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left|center"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="1dp"
+                        android:src="@drawable/terminal"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:text="Lead From"
+                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:text="Select Lead From"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/leadselect_bg"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left|center"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="1dp"
+                        android:src="@drawable/leadthrough"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:text="Lead Through"
+                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:text="Select Lead Through"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="2.5dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/leadgeninputbg"
+                                android:layout_weight="1"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
-                                    android:src="@drawable/terminal"/>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:text="Terminal"
-                                        android:textColor="@color/colorPrimaryExtraDark"
-                                        android:textSize="12dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:text="Select Terminal"
-                                        android:textColor="@color/black"
-                                        android:textSize="18dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
-                                </LinearLayout>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
-                                android:layout_marginBottom="5dp"
-                                android:background="@drawable/leadgeninputbg"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
-                                    android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
-                                    android:src="@drawable/leadthrough"/>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:text="Lead Through"
-                                        android:textColor="@color/colorPrimaryExtraDark"
-                                        android:textSize="12dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:text="Select Lead Through"
-                                        android:textColor="@color/black"
-                                        android:textSize="18dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
-                                </LinearLayout>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
-                                android:layout_marginBottom="5dp"
-                                android:background="@drawable/leadgeninputbg"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
-                                    android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:padding="1dp"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -401,7 +412,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="left"
-                                        android:text="Lead Collected By"
+                                        android:text="Lead By"
                                         android:textColor="@color/colorPrimaryExtraDark"
                                         android:textSize="12dp"
                                         android:textStyle="bold"
@@ -415,7 +426,7 @@
                                         android:gravity="left"
                                         android:text="Select Employee"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
@@ -423,11 +434,61 @@
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="2.5dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
-                                android:background="@drawable/leadgeninputbg"
+                                android:layout_weight="1"
+                                android:background="@drawable/leadselect_bg"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
+                                    android:background="@color/color_activity_transparent"
+                                    android:padding="1dp"
+                                    android:src="@drawable/customer"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:text="Media Type"
+                                        android:textColor="@color/colorPrimaryExtraDark"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:text="Select Media Type"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+                                </LinearLayout>
+                            </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="60dp"
@@ -450,7 +511,7 @@
                                         android:gravity="left"
                                         android:text="Upload Images"
                                         android:textColor="@color/black"
-                                        android:textSize="18dp"
+                                        android:textSize="15dp"
                                         android:layout_marginTop="10dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
@@ -463,26 +524,66 @@
                                         android:orientation="horizontal">
 
                                         <ImageView
-                                            android:layout_width="100dp"
-                                            android:layout_height="60dp"
+                                            android:layout_width="80dp"
+                                            android:layout_height="80dp"
                                             android:layout_gravity="left"
-                                            android:layout_margin="5dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginBottom="5dp"
+                                            android:layout_marginRight="5dp"
                                             android:scaleType="fitXY"
                                             android:background="@color/color_activity_transparent"
-                                            android:src="@drawable/imageicon"/>
+                                            android:src="@drawable/uploadimg"/>
 
                                         <ImageView
-                                            android:layout_width="100dp"
-                                            android:layout_height="60dp"
+                                            android:layout_width="80dp"
+                                            android:layout_height="80dp"
                                             android:layout_gravity="left"
-                                            android:layout_margin="5dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginBottom="5dp"
+                                            android:layout_marginRight="5dp"
                                             android:scaleType="fitXY"
                                             android:background="@color/color_activity_transparent"
-                                            android:src="@drawable/imageicon"/>
+                                            android:src="@drawable/uploadimg"/>
 
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnYes"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/btn_bgcolorprimary"
+                            android:fontFamily="@font/myfont"
+                            android:padding="2dp"
+                            android:text="Reset"
+                            android:textAllCaps="false"
+                            android:textSize="15dp" />
+                        <Button
+                            android:id="@+id/btnNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/myfont"
+                            android:background="@drawable/btn_bgcolour"
+                            android:padding="2dp"
+                            android:layout_weight="2"
+                            android:textAllCaps="false"
+                            android:text="Submit" />
+                    </LinearLayout>
                 </LinearLayout>
         </ScrollView>
 
