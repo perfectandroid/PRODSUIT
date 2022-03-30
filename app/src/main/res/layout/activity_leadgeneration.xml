@@ -77,17 +77,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="2.5dp"
+                                android:layout_marginRight="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:layout_height="50dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/date"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
-                                android:layout_marginLeft="2.5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
@@ -175,12 +175,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="2.5dp"
+                                android:layout_marginRight="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/leadselect_bg"
@@ -190,7 +191,7 @@
                                     android:layout_height="40dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -228,7 +229,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
-                                android:layout_marginLeft="2.5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
@@ -239,7 +240,7 @@
                                     android:layout_height="40dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/products"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -278,13 +279,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="2.5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/leadselect_bg"
@@ -294,7 +296,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="left|center"
                         android:background="@color/color_activity_transparent"
-                        android:padding="1dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/terminal"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -332,7 +334,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
@@ -343,7 +345,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="left|center"
                         android:background="@color/color_activity_transparent"
-                        android:padding="1dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/leadthrough"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -382,12 +384,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="2.5dp"
+                                android:layout_marginRight="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/leadselect_bg"
@@ -397,7 +400,7 @@
                                     android:layout_height="40dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -435,7 +438,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
-                                android:layout_marginLeft="2.5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
@@ -446,7 +449,7 @@
                                     android:layout_height="40dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -488,19 +491,19 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
                                 android:background="@drawable/leadselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
                                     android:layout_gravity="left"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/uploads"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
                                     android:gravity="center"
                                     android:orientation="vertical">
 
