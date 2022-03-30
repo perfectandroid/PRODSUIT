@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/leadgenerartionbd"
+    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -67,21 +67,27 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="50dp"
                     android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"
                                 android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="2.5dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/leadgeninputbg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:padding="1dp"
                                     android:src="@drawable/date"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -119,17 +125,18 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
+                                android:layout_marginLeft="2.5dp"
                                 android:layout_marginRight="30dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/leadgeninputbg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:padding="1dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
                                     android:src="@drawable/location"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -164,20 +171,28 @@
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"
                                 android:layout_marginLeft="30dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="2.5dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/leadgeninputbg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:padding="1dp"
                                     android:src="@drawable/customer"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -215,17 +230,18 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"
-                                android:layout_marginLeft="30dp"
+                                android:layout_marginLeft="2.5dp"
                                 android:layout_marginRight="30dp"
                                 android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/leadgeninputbg"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_gravity="left"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="10dp"
+                                    android:padding="1dp"
                                     android:src="@drawable/products"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -260,6 +276,7 @@
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
+            </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"

@@ -15,6 +15,7 @@
     <color name="colorPrimaryDark">#E10426</color>
     <color name="colorPrimaryExtraDark">#A8031D</color>
     <color name="colorAccent">#ED724B</color>
+    <color name="homebgcolor">#F8B3BE</color>
     <color name="color_activity_transparent">#00000000</color>
     <color name="dot_dark_screen2">#d1395c</color>
     <color name="dot_dark_screen1">#14a895</color>
