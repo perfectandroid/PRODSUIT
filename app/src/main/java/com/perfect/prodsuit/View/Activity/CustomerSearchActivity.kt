@@ -119,7 +119,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   74   "+msg)
+                         Log.e(TAG,"msg   74   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")

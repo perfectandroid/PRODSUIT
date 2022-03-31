@@ -45,13 +45,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
-        llTerminal = findViewById<LinearLayout>(R.id.llTerminal)
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
 
         imback!!.setOnClickListener(this)
-        llTerminal!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
 
     }
@@ -60,10 +58,6 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         when(v.id){
             R.id.imback->{
                 finish()
-            }
-            R.id.llTerminal->{
-               // finish()
-                //getTerminal()
             }
             R.id.llCustomer->{
                 val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
