@@ -68,6 +68,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             R.id.llCustomer->{
                 val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
                 CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
+               // overridePendingTransition(R.anim.exit_on_left, R.anim.enter_from_right);
 
             }
         }
