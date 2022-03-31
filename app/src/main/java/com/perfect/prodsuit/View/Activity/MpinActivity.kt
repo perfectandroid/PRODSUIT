@@ -566,6 +566,10 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+        val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
+        val loginmobileEditer = loginmobileSP.edit()
+        loginmobileEditer.putString("Loginmobilenumber", "")
+        loginmobileEditer.commit()
     }
 
     private fun clearAll() {

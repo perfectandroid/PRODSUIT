@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
 import org.json.JSONObject
@@ -173,6 +174,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+        val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
+        val loginmobileEditer = loginmobileSP.edit()
+        loginmobileEditer.putString("Loginmobilenumber", "")
+        loginmobileEditer.commit()
     }
 
     private fun quit() {

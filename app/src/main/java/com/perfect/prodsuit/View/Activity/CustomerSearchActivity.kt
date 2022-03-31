@@ -1,36 +1,35 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.R.id
+import android.app.AlertDialog
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.R
-import com.google.android.material.snackbar.Snackbar
-import android.R.id.message
-import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Adapter.CustomerAdapter
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
 class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
+
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
@@ -41,7 +40,6 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var customersearchViewModel: CustomerSearchViewModel
     val TAG: String = "CustomerSearchRepository"
     lateinit var customerArrayList : JSONArray
-
     companion object {
         var strCustomer = ""
     }
@@ -50,7 +48,6 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_search)
         context = this@CustomerSearchActivity
-
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         setRegViews()
         bottombarnav()
@@ -61,10 +58,8 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         img_search = findViewById<ImageView>(R.id.img_search)
         recyCustomer = findViewById<RecyclerView>(R.id.recyCustomer)
-
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View) {
@@ -76,30 +71,17 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                 try {
                     strCustomer = edt_customer!!.text.toString()
                     if (strCustomer.equals("")){
-
                     val snackbar: Snackbar = Snackbar.make(v, "Enter Customer", Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-
                     snackbar.show()
 
                     }else{
-//                        val intent = Intent()
-//                        intent.putExtra("MESSAGE", strCustomer)
-//                        setResult(CUSTOMER_SEARCH!!, intent)
-//                        finish() //finishing activity
-
-                        getCustomerSearch()
-
-
                     }
                 }catch (e  :Exception){
                     Log.e("TAG","Exception  64   "+e.toString())
                 }
-
-
-            }
-
+           }
         }
     }
 
@@ -119,7 +101,6 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   74   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
@@ -213,6 +194,10 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+        val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
+        val loginmobileEditer = loginmobileSP.edit()
+        loginmobileEditer.putString("Loginmobilenumber", "")
+        loginmobileEditer.commit()
     }
 
     private fun quit() {
@@ -243,17 +228,14 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
     override fun onClick(position: Int, data: String) {
         if (data.equals("customer")){
             val jsonObject = customerArrayList.getJSONObject(position)
-
             val intent = Intent()
             intent.putExtra("ID_Customer", jsonObject.getString("ID_Customer"))
             intent.putExtra("Name", jsonObject.getString("Name"))
             intent.putExtra("Address", jsonObject.getString("Address"))
             intent.putExtra("Email", jsonObject.getString("Email"))
             intent.putExtra("MobileNumber", jsonObject.getString("MobileNumber"))
-
             setResult(CUSTOMER_SEARCH!!, intent)
-            finish() //finishing activity
-
         }
     }
+
 }

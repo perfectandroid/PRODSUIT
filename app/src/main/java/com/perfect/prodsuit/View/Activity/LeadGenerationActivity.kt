@@ -1,6 +1,5 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -17,18 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
-import org.json.JSONObject
 
 class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
-
     private var llCustomer: LinearLayout? = null
     private var txtcustomer: TextView? = null
-
     private var CUSTOMER_SEARCH: Int? = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +39,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
-
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
-
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View) {
@@ -60,109 +52,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             R.id.llCustomer->{
                 val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
                 CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
-               // overridePendingTransition(R.anim.exit_on_left, R.anim.enter_from_right);
-
             }
         }
     }
-
-//    private fun getTerminal() {
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//
-//                loginActivityViewModel.getUser(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                var jobj = jObject.getJSONObject("UserLoginDetails")
-//                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF1,
-//                                    0
-//                                )
-//                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
-//                                FK_EmployeeEditer.putString(
-//                                    "FK_Employee",
-//                                    jobj.getString("FK_Employee")
-//                                )
-//                                FK_EmployeeEditer.commit()
-//                                val UserNameSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF2,
-//                                    0
-//                                )
-//                                val UserNameEditer = UserNameSP.edit()
-//                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
-//                                UserNameEditer.commit()
-//                                val AddressSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF3,
-//                                    0
-//                                )
-//                                val AddressEditer = AddressSP.edit()
-//                                AddressEditer.putString("Address", jobj.getString("Address"))
-//                                AddressEditer.commit()
-//                                val MobileNumberSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF4,
-//                                    0
-//                                )
-//                                val MobileNumberEditer = MobileNumberSP.edit()
-//                                MobileNumberEditer.putString(
-//                                    "MobileNumber",
-//                                    jobj.getString("MobileNumber")
-//                                )
-//                                MobileNumberEditer.commit()
-//                                val TokenSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF5,
-//                                    0
-//                                )
-//                                val TokenEditer = TokenSP.edit()
-//                                TokenEditer.putString("Token", jobj.getString("Token"))
-//                                TokenEditer.commit()
-//                                val EmailSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF6,
-//                                    0
-//                                )
-//                                val EmailEditer = EmailSP.edit()
-//                                EmailEditer.putString("Email", jobj.getString("Email"))
-//                                EmailEditer.commit()
-//                                val i = Intent(this@LoginActivity, OTPActivity::class.java)
-//                                startActivity(i)
-//                                finish()
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@LoginActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                            }
-//                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//    }
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -217,6 +109,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+        val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
+        val loginmobileEditer = loginmobileSP.edit()
+        loginmobileEditer.putString("Loginmobilenumber", "")
+        loginmobileEditer.commit()
     }
 
     private fun quit() {
@@ -251,4 +147,5 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             txtcustomer!!.text = data!!.getStringExtra("Name")
         }
     }
+
 }

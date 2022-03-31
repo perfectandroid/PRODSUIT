@@ -25,28 +25,48 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
-        splashresellerActivityViewModel = ViewModelProvider(this).get(SplashresellerActivityViewModel::class.java)
+        splashresellerActivityViewModel = ViewModelProvider(this).get(
+            SplashresellerActivityViewModel::class.java
+        )
         val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
         val TestingMobileNopref = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
         val TestingBankKeypref = applicationContext.getSharedPreferences(Config.SHARED_PREF12, 0)
-        val Testingsslcertificatepref = applicationContext.getSharedPreferences(Config.SHARED_PREF13, 0)
+        val Testingsslcertificatepref = applicationContext.getSharedPreferences(
+            Config.SHARED_PREF13,
+            0
+        )
         val Loginmobilenumberpref = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
         if(Loginmobilenumberpref.getString("Loginmobilenumber", null)!=null
             && TestingURLpref.getString("TestingURL", null)!=null
             && Testingsslcertificatepref.getString("Testingsslcertificate", null)!=null
             && TestingBankKeypref.getString("TestingBankKey", null)!=null
-            && TestingMobileNopref.getString("TestingMobileNo", null).equals(Loginmobilenumberpref.getString("Loginmobilenumber", null))){
+            && TestingMobileNopref.getString("TestingMobileNo", null).equals(
+                Loginmobilenumberpref.getString(
+                    "Loginmobilenumber",
+                    null
+                )
+            )){
             val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
             val BASE_URLEditer = BASE_URLSP.edit()
             BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
             BASE_URLEditer.commit()
             val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
             val CERT_NAMEEditer = CERT_NAMESP.edit()
-            CERT_NAMEEditer.putString("CERT_NAME",Testingsslcertificatepref.getString("Testingsslcertificate", null))
+            CERT_NAMEEditer.putString(
+                "CERT_NAME", Testingsslcertificatepref.getString(
+                    "Testingsslcertificate",
+                    null
+                )
+            )
             CERT_NAMEEditer.commit()
             val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
             val BANK_KEYEditer = BANK_KEYESP.edit()
-            BANK_KEYEditer.putString("BANK_KEY", TestingBankKeypref.getString("TestingBankKey", null))
+            BANK_KEYEditer.putString(
+                "BANK_KEY", TestingBankKeypref.getString(
+                    "TestingBankKey",
+                    null
+                )
+            )
             BANK_KEYEditer.commit()
         }else{
             val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -55,7 +75,7 @@ class SplashActivity : AppCompatActivity() {
             BASE_URLEditer.commit()
             val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
             val CERT_NAMEEditer = CERT_NAMESP.edit()
-            CERT_NAMEEditer.putString("CERT_NAME",CERT_NAME)
+            CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
             CERT_NAMEEditer.commit()
             val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
             val BANK_KEYEditer = BANK_KEYESP.edit()
@@ -69,92 +89,182 @@ class SplashActivity : AppCompatActivity() {
         when(Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 splashresellerActivityViewModel.getReseller(this)!!.observe(
-                        this,
-                        Observer { serviceSetterGetter ->
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    var jobj = jObject.getJSONObject("ResellerDetails")
-                                    val TestingURLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
-                                    val TestingURLEditer = TestingURLSP.edit()
-                                    TestingURLEditer.putString("TestingURL", jobj.getString("TestingURL"))
-                                    TestingURLEditer.commit()
-                                    val TestingMobileNoSP = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
-                                    val TestingMobileNoEditer = TestingMobileNoSP.edit()
-                                    TestingMobileNoEditer.putString("TestingMobileNo", jobj.getString("TestingMobileNo"))
-                                    TestingMobileNoEditer.commit()
-                                    val TestingBankKeySP = applicationContext.getSharedPreferences(Config.SHARED_PREF12, 0)
-                                    val TestingBankKeyEditer = TestingBankKeySP.edit()
-                                    TestingBankKeyEditer.putString("TestingBankKey", jobj.getString("BankKey"))
-                                    TestingBankKeyEditer.commit()
-                                    val TestingsslcertificateSP = applicationContext.getSharedPreferences(Config.SHARED_PREF13, 0)
-                                    val TestingsslcertificateEditer = TestingsslcertificateSP.edit()
-                                    TestingsslcertificateEditer.putString("Testingsslcertificate", jobj.getString("CertificateStatus"))
-                                    TestingsslcertificateEditer.commit()
-
-
-
-                                    val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
-                                    val TestingMobileNopref = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
-                                    val TestingBankKeypref = applicationContext.getSharedPreferences(Config.SHARED_PREF12, 0)
-                                    val Testingsslcertificatepref = applicationContext.getSharedPreferences(Config.SHARED_PREF13, 0)
-                                    val Loginmobilenumberpref = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
-                                    if(Loginmobilenumberpref.getString("Loginmobilenumber", null)!=null
-                                        && TestingURLpref.getString("TestingURL", null)!=null
-                                        && Testingsslcertificatepref.getString("Testingsslcertificate", null)!=null
-                                        && TestingBankKeypref.getString("TestingBankKey", null)!=null
-                                        && TestingMobileNopref.getString("TestingMobileNo", null).equals(Loginmobilenumberpref.getString("Loginmobilenumber", null))){
-                                        val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-                                        val BASE_URLEditer = BASE_URLSP.edit()
-                                        BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
-                                        BASE_URLEditer.commit()
-                                        val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-                                        val CERT_NAMEEditer = CERT_NAMESP.edit()
-                                        CERT_NAMEEditer.putString("CERT_NAME",Testingsslcertificatepref.getString("Testingsslcertificate", null))
-                                        CERT_NAMEEditer.commit()
-                                        val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-                                        val BANK_KEYEditer = BANK_KEYESP.edit()
-                                        BANK_KEYEditer.putString("BANK_KEY", TestingBankKeypref.getString("TestingBankKey", null))
-                                        BANK_KEYEditer.commit()
-                                    }else{
-                                        val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-                                        val BASE_URLEditer = BASE_URLSP.edit()
-                                        BASE_URLEditer.putString("BASE_URL", BASE_URL)
-                                        BASE_URLEditer.commit()
-                                        val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-                                        val CERT_NAMEEditer = CERT_NAMESP.edit()
-                                        CERT_NAMEEditer.putString("CERT_NAME",CERT_NAME)
-                                        CERT_NAMEEditer.commit()
-                                        val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-                                        val BANK_KEYEditer = BANK_KEYESP.edit()
-                                        BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
-                                        BANK_KEYEditer.commit()
-                                    }
-                                    doSplash()
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                            this@SplashActivity,
-                                            R.style.MyDialogTheme
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                var jobj = jObject.getJSONObject("ResellerDetails")
+                                val TestingURLSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF10,
+                                    0
+                                )
+                                val TestingURLEditer = TestingURLSP.edit()
+                                TestingURLEditer.putString(
+                                    "TestingURL",
+                                    jobj.getString("TestingURL")
+                                )
+                                TestingURLEditer.commit()
+                                val TestingMobileNoSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF11,
+                                    0
+                                )
+                                val TestingMobileNoEditer = TestingMobileNoSP.edit()
+                                TestingMobileNoEditer.putString(
+                                    "TestingMobileNo", jobj.getString(
+                                        "TestingMobileNo"
                                     )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+                                )
+                                TestingMobileNoEditer.commit()
+                                val TestingBankKeySP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF12,
+                                    0
+                                )
+                                val TestingBankKeyEditer = TestingBankKeySP.edit()
+                                TestingBankKeyEditer.putString(
+                                    "TestingBankKey", jobj.getString(
+                                        "BankKey"
+                                    )
+                                )
+                                TestingBankKeyEditer.commit()
+                                val TestingsslcertificateSP =
+                                    applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF13,
+                                        0
+                                    )
+                                val TestingsslcertificateEditer = TestingsslcertificateSP.edit()
+                                TestingsslcertificateEditer.putString(
+                                    "Testingsslcertificate", jobj.getString(
+                                        "CertificateStatus"
+                                    )
+                                )
+                                TestingsslcertificateEditer.commit()
+
+
+                                val TestingURLpref = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF10,
+                                    0
+                                )
+                                val TestingMobileNopref = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF11,
+                                    0
+                                )
+                                val TestingBankKeypref = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF12,
+                                    0
+                                )
+                                val Testingsslcertificatepref =
+                                    applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF13,
+                                        0
+                                    )
+                                val Loginmobilenumberpref = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF14,
+                                    0
+                                )
+                                if (Loginmobilenumberpref.getString(
+                                        "Loginmobilenumber",
+                                        null
+                                    ) != null
+                                    && TestingURLpref.getString("TestingURL", null) != null
+                                    && Testingsslcertificatepref.getString(
+                                        "Testingsslcertificate",
+                                        null
+                                    ) != null
+                                    && TestingBankKeypref.getString("TestingBankKey", null) != null
+                                    && TestingMobileNopref.getString("TestingMobileNo", null)
+                                        .equals(
+                                            Loginmobilenumberpref.getString(
+                                                "Loginmobilenumber",
+                                                null
+                                            )
+                                        )
+                                ) {
+                                    val BASE_URLSP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF7,
+                                        0
+                                    )
+                                    val BASE_URLEditer = BASE_URLSP.edit()
+                                    BASE_URLEditer.putString(
+                                        "BASE_URL", TestingURLpref.getString(
+                                            "TestingURL",
+                                            null
+                                        )
+                                    )
+                                    BASE_URLEditer.commit()
+                                    val CERT_NAMESP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF8,
+                                        0
+                                    )
+                                    val CERT_NAMEEditer = CERT_NAMESP.edit()
+                                    CERT_NAMEEditer.putString(
+                                        "CERT_NAME", Testingsslcertificatepref.getString(
+                                            "Testingsslcertificate",
+                                            null
+                                        )
+                                    )
+                                    CERT_NAMEEditer.commit()
+                                    val BANK_KEYESP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF9,
+                                        0
+                                    )
+                                    val BANK_KEYEditer = BANK_KEYESP.edit()
+                                    BANK_KEYEditer.putString(
+                                        "BANK_KEY", TestingBankKeypref.getString(
+                                            "TestingBankKey",
+                                            null
+                                        )
+                                    )
+                                    BANK_KEYEditer.commit()
+                                } else {
+                                    val BASE_URLSP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF7,
+                                        0
+                                    )
+                                    val BASE_URLEditer = BASE_URLSP.edit()
+                                    BASE_URLEditer.putString("BASE_URL", BASE_URL)
+                                    BASE_URLEditer.commit()
+                                    val CERT_NAMESP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF8,
+                                        0
+                                    )
+                                    val CERT_NAMEEditer = CERT_NAMESP.edit()
+                                    CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
+                                    CERT_NAMEEditer.commit()
+                                    val BANK_KEYESP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF9,
+                                        0
+                                    )
+                                    val BANK_KEYEditer = BANK_KEYESP.edit()
+                                    BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
+                                    BANK_KEYEditer.commit()
                                 }
+                                doSplash()
                             } else {
-                                Toast.makeText(
-                                        applicationContext,
-                                        "Some Technical Issues.",
-                                        Toast.LENGTH_LONG
-                                ).show()
+                                val builder = AlertDialog.Builder(
+                                    this@SplashActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                             }
-                        })
-                }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+            }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -166,7 +276,10 @@ class SplashActivity : AppCompatActivity() {
                     Thread.sleep((4 * 1000).toLong())
                     val Loginpref = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
                     val loginstatus =Loginpref.getString("loginsession", null)
-                    if (Loginpref.getString("loginsession", null) == null|| Loginpref.getString("loginsession", null)!!.isEmpty()) {
+                    if (Loginpref.getString("loginsession", null) == null|| Loginpref.getString(
+                            "loginsession",
+                            null
+                        )!!.isEmpty()) {
                         val i = Intent(this@SplashActivity, WelcomeSliderActivity::class.java)
                         startActivity(i)
                         finish()
