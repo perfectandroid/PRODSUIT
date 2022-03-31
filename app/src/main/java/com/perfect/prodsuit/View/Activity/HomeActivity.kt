@@ -31,6 +31,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
     private var llservice: LinearLayout? = null
+    private var ll_dashboard: LinearLayout? = null
     private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
@@ -72,9 +73,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         btn_menu = findViewById(R.id.btn_menu)
         lllead = findViewById(R.id.lllead)
         llservice = findViewById(R.id.llservice)
+        ll_dashboard = findViewById(R.id.ll_dashboard)
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
         llservice!!.setOnClickListener(this)
+        ll_dashboard!!.setOnClickListener(this)
         nav_view!!.setNavigationItemSelectedListener(this)
         nav_view!!.setItemIconTintList(null);
     }
@@ -94,6 +97,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.lllead -> {
                 val i = Intent(this@HomeActivity, LeadActivity::class.java)
+                startActivity(i)
+            }
+            R.id.ll_dashboard -> {
+//                https://github.com/PhilJay/MPAndroidChart
+                val i = Intent(this@HomeActivity, DashBoardActivity::class.java)
                 startActivity(i)
             }
         }
