@@ -28,9 +28,11 @@ public class ProdsuitApplication {
             Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key, iv);
             bout.write(cipher.doFinal(inputText.getBytes("ASCII")));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println("Exception .. " + e.getMessage());
         }
         return new String(Base64.encode(bout.toByteArray(), Base64.DEFAULT), "ASCII");
     }
+
 }

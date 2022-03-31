@@ -10,10 +10,8 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 

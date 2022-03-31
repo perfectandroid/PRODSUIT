@@ -20,7 +20,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
-import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
 import org.json.JSONObject
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -250,7 +249,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 etxt_confirmnewpin.setText("")
             }
             dialog1.show()
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -261,7 +261,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun changempinverficationcode(oldPin: String, newPin: String) {
-
         context = this@HomeActivity
         changempinViewModel = ViewModelProvider(this).get(ChangeMpinViewModel::class.java)
         strOldMPIN = oldPin
@@ -319,7 +318,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
-        }    }
+        }
+    }
 
     override fun onBackPressed() {
         quit()

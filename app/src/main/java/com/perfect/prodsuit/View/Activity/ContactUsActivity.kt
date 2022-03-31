@@ -55,8 +55,7 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
-    private fun sendMail(subject: String, msg: String)
-    {
+    private fun sendMail(subject: String, msg: String){
         val to = "pssappfeedback@gmail.com"
         val subject = subject
         val message = msg

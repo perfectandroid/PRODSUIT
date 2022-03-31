@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
@@ -19,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
-import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
 import org.json.JSONObject
 import javax.net.ssl.*
 
@@ -474,7 +472,6 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
 
     companion object {
         var strMPIN= ""

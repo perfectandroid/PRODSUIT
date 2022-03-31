@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/logoutsuccess"
+            android:src="@drawable/checkmark"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"/>
     </LinearLayout>

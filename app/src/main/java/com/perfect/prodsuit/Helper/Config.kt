@@ -28,6 +28,11 @@ object Config {
     const val SHARED_PREF7 = "BASE_URL"
     const val SHARED_PREF8 = "CERT_NAME"
     const val SHARED_PREF9 = "BANK_KEY"
+    const val SHARED_PREF10 = "TestingURL"
+    const val SHARED_PREF11 = "TestingMobileNo"
+    const val SHARED_PREF12 = "TestingBankKey"
+    const val SHARED_PREF13 = "Testingsslcertificate"
+    const val SHARED_PREF14 = "Loginmobilenumber"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
