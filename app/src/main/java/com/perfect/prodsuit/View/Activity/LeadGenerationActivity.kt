@@ -28,7 +28,6 @@ import androidx.core.content.ContextCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
 import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
 import org.json.JSONObject
 import java.io.*
@@ -95,12 +94,40 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             }
             R.id.llleadthrough->{
 
-                getLeadThrough()
+                getLeadThrough(v)
+            }
+
+            R.id.imgv_upload1->{
+                try
+                {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                    strImage="1"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
+            }
+            R.id.imgv_upload2->{
+                try {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                    strImage="2"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
             }
         }
     }
 
-    private fun getLeadThrough() {
+    private fun getLeadThrough(v: View) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -146,33 +173,6 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
                     .show()
             }
 
-            R.id.imgv_upload1->{
-                try
-                {
-                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
-                    strImage="1"
-                    showPictureDialog()
-                }
-                catch(e:java.lang.Exception)
-                {
-                    if (checkCamera()){} else{
-                        requestPermission()
-                    }
-                }
-            }
-            R.id.imgv_upload2->{
-                try {
-                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
-                    strImage="2"
-                    showPictureDialog()
-                }
-                catch(e:java.lang.Exception)
-                {
-                    if (checkCamera()){} else{
-                        requestPermission()
-                    }
-                }
-            }
         }
     }
 
