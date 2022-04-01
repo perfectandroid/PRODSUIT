@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -57,7 +58,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         val imback = findViewById<ImageView>(R.id.imback)
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         img_search = findViewById<ImageView>(R.id.img_search)
-        recyCustomer = findViewById<RecyclerView>(R.id.recyCustomer)
+     //   recyCustomer = findViewById<RecyclerView>(R.id.recyCustomer)
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
     }
@@ -108,13 +109,15 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
                                 if (customerArrayList.length()>0){
                                     Log.e(TAG,"msg   1052   "+msg)
-                                    val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
-                                    recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    recyCustomer!!.setHasFixedSize(true)
-                                    val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
-                                    recyCustomer!!.adapter = adapter
-                                    adapter.setClickListener(this@CustomerSearchActivity)
-                                    Log.e(TAG,"msg   10522   "+msg)
+//                                    val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
+//                                    recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                    recyCustomer!!.setHasFixedSize(true)
+//                                    val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
+//                                    recyCustomer!!.adapter = adapter
+//                                    adapter.setClickListener(this@CustomerSearchActivity)
+//                                    Log.e(TAG,"msg   10522   "+msg)
+
+                                    customerSearchPopup(customerArrayList)
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -142,6 +145,29 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun customerSearchPopup(customerArrayList: JSONArray) {
+        try {
+
+            val dialog2 = Dialog(this)
+            dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog2 .setContentView(R.layout.customersearch_popup)
+            dialog2.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyCustomer = dialog2 .findViewById(R.id.recyCustomer) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
+            recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
+            recyCustomer!!.adapter = adapter
+            adapter.setClickListener(this@CustomerSearchActivity)
+
+            dialog2.show()
+            dialog2.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
