@@ -25,4 +25,7 @@ interface ApiInterface {
     @POST("UserValidations/CustomerDetails")
     fun getCustomerDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AddNewCustomer")
+    fun addCustomerDetails(@Body body: RequestBody): Call<String>
+
 }
