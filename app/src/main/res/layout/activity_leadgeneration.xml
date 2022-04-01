@@ -529,6 +529,7 @@
                                         android:orientation="horizontal">
 
                                         <ImageView
+                                            android:id="@+id/imgv_upload1"
                                             android:layout_width="80dp"
                                             android:layout_height="80dp"
                                             android:layout_gravity="left"
@@ -540,6 +541,7 @@
                                             android:src="@drawable/uploadimg"/>
 
                                         <ImageView
+                                            android:id="@+id/imgv_upload2"
                                             android:layout_width="80dp"
                                             android:layout_height="80dp"
                                             android:layout_gravity="left"
