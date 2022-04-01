@@ -265,6 +265,7 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
+                                        android:id="@+id/txtleadthrough"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"

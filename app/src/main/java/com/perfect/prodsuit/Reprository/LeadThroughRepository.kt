@@ -13,6 +13,7 @@ import com.perfect.prodsuit.Model.CustomerSearchModel
 import com.perfect.prodsuit.Model.LeadThroughModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -76,8 +77,11 @@ object LeadThroughRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_LeadFrom))
+                //requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart("1"))
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"ID_LeadFrom   82   "+LeadGenerationActivity.ID_LeadFrom)
 
             } catch (e: Exception) {
                 e.printStackTrace()
