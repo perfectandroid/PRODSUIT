@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ import com.perfect.prodsuit.Adapter.CustomerAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.CustomerAddViewModel
 import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -35,13 +37,24 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var chipNavigationBar: ChipNavigationBar? = null
     var edt_customer: EditText? = null
     var img_search: ImageView? = null
+    var edt_name: EditText? = null
+    var edt_phone: EditText? = null
+    var edt_email: EditText? = null
+    var edt_address: EditText? = null
+    var btnSubmit: Button? = null
+    var btnReset: Button? = null
     var recyCustomer: RecyclerView? = null
     private var CUSTOMER_SEARCH: Int? = 101
     lateinit var customersearchViewModel: CustomerSearchViewModel
+    lateinit var customerAddViewModel: CustomerAddViewModel
     val TAG: String = "CustomerSearchRepository"
     lateinit var customerArrayList : JSONArray
     companion object {
         var strCustomer = ""
+        var strName = ""
+        var strEmail = ""
+        var strPhone = ""
+        var strAddress = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +62,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         setContentView(R.layout.activity_customer_search)
         context = this@CustomerSearchActivity
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
+        customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         setRegViews()
         bottombarnav()
     }
@@ -57,9 +71,20 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         val imback = findViewById<ImageView>(R.id.imback)
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         img_search = findViewById<ImageView>(R.id.img_search)
-        recyCustomer = findViewById<RecyclerView>(R.id.recyCustomer)
+
+        edt_name = findViewById<EditText>(R.id.edt_name)
+        edt_email = findViewById<EditText>(R.id.edt_email)
+        edt_phone = findViewById<EditText>(R.id.edt_phone)
+        edt_address = findViewById<EditText>(R.id.edt_address)
+
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
+     //   recyCustomer = findViewById<RecyclerView>(R.id.recyCustomer)
+
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -77,11 +102,106 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                     snackbar.show()
 
                     }else{
+                        getCustomerSearch()
                     }
                 }catch (e  :Exception){
                     Log.e("TAG","Exception  64   "+e.toString())
                 }
            }
+            R.id.btnReset->{
+                edt_name!!.setText("")
+                edt_email!!.setText("")
+                edt_phone!!.setText("")
+                edt_address!!.setText("")
+            }
+            R.id.btnSubmit->{
+               validations(v)
+            }
+        }
+    }
+
+    private fun validations(v: View) {
+
+        strName     =  edt_name!!.text.toString()
+        strEmail    =  edt_email!!.text.toString()
+        strPhone    =  edt_phone!!.text.toString()
+        strAddress  =  edt_address!!.text.toString()
+
+        if (strName.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Name", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strPhone.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Phone", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strEmail.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Email", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strAddress.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Address", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else{
+            addCustomer()
+        }
+
+    }
+
+    private fun addCustomer() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                customerAddViewModel.addCustomerApi(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1761   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@CustomerSearchActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -101,16 +221,21 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   105   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
                                 if (customerArrayList.length()>0){
-                                    val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
-                                    recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    recyCustomer!!.setHasFixedSize(true)
-                                    val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
-                                    recyCustomer!!.adapter = adapter
-                                    adapter.setClickListener(this@CustomerSearchActivity)
+                                    Log.e(TAG,"msg   1052   "+msg)
+//                                    val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
+//                                    recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                    recyCustomer!!.setHasFixedSize(true)
+//                                    val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
+//                                    recyCustomer!!.adapter = adapter
+//                                    adapter.setClickListener(this@CustomerSearchActivity)
+//                                    Log.e(TAG,"msg   10522   "+msg)
+
+                                    customerSearchPopup(customerArrayList)
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -138,6 +263,29 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun customerSearchPopup(customerArrayList: JSONArray) {
+        try {
+
+            val dialog2 = Dialog(this)
+            dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog2 .setContentView(R.layout.customersearch_popup)
+            dialog2.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyCustomer = dialog2 .findViewById(R.id.recyCustomer) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
+            recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
+            recyCustomer!!.adapter = adapter
+            adapter.setClickListener(this@CustomerSearchActivity)
+
+            dialog2.show()
+            dialog2.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -235,6 +383,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
             intent.putExtra("Email", jsonObject.getString("Email"))
             intent.putExtra("MobileNumber", jsonObject.getString("MobileNumber"))
             setResult(CUSTOMER_SEARCH!!, intent)
+            finish()
         }
     }
 

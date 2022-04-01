@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-
+                Log.e(TAG,"onBindViewHolder   1051   ")
                 holder.txtName.text        = jsonObject!!.getString("Name")
                 holder.txtEmail.text        = jsonObject!!.getString("Email")
                 holder.txtMobile.text     = jsonObject!!.getString("MobileNumber")
@@ -44,8 +45,9 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
 
                 })
             }
-        } catch (e: JSONException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            Log.e(TAG,"Exception   105   "+e.toString())
         }
 
     }
