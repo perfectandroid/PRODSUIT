@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -13,18 +14,26 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
+import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
+import org.json.JSONObject
 
 class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
 
+    val TAG : String = "LeadGenerationActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
+    private var llleadthrough: LinearLayout? = null
     private var txtcustomer: TextView? = null
     private var CUSTOMER_SEARCH: Int? = 101
+    lateinit var leadThroughViewModel: LeadThroughViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +41,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_leadgeneration)
         context = this@LeadGenerationActivity
+        leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         setRegViews()
         bottombarnav()
     }
@@ -39,9 +49,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
+        llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
+        llleadthrough!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -52,6 +64,58 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             R.id.llCustomer->{
                 val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
                 CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
+            }
+            R.id.llleadthrough->{
+
+                getLeadThrough()
+            }
+        }
+    }
+
+    private fun getLeadThrough() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadThroughViewModel.getLeadThrough(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   91   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

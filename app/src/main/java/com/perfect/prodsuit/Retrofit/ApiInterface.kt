@@ -28,4 +28,7 @@ interface ApiInterface {
     @POST("UserValidations/AddNewCustomer")
     fun addCustomerDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/LeadThroughDetails")
+    fun getLeadThrough(@Body body: RequestBody): Call<String>
+
 }
