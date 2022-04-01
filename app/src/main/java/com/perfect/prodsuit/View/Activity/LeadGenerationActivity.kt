@@ -1,12 +1,19 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -16,12 +23,15 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
 import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
 import org.json.JSONObject
+import java.io.*
 
 class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
 
@@ -35,6 +45,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
     private var CUSTOMER_SEARCH: Int? = 101
     lateinit var leadThroughViewModel: LeadThroughViewModel
 
+    private var imgvupload1: ImageView? = null
+    private var imgvupload2: ImageView? = null
+    private val GALLERY = 1
+    private val CAMERA = 2
+    private val PERMISSION_REQUEST_CODE = 200
+    private var strImage: String? = null
+    private var destination: File? = null
+    private var image1 = ""
+    private var image2 = ""
+    private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -44,6 +64,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         setRegViews()
         bottombarnav()
+
+
     }
 
     private fun setRegViews() {
@@ -54,6 +76,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
+
+        imgvupload1 = findViewById(R.id.imgv_upload1)
+        imgvupload2 = findViewById(R.id.imgv_upload2)
+
+        imgvupload1!!.setOnClickListener(this)
+        imgvupload2!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -116,6 +144,34 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
+            }
+
+            R.id.imgv_upload1->{
+                try
+                {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                    strImage="1"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
+            }
+            R.id.imgv_upload2->{
+                try {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                    strImage="2"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
             }
         }
     }
@@ -197,6 +253,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     finishAffinity()
                 }
+
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -210,6 +267,178 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener {
         if (requestCode == CUSTOMER_SEARCH){
             txtcustomer!!.text = data!!.getStringExtra("Name")
         }
+        if (requestCode == GALLERY) {
+            if (data != null) {
+                val contentURI = data!!.data
+                try {
+                    var selectedImageUri: Uri = data.getData()!!
+                    data.getData()
+                    if(strImage.equals("1")) {
+
+                        //   val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                        imgvupload1!!.setImageURI(contentURI)
+                        image1 = getRealPathFromURI(selectedImageUri)
+                        if (image1 != null) {
+                        }
+                    }
+                    if(strImage.equals("2")) {
+
+                        //  val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                        imgvupload2!!.setImageURI(contentURI)
+                        image2 = getRealPathFromURI(selectedImageUri)
+                        if (image2 != null) {
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        } else if (requestCode == CAMERA) {
+            try {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                }
+                else {
+
+                    val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                    val bytes = ByteArrayOutputStream()
+                    thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                    destination = File(
+                        (Environment.getExternalStorageDirectory()).toString() + "/" +
+                                getString(R.string.app_name),
+                        "IMG_" + System.currentTimeMillis() + ".jpg"
+                    )
+                    val fo: FileOutputStream
+
+                    try {
+                        if (!destination!!.getParentFile().exists()) {
+                            destination!!.getParentFile().mkdirs()
+                        }
+                        if (!destination!!.exists()) {
+                            destination!!.createNewFile()
+                        }
+                        fo = FileOutputStream(destination)
+                        fo.write(bytes.toByteArray())
+                        fo.close()
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                    if (strImage.equals("1")) {
+                        image1 = destination!!.getAbsolutePath()
+                        destination = File(image1)
+
+
+                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                        //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                        if (imgvupload1 != null) {
+                            imgvupload1!!.setImageBitmap(myBitmap)
+                        }
+                        imgvupload1!!.setImageBitmap(myBitmap)
+
+                        if (image1 != null) {
+
+                        }
+                    }
+                    if (strImage.equals("2")) {
+                        image2 = destination!!.getAbsolutePath()
+                        destination = File(image2)
+
+                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                        //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                        if (imgvupload2 != null) {
+                            imgvupload2!!.setImageBitmap(myBitmap)
+                        }
+                        imgvupload2!!.setImageBitmap(myBitmap)
+
+                        if (image2 != null) {
+
+                        }
+                    }
+
+                }
+            }
+            catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun choosePhotoFromGallary() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+    private fun showPictureDialog() {
+        val pictureDialog = AlertDialog.Builder(this)
+        pictureDialog.setTitle("Select From")
+        val pictureDialogItems = arrayOf("Gallery", "Camera")
+        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+            when (which) {
+                0 -> choosePhotoFromGallary()
+                1 -> takePhotoFromCamera()
+            }
+        }
+        pictureDialog.show()
     }
 
+    private fun checkCamera(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            return false;
+        }
+        return true;
+
+    }
+
+    private fun takePhotoFromCamera() {
+        val photo =  Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(photo, CAMERA)
+    }
+
+    private fun requestPermission() {
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf<String>(Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE)
+    }
+    fun getRealPathFromURI(uri: Uri): String {
+        var path = ""
+        if (getContentResolver() != null) {
+            val cursor = getContentResolver().query(uri, null, null, null, null)
+            if (cursor != null) {
+                cursor!!.moveToFirst()
+                val idx = cursor!!.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                path = cursor!!.getString(idx)
+                cursor!!.close()
+            }
+        }
+        return path
+    }
 }
