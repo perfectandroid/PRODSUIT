@@ -15,18 +15,26 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.BannerListViewModel
 import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
+import android.os.Handler
+import com.perfect.prodsuit.View.Adapter.BannerAdapter
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     lateinit var context: Context
     lateinit var changempinViewModel: ChangeMpinViewModel
+    lateinit var bannerListViewModel: BannerListViewModel
     private var progressDialog: ProgressDialog? = null
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
@@ -35,12 +43,20 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var ll_dashboard: LinearLayout? = null
     private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
+    private var mPager: ViewPager? = null
+  //  private var indicator: CircleIndicator? = null
+    private var currentPage = 0
+    public val XMENArray = ArrayList<String>()
+    var XMEN = intArrayOf(0)
+    var jArrayAccount: JSONArray? = null
+    var jArrayLang: JSONArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homemain)
         setRegViews()
         bottombarnav()
+        getBannerlist()
     }
 
     private fun bottombarnav() {
@@ -309,6 +325,90 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 alertDialog.setCancelable(false)
                                 alertDialog.show()
                             }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getBannerlist() {
+        context = this@HomeActivity
+        bannerListViewModel = ViewModelProvider(this).get(BannerListViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                bannerListViewModel.getBannerlist(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                           /* if (jObject.getString("StatusCode") == "0") {
+                                val jsonObj1: JSONObject =
+                                    jObject.getJSONObject("BannerDetails")
+                                val jsonobj2 = JSONObject(jsonObj1.toString())
+
+                                jresult = jsonobj2.getJSONArray("BannerDetailsList")
+
+                                for (i in 0 until jresult!!.length()) {
+                                    try {
+                                        val json = jresult!!.getJSONObject(i)
+
+                                        val ImageURLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF165, 0)
+                                        var s = ImageURLSP.getString("ImageURL", null) + json.getString("ImagePath")
+
+                                        XMENArray!!.add(s)
+                                        mPager!!.adapter = BannerAdapter(
+                                            this@HomeActivity,
+                                            XMENArray
+                                        )
+                                        indicator!!.setViewPager(mPager)
+                                        val handler = Handler()
+                                        val Update = Runnable {
+                                            if (currentPage === jresult!!.length()) {
+                                                currentPage = 0
+                                            }
+                                            mPager!!.setCurrentItem(currentPage++, true)
+                                        }
+                                        val swipeTimer = Timer()
+                                        swipeTimer.schedule(object : TimerTask() {
+                                            override fun run() {
+                                                handler.post(Update)
+                                            }
+                                        }, 3000, 3000)
+                                    } catch (e: JSONException) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            }
+                           else {
+                                val builder = AlertDialog.Builder(
+                                    this@HomeActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }*/
                         } else {
                             Toast.makeText(
                                 applicationContext,
