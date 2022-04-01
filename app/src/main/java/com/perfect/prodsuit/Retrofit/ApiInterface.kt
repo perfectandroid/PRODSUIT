@@ -31,4 +31,10 @@ interface ApiInterface {
     @POST("UserValidations/LeadThroughDetails")
     fun getLeadThrough(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/MaintenanceMessage")
+    fun getMaintenanceMessage(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/BannerDetails")
+    fun getBannerDetails(@Body body: RequestBody): Call<String>
+
 }
