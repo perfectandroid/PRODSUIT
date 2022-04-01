@@ -32,6 +32,7 @@ import com.perfect.prodsuit.Adapter.LeadThroughAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.LeadByViewModel
 import com.perfect.prodsuit.Viewmodel.LeadFromViewModel
 import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
 import org.json.JSONArray
@@ -47,12 +48,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llCustomer: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
+    private var llleadby: LinearLayout? = null
+
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
+    private var txtleadby: TextView? = null
+
     private var CUSTOMER_SEARCH: Int? = 101
+
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
+    lateinit var leadByViewModel: LeadByViewModel
 
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
@@ -89,6 +96,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
+        leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
 
         setRegViews()
         bottombarnav()
@@ -101,13 +109,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
+        llleadby = findViewById<LinearLayout>(R.id.llleadby)
+
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
+        txtleadby = findViewById<TextView>(R.id.txtleadby)
+
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
+        llleadby!!.setOnClickListener(this)
 
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
@@ -171,7 +184,76 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     }
                 }
             }
+
+            R.id.llleadby->{
+
+
+                getLeadBy(v)
+
+            }
         }
+    }
+
+    private fun getLeadBy(v: View) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadByViewModel.getLeadBy(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   217   "+msg.length)
+                            Log.e(TAG,"msg   217   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
+//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
+//                                if (leadFromArrayList.length()>0){
+////                                    if (countLeadFrom == 0){
+////                                        countLeadFrom++
+////                                        leadFromPopup(leadFromArrayList)
+////                                    }
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
     private fun getLeadFrom(v: View) {

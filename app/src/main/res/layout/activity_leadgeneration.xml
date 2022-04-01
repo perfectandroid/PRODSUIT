@@ -393,6 +393,7 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                             <LinearLayout
+                                android:id="@+id/llleadby"
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_marginLeft="10dp"
@@ -429,6 +430,7 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
+                                        android:id="@+id/txtleadby"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
