@@ -285,6 +285,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/llLeadFrom"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="10dp"
@@ -321,6 +322,7 @@
                             android:fontFamily="@font/myfont" />
 
                         <TextView
+                            android:id="@+id/txtleadfrom"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
