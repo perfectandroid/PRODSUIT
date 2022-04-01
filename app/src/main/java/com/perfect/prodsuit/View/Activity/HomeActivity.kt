@@ -28,6 +28,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import android.os.Handler
+import com.perfect.prodsuit.View.Adapter.BannerAdapter
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -370,11 +371,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                         val json = jresult!!.getJSONObject(i)
 
                                         val ImageURLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF165, 0)
-                                        // var s = "https://202.164.150.65:14262/NbfcAndroidAPI" + json.getString("ImagePath")
                                         var s = ImageURLSP.getString("ImageURL", null) + json.getString("ImagePath")
 
                                         XMENArray!!.add(s)
-                                        mPager!!.adapter = BannerAdapter1(
+                                        mPager!!.adapter = BannerAdapter(
                                             this@HomeActivity,
                                             XMENArray
                                         )
