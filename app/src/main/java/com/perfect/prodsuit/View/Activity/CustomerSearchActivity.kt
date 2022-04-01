@@ -77,6 +77,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                     snackbar.show()
 
                     }else{
+                        getCustomerSearch()
                     }
                 }catch (e  :Exception){
                     Log.e("TAG","Exception  64   "+e.toString())
@@ -101,16 +102,19 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   105   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
                                 if (customerArrayList.length()>0){
+                                    Log.e(TAG,"msg   1052   "+msg)
                                     val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
                                     recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                     recyCustomer!!.setHasFixedSize(true)
                                     val adapter = CustomerAdapter(this@CustomerSearchActivity, customerArrayList)
                                     recyCustomer!!.adapter = adapter
                                     adapter.setClickListener(this@CustomerSearchActivity)
+                                    Log.e(TAG,"msg   10522   "+msg)
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -235,6 +239,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
             intent.putExtra("Email", jsonObject.getString("Email"))
             intent.putExtra("MobileNumber", jsonObject.getString("MobileNumber"))
             setResult(CUSTOMER_SEARCH!!, intent)
+            finish()
         }
     }
 
