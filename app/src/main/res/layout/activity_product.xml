@@ -248,7 +248,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/img_search"
                         android:background="@drawable/shape_bg"
-                        android:drawableRight="@drawable/arrow_down"
+                        android:drawableRight="@drawable/calendar_icon"
                         android:editable="false"
                         android:hint="Follow up date"
                         android:layout_marginTop="10dp"

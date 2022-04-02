@@ -34,6 +34,13 @@ import com.perfect.prodsuit.Viewmodel.ProductPriorityViewModel
 import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.widget.TextView
+import java.util.*
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
+import java.text.SimpleDateFormat
+
 
 class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
 
@@ -46,6 +53,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_product: EditText? = null
     var edt_status: EditText? = null
     var edt_priority: EditText? = null
+    var edt_date: EditText? = null
 
     var img_search: ImageView? = null
 
@@ -110,6 +118,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_product = findViewById<EditText>(R.id.edt_product)
         edt_status = findViewById<EditText>(R.id.edt_status)
         edt_priority = findViewById<EditText>(R.id.edt_priority)
+        edt_date = findViewById<EditText>(R.id.edt_date)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
 
@@ -120,6 +129,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_product!!.setOnClickListener(this)
         edt_status!!.setOnClickListener(this)
         edt_priority!!.setOnClickListener(this)
+        edt_date!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -170,10 +180,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
                 getProductStatus()
             }
+            R.id.edt_date->{
+
+                datePickerPopup()
+
+            }
         }
     }
-
-
 
 
     private fun getCategory() {
@@ -505,6 +518,64 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
 
+    private fun datePickerPopup() {
+        try {
+
+            val dialogDate = Dialog(this)
+            dialogDate!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDate!! .setContentView(R.layout.dialog_datepicker)
+            dialogDate!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogDate.setCancelable(false)
+
+            val date_Picker = dialogDate!! .findViewById(R.id.date_Picker) as DatePicker
+            val txtcancel = dialogDate!! .findViewById(R.id.txtcancel) as TextView
+            val txtok = dialogDate!! .findViewById(R.id.txtok) as TextView
+
+            txtok.setOnClickListener {
+                dialogDate.dismiss()
+//                val today = Calendar.getInstance()
+//                date_Picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+//                    today.get(Calendar.DAY_OF_MONTH)
+//
+//                ) { view, year, month, day ->
+//                    val month = month + 1
+//                    val msg = "You Selected: $day/$month/$year"
+//                    Toast.makeText(this@ProductActivity, msg, Toast.LENGTH_SHORT).show()
+//                }
+
+                val day: Int = date_Picker.getDayOfMonth()
+                val mon: Int = date_Picker.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker.getYear()
+
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                edt_date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+
+            }
+
+            txtcancel.setOnClickListener {
+                dialogDate.dismiss()
+            }
+
+            dialogDate!!.show()
+           // dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         chipNavigationBar!!.setItemSelected(R.id.home, true)
@@ -624,6 +695,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             if (jsonObject.getString("ID_Status").equals("1")){
                 llfollowup!!.visibility  =View.VISIBLE
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                edt_date!!.setText(currentDate)
             }else{
                 llfollowup!!.visibility  =View.GONE
             }
