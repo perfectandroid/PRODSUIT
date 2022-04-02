@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -19,15 +20,21 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.prodsuit.Adapter.LeadByAdapter
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
+import org.json.JSONArray
 import org.json.JSONObject
 
-class ProductActivity : AppCompatActivity()  , View.OnClickListener{
+class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
 
     val TAG: String = "ProductActivity"
     lateinit var context: Context
@@ -39,11 +46,21 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
 
     var img_search: ImageView? = null
 
+    var recyProdCategory: RecyclerView? = null
+
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
 
 
     var strProdName : String = ""
+    lateinit var prodCategoryArrayList : JSONArray
+
+    private var dialogProdCat : Dialog? = null
+
+    companion object {
+        var ID_Category : String?= ""
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +110,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
     }
 
     private fun getCategory() {
+        var prodcategory = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -109,7 +127,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   82   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+                                if (prodCategoryArrayList.length()>0){
+                                    if (prodcategory == 0){
+                                        prodcategory++
+                                        productCategoryPopup(prodCategoryArrayList)
+                                    }
 
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -136,6 +162,29 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun productCategoryPopup(prodCategoryArrayList: JSONArray) {
+        try {
+
+            dialogProdCat = Dialog(this)
+            dialogProdCat!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdCat!! .setContentView(R.layout.product_category_popup)
+            dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdCategory = dialogProdCat!! .findViewById(R.id.recyProdCategory) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductCategoryAdapter(this@ProductActivity, prodCategoryArrayList)
+            recyProdCategory!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogProdCat!!.show()
+            dialogProdCat!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -271,6 +320,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
             dialog1.show()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("prodcategory")){
+            dialogProdCat!!.dismiss()
+            val jsonObject = prodCategoryArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
+            ID_Category = jsonObject.getString("ID_Category")
+            edt_category!!.setText(jsonObject.getString("CategoryName"))
         }
     }
 }

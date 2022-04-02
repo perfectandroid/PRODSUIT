@@ -43,5 +43,8 @@ interface ApiInterface {
     @POST("UserValidations/CollectedByUsers")
     fun getLeadBy(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CategoryDetails")
+    fun getProductcategory(@Body body: RequestBody): Call<String>
+
 
 }
