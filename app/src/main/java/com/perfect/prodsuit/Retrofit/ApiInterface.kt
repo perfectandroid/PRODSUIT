@@ -40,4 +40,8 @@ interface ApiInterface {
     @POST("UserValidations/BannerDetails")
     fun getBannerDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CollectedByUsers")
+    fun getLeadBy(@Body body: RequestBody): Call<String>
+
+
 }

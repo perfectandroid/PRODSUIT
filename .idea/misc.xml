@@ -10,10 +10,12 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.26979166666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_from.xml" value="0.18489583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.2869791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.19444444444444445" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.26979166666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_from_popup.xml" value="0.18489583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_through_popup.xml" value="0.2869791666666667" />
       </map>

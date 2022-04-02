@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.prodsuit.Adapter.LeadByAdapter
 import com.perfect.prodsuit.Adapter.LeadFromAdapter
 import com.perfect.prodsuit.Adapter.LeadThroughAdapter
 import com.perfect.prodsuit.Helper.Config
@@ -65,6 +66,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
+    var recyLeadby: RecyclerView? = null
 
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
@@ -78,14 +80,17 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     lateinit var leadFromArrayList : JSONArray
     lateinit var leadThroughArrayList : JSONArray
+    lateinit var leadByArrayList : JSONArray
 
 
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
+    var dialogLeadBy : Dialog? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
+        var ID_CollectedBy : String?= ""
     }
 
 
@@ -208,6 +213,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private fun getLeadBy(v: View) {
 
+        var countLeadBy = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -224,18 +230,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         if (msg!!.length > 0) {
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   217   "+msg.length)
-                            Log.e(TAG,"msg   217   "+msg)
+                            Log.e(TAG,"msg   228   "+msg.length)
+                            Log.e(TAG,"msg   228   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-////                                    if (countLeadFrom == 0){
-////                                        countLeadFrom++
-////                                        leadFromPopup(leadFromArrayList)
-////                                    }
-//
-//                                }
+
+                                val jobjt = jObject.getJSONObject("CollectedByUsersList")
+                                leadByArrayList = jobjt.getJSONArray("CollectedByUsers")
+                                if (leadByArrayList.length()>0){
+                                    if (countLeadBy == 0){
+                                        countLeadBy++
+                                        leadByPopup(leadByArrayList)
+                                    }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -266,6 +273,30 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         }
 
+    }
+
+    private fun leadByPopup(leadByArrayList: JSONArray) {
+
+        try {
+
+            dialogLeadBy = Dialog(this)
+            dialogLeadBy!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogLeadBy!! .setContentView(R.layout.lead_by_popup)
+            dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadby = dialogLeadBy!! .findViewById(R.id.recyLeadby) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recyLeadby!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+            recyLeadby!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogLeadBy!!.show()
+            dialogLeadBy!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getLeadFrom(v: View) {
@@ -720,6 +751,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Log.e(TAG,"ID_LeadThrough   "+jsonObject.getString("ID_LeadThrough"))
             ID_LeadThrough = jsonObject.getString("ID_LeadThrough")
             txtleadthrough!!.text = jsonObject.getString("LeadThroughName")
+
+        }
+
+        if (data.equals("leadby")){
+            dialogLeadBy!!.dismiss()
+            val jsonObject = leadByArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_CollectedBy   "+jsonObject.getString("ID_CollectedBy"))
+            ID_CollectedBy = jsonObject.getString("ID_CollectedBy")
+            txtleadby!!.text = jsonObject.getString("Name")
 
         }
     }
