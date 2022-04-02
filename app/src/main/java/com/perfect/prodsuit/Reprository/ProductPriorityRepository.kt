@@ -60,21 +60,22 @@ object ProductPriorityRepository {
 
             try {
 
-//                "ReqMode":"14",
+
+//                "ReqMode":"16",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_Category:"1"
+//                "Token":sfdsgdgdg
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("16"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
+                Log.e(TAG,"requestObject1   78   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -84,7 +85,7 @@ object ProductPriorityRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductDetail(body)
+            val call = apiService.getProductPriority(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

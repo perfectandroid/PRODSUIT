@@ -77,6 +77,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
+        var ID_Priority : String?= ""
         var strProdName : String = ""
     }
 
@@ -93,6 +94,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_Category = ""
         ID_Product = ""
         ID_Status = ""
+        ID_Priority = ""
         strProdName = ""
 
         setRegViews()
@@ -161,7 +163,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
             R.id.edt_priority->{
 
-            //    getProductPriority()
+                getProductPriority()
             }
 
             R.id.edt_status->{
@@ -356,15 +358,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             Log.e(TAG,"msg   353   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("ProductDetailsList")
-//                                prodPriorityArrayList = jobjt.getJSONArray("ProductList")
-//                                if (prodPriorityArrayList.length()>0){
-//                                    if (prodpriority == 0){
-//                                        prodpriority++
-//                                        productPriorityPopup(prodPriorityArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("PriorityDetailsList")
+                                prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
+                                if (prodPriorityArrayList.length()>0){
+                                    if (prodpriority == 0){
+                                        prodpriority++
+                                        productPriorityPopup(prodPriorityArrayList)
+                                    }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -401,7 +403,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             dialogProdPriority = Dialog(this)
             dialogProdPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogProdPriority!! .setContentView(R.layout.product_status_popup)
+            dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
             dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
 
@@ -603,13 +605,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             ID_Product = jsonObject.getString("ID_Product")
             edt_product!!.setText(jsonObject.getString("ProductName"))
         }
-
         if (data.equals("prodpriority")){
             dialogProdPriority!!.dismiss()
             val jsonObject = prodPriorityArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-//            ID_Status = jsonObject.getString("ID_Status")
-//            edt_status!!.setText(jsonObject.getString("StatusName"))
+            Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
+            ID_Priority = jsonObject.getString("ID_Priority")
+            edt_priority!!.setText(jsonObject.getString("PriorityName"))
 
 
         }

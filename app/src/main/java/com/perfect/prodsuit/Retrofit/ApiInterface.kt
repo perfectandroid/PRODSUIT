@@ -49,6 +49,9 @@ interface ApiInterface {
     @POST("UserValidations/ProductDetails")
     fun getProductDetail(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/PriorityDetails")
+    fun getProductPriority(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/StatusDetails")
     fun getProductStatus(@Body body: RequestBody): Call<String>
 

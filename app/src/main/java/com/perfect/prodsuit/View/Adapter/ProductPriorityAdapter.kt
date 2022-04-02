@@ -36,7 +36,7 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtpriority.text        = jsonObject!!.getString("StatusName")
+                holder.txtpriority.text        = jsonObject!!.getString("PriorityName")
 
                 if (position % 2 == 0){
                     holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
