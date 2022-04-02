@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/leadgenerartionbd"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -60,6 +60,201 @@
                     android:tint="@color/black"
                     tools:ignore="UseAppTint"
                     android:visibility="invisible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/edt_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Category"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/shape_bg"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/edt_product"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@+id/img_search"
+                                android:background="@android:color/transparent"
+                                android:hint="Product"
+                                android:padding="10dp"
+                                android:singleLine="true"
+                                android:text="" />
+
+                            <ImageView
+                                android:id="@+id/img_search"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/ic_search"
+                                android:backgroundTint="@color/greydark"
+                                android:padding="5dp" />
+
+
+                        </RelativeLayout>
+
+                        <EditText
+                            android:id="@+id/edt_qty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:layout_toLeftOf="@+id/img_search"
+                            android:layout_weight="3.5"
+                            android:background="@drawable/shape_bg"
+                            android:hint="Qty"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="10dp"
+                            android:singleLine="true"
+                            android:text="" />
+
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Priority"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <EditText
+                        android:id="@+id/edt_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:hint="Feedback"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <EditText
+                        android:id="@+id/edt_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Status"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Follow Up"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/myfont" />
+
+                    <EditText
+                        android:id="@+id/edt_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Follow up action"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <EditText
+                        android:id="@+id/edt_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Follow up type"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <EditText
+                        android:id="@+id/edt_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/img_search"
+                        android:background="@drawable/shape_bg"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:editable="false"
+                        android:hint="Follow up date"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
 
