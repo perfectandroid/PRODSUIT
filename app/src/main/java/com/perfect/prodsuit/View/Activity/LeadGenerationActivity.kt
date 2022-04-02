@@ -59,6 +59,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtproduct: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
+    private var SELECT_PRODUCT: Int? = 102
 
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
@@ -145,8 +146,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 finish()
             }
             R.id.llCustomer->{
+//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
+//                CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
                 val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-                CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
+                startActivityForResult(intent, CUSTOMER_SEARCH!!);
             }
             R.id.llleadthrough->{
 
@@ -205,7 +208,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             R.id.llproduct->{
 
 
-                getLeadBy(v)
+                val intent = Intent(this@LeadGenerationActivity, ProductActivity::class.java)
+                startActivityForResult(intent, SELECT_PRODUCT!!);
 
             }
         }
