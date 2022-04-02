@@ -107,6 +107,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@+id/img_search"
                                 android:background="@android:color/transparent"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:editable="false"
                                 android:hint="Product"
                                 android:padding="10dp"
                                 android:singleLine="true"
@@ -121,7 +123,8 @@
                                 android:layout_marginRight="5dp"
                                 android:background="@drawable/ic_search"
                                 android:backgroundTint="@color/greydark"
-                                android:padding="5dp" />
+                                android:padding="5dp"
+                                android:visibility="gone"/>
 
 
                         </RelativeLayout>

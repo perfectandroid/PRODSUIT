@@ -29,6 +29,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
+import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
 import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import org.json.JSONArray
@@ -47,18 +48,23 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var img_search: ImageView? = null
 
     var recyProdCategory: RecyclerView? = null
+    var recyProdDetail: RecyclerView? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
 
 
-    var strProdName : String = ""
+
     lateinit var prodCategoryArrayList : JSONArray
+    lateinit var prodDetailArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
+    private var dialogProdDet : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
+        var ID_Product : String?= ""
+        var strProdName : String = ""
     }
 
 
@@ -67,8 +73,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         setContentView(R.layout.activity_product)
         context = this@ProductActivity
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+
+        ID_Category = ""
+        ID_Product = ""
+        strProdName = ""
+
         setRegViews()
         bottombarnav()
+
     }
 
     private fun setRegViews() {
@@ -96,8 +109,27 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
             R.id.img_search->{
                 strProdName = edt_product!!.text.toString()
-                if (strProdName.equals("")){
+                if (ID_Category.equals("")){
+                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
+                    snackbar.setActionTextColor(Color.WHITE)
+                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                    snackbar.show()
+
+                }
+                else if (strProdName.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Enter Product", Snackbar.LENGTH_LONG)
+                    snackbar.setActionTextColor(Color.WHITE)
+                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                    snackbar.show()
+
+                }
+                else{
+                    getProductDetail(strProdName)
+                }
+            }
+            R.id.edt_product->{
+                if (ID_Category.equals("")){
+                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
@@ -189,7 +221,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun getProductDetail(strProdName: String) {
-
+        var proddetail = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -204,8 +236,18 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   158   "+msg)
+                            Log.e(TAG,"msg   227   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                if (prodDetailArrayList.length()>0){
+                                    if (proddetail == 0){
+                                        proddetail++
+                                        productDetailPopup(prodDetailArrayList)
+                                    }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -237,6 +279,30 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     }
 
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!! .setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductDetailAdapter(this@ProductActivity, prodDetailArrayList)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 
 
     private fun bottombarnav() {
@@ -331,5 +397,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             ID_Category = jsonObject.getString("ID_Category")
             edt_category!!.setText(jsonObject.getString("CategoryName"))
         }
+
+        if (data.equals("proddetails")){
+            dialogProdDet!!.dismiss()
+            val jsonObject = prodDetailArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
+            ID_Product = jsonObject.getString("ID_Product")
+            edt_product!!.setText(jsonObject.getString("ProductName"))
+        }
     }
+
+
 }
