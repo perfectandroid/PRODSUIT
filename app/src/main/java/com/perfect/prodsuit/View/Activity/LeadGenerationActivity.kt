@@ -563,7 +563,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
         if (requestCode == CUSTOMER_SEARCH){
-            txtcustomer!!.text = data!!.getStringExtra("Name")
+            if (data!=null){
+                txtcustomer!!.text = data!!.getStringExtra("Name")
+            }
+
         }
         if (requestCode == GALLERY) {
             if (data != null) {
