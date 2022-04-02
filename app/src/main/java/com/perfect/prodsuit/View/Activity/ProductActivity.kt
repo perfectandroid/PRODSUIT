@@ -14,10 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,6 +45,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_status: EditText? = null
 
     var img_search: ImageView? = null
+
+    var llfollowup: LinearLayout? = null
 
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
@@ -95,12 +94,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        img_search = findViewById<ImageView>(R.id.img_search)
 
         edt_category = findViewById<EditText>(R.id.edt_category)
         edt_product = findViewById<EditText>(R.id.edt_product)
         edt_status = findViewById<EditText>(R.id.edt_status)
 
-        img_search = findViewById<ImageView>(R.id.img_search)
+        llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -512,6 +512,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
             edt_status!!.setText(jsonObject.getString("StatusName"))
+
+            if (jsonObject.getString("ID_Status").equals("1")){
+                llfollowup!!.visibility  =View.VISIBLE
+            }else{
+                llfollowup!!.visibility  =View.GONE
+            }
         }
     }
 
