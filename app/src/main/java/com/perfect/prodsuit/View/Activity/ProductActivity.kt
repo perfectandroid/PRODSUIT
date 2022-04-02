@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -7,26 +8,38 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
+import org.json.JSONObject
 
 class ProductActivity : AppCompatActivity()  , View.OnClickListener{
 
+    val TAG: String = "ProductActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
+
+    var edt_category: EditText? = null
+
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
         context = this@ProductActivity
-
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         setRegViews()
         bottombarnav()
     }
@@ -34,13 +47,66 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener{
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
 
+        edt_category = findViewById<EditText>(R.id.edt_category)
+
         imback!!.setOnClickListener(this)
+        edt_category!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.edt_category->{
+               getCategory()
+            }
+        }
+    }
+
+    private fun getCategory() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
