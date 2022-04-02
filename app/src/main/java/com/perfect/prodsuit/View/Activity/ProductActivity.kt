@@ -24,14 +24,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.Adapter.LeadByAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
+import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
 import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
+import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -44,26 +45,32 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     var edt_category: EditText? = null
     var edt_product: EditText? = null
+    var edt_status: EditText? = null
 
     var img_search: ImageView? = null
 
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
+    var recyProdStatus: RecyclerView? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var productStatusViewModel: ProductStatusViewModel
 
 
 
     lateinit var prodCategoryArrayList : JSONArray
     lateinit var prodDetailArrayList : JSONArray
+    lateinit var prodStatusArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
+    private var dialogProdStatus : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
         var ID_Product : String?= ""
+        var ID_Status : String?= ""
         var strProdName : String = ""
     }
 
@@ -74,9 +81,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         context = this@ProductActivity
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
+        ID_Status = ""
         strProdName = ""
 
         setRegViews()
@@ -89,6 +98,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
         edt_category = findViewById<EditText>(R.id.edt_category)
         edt_product = findViewById<EditText>(R.id.edt_product)
+        edt_status = findViewById<EditText>(R.id.edt_status)
 
         img_search = findViewById<ImageView>(R.id.img_search)
 
@@ -97,6 +107,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
         edt_category!!.setOnClickListener(this)
         edt_product!!.setOnClickListener(this)
+        edt_status!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -138,8 +149,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     getProductDetail(strProdName)
                 }
             }
+
+            R.id.edt_status->{
+
+                getProductStatus()
+            }
         }
     }
+
+
 
     private fun getCategory() {
         var prodcategory = 0
@@ -304,6 +322,88 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     }
 
+    private fun getProductStatus() {
+        var prodstatus = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productStatusViewModel.getProductStatus(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   333   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                if (prodStatusArrayList.length()>0){
+                                    if (prodstatus == 0){
+                                        prodstatus++
+                                        productStatusPopup(prodStatusArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productStatusPopup(prodStatusArrayList: JSONArray) {
+
+        try {
+
+            dialogProdStatus = Dialog(this)
+            dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdStatus!! .setContentView(R.layout.product_status_popup)
+            dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductStatusAdapter(this@ProductActivity, prodStatusArrayList)
+            recyProdStatus!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogProdStatus!!.show()
+            dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -404,6 +504,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
             ID_Product = jsonObject.getString("ID_Product")
             edt_product!!.setText(jsonObject.getString("ProductName"))
+        }
+
+        if (data.equals("prodstatus")){
+            dialogProdStatus!!.dismiss()
+            val jsonObject = prodStatusArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+            ID_Status = jsonObject.getString("ID_Status")
+            edt_status!!.setText(jsonObject.getString("StatusName"))
         }
     }
 
