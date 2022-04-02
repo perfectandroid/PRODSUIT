@@ -49,11 +49,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
+    private var llproduct: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
     private var txtleadby: TextView? = null
+    private var txtproduct: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
 
@@ -110,17 +112,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
+        llproduct = findViewById<LinearLayout>(R.id.llproduct)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
         txtleadby = findViewById<TextView>(R.id.txtleadby)
+        txtproduct = findViewById<TextView>(R.id.txtproduct)
 
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
+        llproduct!!.setOnClickListener(this)
 
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
@@ -186,6 +191,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.llleadby->{
+
+
+                getLeadBy(v)
+
+            }
+
+            R.id.llproduct->{
 
 
                 getLeadBy(v)
