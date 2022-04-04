@@ -31,6 +31,9 @@ interface ApiInterface {
     @POST("UserValidations/LeadThroughDetails")
     fun getLeadThrough(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/MediaTypeDetails")
+    fun getMediType(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/LeadFromDetailsList")
     fun getLeadFrom(@Body body: RequestBody): Call<String>
 
