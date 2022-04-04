@@ -46,6 +46,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_priority: EditText? = null
     var edt_date: EditText? = null
     var edt_action: EditText? = null
+    var edt_type: EditText? = null
 
     var img_search: ImageView? = null
 
@@ -61,6 +62,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var followUpActionViewModel: FollowUpActionViewModel
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
 
 
 
@@ -94,6 +96,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -116,6 +119,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_priority = findViewById<EditText>(R.id.edt_priority)
         edt_date = findViewById<EditText>(R.id.edt_date)
         edt_action = findViewById<EditText>(R.id.edt_action)
+        edt_type = findViewById<EditText>(R.id.edt_type)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
 
@@ -128,6 +132,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_priority!!.setOnClickListener(this)
         edt_date!!.setOnClickListener(this)
         edt_action!!.setOnClickListener(this)
+        edt_type!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -186,6 +191,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             R.id.edt_action->{
 
               //  getFollowupAction()
+            }
+            R.id.edt_type->{
+
+                  getFollowupType()
             }
         }
     }
@@ -544,6 +553,62 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 //                                if (prodCategoryArrayList.length()>0){
 //                                    if (followUpAction == 0){
 //                                        followUpAction++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getFollowupType() {
+        var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
+//                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (followUpType == 0){
+//                                        followUpType++
 //                                        productCategoryPopup(prodCategoryArrayList)
 //                                    }
 //
