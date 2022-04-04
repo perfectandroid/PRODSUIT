@@ -20,22 +20,13 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
-import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
-import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
-import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
-import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
-import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
-import com.perfect.prodsuit.Viewmodel.ProductPriorityViewModel
-import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.view.*
 import android.widget.TextView
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import java.util.*
-import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import java.text.SimpleDateFormat
 
 
@@ -51,20 +42,29 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_status: EditText? = null
     var edt_priority: EditText? = null
     var edt_date: EditText? = null
+    var edt_action: EditText? = null
+    var edt_type: EditText? = null
 
     var img_search: ImageView? = null
 
     var llfollowup: LinearLayout? = null
+    var llNeedTransfer: LinearLayout? = null
 
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
     var recyProdStatus: RecyclerView? = null
     var recyProdPriority: RecyclerView? = null
+    var recyFollowupAction: RecyclerView? = null
+    var recyFollowupType: RecyclerView? = null
+
+    var switchTransfer: Switch? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var productPriorityViewModel: ProductPriorityViewModel
+    lateinit var followUpActionViewModel: FollowUpActionViewModel
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
 
 
 
@@ -72,11 +72,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var prodDetailArrayList : JSONArray
     lateinit var prodStatusArrayList : JSONArray
     lateinit var prodPriorityArrayList : JSONArray
+    lateinit var followUpActionArrayList : JSONArray
+    lateinit var followUpTypeArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
     private var dialogProdStatus : Dialog? = null
     private var dialogProdPriority : Dialog? = null
+    private var dialogFollowupAction : Dialog? = null
+    private var dialogFollowupType : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -84,6 +88,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_Status : String?= ""
         var ID_Priority : String?= ""
         var strProdName : String = ""
+        var ID_NextAction : String = ""
+        var ID_ActionType : String = ""
     }
 
 
@@ -97,15 +103,28 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
+        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
         ID_Status = ""
         ID_Priority = ""
         strProdName = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
 
         setRegViews()
         bottombarnav()
+
+        switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                llNeedTransfer!!.visibility = View.VISIBLE
+            } else {
+
+                llNeedTransfer!!.visibility = View.GONE
+            }
+        }
 
     }
 
@@ -118,8 +137,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_status = findViewById<EditText>(R.id.edt_status)
         edt_priority = findViewById<EditText>(R.id.edt_priority)
         edt_date = findViewById<EditText>(R.id.edt_date)
+        edt_action = findViewById<EditText>(R.id.edt_action)
+        edt_type = findViewById<EditText>(R.id.edt_type)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
+        switchTransfer = findViewById<Switch>(R.id.switchTransfer)
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -129,6 +152,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_status!!.setOnClickListener(this)
         edt_priority!!.setOnClickListener(this)
         edt_date!!.setOnClickListener(this)
+        edt_action!!.setOnClickListener(this)
+        edt_type!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -184,8 +209,18 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 datePickerPopup()
 
             }
+            R.id.edt_action->{
+
+                getFollowupAction()
+            }
+            R.id.edt_type->{
+
+                  getFollowupType()
+            }
         }
     }
+
+
 
 
     private fun getCategory() {
@@ -516,6 +551,168 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         }
     }
 
+    private fun getFollowupAction() {
+        var followUpAction = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpActionViewModel.getFollowupAction(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                if (followUpActionArrayList.length()>0){
+                                    if (followUpAction == 0){
+                                        followUpAction++
+                                        followUpActionPopup(followUpActionArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupAction = Dialog(this)
+            dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupAction!! .setContentView(R.layout.followup_action)
+            dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupActionAdapter(this@ProductActivity, followUpActionArrayList)
+            recyFollowupAction!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogFollowupAction!!.show()
+            dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getFollowupType() {
+        var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followUpTypeArrayList.length()>0){
+                                    if (followUpType == 0){
+                                        followUpType++
+                                        followupTypePopup(followUpTypeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupTypeAdapter(this@ProductActivity, followUpTypeArrayList)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
 
     private fun datePickerPopup() {
         try {
@@ -529,6 +726,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             val date_Picker = dialogDate!! .findViewById(R.id.date_Picker) as DatePicker
             val txtcancel = dialogDate!! .findViewById(R.id.txtcancel) as TextView
             val txtok = dialogDate!! .findViewById(R.id.txtok) as TextView
+
+            date_Picker.minDate = Calendar.getInstance().timeInMillis
 
             txtok.setOnClickListener {
                 dialogDate.dismiss()
@@ -546,6 +745,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 val mon: Int = date_Picker.getMonth()
                 val month: Int = mon+1
                 val year: Int = date_Picker.getYear()
+
+
 
                 var strDay = day.toString()
                 var strMonth = month.toString()
@@ -692,15 +893,44 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             ID_Status = jsonObject.getString("ID_Status")
             edt_status!!.setText(jsonObject.getString("StatusName"))
 
+            edt_action!!.setText("")
+            ID_NextAction=""
+            edt_type!!.setText("")
+            ID_ActionType = ""
+
             if (jsonObject.getString("ID_Status").equals("1")){
                 llfollowup!!.visibility  =View.VISIBLE
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
                 edt_date!!.setText(currentDate)
+                switchTransfer!!.isChecked = false
             }else{
                 llfollowup!!.visibility  =View.GONE
+                switchTransfer!!.isChecked = false
             }
         }
+
+        if (data.equals("followupaction")){
+            dialogFollowupAction!!.dismiss()
+            val jsonObject = followUpActionArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
+            ID_NextAction = jsonObject.getString("ID_NextAction")
+            edt_action!!.setText(jsonObject.getString("NxtActnName"))
+
+
+        }
+
+        if (data.equals("followuptype")){
+            dialogFollowupType!!.dismiss()
+            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
+
     }
 
 

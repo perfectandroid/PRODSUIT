@@ -33,9 +33,11 @@ import com.perfect.prodsuit.View.Adapter.LeadThroughAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.LeadByViewModel
 import com.perfect.prodsuit.Viewmodel.LeadFromViewModel
 import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
+import com.perfect.prodsuit.Viewmodel.MediaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
@@ -51,12 +53,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
+    private var llmediatype: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
     private var txtleadby: TextView? = null
     private var txtproduct: TextView? = null
+    private var txtMediatype: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
@@ -64,10 +68,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
     lateinit var leadByViewModel: LeadByViewModel
+    lateinit var mediaTypeViewModel: MediaTypeViewModel
 
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
     var recyLeadby: RecyclerView? = null
+    var recyMediaType: RecyclerView? = null
 
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
@@ -82,16 +88,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadFromArrayList : JSONArray
     lateinit var leadThroughArrayList : JSONArray
     lateinit var leadByArrayList : JSONArray
+    lateinit var mediaTypeArrayList : JSONArray
 
 
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
+    var dialogMediaType : Dialog? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
+        var ID_MediaMaster : String?= ""
     }
 
 
@@ -105,6 +114,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
+        mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
 
         setRegViews()
         bottombarnav()
@@ -119,12 +129,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
+        llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
         txtleadby = findViewById<TextView>(R.id.txtleadby)
         txtproduct = findViewById<TextView>(R.id.txtproduct)
+        txtMediatype = findViewById<TextView>(R.id.txtMediatype)
 
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
@@ -132,6 +144,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
         llproduct!!.setOnClickListener(this)
+        llmediatype!!.setOnClickListener(this)
 
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
@@ -212,8 +225,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 startActivityForResult(intent, SELECT_PRODUCT!!);
 
             }
+
+            R.id.llmediatype->{
+                getMediaType()
+            }
         }
     }
+
+
 
     private fun getLeadBy(v: View) {
 
@@ -468,6 +487,90 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             dialogLeadThrough!!.show()
             dialogLeadThrough!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getMediaType() {
+        var countMediatype = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                mediaTypeViewModel.getMediaType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   510   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("MediaTypeDetails")
+                                mediaTypeArrayList = jobjt.getJSONArray("MediaTypeDetailsList")
+                                if (mediaTypeArrayList.length()>0){
+                                    if (countMediatype == 0){
+                                        countMediatype++
+                                        mediaTypePopup(mediaTypeArrayList)
+                                    }
+
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+    private fun mediaTypePopup(mediaTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogMediaType = Dialog(this)
+            dialogMediaType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogMediaType!! .setContentView(R.layout.mediatype_popup)
+            dialogMediaType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyMediaType = dialogMediaType!! .findViewById(R.id.recyMediaType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recyMediaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeArrayList)
+            recyMediaType!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogMediaType!!.show()
+            dialogMediaType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -767,6 +870,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Log.e(TAG,"ID_CollectedBy   "+jsonObject.getString("ID_CollectedBy"))
             ID_CollectedBy = jsonObject.getString("ID_CollectedBy")
             txtleadby!!.text = jsonObject.getString("Name")
+
+        }
+        if (data.equals("mediatype")){
+            dialogMediaType!!.dismiss()
+            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_MediaMaster   "+jsonObject.getString("ID_MediaMaster"))
+            ID_MediaMaster = jsonObject.getString("ID_MediaMaster")
+            txtMediatype!!.text = jsonObject.getString("MdaName")
 
         }
     }
