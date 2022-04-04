@@ -48,6 +48,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var img_search: ImageView? = null
 
     var llfollowup: LinearLayout? = null
+    var llNeedTransfer: LinearLayout? = null
 
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
@@ -55,6 +56,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyProdPriority: RecyclerView? = null
     var recyFollowupAction: RecyclerView? = null
     var recyFollowupType: RecyclerView? = null
+
+    var switchTransfer: Switch? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
@@ -108,9 +111,20 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_Status = ""
         ID_Priority = ""
         strProdName = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
 
         setRegViews()
         bottombarnav()
+
+        switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                llNeedTransfer!!.visibility = View.VISIBLE
+            } else {
+
+                llNeedTransfer!!.visibility = View.GONE
+            }
+        }
 
     }
 
@@ -127,6 +141,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_type = findViewById<EditText>(R.id.edt_type)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
+        switchTransfer = findViewById<Switch>(R.id.switchTransfer)
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -877,13 +893,20 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             ID_Status = jsonObject.getString("ID_Status")
             edt_status!!.setText(jsonObject.getString("StatusName"))
 
+            edt_action!!.setText("")
+            ID_NextAction=""
+            edt_type!!.setText("")
+            ID_ActionType = ""
+
             if (jsonObject.getString("ID_Status").equals("1")){
                 llfollowup!!.visibility  =View.VISIBLE
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
                 edt_date!!.setText(currentDate)
+                switchTransfer!!.isChecked = false
             }else{
                 llfollowup!!.visibility  =View.GONE
+                switchTransfer!!.isChecked = false
             }
         }
 
