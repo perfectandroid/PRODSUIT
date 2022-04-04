@@ -530,6 +530,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             val txtcancel = dialogDate!! .findViewById(R.id.txtcancel) as TextView
             val txtok = dialogDate!! .findViewById(R.id.txtok) as TextView
 
+            date_Picker.minDate = Calendar.getInstance().timeInMillis
+
             txtok.setOnClickListener {
                 dialogDate.dismiss()
 //                val today = Calendar.getInstance()
@@ -546,6 +548,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 val mon: Int = date_Picker.getMonth()
                 val month: Int = mon+1
                 val year: Int = date_Picker.getYear()
+
+
 
                 var strDay = day.toString()
                 var strMonth = month.toString()
