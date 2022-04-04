@@ -54,6 +54,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyProdStatus: RecyclerView? = null
     var recyProdPriority: RecyclerView? = null
     var recyFollowupAction: RecyclerView? = null
+    var recyFollowupType: RecyclerView? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
@@ -69,12 +70,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var prodStatusArrayList : JSONArray
     lateinit var prodPriorityArrayList : JSONArray
     lateinit var followUpActionArrayList : JSONArray
+    lateinit var followUpTypeArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
     private var dialogProdStatus : Dialog? = null
     private var dialogProdPriority : Dialog? = null
     private var dialogFollowupAction : Dialog? = null
+    private var dialogFollowupType : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -592,9 +595,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             dialogFollowupAction = Dialog(this)
             dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogFollowupAction!! .setContentView(R.layout.product_status_popup)
+            dialogFollowupAction!! .setContentView(R.layout.followup_action)
             dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyProdStatus) as RecyclerView
+            recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
 
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -630,11 +633,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             Log.e(TAG,"msg   82   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 //                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
-//                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
-//                                if (prodCategoryArrayList.length()>0){
+//                                followUpTypeArrayList = jobjt.getJSONArray("CategoryList")
+//                                if (followUpTypeArrayList.length()>0){
 //                                    if (followUpType == 0){
 //                                        followUpType++
-//                                        productCategoryPopup(prodCategoryArrayList)
+//                                        followupTypePopup(followUpTypeArrayList)
 //                                    }
 //
 //                                }
@@ -665,6 +668,31 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     .show()
             }
         }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!! .setContentView(R.layout.product_status_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupTypeAdapter(this@ProductActivity, followUpTypeArrayList)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
 
@@ -866,6 +894,18 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
 
         }
+
+        if (data.equals("followuptype")){
+            dialogFollowupType!!.dismiss()
+            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+//            ID_Status = jsonObject.getString("ID_Status")
+//            edt_status!!.setText(jsonObject.getString("StatusName"))
+
+
+        }
+
+
     }
 
 

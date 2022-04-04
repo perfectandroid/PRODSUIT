@@ -58,5 +58,8 @@ interface ApiInterface {
     @POST("UserValidations/FollowUpActionDetails")
     fun getFollowUpAction(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/FollowUpTypeDetails")
+    fun getFollowUpType(@Body body: RequestBody): Call<String>
+
 
 }
