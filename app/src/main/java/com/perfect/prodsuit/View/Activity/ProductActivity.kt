@@ -20,14 +20,11 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
-import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
-import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
-import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
 import org.json.JSONArray
 import org.json.JSONObject
 import android.view.*
 import android.widget.TextView
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import java.util.*
 import java.text.SimpleDateFormat
@@ -56,6 +53,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyProdDetail: RecyclerView? = null
     var recyProdStatus: RecyclerView? = null
     var recyProdPriority: RecyclerView? = null
+    var recyFollowupAction: RecyclerView? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
@@ -70,11 +68,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var prodDetailArrayList : JSONArray
     lateinit var prodStatusArrayList : JSONArray
     lateinit var prodPriorityArrayList : JSONArray
+    lateinit var followUpActionArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
     private var dialogProdStatus : Dialog? = null
     private var dialogProdPriority : Dialog? = null
+    private var dialogFollowupAction : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -190,11 +190,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
             R.id.edt_action->{
 
-              //  getFollowupAction()
+               // getFollowupAction()
             }
             R.id.edt_type->{
 
-                  getFollowupType()
+               //   getFollowupType()
             }
         }
     }
@@ -548,15 +548,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   82   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
-//                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
-//                                if (prodCategoryArrayList.length()>0){
-//                                    if (followUpAction == 0){
-//                                        followUpAction++
-//                                        productCategoryPopup(prodCategoryArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                followUpActionArrayList = jobjt.getJSONArray("CategoryList")
+                                if (followUpActionArrayList.length()>0){
+                                    if (followUpAction == 0){
+                                        followUpAction++
+                                        followUpActionPopup(followUpActionArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -584,6 +584,31 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     .show()
             }
         }
+    }
+
+    private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupAction = Dialog(this)
+            dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupAction!! .setContentView(R.layout.product_status_popup)
+            dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyProdStatus) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupActionAdapter(this@ProductActivity, followUpActionArrayList)
+            recyFollowupAction!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogFollowupAction!!.show()
+            dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun getFollowupType() {
@@ -830,6 +855,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }else{
                 llfollowup!!.visibility  =View.GONE
             }
+        }
+
+        if (data.equals("followupaction")){
+            dialogFollowupAction!!.dismiss()
+            val jsonObject = followUpActionArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+//            ID_Status = jsonObject.getString("ID_Status")
+//            edt_status!!.setText(jsonObject.getString("StatusName"))
+
+
         }
     }
 
