@@ -53,8 +53,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     val XMENArray = ArrayList<String>()
     var XMEN = intArrayOf(0)
     internal var ll_reminder: LinearLayout? = null
-    internal var etdate: TextView? = null
-    internal var ettime: TextView? = null
+    internal var etdate: EditText? = null
+    internal var ettime: EditText? = null
+    internal var etdis: EditText? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -449,51 +450,50 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         quit()
     }
 
+
     private fun setReminder() {
         try
         {
             val builder = android.app.AlertDialog.Builder(this)
             val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
-            val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+             etdate = layout.findViewById(R.id.etdate) as EditText
+             ettime = layout.findViewById(R.id.ettime) as EditText
+            etdis = layout.findViewById(R.id.etdis) as EditText
+           /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
             val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
-            etdate = layout.findViewById(R.id.etdate) as EditText
-            ettime = layout.findViewById(R.id.ettime) as EditText
-            val etdis = layout.findViewById(R.id.etdis) as EditText
-
+            etdate = layout.findViewById(R.id.etdate) as TextView
+            ettime = layout.findViewById(R.id.ettime) as TextView
+            val etdis = layout.findViewById(R.id.etdis) as EditText*/
             etdate!!.setKeyListener(null)
             ettime!!.setKeyListener(null)
-
-
             builder.setView(layout)
             val alertDialog = builder.create()
             val c = Calendar.getInstance()
             val sdf = SimpleDateFormat("dd-MM-yyyy")
             val sdf1 = SimpleDateFormat("hh:mm a")
             val sdf2 = SimpleDateFormat("hh:mm")
-
             yr = c.get(Calendar.YEAR)
             month = c.get(Calendar.MONTH)
             day = c.get(Calendar.DAY_OF_MONTH)
             etdate!!.setText(sdf.format(c.time))
             ettime!!.setText(sdf1.format(c.time))
-
             val s = sdf2.format(c.time)
             val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val strhr = split[0]
             val strmin = split[1]
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
-
             ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
             etdate!!.setOnClickListener(View.OnClickListener { dateSelector() })
-
-            ll_cancel.setOnClickListener {
+            btncancel.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
                 alertDialog.dismiss() }
-            ll_ok.setOnClickListener {
+            btnsubmit.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
-                addEvent(yr, month, day, hr, min, etdis.text.toString(), " Reminder")
+                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
                 alertDialog.dismiss()
             }
             alertDialog.show()
@@ -530,7 +530,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val tz = TimeZone.getDefault()
         values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
         values.put(CalendarContract.Events.EVENT_LOCATION, "India")
-
         try {
             val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
             val reminders = ContentValues()

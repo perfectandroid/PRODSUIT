@@ -156,6 +156,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="40dp"
                             android:scaleType="fitXY"
+                            android:tint="@color/white"
                             android:src="@drawable/settings" />
 
                         <TextView
@@ -166,7 +167,7 @@
                             android:gravity="center"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="Services"
-                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textColor="@color/white"
                             android:textSize="18dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -278,7 +279,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondarkgreen_bg">
+                            android:background="@drawable/homesectiondarkviolet_bg">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -321,7 +322,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondarkviolet_bg">
+                            android:background="@drawable/homesectiondarkgreen_bg">
 
                             <ImageView
                                 android:layout_width="50dp"

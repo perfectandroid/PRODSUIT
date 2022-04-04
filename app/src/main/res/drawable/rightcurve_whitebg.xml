@@ -16,7 +16,7 @@
         android:top="0dp" />
     <gradient
         android:angle="45"
-        android:endColor="@color/dot_light_screen3"
-        android:centerColor="@color/dot_light_screen3"
+        android:endColor="@color/dot_dark_screen3"
+        android:centerColor="@color/dot_dark_screen3"
         android:startColor="@color/dot_light_screen4" />
 </shape>

@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/logoutsuccess"
+                android:src="@drawable/reminderlogo"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"/>
         </LinearLayout>
@@ -57,7 +57,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textSize="15dp"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -65,7 +66,8 @@
                 android:fontFamily="@font/myfont"
                 android:text="Set your convenient date &amp; time."
                 android:textColor="@color/black"/>
-            <com.google.android.material.textfield.TextInputLayout
+
+        <!--    <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginBottom="10dp"
                 style="@style/TextInputLayoutStyle"
                 android:layout_marginLeft="20dp"
@@ -120,8 +122,65 @@
                     android:background="@drawable/custom_edt_txt_account_border"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+-->
 
+            <EditText
+                android:id="@+id/etdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Date"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/leadselect_bg"
+                android:gravity="center"
+                android:fontFamily="@font/myfont"
+                android:drawableRight="@drawable/ic_date"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2.5dp"/>
 
+            <EditText
+                android:id="@+id/ettime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Time"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/leadselect_bg"
+                android:gravity="center"
+                android:drawableRight="@drawable/ic_time"
+                android:fontFamily="@font/myfont"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2.5dp"/>
+
+            <EditText
+                android:id="@+id/etdis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:background="@drawable/leadselect_bg"
+                android:drawableRight="@drawable/ic_remindermessage"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:hint="Set Reminder Message"
+                android:lines="3"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,6 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:weightSum="1">
             <LinearLayout
@@ -158,6 +218,7 @@
                 android:layout_weight="1"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/btncancel"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -177,6 +238,7 @@
                 android:layout_weight="1"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/btnsubmit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
