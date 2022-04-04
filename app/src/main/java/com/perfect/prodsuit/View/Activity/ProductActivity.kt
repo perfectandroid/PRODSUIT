@@ -24,18 +24,12 @@ import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
 import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
 import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
-import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
-import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
-import com.perfect.prodsuit.Viewmodel.ProductPriorityViewModel
-import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.view.*
 import android.widget.TextView
+import com.perfect.prodsuit.Viewmodel.*
 import java.util.*
-import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import java.text.SimpleDateFormat
 
 
@@ -51,6 +45,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_status: EditText? = null
     var edt_priority: EditText? = null
     var edt_date: EditText? = null
+    var edt_action: EditText? = null
 
     var img_search: ImageView? = null
 
@@ -65,6 +60,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var productPriorityViewModel: ProductPriorityViewModel
+    lateinit var followUpActionViewModel: FollowUpActionViewModel
 
 
 
@@ -97,6 +93,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
+        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -118,6 +115,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_status = findViewById<EditText>(R.id.edt_status)
         edt_priority = findViewById<EditText>(R.id.edt_priority)
         edt_date = findViewById<EditText>(R.id.edt_date)
+        edt_action = findViewById<EditText>(R.id.edt_action)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
 
@@ -129,6 +127,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_status!!.setOnClickListener(this)
         edt_priority!!.setOnClickListener(this)
         edt_date!!.setOnClickListener(this)
+        edt_action!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -184,8 +183,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 datePickerPopup()
 
             }
+            R.id.edt_action->{
+
+              //  getFollowupAction()
+            }
         }
     }
+
+
 
 
     private fun getCategory() {
@@ -513,6 +518,62 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun getFollowupAction() {
+        var followUpAction = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpActionViewModel.getFollowupAction(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
+//                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (followUpAction == 0){
+//                                        followUpAction++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
