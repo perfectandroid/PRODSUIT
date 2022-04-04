@@ -62,253 +62,408 @@
                     android:visibility="invisible"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/edt_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/img_search"
-                        android:background="@drawable/shape_bg"
-                        android:drawableRight="@drawable/arrow_down"
-                        android:editable="false"
-                        android:hint="Category"
-                        android:textSize="15dp"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:text="" />
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/shape_bg"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:id="@+id/edt_product"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toLeftOf="@+id/img_search"
-                                android:background="@android:color/transparent"
-                                android:drawableRight="@drawable/arrow_down"
-                                android:editable="false"
-                                android:hint="Product"
-                                android:padding="10dp"
-                                android:singleLine="true"
-                                android:text=""
-                                android:textSize="15dp" />
-
-                            <ImageView
-                                android:id="@+id/img_search"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/ic_search"
-                                android:backgroundTint="@color/greydark"
-                                android:padding="5dp"
-                                android:visibility="gone"/>
-
-
-                        </RelativeLayout>
-
-                        <EditText
-                            android:id="@+id/edt_qty"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:layout_weight="3.5"
-                            android:background="@drawable/shape_bg"
-                            android:hint="Qty"
-                            android:textSize="15dp"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:padding="10dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/edt_priority"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@+id/img_search"
-                        android:background="@drawable/shape_bg"
-                        android:drawableRight="@drawable/arrow_down"
-                        android:editable="false"
-                        android:hint="Priority"
-                        android:textSize="15dp"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:text="" />
-
-                    <EditText
-                        android:id="@+id/edt_feedback"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@+id/img_search"
-                        android:background="@drawable/shape_bg"
-                        android:hint="Feedback"
-                        android:padding="10dp"
-                        android:textSize="15dp"
-                        android:singleLine="true"
-                        android:text="" />
-
-                    <EditText
-                        android:id="@+id/edt_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@+id/img_search"
-                        android:background="@drawable/shape_bg"
-                        android:drawableRight="@drawable/arrow_down"
-                        android:editable="false"
-                        android:hint="Status"
-                        android:padding="10dp"
-                        android:textSize="15dp"
-                        android:singleLine="true"
-                        android:text="" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llfollowup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Follow Up"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/myfont" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/edt_action"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Action"
-                            android:textSize="15dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"/>
-
-                        <EditText
-                            android:id="@+id/edt_type"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Type"
-                            android:textSize="15dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/edt_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/calendar_icon"
-                            android:editable="false"
-                            android:hint="Date"
-                            android:textSize="15dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"/>
-
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
-
-
-                            <Switch
-                                android:id="@+id/switchTransfer"
+                            <EditText
+                                android:id="@+id/edt_category"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical"
-                                android:checked="false"
+                                android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@+id/img_search"
+                                android:background="@drawable/shape_bg"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:editable="false"
+                                android:hint="Category"
                                 android:textSize="15dp"
-                                android:text="Need to Transfer"/>
+                                android:padding="10dp"
+                                android:singleLine="true"
+                                android:text="" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/shape_bg"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:id="@+id/edt_product"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toLeftOf="@+id/img_search"
+                                        android:background="@android:color/transparent"
+                                        android:drawableRight="@drawable/arrow_down"
+                                        android:editable="false"
+                                        android:hint="Product"
+                                        android:padding="10dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textSize="15dp" />
+
+                                    <ImageView
+                                        android:id="@+id/img_search"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginRight="5dp"
+                                        android:background="@drawable/ic_search"
+                                        android:backgroundTint="@color/greydark"
+                                        android:padding="5dp"
+                                        android:visibility="gone"/>
 
 
+                                </RelativeLayout>
+
+                                <EditText
+                                    android:id="@+id/edt_qty"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="3.5"
+                                    android:background="@drawable/shape_bg"
+                                    android:hint="Qty"
+                                    android:textSize="15dp"
+                                    android:gravity="center"
+                                    android:inputType="number"
+                                    android:maxLength="3"
+                                    android:padding="10dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edt_priority"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_toLeftOf="@+id/img_search"
+                                android:background="@drawable/shape_bg"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:editable="false"
+                                android:hint="Priority"
+                                android:textSize="15dp"
+                                android:padding="10dp"
+                                android:singleLine="true"
+                                android:text="" />
+
+                            <EditText
+                                android:id="@+id/edt_feedback"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_toLeftOf="@+id/img_search"
+                                android:background="@drawable/shape_bg"
+                                android:hint="Feedback"
+                                android:padding="10dp"
+                                android:textSize="15dp"
+                                android:singleLine="true"
+                                android:text="" />
+
+                            <EditText
+                                android:id="@+id/edt_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_toLeftOf="@+id/img_search"
+                                android:background="@drawable/shape_bg"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:editable="false"
+                                android:hint="Status"
+                                android:padding="10dp"
+                                android:textSize="15dp"
+                                android:singleLine="true"
+                                android:text="" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llfollowup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Follow Up"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/edt_action"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Action"
+                                    android:textSize="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"/>
+
+                                <EditText
+                                    android:id="@+id/edt_type"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Type"
+                                    android:textSize="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/edt_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/calendar_icon"
+                                    android:editable="false"
+                                    android:hint="Date"
+                                    android:textSize="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"/>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+
+
+                                    <Switch
+                                        android:id="@+id/switchTransfer"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:checked="false"
+                                        android:textSize="15dp"
+                                        android:text="Need to Transfer"/>
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llNeedTransfer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/edt_barnchtype"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Branch Type"
+                                    android:textSize="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"/>
+
+                                <EditText
+                                    android:id="@+id/edt_branch"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Branch"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:textSize="15dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/edt_department"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Department"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:textSize="15dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="match_parent"/>
+
+                                <EditText
+                                    android:id="@+id/edt_Employee"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_toLeftOf="@+id/img_search"
+                                    android:background="@drawable/shape_bg"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:editable="false"
+                                    android:hint="Employee"
+                                    android:layout_marginTop="10dp"
+                                    android:padding="10dp"
+                                    android:textSize="15dp"
+                                    android:singleLine="true"
+                                    android:text="" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="20dp"
+                            android:layout_alignParentBottom="true"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/btnYes"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/btn_bgcolorprimary"
+                                android:fontFamily="@font/myfont"
+                                android:padding="2dp"
+                                android:text="Reset"
+                                android:textAllCaps="false"
+                                android:textSize="15dp" />
+                            <Button
+                                android:id="@+id/btnNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:textSize="15dp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/myfont"
+                                android:background="@drawable/btn_bgcolour"
+                                android:padding="2dp"
+                                android:layout_weight="2"
+                                android:textAllCaps="false"
+                                android:text="Submit" />
                         </LinearLayout>
 
 
@@ -317,114 +472,18 @@
 
 
 
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llNeedTransfer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/edt_barnchtype"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Branch Type"
-                            android:textSize="15dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"/>
-
-                        <EditText
-                            android:id="@+id/edt_branch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Branch"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:textSize="15dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/edt_department"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Department"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:textSize="15dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"/>
-
-                        <EditText
-                            android:id="@+id/edt_Employee"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_toLeftOf="@+id/img_search"
-                            android:background="@drawable/shape_bg"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:editable="false"
-                            android:hint="Employee"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:textSize="15dp"
-                            android:singleLine="true"
-                            android:text="" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                </ScrollView>
 
 
 
 
 
-            </LinearLayout>
+
+
+
+
+
+            </RelativeLayout>
 
 
 
