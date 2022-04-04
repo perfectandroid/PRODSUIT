@@ -38,7 +38,7 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtMediaType.text        = jsonObject!!.getString("LeadFromName")
+                holder.txtMediaType.text        = jsonObject!!.getString("MdaName")
 
                 if (position % 2 == 0){
                     holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.greylight))

@@ -60,6 +60,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtleadthrough: TextView? = null
     private var txtleadby: TextView? = null
     private var txtproduct: TextView? = null
+    private var txtMediatype: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
@@ -99,6 +100,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
+        var ID_MediaMaster : String?= ""
     }
 
 
@@ -134,6 +136,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
         txtleadby = findViewById<TextView>(R.id.txtleadby)
         txtproduct = findViewById<TextView>(R.id.txtproduct)
+        txtMediatype = findViewById<TextView>(R.id.txtMediatype)
 
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
@@ -507,18 +510,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   267   "+msg)
+                            Log.e(TAG,"msg   510   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadThroughDetailsList")
-//                                mediaTypeArrayList = jobjt.getJSONArray("LeadThroughDetails")
-//                                if (mediaTypeArrayList.length()>0){
-//                                    if (countMediatype == 0){
-//                                        countMediatype++
-//                                        mediaTypePopup(mediaTypeArrayList)
-//                                    }
-//
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("MediaTypeDetails")
+                                mediaTypeArrayList = jobjt.getJSONArray("MediaTypeDetailsList")
+                                if (mediaTypeArrayList.length()>0){
+                                    if (countMediatype == 0){
+                                        countMediatype++
+                                        mediaTypePopup(mediaTypeArrayList)
+                                    }
+
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadGenerationActivity,
@@ -869,12 +872,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             txtleadby!!.text = jsonObject.getString("Name")
 
         }
-        if (data.equals("leadby")){
+        if (data.equals("mediatype")){
             dialogMediaType!!.dismiss()
-//            val jsonObject = mediaTypeArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_CollectedBy   "+jsonObject.getString("ID_CollectedBy"))
-//            ID_CollectedBy = jsonObject.getString("ID_CollectedBy")
-//            txtleadby!!.text = jsonObject.getString("Name")
+            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_MediaMaster   "+jsonObject.getString("ID_MediaMaster"))
+            ID_MediaMaster = jsonObject.getString("ID_MediaMaster")
+            txtMediatype!!.text = jsonObject.getString("MdaName")
 
         }
     }
