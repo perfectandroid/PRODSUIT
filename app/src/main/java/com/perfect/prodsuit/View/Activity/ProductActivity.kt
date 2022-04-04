@@ -10,10 +10,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +32,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.view.*
 import android.widget.TextView
 import java.util.*
 import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
@@ -92,6 +89,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_product)
         context = this@ProductActivity
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
