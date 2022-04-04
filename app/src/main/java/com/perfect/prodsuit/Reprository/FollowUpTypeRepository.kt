@@ -58,10 +58,11 @@ object FollowUpTypeRepository {
 
             try {
 
-//                "ReqMode":"17",
+//                "ReqMode":"18",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg
+
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)

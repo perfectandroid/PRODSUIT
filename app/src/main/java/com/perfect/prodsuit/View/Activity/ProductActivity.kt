@@ -85,6 +85,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_Status : String?= ""
         var ID_Priority : String?= ""
         var strProdName : String = ""
+        var ID_NextAction : String = ""
+        var ID_ActionType : String = ""
     }
 
 
@@ -193,11 +195,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
             R.id.edt_action->{
 
-               // getFollowupAction()
+                getFollowupAction()
             }
             R.id.edt_type->{
 
-               //   getFollowupType()
+                  getFollowupType()
             }
         }
     }
@@ -551,8 +553,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   82   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
-                                followUpActionArrayList = jobjt.getJSONArray("CategoryList")
+                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
                                 if (followUpActionArrayList.length()>0){
                                     if (followUpAction == 0){
                                         followUpAction++
@@ -632,15 +634,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   82   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
-//                                followUpTypeArrayList = jobjt.getJSONArray("CategoryList")
-//                                if (followUpTypeArrayList.length()>0){
-//                                    if (followUpType == 0){
-//                                        followUpType++
-//                                        followupTypePopup(followUpTypeArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followUpTypeArrayList.length()>0){
+                                    if (followUpType == 0){
+                                        followUpType++
+                                        followupTypePopup(followUpTypeArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -676,7 +678,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             dialogFollowupType = Dialog(this)
             dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogFollowupType!! .setContentView(R.layout.product_status_popup)
+            dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
 
@@ -888,9 +890,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
             val jsonObject = followUpActionArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-//            ID_Status = jsonObject.getString("ID_Status")
-//            edt_status!!.setText(jsonObject.getString("StatusName"))
+            Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
+            ID_NextAction = jsonObject.getString("ID_NextAction")
+            edt_action!!.setText(jsonObject.getString("NxtActnName"))
 
 
         }
@@ -898,9 +900,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("followuptype")){
             dialogFollowupType!!.dismiss()
             val jsonObject = followUpTypeArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-//            ID_Status = jsonObject.getString("ID_Status")
-//            edt_status!!.setText(jsonObject.getString("StatusName"))
+            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
 
 
         }

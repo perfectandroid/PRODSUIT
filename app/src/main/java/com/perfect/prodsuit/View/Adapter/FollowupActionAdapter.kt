@@ -36,7 +36,7 @@ class FollowupActionAdapter(internal var context: Context, internal var jsonArra
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtFollowupAction.text        = jsonObject!!.getString("StatusName")
+                holder.txtFollowupAction.text        = jsonObject!!.getString("NxtActnName")
 
                 if (position % 2 == 0){
                     holder.llfollowupaction!!.setBackgroundColor(context.getColor(R.color.greylight))
