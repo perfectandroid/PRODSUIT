@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Adapter
+package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
 import android.util.Log
@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
-class CustomerAdapter (internal var context: Context, internal var jsonArray: JSONArray):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    internal val TAG : String = "CustomerAdapter"
+class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    internal val TAG : String = "LeadFromAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_customer_details, parent, false
+            R.layout.adapter_lead_from, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -34,14 +34,20 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-                holder.txtName.text        = jsonObject!!.getString("Name")
-                holder.txtEmail.text        = jsonObject!!.getString("Email")
-                holder.txtMobile.text     = jsonObject!!.getString("MobileNumber")
-                holder.txtAddress.text      = jsonObject!!.getString("Address")
+                val pos = position+1
+                holder.txtsino.text        = pos.toString()
+                holder.txtName.text        = jsonObject!!.getString("LeadFromName")
 
-                holder.lladpcustomer!!.setTag(position)
-                holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "customer")
+                if (position % 2 == 0){
+                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.greylight))
+                }
+                else{
+                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.white))
+                }
+
+                holder.llleadfrom!!.setTag(position)
+                holder.llleadfrom!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "leadfrom")
 
                 })
             }
@@ -51,7 +57,6 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
         }
 
     }
-
 
 
     override fun getItemCount(): Int {
@@ -69,22 +74,17 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         internal var txtName          : TextView
-        internal var txtEmail         : TextView
-        internal var txtMobile        : TextView
-        internal var txtAddress       : TextView
-        internal var lladpcustomer    : LinearLayout
+        internal var txtsino          : TextView
+        internal var llleadfrom    : LinearLayout
 
         init {
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
-            txtEmail       = v.findViewById<View>(R.id.txtEmail) as TextView
-            txtMobile      = v.findViewById<View>(R.id.txtMobile) as TextView
-            txtAddress     = v.findViewById<View>(R.id.txtAddress) as TextView
-            lladpcustomer  = v.findViewById<View>(R.id.lladpcustomer) as LinearLayout
+            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
+            llleadfrom     = v.findViewById<View>(R.id.llleadfrom) as LinearLayout
         }
     }
 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
-
 }

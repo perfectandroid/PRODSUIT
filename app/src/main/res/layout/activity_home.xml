@@ -65,14 +65,33 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
             </RelativeLayout>
-            <ImageView
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_weight="2"
+             android:layout_marginBottom="10dp"
+             android:layout_height="match_parent">
+             <RelativeLayout
+                 android:layout_width="fill_parent"
+                 android:layout_height="match_parent">
+                 <androidx.viewpager.widget.ViewPager
+                     android:id="@+id/pager"
+                     android:layout_width="fill_parent"
+                     android:layout_height="fill_parent" />
+
+                 <me.relex.circleindicator.CircleIndicator
+                     android:id="@+id/indicator"
+                     android:layout_width="match_parent"
+                     android:layout_height="30dp"
+                     android:layout_alignParentBottom="true" />
+             </RelativeLayout>
+         </LinearLayout>
+        <!--    <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_weight="2"
                 android:scaleType="fitXY"
-                android:src="@drawable/bannerhome"/>
+                android:src="@drawable/bannerhome"/>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -84,49 +103,50 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/lllead"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rightcurve_bg"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:background="@drawable/rightcurve_bg">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:scaleType="fitXY"
                             android:layout_marginLeft="40dp"
-                            android:layout_marginRight="40dp"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/filter"/>
+                            android:layout_marginRight="40dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/filter" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="Leads"
                             android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:fontFamily="@font/myfont" />
+                            android:textSize="18dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llservice"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
                         android:layout_weight="1"
                         android:background="@drawable/rightcurve_whitebg"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
@@ -174,7 +194,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondark_bg">
+                            android:background="@drawable/homesectiondarkyellow_bg">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -188,13 +208,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_gravity="left|center"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="left|center"
+                            android:layout_marginLeft="10dp"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="My Agenda"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textColor="@color/black"
                             android:textSize="20dp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -216,7 +237,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondark_bg">
+                            android:background="@drawable/homesectiondarkblue_bg">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -230,11 +251,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="left|center"
+                            android:layout_marginLeft="10dp"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:text="Dashboard"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
@@ -256,7 +278,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondark_bg">
+                            android:background="@drawable/homesectiondarkgreen_bg">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -272,14 +294,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:text="Notification"
+                            android:gravity="left|center"
+                            android:layout_marginLeft="10dp"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/ll_reminder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -297,7 +321,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_weight="2.5"
-                            android:background="@drawable/homesectiondark_bg">
+                            android:background="@drawable/homesectiondarkviolet_bg">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -313,10 +337,11 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:gravity="center"
+                            android:gravity="left|center"
+                            android:layout_marginLeft="10dp"
                             android:text="Set Reminder"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/colorPrimaryExtraDark"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>

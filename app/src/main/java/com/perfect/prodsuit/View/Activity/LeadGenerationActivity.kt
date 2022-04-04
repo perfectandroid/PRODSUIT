@@ -27,9 +27,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.Adapter.LeadByAdapter
-import com.perfect.prodsuit.Adapter.LeadFromAdapter
-import com.perfect.prodsuit.Adapter.LeadThroughAdapter
+import com.perfect.prodsuit.View.Adapter.LeadByAdapter
+import com.perfect.prodsuit.View.Adapter.LeadFromAdapter
+import com.perfect.prodsuit.View.Adapter.LeadThroughAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R

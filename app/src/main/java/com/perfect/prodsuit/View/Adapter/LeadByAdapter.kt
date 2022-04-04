@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Adapter
+package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
 import android.util.Log
