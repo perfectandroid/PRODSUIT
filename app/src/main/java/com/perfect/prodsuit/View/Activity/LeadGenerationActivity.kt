@@ -41,6 +41,8 @@ import com.perfect.prodsuit.Viewmodel.MediaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
 
@@ -54,6 +56,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
+    private var lldate: LinearLayout? = null
+    private var lllocation: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
@@ -61,9 +65,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtleadby: TextView? = null
     private var txtproduct: TextView? = null
     private var txtMediatype: TextView? = null
+    private var txtDate: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
+    private var SELECT_LOCATION: Int? = 102
 
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
@@ -130,6 +136,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
+        lldate = findViewById<LinearLayout>(R.id.lldate)
+        lllocation = findViewById<LinearLayout>(R.id.lllocation)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
@@ -137,6 +145,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadby = findViewById<TextView>(R.id.txtleadby)
         txtproduct = findViewById<TextView>(R.id.txtproduct)
         txtMediatype = findViewById<TextView>(R.id.txtMediatype)
+        txtDate = findViewById<TextView>(R.id.txtDate)
 
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
@@ -145,12 +154,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadby!!.setOnClickListener(this)
         llproduct!!.setOnClickListener(this)
         llmediatype!!.setOnClickListener(this)
+        lldate!!.setOnClickListener(this)
+        lllocation!!.setOnClickListener(this)
 
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
 
         imgvupload1!!.setOnClickListener(this)
         imgvupload2!!.setOnClickListener(this)
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        txtDate!!.setText(currentDate)
     }
 
     override fun onClick(v: View) {
@@ -229,9 +244,68 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             R.id.llmediatype->{
                 getMediaType()
             }
+            R.id.lldate->{
+                datePickerPopup()
+            }
+
+            R.id.lllocation->{
+
+                val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
+            }
         }
     }
 
+    private fun datePickerPopup() {
+        try {
+
+            val dialogDate = Dialog(this)
+            dialogDate!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDate!! .setContentView(R.layout.dialog_datepicker)
+            dialogDate!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogDate.setCancelable(false)
+
+            val date_Picker = dialogDate!! .findViewById(R.id.date_Picker) as DatePicker
+            val txtcancel = dialogDate!! .findViewById(R.id.txtcancel) as TextView
+            val txtok = dialogDate!! .findViewById(R.id.txtok) as TextView
+
+            date_Picker.minDate = Calendar.getInstance().timeInMillis
+
+            txtok.setOnClickListener {
+                dialogDate.dismiss()
+                val day: Int = date_Picker.getDayOfMonth()
+                val mon: Int = date_Picker.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker.getYear()
+
+
+
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+
+            }
+
+            txtcancel.setOnClickListener {
+                dialogDate.dismiss()
+            }
+
+            dialogDate!!.show()
+            // dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 
     private fun getLeadBy(v: View) {

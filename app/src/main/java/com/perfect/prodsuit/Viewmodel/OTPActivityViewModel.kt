@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.OTPModel
-import com.perfect.prodsuit.Reprository.OTPActivityRepository
+import com.perfect.prodsuit.Repository.OTPActivityRepository
 
 class OTPActivityViewModel : ViewModel() {
 

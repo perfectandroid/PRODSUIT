@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ProductDetailModel
-import com.perfect.prodsuit.Reprository.ProductDetailRepository
+import com.perfect.prodsuit.Repository.ProductDetailRepository
 
 class ProductDetailViewModel : ViewModel() {
 

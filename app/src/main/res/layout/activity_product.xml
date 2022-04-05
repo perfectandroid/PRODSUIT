@@ -93,10 +93,10 @@
                                 android:drawableRight="@drawable/arrow_down"
                                 android:editable="false"
                                 android:hint="Category"
-                                android:textSize="15dp"
                                 android:padding="10dp"
                                 android:singleLine="true"
-                                android:text="" />
+                                android:text=""
+                                android:textSize="15dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                                         android:background="@drawable/ic_search"
                                         android:backgroundTint="@color/greydark"
                                         android:padding="5dp"
-                                        android:visibility="gone"/>
+                                        android:visibility="gone" />
 
 
                                 </RelativeLayout>
@@ -148,14 +148,14 @@
                                     android:layout_toLeftOf="@+id/img_search"
                                     android:layout_weight="3.5"
                                     android:background="@drawable/shape_bg"
-                                    android:hint="Qty"
-                                    android:textSize="15dp"
                                     android:gravity="center"
+                                    android:hint="Qty"
                                     android:inputType="number"
                                     android:maxLength="3"
                                     android:padding="10dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
 
                             </LinearLayout>
@@ -170,10 +170,10 @@
                                 android:drawableRight="@drawable/arrow_down"
                                 android:editable="false"
                                 android:hint="Priority"
-                                android:textSize="15dp"
                                 android:padding="10dp"
                                 android:singleLine="true"
-                                android:text="" />
+                                android:text=""
+                                android:textSize="15dp" />
 
                             <EditText
                                 android:id="@+id/edt_feedback"
@@ -184,9 +184,9 @@
                                 android:background="@drawable/shape_bg"
                                 android:hint="Feedback"
                                 android:padding="10dp"
-                                android:textSize="15dp"
                                 android:singleLine="true"
-                                android:text="" />
+                                android:text=""
+                                android:textSize="15dp" />
 
                             <EditText
                                 android:id="@+id/edt_status"
@@ -199,9 +199,9 @@
                                 android:editable="false"
                                 android:hint="Status"
                                 android:padding="10dp"
-                                android:textSize="15dp"
                                 android:singleLine="true"
-                                android:text="" />
+                                android:text=""
+                                android:textSize="15dp" />
 
 
                         </LinearLayout>
@@ -213,21 +213,21 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="20dp"
-                            android:visibility="gone"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
                                 android:gravity="center"
                                 android:text="Follow Up"
-                                android:layout_marginTop="10dp"
                                 android:textColor="@color/black"
                                 android:textSize="20dp"
-                                android:textStyle="bold"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont" />
+                                android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -238,37 +238,37 @@
                                     android:id="@+id/edt_action"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Action"
-                                    android:textSize="15dp"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
                                 <View
                                     android:layout_width="10dp"
-                                    android:layout_height="match_parent"/>
+                                    android:layout_height="match_parent" />
 
                                 <EditText
                                     android:id="@+id/edt_type"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Type"
-                                    android:textSize="15dp"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
 
                             </LinearLayout>
@@ -282,49 +282,45 @@
                                     android:id="@+id/edt_date"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/calendar_icon"
                                     android:editable="false"
                                     android:hint="Date"
-                                    android:textSize="15dp"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
                                 <View
                                     android:layout_width="10dp"
-                                    android:layout_height="match_parent"/>
+                                    android:layout_height="match_parent" />
 
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1"
                                     android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
                                     android:orientation="horizontal">
-
 
 
                                     <Switch
                                         android:id="@+id/switchTransfer"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:gravity="center_vertical"
                                         android:checked="false"
-                                        android:textSize="15dp"
-                                        android:text="Need to Transfer"/>
+                                        android:gravity="center_vertical"
+                                        android:text="Need to Transfer"
+                                        android:textSize="15dp" />
 
 
                                 </LinearLayout>
 
 
-
                             </LinearLayout>
-
-
 
 
                         </LinearLayout>
@@ -336,8 +332,8 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="20dp"
-                            android:visibility="gone"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -348,37 +344,37 @@
                                     android:id="@+id/edt_barnchtype"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Branch Type"
-                                    android:textSize="15dp"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
                                 <View
                                     android:layout_width="10dp"
-                                    android:layout_height="match_parent"/>
+                                    android:layout_height="match_parent" />
 
                                 <EditText
                                     android:id="@+id/edt_branch"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Branch"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
-                                    android:textSize="15dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
 
                             </LinearLayout>
@@ -392,37 +388,37 @@
                                     android:id="@+id/edt_department"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Department"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
-                                    android:textSize="15dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
                                 <View
                                     android:layout_width="10dp"
-                                    android:layout_height="match_parent"/>
+                                    android:layout_height="match_parent" />
 
                                 <EditText
                                     android:id="@+id/edt_Employee"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginTop="10dp"
                                     android:layout_toLeftOf="@+id/img_search"
+                                    android:layout_weight="1"
                                     android:background="@drawable/shape_bg"
                                     android:drawableRight="@drawable/arrow_down"
                                     android:editable="false"
                                     android:hint="Employee"
-                                    android:layout_marginTop="10dp"
                                     android:padding="10dp"
-                                    android:textSize="15dp"
                                     android:singleLine="true"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textSize="15dp" />
 
 
                             </LinearLayout>
@@ -432,13 +428,13 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_margin="20dp"
                             android:layout_alignParentBottom="true"
-                            android:gravity="center">
+                            android:layout_margin="20dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
                             <Button
-                                android:id="@+id/btnYes"
+                                android:id="@+id/btnReset"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
@@ -450,26 +446,25 @@
                                 android:text="Reset"
                                 android:textAllCaps="false"
                                 android:textSize="15dp" />
+
                             <Button
-                                android:id="@+id/btnNo"
+                                android:id="@+id/btnSubmit"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:textSize="15dp"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/myfont"
-                                android:background="@drawable/btn_bgcolour"
-                                android:padding="2dp"
                                 android:layout_weight="2"
+                                android:background="@drawable/btn_bgcolour"
+                                android:fontFamily="@font/myfont"
+                                android:padding="2dp"
+                                android:text="Submit"
                                 android:textAllCaps="false"
-                                android:text="Submit" />
+                                android:textColor="@color/white"
+                                android:textSize="15dp" />
                         </LinearLayout>
 
 
-
                     </LinearLayout>
-
 
 
                 </ScrollView>

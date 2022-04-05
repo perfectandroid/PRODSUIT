@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="2dp"
+    app:cardElevation="1dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/llbranch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtsino"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/txtBranch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sree"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:textStyle="normal" />
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

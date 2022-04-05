@@ -44,6 +44,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_date: EditText? = null
     var edt_action: EditText? = null
     var edt_type: EditText? = null
+    var edt_barnchtype: EditText? = null
+    var edt_branch: EditText? = null
+    var edt_department: EditText? = null
+    var edt_Employee: EditText? = null
+    var edt_qty: EditText? = null
+    var edt_feedback: EditText? = null
+
+    var btnReset: Button? = null
+    var btnSubmit: Button? = null
 
     var img_search: ImageView? = null
 
@@ -56,6 +65,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyProdPriority: RecyclerView? = null
     var recyFollowupAction: RecyclerView? = null
     var recyFollowupType: RecyclerView? = null
+    var recyBranchType: RecyclerView? = null
+    var recyBranch: RecyclerView? = null
+    var recyDeaprtment: RecyclerView? = null
+    var recyEmployee: RecyclerView? = null
 
     var switchTransfer: Switch? = null
 
@@ -65,6 +78,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    lateinit var branchTypeViewModel: BranchTypeViewModel
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var departmentViewModel: DepartmentViewModel
+    lateinit var employeeViewModel: EmployeeViewModel
 
 
 
@@ -74,6 +91,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var prodPriorityArrayList : JSONArray
     lateinit var followUpActionArrayList : JSONArray
     lateinit var followUpTypeArrayList : JSONArray
+    lateinit var branchTypeArrayList : JSONArray
+    lateinit var branchArrayList : JSONArray
+    lateinit var departmentArrayList : JSONArray
+    lateinit var employeeArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
@@ -81,6 +102,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     private var dialogProdPriority : Dialog? = null
     private var dialogFollowupAction : Dialog? = null
     private var dialogFollowupType : Dialog? = null
+    private var dialogBranchType : Dialog? = null
+    private var dialogBranch : Dialog? = null
+    private var dialogDepartment : Dialog? = null
+    private var dialogEmployee : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -90,6 +115,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var strProdName : String = ""
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
+        var ID_BranchType : String = ""
+        var ID_Branch : String = ""
+        var ID_Department : String = ""
+        var ID_Employee : String = ""
+
+        var strQty : String = ""
+        var strFeedback : String = ""
+        var strFollowupdate : String = ""
+        var strNeedCheck : String = "0"
     }
 
 
@@ -105,6 +139,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        branchTypeViewModel = ViewModelProvider(this).get(BranchTypeViewModel::class.java)
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
+        employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -113,6 +151,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         strProdName = ""
         ID_NextAction = ""
         ID_ActionType = ""
+        ID_BranchType = ""
+        ID_Branch = ""
+        ID_Department = ""
+        ID_Employee = ""
+        strQty = ""
+        strFeedback = ""
+        strFollowupdate = ""
+        strFollowupdate = "0"
 
         setRegViews()
         bottombarnav()
@@ -120,9 +166,21 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
+                edt_barnchtype!!.setText("")
+                edt_branch!!.setText("")
+                edt_department!!.setText("")
+                edt_Employee!!.setText("")
+                strNeedCheck = "1"
             } else {
 
                 llNeedTransfer!!.visibility = View.GONE
+                edt_barnchtype!!.setText("")
+                edt_branch!!.setText("")
+                edt_department!!.setText("")
+                edt_Employee!!.setText("")
+                strNeedCheck = "0"
+
+
             }
         }
 
@@ -139,10 +197,19 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_date = findViewById<EditText>(R.id.edt_date)
         edt_action = findViewById<EditText>(R.id.edt_action)
         edt_type = findViewById<EditText>(R.id.edt_type)
+        edt_barnchtype = findViewById<EditText>(R.id.edt_barnchtype)
+        edt_branch = findViewById<EditText>(R.id.edt_branch)
+        edt_department = findViewById<EditText>(R.id.edt_department)
+        edt_Employee = findViewById<EditText>(R.id.edt_Employee)
+        edt_qty = findViewById<EditText>(R.id.edt_qty)
+        edt_feedback = findViewById<EditText>(R.id.edt_feedback)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
         switchTransfer = findViewById<Switch>(R.id.switchTransfer)
+
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -154,6 +221,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_date!!.setOnClickListener(this)
         edt_action!!.setOnClickListener(this)
         edt_type!!.setOnClickListener(this)
+        edt_barnchtype!!.setOnClickListener(this)
+        edt_branch!!.setOnClickListener(this)
+        edt_department!!.setOnClickListener(this)
+        edt_Employee!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -217,10 +291,132 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
                   getFollowupType()
             }
+
+            R.id.edt_barnchtype->{
+
+                getBranchType()
+            }
+
+            R.id.edt_branch->{
+
+                getBranch()
+            }
+
+            R.id.edt_department->{
+
+                getDepartment()
+            }
+
+            R.id.edt_Employee->{
+
+                getEmployee()
+            }
+
+            R.id.btnReset->{
+
+               resetData()
+            }
+            R.id.btnSubmit->{
+                Config.Utils.hideSoftKeyBoard(this@ProductActivity,v)
+             // validations(v)
+            }
+
         }
     }
 
 
+
+    private fun resetData() {
+
+        edt_category!!.setText("")
+        edt_product!!.setText("")
+        edt_qty!!.setText("")
+        edt_priority!!.setText("")
+        edt_feedback!!.setText("")
+        edt_status!!.setText("")
+        edt_action!!.setText("")
+        edt_type!!.setText("")
+        edt_date!!.setText("")
+        edt_barnchtype!!.setText("")
+        edt_branch!!.setText("")
+        edt_department!!.setText("")
+        edt_Employee!!.setText("")
+
+        switchTransfer!!.isChecked = false
+        llfollowup!!.visibility = View.GONE
+        llNeedTransfer!!.visibility = View.GONE
+
+        ID_Category = ""
+        ID_Product = ""
+        ID_Status = ""
+        ID_Priority = ""
+        strProdName = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
+        ID_BranchType = ""
+        ID_Branch = ""
+        ID_Department = ""
+        ID_Employee = ""
+
+    }
+
+    private fun validations(v: View) {
+        strQty = edt_qty!!.text.toString()
+        strFeedback = edt_feedback!!.text.toString()
+        if (ID_Category.equals("")){
+            warningMessage(v,"Select Category")
+        }
+        else if (ID_Product.equals("")){
+            warningMessage(v,"Select Product")
+        }
+        else if (strQty.equals("")){
+            warningMessage(v,"Enter quantity")
+        }
+        else if (ID_Priority.equals("")){
+            warningMessage(v,"Select Priority")
+        }
+//        else if (ID_Product.equals("")){
+//            warningMessage(v,"")
+//        }
+        else if (ID_Status.equals("")){
+            warningMessage(v,"Select Status")
+        }
+        else{
+            if (ID_Status.equals("1")){
+                validations1(v)
+            }else{
+                Log.e(TAG,"No Follow up")
+            }
+        }
+    }
+
+    private fun validations1(v: View) {
+        strFollowupdate = edt_date!!.text.toString()
+        if (ID_NextAction.equals("")){
+            warningMessage(v,"Select Action")
+        }
+        else if (ID_ActionType.equals("")){
+            warningMessage(v,"Select Type")
+        }
+        else if (strFollowupdate.equals("")){
+            warningMessage(v,"Select date")
+        }else{
+            if (strNeedCheck.equals("1")){
+                Log.e(TAG,"need Transfer")
+            }else{
+                Log.e(TAG,"No Transfer")
+            }
+        }
+    }
+
+    private fun warningMessage(v: View ,message: String) {
+
+        val snackbar: Snackbar = Snackbar.make(v, ""+message, Snackbar.LENGTH_LONG)
+        snackbar.setActionTextColor(Color.WHITE)
+        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+        snackbar.show()
+
+    }
 
 
     private fun getCategory() {
@@ -776,6 +972,326 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
 
+    private fun getBranchType() {
+        var branchType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchTypeViewModel.getBranchType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   979   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("BranchTypeDetails")
+                                branchTypeArrayList = jobjt.getJSONArray("BranchTypeDetailsList")
+                                if (branchTypeArrayList.length()>0){
+                                    if (branchType == 0){
+                                        branchType++
+                                        branchTypePopup(branchTypeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchTypePopup(branchTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogBranchType = Dialog(this)
+            dialogBranchType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranchType!! .setContentView(R.layout.branchtype_popup)
+            dialogBranchType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranchType = dialogBranchType!! .findViewById(R.id.recyBranchType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyBranchType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchTypeAdapter(this@ProductActivity, branchTypeArrayList)
+            recyBranchType!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogBranchType!!.show()
+            dialogBranchType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getBranch() {
+        var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("BranchDetails")
+                                branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                if (branchArrayList.length()>0){
+                                    if (branch == 0){
+                                        branch++
+                                        branchPopup(branchArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!! .setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchAdapter(this@ProductActivity, branchArrayList)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+    private fun getDepartment() {
+        var department = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                departmentViewModel.getDepartment(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1142   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                if (departmentArrayList.length()>0){
+                                    if (department == 0){
+                                        department++
+                                        departmentPopup(departmentArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun departmentPopup(departmentArrayList: JSONArray) {
+        try {
+
+            dialogDepartment = Dialog(this)
+            dialogDepartment!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDepartment!! .setContentView(R.layout.department_popup)
+            dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = DepartmentAdapter(this@ProductActivity, departmentArrayList)
+            recyDeaprtment!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogDepartment!!.show()
+            dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getEmployee() {
+        var employee = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                employeeViewModel.getEmployee(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1224   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                if (employeeArrayList.length()>0){
+                                    if (employee == 0){
+                                        employee++
+                                        employeePopup(employeeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeePopup(employeeArrayList: JSONArray) {
+        try {
+
+            dialogEmployee = Dialog(this)
+            dialogEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployee!! .setContentView(R.layout.employee_popup)
+            dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = EmployeeAdapter(this@ProductActivity, employeeArrayList)
+            recyEmployee!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogEmployee!!.show()
+            dialogEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         chipNavigationBar!!.setItemSelected(R.id.home, true)
@@ -904,6 +1420,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 val currentDate = sdf.format(Date())
                 edt_date!!.setText(currentDate)
                 switchTransfer!!.isChecked = false
+
             }else{
                 llfollowup!!.visibility  =View.GONE
                 switchTransfer!!.isChecked = false
@@ -929,6 +1446,50 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
 
         }
+
+        if (data.equals("branchtype")){
+            dialogBranchType!!.dismiss()
+            val jsonObject = branchTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_BranchType   "+jsonObject.getString("ID_BranchType"))
+            ID_BranchType = jsonObject.getString("ID_BranchType")
+            edt_barnchtype!!.setText(jsonObject.getString("BranchTypeName"))
+
+
+        }
+
+        if (data.equals("branch")){
+            dialogBranch!!.dismiss()
+            val jsonObject = branchArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            edt_branch!!.setText(jsonObject.getString("BranchName"))
+
+
+        }
+
+        if (data.equals("department")){
+            dialogDepartment!!.dismiss()
+            val jsonObject = departmentArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
+            ID_Department = jsonObject.getString("ID_Department")
+            edt_department!!.setText(jsonObject.getString("DeptName"))
+
+
+        }
+
+        if (data.equals("employee")){
+            dialogEmployee!!.dismiss()
+            val jsonObject = employeeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            edt_Employee!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
+
+
+
+
 
 
     }

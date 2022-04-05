@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.MediaTypeModel
-import com.perfect.prodsuit.Reprository.MediaTypeRepository
+import com.perfect.prodsuit.Repository.MediaTypeRepository
 
 class MediaTypeViewModel: ViewModel() {
 
