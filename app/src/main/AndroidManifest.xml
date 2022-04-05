@@ -99,6 +99,21 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name=".View.Activity.TodoListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.OverDueActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.UpcomingtaskActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.SetMpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

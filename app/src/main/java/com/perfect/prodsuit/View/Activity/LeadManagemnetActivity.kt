@@ -9,6 +9,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
@@ -17,6 +18,9 @@ import com.perfect.prodsuit.R
 class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
 
     private var chipNavigationBar: ChipNavigationBar? = null
+    private var lltodolist: LinearLayout? = null
+    private var lloverdue: LinearLayout? = null
+    private var lloverUpcoming: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +32,32 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        lltodolist = findViewById<LinearLayout>(R.id.lltodolist)
+        lloverdue = findViewById<LinearLayout>(R.id.lloverdue)
+        lloverUpcoming = findViewById<LinearLayout>(R.id.lloverUpcoming)
+
+        lltodolist!!.setOnClickListener(this)
+        lloverdue!!.setOnClickListener(this)
+        lloverUpcoming!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.lltodolist->{
+                val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
+                startActivity(i)
+            }
+            R.id.lloverdue->{
+                val i = Intent(this@LeadManagemnetActivity, OverDueActivity::class.java)
+                startActivity(i)
+            }
+            R.id.lloverUpcoming->{
+                val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
+                startActivity(i)
             }
         }
     }
