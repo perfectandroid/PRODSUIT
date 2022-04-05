@@ -10,6 +10,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.BranchModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.ProductActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -58,23 +59,25 @@ object BranchRepository {
 
             try {
 
-//                "ReqMode":"18",
+//                "ReqMode":"22",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
-//                "Token":sfdsgdgdg
+//                "Token":sfdsgdgdg,
+//                "ID_BranchType":1
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("18"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("22"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(ProductActivity.ID_BranchType))
 
 
-                Log.e(TAG,"78"+requestObject1)
+                Log.e(TAG,"78  getBranch  "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -84,7 +87,7 @@ object BranchRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getFollowUpType(body)
+            val call = apiService.getBranch(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

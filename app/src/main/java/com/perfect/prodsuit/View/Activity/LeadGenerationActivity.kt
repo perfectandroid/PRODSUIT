@@ -57,6 +57,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llproduct: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
     private var lldate: LinearLayout? = null
+    private var lllocation: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
@@ -68,6 +69,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
+    private var SELECT_LOCATION: Int? = 102
 
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
@@ -135,6 +137,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
         lldate = findViewById<LinearLayout>(R.id.lldate)
+        lllocation = findViewById<LinearLayout>(R.id.lllocation)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
@@ -152,6 +155,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llproduct!!.setOnClickListener(this)
         llmediatype!!.setOnClickListener(this)
         lldate!!.setOnClickListener(this)
+        lllocation!!.setOnClickListener(this)
 
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
@@ -242,6 +246,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
             R.id.lldate->{
                 datePickerPopup()
+            }
+
+            R.id.lllocation->{
+
+                val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
             }
         }
     }
