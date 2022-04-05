@@ -62,6 +62,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyFollowupType: RecyclerView? = null
     var recyBranchType: RecyclerView? = null
     var recyBranch: RecyclerView? = null
+    var recyDeaprtment: RecyclerView? = null
 
     var switchTransfer: Switch? = null
 
@@ -73,6 +74,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var branchTypeViewModel: BranchTypeViewModel
     lateinit var branchViewModel: BranchViewModel
+    lateinit var departmentViewModel: DepartmentViewModel
 
 
 
@@ -84,6 +86,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var followUpTypeArrayList : JSONArray
     lateinit var branchTypeArrayList : JSONArray
     lateinit var branchArrayList : JSONArray
+    lateinit var departmentArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
@@ -93,6 +96,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     private var dialogFollowupType : Dialog? = null
     private var dialogBranchType : Dialog? = null
     private var dialogBranch : Dialog? = null
+    private var dialogDepartment : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -119,6 +123,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         branchTypeViewModel = ViewModelProvider(this).get(BranchTypeViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -252,7 +257,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_department->{
 
-              //  getFollowupType()
+              //  getDepartment()
             }
 
             R.id.edt_Employee->{
@@ -979,6 +984,85 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         }
     }
 
+    private fun getDepartment() {
+        var department = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                departmentViewModel.getDepartment(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   998   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                departmentArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (departmentArrayList.length()>0){
+//                                    if (department == 0){
+//                                        department++
+//                                        departmentPopup(departmentArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun departmentPopup(departmentArrayList: JSONArray) {
+        try {
+
+            dialogDepartment = Dialog(this)
+            dialogDepartment!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDepartment!! .setContentView(R.layout.department_popup)
+            dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = DepartmentAdapter(this@ProductActivity, departmentArrayList)
+            recyDeaprtment!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogDepartment!!.show()
+            dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -1153,6 +1237,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
 
         }
+
+        if (data.equals("department")){
+            dialogDepartment!!.dismiss()
+            val jsonObject = departmentArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+//            ID_ActionType = jsonObject.getString("ID_ActionType")
+//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
 
 
 
