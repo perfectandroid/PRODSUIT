@@ -53,6 +53,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     val XMENArray = ArrayList<String>()
     var XMEN = intArrayOf(0)
     internal var ll_reminder: LinearLayout? = null
+    internal var ll_report: LinearLayout? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -117,6 +118,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         indicator =findViewById(R.id.indicator)
         ll_reminder =findViewById(R.id.ll_reminder)
         ll_reminder!!.setOnClickListener(this)
+        ll_report =findViewById(R.id.ll_report)
+        ll_report!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -144,6 +147,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             R.id.ll_reminder -> {
                 setReminder()
             }
+            R.id.ll_report -> {
+                val i = Intent(this@HomeActivity, ReportActivity::class.java)
+                startActivity(i)            }
         }
     }
 
