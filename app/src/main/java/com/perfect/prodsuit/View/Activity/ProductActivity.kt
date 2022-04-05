@@ -48,6 +48,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_branch: EditText? = null
     var edt_department: EditText? = null
     var edt_Employee: EditText? = null
+    var edt_qty: EditText? = null
+    var edt_feedback: EditText? = null
+
+    var btnReset: Button? = null
+    var btnSubmit: Button? = null
 
     var img_search: ImageView? = null
 
@@ -110,6 +115,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var strProdName : String = ""
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
+
+        var strQty : String = ""
+        var strFeedback : String = ""
+        var strFollowupdate : String = ""
+        var strNeedCheck : String = "0"
     }
 
 
@@ -137,6 +147,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         strProdName = ""
         ID_NextAction = ""
         ID_ActionType = ""
+        strQty = ""
+        strFeedback = ""
+        strFollowupdate = ""
+        strFollowupdate = "0"
 
         setRegViews()
         bottombarnav()
@@ -144,9 +158,21 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
+                edt_barnchtype!!.setText("")
+                edt_branch!!.setText("")
+                edt_department!!.setText("")
+                edt_Employee!!.setText("")
+                strNeedCheck = "1"
             } else {
 
                 llNeedTransfer!!.visibility = View.GONE
+                edt_barnchtype!!.setText("")
+                edt_branch!!.setText("")
+                edt_department!!.setText("")
+                edt_Employee!!.setText("")
+                strNeedCheck = "0"
+
+
             }
         }
 
@@ -167,10 +193,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_branch = findViewById<EditText>(R.id.edt_branch)
         edt_department = findViewById<EditText>(R.id.edt_department)
         edt_Employee = findViewById<EditText>(R.id.edt_Employee)
+        edt_qty = findViewById<EditText>(R.id.edt_qty)
+        edt_feedback = findViewById<EditText>(R.id.edt_feedback)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
         switchTransfer = findViewById<Switch>(R.id.switchTransfer)
+
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -186,6 +217,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_branch!!.setOnClickListener(this)
         edt_department!!.setOnClickListener(this)
         edt_Employee!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -270,10 +304,107 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
               //  getEmployee()
             }
 
+            R.id.btnReset->{
+
+               resetData()
+            }
+            R.id.btnSubmit->{
+                Config.Utils.hideSoftKeyBoard(this@ProductActivity,v)
+             // validations(v)
+            }
+
         }
     }
 
 
+
+    private fun resetData() {
+
+        edt_category!!.setText("")
+        edt_product!!.setText("")
+        edt_qty!!.setText("")
+        edt_priority!!.setText("")
+        edt_feedback!!.setText("")
+        edt_status!!.setText("")
+        edt_action!!.setText("")
+        edt_type!!.setText("")
+        edt_date!!.setText("")
+        edt_barnchtype!!.setText("")
+        edt_branch!!.setText("")
+        edt_department!!.setText("")
+        edt_Employee!!.setText("")
+
+        switchTransfer!!.isChecked = false
+        llfollowup!!.visibility = View.GONE
+        llNeedTransfer!!.visibility = View.GONE
+
+        ID_Category = ""
+        ID_Product = ""
+        ID_Status = ""
+        ID_Priority = ""
+        strProdName = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
+
+    }
+
+    private fun validations(v: View) {
+        strQty = edt_qty!!.text.toString()
+        strFeedback = edt_feedback!!.text.toString()
+        if (ID_Category.equals("")){
+            warningMessage(v,"Select Category")
+        }
+        else if (ID_Product.equals("")){
+            warningMessage(v,"Select Product")
+        }
+        else if (strQty.equals("")){
+            warningMessage(v,"Enter quantity")
+        }
+        else if (ID_Priority.equals("")){
+            warningMessage(v,"Select Priority")
+        }
+//        else if (ID_Product.equals("")){
+//            warningMessage(v,"")
+//        }
+        else if (ID_Status.equals("")){
+            warningMessage(v,"Select Status")
+        }
+        else{
+            if (ID_Status.equals("1")){
+                validations1(v)
+            }else{
+                Log.e(TAG,"No Follow up")
+            }
+        }
+    }
+
+    private fun validations1(v: View) {
+        strFollowupdate = edt_date!!.text.toString()
+        if (ID_NextAction.equals("")){
+            warningMessage(v,"Select Action")
+        }
+        else if (ID_ActionType.equals("")){
+            warningMessage(v,"Select Type")
+        }
+        else if (strFollowupdate.equals("")){
+            warningMessage(v,"Select date")
+        }else{
+            if (strNeedCheck.equals("1")){
+                Log.e(TAG,"need Transfer")
+            }else{
+                Log.e(TAG,"No Transfer")
+            }
+        }
+    }
+
+    private fun warningMessage(v: View ,message: String) {
+
+        val snackbar: Snackbar = Snackbar.make(v, ""+message, Snackbar.LENGTH_LONG)
+        snackbar.setActionTextColor(Color.WHITE)
+        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+        snackbar.show()
+
+    }
 
 
     private fun getCategory() {
@@ -1276,6 +1407,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 val currentDate = sdf.format(Date())
                 edt_date!!.setText(currentDate)
                 switchTransfer!!.isChecked = false
+
             }else{
                 llfollowup!!.visibility  =View.GONE
                 switchTransfer!!.isChecked = false

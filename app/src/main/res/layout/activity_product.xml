@@ -434,7 +434,7 @@
                             android:orientation="horizontal">
 
                             <Button
-                                android:id="@+id/btnYes"
+                                android:id="@+id/btnReset"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
@@ -448,7 +448,7 @@
                                 android:textSize="15dp" />
 
                             <Button
-                                android:id="@+id/btnNo"
+                                android:id="@+id/btnSubmit"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
