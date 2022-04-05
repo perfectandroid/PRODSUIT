@@ -71,4 +71,14 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+<!--    <style name="datepicker">-->
+<!--        <item name="android:background">@color/white</item>-->
+<!--        <item name="android:textColorPrimaryInverse">@color/red</item>-->
+<!--        <item name="android:textColorPrimary">@color/green</item>-->
+<!--        <item name="android:textColorSecondary">@color/colorAccent</item>-->
+<!--        <item name="android:textColorSecondaryInverse">@color/blue</item>-->
+<!--        <item name="android:textColorTertiary">@color/redDark</item>-->
+<!--    </style>-->
+
+
 </resources>
