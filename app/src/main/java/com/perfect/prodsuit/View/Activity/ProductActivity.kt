@@ -44,6 +44,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_date: EditText? = null
     var edt_action: EditText? = null
     var edt_type: EditText? = null
+    var edt_barnchtype: EditText? = null
+    var edt_branch: EditText? = null
+    var edt_department: EditText? = null
+    var edt_Employee: EditText? = null
 
     var img_search: ImageView? = null
 
@@ -56,6 +60,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyProdPriority: RecyclerView? = null
     var recyFollowupAction: RecyclerView? = null
     var recyFollowupType: RecyclerView? = null
+    var recyBranchType: RecyclerView? = null
 
     var switchTransfer: Switch? = null
 
@@ -65,6 +70,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    lateinit var branchTypeViewModel: BranchTypeViewModel
 
 
 
@@ -74,6 +80,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var prodPriorityArrayList : JSONArray
     lateinit var followUpActionArrayList : JSONArray
     lateinit var followUpTypeArrayList : JSONArray
+    lateinit var branchTypeArrayList : JSONArray
+    lateinit var branchArrayList : JSONArray
 
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
@@ -81,6 +89,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     private var dialogProdPriority : Dialog? = null
     private var dialogFollowupAction : Dialog? = null
     private var dialogFollowupType : Dialog? = null
+    private var dialogBranchType : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -105,6 +114,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        branchTypeViewModel = ViewModelProvider(this).get(BranchTypeViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -139,6 +149,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_date = findViewById<EditText>(R.id.edt_date)
         edt_action = findViewById<EditText>(R.id.edt_action)
         edt_type = findViewById<EditText>(R.id.edt_type)
+        edt_barnchtype = findViewById<EditText>(R.id.edt_barnchtype)
+        edt_branch = findViewById<EditText>(R.id.edt_branch)
+        edt_department = findViewById<EditText>(R.id.edt_department)
+        edt_Employee = findViewById<EditText>(R.id.edt_Employee)
 
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
@@ -154,6 +168,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_date!!.setOnClickListener(this)
         edt_action!!.setOnClickListener(this)
         edt_type!!.setOnClickListener(this)
+        edt_barnchtype!!.setOnClickListener(this)
+        edt_branch!!.setOnClickListener(this)
+        edt_department!!.setOnClickListener(this)
+        edt_Employee!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -217,6 +235,27 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
                   getFollowupType()
             }
+
+            R.id.edt_barnchtype->{
+
+              //  getBranchType()
+            }
+
+            R.id.edt_branch->{
+
+                getBranch()
+            }
+
+            R.id.edt_department->{
+
+              //  getFollowupType()
+            }
+
+            R.id.edt_Employee->{
+
+              //  getFollowupType()
+            }
+
         }
     }
 
@@ -776,6 +815,143 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
 
+    private fun getBranchType() {
+        var branchType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchTypeViewModel.getBranchType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                branchTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (branchTypeArrayList.length()>0){
+//                                    if (branchType == 0){
+//                                        branchType++
+//                                        branchTypePopup(branchTypeArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchTypePopup(branchTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogBranchType = Dialog(this)
+            dialogBranchType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranchType!! .setContentView(R.layout.branchtype_popup)
+            dialogBranchType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranchType = dialogBranchType!! .findViewById(R.id.recyBranchType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyBranchType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchTypeAdapter(this@ProductActivity, branchTypeArrayList)
+            recyBranchType!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogBranchType!!.show()
+            dialogBranchType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getBranch() {
+        var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchTypeViewModel.getBranchType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                branchArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (branchArrayList.length()>0){
+//                                    if (branch == 0){
+//                                        branch++
+//                                        branchTypePopup(branchArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProductActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         chipNavigationBar!!.setItemSelected(R.id.home, true)
@@ -929,6 +1105,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
 
         }
+
+        if (data.equals("branchtype")){
+            dialogBranchType!!.dismiss()
+            val jsonObject = branchTypeArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+//            ID_ActionType = jsonObject.getString("ID_ActionType")
+//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
 
 
     }
