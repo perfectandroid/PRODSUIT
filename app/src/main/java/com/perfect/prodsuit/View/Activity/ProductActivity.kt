@@ -305,7 +305,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_Employee->{
 
-              //  getEmployee()
+                getEmployee()
             }
 
             R.id.btnReset->{
@@ -1221,7 +1221,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1084   "+msg)
+                            Log.e(TAG,"msg   1224   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 //                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
 //                                employeeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
