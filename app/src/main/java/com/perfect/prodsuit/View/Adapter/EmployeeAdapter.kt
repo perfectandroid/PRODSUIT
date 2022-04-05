@@ -36,7 +36,7 @@ class EmployeeAdapter(internal var context: Context, internal var jsonArray: JSO
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
+                holder.txtEmployee.text        = jsonObject!!.getString("EmpName")
 
                 if (position % 2 == 0){
                     holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))

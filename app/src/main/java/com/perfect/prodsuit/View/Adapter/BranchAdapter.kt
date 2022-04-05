@@ -36,7 +36,7 @@ class BranchAdapter(internal var context: Context, internal var jsonArray: JSONA
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtBranch.text        = jsonObject!!.getString("ActnTypeName")
+                holder.txtBranch.text        = jsonObject!!.getString("BranchName")
 
                 if (position % 2 == 0){
                     holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))

@@ -116,7 +116,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
         var ID_BranchType : String = ""
+        var ID_Branch : String = ""
         var ID_Department : String = ""
+        var ID_Employee : String = ""
 
         var strQty : String = ""
         var strFeedback : String = ""
@@ -150,7 +152,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_NextAction = ""
         ID_ActionType = ""
         ID_BranchType = ""
+        ID_Branch = ""
         ID_Department = ""
+        ID_Employee = ""
         strQty = ""
         strFeedback = ""
         strFollowupdate = ""
@@ -295,7 +299,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_branch->{
 
-               // getBranch()
+                getBranch()
             }
 
             R.id.edt_department->{
@@ -350,7 +354,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_NextAction = ""
         ID_ActionType = ""
         ID_BranchType = ""
+        ID_Branch = ""
         ID_Department = ""
+        ID_Employee = ""
 
     }
 
@@ -1064,15 +1070,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1062   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-//                                branchArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-//                                if (branchArrayList.length()>0){
-//                                    if (branch == 0){
-//                                        branch++
-//                                        branchPopup(branchArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("BranchDetails")
+                                branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                if (branchArrayList.length()>0){
+                                    if (branch == 0){
+                                        branch++
+                                        branchPopup(branchArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -1110,7 +1116,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogBranch!! .setContentView(R.layout.branch_popup)
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyBranch = dialogBranch!! .findViewById(R.id.recyBranchType) as RecyclerView
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
 
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1123,6 +1129,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
         }
     }
 
@@ -1223,15 +1230,15 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1224   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-//                                employeeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-//                                if (employeeArrayList.length()>0){
-//                                    if (employee == 0){
-//                                        employee++
-//                                        employeePopup(employeeArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                if (employeeArrayList.length()>0){
+                                    if (employee == 0){
+                                        employee++
+                                        employeePopup(employeeArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -1273,7 +1280,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = EmployeeAdapter(this@ProductActivity, departmentArrayList)
+            val adapter = EmployeeAdapter(this@ProductActivity, employeeArrayList)
             recyEmployee!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
 
@@ -1453,9 +1460,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("branch")){
             dialogBranch!!.dismiss()
             val jsonObject = branchArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
-//            ID_ActionType = jsonObject.getString("ID_ActionType")
-//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+            Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            edt_branch!!.setText(jsonObject.getString("BranchName"))
 
 
         }
@@ -1473,9 +1480,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("employee")){
             dialogEmployee!!.dismiss()
             val jsonObject = employeeArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
-//            ID_ActionType = jsonObject.getString("ID_ActionType")
-//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            edt_Employee!!.setText(jsonObject.getString("EmpName"))
 
 
         }
