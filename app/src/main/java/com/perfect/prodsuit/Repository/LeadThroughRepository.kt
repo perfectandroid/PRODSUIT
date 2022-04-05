@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Reprository
+package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -8,10 +8,9 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadFromModel
-import com.perfect.prodsuit.Model.ProductDetailModel
+import com.perfect.prodsuit.Model.LeadThroughModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.ProductActivity
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -21,18 +20,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object ProductDetailRepository {
+object LeadThroughRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val productdetailSetterGetter = MutableLiveData<ProductDetailModel>()
-    val TAG: String = "ProductDetailRepository"
+    val leadThroghSetterGetter = MutableLiveData<LeadThroughModel>()
+    val TAG: String = "LeadThroughRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ProductDetailModel> {
-        getProductDetail(context)
-        return productdetailSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<LeadThroughModel> {
+        getLeadThrough(context)
+        return leadThroghSetterGetter
     }
 
-    private fun getProductDetail(context: Context) {
+    private fun getLeadThrough(context: Context) {
+
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -60,23 +60,25 @@ object ProductDetailRepository {
 
             try {
 
-//                "ReqMode":"14",
+
+//                "ReqMode":"9",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_Category:"1"
+//                "Token":sfdsgdgdg
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("9"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ProductActivity.ID_Category))
+                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_LeadFrom))
+                //requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart("1"))
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
-                Log.e(TAG,"ID_Category   80   "+ProductActivity.ID_Category)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"ID_LeadFrom   82   "+LeadGenerationActivity.ID_LeadFrom)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -85,7 +87,7 @@ object ProductDetailRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductDetail(body)
+            val call = apiService.getLeadThrough(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -94,10 +96,10 @@ object ProductDetailRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<ProductDetailModel>()
-                        leads.add(ProductDetailModel(response.body()))
+                        val leads = ArrayList<LeadThroughModel>()
+                        leads.add(LeadThroughModel(response.body()))
                         val msg = leads[0].message
-                        productdetailSetterGetter.value = ProductDetailModel(msg)
+                        leadThroghSetterGetter.value = LeadThroughModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -114,5 +116,6 @@ object ProductDetailRepository {
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
+
     }
 }

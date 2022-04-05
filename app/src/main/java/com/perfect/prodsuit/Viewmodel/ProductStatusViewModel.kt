@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.ProductDetailModel
 import com.perfect.prodsuit.Model.ProductStatusModel
-import com.perfect.prodsuit.Reprository.ProductDetailRepository
-import com.perfect.prodsuit.Reprository.ProductStatusRepository
+import com.perfect.prodsuit.Repository.ProductStatusRepository
 
 class ProductStatusViewModel : ViewModel() {
 

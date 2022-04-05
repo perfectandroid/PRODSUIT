@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadByModel
-import com.perfect.prodsuit.Reprository.LeadByRepository
+import com.perfect.prodsuit.Repository.LeadByRepository
 
 class LeadByViewModel : ViewModel()  {
 

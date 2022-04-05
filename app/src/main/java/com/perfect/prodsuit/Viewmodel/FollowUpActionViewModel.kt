@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.FollowUpActionModel
-import com.perfect.prodsuit.Reprository.FollowUpActionRepository
+import com.perfect.prodsuit.Repository.FollowUpActionRepository
 
 
 class FollowUpActionViewModel: ViewModel()  {

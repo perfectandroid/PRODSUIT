@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.MaintananceMessageModel
-import com.perfect.prodsuit.Reprository.MaintanaceMessageRepository
+import com.perfect.prodsuit.Repository.MaintanaceMessageRepository
 
 class MaintanceMessageViewModel : ViewModel() {
 

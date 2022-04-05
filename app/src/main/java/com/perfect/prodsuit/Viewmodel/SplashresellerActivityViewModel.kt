@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ResellerModel
-import com.perfect.prodsuit.Reprository.SplashresellerActivityRepository
+import com.perfect.prodsuit.Repository.SplashresellerActivityRepository
 
 class SplashresellerActivityViewModel : ViewModel() {
 

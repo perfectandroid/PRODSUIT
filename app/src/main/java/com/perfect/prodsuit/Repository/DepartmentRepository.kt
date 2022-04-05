@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Reprository
+package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -8,7 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BranchTypeModel
+
+import com.perfect.prodsuit.Model.DepartmentModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -19,18 +20,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object BranchTypeRepository {
+object DepartmentRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val branchtypeSetterGetter = MutableLiveData<BranchTypeModel>()
-    val TAG: String = "BranchTypeRepository"
+    val departmentSetterGetter = MutableLiveData<DepartmentModel>()
+    val TAG: String = "DepartmentRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<BranchTypeModel> {
-        getBranchType(context)
-        return branchtypeSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<DepartmentModel> {
+        getDepartment(context)
+        return departmentSetterGetter
     }
 
-    private fun getBranchType(context: Context) {
+    private fun getDepartment(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -93,10 +94,10 @@ object BranchTypeRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<BranchTypeModel>()
-                        leads.add(BranchTypeModel(response.body()))
+                        val leads = ArrayList<DepartmentModel>()
+                        leads.add(DepartmentModel(response.body()))
                         val msg = leads[0].message
-                        branchtypeSetterGetter.value = BranchTypeModel(msg)
+                        departmentSetterGetter.value = DepartmentModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                     }

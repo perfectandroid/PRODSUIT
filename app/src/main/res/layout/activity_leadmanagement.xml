@@ -266,7 +266,7 @@
                                         android:paddingLeft="5dp"
                                         android:paddingTop="25dp"
                                         android:paddingBottom="1dp"
-                                        android:text="Upcoming task"
+                                        android:text="Upcoming tasks"
                                         android:fontFamily="@font/myfont"
                                         android:textSize="18dp"
                                         android:textStyle="bold"

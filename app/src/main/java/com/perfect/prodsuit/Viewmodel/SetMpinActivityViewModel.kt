@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.SetMpinModel
-import com.perfect.prodsuit.Reprository.SetMpinActivityRepository
+import com.perfect.prodsuit.Repository.SetMpinActivityRepository
 
 class SetMpinActivityViewModel : ViewModel() {
 

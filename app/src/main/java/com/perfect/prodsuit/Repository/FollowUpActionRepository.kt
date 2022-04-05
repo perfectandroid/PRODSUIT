@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Reprository
+package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -9,7 +9,6 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.FollowUpActionModel
-import com.perfect.prodsuit.Model.LeadByModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
