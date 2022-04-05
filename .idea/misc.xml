@@ -11,6 +11,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_product.xml" value="0.22864583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followup_action.xml" value="0.20520833333333333" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_priority.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_status.xml" value="0.2994791666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.19444444444444445" />

@@ -61,6 +61,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyFollowupAction: RecyclerView? = null
     var recyFollowupType: RecyclerView? = null
     var recyBranchType: RecyclerView? = null
+    var recyBranch: RecyclerView? = null
 
     var switchTransfer: Switch? = null
 
@@ -71,6 +72,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var branchTypeViewModel: BranchTypeViewModel
+    lateinit var branchViewModel: BranchViewModel
 
 
 
@@ -90,6 +92,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     private var dialogFollowupAction : Dialog? = null
     private var dialogFollowupType : Dialog? = null
     private var dialogBranchType : Dialog? = null
+    private var dialogBranch : Dialog? = null
 
     companion object {
         var ID_Category : String?= ""
@@ -115,6 +118,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         branchTypeViewModel = ViewModelProvider(this).get(BranchTypeViewModel::class.java)
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
 
         ID_Category = ""
         ID_Product = ""
@@ -243,7 +247,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_branch->{
 
-                getBranch()
+              //  getBranch()
             }
 
             R.id.edt_department->{
@@ -905,7 +909,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchTypeViewModel.getBranchType(this)!!.observe(
+                branchViewModel.getBranch(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -918,7 +922,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 //                                if (branchArrayList.length()>0){
 //                                    if (branch == 0){
 //                                        branch++
-//                                        branchTypePopup(branchArrayList)
+//                                        branchPopup(branchArrayList)
 //                                    }
 //
 //                                }
@@ -948,6 +952,30 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!! .setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranchType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@ProductActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchAdapter(this@ProductActivity, branchArrayList)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@ProductActivity)
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -1109,6 +1137,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("branchtype")){
             dialogBranchType!!.dismiss()
             val jsonObject = branchTypeArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+//            ID_ActionType = jsonObject.getString("ID_ActionType")
+//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
+        if (data.equals("branch")){
+            dialogBranch!!.dismiss()
+            val jsonObject = branchArrayList.getJSONObject(position)
 //            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
 //            ID_ActionType = jsonObject.getString("ID_ActionType")
 //            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
