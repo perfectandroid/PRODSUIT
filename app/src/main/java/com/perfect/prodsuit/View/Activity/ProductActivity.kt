@@ -116,6 +116,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
         var ID_BranchType : String = ""
+        var ID_Department : String = ""
 
         var strQty : String = ""
         var strFeedback : String = ""
@@ -149,6 +150,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_NextAction = ""
         ID_ActionType = ""
         ID_BranchType = ""
+        ID_Department = ""
         strQty = ""
         strFeedback = ""
         strFollowupdate = ""
@@ -298,7 +300,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_department->{
 
-              //  getDepartment()
+                getDepartment()
             }
 
             R.id.edt_Employee->{
@@ -348,6 +350,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_NextAction = ""
         ID_ActionType = ""
         ID_BranchType = ""
+        ID_Department = ""
 
     }
 
@@ -1139,17 +1142,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   998   "+msg)
+                            Log.e(TAG,"msg   1142   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-//                                departmentArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-//                                if (departmentArrayList.length()>0){
-//                                    if (department == 0){
-//                                        department++
-//                                        departmentPopup(departmentArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                if (departmentArrayList.length()>0){
+                                    if (department == 0){
+                                        department++
+                                        departmentPopup(departmentArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -1460,9 +1463,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("department")){
             dialogDepartment!!.dismiss()
             val jsonObject = departmentArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
-//            ID_ActionType = jsonObject.getString("ID_ActionType")
-//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+            Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
+            ID_Department = jsonObject.getString("ID_Department")
+            edt_department!!.setText(jsonObject.getString("DeptName"))
 
 
         }
