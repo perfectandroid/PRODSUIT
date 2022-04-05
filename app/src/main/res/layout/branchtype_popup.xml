@@ -13,7 +13,7 @@
         android:textStyle="bold"
         android:background="@color/pophead"
         android:padding="15dp"
-        android:text="Type"/>
+        android:text="Branch Type"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyBranchType"

@@ -115,6 +115,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var strProdName : String = ""
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
+        var ID_BranchType : String = ""
 
         var strQty : String = ""
         var strFeedback : String = ""
@@ -147,6 +148,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         strProdName = ""
         ID_NextAction = ""
         ID_ActionType = ""
+        ID_BranchType = ""
         strQty = ""
         strFeedback = ""
         strFollowupdate = ""
@@ -286,12 +288,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             R.id.edt_barnchtype->{
 
-              //  getBranchType()
+                getBranchType()
             }
 
             R.id.edt_branch->{
 
-              //  getBranch()
+               // getBranch()
             }
 
             R.id.edt_department->{
@@ -345,6 +347,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         strProdName = ""
         ID_NextAction = ""
         ID_ActionType = ""
+        ID_BranchType = ""
 
     }
 
@@ -976,17 +979,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   82   "+msg)
+                            Log.e(TAG,"msg   979   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-//                                branchTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-//                                if (branchTypeArrayList.length()>0){
-//                                    if (branchType == 0){
-//                                        branchType++
-//                                        branchTypePopup(branchTypeArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("BranchTypeDetails")
+                                branchTypeArrayList = jobjt.getJSONArray("BranchTypeDetailsList")
+                                if (branchTypeArrayList.length()>0){
+                                    if (branchType == 0){
+                                        branchType++
+                                        branchTypePopup(branchTypeArrayList)
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -1056,7 +1059,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   82   "+msg)
+                            Log.e(TAG,"msg   1062   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 //                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
 //                                branchArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
@@ -1437,9 +1440,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         if (data.equals("branchtype")){
             dialogBranchType!!.dismiss()
             val jsonObject = branchTypeArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
-//            ID_ActionType = jsonObject.getString("ID_ActionType")
-//            edt_type!!.setText(jsonObject.getString("ActnTypeName"))
+            Log.e(TAG,"ID_BranchType   "+jsonObject.getString("ID_BranchType"))
+            ID_BranchType = jsonObject.getString("ID_BranchType")
+            edt_barnchtype!!.setText(jsonObject.getString("BranchTypeName"))
 
 
         }
