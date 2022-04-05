@@ -495,7 +495,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 var jobj = jObject.getJSONObject("UserLoginDetails")
-                                val builder = AlertDialog.Builder(
+                               /* val builder = AlertDialog.Builder(
                                     this@MpinActivity,
                                     R.style.MyDialogTheme
                                 )
@@ -507,7 +507,10 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 }
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
-                                alertDialog.show()
+                                alertDialog.show()*/
+                                val i = Intent(this@MpinActivity, HomeActivity::class.java)
+                                startActivity(i)
+                                finish()
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@MpinActivity,
