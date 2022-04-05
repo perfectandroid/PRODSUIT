@@ -8,8 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-
 import com.perfect.prodsuit.Model.DepartmentModel
+import com.perfect.prodsuit.Model.EmployeeModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,18 +20,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object DepartmentRepository {
+object EmployeeRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val departmentSetterGetter = MutableLiveData<DepartmentModel>()
-    val TAG: String = "DepartmentRepository"
+    val employeeSetterGetter = MutableLiveData<EmployeeModel>()
+    val TAG: String = "EmployeeRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<DepartmentModel> {
-        getDepartment(context)
-        return departmentSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<EmployeeModel> {
+        getEmployee(context)
+        return employeeSetterGetter
     }
 
-    private fun getDepartment(context: Context) {
+    private fun getEmployee(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -94,10 +94,10 @@ object DepartmentRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<DepartmentModel>()
-                        leads.add(DepartmentModel(response.body()))
+                        val leads = ArrayList<EmployeeModel>()
+                        leads.add(EmployeeModel(response.body()))
                         val msg = leads[0].message
-                        departmentSetterGetter.value = DepartmentModel(msg)
+                        employeeSetterGetter.value = EmployeeModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                     }
@@ -114,5 +114,4 @@ object DepartmentRepository {
             progressDialog!!.dismiss()
         }
     }
-
 }
