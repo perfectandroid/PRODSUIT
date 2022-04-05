@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 import com.perfect.prodsuit.Model.ProductPriorityModel
 
-import com.perfect.prodsuit.Reprository.ProductPriorityRepository
+import com.perfect.prodsuit.Repository.ProductPriorityRepository
 
 class ProductPriorityViewModel : ViewModel()  {
 

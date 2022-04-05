@@ -4,12 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.BannerModel
-import com.perfect.prodsuit.Model.ChangeMpinModel
 import com.perfect.prodsuit.Model.OverDueModel
-import com.perfect.prodsuit.Reprository.BannersRepository
-import com.perfect.prodsuit.Reprository.ChangeMpinRepository
-import com.perfect.prodsuit.Reprository.OverDueRepository
+import com.perfect.prodsuit.Repository.OverDueRepository
 
 class OverDueListViewModel : ViewModel() {
 

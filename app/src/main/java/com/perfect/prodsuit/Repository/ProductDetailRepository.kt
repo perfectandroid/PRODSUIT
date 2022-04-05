@@ -1,4 +1,4 @@
-package com.perfect.prodsuit.Reprository
+package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -8,9 +8,9 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.MediaTypeModel
+import com.perfect.prodsuit.Model.ProductDetailModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
+import com.perfect.prodsuit.View.Activity.ProductActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -20,19 +20,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object MediaTypeRepository {
+object ProductDetailRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val mediaTypeSetterGetter = MutableLiveData<MediaTypeModel>()
-    val TAG: String = "MediaTypeRepository"
+    val productdetailSetterGetter = MutableLiveData<ProductDetailModel>()
+    val TAG: String = "ProductDetailRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MediaTypeModel> {
-        getMediaType(context)
-        return mediaTypeSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<ProductDetailModel> {
+        getProductDetail(context)
+        return productdetailSetterGetter
     }
 
-    private fun getMediaType(context: Context) {
-
+    private fun getProductDetail(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -60,26 +59,23 @@ object MediaTypeRepository {
 
             try {
 
-
-//                "ReqMode":"9",
+//                "ReqMode":"14",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
-//                "Token":sfdsgdgdg
-
+//                "Token":sfdsgdgdg,
+//                "ID_Category:"1"
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("19"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(
-                    LeadGenerationActivity.ID_LeadFrom))
-                //requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ProductActivity.ID_Category))
 
-                Log.e(TAG,"requestObject1   82   "+requestObject1)
-                Log.e(TAG,"ID_LeadFrom   82   "+ LeadGenerationActivity.ID_LeadFrom)
+                Log.e(TAG,"requestObject1   80   "+requestObject1)
+                Log.e(TAG,"ID_Category   80   "+ProductActivity.ID_Category)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -88,7 +84,7 @@ object MediaTypeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getMediType(body)
+            val call = apiService.getProductDetail(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -97,10 +93,10 @@ object MediaTypeRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<MediaTypeModel>()
-                        leads.add(MediaTypeModel(response.body()))
+                        val leads = ArrayList<ProductDetailModel>()
+                        leads.add(ProductDetailModel(response.body()))
                         val msg = leads[0].message
-                        mediaTypeSetterGetter.value = MediaTypeModel(msg)
+                        productdetailSetterGetter.value = ProductDetailModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -117,7 +113,5 @@ object MediaTypeRepository {
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
-
     }
-
 }

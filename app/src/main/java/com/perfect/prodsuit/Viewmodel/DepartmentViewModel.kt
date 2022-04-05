@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.DepartmentModel
-import com.perfect.prodsuit.Reprository.DepartmentRepository
+import com.perfect.prodsuit.Repository.DepartmentRepository
 
 
 class DepartmentViewModel: ViewModel()  {

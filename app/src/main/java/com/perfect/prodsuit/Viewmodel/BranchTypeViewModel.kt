@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.BranchTypeModel
-import com.perfect.prodsuit.Reprository.BranchTypeRepository
+import com.perfect.prodsuit.Repository.BranchTypeRepository
 
 class BranchTypeViewModel: ViewModel() {
 
