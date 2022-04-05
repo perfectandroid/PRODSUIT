@@ -33,7 +33,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textStyle="bold"
-                android:text="LEADS"
+                android:text="ERP SOLUTIONS"
                 app:fontFamily="@font/myfont"
                 android:textColor="@color/colorPrimaryDark"/>
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="15dp"
                 app:fontFamily="@font/myfont"
-                android:text="Send or receive money without any trouble with this app’s fund transfer channels. We make transferring funds from your Bank account very simple and convenient. In fact, there are various options that we provide for transferring your funds online."
+                android:text="An ERP system, enables businesses to identify waste, eliminate inefficiencies, improve customer relations and facilitate real-time collaboration. ERP systems enable businesses to have greater insight and visibility into their supply chain operations."
                 android:textColor="@color/black"/>
         </LinearLayout>
     </ScrollView>

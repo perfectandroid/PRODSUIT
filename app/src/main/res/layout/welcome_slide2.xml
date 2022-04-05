@@ -33,7 +33,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:textStyle="bold"
-                    android:text="SERVICES"
+                    android:text="ERP SOLUTIONS FOR MANUFACTURING INDUSTRY"
                     app:fontFamily="@font/myfont"
                     android:textColor="@color/colorPrimaryDark"/>
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_marginBottom="20dp"
                     android:textSize="15dp"
                     app:fontFamily="@font/myfont"
-                    android:text="The easiest way to find your bank branch is to log in and go to your branch details page. This should give you the branch name, address, contact details, opening &amp; closing time etc.  You can also locate your branch on Map &amp; can get exact location by tracking."
+                    android:text="At its core, an ERP is an application that automates business processes, and provides insights and internal controls, drawing on a central database that collects inputs from departments including accounting, manufacturing, supply chain management, sales, marketing and human resources."
                     android:textColor="@color/black"/>
             </LinearLayout>
         </ScrollView>
