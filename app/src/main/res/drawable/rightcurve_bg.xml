@@ -17,6 +17,6 @@
     <gradient
         android:angle="45"
         android:endColor="@color/colorAccent"
-        android:centerColor="@color/navbottom"
+        android:centerColor="@color/colorAccent"
         android:startColor="@color/navbottom" />
 </shape>
