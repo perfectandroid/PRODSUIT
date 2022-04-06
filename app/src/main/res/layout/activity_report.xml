@@ -62,14 +62,15 @@
                         android:gravity="center"
                         android:orientation="horizontal">
                         <ImageView
-                            android:layout_width="match_parent"
+                            android:layout_width="200dp"
                             android:layout_height="150dp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/reportlogo"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/llleadgeneration"
+                        android:id="@+id/ll_reportview"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_gravity="center"
@@ -100,7 +101,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/llleadmanagement"
+                        android:id="@+id/ll_ticketreport"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_gravity="center"

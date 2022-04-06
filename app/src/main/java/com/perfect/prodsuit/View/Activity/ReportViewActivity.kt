@@ -9,47 +9,31 @@ import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
-class ReportActivity : AppCompatActivity() , View.OnClickListener{
+class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
 
-    private var ll_reportview: LinearLayout? = null
-    private var ll_ticketreport: LinearLayout? = null
-    private var imback: ImageView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_report)
+        setContentView(R.layout.activity_reportview)
         setRegViews()
         bottombarnav()
     }
 
     private fun setRegViews() {
-        imback = findViewById(R.id.imback)
+        val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-        ll_reportview = findViewById(R.id.ll_reportview)
-        ll_reportview!!.setOnClickListener(this)
-        ll_ticketreport = findViewById(R.id.ll_ticketreport)
-        ll_ticketreport!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
-            }
-            R.id.ll_reportview->{
-                val i = Intent(this@ReportActivity, ReportViewActivity::class.java)
-                startActivity(i)
-            }
-            R.id.ll_ticketreport->{
-                val i = Intent(this@ReportActivity, TicketReportActivity::class.java)
-                startActivity(i)
             }
         }
     }
@@ -61,11 +45,11 @@ class ReportActivity : AppCompatActivity() , View.OnClickListener{
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
-                        val i = Intent(this@ReportActivity, HomeActivity::class.java)
+                        val i = Intent(this@ReportViewActivity, HomeActivity::class.java)
                         startActivity(i)
                     }
                     R.id.profile -> {
-                        val i = Intent(this@ReportActivity, ReportActivity::class.java)
+                        val i = Intent(this@ReportViewActivity, ProfileActivity::class.java)
                         startActivity(i)
                     }
                     R.id.logout -> {
@@ -94,7 +78,7 @@ class ReportActivity : AppCompatActivity() , View.OnClickListener{
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
                 dologoutchanges()
-                startActivity(Intent(this@ReportActivity, WelcomeActivity::class.java))
+                startActivity(Intent(this@ReportViewActivity, WelcomeActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
