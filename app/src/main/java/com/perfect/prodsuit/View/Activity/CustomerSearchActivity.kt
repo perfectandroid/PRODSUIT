@@ -52,6 +52,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         var strEmail = ""
         var strPhone = ""
         var strAddress = ""
+        var ID_Customer = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +65,13 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         setRegViews()
         bottombarnav()
+
+        strCustomer = ""
+        strName = ""
+        strEmail = ""
+        strPhone = ""
+        strAddress = ""
+        ID_Customer = ""
     }
 
     private fun setRegViews() {
@@ -132,8 +140,8 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
             snackbar.show()
         }
-        else if (strPhone.equals("")){
-            val snackbar: Snackbar = Snackbar.make(v, "Enter Phone", Snackbar.LENGTH_LONG)
+        else if (strPhone.equals("") || strPhone.length != 10){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Mobile", Snackbar.LENGTH_LONG)
             snackbar.setActionTextColor(Color.WHITE)
             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
             snackbar.show()
@@ -157,51 +165,16 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun addCustomer() {
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                customerAddViewModel.addCustomerApi(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1761   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@CustomerSearchActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
+        val intent = Intent()
+        intent.putExtra("Customer_Mode", "0")
+        intent.putExtra("ID_Customer", "")
+        intent.putExtra("Name", strName)
+        intent.putExtra("Address", strAddress)
+        intent.putExtra("Email", strEmail)
+        intent.putExtra("MobileNumber", strPhone)
+        setResult(CUSTOMER_SEARCH!!, intent)
+        finish()
     }
 
     private fun getCustomerSearch() {
@@ -376,6 +349,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         if (data.equals("customer")){
             val jsonObject = customerArrayList.getJSONObject(position)
             val intent = Intent()
+            intent.putExtra("Customer_Mode", "1")
             intent.putExtra("ID_Customer", jsonObject.getString("ID_Customer"))
             intent.putExtra("Name", jsonObject.getString("Name"))
             intent.putExtra("Address", jsonObject.getString("Address"))

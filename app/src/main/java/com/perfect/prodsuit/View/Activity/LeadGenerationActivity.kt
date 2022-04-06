@@ -70,7 +70,7 @@ import java.util.*
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
-    private var SELECT_LOCATION: Int? = 102
+    private var SELECT_LOCATION: Int? = 103
 
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
@@ -108,6 +108,27 @@ import java.util.*
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
+
+        var Customer_Mode : String?= ""
+        var ID_Customer : String?= ""
+        var Customer_Name : String?= ""
+        var Customer_Mobile : String?= ""
+        var Customer_Email : String?= ""
+        var Customer_Address : String?= ""
+
+
+        var locAddress : String?= ""
+        var locCity : String?= ""
+        var locState : String?= ""
+        var locCountry : String?= ""
+        var locpostalCode : String?= ""
+        var locKnownName : String?= ""
+        var strLatitude : String?= ""
+        var strLongitue : String?= ""
+
+
+
+
     }
 
 
@@ -123,6 +144,32 @@ import java.util.*
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         setRegViews()
         bottombarnav()
+        clearData()
+
+
+    }
+
+    private fun clearData() {
+        ID_LeadFrom  = ""
+        ID_LeadThrough = ""
+        ID_CollectedBy = ""
+        ID_MediaMaster = ""
+
+        Customer_Mode = ""
+        ID_Customer = ""
+        Customer_Name = ""
+        Customer_Mobile = ""
+        Customer_Email = ""
+        Customer_Address = ""
+
+        locAddress = ""
+        locCity = ""
+        locState = ""
+        locCountry = ""
+        locpostalCode = ""
+        locKnownName = ""
+        strLatitude = ""
+        strLongitue = ""
     }
 
     private fun setRegViews() {
@@ -730,6 +777,13 @@ import java.util.*
         if (requestCode == CUSTOMER_SEARCH){
             if (data!=null){
                 txtcustomer!!.text = data!!.getStringExtra("Name")
+
+                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
+                ID_Customer       = data!!.getStringExtra("ID_Customer")
+                Customer_Name     = data!!.getStringExtra("Name")
+                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
+                Customer_Email    = data!!.getStringExtra("Email")
+                Customer_Address  = data!!.getStringExtra("Address")
             }
 
         }
@@ -742,6 +796,15 @@ import java.util.*
                 }else{
                     txtLocation!!.setText(data.getStringExtra("city"))
                 }
+
+                locAddress      = data.getStringExtra("address")
+                locCity         = data.getStringExtra("city")
+                locState        = data.getStringExtra("state")
+                locCountry      = data.getStringExtra("country")
+                locpostalCode   = data.getStringExtra("postalCode")
+                locKnownName    = data.getStringExtra("knownName")
+                strLatitude     = data.getStringExtra("strLatitude")
+                strLongitue     = data.getStringExtra("strLongitue")
             }
 
         }

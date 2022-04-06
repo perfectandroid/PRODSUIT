@@ -1,59 +1,49 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import java.text.SimpleDateFormat
+import java.util.*
 
-class LeadActivity : AppCompatActivity() , View.OnClickListener {
+class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener{
 
+    val TAG : String = "LeadGeneratnActivity"
+    lateinit var context: Context
+    private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
-    private var llleadgeneration: LinearLayout? = null
-    private var llleadmanagement: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_leads)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        setContentView(R.layout.activity_lead_generatn)
+        context = this@LeadGeneratnActivity
+
         setRegViews()
         bottombarnav()
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+
         imback!!.setOnClickListener(this)
-        llleadgeneration = findViewById<LinearLayout>(R.id.llleadgeneration)
-        llleadgeneration!!.setOnClickListener(this)
-        llleadmanagement = findViewById<LinearLayout>(R.id.llleadmanagement)
-        llleadmanagement!!.setOnClickListener(this)
-    }
 
-    override fun onClick(v: View) {
-        when(v.id){
-            R.id.imback->{
-                finish()
-            }
-            R.id.llleadgeneration->{
-//                val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
-//                startActivity(i)
-
-                val i = Intent(this@LeadActivity, LeadGeneratnActivity::class.java)
-                startActivity(i)
-            }
-            R.id.llleadmanagement->{
-                val i = Intent(this@LeadActivity, LeadManagemnetActivity::class.java)
-                startActivity(i)
-            }
-        }
     }
 
     private fun bottombarnav() {
@@ -63,11 +53,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
-                        val i = Intent(this@LeadActivity, HomeActivity::class.java)
+                        val i = Intent(this@LeadGeneratnActivity, HomeActivity::class.java)
                         startActivity(i)
                     }
                     R.id.profile -> {
-                        val i = Intent(this@LeadActivity, ProfileActivity::class.java)
+                        val i = Intent(this@LeadGeneratnActivity, ProfileActivity::class.java)
                         startActivity(i)
                     }
                     R.id.logout -> {
@@ -96,7 +86,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
                 dologoutchanges()
-                startActivity(Intent(this@LeadActivity, WelcomeActivity::class.java))
+                startActivity(Intent(this@LeadGeneratnActivity, WelcomeActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -133,6 +123,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     finishAffinity()
                 }
+
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -140,4 +131,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.imback->{
+                finish()
+            }
+        }
+    }
 }
