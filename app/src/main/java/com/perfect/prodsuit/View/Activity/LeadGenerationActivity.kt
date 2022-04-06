@@ -108,6 +108,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
+
+        var Customer_Mode : String?= ""
+        var ID_Customer : String?= ""
+        var Customer_Name : String?= ""
+        var Customer_Mobile : String?= ""
+        var Customer_Email : String?= ""
+        var Customer_Address : String?= ""
+
+
     }
 
 
@@ -125,8 +134,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         setRegViews()
         bottombarnav()
+        clearData()
 
 
+    }
+
+    private fun clearData() {
+        ID_LeadFrom  = ""
+        ID_LeadThrough = ""
+        ID_CollectedBy = ""
+        ID_MediaMaster = ""
+
+        Customer_Mode = ""
+        ID_Customer = ""
+        Customer_Name = ""
+        Customer_Mobile = ""
+        Customer_Email = ""
+        Customer_Address = ""
     }
 
     private fun setRegViews() {
@@ -744,6 +768,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         if (requestCode == CUSTOMER_SEARCH){
             if (data!=null){
                 txtcustomer!!.text = data!!.getStringExtra("Name")
+
+                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
+                ID_Customer       = data!!.getStringExtra("ID_Customer")
+                Customer_Name     = data!!.getStringExtra("Name")
+                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
+                Customer_Email    = data!!.getStringExtra("Email")
+                Customer_Address  = data!!.getStringExtra("Address")
             }
 
         }
@@ -755,6 +786,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     txtLocation!!.setText(data.getStringExtra("address"))
                 }else{
                     txtLocation!!.setText(data.getStringExtra("city"))
+
                 }
             }
 
