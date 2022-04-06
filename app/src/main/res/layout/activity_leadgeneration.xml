@@ -116,7 +116,6 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="left"
-                                        android:text="12-03-2022"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
