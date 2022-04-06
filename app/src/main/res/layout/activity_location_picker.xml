@@ -14,6 +14,117 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="visible"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/white_rounded_corner">
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:editable="true"
+                    android:gravity="left|center_vertical"
+                    android:hint="Search Location"
+                    android:layout_toLeftOf="@+id/llSearch"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions|textMultiLine"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:id="@+id/llSearch"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignTop="@+id/edtSearch"
+
+                        android:layout_marginRight="5dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_cancel_"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:id="@+id/txtSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="SUBMIT"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:background="@drawable/white_rounded_corner"/>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/txtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="SEARCH"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:background="@drawable/white_rounded_corner"/>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
     </RelativeLayout>
 
 </LinearLayout>
