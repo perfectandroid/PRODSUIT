@@ -44,7 +44,7 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
+ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
 
     val TAG : String = "LeadGenerationActivity"
     lateinit var context: Context
@@ -117,16 +117,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_leadgeneration)
         context = this@LeadGenerationActivity
-
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
-
         setRegViews()
         bottombarnav()
-
-
     }
 
     private fun setRegViews() {
@@ -139,7 +135,6 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
-
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
@@ -148,7 +143,6 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtMediatype = findViewById<TextView>(R.id.txtMediatype)
         txtDate = findViewById<TextView>(R.id.txtDate)
         txtLocation = findViewById<TextView>(R.id.txtLocation)
-
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
@@ -158,13 +152,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llmediatype!!.setOnClickListener(this)
         lldate!!.setOnClickListener(this)
         lllocation!!.setOnClickListener(this)
-
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
-
         imgvupload1!!.setOnClickListener(this)
         imgvupload2!!.setOnClickListener(this)
-
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
@@ -182,21 +173,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 startActivityForResult(intent, CUSTOMER_SEARCH!!);
             }
             R.id.llleadthrough->{
-
                 if (ID_LeadFrom.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
-
                 }else{
                     getLeadThrough(v)
                 }
-
-
             }
             R.id.llLeadFrom->{
-
                 getLeadFrom(v)
             }
 
