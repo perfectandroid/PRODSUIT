@@ -45,6 +45,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     private var mLocationPermissionGranted = false
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
+    private var SELECT_LOCATION: Int? = 102
+
 
     var mLastLocation: Location? = null
     var mCurrLocationMarker: Marker? = null
@@ -56,6 +58,17 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     var imgMylocation: ImageView? = null
     var edtSearch: EditText? = null
     var txtSearch: TextView? = null
+    var txtSubmit: TextView? = null
+
+    var address : String = ""
+    var city : String = ""
+    var state : String = ""
+    var country : String = ""
+    var postalCode : String = ""
+    var knownName : String = ""
+
+    var strLongitue : String = ""
+    var strLatitude : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +93,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
 
         edtSearch = findViewById(R.id.edtSearch) as EditText
         txtSearch = findViewById(R.id.txtSearch) as TextView
+        txtSubmit = findViewById(R.id.txtSubmit) as TextView
         imgSearch = findViewById(R.id.imgSearch) as ImageView
 
         imgSearch!!.setOnClickListener {
@@ -95,12 +109,14 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
                 if (addresses != null && !addresses!!.equals("")){
                     googleMap.clear()
                     //   val address = addresses!![0]
-                    val address = addresses!!.get(0).getAddressLine(0)
-                    val city = addresses!!.get(0).locality
-                    val state = addresses!!.get(0).adminArea
-                    val country = addresses!!.get(0).countryName
-                    val postalCode = addresses!!.get(0).postalCode
-                    val knownName = addresses!!.get(0).featureName
+                    address = addresses!!.get(0).getAddressLine(0)
+                    city = addresses!!.get(0).locality
+                    state = addresses!!.get(0).adminArea
+                    country = addresses!!.get(0).countryName
+                    postalCode = addresses!!.get(0).postalCode
+                    knownName = addresses!!.get(0).featureName
+                    strLongitue = addresses!![0].longitude.toString()
+                    strLatitude = addresses!![0].latitude.toString()
                     val latLng = LatLng(addresses!![0].latitude, addresses!![0].longitude)
                     googleMap!!.addMarker(MarkerOptions().position(latLng).title(address+","+city+","+state+","+country+","+postalCode))
                     googleMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
@@ -109,9 +125,24 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
             }catch (e: Exception){
                 Log.e(TAG,"Exception   108   "+e.toString())
             }
-
-
 //
+        }
+
+        txtSubmit!!.setOnClickListener {
+            if (addresses != null && !addresses!!.equals("")){
+                intent.putExtra("address", address)
+                intent.putExtra("city", city)
+                intent.putExtra("state", state)
+                intent.putExtra("country", country)
+                intent.putExtra("postalCode", postalCode)
+                intent.putExtra("knownName", knownName)
+                intent.putExtra("strLatitude", strLatitude)
+                intent.putExtra("strLongitue", strLongitue)
+
+                setResult(SELECT_LOCATION!!, intent)
+                finish()
+            }
+
         }
 
 
@@ -195,12 +226,15 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
             googleMap.clear()
             geocoder = Geocoder(this, Locale.getDefault())
             addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            val address = addresses!!.get(0).getAddressLine(0)
-            val city = addresses!!.get(0).locality
-            val state = addresses!!.get(0).adminArea
-            val country = addresses!!.get(0).countryName
-            val postalCode = addresses!!.get(0).postalCode
-            val knownName = addresses!!.get(0).featureName
+            address = addresses!!.get(0).getAddressLine(0)
+            city = addresses!!.get(0).locality
+            state = addresses!!.get(0).adminArea
+            country = addresses!!.get(0).countryName
+            postalCode = addresses!!.get(0).postalCode
+            knownName = addresses!!.get(0).featureName
+
+            strLongitue = latLng.longitude.toString()
+            strLatitude = latLng.latitude.toString()
 
             val latLng = LatLng(latLng.latitude, latLng.longitude)
             val markerOptions = MarkerOptions()
@@ -257,13 +291,17 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         }
         geocoder = Geocoder(this, Locale.getDefault())
         addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-        val address = addresses!!.get(0).getAddressLine(0)
-        val city = addresses!!.get(0).locality
-        val state = addresses!!.get(0).adminArea
-        val country = addresses!!.get(0).countryName
-        val postalCode = addresses!!.get(0).postalCode
-        val knownName = addresses!!.get(0).featureName
+        address = addresses!!.get(0).getAddressLine(0)
+        city = addresses!!.get(0).locality
+        state = addresses!!.get(0).adminArea
+        country = addresses!!.get(0).countryName
+        postalCode = addresses!!.get(0).postalCode
+        knownName = addresses!!.get(0).featureName
         //Place current location marker
+
+        strLongitue = location.longitude.toString()
+        strLatitude = location.latitude.toString()
+
         val latLng = LatLng(location.latitude, location.longitude)
         val markerOptions = MarkerOptions()
         markerOptions.position(latLng)

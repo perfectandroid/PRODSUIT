@@ -66,6 +66,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtproduct: TextView? = null
     private var txtMediatype: TextView? = null
     private var txtDate: TextView? = null
+    private var txtLocation: TextView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
@@ -146,6 +147,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtproduct = findViewById<TextView>(R.id.txtproduct)
         txtMediatype = findViewById<TextView>(R.id.txtMediatype)
         txtDate = findViewById<TextView>(R.id.txtDate)
+        txtLocation = findViewById<TextView>(R.id.txtLocation)
 
         imback!!.setOnClickListener(this)
         llCustomer!!.setOnClickListener(this)
@@ -742,6 +744,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         if (requestCode == CUSTOMER_SEARCH){
             if (data!=null){
                 txtcustomer!!.text = data!!.getStringExtra("Name")
+            }
+
+        }
+
+        if (requestCode == SELECT_LOCATION){
+            if (data!=null){
+            //    txtcustomer!!.text = data!!.getStringExtra("Name")
+                if (data.getStringExtra("address").equals("")){
+                    txtLocation!!.setText(data.getStringExtra("address"))
+                }else{
+                    txtLocation!!.setText(data.getStringExtra("city"))
+                }
             }
 
         }
