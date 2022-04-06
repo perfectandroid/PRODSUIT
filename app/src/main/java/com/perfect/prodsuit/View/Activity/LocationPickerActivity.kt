@@ -1,8 +1,11 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Address
 import android.location.Location
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
@@ -10,6 +13,7 @@ import android.view.WindowManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationServices
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,18 +23,40 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.databinding.ActivityLocationPickerBinding
-import java.util.ArrayList
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.location.LocationRequest
 
-class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
+import android.location.Geocoder
+import android.util.Log
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
+import java.util.*
 
-    private lateinit var mMap: GoogleMap
+class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener,GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener {
+
+    val TAG  :String="LocationPickerActivity"
+    private lateinit var googleMap : GoogleMap
     private var mLocationPermissionGranted = false
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
 
-    private lateinit var currentLocation: Location
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var mLastLocation: Location? = null
+    var mCurrLocationMarker: Marker? = null
+    var mGoogleApiClient: GoogleApiClient? = null
+    var mLocationRequest: LocationRequest? = null
+    var geocoder: Geocoder? = null
+    var addresses: List<Address>? = null
+    var imgSearch: ImageView? = null
+    var imgMylocation: ImageView? = null
+    var edtSearch: EditText? = null
+    var txtSearch: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +70,51 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         // Try to obtain the map from the SupportMapFragment.
         checkAndRequestPermissions()
 
-        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@LocationPickerActivity)
-       // fetchLocation()
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        val mapFragment = supportFragmentManager
-//            .findFragmentById(R.id.map) as SupportMapFragment
-//        mapFragment.getMapAsync(this)
+
+//        googleMap = mapFragment.getMap();
+//        googleMap!!.setMyLocationEnabled(true);
+
+        edtSearch = findViewById(R.id.edtSearch) as EditText
+        txtSearch = findViewById(R.id.txtSearch) as TextView
+        imgSearch = findViewById(R.id.imgSearch) as ImageView
+
+        imgSearch!!.setOnClickListener {
+            edtSearch!!.setText("")
+        }
+        txtSearch!!.setOnClickListener {
+
+            try {
+                val strName = edtSearch!!.text.toString()
+                geocoder = Geocoder(this, Locale.getDefault())
+                addresses = geocoder!!.getFromLocationName(strName,1)
+
+                if (addresses != null && !addresses!!.equals("")){
+                    googleMap.clear()
+                    //   val address = addresses!![0]
+                    val address = addresses!!.get(0).getAddressLine(0)
+                    val city = addresses!!.get(0).locality
+                    val state = addresses!!.get(0).adminArea
+                    val country = addresses!!.get(0).countryName
+                    val postalCode = addresses!!.get(0).postalCode
+                    val knownName = addresses!!.get(0).featureName
+                    val latLng = LatLng(addresses!![0].latitude, addresses!![0].longitude)
+                    googleMap!!.addMarker(MarkerOptions().position(latLng).title(address+","+city+","+state+","+country+","+postalCode))
+                    googleMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+                    edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+                }
+            }catch (e: Exception){
+                Log.e(TAG,"Exception   108   "+e.toString())
+            }
+
+
+//
+        }
+
+
 
 
     }
@@ -58,14 +122,6 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
 
     private fun getLocationPermission() {
 
@@ -106,5 +162,130 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         return true
     }
+
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(p0: GoogleMap) {
+        googleMap = p0
+
+
+//        // Add a marker in Sydney and move the camera
+//        val sydney = LatLng(-34.0, 151.0)
+//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+              //  googleMap.setMyLocationEnabled(true);
+                googleMap.setMyLocationEnabled(false);
+                googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+            }
+        }
+        else {
+            buildGoogleApiClient();
+           // googleMap.setMyLocationEnabled(true);
+            googleMap.setMyLocationEnabled(false);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
+
+        // Setting a click event handler for the map
+        googleMap.setOnMapClickListener(OnMapClickListener { latLng ->
+            googleMap.clear()
+            geocoder = Geocoder(this, Locale.getDefault())
+            addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            val address = addresses!!.get(0).getAddressLine(0)
+            val city = addresses!!.get(0).locality
+            val state = addresses!!.get(0).adminArea
+            val country = addresses!!.get(0).countryName
+            val postalCode = addresses!!.get(0).postalCode
+            val knownName = addresses!!.get(0).featureName
+
+            val latLng = LatLng(latLng.latitude, latLng.longitude)
+            val markerOptions = MarkerOptions()
+            markerOptions.position(latLng)
+            markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            mCurrLocationMarker = googleMap.addMarker(markerOptions)
+            edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+
+            //move map camera
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+        })
+
+    }
+
+
+
+    @Synchronized
+    protected fun buildGoogleApiClient() {
+        mGoogleApiClient = GoogleApiClient.Builder(this)
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API).build()
+        mGoogleApiClient!!.connect()
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onConnected(bundle: Bundle?) {
+        mLocationRequest = LocationRequest()
+        mLocationRequest!!.setInterval(1000)
+        mLocationRequest!!.setFastestInterval(1000)
+        mLocationRequest!!.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient!!,
+                mLocationRequest!!,
+                this
+            )
+        }
+    }
+
+    override fun onConnectionSuspended(i: Int) {}
+
+    override fun onLocationChanged(location: Location) {
+        mLastLocation = location
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker!!.remove()
+        }
+        geocoder = Geocoder(this, Locale.getDefault())
+        addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+        val address = addresses!!.get(0).getAddressLine(0)
+        val city = addresses!!.get(0).locality
+        val state = addresses!!.get(0).adminArea
+        val country = addresses!!.get(0).countryName
+        val postalCode = addresses!!.get(0).postalCode
+        val knownName = addresses!!.get(0).featureName
+        //Place current location marker
+        val latLng = LatLng(location.latitude, location.longitude)
+        val markerOptions = MarkerOptions()
+        markerOptions.position(latLng)
+        markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        mCurrLocationMarker = googleMap.addMarker(markerOptions)
+        edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+
+        //move map camera
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
+        }
+    }
+
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+
+    }
+
 
 }
