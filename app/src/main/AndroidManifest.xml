@@ -144,11 +144,12 @@
             android:name=".View.Activity.SetMpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- SplashActivity -->
-
-
-
-
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.ReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">

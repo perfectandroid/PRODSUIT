@@ -33,7 +33,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textStyle="bold"
-                android:text="DASHBOARD"
+                android:text="GROW YOUR BUSINESS WITH ERP SOFTWARE"
                 app:fontFamily="@font/myfont"
                 android:textColor="@color/colorPrimaryDark"/>
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="15dp"
                 app:fontFamily="@font/myfont"
-                android:text="Online recharging was never this easy. Thanks to the availability of numerous digital services, one can recharge from anywhere, anytime. You can recharge Mobile (Pre-paid/Postpaid), Data card, DTH etc. using this app very easily."
+                android:text="ERP refers to a type of software that organizations use to manage day-to-day business activities such as accounting, procurement, project management, risk management and compliance, and supply chain operations."
                 android:textColor="@color/black"/>
         </LinearLayout>
     </ScrollView>

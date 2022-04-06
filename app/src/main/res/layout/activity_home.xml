@@ -11,17 +11,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"
+         android:background="@color/homebgcolor"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_weight="2.5"
+                android:background="@color/white"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/btn_menu"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:padding="10dp"
-                    android:tint="@color/colorPrimaryExtraDark"
+                    android:tint="@color/black"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/homemenu"/>
                 <ImageView
@@ -45,7 +47,7 @@
                         android:src="@drawable/ic_notifications"
                         android:layout_alignParentRight="true"
                         android:padding="8dp"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/black"
                         android:layout_gravity="right"
                         android:layout_height="60dp"/>
 
@@ -60,7 +62,7 @@
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:text="100"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="10dp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -123,6 +125,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="40dp"
                             android:scaleType="fitXY"
+                            android:padding="5dp"
+                            android:tint="@color/white"
                             android:src="@drawable/filter" />
 
                         <TextView
@@ -157,7 +161,7 @@
                             android:layout_marginRight="40dp"
                             android:scaleType="fitXY"
                             android:tint="@color/white"
-                            android:src="@drawable/settings" />
+                            android:src="@drawable/service" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -203,6 +207,7 @@
                                 android:scaleType="fitXY"
                                 android:padding="5dp"
                                 android:layout_margin="10dp"
+                                android:tint="@color/white"
                                 android:src="@drawable/agenda"/>
                         </LinearLayout>
 
@@ -213,7 +218,6 @@
                             android:layout_weight="1"
                             android:gravity="left|center"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/rightcurve_whitebg"
                             android:text="My Agenda"
                             android:textStyle="bold"
                             android:fontFamily="@font/myfont"
@@ -247,7 +251,8 @@
                                 android:scaleType="fitXY"
                                 android:padding="5dp"
                                 android:layout_margin="10dp"
-                                android:src="@drawable/dashboard"/>
+                                android:tint="@color/white"
+                                android:src="@drawable/monitor"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
@@ -264,6 +269,7 @@
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/ll_report"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -290,14 +296,14 @@
                                 android:padding="5dp"
                                 android:layout_margin="10dp"
                                 android:tint="@color/white"
-                                android:src="@drawable/notificationbellicon"/>
+                                android:src="@drawable/report"/>
                         </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:text="Notification"
+                            android:text="Reports"
                             android:textStyle="bold"
                             android:gravity="left|center"
                             android:layout_marginLeft="10dp"
