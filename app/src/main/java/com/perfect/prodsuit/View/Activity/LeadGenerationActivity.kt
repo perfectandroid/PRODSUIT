@@ -117,6 +117,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var Customer_Address : String?= ""
 
 
+        var locAddress : String?= ""
+        var locCity : String?= ""
+        var locState : String?= ""
+        var locCountry : String?= ""
+        var locpostalCode : String?= ""
+        var locKnownName : String?= ""
+        var strLatitude : String?= ""
+        var strLongitue : String?= ""
+
+
     }
 
 
@@ -151,6 +161,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         Customer_Mobile = ""
         Customer_Email = ""
         Customer_Address = ""
+
+        locAddress = ""
+        locCity = ""
+        locState = ""
+        locCountry = ""
+        locpostalCode = ""
+        locKnownName = ""
+        strLatitude = ""
+        strLongitue = ""
     }
 
     private fun setRegViews() {
@@ -786,8 +805,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     txtLocation!!.setText(data.getStringExtra("address"))
                 }else{
                     txtLocation!!.setText(data.getStringExtra("city"))
-
                 }
+
+                locAddress      = data.getStringExtra("address")
+                locCity         = data.getStringExtra("city")
+                locState        = data.getStringExtra("state")
+                locCountry      = data.getStringExtra("country")
+                locpostalCode   = data.getStringExtra("postalCode")
+                locKnownName    = data.getStringExtra("knownName")
+                strLatitude     = data.getStringExtra("strLatitude")
+                strLongitue     = data.getStringExtra("strLongitue")
             }
 
         }
