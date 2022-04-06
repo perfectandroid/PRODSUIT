@@ -70,7 +70,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
-    private var SELECT_LOCATION: Int? = 102
+    private var SELECT_LOCATION: Int? = 103
 
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
@@ -125,6 +125,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var locKnownName : String?= ""
         var strLatitude : String?= ""
         var strLongitue : String?= ""
+
+
 
 
     }

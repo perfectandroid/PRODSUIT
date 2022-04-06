@@ -45,7 +45,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     private var mLocationPermissionGranted = false
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
-    private var SELECT_LOCATION: Int? = 102
+    private var SELECT_LOCATION: Int? = 103
 
 
     var mLastLocation: Location? = null

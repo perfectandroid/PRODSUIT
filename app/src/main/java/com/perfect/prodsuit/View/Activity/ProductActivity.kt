@@ -36,6 +36,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
+    private var SELECT_PRODUCT: Int? = 102
 
     var edt_category: EditText? = null
     var edt_product: EditText? = null
@@ -144,25 +145,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
 
-        ID_Category = ""
-        ID_Product = ""
-        ID_Status = ""
-        ID_Priority = ""
-        strProdName = ""
-        ID_NextAction = ""
-        ID_ActionType = ""
-        ID_BranchType = ""
-        ID_Branch = ""
-        ID_Department = ""
-        ID_Employee = ""
-        strQty = ""
-        strFeedback = ""
-        strFollowupdate = ""
-        strFollowupdate = "0"
+
 
         setRegViews()
         bottombarnav()
-
+        clearData()
+        resetData()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -183,6 +171,29 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
             }
         }
+
+    }
+
+    private fun clearData() {
+        ID_Category = ""
+        ID_Product = ""
+        strProdName = ""
+        strQty = ""
+        ID_Priority = ""
+        strFeedback = ""
+        ID_Status = ""
+
+        ID_NextAction = ""
+        ID_ActionType = ""
+        strFollowupdate = ""
+        strNeedCheck = "0"
+
+        ID_BranchType = ""
+        ID_Branch = ""
+        ID_Department = ""
+        ID_Employee = ""
+
+
 
     }
 
@@ -318,7 +329,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
             R.id.btnSubmit->{
                 Config.Utils.hideSoftKeyBoard(this@ProductActivity,v)
-             // validations(v)
+              validations(v)
             }
 
         }
@@ -348,11 +359,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
         ID_Category = ""
         ID_Product = ""
-        ID_Status = ""
-        ID_Priority = ""
         strProdName = ""
+        strQty = ""
+        ID_Priority = ""
+        strFeedback = ""
+        ID_Status = ""
+
         ID_NextAction = ""
         ID_ActionType = ""
+        strFollowupdate = ""
+        strNeedCheck = "0"
+
         ID_BranchType = ""
         ID_Branch = ""
         ID_Department = ""
@@ -385,7 +402,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             if (ID_Status.equals("1")){
                 validations1(v)
             }else{
-                Log.e(TAG,"No Follow up")
+                PassDatas()
             }
         }
     }
@@ -403,10 +420,57 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         }else{
             if (strNeedCheck.equals("1")){
                 Log.e(TAG,"need Transfer")
+                validations2(v)
             }else{
                 Log.e(TAG,"No Transfer")
+                PassDatas()
             }
         }
+    }
+
+
+
+    private fun validations2(v: View) {
+        if (ID_BranchType.equals("")){
+            warningMessage(v,"Select Branch Type")
+        }
+        else if (ID_Branch.equals("")){
+            warningMessage(v,"Select Branch")
+        }
+        else if (ID_Department.equals("")){
+            warningMessage(v,"Select Department")
+        }
+        else if (ID_Employee.equals("")){
+            warningMessage(v,"Select Employee")
+        }
+        else{
+            PassDatas()
+        }
+
+    }
+
+    private fun PassDatas() {
+        val intent = Intent()
+        intent.putExtra("ID_Category", ID_Category)
+        intent.putExtra("ID_Product", ID_Product)
+        intent.putExtra("strProdName", strProdName)
+        intent.putExtra("strQty", strQty)
+        intent.putExtra("ID_Priority", ID_Priority)
+        intent.putExtra("strFeedback", strFeedback)
+        intent.putExtra("ID_Status", ID_Status)
+        intent.putExtra("ID_NextAction", ID_NextAction)
+        intent.putExtra("ID_ActionType", ID_ActionType)
+        intent.putExtra("strFollowupdate", strFollowupdate)
+        intent.putExtra("strNeedCheck", strNeedCheck)
+        intent.putExtra("ID_BranchType", strNeedCheck)
+        intent.putExtra("ID_Branch", ID_Branch)
+        intent.putExtra("ID_Department", ID_Department)
+        intent.putExtra("ID_Employee", ID_Employee)
+
+
+        setResult(SELECT_PRODUCT!!, intent)
+        finish()
+
     }
 
     private fun warningMessage(v: View ,message: String) {
