@@ -13,7 +13,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -21,6 +20,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -41,18 +41,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.CustomerAddViewModel
 import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
-import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+import androidx.lifecycle.Observer
 
 class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapReadyCallback,
     LocationListener,GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
 
     val TAG : String = "LeadGeneratnActivity"
-    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
@@ -95,9 +93,8 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
     /////////////////
 
+    lateinit var context: Context
     lateinit var customersearchViewModel: CustomerSearchViewModel
-    lateinit var customerAddViewModel: CustomerAddViewModel
-    lateinit var customerArrayList : JSONArray
 
     var edt_customer: EditText? = null
     var img_search: ImageView? = null
@@ -355,86 +352,37 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-//                otpActivityViewModel.getOTP(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                var jobj = jObject.getJSONObject("UserLoginDetails")
-//                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF1,
-//                                    0
-//                                )
-//                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
-//                                FK_EmployeeEditer.putString(
-//                                    "FK_Employee",
-//                                    jobj.getString("FK_Employee")
-//                                )
-//                                FK_EmployeeEditer.commit()
-//                                val UserNameSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF2,
-//                                    0
-//                                )
-//                                val UserNameEditer = UserNameSP.edit()
-//                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
-//                                UserNameEditer.commit()
-//                                val AddressSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF3,
-//                                    0
-//                                )
-//                                val AddressEditer = AddressSP.edit()
-//                                AddressEditer.putString("Address", jobj.getString("Address"))
-//                                AddressEditer.commit()
-//                                val MobileNumberSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF4,
-//                                    0
-//                                )
-//                                val MobileNumberEditer = MobileNumberSP.edit()
-//                                MobileNumberEditer.putString(
-//                                    "MobileNumber",
-//                                    jobj.getString("MobileNumber")
-//                                )
-//                                MobileNumberEditer.commit()
-//                                val TokenSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF5,
-//                                    0
-//                                )
-//                                val TokenEditer = TokenSP.edit()
-//                                TokenEditer.putString("Token", jobj.getString("Token"))
-//                                TokenEditer.commit()
-//                                val EmailSP = applicationContext.getSharedPreferences(
-//                                    Config.SHARED_PREF6,
-//                                    0
-//                                )
-//                                val EmailEditer = EmailSP.edit()
-//                                EmailEditer.putString("Email", jobj.getString("Email"))
-//                                EmailEditer.commit()
-//                                val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
-//                                startActivity(i)
-//                                finish()
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@OTPActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                                clearAll()
-//                            }
-//                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
+                customersearchViewModel.getCustomer(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+
+                            }
+                            else {
+                                val builder = AlertDialog.Builder(
+                                        this@LeadGeneratnActivity,
+                                        R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        }
+                        else {
+                            Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
                 progressDialog!!.dismiss()
             }
             false -> {
