@@ -11,14 +11,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
+                android:layout_above="@+id/chipNavigation"
                 android:orientation="vertical">
+
+
                 <LinearLayout
+                    android:id="@+id/llHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -30,7 +34,8 @@
                         android:padding="10dp"
                         android:layout_weight="2"
                         android:tint="@color/black"
-                        android:src="@drawable/icback"/>
+                        android:src="@drawable/icback"
+                        tools:ignore="UseAppTint" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -56,32 +61,35 @@
                         android:background="@color/color_activity_transparent"
                         android:padding="10dp"
                         android:src="@drawable/ic_edit"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"
+                        tools:ignore="UseAppTint" />
                 </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llHeader"
                     android:orientation="vertical">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
                             <LinearLayout
                                 android:id="@+id/lldate"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -118,6 +126,7 @@
                                         android:gravity="left"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
+                                        android:hint="Date"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
@@ -126,12 +135,13 @@
                             <LinearLayout
                                 android:id="@+id/lllocation"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:background="@color/color_activity_transparent"
@@ -166,7 +176,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="left"
-                                        android:text="Calicut"
+                                        android:hint="Location"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
@@ -174,21 +184,17 @@
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+
                             <LinearLayout
                                 android:id="@+id/llCustomer"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -224,7 +230,6 @@
                                         android:layout_gravity="center"
                                         android:gravity="left"
                                         android:hint="Select Customer"
-                                        android:textColorHint="@color/black"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
@@ -235,12 +240,13 @@
                             <LinearLayout
                                 android:id="@+id/llproduct"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -276,7 +282,6 @@
                                         android:layout_gravity="center"
                                         android:gravity="left"
                                         android:hint="Select Product"
-                                        android:textColorHint="@color/black"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
@@ -284,132 +289,122 @@
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/llLeadFrom"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/leadselect_bg"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="left|center"
-                        android:background="@color/color_activity_transparent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/terminal"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/llLeadFrom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/etselect_bg"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
+                                    android:background="@color/color_activity_transparent"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/terminal"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:text="Lead From"
-                            android:textColor="@color/colorPrimaryExtraDark"
-                            android:textSize="12dp"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:text="Lead From"
+                                        android:textColor="@color/colorPrimaryExtraDark"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
 
-                        <TextView
-                            android:id="@+id/txtleadfrom"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:hint="Select Lead From"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont" />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/llleadthrough"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/leadselect_bg"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="left|center"
-                        android:background="@color/color_activity_transparent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/leadthrough"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/txtleadfrom"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:hint="Select Lead From"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/llleadthrough"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/etselect_bg"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
+                                    android:background="@color/color_activity_transparent"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/leadthrough"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:text="Lead Through"
-                            android:textColor="@color/colorPrimaryExtraDark"
-                            android:textSize="12dp"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:text="Lead Through"
+                                        android:textColor="@color/colorPrimaryExtraDark"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
 
-                        <TextView
-                            android:id="@+id/txtleadthrough"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:hint="Select Lead Through"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/txtleadthrough"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:hint="Select Lead Through"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+                                </LinearLayout>
+                            </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/llleadby"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="5dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -445,7 +440,6 @@
                                         android:layout_gravity="center"
                                         android:gravity="left"
                                         android:hint="Select Employee"
-                                        android:textColorHint="@color/black"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
@@ -456,12 +450,13 @@
                             <LinearLayout
                                 android:id="@+id/llmediatype"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:layout_width="40dp"
@@ -497,7 +492,6 @@
                                         android:layout_gravity="center"
                                         android:gravity="left"
                                         android:hint="Select Media Type"
-                                        android:textColorHint="@color/black"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
                                         android:textStyle="bold"
@@ -505,16 +499,18 @@
                                         android:fontFamily="@font/myfont" />
                                 </LinearLayout>
                             </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
+
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@drawable/leadselect_bg"
+                                android:background="@drawable/etselect_bg"
                                 android:orientation="horizontal">
+
                                 <ImageView
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
@@ -575,45 +571,48 @@
                                 </LinearLayout>
                             </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_margin="5dp"
-                        android:gravity="center">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_margin="5dp"
+                                android:gravity="center">
 
-                        <Button
-                            android:id="@+id/btnYes"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/btn_bgcolorprimary"
-                            android:fontFamily="@font/myfont"
-                            android:padding="2dp"
-                            android:text="Reset"
-                            android:textAllCaps="false"
-                            android:textSize="15dp" />
-                        <Button
-                            android:id="@+id/btnNo"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
-                            android:textSize="15dp"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/myfont"
-                            android:background="@drawable/btn_bgcolour"
-                            android:padding="2dp"
-                            android:layout_weight="2"
-                            android:textAllCaps="false"
-                            android:text="Submit" />
-                    </LinearLayout>
+                                <Button
+                                    android:id="@+id/btnYes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/btn_bgcolorprimary"
+                                    android:fontFamily="@font/myfont"
+                                    android:padding="2dp"
+                                    android:text="Reset"
+                                    android:textAllCaps="false"
+                                    android:textSize="15dp" />
+                                <Button
+                                    android:id="@+id/btnNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/myfont"
+                                    android:background="@drawable/btn_bgcolour"
+                                    android:padding="2dp"
+                                    android:layout_weight="2"
+                                    android:textAllCaps="false"
+                                    android:text="Submit" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
+
                 </LinearLayout>
-        </ScrollView>
 
-            </LinearLayout>
+
+            </RelativeLayout>
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
             android:layout_width="match_parent"
