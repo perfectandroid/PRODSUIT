@@ -35,6 +35,7 @@
     <color name="navbottom">#FF8B9C</color>
     <color name="colorlist">#FA8898</color>
     <color name="pophead">#EC9AA5</color>
+    <color name="sidemenu">#cc6423</color>
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>

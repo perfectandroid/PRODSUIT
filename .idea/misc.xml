@@ -3,16 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle.xml" value="0.24010416666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_grey.xml" value="0.21979166666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_right_arrow.xml" value="0.15" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_rightarrow.xml" value="0.24010416666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangles.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/white_rounded_corner.xml" value="0.22135416666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.22" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.20520833333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_product.xml" value="0.22864583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.20364583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
