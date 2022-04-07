@@ -332,7 +332,6 @@
                                             android:gravity="left"
                                             android:hint="Customer"
                                             android:textColor="@color/black"
-                                            android:drawableRight="@drawable/arrow_down"
                                             android:textSize="15dp"
                                             android:textStyle="bold"
                                             android:layout_weight="1"
@@ -547,7 +546,6 @@
 
 
                             <LinearLayout
-                                android:id="@+id/llproduct"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -556,47 +554,189 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/etselect_bg"
-                                android:orientation="horizontal">
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="left|center"
-                                    android:background="@color/color_activity_transparent"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/products"/>
+                                android:orientation="vertical">
+
                                 <LinearLayout
+                                    android:id="@+id/llproduct"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="left|center"
+                                        android:background="@color/color_activity_transparent"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/products"/>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="left"
+                                            android:text="Product Details"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont" />
+
+                                        <TextView
+                                            android:id="@+id/txtproduct"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="left"
+                                            android:hint="Select Product"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont" />
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/llProdDetail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="5dp"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
+                                    android:background="@drawable/etselect_bggrey"
                                     android:orientation="vertical">
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:text="Product Details"
-                                        android:textColor="@color/colorPrimaryExtraDark"
-                                        android:textSize="12dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
 
-                                    <TextView
-                                        android:id="@+id/txtproduct"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:hint="Select Product"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
+                                        android:layout_margin="10dp"
+                                        android:orientation="vertical">
+
+                                        <EditText
+                                            android:id="@+id/edtProdcategory"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:editable="false"
+                                            android:hint="Category"
+                                            android:padding="10dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:orientation="horizontal">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/shape_bg"
+                                                android:orientation="horizontal">
+
+                                                <EditText
+                                                    android:id="@+id/edtProdproduct"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@android:color/transparent"
+                                                    android:drawableRight="@drawable/arrow_down"
+                                                    android:editable="false"
+                                                    android:hint="Product"
+                                                    android:padding="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+
+
+
+                                            </RelativeLayout>
+
+                                            <EditText
+                                                android:id="@+id/edtProdqty"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="2dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:layout_weight="3.5"
+                                                android:background="@drawable/shape_bg"
+                                                android:gravity="center"
+                                                android:hint="Qty"
+                                                android:inputType="number"
+                                                android:maxLength="3"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/edtProdpriority"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:editable="false"
+                                            android:hint="Priority"
+                                            android:padding="10dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <EditText
+                                            android:id="@+id/edtProdfeedback"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:hint="Feedback"
+                                            android:padding="10dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <EditText
+                                            android:id="@+id/edtProdstatus"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:editable="false"
+                                            android:hint="Status"
+                                            android:padding="10dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+
+                                    </LinearLayout>
+
                                 </LinearLayout>
+
+
+
+
                             </LinearLayout>
 
                             <LinearLayout
