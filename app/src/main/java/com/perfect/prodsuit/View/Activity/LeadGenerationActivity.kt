@@ -27,17 +27,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.View.Adapter.LeadByAdapter
-import com.perfect.prodsuit.View.Adapter.LeadFromAdapter
-import com.perfect.prodsuit.View.Adapter.LeadThroughAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
-import com.perfect.prodsuit.Viewmodel.LeadByViewModel
-import com.perfect.prodsuit.Viewmodel.LeadFromViewModel
-import com.perfect.prodsuit.Viewmodel.LeadThroughViewModel
-import com.perfect.prodsuit.Viewmodel.MediaTypeViewModel
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
@@ -51,6 +45,7 @@ import java.util.*
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
+    private var llCustomerDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
@@ -58,6 +53,7 @@ import java.util.*
     private var llmediatype: LinearLayout? = null
     private var lldate: LinearLayout? = null
     private var lllocation: LinearLayout? = null
+    private var ll_Todate: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
@@ -67,6 +63,21 @@ import java.util.*
     private var txtMediatype: TextView? = null
     private var txtDate: TextView? = null
     private var txtLocation: TextView? = null
+    private var txtok1: TextView? = null
+
+    private var edt_customer: EditText? = null
+    private var edtCustname: EditText? = null
+    private var edtCustphone: EditText? = null
+    private var edtCustemail: EditText? = null
+    private var edtCustaddress: EditText? = null
+
+    private var img_search: ImageView? = null
+    var date_Picker1: DatePicker? = null
+
+    private var btnCustReset: Button? = null
+    private var btnCustSubmit: Button? = null
+    private var imCustclose: ImageView? = null
+    private var imDateclose: ImageView? = null
 
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
@@ -102,6 +113,15 @@ import java.util.*
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
     var dialogMediaType : Dialog? = null
+    var dialogCustSearch : Dialog? = null
+
+     lateinit var customersearchViewModel: CustomerSearchViewModel
+     lateinit var customerAddViewModel: CustomerAddViewModel
+     lateinit var customerArrayList : JSONArray
+
+
+
+     //GONE
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -109,12 +129,14 @@ import java.util.*
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
 
+        var custDetailMode : String?= "1"
         var Customer_Mode : String?= ""
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
         var Customer_Email : String?= ""
         var Customer_Address : String?= ""
+        var strCustomer = ""
 
 
         var locAddress : String?= ""
@@ -125,6 +147,10 @@ import java.util.*
         var locKnownName : String?= ""
         var strLatitude : String?= ""
         var strLongitue : String?= ""
+
+        var dateMode : String?= "1"  // GONE
+
+
 
 
 
@@ -142,6 +168,8 @@ import java.util.*
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
+        customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
+        customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         setRegViews()
         bottombarnav()
         clearData()
@@ -155,12 +183,14 @@ import java.util.*
         ID_CollectedBy = ""
         ID_MediaMaster = ""
 
+        custDetailMode = "1"
         Customer_Mode = ""
         ID_Customer = ""
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
         Customer_Address = ""
+        strCustomer = ""
 
         locAddress = ""
         locCity = ""
@@ -174,7 +204,12 @@ import java.util.*
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        img_search = findViewById<ImageView>(R.id.img_search)
+        imCustclose = findViewById<ImageView>(R.id.imCustclose)
+        imDateclose = findViewById<ImageView>(R.id.imDateclose)
+
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
+        llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
@@ -182,6 +217,8 @@ import java.util.*
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
+        ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
+
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
@@ -190,7 +227,29 @@ import java.util.*
         txtMediatype = findViewById<TextView>(R.id.txtMediatype)
         txtDate = findViewById<TextView>(R.id.txtDate)
         txtLocation = findViewById<TextView>(R.id.txtLocation)
+        txtok1 = findViewById<TextView>(R.id.txtok1)
+
+
+        edt_customer = findViewById<EditText>(R.id.edt_customer)
+
+        edtCustname= findViewById<EditText>(R.id.edtCustname)
+        edtCustemail= findViewById<EditText>(R.id.edtCustemail)
+        edtCustphone= findViewById<EditText>(R.id.edtCustphone)
+        edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
+
+        btnCustReset = findViewById<Button>(R.id.btnCustReset)
+        btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
+
+
         imback!!.setOnClickListener(this)
+        img_search!!.setOnClickListener(this)
+        imCustclose!!.setOnClickListener(this)
+        imDateclose!!.setOnClickListener(this)
+
+        btnCustReset!!.setOnClickListener(this)
+        btnCustSubmit!!.setOnClickListener(this)
+        txtok1!!.setOnClickListener(this)
+
         llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
@@ -206,6 +265,9 @@ import java.util.*
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
+
+        date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
     }
 
     override fun onClick(v: View) {
@@ -216,8 +278,17 @@ import java.util.*
             R.id.llCustomer->{
 //                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
 //                CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
-                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-                startActivityForResult(intent, CUSTOMER_SEARCH!!);
+//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
+//                startActivityForResult(intent, CUSTOMER_SEARCH!!);
+
+                if (custDetailMode.equals("0")){
+                    llCustomerDetail!!.visibility = View.GONE
+                    custDetailMode = "1"
+                }else{
+                    llCustomerDetail!!.visibility = View.VISIBLE
+                    custDetailMode = "0"
+                }
+
             }
             R.id.llleadthrough->{
                 if (ID_LeadFrom.equals("")){
@@ -280,13 +351,94 @@ import java.util.*
                 getMediaType()
             }
             R.id.lldate->{
-                datePickerPopup()
+               // datePickerPopup()
+                if (dateMode.equals("0")){
+                    ll_Todate!!.visibility = View.GONE
+                    dateMode = "1"
+                }else{
+                    ll_Todate!!.visibility = View.VISIBLE
+                    dateMode = "0"
+                }
             }
 
             R.id.lllocation->{
 
                 val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
                 startActivityForResult(intent, SELECT_LOCATION!!);
+            }
+
+            R.id.img_search->{
+                try {
+                    strCustomer = edt_customer!!.text.toString()
+                    if (strCustomer.equals("")){
+                        val snackbar: Snackbar = Snackbar.make(v, "Enter Customer", Snackbar.LENGTH_LONG)
+                        snackbar.setActionTextColor(Color.WHITE)
+                        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                        snackbar.show()
+
+                    }else{
+                        getCustomerSearch()
+                    }
+                }catch (e  :Exception){
+                    Log.e("TAG","Exception  64   "+e.toString())
+                }
+            }
+
+            R.id.btnCustSubmit->{
+                validations(v)
+            }
+            R.id.btnCustReset->{
+
+                edtCustname!!.setText("")
+                edtCustphone!!.setText("")
+                edtCustemail!!.setText("")
+                edtCustaddress!!.setText("")
+                custDetailMode = "1"
+                ID_Customer = ""
+                edt_customer!!.setText("")
+                custDetailMode = "1"
+                Customer_Mode = ""
+                ID_Customer  = ""
+                Customer_Name  = ""
+                Customer_Mobile = ""
+                Customer_Email = ""
+                Customer_Address = ""
+                strCustomer = ""
+            }
+
+            R.id.imCustclose->{
+                llCustomerDetail!!.visibility = View.GONE
+                custDetailMode = "1"
+            }
+            R.id.imDateclose->{
+                ll_Todate!!.visibility = View.GONE
+                dateMode = "1"
+            }
+
+            R.id.txtok1->{
+                try {
+                    date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                    val day: Int = date_Picker1!!.getDayOfMonth()
+                    val mon: Int = date_Picker1!!.getMonth()
+                    val month: Int = mon+1
+                    val year: Int = date_Picker1!!.getYear()
+                    var strDay = day.toString()
+                    var strMonth = month.toString()
+                    var strYear = year.toString()
+                    if (strDay.length == 1){
+                        strDay ="0"+day
+                    }
+                    if (strMonth.length == 1){
+                        strMonth ="0"+strMonth
+                    }
+                    txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    ll_Todate!!.visibility=View.GONE
+                    dateMode = "1"
+                }
+                catch (e: Exception){
+                    Log.e(TAG,"Exception   428   "+e.toString())
+                }
+
             }
         }
     }
@@ -983,7 +1135,137 @@ import java.util.*
         return path
     }
 
-    override fun onClick(position: Int, data: String) {
+
+     private fun getCustomerSearch() {
+         when (Config.ConnectivityUtils.isConnected(this)) {
+             true -> {
+                 progressDialog = ProgressDialog(context, R.style.Progress)
+                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                 progressDialog!!.setCancelable(false)
+                 progressDialog!!.setIndeterminate(true)
+                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                 progressDialog!!.show()
+                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                 customersearchViewModel.getCustomer(this)!!.observe(
+                     this,
+                     Observer { serviceSetterGetter ->
+                         val msg = serviceSetterGetter.message
+                         if (msg!!.length > 0) {
+                             val jObject = JSONObject(msg)
+                             Log.e(TAG,"msg   105   "+msg)
+                             if (jObject.getString("StatusCode") == "0") {
+                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
+                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
+                                 if (customerArrayList.length()>0){
+                                     Log.e(TAG,"msg   1052   "+msg)
+
+                                     customerSearchPopup(customerArrayList)
+                                 }
+                             } else {
+                                 val builder = AlertDialog.Builder(
+                                     this@LeadGenerationActivity,
+                                     R.style.MyDialogTheme
+                                 )
+                                 builder.setMessage(jObject.getString("EXMessage"))
+                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                 }
+                                 val alertDialog: AlertDialog = builder.create()
+                                 alertDialog.setCancelable(false)
+                                 alertDialog.show()
+                             }
+                         } else {
+                             Toast.makeText(
+                                 applicationContext,
+                                 "Some Technical Issues.",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                     })
+                 progressDialog!!.dismiss()
+             }
+             false -> {
+                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                     .show()
+             }
+         }
+     }
+
+     private fun customerSearchPopup(customerArrayList: JSONArray) {
+         try {
+
+             dialogCustSearch = Dialog(this)
+             dialogCustSearch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+             dialogCustSearch!! .setContentView(R.layout.customersearch_popup)
+             dialogCustSearch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+             val recyCustomer = dialogCustSearch!! .findViewById(R.id.recyCustomer) as RecyclerView
+
+             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+             recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+             val adapter = CustomerAdapter(this@LeadGenerationActivity, customerArrayList)
+             recyCustomer!!.adapter = adapter
+             adapter.setClickListener(this@LeadGenerationActivity)
+
+             dialogCustSearch!!.show()
+             dialogCustSearch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+     }
+
+     private fun validations(v: View) {
+
+         val Cust_Name =  edtCustname!!.text.toString()
+         val Cust_Email =  edtCustemail!!.text.toString()
+         val Cust_Mobile =  edtCustphone!!.text.toString()
+         val Cust_Address =  edtCustaddress!!.text.toString()
+
+         if (Cust_Name.equals("")){
+             val snackbar: Snackbar = Snackbar.make(v, "Enter Name", Snackbar.LENGTH_LONG)
+             snackbar.setActionTextColor(Color.WHITE)
+             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+             snackbar.show()
+         }
+         else if (Cust_Mobile.equals("") || Cust_Mobile!!.length != 10){
+             val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Mobile", Snackbar.LENGTH_LONG)
+             snackbar.setActionTextColor(Color.WHITE)
+             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+             snackbar.show()
+         }
+         else if (Cust_Email.equals("")){
+             val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Email", Snackbar.LENGTH_LONG)
+             snackbar.setActionTextColor(Color.WHITE)
+             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+             snackbar.show()
+         }
+         else if (Cust_Address.equals("")){
+             val snackbar: Snackbar = Snackbar.make(v, "Enter Address", Snackbar.LENGTH_LONG)
+             snackbar.setActionTextColor(Color.WHITE)
+             snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+             snackbar.show()
+         }
+         else{
+
+
+             custDetailMode = "1"
+             ID_Customer = ""
+             edt_customer!!.setText("")
+             txtcustomer!!.text = Cust_Name
+
+             Customer_Mode     = "0"  // ADD
+             ID_Customer       = ""
+             Customer_Name     = Cust_Name
+             Customer_Mobile   = Cust_Mobile
+             Customer_Email    = Cust_Email
+             Customer_Address  = Cust_Address
+             llCustomerDetail!!.visibility = View.GONE
+
+         }
+
+     }
+
+
+     override fun onClick(position: Int, data: String) {
 
         if (data.equals("leadfrom")){
             dialogLeadFrom!!.dismiss()
@@ -1016,6 +1298,25 @@ import java.util.*
             ID_MediaMaster = jsonObject.getString("ID_MediaMaster")
             txtMediatype!!.text = jsonObject.getString("MdaName")
 
+        }
+        if (data.equals("customer")){
+            dialogCustSearch!!.dismiss()
+            val jsonObject = customerArrayList.getJSONObject(position)
+            txtcustomer!!.text = jsonObject!!.getString("Name")
+
+            custDetailMode = "1"
+            Customer_Mode     = "1"  // SEARCH
+            ID_Customer       = jsonObject.getString("ID_Customer")
+            Customer_Name     = jsonObject.getString("Name")
+            Customer_Mobile   = jsonObject.getString("MobileNumber")
+            Customer_Email    = jsonObject.getString("Email")
+            Customer_Address  = jsonObject.getString("Address")
+
+            llCustomerDetail!!.visibility = View.GONE
+            edtCustname!!.setText("")
+            edtCustphone!!.setText("")
+            edtCustemail!!.setText("")
+            edtCustaddress!!.setText("")
         }
     }
 }

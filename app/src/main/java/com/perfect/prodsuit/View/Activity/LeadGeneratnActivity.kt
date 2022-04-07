@@ -15,10 +15,7 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -45,10 +42,15 @@ import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
 import org.json.JSONObject
 import java.util.*
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.View.Adapter.CustomerAdapter
+import org.json.JSONArray
 
 class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapReadyCallback,
     LocationListener,GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener {
+    GoogleApiClient.OnConnectionFailedListener, ItemClickListener {
 
     val TAG : String = "LeadGeneratnActivity"
     private var progressDialog: ProgressDialog? = null
@@ -61,6 +63,8 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
     var ll_content_location: LinearLayout? = null
     var ll_menu_customer: LinearLayout? = null
     var ll_content_customer: LinearLayout? = null
+    var ll_menu_product: LinearLayout? = null
+    var ll_content_product: LinearLayout? = null
 
 
     /////////////////
@@ -95,9 +99,30 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
     lateinit var context: Context
     lateinit var customersearchViewModel: CustomerSearchViewModel
-
+    lateinit var customerArrayList : JSONArray
     var edt_customer: EditText? = null
     var img_search: ImageView? = null
+    var btnCustReset: Button? = null
+    var btnCustSubmit: Button? = null
+    var llCustomerSave: LinearLayout? = null
+
+    var txtCustName: TextView? = null
+    var txtCustMobile: TextView? = null
+    var txtCustEmail: TextView? = null
+    var txtCustAddress: TextView? = null
+
+    var edt_name: EditText? = null
+    var edt_phone: EditText? = null
+    var edt_email: EditText? = null
+    var edt_address: EditText? = null
+    private var dialogCustSearch : Dialog? = null
+
+    ////////////////// PRODUCT
+
+    var txtProductDetail: TextView? = null
+    var llProductDetails: LinearLayout? = null
+    var modeProductDetail : String = "0"  // VISIBLE
+
     companion object {
         var strCustomer = ""
         var strName = ""
@@ -133,15 +158,31 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         ll_content_location = findViewById<LinearLayout>(R.id.ll_content_location)
         ll_menu_customer = findViewById<LinearLayout>(R.id.ll_menu_customer)
         ll_content_customer = findViewById<LinearLayout>(R.id.ll_content_customer)
+        ll_menu_product = findViewById<LinearLayout>(R.id.ll_menu_product)
+        ll_content_product = findViewById<LinearLayout>(R.id.ll_content_product)
+
 
         edtSearch = findViewById<EditText>(R.id.edtSearch)
+        edtSearch = findViewById<EditText>(R.id.edtSearch)
 
-        imgClear = findViewById(R.id.imgClear) as ImageView
+        txtCustName = findViewById(R.id.txtCustName) as TextView
+        txtCustMobile = findViewById(R.id.txtCustMobile) as TextView
+        txtCustEmail = findViewById(R.id.txtCustEmail) as TextView
+        txtCustAddress = findViewById(R.id.txtCustAddress) as TextView
+        edt_name = findViewById<EditText>(R.id.edt_name)
+        edt_email = findViewById<EditText>(R.id.edt_email)
+        edt_phone = findViewById<EditText>(R.id.edt_phone)
+        edt_address = findViewById<EditText>(R.id.edt_address)
+        btnCustReset = findViewById(R.id.btnCustReset) as Button
+        btnCustSubmit = findViewById(R.id.btnCustSubmit) as Button
+        llCustomerSave = findViewById(R.id.llCustomerSave) as LinearLayout
+
         txtSearch = findViewById(R.id.txtSearch) as TextView
         txtSubmit = findViewById(R.id.txtSubmit) as TextView
 
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         img_search = findViewById<ImageView>(R.id.img_search)
+        imgClear = findViewById<ImageView>(R.id.imgClear)
 
         imback!!.setOnClickListener(this)
         imgClear!!.setOnClickListener(this)
@@ -149,11 +190,20 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         ll_menu_date!!.setOnClickListener(this)
         ll_menu_location!!.setOnClickListener(this)
         ll_menu_customer!!.setOnClickListener(this)
+        ll_menu_product!!.setOnClickListener(this)
 
         txtSearch!!.setOnClickListener(this)
         txtSubmit!!.setOnClickListener(this)
+        btnCustSubmit!!.setOnClickListener(this)
+        btnCustReset!!.setOnClickListener(this)
 
         img_search!!.setOnClickListener(this)
+
+        ///////// PRODUCT
+
+        txtProductDetail = findViewById<TextView>(R.id.txtProductDetail)
+        llProductDetails = findViewById<LinearLayout>(R.id.llProductDetails)
+        txtProductDetail!!.setOnClickListener(this)
 
     }
 
@@ -251,20 +301,24 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 ll_content_date!!.visibility = View.VISIBLE
                 ll_content_location!!.visibility = View.GONE
                 ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangle))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
             }
             R.id.ll_menu_location->{
 
                 ll_content_date!!.visibility = View.GONE
                 ll_content_location!!.visibility = View.VISIBLE
                 ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangle))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
 
                 val mapFragment = supportFragmentManager
                     .findFragmentById(R.id.map) as SupportMapFragment
@@ -278,10 +332,26 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 ll_content_date!!.visibility = View.GONE
                 ll_content_location!!.visibility = View.GONE
                 ll_content_customer!!.visibility = View.VISIBLE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangle))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
+
+            }
+
+             R.id.ll_menu_product->{
+
+                ll_content_date!!.visibility = View.GONE
+                ll_content_location!!.visibility = View.GONE
+                ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.VISIBLE
+
+                ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangle))
 
 
 
@@ -289,9 +359,9 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
             R.id.txtSearch->{
                 try {
-                    val strName = edtSearch!!.text.toString()
+                    val strNames = edtSearch!!.text.toString()
                     geocoder = Geocoder(this, Locale.getDefault())
-                    addresses = geocoder!!.getFromLocationName(strName,1)
+                    addresses = geocoder!!.getFromLocationName(strNames,1)
 
                     if (addresses != null && !addresses!!.equals("")){
                         googleMap.clear()
@@ -323,8 +393,10 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
             R.id.img_search->{
                 try {
+                    Log.e("TAG","img_search  64   ")
                     strCustomer = edt_customer!!.text.toString()
-                    if (CustomerSearchActivity.strCustomer.equals("")){
+                    Log.e("TAG","strCustomer  64   "+strCustomer)
+                    if (strCustomer.equals("")){
                         val snackbar: Snackbar = Snackbar.make(v, "Enter Customer", Snackbar.LENGTH_LONG)
                         snackbar.setActionTextColor(Color.WHITE)
                         snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
@@ -337,59 +409,48 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                     Log.e("TAG","Exception  64   "+e.toString())
                 }
             }
+            R.id.btnCustSubmit->{
+
+                validations(v)
+            }
+            R.id.btnCustReset->{
+
+                resetCustomer()
+            }
+
+            R.id.txtProductDetail->{
+                if (modeProductDetail.equals("0")){
+                    llProductDetails!!.visibility = View.GONE
+                    modeProductDetail = "1"
+                }else{
+                    llProductDetails!!.visibility = View.VISIBLE
+                    modeProductDetail = "0"
+                }
+            }
+
         }
     }
 
+    private fun resetCustomer() {
+        edt_customer!!.setText("")
+        strCustomer = ""
+        strName = ""
+        strEmail = ""
+        strPhone = ""
+        strAddress = ""
+        ID_Customer = ""
 
+        llCustomerSave!!.visibility=View.GONE
+        txtCustName!!.setText("")
+        txtCustMobile!!.setText("")
+        txtCustEmail!!.setText("")
+        txtCustAddress!!.setText("")
 
+        edt_name!!.setText("")
+        edt_email!!.setText("")
+        edt_phone!!.setText("")
+        edt_address!!.setText("")
 
-    private fun getCustomerSearch() {
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                customersearchViewModel.getCustomer(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-
-
-                            }
-                            else {
-                                val builder = AlertDialog.Builder(
-                                        this@LeadGeneratnActivity,
-                                        R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        }
-                        else {
-                            Toast.makeText(
-                                    applicationContext,
-                                    "Some Technical Issues.",
-                                    Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
     }
 
 
@@ -574,5 +635,161 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
     override fun onConnectionFailed(p0: ConnectionResult) {
 
+    }
+
+    private fun getCustomerSearch() {
+        llCustomerSave!!.visibility=View.GONE
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                customersearchViewModel.getCustomer(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+                                if (customerArrayList.length()>0){
+                                    Log.e(TAG,"msg   1052   "+msg)
+                                    customerSearchPopup(customerArrayList)
+                                }
+                            }
+                            else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGeneratnActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        }
+                        else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun customerSearchPopup(customerArrayList: JSONArray) {
+        try {
+
+            dialogCustSearch = Dialog(this)
+            dialogCustSearch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCustSearch!! .setContentView(R.layout.customersearch_popup)
+            dialogCustSearch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyCustomer = dialogCustSearch!! .findViewById(R.id.recyCustomer) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGeneratnActivity, 1)
+            recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = CustomerAdapter(this@LeadGeneratnActivity, customerArrayList)
+            recyCustomer!!.adapter = adapter
+            adapter.setClickListener(this@LeadGeneratnActivity)
+
+            dialogCustSearch!!.show()
+            dialogCustSearch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun validations(v: View) {
+        llCustomerSave!!.visibility=View.GONE
+        strName =  edt_name!!.text.toString()
+        strEmail =  edt_email!!.text.toString()
+        strPhone =  edt_phone!!.text.toString()
+        strAddress =  edt_address!!.text.toString()
+
+        if (strName.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Name", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strPhone.equals("") || strPhone.length != 10){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Mobile", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strEmail.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Valid Email", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else if (strAddress.equals("")){
+            val snackbar: Snackbar = Snackbar.make(v, "Enter Address", Snackbar.LENGTH_LONG)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+            snackbar.show()
+        }
+        else{
+
+            llCustomerSave!!.visibility=View.VISIBLE
+            ID_Customer = ""
+            edt_customer!!.setText("")
+
+            txtCustName!!.setText(strName)
+            txtCustMobile!!.setText(strPhone)
+            txtCustEmail!!.setText(strEmail)
+            txtCustAddress!!.setText(strAddress)
+
+        }
+
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("customer")){
+            dialogCustSearch!!.dismiss()
+            val jsonObject = customerArrayList.getJSONObject(position)
+            val intent = Intent()
+//            intent.putExtra("Customer_Mode", "1")
+//            intent.putExtra("ID_Customer", jsonObject.getString("ID_Customer"))
+//            intent.putExtra("Name", jsonObject.getString("Name"))
+//            intent.putExtra("Address", jsonObject.getString("Address"))
+//            intent.putExtra("Email", jsonObject.getString("Email"))
+//            intent.putExtra("MobileNumber", jsonObject.getString("MobileNumber"))
+//            setResult(CUSTOMER_SEARCH!!, intent)
+//            finish()
+
+            edt_customer!!.setText(jsonObject.getString("Name"))
+            strCustomer = jsonObject.getString("Name")
+            strName = jsonObject.getString("Name")
+            strEmail = jsonObject.getString("Email")
+            strPhone = jsonObject.getString("MobileNumber")
+            strAddress = jsonObject.getString("Address")
+            ID_Customer = jsonObject.getString("ID_Customer")
+
+            llCustomerSave!!.visibility=View.VISIBLE
+            txtCustName!!.setText(strName)
+            txtCustMobile!!.setText(strPhone)
+            txtCustEmail!!.setText(strEmail)
+            txtCustAddress!!.setText(strAddress)
+
+
+        }
     }
 }

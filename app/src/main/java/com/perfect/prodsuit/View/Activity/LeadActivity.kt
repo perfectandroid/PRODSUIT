@@ -43,11 +43,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
                 finish()
             }
             R.id.llleadgeneration->{
-//                val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
-//                startActivity(i)
-
-                val i = Intent(this@LeadActivity, LeadGeneratnActivity::class.java)
+                val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
                 startActivity(i)
+
+//                val i = Intent(this@LeadActivity, LeadGeneratnActivity::class.java)
+//                startActivity(i)
             }
             R.id.llleadmanagement->{
                 val i = Intent(this@LeadActivity, LeadManagemnetActivity::class.java)
