@@ -347,7 +347,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/llLeadFrom"
+                        android:id="@+id/llDashboardreporttype"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -386,7 +386,7 @@
                                 android:fontFamily="@font/myfont" />
 
                             <TextView
-                                android:id="@+id/txtleadfrom"
+                                android:id="@+id/txtdashboardtype"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -423,7 +423,7 @@
                             android:textAllCaps="false"
                             android:textSize="15dp" />
                         <Button
-                            android:id="@+id/btnNo"
+                            android:id="@+id/btnSubmit"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
