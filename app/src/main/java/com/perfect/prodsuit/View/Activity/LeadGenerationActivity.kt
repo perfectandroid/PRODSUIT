@@ -139,8 +139,8 @@ import java.util.*
      lateinit var productDetailViewModel: ProductDetailViewModel
      lateinit var productStatusViewModel: ProductStatusViewModel
      lateinit var productPriorityViewModel: ProductPriorityViewModel
-//     lateinit var followUpActionViewModel: FollowUpActionViewModel
-//     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+     lateinit var followUpActionViewModel: FollowUpActionViewModel
+     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
 //     lateinit var branchTypeViewModel: BranchTypeViewModel
 //     lateinit var branchViewModel: BranchViewModel
 //     lateinit var departmentViewModel: DepartmentViewModel
@@ -150,8 +150,8 @@ import java.util.*
      lateinit var prodDetailArrayList : JSONArray
      lateinit var prodStatusArrayList : JSONArray
      lateinit var prodPriorityArrayList : JSONArray
-//     lateinit var followUpActionArrayList : JSONArray
-//     lateinit var followUpTypeArrayList : JSONArray
+     lateinit var followUpActionArrayList : JSONArray
+     lateinit var followUpTypeArrayList : JSONArray
 //     lateinit var branchTypeArrayList : JSONArray
 //     lateinit var branchArrayList : JSONArray
 //     lateinit var departmentArrayList : JSONArray
@@ -161,8 +161,8 @@ import java.util.*
      private var dialogProdDet : Dialog? = null
      private var dialogProdStatus : Dialog? = null
      private var dialogProdPriority : Dialog? = null
-//     private var dialogFollowupAction : Dialog? = null
-//     private var dialogFollowupType : Dialog? = null
+     private var dialogFollowupAction : Dialog? = null
+     private var dialogFollowupType : Dialog? = null
 //     private var dialogBranchType : Dialog? = null
 //     private var dialogBranch : Dialog? = null
 //     private var dialogDepartment : Dialog? = null
@@ -172,8 +172,8 @@ import java.util.*
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
      var recyProdPriority: RecyclerView? = null
-//     var recyFollowupAction: RecyclerView? = null
-//     var recyFollowupType: RecyclerView? = null
+     var recyFollowupAction: RecyclerView? = null
+     var recyFollowupType: RecyclerView? = null
 //     var recyBranchType: RecyclerView? = null
 //     var recyBranch: RecyclerView? = null
 //     var recyDeaprtment: RecyclerView? = null
@@ -256,8 +256,8 @@ import java.util.*
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
-//        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
-//        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
 //        branchTypeViewModel = ViewModelProvider(this).get(BranchTypeViewModel::class.java)
 //        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
 //        departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
@@ -301,8 +301,8 @@ import java.util.*
         edtProdpriority!!.setText("")
 //        edt_feedback!!.setText("")
         edtProdstatus!!.setText("")
-//        edt_action!!.setText("")
-//        edt_type!!.setText("")
+        edtFollowaction!!.setText("")
+        edtFollowtype!!.setText("")
 //        edt_date!!.setText("")
 //        edt_barnchtype!!.setText("")
 //        edt_branch!!.setText("")
@@ -409,6 +409,9 @@ import java.util.*
         edtProdproduct!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
         edtProdstatus!!.setOnClickListener(this)
+
+        edtFollowaction!!.setOnClickListener(this)
+        edtFollowtype!!.setOnClickListener(this)
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
@@ -621,6 +624,12 @@ import java.util.*
             }
             R.id.edtProdstatus->{
                 getProductStatus()
+            }
+            R.id.edtFollowaction->{
+                getFollowupAction()
+            }
+            R.id.edtFollowtype->{
+                getFollowupType()
             }
 
         }
@@ -1776,6 +1785,169 @@ import java.util.*
          }
      }
 
+     private fun getFollowupAction() {
+         var followUpAction = 0
+         when (Config.ConnectivityUtils.isConnected(this)) {
+             true -> {
+                 progressDialog = ProgressDialog(context, R.style.Progress)
+                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                 progressDialog!!.setCancelable(false)
+                 progressDialog!!.setIndeterminate(true)
+                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                 progressDialog!!.show()
+                 followUpActionViewModel.getFollowupAction(this)!!.observe(
+                     this,
+                     Observer { serviceSetterGetter ->
+                         val msg = serviceSetterGetter.message
+                         if (msg!!.length > 0) {
+                             val jObject = JSONObject(msg)
+                             Log.e(TAG,"msg   82   "+msg)
+                             if (jObject.getString("StatusCode") == "0") {
+                                 val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                 followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                 if (followUpActionArrayList.length()>0){
+                                     if (followUpAction == 0){
+                                         followUpAction++
+                                         followUpActionPopup(followUpActionArrayList)
+                                     }
+
+                                 }
+                             } else {
+                                 val builder = AlertDialog.Builder(
+                                     this@LeadGenerationActivity,
+                                     R.style.MyDialogTheme
+                                 )
+                                 builder.setMessage(jObject.getString("EXMessage"))
+                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                 }
+                                 val alertDialog: AlertDialog = builder.create()
+                                 alertDialog.setCancelable(false)
+                                 alertDialog.show()
+                             }
+                         } else {
+                             Toast.makeText(
+                                 applicationContext,
+                                 "Some Technical Issues.",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                     })
+                 progressDialog!!.dismiss()
+             }
+             false -> {
+                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                     .show()
+             }
+         }
+     }
+
+     private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
+
+         try {
+
+             dialogFollowupAction = Dialog(this)
+             dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+             dialogFollowupAction!! .setContentView(R.layout.followup_action)
+             dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+             recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+
+             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+             recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+             val adapter = FollowupActionAdapter(this@LeadGenerationActivity, followUpActionArrayList)
+             recyFollowupAction!!.adapter = adapter
+             adapter.setClickListener(this@LeadGenerationActivity)
+
+             dialogFollowupAction!!.show()
+             dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+
+     }
+
+
+     private fun getFollowupType() {
+         var followUpType = 0
+         when (Config.ConnectivityUtils.isConnected(this)) {
+             true -> {
+                 progressDialog = ProgressDialog(context, R.style.Progress)
+                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                 progressDialog!!.setCancelable(false)
+                 progressDialog!!.setIndeterminate(true)
+                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                 progressDialog!!.show()
+                 followUpTypeViewModel.getFollowupType(this)!!.observe(
+                     this,
+                     Observer { serviceSetterGetter ->
+                         val msg = serviceSetterGetter.message
+                         if (msg!!.length > 0) {
+                             val jObject = JSONObject(msg)
+                             Log.e(TAG,"msg   82   "+msg)
+                             if (jObject.getString("StatusCode") == "0") {
+                                 val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                 followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                 if (followUpTypeArrayList.length()>0){
+                                     if (followUpType == 0){
+                                         followUpType++
+                                         followupTypePopup(followUpTypeArrayList)
+                                     }
+
+                                 }
+                             } else {
+                                 val builder = AlertDialog.Builder(
+                                     this@LeadGenerationActivity,
+                                     R.style.MyDialogTheme
+                                 )
+                                 builder.setMessage(jObject.getString("EXMessage"))
+                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                 }
+                                 val alertDialog: AlertDialog = builder.create()
+                                 alertDialog.setCancelable(false)
+                                 alertDialog.show()
+                             }
+                         } else {
+                             Toast.makeText(
+                                 applicationContext,
+                                 "Some Technical Issues.",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                     })
+                 progressDialog!!.dismiss()
+             }
+             false -> {
+                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                     .show()
+             }
+         }
+     }
+
+     private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+         try {
+
+             dialogFollowupType = Dialog(this)
+             dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
+             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+             val adapter = FollowupTypeAdapter(this@LeadGenerationActivity, followUpTypeArrayList)
+             recyFollowupType!!.adapter = adapter
+             adapter.setClickListener(this@LeadGenerationActivity)
+
+             dialogFollowupType!!.show()
+             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+
+     }
+
 
      override fun onClick(position: Int, data: String) {
 
@@ -1878,6 +2050,25 @@ import java.util.*
                  llfollowup!!.visibility  =View.GONE
                  switchTransfer!!.isChecked = false
              }
+         }
+         if (data.equals("followupaction")){
+             dialogFollowupAction!!.dismiss()
+             val jsonObject = followUpActionArrayList.getJSONObject(position)
+             Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
+             ID_NextAction = jsonObject.getString("ID_NextAction")
+             edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
+
+
+         }
+
+         if (data.equals("followuptype")){
+             dialogFollowupType!!.dismiss()
+             val jsonObject = followUpTypeArrayList.getJSONObject(position)
+             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+             ID_ActionType = jsonObject.getString("ID_ActionType")
+             edtFollowtype!!.setText(jsonObject.getString("ActnTypeName"))
+
+
          }
     }
 }
