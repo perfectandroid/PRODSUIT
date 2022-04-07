@@ -123,13 +123,21 @@ import java.util.*
      lateinit var customerArrayList : JSONArray
 
 
+     private var llfollowup: LinearLayout? = null
+
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
      private var edtProdpriority: EditText? = null
+     private var edtProdstatus: EditText? = null
+
+     private var edtFollowaction: EditText? = null
+     private var edtFollowtype: EditText? = null
+     private var edtFollowdate: EditText? = null
+     var switchTransfer: Switch? = null
 
      lateinit var productCategoryViewModel: ProductCategoryViewModel
      lateinit var productDetailViewModel: ProductDetailViewModel
-//     lateinit var productStatusViewModel: ProductStatusViewModel
+     lateinit var productStatusViewModel: ProductStatusViewModel
      lateinit var productPriorityViewModel: ProductPriorityViewModel
 //     lateinit var followUpActionViewModel: FollowUpActionViewModel
 //     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
@@ -140,7 +148,7 @@ import java.util.*
 
      lateinit var prodCategoryArrayList : JSONArray
      lateinit var prodDetailArrayList : JSONArray
-//     lateinit var prodStatusArrayList : JSONArray
+     lateinit var prodStatusArrayList : JSONArray
      lateinit var prodPriorityArrayList : JSONArray
 //     lateinit var followUpActionArrayList : JSONArray
 //     lateinit var followUpTypeArrayList : JSONArray
@@ -151,7 +159,7 @@ import java.util.*
 
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
-//     private var dialogProdStatus : Dialog? = null
+     private var dialogProdStatus : Dialog? = null
      private var dialogProdPriority : Dialog? = null
 //     private var dialogFollowupAction : Dialog? = null
 //     private var dialogFollowupType : Dialog? = null
@@ -162,7 +170,7 @@ import java.util.*
 
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
-//     var recyProdStatus: RecyclerView? = null
+     var recyProdStatus: RecyclerView? = null
      var recyProdPriority: RecyclerView? = null
 //     var recyFollowupAction: RecyclerView? = null
 //     var recyFollowupType: RecyclerView? = null
@@ -246,7 +254,7 @@ import java.util.*
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-//        productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
+        productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
 //        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
 //        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
@@ -292,7 +300,7 @@ import java.util.*
 //        edt_qty!!.setText("")
         edtProdpriority!!.setText("")
 //        edt_feedback!!.setText("")
-//        edt_status!!.setText("")
+        edtProdstatus!!.setText("")
 //        edt_action!!.setText("")
 //        edt_type!!.setText("")
 //        edt_date!!.setText("")
@@ -341,6 +349,7 @@ import java.util.*
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
+        llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
@@ -354,9 +363,16 @@ import java.util.*
 
 
         edt_customer = findViewById<EditText>(R.id.edt_customer)
+
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
+        edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
+
+        edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
+        edtFollowtype = findViewById<EditText>(R.id.edtFollowtype)
+        edtFollowdate = findViewById<EditText>(R.id.edtFollowdate)
+        switchTransfer = findViewById<Switch>(R.id.switchTransfer)
 
         edtCustname= findViewById<EditText>(R.id.edtCustname)
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
@@ -392,6 +408,7 @@ import java.util.*
         edtProdcategory!!.setOnClickListener(this)
         edtProdproduct!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
+        edtProdstatus!!.setOnClickListener(this)
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
@@ -601,6 +618,9 @@ import java.util.*
 
             R.id.edtProdpriority->{
                 getProductPriority()
+            }
+            R.id.edtProdstatus->{
+                getProductStatus()
             }
 
         }
@@ -1674,6 +1694,88 @@ import java.util.*
 
      }
 
+     private fun getProductStatus() {
+         var prodstatus = 0
+         when (Config.ConnectivityUtils.isConnected(this)) {
+             true -> {
+                 progressDialog = ProgressDialog(context, R.style.Progress)
+                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                 progressDialog!!.setCancelable(false)
+                 progressDialog!!.setIndeterminate(true)
+                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                 progressDialog!!.show()
+                 productStatusViewModel.getProductStatus(this)!!.observe(
+                     this,
+                     Observer { serviceSetterGetter ->
+                         val msg = serviceSetterGetter.message
+                         if (msg!!.length > 0) {
+                             val jObject = JSONObject(msg)
+                             Log.e(TAG,"msg   333   "+msg)
+                             if (jObject.getString("StatusCode") == "0") {
+
+                                 val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                 prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                 if (prodStatusArrayList.length()>0){
+                                     if (prodstatus == 0){
+                                         prodstatus++
+                                         productStatusPopup(prodStatusArrayList)
+                                     }
+
+                                 }
+
+                             } else {
+                                 val builder = AlertDialog.Builder(
+                                     this@LeadGenerationActivity,
+                                     R.style.MyDialogTheme
+                                 )
+                                 builder.setMessage(jObject.getString("EXMessage"))
+                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                 }
+                                 val alertDialog: AlertDialog = builder.create()
+                                 alertDialog.setCancelable(false)
+                                 alertDialog.show()
+                             }
+                         } else {
+                             Toast.makeText(
+                                 applicationContext,
+                                 "Some Technical Issues.",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                     })
+                 progressDialog!!.dismiss()
+             }
+             false -> {
+                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                     .show()
+             }
+         }
+     }
+
+     private fun productStatusPopup(prodStatusArrayList: JSONArray) {
+
+         try {
+
+             dialogProdStatus = Dialog(this)
+             dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+             dialogProdStatus!! .setContentView(R.layout.product_status_popup)
+             dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+             recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+
+             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+             recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusArrayList)
+             recyProdStatus!!.adapter = adapter
+             adapter.setClickListener(this@LeadGenerationActivity)
+
+             dialogProdStatus!!.show()
+             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+     }
+
 
      override fun onClick(position: Int, data: String) {
 
@@ -1751,6 +1853,31 @@ import java.util.*
              edtProdpriority!!.setText(jsonObject.getString("PriorityName"))
 
 
+         }
+
+         if (data.equals("prodstatus")){
+             dialogProdStatus!!.dismiss()
+             val jsonObject = prodStatusArrayList.getJSONObject(position)
+             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+             ProductActivity.ID_Status = jsonObject.getString("ID_Status")
+             edtProdstatus!!.setText(jsonObject.getString("StatusName"))
+
+             edtFollowaction!!.setText("")
+             ID_NextAction =""
+             edtFollowtype!!.setText("")
+             ID_ActionType = ""
+
+             if (jsonObject.getString("ID_Status").equals("1")){
+                 llfollowup!!.visibility  =View.VISIBLE
+                 val sdf = SimpleDateFormat("dd-MM-yyyy")
+                 val currentDate = sdf.format(Date())
+                 edtFollowdate!!.setText(currentDate)
+                 switchTransfer!!.isChecked = false
+
+             }else{
+                 llfollowup!!.visibility  =View.GONE
+                 switchTransfer!!.isChecked = false
+             }
          }
     }
 }

@@ -732,6 +732,119 @@
 
                                     </LinearLayout>
 
+                                    <LinearLayout
+                                        android:id="@+id/llfollowup"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:orientation="vertical"
+                                        android:visibility="gone">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:text="Follow Up"
+                                            android:textColor="@color/black"
+                                            android:textSize="20dp"
+                                            android:textStyle="bold" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <EditText
+                                                android:id="@+id/edtFollowaction"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrow_down"
+                                                android:editable="false"
+                                                android:hint="Action"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+
+                                            <EditText
+                                                android:id="@+id/edtFollowtype"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrow_down"
+                                                android:editable="false"
+                                                android:hint="Type"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <EditText
+                                                android:id="@+id/edtFollowdate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/calendar_icon"
+                                                android:editable="false"
+                                                android:hint="Date"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_weight="1"
+                                                android:orientation="horizontal">
+
+
+                                                <Switch
+                                                    android:id="@+id/switchTransfer"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:checked="false"
+                                                    android:gravity="center_vertical"
+                                                    android:text="Need to Transfer"
+                                                    android:textSize="15dp" />
+
+
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
                                 </LinearLayout>
 
 
