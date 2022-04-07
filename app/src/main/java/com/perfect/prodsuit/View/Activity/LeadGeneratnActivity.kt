@@ -2,11 +2,13 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -21,6 +23,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
@@ -34,10 +37,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import java.text.SimpleDateFormat
+import com.perfect.prodsuit.Viewmodel.CustomerAddViewModel
+import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapReadyCallback,
@@ -85,6 +92,25 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
     var strLongitue : String = ""
     var strLatitude : String = ""
 
+
+    /////////////////
+
+    lateinit var customersearchViewModel: CustomerSearchViewModel
+    lateinit var customerAddViewModel: CustomerAddViewModel
+    lateinit var customerArrayList : JSONArray
+
+    var edt_customer: EditText? = null
+    var img_search: ImageView? = null
+    companion object {
+        var strCustomer = ""
+        var strName = ""
+        var strEmail = ""
+        var strPhone = ""
+        var strAddress = ""
+        var ID_Customer = ""
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -96,6 +122,8 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         bottombarnav()
         getLocationPermission()
         checkAndRequestPermissions()
+
+        customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
 
     }
 
@@ -115,6 +143,9 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         txtSearch = findViewById(R.id.txtSearch) as TextView
         txtSubmit = findViewById(R.id.txtSubmit) as TextView
 
+        edt_customer = findViewById<EditText>(R.id.edt_customer)
+        img_search = findViewById<ImageView>(R.id.img_search)
+
         imback!!.setOnClickListener(this)
         imgClear!!.setOnClickListener(this)
 
@@ -124,6 +155,8 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
         txtSearch!!.setOnClickListener(this)
         txtSubmit!!.setOnClickListener(this)
+
+        img_search!!.setOnClickListener(this)
 
     }
 
@@ -289,6 +322,124 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
             R.id.imgClear->{
                 edtSearch!!.setText("")
+            }
+
+            R.id.img_search->{
+                try {
+                    strCustomer = edt_customer!!.text.toString()
+                    if (CustomerSearchActivity.strCustomer.equals("")){
+                        val snackbar: Snackbar = Snackbar.make(v, "Enter Customer", Snackbar.LENGTH_LONG)
+                        snackbar.setActionTextColor(Color.WHITE)
+                        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                        snackbar.show()
+
+                    }else{
+                        getCustomerSearch()
+                    }
+                }catch (e  :Exception){
+                    Log.e("TAG","Exception  64   "+e.toString())
+                }
+            }
+        }
+    }
+
+
+
+
+    private fun getCustomerSearch() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+//                otpActivityViewModel.getOTP(this)!!.observe(
+//                    this,
+//                    Observer { serviceSetterGetter ->
+//                        val msg = serviceSetterGetter.message
+//                        if (msg!!.length > 0) {
+//                            val jObject = JSONObject(msg)
+//                            if (jObject.getString("StatusCode") == "0") {
+//                                var jobj = jObject.getJSONObject("UserLoginDetails")
+//                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF1,
+//                                    0
+//                                )
+//                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
+//                                FK_EmployeeEditer.putString(
+//                                    "FK_Employee",
+//                                    jobj.getString("FK_Employee")
+//                                )
+//                                FK_EmployeeEditer.commit()
+//                                val UserNameSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF2,
+//                                    0
+//                                )
+//                                val UserNameEditer = UserNameSP.edit()
+//                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
+//                                UserNameEditer.commit()
+//                                val AddressSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF3,
+//                                    0
+//                                )
+//                                val AddressEditer = AddressSP.edit()
+//                                AddressEditer.putString("Address", jobj.getString("Address"))
+//                                AddressEditer.commit()
+//                                val MobileNumberSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF4,
+//                                    0
+//                                )
+//                                val MobileNumberEditer = MobileNumberSP.edit()
+//                                MobileNumberEditer.putString(
+//                                    "MobileNumber",
+//                                    jobj.getString("MobileNumber")
+//                                )
+//                                MobileNumberEditer.commit()
+//                                val TokenSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF5,
+//                                    0
+//                                )
+//                                val TokenEditer = TokenSP.edit()
+//                                TokenEditer.putString("Token", jobj.getString("Token"))
+//                                TokenEditer.commit()
+//                                val EmailSP = applicationContext.getSharedPreferences(
+//                                    Config.SHARED_PREF6,
+//                                    0
+//                                )
+//                                val EmailEditer = EmailSP.edit()
+//                                EmailEditer.putString("Email", jobj.getString("Email"))
+//                                EmailEditer.commit()
+//                                val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
+//                                startActivity(i)
+//                                finish()
+//                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@OTPActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+//                                clearAll()
+//                            }
+//                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }
+//                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
