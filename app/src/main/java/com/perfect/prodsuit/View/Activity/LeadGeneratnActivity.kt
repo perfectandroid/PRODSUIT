@@ -63,6 +63,8 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
     var ll_content_location: LinearLayout? = null
     var ll_menu_customer: LinearLayout? = null
     var ll_content_customer: LinearLayout? = null
+    var ll_menu_product: LinearLayout? = null
+    var ll_content_product: LinearLayout? = null
 
 
     /////////////////
@@ -115,6 +117,12 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
     var edt_address: EditText? = null
     private var dialogCustSearch : Dialog? = null
 
+    ////////////////// PRODUCT
+
+    var txtProductDetail: TextView? = null
+    var llProductDetails: LinearLayout? = null
+    var modeProductDetail : String = "0"  // VISIBLE
+
     companion object {
         var strCustomer = ""
         var strName = ""
@@ -150,6 +158,9 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         ll_content_location = findViewById<LinearLayout>(R.id.ll_content_location)
         ll_menu_customer = findViewById<LinearLayout>(R.id.ll_menu_customer)
         ll_content_customer = findViewById<LinearLayout>(R.id.ll_content_customer)
+        ll_menu_product = findViewById<LinearLayout>(R.id.ll_menu_product)
+        ll_content_product = findViewById<LinearLayout>(R.id.ll_content_product)
+
 
         edtSearch = findViewById<EditText>(R.id.edtSearch)
         edtSearch = findViewById<EditText>(R.id.edtSearch)
@@ -179,6 +190,7 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         ll_menu_date!!.setOnClickListener(this)
         ll_menu_location!!.setOnClickListener(this)
         ll_menu_customer!!.setOnClickListener(this)
+        ll_menu_product!!.setOnClickListener(this)
 
         txtSearch!!.setOnClickListener(this)
         txtSubmit!!.setOnClickListener(this)
@@ -186,6 +198,12 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         btnCustReset!!.setOnClickListener(this)
 
         img_search!!.setOnClickListener(this)
+
+        ///////// PRODUCT
+
+        txtProductDetail = findViewById<TextView>(R.id.txtProductDetail)
+        llProductDetails = findViewById<LinearLayout>(R.id.llProductDetails)
+        txtProductDetail!!.setOnClickListener(this)
 
     }
 
@@ -283,20 +301,24 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 ll_content_date!!.visibility = View.VISIBLE
                 ll_content_location!!.visibility = View.GONE
                 ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangle))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
             }
             R.id.ll_menu_location->{
 
                 ll_content_date!!.visibility = View.GONE
                 ll_content_location!!.visibility = View.VISIBLE
                 ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangle))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
 
                 val mapFragment = supportFragmentManager
                     .findFragmentById(R.id.map) as SupportMapFragment
@@ -310,10 +332,26 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 ll_content_date!!.visibility = View.GONE
                 ll_content_location!!.visibility = View.GONE
                 ll_content_customer!!.visibility = View.VISIBLE
+                ll_content_product!!.visibility = View.GONE
 
                 ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
                 ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangle))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangles))
+
+            }
+
+             R.id.ll_menu_product->{
+
+                ll_content_date!!.visibility = View.GONE
+                ll_content_location!!.visibility = View.GONE
+                ll_content_customer!!.visibility = View.GONE
+                ll_content_product!!.visibility = View.VISIBLE
+
+                ll_menu_date!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_location!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_customer!!.setBackground(context.getDrawable(R.drawable.rectangles))
+                ll_menu_product!!.setBackground(context.getDrawable(R.drawable.rectangle))
 
 
 
@@ -378,6 +416,16 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
             R.id.btnCustReset->{
 
                 resetCustomer()
+            }
+
+            R.id.txtProductDetail->{
+                if (modeProductDetail.equals("0")){
+                    llProductDetails!!.visibility = View.GONE
+                    modeProductDetail = "1"
+                }else{
+                    llProductDetails!!.visibility = View.VISIBLE
+                    modeProductDetail = "0"
+                }
             }
 
         }
