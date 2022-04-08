@@ -14,11 +14,17 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.google.gson.JsonArray
+import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
+import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
 import org.json.JSONArray
 
 
@@ -29,6 +35,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
+    var recyAccountDetail: RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -38,29 +46,58 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
         setRegViews()
         bottombarnav()
 
-        val rootObject= JSONObject()
-        val list = ArrayList<String>()
-        rootObject.put("name","test name")
-        rootObject.put("age","25")
-        list.add(rootObject.toString())
-        rootObject.put("name","test name1")
-        rootObject.put("age","26")
-        list.add(rootObject.toString())
-        val jsArray = JSONArray(list)
-        Log.e(TAG,"jsArray   "+jsArray)
+        getAccountDetails()
 
-        val rootObject1= JSONObject()
-        rootObject1!!.opt(rootObject1.toString())
 
-        Log.e(TAG,"rootObject1   "+rootObject1)
+
 
 
     }
 
+
+
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
 
+        recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
+
         imback!!.setOnClickListener(this)
+
+    }
+
+    private fun getAccountDetails() {
+
+        val arrayList = ArrayList<String>()
+        arrayList.add("Lead Info")
+        arrayList.add("Follow Up Details")
+        arrayList.add("Next Action")
+        arrayList.add("New Action")
+        arrayList.add("History")
+        val jsonArray = JSONArray()
+        val detailObj = JSONObject()
+        for (i in 0 until arrayList.size) {
+            val jObject = JSONObject()
+            val ii = i+1
+            jObject.put("id", ii);
+            jObject.put("name", arrayList.get(i));
+            jObject.put("image", R.drawable.applogo);
+            jsonArray.put(jObject)
+        }
+
+        Log.e(TAG,"arrayList   8311   "+arrayList)
+        Log.e(TAG,"jsonArray   8312   "+jsonArray)
+
+//        detailObj.put("Accounts", jsonArray);
+//
+//        Log.e(TAG,"detailObj   "+detailObj)
+
+//        val lLayout = LinearLayout(this@AccountDetailsActivity, LinearLayoutManager.HORIZONTAL,false)
+//        recyAccountDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+        recyAccountDetail!!.setLayoutManager(LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false))
+//            recyCustomer!!.setHasFixedSize(true)
+        val adapter = AccountDetailAdapter(this@AccountDetailsActivity, jsonArray)
+        recyAccountDetail!!.adapter = adapter
+//        adapter.setClickListener(this@AccountDetailsActivity)
     }
 
 

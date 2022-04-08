@@ -22,11 +22,13 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT">
+
         <activity
             android:name=".View.Activity.AccountDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <activity
             android:name=".View.Activity.LeadGeneratnActivity"
             android:screenOrientation="portrait"
