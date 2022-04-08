@@ -55,6 +55,7 @@ import java.util.*
     private var lldate: LinearLayout? = null
     private var lllocation: LinearLayout? = null
     private var ll_Todate: LinearLayout? = null
+    private var llNeedTransfer: LinearLayout? = null
 
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
@@ -267,6 +268,26 @@ import java.util.*
         bottombarnav()
         clearData()
 
+        switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                llNeedTransfer!!.visibility = View.VISIBLE
+//                edt_barnchtype!!.setText("")
+//                edt_branch!!.setText("")
+//                edt_department!!.setText("")
+//                edt_Employee!!.setText("")
+//                ProductActivity.strNeedCheck = "1"
+            } else {
+
+                llNeedTransfer!!.visibility = View.GONE
+//                edt_barnchtype!!.setText("")
+//                edt_branch!!.setText("")
+//                edt_department!!.setText("")
+//                edt_Employee!!.setText("")
+//                ProductActivity.strNeedCheck = "0"
+
+
+            }
+        }
 
     }
 
@@ -350,6 +371,7 @@ import java.util.*
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
 
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
