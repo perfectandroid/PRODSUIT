@@ -65,7 +65,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyAccountDetail"
@@ -73,14 +74,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"/>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/recyAccountDetail"
                     android:layout_above="@+id/chipNavigation"
-                    android:background="@color/greylight"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     tools:ignore="NotSibling">
 
@@ -88,7 +90,19 @@
                         android:id="@+id/llHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="History"
+                            android:textSize="20dp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:background="@color/grey"
+                            android:padding="10dp"/>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyHistory"
@@ -98,12 +112,164 @@
                             android:orientation="horizontal"
                             android:layout_marginLeft="5dp"/>
 
+
+
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/txtHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab4"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab5"
+                            android:gravity="center"
+                            android:text="History"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab4"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtNxtAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab3"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab4"
+                            android:gravity="center"
+                            android:text="Next Action"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab3"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtNewAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab2"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab3"
+                            android:gravity="center"
+                            android:text="New Action"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab2"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtFollowupDeatils"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab1"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab2"
+                            android:gravity="center"
+                            android:text="Follow Up Details"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab1"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            android:scaleType="center"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                        <TextView
+                            android:id="@+id/txtLeadInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab2"
+                            android:gravity="center"
+                            android:text="Lead Info"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
 
 
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_dialog_map" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="end"
+                            android:layout_margin="20dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_dialog_email" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
 
 
             </RelativeLayout>

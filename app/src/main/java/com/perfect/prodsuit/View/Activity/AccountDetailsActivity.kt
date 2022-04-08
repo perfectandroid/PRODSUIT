@@ -13,15 +13,15 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
@@ -50,6 +50,28 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
     lateinit var leadHistoryArrayList : JSONArray
 
+    private var fab_main : FloatingActionButton? = null
+    private var fab1 : FloatingActionButton? = null
+    private var fab2 : FloatingActionButton? = null
+    private var fab3 : FloatingActionButton? = null
+    private var fab4 : FloatingActionButton? = null
+    private var fab5 : FloatingActionButton? = null
+
+    private var fab_open : Animation? = null
+    private var fab_close : Animation? = null
+    private var fab_clock : Animation? = null
+    private var fab_anticlock : Animation? = null
+
+    private var txtHistory : TextView? = null
+    private var txtNxtAction : TextView? = null
+    private var txtNewAction : TextView? = null
+    private var txtFollowupDeatils : TextView? = null
+    private var txtLeadInfo : TextView? = null
+
+
+    private var isOpen  : Boolean? = true
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -62,14 +84,64 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         setRegViews()
         bottombarnav()
 
-        getAccountDetails()
+       // getAccountDetails()
+        fabOpenClose()
 
-
-
+//
+//        fab_main!!.setOnClickListener {
+//
+//            fabOpenClose()
+//        }
 
 
     }
 
+    private fun fabOpenClose() {
+        if (isOpen!!) {
+
+            fab1!!.startAnimation(fab_close);
+            fab2!!.startAnimation(fab_close);
+            fab3!!.startAnimation(fab_close);
+            fab4!!.startAnimation(fab_close);
+            fab5!!.startAnimation(fab_close);
+            txtHistory!!.startAnimation(fab_close)
+            txtNxtAction!!.startAnimation(fab_close)
+            txtNewAction!!.startAnimation(fab_close)
+            txtFollowupDeatils!!.startAnimation(fab_close)
+            txtLeadInfo!!.startAnimation(fab_close)
+
+
+
+            fab_main!!.startAnimation(fab_anticlock);
+            fab1!!.setClickable(false);
+            fab2!!.setClickable(false);
+            fab3!!.setClickable(false);
+            fab4!!.setClickable(false);
+            fab5!!.setClickable(false);
+            isOpen = false;
+        } else {
+
+            fab1!!.startAnimation(fab_open);
+            fab2!!.startAnimation(fab_open);
+            fab3!!.startAnimation(fab_open);
+            fab4!!.startAnimation(fab_open);
+            fab5!!.startAnimation(fab_open);
+
+            txtHistory!!.startAnimation(fab_open)
+            txtNxtAction!!.startAnimation(fab_open)
+            txtNewAction!!.startAnimation(fab_open)
+            txtFollowupDeatils!!.startAnimation(fab_open)
+            txtLeadInfo!!.startAnimation(fab_open)
+
+            fab_main!!.startAnimation(fab_clock);
+            fab1!!.setClickable(true);
+            fab2!!.setClickable(true);
+            fab3!!.setClickable(true);
+            fab4!!.setClickable(true);
+            fab5!!.setClickable(true);
+            isOpen = true;
+        }
+    }
 
 
     private fun setRegViews() {
@@ -81,6 +153,32 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
 
         imback!!.setOnClickListener(this)
+
+        fab_main = findViewById(R.id.fab);
+        fab1 = findViewById(R.id.fab1);
+        fab2 = findViewById(R.id.fab2);
+        fab3 = findViewById(R.id.fab3);
+        fab4 = findViewById(R.id.fab4);
+        fab5 = findViewById(R.id.fab5);
+
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
+        fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
+
+        txtHistory = findViewById(R.id.txtHistory);
+        txtNxtAction = findViewById(R.id.txtNxtAction);
+        txtNewAction = findViewById(R.id.txtNewAction);
+        txtFollowupDeatils = findViewById(R.id.txtFollowupDeatils);
+        txtLeadInfo = findViewById(R.id.txtLeadInfo);
+
+        fab_main!!.setOnClickListener(this)
+        fab1!!.setOnClickListener(this)
+        fab2!!.setOnClickListener(this)
+        fab3!!.setOnClickListener(this)
+        fab4!!.setOnClickListener(this)
+        fab5!!.setOnClickListener(this)
+
 
     }
 
@@ -207,6 +305,35 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             R.id.imback->{
                 finish()
             }
+            R.id.fab->{
+                fabOpenClose()
+            }
+            R.id.fab1->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+            }
+            R.id.fab2->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+            }
+            R.id.fab3->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+            }
+            R.id.fab4->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+            }
+            R.id.fab5->{
+                isOpen = true
+                fabOpenClose()
+                getHistory("1")
+            }
+
         }
     }
 
@@ -217,7 +344,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getHistory(PrductOnly: String) {
-
+        llHistory!!.visibility = View.GONE
         var leadHisory = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -239,6 +366,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 leadHistoryArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
                                 if (leadHistoryArrayList.length()>0){
                                     if (leadHisory == 0){
+                                        llHistory!!.visibility = View.VISIBLE
                                         leadHisory++
 //                                        productCategoryPopup(leadHistoryArrayList)
 
