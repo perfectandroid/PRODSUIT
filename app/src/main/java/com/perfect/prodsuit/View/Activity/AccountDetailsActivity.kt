@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -15,6 +16,9 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,10 +26,11 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
-import com.google.gson.JsonArray
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
-import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
+import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
+import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
+import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import org.json.JSONArray
 
 
@@ -42,11 +47,17 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyHistory: RecyclerView? = null
     lateinit var jsonArray : JSONArray
 
+    lateinit var leadHistoryViewModel: LeadHistoryViewModel
+    lateinit var leadHistoryArrayList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_account_details)
+        context = this@AccountDetailsActivity
+
+        leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
 
         setRegViews()
         bottombarnav()
@@ -207,5 +218,65 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun getHistory(PrductOnly: String) {
 
+        var leadHisory = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadHistoryViewModel.getLeadHistory(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   231   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                leadHistoryArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                if (leadHistoryArrayList.length()>0){
+                                    if (leadHisory == 0){
+                                        leadHisory++
+//                                        productCategoryPopup(leadHistoryArrayList)
+
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recyHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        recyCustomer!!.setHasFixedSize(true)
+                                        val adapter = LeadHistoryAdapter(this@AccountDetailsActivity, leadHistoryArrayList)
+                                        recyHistory!!.adapter = adapter
+                                       // adapter.setClickListener(this@AccountDetailsActivity)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 }
