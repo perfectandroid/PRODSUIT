@@ -43,12 +43,12 @@ class LeadHistoryAdapter(internal var context: Context, internal var jsonArray: 
                 holder.txtAgentRemark.text   = jsonObject!!.getString("Agentremarks")
                 holder.txtFollowedBy.text    = jsonObject!!.getString("FollowedBy")
 
-                if (position % 2 == 0){
-                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
 
 //                holder.llleadHistory!!.setTag(position)
 //                holder.llleadHistory!!.setOnClickListener(View.OnClickListener {

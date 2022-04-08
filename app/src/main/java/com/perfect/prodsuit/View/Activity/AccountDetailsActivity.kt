@@ -331,6 +331,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             R.id.fab5->{
                 isOpen = true
                 fabOpenClose()
+
                 getHistory("1")
             }
 

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
-    android:backgroundTint="@color/greylight"
-    android:layout_margin="1dp"
+    android:backgroundTint="@color/white"
+    android:layout_margin="2dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="3dp">
+    app:cardElevation="5dp">
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
@@ -22,6 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/greylight"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -59,6 +61,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -96,6 +100,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/greylight"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -133,6 +139,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -171,6 +179,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/greylight"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
@@ -209,6 +219,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="2dp"
             android:orientation="horizontal">
 
             <TextView
