@@ -879,8 +879,6 @@
                                                     android:layout_height="wrap_content"
                                                     android:datePickerMode = "spinner"
                                                     android:background="@color/greylight"
-                                                    android:layout_marginLeft="20dp"
-                                                    android:layout_marginRight="20dp"
                                                     android:calendarViewShown="false"/>
 
                                                 <LinearLayout

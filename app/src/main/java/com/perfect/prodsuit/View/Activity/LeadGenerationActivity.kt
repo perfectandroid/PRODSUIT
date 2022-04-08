@@ -458,6 +458,7 @@ import java.util.*
 
         edtFollowaction!!.setOnClickListener(this)
         edtFollowtype!!.setOnClickListener(this)
+        edtFollowdate!!.setOnClickListener(this)
         edtbarnchtype!!.setOnClickListener(this)
         edtbranch!!.setOnClickListener(this)
         edtdepartment!!.setOnClickListener(this)
@@ -470,7 +471,7 @@ import java.util.*
 
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
-        date_Picker2 = findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
         date_Picker2!!.minDate = Calendar.getInstance().timeInMillis
     }
 
