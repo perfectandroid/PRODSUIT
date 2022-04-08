@@ -10,7 +10,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.BranchModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.ProductActivity
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -74,7 +74,7 @@ object BranchRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(ProductActivity.ID_BranchType))
+                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_BranchType))
 
 
                 Log.e(TAG,"78  getBranch  "+requestObject1)
