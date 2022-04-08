@@ -531,7 +531,8 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
                                         alertDialog.show()
-                                    } else {
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@SetMpinActivity,
                                             R.style.MyDialogTheme
@@ -544,7 +545,8 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                         alertDialog.show()
                                         clearAll()
                                     }
-                                } else {
+                                }
+                                else {
                                     Toast.makeText(
                                         applicationContext,
                                         "Some Technical Issues.",

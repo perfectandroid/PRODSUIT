@@ -7,51 +7,48 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import java.util.*
 
-class LeadActivity : AppCompatActivity() , View.OnClickListener {
+class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
+    private var imback: ImageView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
-    private var llleadgeneration: LinearLayout? = null
-    private var llleadmanagement: LinearLayout? = null
+
+    private var strFromdate:String?=""
+    private var strTodate:String?=""
+    private var strDashboardTypeId:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_leads)
+        setContentView(R.layout.activity_reportviewdetails)
         setRegViews()
         bottombarnav()
+
+        if (getIntent().hasExtra("Fromdate")) {
+            strFromdate = intent.getStringExtra("Fromdate")
+        }
+        if (getIntent().hasExtra("Todate")) {
+            strTodate = intent.getStringExtra("Todate")
+        }
+        if (getIntent().hasExtra("DashboardTypeId")) {
+            strDashboardTypeId = intent.getStringExtra("DashboardTypeId")
+        }
     }
 
     private fun setRegViews() {
-        val imback = findViewById<ImageView>(R.id.imback)
+        imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
-        llleadgeneration = findViewById<LinearLayout>(R.id.llleadgeneration)
-        llleadgeneration!!.setOnClickListener(this)
-        llleadmanagement = findViewById<LinearLayout>(R.id.llleadmanagement)
-        llleadmanagement!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
-            }
-            R.id.llleadgeneration->{
-                val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
-                startActivity(i)
-
-//                val i = Intent(this@LeadActivity, LeadGeneratnActivity::class.java)
-//                startActivity(i)
-            }
-            R.id.llleadmanagement->{
-                val i = Intent(this@LeadActivity, LeadManagemnetActivity::class.java)
-                startActivity(i)
             }
         }
     }
@@ -63,11 +60,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
-                        val i = Intent(this@LeadActivity, HomeActivity::class.java)
+                        val i = Intent(this@ReportViewDetailsActivity, HomeActivity::class.java)
                         startActivity(i)
                     }
                     R.id.profile -> {
-                        val i = Intent(this@LeadActivity, ProfileActivity::class.java)
+                        val i = Intent(this@ReportViewDetailsActivity, ProfileActivity::class.java)
                         startActivity(i)
                     }
                     R.id.logout -> {
@@ -96,7 +93,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
                 dologoutchanges()
-                startActivity(Intent(this@LeadActivity, WelcomeActivity::class.java))
+                startActivity(Intent(this@ReportViewDetailsActivity, WelcomeActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {

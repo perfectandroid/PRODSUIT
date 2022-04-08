@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     app:cardCornerRadius="5dp"
-    android:backgroundTint="@color/colorlist"
+    android:backgroundTint="@android:color/transparent"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp">
+
+<!--    android:backgroundTint="@color/colorlist"-->
 
     <LinearLayout
         android:id="@+id/lladpcustomer"
@@ -22,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sree"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -37,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="Item"
                 android:textSize="15dp"
                 android:textStyle="normal" />
@@ -48,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Item"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="15dp"
                 android:textStyle="normal" />
 
@@ -60,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Item"
             android:textSize="15dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="normal" />
 
     </LinearLayout>
