@@ -23,19 +23,24 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.google.gson.JsonArray
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
 import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
 import org.json.JSONArray
 
 
-class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
+class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
 
     val TAG : String = "AccountDetailsActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
 
+    var llHistory: LinearLayout? = null
+
     var recyAccountDetail: RecyclerView? = null
+    var recyHistory: RecyclerView? = null
+    lateinit var jsonArray : JSONArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +64,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
 
+        llHistory = findViewById<LinearLayout>(R.id.llHistory)
+
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
+        recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
 
         imback!!.setOnClickListener(this)
 
@@ -73,7 +81,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
         arrayList.add("Next Action")
         arrayList.add("New Action")
         arrayList.add("History")
-        val jsonArray = JSONArray()
+        jsonArray = JSONArray()
         val detailObj = JSONObject()
         for (i in 0 until arrayList.size) {
             val jObject = JSONObject()
@@ -81,7 +89,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
             jObject.put("id", ii);
             jObject.put("name", arrayList.get(i));
             jObject.put("image", R.drawable.applogo);
-            jsonArray.put(jObject)
+            jsonArray!!.put(jObject)
         }
 
         Log.e(TAG,"arrayList   8311   "+arrayList)
@@ -91,13 +99,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
 //
 //        Log.e(TAG,"detailObj   "+detailObj)
 
-//        val lLayout = LinearLayout(this@AccountDetailsActivity, LinearLayoutManager.HORIZONTAL,false)
-//        recyAccountDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
         recyAccountDetail!!.setLayoutManager(LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false))
-//            recyCustomer!!.setHasFixedSize(true)
         val adapter = AccountDetailAdapter(this@AccountDetailsActivity, jsonArray)
         recyAccountDetail!!.adapter = adapter
-//        adapter.setClickListener(this@AccountDetailsActivity)
+        adapter.setClickListener(this@AccountDetailsActivity)
     }
 
 
@@ -192,5 +197,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener{
                 finish()
             }
         }
+    }
+
+    override fun onClick(position: Int, data: String) {
+        Log.e(TAG,"data  197  "+data)
+        llHistory!!.visibility = View.VISIBLE
+        getHistory("1")
+    }
+
+    private fun getHistory(PrductOnly: String) {
+
     }
 }

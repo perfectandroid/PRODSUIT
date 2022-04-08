@@ -50,7 +50,7 @@ class AccountDetailAdapter(internal var context: Context, internal var jsonArray
 
                 holder.llaccontdetail!!.setTag(position)
                 holder.llaccontdetail!!.setOnClickListener(View.OnClickListener {
-                  //  clickListener!!.onClick(position, "department")
+                    clickListener!!.onClick(position, jsonObject!!.getString("name"))
                     row_index=position;
                     notifyDataSetChanged()
 

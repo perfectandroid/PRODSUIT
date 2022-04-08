@@ -67,7 +67,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyAccountDetail"
                     android:layout_width="match_parent"
@@ -75,6 +74,34 @@
                     android:layout_marginRight="5dp"
                     android:orientation="horizontal"
                     android:layout_marginLeft="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/recyAccountDetail"
+                    android:layout_above="@+id/chipNavigation"
+                    android:background="@color/greylight"
+                    android:orientation="vertical"
+                    tools:ignore="NotSibling">
+
+                    <LinearLayout
+                        android:id="@+id/llHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
 
 
