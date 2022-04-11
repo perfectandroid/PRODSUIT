@@ -135,7 +135,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, SiteVisitActivity::class.java)
+//                val i = Intent(this@HomeActivity, SiteVisitActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, CallRemarkActivity::class.java)
                 startActivity(i)
             }
             R.id.lllead -> {

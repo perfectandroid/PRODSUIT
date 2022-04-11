@@ -1,0 +1,1051 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/navbg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/chipNavigation"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imback"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:layout_weight="2"
+                    android:tint="@color/black"
+                    android:src="@drawable/icback"
+                    tools:ignore="UseAppTint" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left"
+                    android:text="Call Remark"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont" />
+
+                <ImageView
+                    android:id="@+id/imLeadedit"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="2"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_edit"
+                    android:tint="@color/black"
+                    tools:ignore="UseAppTint"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llHeader"
+                android:background="@color/white"
+                android:layout_above="@+id/llButton"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="1dp"-->
+<!--                            app:cardBackgroundColor="@color/white"-->
+<!--                            app:cardCornerRadius="5dp"-->
+<!--                            app:cardElevation="5dp"-->
+<!--                            app:cardMaxElevation="1dp"-->
+<!--                            app:cardPreventCornerOverlap="true"-->
+<!--                            app:cardUseCompatPadding="true">-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="2dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llFromdate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="From Date"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtFromDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Date"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llToDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="To Date"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtToDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Date"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/llFromDatePick"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/etselect_bggrey"
+                                    android:gravity = "center"
+                                    android:visibility="gone">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@color/greylight"
+                                            android:gravity="center"
+                                            android:text="Select From Date"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="13dp"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/imFromDate"
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginRight="5dp"
+                                            android:background="@color/color_activity_transparent"
+                                            android:gravity="center"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/ic_cancel_" />
+                                    </RelativeLayout>
+
+                                    <DatePicker
+                                        android:id="@+id/datePickerFrom"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:datePickerMode = "spinner"
+                                        android:background="@color/greylight"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:calendarViewShown="false"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:layout_marginBottom="10dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:id="@+id/txtFromSubmit"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:textSize="15dp"
+                                            android:textColor="@color/white"
+                                            android:fontFamily="@font/myfont"
+                                            android:background="@drawable/btn_bgcolour"
+                                            android:paddingLeft="20dp"
+                                            android:paddingRight="20dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingTop="5dp"
+                                            android:textAllCaps="false"
+                                            android:text="Submit" />
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/llToDatePick"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/etselect_bggrey"
+                                    android:gravity = "center"
+                                    android:visibility="gone">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:background="@color/greylight"
+                                            android:gravity="center"
+                                            android:text="Select To Date"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="13dp"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/imToDate"
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginRight="5dp"
+                                            android:background="@color/color_activity_transparent"
+                                            android:gravity="center"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/ic_cancel_" />
+                                    </RelativeLayout>
+
+                                    <DatePicker
+                                        android:id="@+id/datePickerTo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:datePickerMode = "spinner"
+                                        android:background="@color/greylight"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:calendarViewShown="false"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:layout_marginBottom="10dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:id="@+id/txtToSubmit"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:textSize="15dp"
+                                            android:textColor="@color/white"
+                                            android:fontFamily="@font/myfont"
+                                            android:background="@drawable/btn_bgcolour"
+                                            android:paddingLeft="20dp"
+                                            android:paddingRight="20dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingTop="5dp"
+                                            android:textAllCaps="false"
+                                            android:text="Submit" />
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llCallStatus"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Call Status"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txtCallStatus"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Call Status"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llCallDuration"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Call Duaration (Seconds)"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtCallDurartion"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Call Durartion"
+                                                android:padding="2dp"
+                                                android:inputType="number"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llRiskType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Risk Type"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txtRiskType"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Risk Type"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llAgentNote"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Agent Note"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtAgentNote"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Agent Note"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llCustNote"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Customer Note"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtCustNote"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Customer Note"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llMentionDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Customer Mention Date"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txtMentionDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Customer Mention Date"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llMentionDatePick"
+                                        android:orientation="vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/etselect_bggrey"
+                                        android:gravity = "center"
+                                        android:visibility="gone">
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@color/greylight"
+                                                android:gravity="center"
+                                                android:text="Select Mention Date"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="13dp"
+                                                android:textStyle="bold" />
+
+                                            <ImageView
+                                                android:id="@+id/imMentionDate"
+                                                android:layout_width="25dp"
+                                                android:layout_height="25dp"
+                                                android:layout_alignParentRight="true"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:background="@color/color_activity_transparent"
+                                                android:gravity="center"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/ic_cancel_" />
+                                        </RelativeLayout>
+
+                                        <DatePicker
+                                            android:id="@+id/datePickerMention"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:datePickerMode = "spinner"
+                                            android:background="@color/greylight"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:calendarViewShown="false"/>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:layout_marginBottom="10dp"
+                                            android:orientation="horizontal">
+
+
+                                            <TextView
+                                                android:id="@+id/txtMentionSubmit"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:textSize="15dp"
+                                                android:textColor="@color/white"
+                                                android:fontFamily="@font/myfont"
+                                                android:background="@drawable/btn_bgcolour"
+                                                android:paddingLeft="20dp"
+                                                android:paddingRight="20dp"
+                                                android:paddingBottom="5dp"
+                                                android:paddingTop="5dp"
+                                                android:textAllCaps="false"
+                                                android:text="Submit" />
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+
+
+
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="1dp"-->
+<!--                            app:cardBackgroundColor="@color/white"-->
+<!--                            app:cardCornerRadius="5dp"-->
+<!--                            app:cardElevation="5dp"-->
+<!--                            app:cardMaxElevation="1dp"-->
+<!--                            app:cardPreventCornerOverlap="true"-->
+<!--                            app:cardUseCompatPadding="true">-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/greylight"
+                                    android:fontFamily="@font/myfont"
+                                    android:padding="5dp"
+                                    android:text="Request"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold"/>
+
+                                <CheckBox
+                                    android:id="@+id/cbAknowledgement"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="false"
+                                    android:textStyle="normal"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="17dp"
+                                    android:padding="5dp"
+                                    android:text="Send aknowledgement"
+                                    android:buttonTint="@color/colorPrimary"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+
+                                    <CheckBox
+                                        android:id="@+id/cbSiteVisit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:checked="false"
+                                        android:textStyle="normal"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="17dp"
+                                        android:padding="5dp"
+                                        android:text="Need Site Visit"
+                                        android:buttonTint="@color/colorPrimary"/>
+
+                                    <CheckBox
+                                        android:id="@+id/cbNeedNotice"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:checked="false"
+                                        android:textStyle="normal"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="17dp"
+                                        android:padding="5dp"
+                                        android:text="Need Notice"
+                                        android:buttonTint="@color/colorPrimary"/>
+                                </LinearLayout>
+
+
+
+
+                            </LinearLayout>
+
+<!--                        </androidx.cardview.widget.CardView>-->
+
+
+
+                    </LinearLayout>
+
+
+                </ScrollView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp">
+
+                <Button
+                    android:id="@+id/btnYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/btn_bgcolorprimary"
+                    android:fontFamily="@font/myfont"
+                    android:padding="2dp"
+                    android:text="Reset"
+                    android:textAllCaps="false"
+                    android:textSize="15dp" />
+                <Button
+                    android:id="@+id/btnNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/myfont"
+                    android:background="@drawable/btn_bgcolour"
+                    android:padding="2dp"
+                    android:layout_weight="2"
+                    android:textAllCaps="false"
+                    android:text="Submit" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/chipNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:cnb_menuResource="@menu/navbottom_item"
+            app:cnb_textAppearance="@style/CustomTextStyle" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
