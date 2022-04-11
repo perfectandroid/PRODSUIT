@@ -57,13 +57,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:gravity="center"
                             android:orientation="horizontal">
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="150dp"
+                                android:layout_height="300dp"
+                                android:padding="50dp"
                                 android:src="@drawable/leadbgicon"/>
 
                         </LinearLayout>
@@ -71,33 +72,30 @@
                             <LinearLayout
                                 android:id="@+id/llleadgeneration"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginTop="30dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginLeft="20dp"
-                                android:background="@drawable/leadgenbg"
+                                android:layout_marginRight="20dp"
+                                android:background="@drawable/leadgen1"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="50dp"
-                                    android:gravity="center"
-                                    android:src="@drawable/leadmanicon" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:gravity="left"
-                                    android:layout_margin="10dp"
+                                    android:gravity="right"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="20dp"
                                     android:text="Lead Generation"
                                     android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
                                     android:fontFamily="@font/myfont" />
                             </LinearLayout>
 
@@ -105,33 +103,29 @@
                             <LinearLayout
                                 android:id="@+id/llleadmanagement"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:layout_marginBottom="10dp"
+                                android:layout_marginBottom="20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="20dp"
-                                android:background="@drawable/leadmanbg"
+                                android:layout_marginRight="20dp"
+                                android:background="@drawable/leadgen2"
                                 android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="50dp"
-                                    android:gravity="center"
-                                    android:src="@drawable/leadgenicon" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:gravity="left"
-                                    android:layout_margin="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
                                     android:text="Lead Management"
                                     android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
                                     android:fontFamily="@font/myfont" />
                             </LinearLayout>
 

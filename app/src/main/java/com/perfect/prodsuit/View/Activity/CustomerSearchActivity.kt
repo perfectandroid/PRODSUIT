@@ -193,12 +193,12 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   105   "+msg)
+                            Log.e("TAG","msg   105   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
                                 if (customerArrayList.length()>0){
-                                    Log.e(TAG,"msg   1052   "+msg)
+                                    Log.e("TAG","msg   1052   "+msg)
 //                                    val lLayout = GridLayoutManager(this@CustomerSearchActivity, 1)
 //                                    recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                    recyCustomer!!.setHasFixedSize(true)

@@ -11,11 +11,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"
-         android:background="@color/homebgcolor"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_weight="2.5"
+                android:layout_weight="2.7"
                 android:background="@color/white"
                 android:layout_height="match_parent">
                 <ImageView
@@ -69,7 +68,7 @@
             </RelativeLayout>
          <LinearLayout
              android:layout_width="match_parent"
-             android:layout_weight="2"
+             android:layout_weight="2.2"
              android:layout_marginBottom="10dp"
              android:layout_height="match_parent">
              <RelativeLayout
@@ -189,7 +188,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:padding="3dp"
-                        android:background="@drawable/homesection_bg1"
+                        android:background="@drawable/homesection_bg4"
                         android:layout_marginTop="2.5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
@@ -282,7 +281,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/homesection_bg4">
+                        android:background="@drawable/homesection_bg1">
 
                         <LinearLayout
                             android:layout_width="match_parent"
