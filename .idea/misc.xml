@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/checkbox_selector.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/headertoolbar.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_grey.xml" value="0.21979166666666666" />
@@ -52,6 +53,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_status.xml" value="0.2994791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.22395833333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.19444444444444445" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.36666666666666664" />
@@ -67,6 +69,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_detail_popup.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_priority_popup.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_status_popup.xml" value="0.2994791666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.22395833333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/spinner_item.xml" value="0.22395833333333334" />
       </map>
     </option>
   </component>
