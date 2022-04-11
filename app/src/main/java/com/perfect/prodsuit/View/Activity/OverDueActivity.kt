@@ -61,7 +61,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                  //   var jobj = jObject.getJSONObject("UserLoginDetails")
-
+                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
+                                    overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
                                     val lLayout = GridLayoutManager(this@OverDueActivity, 1)
                                     rv_overduelist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
