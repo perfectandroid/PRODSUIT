@@ -85,6 +85,9 @@ interface ApiInterface {
     @POST("UserValidations/LeadHistoryDetails")
     fun getLeadHistoryDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/GeneralReport")
+    fun getGeneralReport(@Body body: RequestBody): Call<String>
+
 
 
 
