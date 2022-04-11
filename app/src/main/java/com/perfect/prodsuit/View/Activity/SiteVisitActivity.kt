@@ -460,7 +460,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
 
-        if (requestCode == GALLERY) {
+        if (requestCode == GALLERY ) {
             if (data != null) {
                 val contentURI = data!!.data
                 try {
@@ -489,97 +489,100 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
         } else if (requestCode == CAMERA) {
-            try {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+            if (data != null) {
+                try {
+                    if (ContextCompat.checkSelfPermission(
                             this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
+                        ) != PackageManager.PERMISSION_GRANTED
                     ) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
 
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        } else {
+                            // No explanation needed; request the permission
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
+                        }
+                    }
+                    else {
+
+                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val bytes = ByteArrayOutputStream()
+                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                        destination = File(
+                            (Environment.getExternalStorageDirectory()).toString() + "/" +
+                                    getString(R.string.app_name),
+                            "IMG_" + System.currentTimeMillis() + ".jpg"
                         )
-                    }
-                }
-                else {
+                        val fo: FileOutputStream
 
-                    val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                    val bytes = ByteArrayOutputStream()
-                    thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-                    destination = File(
-                        (Environment.getExternalStorageDirectory()).toString() + "/" +
-                                getString(R.string.app_name),
-                        "IMG_" + System.currentTimeMillis() + ".jpg"
-                    )
-                    val fo: FileOutputStream
+                        try {
+                            if (!destination!!.getParentFile().exists()) {
+                                destination!!.getParentFile().mkdirs()
+                            }
+                            if (!destination!!.exists()) {
+                                destination!!.createNewFile()
+                            }
+                            fo = FileOutputStream(destination)
+                            fo.write(bytes.toByteArray())
+                            fo.close()
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
 
-                    try {
-                        if (!destination!!.getParentFile().exists()) {
-                            destination!!.getParentFile().mkdirs()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
                         }
-                        if (!destination!!.exists()) {
-                            destination!!.createNewFile()
-                        }
-                        fo = FileOutputStream(destination)
-                        fo.write(bytes.toByteArray())
-                        fo.close()
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
 
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                    if (strImage.equals("1")) {
-                        image1 = destination!!.getAbsolutePath()
-                        destination = File(image1)
+                        if (strImage.equals("1")) {
+                            image1 = destination!!.getAbsolutePath()
+                            destination = File(image1)
 
 
-                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                        //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-                        if (imgv_upload1 != null) {
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                            if (imgv_upload1 != null) {
+                                imgv_upload1!!.setImageBitmap(myBitmap)
+                            }
                             imgv_upload1!!.setImageBitmap(myBitmap)
+
+                            if (image1 != null) {
+
+                            }
                         }
-                        imgv_upload1!!.setImageBitmap(myBitmap)
+                        if (strImage.equals("2")) {
+                            image2 = destination!!.getAbsolutePath()
+                            destination = File(image2)
 
-                        if (image1 != null) {
-
-                        }
-                    }
-                    if (strImage.equals("2")) {
-                        image2 = destination!!.getAbsolutePath()
-                        destination = File(image2)
-
-                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                        //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
-                        if (imgv_upload2 != null) {
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                            if (imgv_upload2 != null) {
+                                imgv_upload2!!.setImageBitmap(myBitmap)
+                            }
                             imgv_upload2!!.setImageBitmap(myBitmap)
-                        }
-                        imgv_upload2!!.setImageBitmap(myBitmap)
 
-                        if (image2 != null) {
+                            if (image2 != null) {
 
+                            }
                         }
+
                     }
-
+                }
+                catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@SiteVisitActivity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
             }
-            catch (e: IOException) {
-                e.printStackTrace()
-                Toast.makeText(this@SiteVisitActivity, "Failed!", Toast.LENGTH_SHORT).show()
-            }
+
         }
     }
 }
