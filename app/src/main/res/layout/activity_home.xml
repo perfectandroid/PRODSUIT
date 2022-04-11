@@ -223,7 +223,7 @@
                             android:text="My Agenda"
                             android:textStyle="bold"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="20dp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -267,7 +267,7 @@
                             android:text="Dashboard"
                             android:textStyle="bold"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
@@ -312,7 +312,7 @@
                             android:gravity="left|center"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
                             android:src="@drawable/rightcurve_whitebg"/>
                     </LinearLayout>
@@ -347,19 +347,20 @@
                                 android:tint="@color/white"
                                 android:src="@drawable/icreminder"/>
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:gravity="left|center"
                             android:layout_marginLeft="10dp"
-                            android:text="Set Reminder"
-                            android:textStyle="bold"
+                            android:layout_weight="1"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/white"
+                            android:gravity="left|center"
+                            android:src="@drawable/rightcurve_whitebg"
+                            android:text="Set Reminder"
+                            android:textColor="@color/black"
                             android:textSize="20dp"
-                            android:src="@drawable/rightcurve_whitebg"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
