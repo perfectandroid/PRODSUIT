@@ -31,7 +31,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-           // jsonObject = jsonArray.getJSONObject(position)
+            jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 holder.txtv_date1.text        = jsonObject!!.getString("LgLeadDate")

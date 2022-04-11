@@ -59,8 +59,9 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                    var jobj = jObject.getJSONObject("UserLoginDetails")
+                                    var jobj = jObject.getJSONObject("LeadManagementDetailsList")
                                     val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+                                    val todoArrayList=jobj.getJSONArray("LeadManagementDetails")
                                     rv_todolist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_todolist!!.setHasFixedSize(true)
