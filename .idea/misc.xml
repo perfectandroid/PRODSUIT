@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_grey.xml" value="0.21979166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_right_arrow.xml" value="0.15" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_rightarrow.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangles.xml" value="0.24010416666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_bg.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_default.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_selected.xml" value="0.27760416666666665" />
