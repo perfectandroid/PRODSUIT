@@ -371,7 +371,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         app:cnb_menuResource="@menu/navbottom_item"
         app:cnb_textAppearance="@style/CustomTextStyle" />
 </RelativeLayout>
