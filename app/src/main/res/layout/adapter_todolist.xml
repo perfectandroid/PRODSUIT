@@ -30,13 +30,13 @@
                         android:textStyle="bold"
                         android:id="@+id/txtv_dte" />
                     <TextView
-                        android:id="@+id/txtv_dte1"
+                        android:id="@+id/txtv_date1"
                         android:padding="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="05-04-2022"
+                        android:text=""
                         android:maxLines="5"
                         android:textColor="@color/black"
                          />
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Meena"
+                        android:text=""
                         android:maxLines="5"
                         android:textColor="@color/black"
                         />
@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Solar Heater"
+                        android:text=""
                         android:maxLines="5"
                         android:textColor="@color/black"
                         />
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Mathew"
+                        android:text=""
                         android:maxLines="5"
                         android:textColor="@color/black"
                         />
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Aiswarya"
+                        android:text=""
                         android:maxLines="5"
                         android:textColor="@color/black"
                         />

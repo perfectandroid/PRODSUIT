@@ -8,9 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BranchModel
+import com.perfect.prodsuit.Model.LeadHistoryModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -20,18 +19,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object BranchRepository {
+object LeadHistoryRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val branchSetterGetter = MutableLiveData<BranchModel>()
-    val TAG: String = "BranchRepository"
+    val leadHistorySetterGetter = MutableLiveData<LeadHistoryModel>()
+    val TAG: String = "LeadHistoryRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<BranchModel> {
-        getBranch(context)
-        return branchSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<LeadHistoryModel> {
+        getLeadHistory(context)
+        return leadHistorySetterGetter
     }
 
-    private fun getBranch(context: Context) {
+    private fun getLeadHistory(context: Context) {
+
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -59,25 +59,30 @@ object BranchRepository {
 
             try {
 
-//                "ReqMode":"22",
+
+//
+//                "ReqMode":"27",
+//                "SubMode:"1",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg,
-//                "ID_BranchType":1
-
+//                "ID_LeadGenerateProduct":1,
+//                "PrductOnly":"1 "
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("22"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("27"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_BranchType))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart("1"))
 
 
-                Log.e(TAG,"78  getBranch  "+requestObject1)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -87,7 +92,7 @@ object BranchRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getBranch(body)
+            val call = apiService.getLeadHistoryDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -96,10 +101,10 @@ object BranchRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<BranchModel>()
-                        leads.add(BranchModel(response.body()))
+                        val leads = ArrayList<LeadHistoryModel>()
+                        leads.add(LeadHistoryModel(response.body()))
                         val msg = leads[0].message
-                        branchSetterGetter.value = BranchModel(msg)
+                        leadHistorySetterGetter.value = LeadHistoryModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                     }
@@ -115,5 +120,7 @@ object BranchRepository {
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
+
+
     }
 }

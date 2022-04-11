@@ -34,9 +34,10 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
            // jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
+                holder.txtv_date1.text        = jsonObject!!.getString("LgLeadDate")
                /* val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
+
 
                 if (position % 2 == 0){
                     holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
@@ -73,14 +74,14 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-        internal var txtEmployee   : TextView
-        internal var txtsino       : TextView
-        internal var llemployee    : LinearLayout
+        internal var txtv_date1   : TextView
+       /* internal var txtsino       : TextView
+        internal var llemployee    : LinearLayout*/
 
         init {
-            txtEmployee          = v.findViewById<View>(R.id.txtEmployee) as TextView
-            txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
-            llemployee           = v.findViewById<View>(R.id.llemployee) as LinearLayout
+            txtv_date1          = v.findViewById<View>(R.id.txtv_date1) as TextView
+         /*   txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
+            llemployee           = v.findViewById<View>(R.id.llemployee) as LinearLayout*/
         }
     }
 

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imback"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:layout_weight="2"
+                    android:tint="@color/black"
+                    android:src="@drawable/icback"
+                    tools:ignore="UseAppTint" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left"
+                    android:text="Account Details"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont" />
+
+                <ImageView
+                    android:id="@+id/imLeadedit"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="2"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_edit"
+                    android:tint="@color/black"
+                    tools:ignore="UseAppTint"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyAccountDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/recyAccountDetail"
+                    android:layout_above="@+id/chipNavigation"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    tools:ignore="NotSibling">
+
+                    <LinearLayout
+                        android:id="@+id/llHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="History"
+                            android:textSize="20dp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:background="@color/grey"
+                            android:padding="10dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="5dp"/>
+
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab4"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab5"
+                            android:gravity="center"
+                            android:text="History"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab4"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtNxtAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab3"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab4"
+                            android:gravity="center"
+                            android:text="Next Action"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab3"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtNewAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab2"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab3"
+                            android:gravity="center"
+                            android:text="New Action"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab2"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                        <TextView
+                            android:id="@+id/txtFollowupDeatils"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab1"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab2"
+                            android:gravity="center"
+                            android:text="Follow Up Details"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab1"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            android:scaleType="center"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                        <TextView
+                            android:id="@+id/txtLeadInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fab2"
+                            android:gravity="center"
+                            android:text="Lead Info"
+                            android:textColor="@color/blue"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fab"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_dialog_map" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="end"
+                            android:layout_margin="20dp"
+                            android:backgroundTint="@color/white"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@android:drawable/ic_dialog_email" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/chipNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            app:cnb_menuResource="@menu/navbottom_item"
+            app:cnb_textAppearance="@style/CustomTextStyle" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
