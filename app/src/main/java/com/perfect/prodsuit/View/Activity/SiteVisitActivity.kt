@@ -18,6 +18,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -43,6 +44,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var llToDatePick: LinearLayout? = null
     var llMentionDate: LinearLayout? = null
     var llMentionDatePick: LinearLayout? = null
+    var llRiskType: LinearLayout? = null
 
     var txtFromDate: TextView? = null
     var txtFromSubmit: TextView? = null
@@ -52,6 +54,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var txtMentionSubmit: TextView? = null
     var txtLatitude: TextView? = null
     var txtLongitude: TextView? = null
+    var txtRiskType: TextView? = null
 
     var imFromDate: ImageView? = null
     var imToDate: ImageView? = null
@@ -77,6 +80,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var toDateMode : String?= "1"  // GONE
     var MentionDateMode : String?= "1"  // GONE
 
+    companion object {
+
+        var strRiskType : String?= ""
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -86,9 +94,15 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         context = this@SiteVisitActivity
 
         setRegViews()
+        removeData()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLastLocation()
+
+    }
+
+    private fun removeData() {
+        CallRemarkActivity.strRiskType = ""
     }
 
     private fun setRegViews() {
@@ -103,6 +117,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         txtMentionSubmit = findViewById(R.id.txtMentionSubmit) as TextView
         txtLatitude = findViewById(R.id.txtLatitude) as TextView
         txtLongitude = findViewById(R.id.txtLongitude) as TextView
+        txtRiskType = findViewById(R.id.txtRiskType) as TextView
 
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
@@ -116,6 +131,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         llToDatePick = findViewById(R.id.llToDatePick) as LinearLayout
         llMentionDate = findViewById(R.id.llMentionDate) as LinearLayout
         llMentionDatePick = findViewById(R.id.llMentionDatePick) as LinearLayout
+        llRiskType = findViewById(R.id.llRiskType) as LinearLayout
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
         datePickerTo = findViewById(R.id.datePickerTo) as DatePicker
@@ -124,6 +140,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         llFromdate!!.setOnClickListener(this)
         llToDate!!.setOnClickListener(this)
         llMentionDate!!.setOnClickListener(this)
+        llRiskType!!.setOnClickListener(this)
 
         txtLatitude!!.setOnClickListener(this)
         txtLongitude!!.setOnClickListener(this)
@@ -400,7 +417,44 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                }
            }
 
+           R.id.llRiskType->{
+               getRiskType()
+           }
+
        }
+    }
+
+    private fun getRiskType() {
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.riskstatus_popup, null)
+            val lvRiskType  = layout.findViewById<ListView>(R.id.lvRiskType)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.risk_type)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvRiskType.setAdapter(adapter)
+            lvRiskType.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                txtRiskType!!.setText(value)
+                if (position == 0) {
+                    strRiskType = "1"
+                }
+                if (position == 1) {
+                    strRiskType = "2"
+                }
+                if (position == 2) {
+                    strRiskType = "3"
+                }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun choosePhotoFromGallary() {

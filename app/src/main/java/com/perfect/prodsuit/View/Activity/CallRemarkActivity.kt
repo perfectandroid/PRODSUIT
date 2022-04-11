@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.DatePicker
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.R
 import java.util.*
 
@@ -25,6 +24,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
     var llToDatePick: LinearLayout? = null
     var llMentionDate: LinearLayout? = null
     var llMentionDatePick: LinearLayout? = null
+    var llCallStatus: LinearLayout? = null
+    var llRiskType: LinearLayout? = null
 
     var txtFromDate: TextView? = null
     var txtFromSubmit: TextView? = null
@@ -32,6 +33,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
     var txtToSubmit: TextView? = null
     var txtMentionDate: TextView? = null
     var txtMentionSubmit: TextView? = null
+    var txtCallStatus: TextView? = null
+    var txtRiskType: TextView? = null
 
     var imFromDate: ImageView? = null
     var imToDate: ImageView? = null
@@ -45,6 +48,12 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
     var toDateMode : String?= "1"  // GONE
     var MentionDateMode : String?= "1"  // GONE
 
+    companion object {
+
+        var strCallStatus : String?= ""
+        var strRiskType : String?= ""
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +63,12 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         context = this@CallRemarkActivity
 
         setRegViews()
+        removeData()
+    }
+
+    private fun removeData() {
+        strCallStatus = ""
+        strRiskType = ""
     }
 
     private fun setRegViews() {
@@ -66,6 +81,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         txtToSubmit = findViewById(R.id.txtToSubmit) as TextView
         txtMentionDate = findViewById(R.id.txtMentionDate) as TextView
         txtMentionSubmit = findViewById(R.id.txtMentionSubmit) as TextView
+        txtCallStatus = findViewById(R.id.txtCallStatus) as TextView
+        txtRiskType = findViewById(R.id.txtRiskType) as TextView
 
         imFromDate = findViewById(R.id.imFromDate) as ImageView
         imToDate = findViewById(R.id.imToDate) as ImageView
@@ -77,6 +94,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         llToDatePick = findViewById(R.id.llToDatePick) as LinearLayout
         llMentionDate = findViewById(R.id.llMentionDate) as LinearLayout
         llMentionDatePick = findViewById(R.id.llMentionDatePick) as LinearLayout
+        llCallStatus = findViewById(R.id.llCallStatus) as LinearLayout
+        llRiskType = findViewById(R.id.llRiskType) as LinearLayout
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
         datePickerTo = findViewById(R.id.datePickerTo) as DatePicker
@@ -85,6 +104,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         llFromdate!!.setOnClickListener(this)
         llToDate!!.setOnClickListener(this)
         llMentionDate!!.setOnClickListener(this)
+        llCallStatus!!.setOnClickListener(this)
+        llRiskType!!.setOnClickListener(this)
 
         txtFromSubmit!!.setOnClickListener(this)
         txtToSubmit!!.setOnClickListener(this)
@@ -226,7 +247,82 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
                 }
             }
 
+            R.id.llCallStatus->{
 
+                getCallStatus()
+            }
+            R.id.llRiskType->{
+
+                getRiskType()
+            }
+
+
+        }
+    }
+
+    private fun getRiskType() {
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.riskstatus_popup, null)
+            val lvRiskType  = layout.findViewById<ListView>(R.id.lvRiskType)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.risk_type)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvRiskType.setAdapter(adapter)
+            lvRiskType.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                txtRiskType!!.setText(value)
+                if (position == 0) {
+                    strRiskType = "1"
+                }
+                if (position == 1) {
+                    strRiskType = "2"
+                }
+                if (position == 2) {
+                    strRiskType = "3"
+                }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCallStatus() {
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.callstatus)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvCallStatus.setAdapter(adapter)
+            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                txtCallStatus!!.setText(value)
+                if (position == 0) {
+                    strCallStatus = "1"
+                }
+                if (position == 1) {
+                    strCallStatus = "2"
+                }
+                if (position == 2) {
+                    strCallStatus = "3"
+                }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

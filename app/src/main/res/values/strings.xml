@@ -10,4 +10,25 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name="callstatus">
+        <item>Attended</item>
+        <item>Not connected</item>
+        <item>Not Attended</item>
+    </string-array>
+
+    <string-array name="sitevisitstatus">
+        <item>All</item>
+        <item>Need To Visit</item>
+        <item>Site Visited</item>
+    </string-array>
+
+
+
+    <string-array name="risk_type">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
 </resources>
