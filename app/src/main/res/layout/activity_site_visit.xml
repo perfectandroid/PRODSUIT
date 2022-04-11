@@ -69,19 +69,773 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llHeader"
+                android:background="@color/white"
                 android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+                            app:cardMaxElevation="1dp"
+                            app:cardPreventCornerOverlap="true"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:text="Perfect Software"
+                                    android:textColor="@color/black"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="5">
+
+                                        <ImageView
+                                            android:id="@+id/img"
+                                            android:layout_width="70dp"
+                                            android:layout_height="70dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:contentDescription="@string/app_name"
+                                            android:src="@drawable/applogo" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2"
+                                        android:orientation="vertical">
+
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:padding="1dp"
+                                            android:text="19/1194, Dialysis Center"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:padding="1dp"
+                                            android:text="Chalappuram,Kozhikode"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:padding="1dp"
+                                            android:text="Kerala 673002"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+                            app:cardMaxElevation="1dp"
+                            app:cardPreventCornerOverlap="true"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="2dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llFromdate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="From Date"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtFromDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Date"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llToDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="To Date"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtToDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Date"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llRiskType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Risk Type"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txtRiskType"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Risk Type"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llAgentNote"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Agent Note"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtAgentNote"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Agent Note"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llCustNote"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Customer Note"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtCustNote"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Customer Note"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llCustMentionDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Customer Mention Date"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:id="@+id/txtCustMentionDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Customer Mention Date"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/etselect_bg"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llAmount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left|center"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/date" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="5dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:text="Amount"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="12dp"
+                                                android:textStyle="bold" />
+
+                                            <EditText
+                                                android:id="@+id/edtAmount"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="left"
+                                                android:hint="Amount"
+                                                android:inputType="numberDecimal"
+                                                android:padding="2dp"
+                                                android:singleLine="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="2dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llLatitude"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="Latitude"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtLatitude"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Latitude"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/etselect_bg"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:id="@+id/llLongitude"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="40dp"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="left|center"
+                                                android:background="@color/color_activity_transparent"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/date" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="5dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:text="Longitude"
+                                                    android:textColor="@color/colorPrimaryExtraDark"
+                                                    android:textSize="12dp"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:id="@+id/txtLongitude"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="left"
+                                                    android:hint="Longitude"
+                                                    android:padding="2dp"
+                                                    android:singleLine="true"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                </ScrollView>
 
 
             </LinearLayout>
 
 
         </RelativeLayout>
+
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
+            android:visibility="gone"
             app:cnb_menuResource="@menu/navbottom_item"
             app:cnb_textAppearance="@style/CustomTextStyle" />
     </RelativeLayout>
