@@ -39,16 +39,28 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
 
     var llFromdate: LinearLayout? = null
     var llFromDatePick: LinearLayout? = null
+    var llToDate: LinearLayout? = null
+    var llToDatePick: LinearLayout? = null
+    var llMentionDate: LinearLayout? = null
+    var llMentionDatePick: LinearLayout? = null
 
     var txtFromDate: TextView? = null
     var txtFromSubmit: TextView? = null
+    var txtToDate: TextView? = null
+    var txtToSubmit: TextView? = null
+    var txtMentionDate: TextView? = null
+    var txtMentionSubmit: TextView? = null
     var txtLatitude: TextView? = null
     var txtLongitude: TextView? = null
 
     var imFromDate: ImageView? = null
+    var imToDate: ImageView? = null
+    var imMentionDate: ImageView? = null
 
 
     var datePickerFrom: DatePicker? = null
+    var datePickerTo: DatePicker? = null
+    var datePickerMention: DatePicker? = null
 
     var imgv_upload1: ImageView? = null
     var imgv_upload2: ImageView? = null
@@ -62,6 +74,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
 
     var fromDateMode : String?= "1"  // GONE
+    var toDateMode : String?= "1"  // GONE
+    var MentionDateMode : String?= "1"  // GONE
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -83,30 +97,49 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
 
         txtFromDate = findViewById(R.id.txtFromDate) as TextView
         txtFromSubmit = findViewById(R.id.txtFromSubmit) as TextView
+        txtToDate = findViewById(R.id.txtToDate) as TextView
+        txtToSubmit = findViewById(R.id.txtToSubmit) as TextView
+        txtMentionDate = findViewById(R.id.txtMentionDate) as TextView
+        txtMentionSubmit = findViewById(R.id.txtMentionSubmit) as TextView
         txtLatitude = findViewById(R.id.txtLatitude) as TextView
         txtLongitude = findViewById(R.id.txtLongitude) as TextView
 
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
         imFromDate = findViewById(R.id.imFromDate) as ImageView
+        imToDate = findViewById(R.id.imToDate) as ImageView
+        imMentionDate = findViewById(R.id.imMentionDate) as ImageView
 
         llFromdate = findViewById(R.id.llFromdate) as LinearLayout
         llFromDatePick = findViewById(R.id.llFromDatePick) as LinearLayout
+        llToDate = findViewById(R.id.llToDate) as LinearLayout
+        llToDatePick = findViewById(R.id.llToDatePick) as LinearLayout
+        llMentionDate = findViewById(R.id.llMentionDate) as LinearLayout
+        llMentionDatePick = findViewById(R.id.llMentionDatePick) as LinearLayout
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
+        datePickerTo = findViewById(R.id.datePickerTo) as DatePicker
+        datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
 
         llFromdate!!.setOnClickListener(this)
+        llToDate!!.setOnClickListener(this)
+        llMentionDate!!.setOnClickListener(this)
 
         txtLatitude!!.setOnClickListener(this)
         txtLongitude!!.setOnClickListener(this)
         txtFromSubmit!!.setOnClickListener(this)
+        txtToSubmit!!.setOnClickListener(this)
+        txtMentionSubmit!!.setOnClickListener(this)
 
         imgv_upload1!!.setOnClickListener(this)
         imgv_upload2!!.setOnClickListener(this)
         imFromDate!!.setOnClickListener(this)
+        imToDate!!.setOnClickListener(this)
+        imMentionDate!!.setOnClickListener(this)
 
 
         datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
+      //  datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
 
     }
 
@@ -252,11 +285,45 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                    llFromDatePick!!.visibility = View.VISIBLE
                    fromDateMode = "0"
                }
+               llToDatePick!!.visibility = View.GONE
+               toDateMode = "1"
            }
+           R.id.llToDate->{
+               if (toDateMode.equals("0")){
+                   llToDatePick!!.visibility = View.GONE
+                   toDateMode = "1"
+               }else{
+                   llToDatePick!!.visibility = View.VISIBLE
+                   toDateMode = "0"
+               }
+               llFromDatePick!!.visibility = View.GONE
+               fromDateMode = "1"
+           }
+
+           R.id.llMentionDate->{
+               if (MentionDateMode.equals("0")){
+                   llMentionDatePick!!.visibility = View.GONE
+                   MentionDateMode = "1"
+               }else{
+                   llMentionDatePick!!.visibility = View.VISIBLE
+                   MentionDateMode = "0"
+               }
+
+           }
+
+
 
            R.id.imFromDate->{
                llFromDatePick!!.visibility = View.GONE
                fromDateMode = "1"
+           }
+           R.id.imToDate->{
+               llToDatePick!!.visibility = View.GONE
+               toDateMode = "1"
+           }
+           R.id.imMentionDate->{
+               llMentionDatePick!!.visibility = View.GONE
+               MentionDateMode = "1"
            }
 
            R.id.txtFromSubmit->{
@@ -283,6 +350,56 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                    Log.e(TAG,"Exception   428   "+e.toString())
                }
            }
+           R.id.txtToSubmit->{
+               try {
+                   datePickerTo!!.minDate = Calendar.getInstance().timeInMillis
+                   val day: Int = datePickerTo!!.getDayOfMonth()
+                   val mon: Int = datePickerTo!!.getMonth()
+                   val month: Int = mon+1
+                   val year: Int = datePickerTo!!.getYear()
+                   var strDay = day.toString()
+                   var strMonth = month.toString()
+                   var strYear = year.toString()
+                   if (strDay.length == 1){
+                       strDay ="0"+day
+                   }
+                   if (strMonth.length == 1){
+                       strMonth ="0"+strMonth
+                   }
+                   txtToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                   llToDatePick!!.visibility=View.GONE
+                   toDateMode = "1"
+               }
+               catch (e: Exception){
+                   Log.e(TAG,"Exception   428   "+e.toString())
+               }
+           }
+
+           R.id.txtMentionSubmit->{
+               try {
+                   datePickerMention!!.minDate = Calendar.getInstance().timeInMillis
+                   val day: Int = datePickerMention!!.getDayOfMonth()
+                   val mon: Int = datePickerMention!!.getMonth()
+                   val month: Int = mon+1
+                   val year: Int = datePickerMention!!.getYear()
+                   var strDay = day.toString()
+                   var strMonth = month.toString()
+                   var strYear = year.toString()
+                   if (strDay.length == 1){
+                       strDay ="0"+day
+                   }
+                   if (strMonth.length == 1){
+                       strMonth ="0"+strMonth
+                   }
+                   txtMentionDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                   llMentionDatePick!!.visibility=View.GONE
+                   MentionDateMode = "1"
+               }
+               catch (e: Exception){
+                   Log.e(TAG,"Exception   428   "+e.toString())
+               }
+           }
+
        }
     }
 
