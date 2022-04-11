@@ -50,8 +50,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
 
     companion object {
 
-        var strCallStatus : String?= "1"
-        var strRiskType : String?= "1"
+        var strCallStatus : String?= ""
+        var strRiskType : String?= ""
     }
 
 
