@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/greylight"
+            android:background="@color/white"
             android:padding="2dp"
             android:orientation="horizontal">
 
@@ -34,6 +34,7 @@
                 android:text="Enquiry About"
                 android:singleLine="true"
                 android:textColor="@color/black"
+                android:fontFamily="@font/myfont"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
                 android:textStyle="normal" />
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -71,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Action"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -88,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -100,7 +104,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/greylight"
+            android:background="@color/white"
             android:padding="2dp"
             android:orientation="horizontal">
 
@@ -110,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Action Date"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -127,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -149,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Status"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -166,6 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -179,7 +187,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/greylight"
+            android:background="@color/white"
             android:padding="2dp"
             android:orientation="horizontal">
 
@@ -189,6 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Agent Remark"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -206,6 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -229,6 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:text="Followed By"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -246,6 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"

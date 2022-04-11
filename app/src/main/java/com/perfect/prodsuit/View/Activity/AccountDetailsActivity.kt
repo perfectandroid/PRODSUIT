@@ -29,7 +29,6 @@ import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
 import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
-import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import org.json.JSONArray
 
