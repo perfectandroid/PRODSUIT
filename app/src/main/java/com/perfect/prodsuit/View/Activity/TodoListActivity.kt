@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -54,14 +55,16 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
                 progressDialog!!.show()
                 todolistViewModel.getTodolist(this)!!.observe(
                         this,
-                        Observer { serviceSetterGetter ->
-                            val msg = serviceSetterGetter.message
+                        Observer { todolistSetterGetter ->
+                            val msg = todolistSetterGetter.message
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
+
                                 if (jObject.getString("StatusCode") == "0") {
-                                    var jobj = jObject.getJSONObject("LeadManagementDetailsList")
+                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
+                                    todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                   // var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val lLayout = GridLayoutManager(this@TodoListActivity, 1)
-                                    val todoArrayList=jobj.getJSONArray("LeadManagementDetails")
                                     rv_todolist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_todolist!!.setHasFixedSize(true)

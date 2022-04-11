@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -54,6 +55,7 @@ object OverDueRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                Log.i("request overdue",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -69,6 +71,7 @@ object OverDueRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
+                        Log.i("Overdue Respose",response.body())
                         val users = ArrayList<OverDueModel>()
                         users.add(OverDueModel(response.body()))
                         val msg = users[0].message

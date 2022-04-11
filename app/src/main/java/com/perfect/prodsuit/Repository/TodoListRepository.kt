@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -53,7 +54,9 @@ object TodoListRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                Log.i("request",requestObject1.toString())
             } catch (e: Exception) {
+                Log.i("Exception",e.toString());
                 e.printStackTrace()
             }
             val body = RequestBody.create(
@@ -68,6 +71,7 @@ object TodoListRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
+                        Log.i("TodoList Respose",response.body())
                         val users = ArrayList<TodoListModel>()
                         users.add(TodoListModel(response.body()))
                         val msg = users[0].message
