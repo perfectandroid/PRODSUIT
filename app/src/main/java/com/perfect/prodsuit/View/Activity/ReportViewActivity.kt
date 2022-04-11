@@ -24,7 +24,6 @@ import com.perfect.prodsuit.Model.DashrrporttypeModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DashReporttypeListAdapter
 import com.perfect.prodsuit.Viewmodel.DashboardreportListViewModel
-import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
