@@ -130,10 +130,12 @@
                             android:layout_above="@+id/fab4"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fab5"
+                            android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:text="History"
+                            android:background="@color/greylight"
+                            android:padding="10dp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/myfont"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -157,11 +159,13 @@
                             android:layout_above="@+id/fab3"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fab4"
+                            android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:text="Next Action"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:fontFamily="@font/myfont"
+                            android:background="@color/greylight"
+                            android:padding="10dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -184,11 +188,13 @@
                             android:layout_above="@+id/fab2"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fab3"
+                            android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:text="New Action"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:fontFamily="@font/myfont"
+                            android:background="@color/greylight"
+                            android:padding="10dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -211,11 +217,13 @@
                             android:layout_above="@+id/fab1"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fab2"
+                            android:background="@color/greylight"
+                            android:fontFamily="@font/myfont"
                             android:gravity="center"
+                            android:padding="10dp"
                             android:text="Follow Up Details"
                             android:textColor="@color/black"
                             android:textSize="18dp"
-                            android:fontFamily="@font/myfont"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -239,9 +247,11 @@
                             android:layout_above="@+id/fab"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fab2"
-                            android:gravity="center"
-                            android:text="Lead Info"
+                            android:background="@color/greylight"
                             android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Lead Info"
                             android:textColor="@color/black"
                             android:textSize="18dp"
                             android:textStyle="bold" />
