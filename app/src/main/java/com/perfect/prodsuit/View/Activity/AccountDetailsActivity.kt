@@ -9,10 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -29,7 +26,6 @@ import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
 import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
-import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import org.json.JSONArray
 
@@ -327,6 +323,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
+
+                messagePopup()
             }
             R.id.fab5->{
                 isOpen = true
@@ -335,6 +333,20 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 getHistory("1")
             }
 
+        }
+    }
+
+    private fun messagePopup() {
+        try {
+            val builder = AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.send_message_popup, null)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -40,22 +40,22 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
                 holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
-               /* val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
+//                val pos = position+1
+//                holder.txtsino.text        = pos.toString()
+//                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
+//
+//                if (position % 2 == 0){
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
 
-                if (position % 2 == 0){
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+                holder.llOverDue!!.setTag(position)
+                holder.llOverDue!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "overdue")
 
-                holder.llemployee!!.setTag(position)
-                holder.llemployee!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "employee")
-
-                })*/
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -84,6 +84,7 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
         internal var txtv_prdctnme    : TextView
         internal var txtv_clct1    : TextView
         internal var txtv_asgndto    : TextView
+        internal var llOverDue    : LinearLayout
 
         init {
             txtv_dte1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
@@ -91,6 +92,7 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
             txtv_prdctnme           = v.findViewById<View>(R.id.txtv_prdctnme) as TextView
             txtv_clct1           = v.findViewById<View>(R.id.txtv_clct1) as TextView
             txtv_asgndto           = v.findViewById<View>(R.id.txtv_asgndto) as TextView
+            llOverDue           = v.findViewById<View>(R.id.llOverDue) as LinearLayout
         }
     }
 

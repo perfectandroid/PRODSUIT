@@ -4,9 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/cbselector.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_deselect.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_select.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/checkbox_selector.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/headertoolbar.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_regular.xml" value="0.2833333333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selected.xml" value="0.2833333333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selector.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_grey.xml" value="0.21979166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_right_arrow.xml" value="0.15" />
@@ -47,6 +53,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_history.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.2869791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_media_type.xml" value="0.2552083333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_overdue.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.3078125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_priority.xml" value="0.2421875" />
@@ -69,8 +76,11 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_detail_popup.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_priority_popup.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_status_popup.xml" value="0.2994791666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.22395833333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/spinner_item.xml" value="0.22395833333333334" />
+        <entry key="..\:/gradle-7.0.2/caches/transforms-2/files-2.1/19dc1fade8646ce44cd878841e800344/jetified-android-segmented-1.0.6/res/drawable/button_text_color.xml" value="0.3175925925925926" />
       </map>
     </option>
   </component>

@@ -3,6 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.OverdueListAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
@@ -21,7 +23,7 @@ import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class OverDueActivity : AppCompatActivity(), View.OnClickListener {
+class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener {
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var overduelistViewModel: OverDueListViewModel
@@ -69,6 +71,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener {
                                     rv_overduelist!!.setHasFixedSize(true)
                                     val adapter = OverdueListAdapter(applicationContext, overdueArrayList)
                                     rv_overduelist!!.adapter = adapter
+                                    adapter.setClickListener(this@OverDueActivity)
 
                                 } else {
                                     val builder = AlertDialog.Builder(
@@ -105,6 +108,15 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener {
             R.id.imback -> {
                 finish()
             }
+        }
+    }
+
+    override fun onClick(position: Int, data: String) {
+
+        if (data.equals("overdue")){
+            val jsonObject = overdueArrayList.getJSONObject(position)
+            val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)
+            startActivity(i)
         }
     }
 }
