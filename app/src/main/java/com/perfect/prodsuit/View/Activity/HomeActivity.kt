@@ -86,9 +86,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                         val i = Intent(this@HomeActivity, HomeActivity::class.java)
                         startActivity(i)
                     }
-                    R.id.profile -> {
-                        val i = Intent(this@HomeActivity, ProfileActivity::class.java)
-                        startActivity(i)
+                    R.id.reminder -> {
+                        setReminder()
                     }
                     R.id.logout -> {
                         doLogout()
@@ -154,8 +153,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.ll_reminder -> {
-                setReminder()
-            }
+                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
+                startActivity(i)            }
             R.id.ll_report -> {
                 val i = Intent(this@HomeActivity, ReportActivity::class.java)
                 startActivity(i)            }

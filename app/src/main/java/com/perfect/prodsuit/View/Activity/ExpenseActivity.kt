@@ -1,7 +1,10 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.*
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -13,22 +16,19 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import org.json.JSONObject
-import java.util.*
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.perfect.prodsuit.Viewmodel.DashboardreportListViewModel
-import com.perfect.prodsuit.Viewmodel.ReportviewViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
-class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
+class ExpenseActivity : AppCompatActivity() , View.OnClickListener {
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -43,41 +43,17 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
-    private var progressDialog: ProgressDialog? = null
-    private var imback: ImageView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
-
-    private var strFromdate:String?=""
-    private var strTodate:String?=""
-    private var strDashboardTypeId:String?=""
-    private var strDashboardTypeName:String?=""
-
-    lateinit var context: Context
-    lateinit var reportviewViewModel: ReportviewViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reportviewdetails)
+        setContentView(R.layout.activity_expense)
         setRegViews()
         bottombarnav()
-
-        if (getIntent().hasExtra("Fromdate")) {
-            strFromdate = intent.getStringExtra("Fromdate")
-        }
-        if (getIntent().hasExtra("Todate")) {
-            strTodate = intent.getStringExtra("Todate")
-        }
-        if (getIntent().hasExtra("DashboardTypeId")) {
-            strDashboardTypeId = intent.getStringExtra("DashboardTypeId")
-        }
-        if (getIntent().hasExtra("DashboardTypeName")) {
-            strDashboardTypeName = intent.getStringExtra("DashboardTypeName")
-        }
-        getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
     }
 
     private fun setRegViews() {
-        imback = findViewById(R.id.imback)
+        val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
     }
 
@@ -96,11 +72,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
-                        val i = Intent(this@ReportViewDetailsActivity, HomeActivity::class.java)
+                        val i = Intent(this@ExpenseActivity, HomeActivity::class.java)
                         startActivity(i)
                     }
                     R.id.reminder -> {
-                       setReminder()
+                        setReminder()
                     }
                     R.id.logout -> {
                         doLogout()
@@ -276,7 +252,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
                 dologoutchanges()
-                startActivity(Intent(this@ReportViewDetailsActivity, WelcomeActivity::class.java))
+                startActivity(Intent(this@ExpenseActivity, WelcomeActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -317,66 +293,6 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
             dialog1.show()
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-
-    companion object {
-        var strfromdate= ""
-        var strtodate= ""
-        var strDashboardtype= ""
-    }
-
-    private fun getReportview(fdate:String, tdate:String, dashboardtype:String,) {
-        strfromdate= fdate
-        strtodate= tdate
-        strDashboardtype= dashboardtype
-        context = this@ReportViewDetailsActivity
-        reportviewViewModel = ViewModelProvider(this).get(ReportviewViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                reportviewViewModel.getReportview(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                var jobj = jObject.getJSONObject("UserLoginDetails")
-
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@ReportViewDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
         }
     }
 
