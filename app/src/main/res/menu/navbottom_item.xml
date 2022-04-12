@@ -12,9 +12,9 @@
         app:cnb_textColor="#ffffff" />
 
     <item
-        android:id="@+id/profile"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile"
+        android:id="@+id/reminder"
+        android:icon="@drawable/ic_remindr"
+        android:title="Reminder"
         app:cnb_backgroundColor="@color/colorPrimary"
         app:iconTint="@color/colorPrimaryExtraDark"
         app:cnb_iconColor="#ffffff"

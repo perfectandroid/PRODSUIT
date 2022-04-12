@@ -188,7 +188,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:padding="3dp"
-                        android:background="@drawable/myagandabg"
+                        android:background="@drawable/myreminderbg"
                         android:layout_marginTop="2.5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="2.5dp">
@@ -328,7 +328,7 @@
                         android:layout_marginTop="2.5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/myreminderbg">
+                        android:background="@drawable/myagandabg">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -360,7 +360,7 @@
                             android:fontFamily="@font/myfont"
                             android:gravity="left|center"
                             android:src="@drawable/rightcurve_whitebg"
-                            android:text="Set Reminder"
+                            android:text="Expense"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/black"
                             android:textSize="20dp"
