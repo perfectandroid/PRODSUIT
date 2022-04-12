@@ -533,7 +533,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
         val cr = contentResolver
         val beginTime = Calendar.getInstance()
-        beginTime.set(2019, 11 - 1, 28, 9, 30)
+        beginTime.set(2022, 11 - 1, 28, 9, 30)
         val endTime = Calendar.getInstance()
         endTime.set(iyr, imnth, iday, ihour, imin)
         val values = ContentValues()
