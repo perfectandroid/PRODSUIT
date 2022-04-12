@@ -30,6 +30,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
 import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
+import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
 import org.json.JSONArray
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -62,9 +63,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
     lateinit var jsonArray : JSONArray
+    var jsonObj: JSONObject? = null
 
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
+    lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var leadHistoryArrayList : JSONArray
+    lateinit var leadInfoArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
     private var fab1 : FloatingActionButton? = null
@@ -84,8 +88,22 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtFollowupDeatils : TextView? = null
     private var txtLeadInfo : TextView? = null
 
+    private var txtName : TextView? = null
+    private var txtAddress : TextView? = null
+    private var txtPhone : TextView? = null
+    private var txtEmail : TextView? = null
+    private var txtLeadNo : TextView? = null
+    private var txtCategory : TextView? = null
+    private var txtProduct : TextView? = null
+    private var txtTargetDate : TextView? = null
+    private var txtAction : TextView? = null
+
 
     private var isOpen  : Boolean? = true
+
+    companion object{
+        var ID_LeadGenerateProduct :String = ""
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +114,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         context = this@AccountDetailsActivity
 
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
+        leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
 
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        Log.e(TAG,"jsonObj   "+jsonObj)
+        ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         setRegViews()
         bottombarnav()
 
@@ -109,8 +132,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //            fabOpenClose()
 //        }
 
+        getLeadInfoetails()
 
     }
+
+
 
     private fun fabOpenClose() {
         if (isOpen!!) {
@@ -187,6 +213,16 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtNewAction = findViewById(R.id.txtNewAction);
         txtFollowupDeatils = findViewById(R.id.txtFollowupDeatils);
         txtLeadInfo = findViewById(R.id.txtLeadInfo);
+
+        txtName = findViewById(R.id.txtName);
+        txtAddress = findViewById(R.id.txtAddress);
+        txtPhone = findViewById(R.id.txtPhone);
+        txtEmail = findViewById(R.id.txtEmail);
+        txtLeadNo = findViewById(R.id.txtLeadNo);
+        txtCategory = findViewById(R.id.txtCategory);
+        txtProduct = findViewById(R.id.txtProduct);
+        txtTargetDate = findViewById(R.id.txtTargetDate);
+        txtAction = findViewById(R.id.txtAction);
 
         fab_main!!.setOnClickListener(this)
         fab1!!.setOnClickListener(this)
@@ -479,6 +515,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
+
+                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+                startActivity(i)
             }
             R.id.fab3->{
                 isOpen = true
@@ -586,4 +625,71 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
         }
     }
+
+    private fun getLeadInfoetails() {
+        var leadInfo = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadInfoViewModel.getLeadInfo(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadInfoetails")
+                                leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                if (leadInfoArrayList.length()>0){
+                                    if (leadInfo == 0){
+                                        leadInfo++
+                                        val jObjectLeadInfo = leadInfoArrayList.getJSONObject(0)
+                                        txtName!!.setText(""+jObjectLeadInfo.getString("LgCusName"))
+                                        txtAddress!!.setText(""+jObjectLeadInfo.getString("LgCusAddress"))
+                                        txtPhone!!.setText(""+jObjectLeadInfo.getString("LgCusMobile"))
+                                        txtEmail!!.setText(""+jObjectLeadInfo.getString("LgCusEmail"))
+                                        txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LgLeadNo"))
+                                        txtCategory!!.setText(""+jObjectLeadInfo.getString("CatName"))
+                                        txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
+                                        txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
+                                        txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
+                                    }
+
+                                }
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@AccountDetailsActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
 }

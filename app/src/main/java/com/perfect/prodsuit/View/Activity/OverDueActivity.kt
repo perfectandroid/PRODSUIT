@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -65,6 +66,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                  //   var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                     overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                    Log.e("OverDueActivity","overdueArrayList 69  "+overdueArrayList)
                                     val lLayout = GridLayoutManager(this@OverDueActivity, 1)
                                     rv_overduelist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
@@ -116,6 +118,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         if (data.equals("overdue")){
             val jsonObject = overdueArrayList.getJSONObject(position)
             val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
             startActivity(i)
         }
     }
