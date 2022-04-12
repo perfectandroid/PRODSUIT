@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
@@ -29,6 +30,12 @@ import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
 import org.json.JSONArray
+import java.util.Map.entry
+
+import android.view.ViewManager
+
+
+
 
 
 class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
@@ -39,6 +46,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var chipNavigationBar: ChipNavigationBar? = null
 
     var llHistory: LinearLayout? = null
+    var llMainDetail: LinearLayout? = null
 
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
@@ -78,6 +86,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtTargetDate : TextView? = null
     private var txtAction : TextView? = null
 
+    private var tabLayout : TabLayout? = null
+
 
     private var isOpen  : Boolean? = true
 
@@ -113,9 +123,67 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //        }
 
         getLeadInfoetails()
+        addTabItem()
 
     }
 
+    private fun addTabItem() {
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Info"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Activities"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Note"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
+        tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+
+        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+               Log.e(TAG,"onTabSelected  113  "+tab.position)
+                if (tab.position == 0){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+                    llMainDetail!!.removeAllViews()
+
+                }
+                if (tab.position == 1){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+                    llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_activities, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
+
+                }
+                if (tab.position == 2){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+
+                    llMainDetail!!.removeAllViews()
+
+                }
+                if (tab.position == 3){
+
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+                    llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_document, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
+
+                }
+                if (tab.position == 4){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+                    llMainDetail!!.removeAllViews()
+                    val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_quotation, null, false)
+                    llMainDetail!!.addView(inflatedLayout1);
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabUnselected  162  "+tab.position)
+
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabReselected  165  "+tab.position)
+            }
+        })
+
+    }
 
 
     private fun fabOpenClose() {
@@ -170,6 +238,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val imback = findViewById<ImageView>(R.id.imback)
 
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
+        llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
 
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
@@ -203,6 +272,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtProduct = findViewById(R.id.txtProduct);
         txtTargetDate = findViewById(R.id.txtTargetDate);
         txtAction = findViewById(R.id.txtAction);
+
+        tabLayout = findViewById(R.id.tabLayout);
 
         fab_main!!.setOnClickListener(this)
         fab1!!.setOnClickListener(this)
