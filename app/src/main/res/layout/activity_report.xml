@@ -72,14 +72,13 @@
                     <LinearLayout
                         android:id="@+id/ll_reportview"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/reportviewbg"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/reportbg1"
                         android:orientation="horizontal">
 
 
@@ -103,13 +102,12 @@
                     <LinearLayout
                         android:id="@+id/ll_ticketreport"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/ticketreportbg"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/reportbg2"
                         android:orientation="horizontal">
 
 
@@ -123,6 +121,35 @@
                             android:layout_marginLeft="50dp"
                             android:layout_marginRight="30dp"
                             android:text="Ticket Report"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            android:fontFamily="@font/myfont" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ledgerreport"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/reportbg3"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="30dp"
+                            android:text="Ledger Report"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="20dp"
