@@ -62,7 +62,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
 
 
     var datePickerFrom: DatePicker? = null
-    var datePickerTo: DatePicker? = null
+    var datePickerTo: TimePicker? = null
     var datePickerMention: DatePicker? = null
 
     var imgv_upload1: ImageView? = null
@@ -134,7 +134,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         llRiskType = findViewById(R.id.llRiskType) as LinearLayout
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
-        datePickerTo = findViewById(R.id.datePickerTo) as DatePicker
+        datePickerTo = findViewById(R.id.datePickerTo) as TimePicker
         datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
 
         llFromdate!!.setOnClickListener(this)
@@ -369,21 +369,32 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
            }
            R.id.txtToSubmit->{
                try {
-                   datePickerTo!!.minDate = Calendar.getInstance().timeInMillis
-                   val day: Int = datePickerTo!!.getDayOfMonth()
-                   val mon: Int = datePickerTo!!.getMonth()
-                   val month: Int = mon+1
-                   val year: Int = datePickerTo!!.getYear()
-                   var strDay = day.toString()
-                   var strMonth = month.toString()
-                   var strYear = year.toString()
-                   if (strDay.length == 1){
-                       strDay ="0"+day
+//                   datePickerTo!!.minDate = Calendar.getInstance().timeInMillis
+                   var am_pm = ""
+                   var hour: Int = datePickerTo!!.hour
+                   var min: Int = datePickerTo!!.minute
+
+                   when {hour == 0 -> { hour += 12
+                       am_pm = "AM"
                    }
-                   if (strMonth.length == 1){
-                       strMonth ="0"+strMonth
+                       hour == 12 -> am_pm = "PM"
+                       hour > 12 -> { hour -= 12
+                           am_pm = "PM"
+                       }
+                       else -> am_pm = "AM"
                    }
-                   txtToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+                   var hours : String = ""+hour
+                   var minutes : String = ""+min
+
+                   if (hour<10){
+                       hours = "0"+hour
+                   }
+                   if (min<10){
+                       minutes = "0"+min
+                   }
+
+                   txtToDate!!.setText(""+hour+"-"+minutes+"-"+"00")
                    llToDatePick!!.visibility=View.GONE
                    toDateMode = "1"
                }
