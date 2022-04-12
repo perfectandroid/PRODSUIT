@@ -125,6 +125,7 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
                 intent.putExtra("Fromdate", txtfromDate!!.text.toString())
                 intent.putExtra("Todate", txttoDate!!.text.toString())
                 intent.putExtra("DashboardTypeId", strDashboardTypeId)
+                intent.putExtra("DashboardTypeName", strDashboardType)
                 startActivity(intent)
             }
             R.id.txtok1->{

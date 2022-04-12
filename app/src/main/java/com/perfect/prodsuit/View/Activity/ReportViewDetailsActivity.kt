@@ -31,6 +31,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     private var strFromdate:String?=""
     private var strTodate:String?=""
     private var strDashboardTypeId:String?=""
+    private var strDashboardTypeName:String?=""
 
     lateinit var context: Context
     lateinit var reportviewViewModel: ReportviewViewModel
@@ -49,6 +50,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         }
         if (getIntent().hasExtra("DashboardTypeId")) {
             strDashboardTypeId = intent.getStringExtra("DashboardTypeId")
+        }
+        if (getIntent().hasExtra("DashboardTypeName")) {
+            strDashboardTypeName = intent.getStringExtra("DashboardTypeName")
         }
         getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
     }
