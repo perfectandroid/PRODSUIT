@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +11,9 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TodoListAdapter(internal var context: Context, internal var jsonArray: JSONArray):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,7 +25,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-                R.layout.adapter_todolist, parent, false
+            R.layout.adapter_todolist, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -33,9 +35,12 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
-                Log.i("Todo Date",jsonObject!!.getString("LgLeadDate"))
+                Log.e(TAG, "onBindViewHolder   1051   ")
+                Log.i("Todo Date", jsonObject!!.getString("LgLeadDate"))
+
+
                 holder.txtv_date1.text        = jsonObject!!.getString("LgLeadDate")
+
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
                 holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
@@ -60,7 +65,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG,"Exception   105   "+e.toString())
+            Log.e(TAG, "Exception   105   " + e.toString())
         }
 
     }
