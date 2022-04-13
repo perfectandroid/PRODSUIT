@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.Model.UpcomingtasksModel
+import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -21,7 +23,7 @@ import java.util.*
 object UpcomingtasksRepository {
 
     val upcomingtasksSetterGetter = MutableLiveData<UpcomingtasksModel>()
-
+    private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context): MutableLiveData<UpcomingtasksModel> {
         getUpcomingtasks(context)
         return upcomingtasksSetterGetter
@@ -32,6 +34,14 @@ object UpcomingtasksRepository {
 
 
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+                R.drawable.progress))
+            progressDialog!!.show()
+
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -71,6 +81,7 @@ object UpcomingtasksRepository {
                     Response<String>
                 ) {
                     try {
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.i("upcoming Respose",response.body())
                         val users = ArrayList<UpcomingtasksModel>()
@@ -79,14 +90,17 @@ object UpcomingtasksRepository {
                         upcomingtasksSetterGetter.value = UpcomingtasksModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    progressDialog!!.dismiss()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
+            progressDialog!!.dismiss()
         }
     }
 

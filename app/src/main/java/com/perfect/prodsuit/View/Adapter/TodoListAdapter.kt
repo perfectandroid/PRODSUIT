@@ -11,9 +11,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
 
 class TodoListAdapter(internal var context: Context, internal var jsonArray: JSONArray):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,8 +36,16 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 Log.e(TAG, "onBindViewHolder   1051   ")
                 Log.i("Todo Date", jsonObject!!.getString("LgLeadDate"))
 
+                var date = jsonObject!!.getString("LgLeadDate")
+                var spf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+                val newDate = spf.parse(date)
+                spf = SimpleDateFormat("dd-MM-yyyy")
+                date = spf.format(newDate)
+                println(date)
+                Log.i("Todo Date1", date)
 
-                holder.txtv_date1.text        = jsonObject!!.getString("LgLeadDate")
+
+                holder.txtv_date1.text        = date
 
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
