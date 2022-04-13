@@ -33,10 +33,6 @@ import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
 import org.json.JSONArray
-import java.util.Map.entry
-
-import android.view.ViewManager
-
 
 
 import java.text.ParseException
@@ -162,19 +158,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
 
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                Log.e(TAG,"onTabSelected  113  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
 
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_activities, null, false)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
                     llMainDetail!!.addView(inflatedLayout);
 
                 }
@@ -182,6 +186,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
 
                     llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
+
 
                 }
                 if (tab.position == 3){
@@ -189,7 +197,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_document, null, false)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
                     llMainDetail!!.addView(inflatedLayout);
 
                 }
@@ -197,7 +205,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_quotation, null, false)
+                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
                     llMainDetail!!.addView(inflatedLayout1);
                 }
             }
