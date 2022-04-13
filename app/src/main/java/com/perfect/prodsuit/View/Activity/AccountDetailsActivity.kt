@@ -74,11 +74,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var infoViewModel: InfoViewModel
     lateinit var quotationViewModel: QuotationViewModel
     lateinit var documentViewModel: DocumentViewModel
+    lateinit var historyActViewModel: HistoryActViewModel
+
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
     lateinit var documentArrayList : JSONArray
+    lateinit var historyActArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
@@ -112,6 +115,17 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private var tabLayout : TabLayout? = null
 
+    var llCall : LinearLayout? = null
+    var llMessage : LinearLayout? = null
+    var llMeeting : LinearLayout? = null
+
+    var imActCall : ImageView? = null
+    var imActMessage : ImageView? = null
+    var imActMeeting : ImageView? = null
+    var recyActCall  : RecyclerView? = null
+    var recyActMessage  : RecyclerView? = null
+    var recyActMeeting   : RecyclerView? = null
+
 
     private var isOpen  : Boolean? = true
 
@@ -134,6 +148,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
         documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
+        historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -186,9 +201,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
-                    llMainDetail!!.addView(inflatedLayout);
+
+                    getActivitieDtails()
 
                 }
                 if (tab.position == 2){
@@ -229,7 +243,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         })
 
     }
-
 
 
 
@@ -904,16 +917,16 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             if (jObject.getString("StatusCode") == "0") {
                                 imDocumentLoading.visibility = View.GONE
                                 val jobjt = jObject.getJSONObject("LeadInfoetails")
-                                infoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
-                                if (infoArrayList.length()>0){
+                                documentArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                if (documentArrayList.length()>0){
                                     if (docs == 0){
                                         docs++
 
-                                        Log.e(TAG,"recySubDocs  845   "+infoArrayList)
+                                        Log.e(TAG,"documentArrayList  845   "+documentArrayList)
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recySubDocs!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         recySubDocs!!.setHasFixedSize(true)
-                                        val adapter = DocumentSubAdapter(this@AccountDetailsActivity, infoArrayList)
+                                        val adapter = DocumentSubAdapter(this@AccountDetailsActivity, documentArrayList)
                                         recySubDocs!!.adapter = adapter
                                         //adapter.setClickListener(this@AccountDetailsActivity)
                                     }
@@ -1002,5 +1015,129 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
 
     }
+
+    private fun getActivitieDtails() {
+
+        var rbActMode = "1"
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+        llCall = inflatedLayout.findViewById<LinearLayout>(R.id.llCall)
+        llMessage = inflatedLayout.findViewById<LinearLayout>(R.id.llMessage)
+        llMeeting = inflatedLayout.findViewById<LinearLayout>(R.id.llMeeting)
+
+        llCall!!.visibility = View.GONE
+        llMessage!!.visibility = View.GONE
+        llMeeting!!.visibility = View.GONE
+
+        var rbCall = inflatedLayout.findViewById<RadioButton>(R.id.rbCall)
+        var rbMessage = inflatedLayout.findViewById<RadioButton>(R.id.rbMessage)
+        var rbMeeting = inflatedLayout.findViewById<RadioButton>(R.id.rbMeeting)
+
+        imActCall = inflatedLayout.findViewById<ImageView>(R.id.imActCall)
+        imActMessage = inflatedLayout.findViewById<ImageView>(R.id.imActMessage)
+        imActMeeting = inflatedLayout.findViewById<ImageView>(R.id.imActMeeting)
+        recyActCall = inflatedLayout.findViewById<RecyclerView>(R.id.recyActCall)
+        recyActMessage = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMessage)
+        recyActMeeting = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMeeting)
+
+//        Glide.with(this).load(R.drawable.loadinggif).into(imActCall);
+//        Glide.with(this).load(R.drawable.loadinggif).into(imActMessage);
+//        Glide.with(this).load(R.drawable.loadinggif).into(imActMeeting);
+
+        getHistoryAct(rbActMode)
+
+        rbCall!!.setOnClickListener {
+            var rbActMode = "1"
+            Log.e(TAG,"rbCall  1029")
+        }
+
+        rbMessage!!.setOnClickListener {
+            var rbActMode = "2"
+            Log.e(TAG,"rbMessage  1029")
+        }
+
+        rbMeeting!!.setOnClickListener {
+            var rbActMode = "3"
+            Log.e(TAG,"rbMeeting  1029")
+        }
+
+    }
+
+    private fun getHistoryAct(rbActMode: String) {
+        var historyAct = 0
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imActCall!!.visibility = View.VISIBLE
+                llCall!!.visibility = View.VISIBLE
+                try {
+                    historyActViewModel.getHistoryAct(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            imActCall!!.visibility = View.GONE
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                historyActArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                if (historyActArrayList.length()>0){
+                                    if (historyAct == 0){
+                                        recyActCall!!.visibility = View.VISIBLE
+                                        Log.e(TAG,"leadHistoryArrayList  1067  "+historyActArrayList)
+                                        historyAct++
+////                                        productCategoryPopup(leadHistoryArrayList)
+//
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recyActCall!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        recyCustomer!!.setHasFixedSize(true)
+                                        val adapter = HistoryActCallAdapter(this@AccountDetailsActivity, historyActArrayList)
+                                        recyActCall!!.adapter = adapter
+                                        // adapter.setClickListener(this@AccountDetailsActivity)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        })
+                }
+                catch (e : Exception){
+                    Log.e(TAG,"Exception  1104   "+e.toString())
+                }
+
+
+
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
 
 }

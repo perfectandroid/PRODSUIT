@@ -15,22 +15,24 @@
             android:layout_margin="10dp"
             android:orientation="horizontal"
             segmentedgroup:sc_tint_color="#000204"
+            android:layout_alignParentTop="true"
             segmentedgroup:sc_checked_text_color="@color/white"
             segmentedgroup:sc_border_width="2dp"
             segmentedgroup:sc_corner_radius="5dp">
 
             <RadioButton
-                android:id="@+id/rbMessages"
+                android:id="@+id/rbCall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/myfont"
                 android:textStyle="bold"
+                android:checked="true"
                 android:text="Call"
                 style="@style/RadioButton" />
 
             <RadioButton
-                android:id="@+id/rbReminder"
+                android:id="@+id/rbMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -40,7 +42,7 @@
                 style="@style/RadioButton" />
 
             <RadioButton
-                android:id="@+id/rbIntimation"
+                android:id="@+id/rbMeeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
@@ -49,6 +51,105 @@
                 android:text="Meeting"
                 style="@style/RadioButton" />
         </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/segmented2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llCall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imActCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/loadinggif"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyActCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imActMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/loadinggif"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyActMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imActMeeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/loadinggif"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyActMeeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
 
     </RelativeLayout>
