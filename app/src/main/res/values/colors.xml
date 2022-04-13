@@ -27,6 +27,8 @@
     <color name="dot_light_screen1">#8cf9eb</color>
     <color name="dot_light_screen4">#93c6fd</color>
     <color name="dot_light_screen3">#e4b5fc</color>
+    <color name="tabColor">#67ADF6</color>
+    <color name="tabbgColor">#28292B</color>
     <color name="red">#E91E1E</color>
     <color name="redDark">#7E1212</color>
     <color name="blue">#03A9F4</color>

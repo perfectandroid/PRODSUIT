@@ -79,22 +79,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadInfoArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
-    private var fab1 : FloatingActionButton? = null
-    private var fab2 : FloatingActionButton? = null
-    private var fab3 : FloatingActionButton? = null
-    private var fab4 : FloatingActionButton? = null
-    private var fab5 : FloatingActionButton? = null
+    private var fabAddNote : FloatingActionButton? = null
+    private var fabAddActivities : FloatingActionButton? = null
+    private var fabAddDocument : FloatingActionButton? = null
+    private var fabAddQuotation : FloatingActionButton? = null
+    private var fabEditLead : FloatingActionButton? = null
+    private var fabCloseLead : FloatingActionButton? = null
 
     private var fab_open : Animation? = null
     private var fab_close : Animation? = null
     private var fab_clock : Animation? = null
     private var fab_anticlock : Animation? = null
 
-    private var txtHistory : TextView? = null
-    private var txtNxtAction : TextView? = null
-    private var txtNewAction : TextView? = null
-    private var txtFollowupDeatils : TextView? = null
-    private var txtLeadInfo : TextView? = null
+    private var txtCloseLead : TextView? = null
+    private var txtEditLead : TextView? = null
+    private var txtAddQuotation : TextView? = null
+    private var txtAddDocument : TextView? = null
+    private var txtAddActivities : TextView? = null
+    private var txtAddNote : TextView? = null
 
     private var txtName : TextView? = null
     private var txtAddress : TextView? = null
@@ -209,46 +211,52 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private fun fabOpenClose() {
         if (isOpen!!) {
 
-            fab1!!.startAnimation(fab_close);
-            fab2!!.startAnimation(fab_close);
-            fab3!!.startAnimation(fab_close);
-            fab4!!.startAnimation(fab_close);
-            fab5!!.startAnimation(fab_close);
-            txtHistory!!.startAnimation(fab_close)
-            txtNxtAction!!.startAnimation(fab_close)
-            txtNewAction!!.startAnimation(fab_close)
-            txtFollowupDeatils!!.startAnimation(fab_close)
-            txtLeadInfo!!.startAnimation(fab_close)
+            fabAddNote!!.startAnimation(fab_close);
+            fabAddActivities!!.startAnimation(fab_close);
+            fabAddDocument!!.startAnimation(fab_close);
+            fabAddQuotation!!.startAnimation(fab_close);
+            fabEditLead!!.startAnimation(fab_close);
+            fabCloseLead!!.startAnimation(fab_close);
+            txtEditLead!!.startAnimation(fab_close)
+            txtCloseLead!!.startAnimation(fab_close)
+            txtAddQuotation!!.startAnimation(fab_close)
+            txtAddDocument!!.startAnimation(fab_close)
+            txtAddActivities!!.startAnimation(fab_close)
+            txtAddNote!!.startAnimation(fab_close)
 
 
 
             fab_main!!.startAnimation(fab_anticlock);
-            fab1!!.setClickable(false);
-            fab2!!.setClickable(false);
-            fab3!!.setClickable(false);
-            fab4!!.setClickable(false);
-            fab5!!.setClickable(false);
+            fabAddNote!!.setClickable(false);
+            fabAddActivities!!.setClickable(false);
+            fabAddDocument!!.setClickable(false);
+            fabAddQuotation!!.setClickable(false);
+            fabEditLead!!.setClickable(false);
+            fabCloseLead!!.setClickable(false);
             isOpen = false;
         } else {
 
-            fab1!!.startAnimation(fab_open);
-            fab2!!.startAnimation(fab_open);
-            fab3!!.startAnimation(fab_open);
-            fab4!!.startAnimation(fab_open);
-            fab5!!.startAnimation(fab_open);
+            fabAddNote!!.startAnimation(fab_open);
+            fabAddActivities!!.startAnimation(fab_open);
+            fabAddDocument!!.startAnimation(fab_open);
+            fabAddQuotation!!.startAnimation(fab_open);
+            fabEditLead!!.startAnimation(fab_open);
+            fabCloseLead!!.startAnimation(fab_open);
 
-            txtHistory!!.startAnimation(fab_open)
-            txtNxtAction!!.startAnimation(fab_open)
-            txtNewAction!!.startAnimation(fab_open)
-            txtFollowupDeatils!!.startAnimation(fab_open)
-            txtLeadInfo!!.startAnimation(fab_open)
+            txtCloseLead!!.startAnimation(fab_open)
+            txtEditLead!!.startAnimation(fab_open)
+            txtAddQuotation!!.startAnimation(fab_open)
+            txtAddDocument!!.startAnimation(fab_open)
+            txtAddActivities!!.startAnimation(fab_open)
+            txtAddNote!!.startAnimation(fab_open)
 
             fab_main!!.startAnimation(fab_clock);
-            fab1!!.setClickable(true);
-            fab2!!.setClickable(true);
-            fab3!!.setClickable(true);
-            fab4!!.setClickable(true);
-            fab5!!.setClickable(true);
+            fabAddNote!!.setClickable(true);
+            fabAddActivities!!.setClickable(true);
+            fabAddDocument!!.setClickable(true);
+            fabAddQuotation!!.setClickable(true);
+            fabEditLead!!.setClickable(true);
+            fabCloseLead!!.setClickable(true);
             isOpen = true;
         }
     }
@@ -266,22 +274,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         imback!!.setOnClickListener(this)
 
         fab_main = findViewById(R.id.fab);
-        fab1 = findViewById(R.id.fab1);
-        fab2 = findViewById(R.id.fab2);
-        fab3 = findViewById(R.id.fab3);
-        fab4 = findViewById(R.id.fab4);
-        fab5 = findViewById(R.id.fab5);
+        fabAddNote = findViewById(R.id.fabAddNote);
+        fabAddActivities = findViewById(R.id.fabAddActivities);
+        fabAddDocument = findViewById(R.id.fabAddDocument);
+        fabAddQuotation = findViewById(R.id.fabAddQuotation);
+        fabEditLead = findViewById(R.id.fabEditLead);
+        fabCloseLead = findViewById(R.id.fabCloseLead);
 
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
 
-        txtHistory = findViewById(R.id.txtHistory);
-        txtNxtAction = findViewById(R.id.txtNxtAction);
-        txtNewAction = findViewById(R.id.txtNewAction);
-        txtFollowupDeatils = findViewById(R.id.txtFollowupDeatils);
-        txtLeadInfo = findViewById(R.id.txtLeadInfo);
+        txtCloseLead = findViewById(R.id.txtCloseLead);
+        txtEditLead = findViewById(R.id.txtEditLead);
+        txtAddQuotation = findViewById(R.id.txtAddQuotation);
+        txtAddDocument = findViewById(R.id.txtAddDocument);
+        txtAddActivities = findViewById(R.id.txtAddActivities);
+        txtAddNote = findViewById(R.id.txtAddNote);
 
         txtName = findViewById(R.id.txtName);
         txtAddress = findViewById(R.id.txtAddress);
@@ -296,11 +306,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout = findViewById(R.id.tabLayout);
 
         fab_main!!.setOnClickListener(this)
-        fab1!!.setOnClickListener(this)
-        fab2!!.setOnClickListener(this)
-        fab3!!.setOnClickListener(this)
-        fab4!!.setOnClickListener(this)
-        fab5!!.setOnClickListener(this)
+        fabAddNote!!.setOnClickListener(this)
+        fabAddActivities!!.setOnClickListener(this)
+        fabAddDocument!!.setOnClickListener(this)
+        fabAddQuotation!!.setOnClickListener(this)
+        fabEditLead!!.setOnClickListener(this)
+        fabCloseLead!!.setOnClickListener(this)
 
 
     }
@@ -577,12 +588,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             R.id.fab->{
                 fabOpenClose()
             }
-            R.id.fab1->{
+            R.id.fabAddNote->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
             }
-            R.id.fab2->{
+            R.id.fabAddActivities->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
@@ -590,23 +601,30 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
                 startActivity(i)
             }
-            R.id.fab3->{
+            R.id.fabAddDocument->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
             }
-            R.id.fab4->{
+            R.id.fabAddQuotation->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
 
                 messagePopup()
             }
-            R.id.fab5->{
+            R.id.fabEditLead->{
                 isOpen = true
                 fabOpenClose()
 
                 getHistory("1")
+            }
+
+            R.id.fabCloseLead->{
+                isOpen = true
+                fabOpenClose()
+
+               // getHistory("1")
             }
 
         }
