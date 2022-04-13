@@ -1027,10 +1027,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessage = inflatedLayout.findViewById<LinearLayout>(R.id.llMessage)
         llMeeting = inflatedLayout.findViewById<LinearLayout>(R.id.llMeeting)
 
-        llCall!!.visibility = View.GONE
-        llMessage!!.visibility = View.GONE
-        llMeeting!!.visibility = View.GONE
-
         var rbCall = inflatedLayout.findViewById<RadioButton>(R.id.rbCall)
         var rbMessage = inflatedLayout.findViewById<RadioButton>(R.id.rbMessage)
         var rbMeeting = inflatedLayout.findViewById<RadioButton>(R.id.rbMeeting)
@@ -1042,45 +1038,65 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         recyActMessage = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMessage)
         recyActMeeting = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMeeting)
 
-//        Glide.with(this).load(R.drawable.loadinggif).into(imActCall);
-//        Glide.with(this).load(R.drawable.loadinggif).into(imActMessage);
-//        Glide.with(this).load(R.drawable.loadinggif).into(imActMeeting);
+        Glide.with(this).load(R.drawable.loadinggif).into(imActCall!!);
+        Glide.with(this).load(R.drawable.loadinggif).into(imActMessage!!);
+        Glide.with(this).load(R.drawable.loadinggif).into(imActMeeting!!);
 
         getHistoryAct(rbActMode)
 
         rbCall!!.setOnClickListener {
             var rbActMode = "1"
             Log.e(TAG,"rbCall  1029")
+            getHistoryAct(rbActMode)
         }
 
         rbMessage!!.setOnClickListener {
             var rbActMode = "2"
             Log.e(TAG,"rbMessage  1029")
+            getHistoryAct(rbActMode)
         }
 
         rbMeeting!!.setOnClickListener {
             var rbActMode = "3"
             Log.e(TAG,"rbMeeting  1029")
+            getHistoryAct(rbActMode)
         }
 
     }
 
     private fun getHistoryAct(rbActMode: String) {
         var historyAct = 0
-
+        llCall!!.visibility = View.GONE
+        llMessage!!.visibility = View.GONE
+        llMeeting!!.visibility = View.GONE
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                imActCall!!.visibility = View.VISIBLE
-                llCall!!.visibility = View.VISIBLE
+
+                if (rbActMode.equals("1")){
+                    imActCall!!.visibility = View.VISIBLE
+                    llCall!!.visibility = View.VISIBLE
+                }
+                if (rbActMode.equals("2")){
+                    imActMessage!!.visibility = View.VISIBLE
+                    llMessage!!.visibility = View.VISIBLE
+                }
+                if (rbActMode.equals("3")){
+                    imActMeeting!!.visibility = View.VISIBLE
+                    llMeeting!!.visibility = View.VISIBLE
+                }
+
                 try {
                     historyActViewModel.getHistoryAct(this)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
+                            imActCall!!.visibility = View.GONE
+                            imActMessage!!.visibility = View.GONE
+                            imActMeeting!!.visibility = View.GONE
                         if (msg!!.length > 0) {
 
-                            imActCall!!.visibility = View.GONE
+
 
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1062   "+msg)
@@ -1089,17 +1105,41 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 historyActArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
                                 if (historyActArrayList.length()>0){
                                     if (historyAct == 0){
-                                        recyActCall!!.visibility = View.VISIBLE
+
                                         Log.e(TAG,"leadHistoryArrayList  1067  "+historyActArrayList)
                                         historyAct++
 ////                                        productCategoryPopup(leadHistoryArrayList)
-//
-                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
-                                        recyActCall!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+                                        if (rbActMode.equals("1")){
+                                            recyActCall!!.visibility = View.VISIBLE
+                                            val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                            recyActCall!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                        recyCustomer!!.setHasFixedSize(true)
-                                        val adapter = HistoryActCallAdapter(this@AccountDetailsActivity, historyActArrayList)
-                                        recyActCall!!.adapter = adapter
-                                        // adapter.setClickListener(this@AccountDetailsActivity)
+                                            val adapter = HistoryActCallAdapter(this@AccountDetailsActivity, historyActArrayList)
+                                            recyActCall!!.adapter = adapter
+                                            // adapter.setClickListener(this@AccountDetailsActivity)
+                                        }
+                                        if (rbActMode.equals("2")){
+                                            recyActMessage!!.visibility = View.VISIBLE
+                                            val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                            recyActMessage!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        recyCustomer!!.setHasFixedSize(true)
+                                            val adapter = HistoryActMesssageAdapter(this@AccountDetailsActivity, historyActArrayList)
+                                            recyActMessage!!.adapter = adapter
+                                            // adapter.setClickListener(this@AccountDetailsActivity)
+                                        }
+
+                                        if (rbActMode.equals("3")){
+                                            recyActMeeting!!.visibility = View.VISIBLE
+                                            val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                            recyActMeeting!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        recyCustomer!!.setHasFixedSize(true)
+                                            val adapter = HistoryActMeetingAdapter(this@AccountDetailsActivity, historyActArrayList)
+                                            recyActMeeting!!.adapter = adapter
+                                            // adapter.setClickListener(this@AccountDetailsActivity)
+                                        }
+//
+
                                     }
 
                                 }
