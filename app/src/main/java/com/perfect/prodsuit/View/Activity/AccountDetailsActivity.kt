@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -158,10 +159,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
 
-        llMainDetail!!.removeAllViews()
-        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
-        llMainDetail!!.addView(inflatedLayout);
+
+
+
+        getInfoetails()
 
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -219,6 +220,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         })
 
     }
+
+
 
 
     private fun fabOpenClose() {
@@ -740,12 +743,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var leadInfo = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
                 leadInfoViewModel.getLeadInfo(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -795,13 +798,68 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+               // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
         }
+    }
+
+    private fun getInfoetails() {
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+        var imInfoLoading = inflatedLayout.findViewById<ImageView>(R.id.imInfoLoading)
+
+
+        var Info = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imInfoLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
+                leadInfoViewModel.getLeadInfo(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                imInfoLoading.visibility = View.GONE
+                                val jobjt = jObject.getJSONObject("LeadInfoetails")
+                                leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                if (leadInfoArrayList.length()>0){
+                                    if (Info == 0){
+                                        Info++
+
+                                    }
+
+                                }
+                            } else {
+                                imInfoLoading.visibility = View.GONE
+                            }
+                        } else {
+                            imInfoLoading.visibility = View.GONE
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                // progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
     }
 
 

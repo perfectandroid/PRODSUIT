@@ -36,13 +36,13 @@ object LeadInfoRepository {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-            progressDialog = ProgressDialog(context, R.style.Progress)
-            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                R.drawable.progress))
-            progressDialog!!.show()
+//            progressDialog = ProgressDialog(context, R.style.Progress)
+//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//            progressDialog!!.setCancelable(false)
+//            progressDialog!!.setIndeterminate(true)
+//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+//                R.drawable.progress))
+//            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -96,18 +96,18 @@ object LeadInfoRepository {
                     Response<String>
                 ) {
                     try {
-                        progressDialog!!.dismiss()
+                    //    progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<LeadInfoModel>()
                         leads.add(LeadInfoModel(response.body()))
                         val msg = leads[0].message
                         leadInfoSetterGetter.value = LeadInfoModel(msg)
                     } catch (e: Exception) {
-                        progressDialog!!.dismiss()
+                     //   progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                    progressDialog!!.dismiss()
+                   // progressDialog!!.dismiss()
                 }
             })
 
@@ -115,7 +115,7 @@ object LeadInfoRepository {
 
         }catch (e : Exception){
             e.printStackTrace()
-            progressDialog!!.dismiss()
+           // progressDialog!!.dismiss()
         }
 
 
