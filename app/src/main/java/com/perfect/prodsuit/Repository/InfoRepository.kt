@@ -8,9 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadHistoryModel
+import com.perfect.prodsuit.Model.InfoModel
 import com.perfect.prodsuit.Model.LeadInfoModel
-import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -21,28 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadInfoRepository {
+object InfoRepository {
+    val infoSetterGetter = MutableLiveData<InfoModel>()
+    val TAG: String = "InfoRepository"
 
-    private var progressDialog: ProgressDialog? = null
-    val leadInfoSetterGetter = MutableLiveData<LeadInfoModel>()
-    val TAG: String = "LeadInfoRepository"
-
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadInfoModel> {
-        getLeadInfo(context)
-        return leadInfoSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<InfoModel> {
+        getInfo(context)
+        return infoSetterGetter
     }
 
-    private fun getLeadInfo(context: Context) {
+    private fun getInfo(context: Context) {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-//                R.drawable.progress))
-//            progressDialog!!.show()
+
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -76,7 +67,8 @@ object LeadInfoRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(
+                    AccountDetailsActivity.ID_LeadGenerateProduct))
 
 
                 Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
@@ -89,25 +81,25 @@ object LeadInfoRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadInfoetails(body)
+            val call = apiService.getInfoetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                    //    progressDialog!!.dismiss()
+                        //    progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadInfoModel>()
-                        leads.add(LeadInfoModel(response.body()))
+                        val leads = ArrayList<InfoModel>()
+                        leads.add(InfoModel(response.body()))
                         val msg = leads[0].message
-                        leadInfoSetterGetter.value = LeadInfoModel(msg)
+                        infoSetterGetter.value = InfoModel(msg)
                     } catch (e: Exception) {
-                     //   progressDialog!!.dismiss()
+
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                   // progressDialog!!.dismiss()
+
                 }
             })
 
@@ -115,10 +107,11 @@ object LeadInfoRepository {
 
         }catch (e : Exception){
             e.printStackTrace()
-           // progressDialog!!.dismiss()
+
         }
 
 
     }
+
 
 }
