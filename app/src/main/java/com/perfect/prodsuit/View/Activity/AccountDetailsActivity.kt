@@ -173,10 +173,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
-                    llMainDetail!!.addView(inflatedLayout);
+//                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+//                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+//                    llMainDetail!!.addView(inflatedLayout);
 
+                    getInfoetails()
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -200,17 +201,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
-                    llMainDetail!!.addView(inflatedLayout);
+
+                    getDocumenttails()
 
                 }
                 if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
-                    llMainDetail!!.addView(inflatedLayout1);
+//                    val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
+//                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
+//                    llMainDetail!!.addView(inflatedLayout1);
+
+                    getQuotationtails()
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -811,7 +813,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getInfoetails() {
-        llMainDetail!!.removeAllViews()
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
         llMainDetail!!.addView(inflatedLayout);
@@ -866,5 +867,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     }
 
+    private fun getDocumenttails() {
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+        var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
+        imDocumentLoading.visibility = View.VISIBLE
+        Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
+
+    }
+
+
+    private fun getQuotationtails() {
+        val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
+        imQuotationLoading.visibility = View.VISIBLE
+        Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
+
+    }
 
 }
