@@ -29,14 +29,8 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
-import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
-import com.perfect.prodsuit.View.Adapter.QuotationSubAdapter
-import com.perfect.prodsuit.View.Adapter.infoSubAdapter
-import com.perfect.prodsuit.Viewmodel.InfoViewModel
-import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
-import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
-import com.perfect.prodsuit.Viewmodel.QuotationViewModel
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 
 
@@ -79,10 +73,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
     lateinit var quotationViewModel: QuotationViewModel
+    lateinit var documentViewModel: DocumentViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
+    lateinit var documentArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
@@ -136,6 +132,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
+        documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -888,9 +885,59 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMainDetail!!.addView(inflatedLayout);
 
         var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
-//        var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
-        imDocumentLoading.visibility = View.VISIBLE
+        var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.recySubDocs)
+       // imDocumentLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
+
+        var docs = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imDocumentLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
+                infoViewModel.getInfo(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                imDocumentLoading.visibility = View.GONE
+                                val jobjt = jObject.getJSONObject("LeadInfoetails")
+                                infoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                if (infoArrayList.length()>0){
+                                    if (docs == 0){
+                                        docs++
+
+                                        Log.e(TAG,"recySubDocs  845   "+infoArrayList)
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recySubDocs!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recySubDocs!!.setHasFixedSize(true)
+                                        val adapter = DocumentSubAdapter(this@AccountDetailsActivity, infoArrayList)
+                                        recySubDocs!!.adapter = adapter
+                                        //adapter.setClickListener(this@AccountDetailsActivity)
+                                    }
+
+                                }
+                            } else {
+                                imDocumentLoading.visibility = View.GONE
+                            }
+                        } else {
+                            imDocumentLoading.visibility = View.GONE
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                // progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
     }
 
