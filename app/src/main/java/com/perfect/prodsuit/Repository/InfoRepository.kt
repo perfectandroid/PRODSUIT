@@ -21,12 +21,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
 object InfoRepository {
-    val InfoSetterGetter = MutableLiveData<InfoModel>()
+    val infoSetterGetter = MutableLiveData<InfoModel>()
     val TAG: String = "InfoRepository"
 
     fun getServicesApiCall(context: Context): MutableLiveData<InfoModel> {
         getInfo(context)
-        return InfoSetterGetter
+        return infoSetterGetter
     }
 
     private fun getInfo(context: Context) {
@@ -81,7 +81,7 @@ object InfoRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadInfoetails(body)
+            val call = apiService.getInfoetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -90,10 +90,10 @@ object InfoRepository {
                     try {
                         //    progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadInfoModel>()
-                        leads.add(LeadInfoModel(response.body()))
+                        val leads = ArrayList<InfoModel>()
+                        leads.add(InfoModel(response.body()))
                         val msg = leads[0].message
-                        LeadInfoRepository.leadInfoSetterGetter.value = LeadInfoModel(msg)
+                        infoSetterGetter.value = InfoModel(msg)
                     } catch (e: Exception) {
 
                     }

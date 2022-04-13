@@ -30,7 +30,9 @@ import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
+import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
+import com.perfect.prodsuit.View.Adapter.infoSubAdapter
 import com.perfect.prodsuit.Viewmodel.InfoViewModel
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
@@ -77,6 +79,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var infoViewModel: InfoViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
+    lateinit var infoArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
@@ -818,51 +821,59 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMainDetail!!.addView(inflatedLayout);
 
         var imInfoLoading = inflatedLayout.findViewById<ImageView>(R.id.imInfoLoading)
-        imInfoLoading.visibility = View.VISIBLE
+        var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
+//        imInfoLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
 
-//        var Info = 0
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                imInfoLoading.visibility = View.VISIBLE
-//                Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
-//                InfoViewModel.getInfo(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   458   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                imInfoLoading.visibility = View.GONE
-//                                val jobjt = jObject.getJSONObject("LeadInfoetails")
-//                                leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
-//                                if (leadInfoArrayList.length()>0){
-//                                    if (Info == 0){
-//                                        Info++
-//
-//                                    }
-//
-//                                }
-//                            } else {
-//                                imInfoLoading.visibility = View.GONE
-//                            }
-//                        } else {
-//                            imInfoLoading.visibility = View.GONE
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                // progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
+        var Info = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imInfoLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
+                infoViewModel.getInfo(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                imInfoLoading.visibility = View.GONE
+                                val jobjt = jObject.getJSONObject("LeadInfoetails")
+                                infoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                if (infoArrayList.length()>0){
+                                    if (Info == 0){
+                                        Info++
+
+                                        Log.e(TAG,"infoArrayList  845   "+infoArrayList)
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recySubInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recySubInfo!!.setHasFixedSize(true)
+                                        val adapter = infoSubAdapter(this@AccountDetailsActivity, infoArrayList)
+                                        recySubInfo!!.adapter = adapter
+                                        //adapter.setClickListener(this@AccountDetailsActivity)
+                                    }
+
+                                }
+                            } else {
+                                imInfoLoading.visibility = View.GONE
+                            }
+                        } else {
+                            imInfoLoading.visibility = View.GONE
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                // progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
 
     }
