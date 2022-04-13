@@ -67,6 +67,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
+    var llMessages: LinearLayout? = null
 
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
@@ -115,6 +116,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     companion object{
         var ID_LeadGenerateProduct :String = ""
+        var LgCusMobile :String = ""
+        var LgCusEmail  :String = ""
     }
 
 
@@ -132,6 +135,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
+//        LgCusMobile = jsonObj!!.getString("LgCusMobile")
+//        LgCusEmail = jsonObj!!.getString("LgCusEmail")
         setRegViews()
         bottombarnav()
 
@@ -267,6 +272,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
+        llMessages = findViewById<LinearLayout>(R.id.llMessages)
 
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
@@ -312,6 +318,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddQuotation!!.setOnClickListener(this)
         fabEditLead!!.setOnClickListener(this)
         fabCloseLead!!.setOnClickListener(this)
+        llMessages!!.setOnClickListener(this)
 
 
     }
@@ -626,6 +633,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                // getHistory("1")
             }
+            R.id.llMessages->{
+                val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
+                i.putExtra("LgCusMobile",LgCusMobile)
+                i.putExtra("LgCusEmail",LgCusEmail)
+                startActivity(i)
+            }
 
         }
     }
@@ -748,6 +761,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
                                         txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
                                         txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
+
+                                        LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
+                                        LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
                                     }
 
                                 }

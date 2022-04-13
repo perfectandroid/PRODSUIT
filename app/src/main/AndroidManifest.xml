@@ -24,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT">
         <activity
+            android:name=".View.Activity.MessagesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.CallRemarkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
