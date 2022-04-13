@@ -14,6 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal"
+            segmentedgroup:sc_tint_color="#000204"
+            segmentedgroup:sc_checked_text_color="@color/white"
             segmentedgroup:sc_border_width="2dp"
             segmentedgroup:sc_corner_radius="5dp">
 

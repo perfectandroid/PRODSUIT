@@ -11,11 +11,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
+            android:layout_above="@+id/chipNavigation"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,27 +28,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_gravity="left"
+                    android:layout_weight="2"
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
-                    android:layout_weight="2"
-                    android:tint="@color/black"
                     android:src="@drawable/icback"
+                    android:tint="@color/black"
                     tools:ignore="UseAppTint" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
                     android:gravity="left"
                     android:text="Account Details"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/myfont" />
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/imLeadedit"
@@ -58,30 +61,30 @@
                     android:padding="10dp"
                     android:src="@drawable/ic_edit"
                     android:tint="@color/black"
-                    tools:ignore="UseAppTint"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    tools:ignore="UseAppTint" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyAccountDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="5dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/recyAccountDetail"
                     android:layout_above="@+id/chipNavigation"
+                    android:layout_below="@+id/recyAccountDetail"
                     android:background="@color/white"
                     android:orientation="vertical"
                     tools:ignore="NotSibling">
@@ -91,14 +94,13 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
-                            xmlns:android="http://schemas.android.com/apk/res/android"
+                        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardCornerRadius="3dp"
-                            android:backgroundTint="@color/greylight"
                             android:layout_margin="2dp"
+                            android:backgroundTint="@color/greylight"
+                            app:cardCornerRadius="3dp"
                             app:cardElevation="5dp"
                             app:cardUseCompatPadding="true">
 
@@ -108,13 +110,11 @@
                                 android:orientation="vertical">
 
 
-
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:background="@color/grey"
-                                    android:visibility="gone"/>
-
+                                    android:visibility="gone" />
 
 
                                 <LinearLayout
@@ -144,15 +144,13 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:padding="5dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
 
                                             <TextView
                                                 android:id="@+id/txtName"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_above="@+id/fab4"
-                                                android:layout_toLeftOf="@+id/fab5"
                                                 android:fontFamily="@font/myfont"
                                                 android:gravity="center"
                                                 android:paddingLeft="2dp"
@@ -160,14 +158,12 @@
                                                 android:textColor="@color/black"
                                                 android:textSize="15dp"
                                                 android:textStyle="bold"
-                                                android:visibility="visible"/>
+                                                android:visibility="visible" />
 
                                             <TextView
                                                 android:id="@+id/txtAddress"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_above="@+id/fab4"
-                                                android:layout_toLeftOf="@+id/fab5"
                                                 android:fontFamily="@font/myfont"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="2dp"
@@ -180,8 +176,6 @@
                                                 android:id="@+id/txtPhone"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_above="@+id/fab4"
-                                                android:layout_toLeftOf="@+id/fab5"
                                                 android:fontFamily="@font/myfont"
                                                 android:gravity="center"
                                                 android:paddingLeft="2dp"
@@ -194,8 +188,6 @@
                                                 android:id="@+id/txtEmail"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_above="@+id/fab4"
-                                                android:layout_toLeftOf="@+id/fab5"
                                                 android:fontFamily="@font/myfont"
                                                 android:gravity="center"
                                                 android:paddingLeft="2dp"
@@ -215,7 +207,7 @@
                                     <View
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:background="@color/grey"/>
+                                        android:background="@color/grey" />
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -238,8 +230,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:padding="5dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -248,11 +240,12 @@
                                                 android:orientation="horizontal">
 
                                                 <LinearLayout
+                                                    android:id="@+id/llCall"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="horizontal"
+                                                    android:layout_weight="1"
                                                     android:gravity="center"
-                                                    android:layout_weight="1">
+                                                    android:orientation="horizontal">
 
                                                     <ImageView
                                                         android:layout_width="30dp"
@@ -265,11 +258,12 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llLocation"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="horizontal"
+                                                    android:layout_weight="1"
                                                     android:gravity="center"
-                                                    android:layout_weight="1">
+                                                    android:orientation="horizontal">
 
                                                     <ImageView
                                                         android:layout_width="30dp"
@@ -282,11 +276,12 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llMessages"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="horizontal"
+                                                    android:layout_weight="1"
                                                     android:gravity="center"
-                                                    android:layout_weight="1">
+                                                    android:orientation="horizontal">
 
                                                     <ImageView
                                                         android:layout_width="30dp"
@@ -299,11 +294,12 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llImages"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="horizontal"
+                                                    android:layout_weight="1"
                                                     android:gravity="center"
-                                                    android:layout_weight="1">
+                                                    android:orientation="horizontal">
 
                                                     <ImageView
                                                         android:layout_width="30dp"
@@ -314,8 +310,6 @@
 
 
                                                 </LinearLayout>
-
-
 
 
                                             </LinearLayout>
@@ -329,8 +323,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="2"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -342,8 +334,6 @@
                                                 <TextView
                                                     android:layout_width="5dp"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center"
                                                     android:paddingLeft="2dp"
@@ -357,8 +347,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -379,8 +367,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="2"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -392,8 +378,6 @@
                                                 <TextView
                                                     android:layout_width="5dp"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center"
                                                     android:paddingLeft="2dp"
@@ -407,8 +391,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -429,8 +411,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="2"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -442,8 +422,6 @@
                                                 <TextView
                                                     android:layout_width="5dp"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center"
                                                     android:paddingLeft="2dp"
@@ -457,8 +435,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:layout_above="@+id/fab4"
-                                                    android:layout_toLeftOf="@+id/fab5"
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="2dp"
@@ -492,22 +468,21 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="History"
-                                        android:textSize="20dp"
-                                        android:gravity="center"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"
                                         android:background="@color/grey"
-                                        android:padding="10dp"/>
+                                        android:gravity="center"
+                                        android:padding="10dp"
+                                        android:text="History"
+                                        android:textColor="@color/black"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
 
                                     <androidx.recyclerview.widget.RecyclerView
                                         android:id="@+id/recyHistory"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
-                                        android:orientation="horizontal"
-                                        android:layout_marginLeft="5dp"/>
-
+                                        android:orientation="horizontal" />
 
 
                                 </LinearLayout>
@@ -526,8 +501,6 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center_vertical"
                                             android:paddingLeft="2dp"
@@ -539,8 +512,6 @@
                                         <TextView
                                             android:layout_width="5dp"
                                             android:layout_height="wrap_content"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center"
                                             android:paddingLeft="2dp"
@@ -554,8 +525,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center"
                                             android:paddingLeft="2dp"
@@ -577,8 +546,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center_vertical"
                                             android:paddingLeft="2dp"
@@ -590,8 +557,6 @@
                                         <TextView
                                             android:layout_width="5dp"
                                             android:layout_height="wrap_content"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center"
                                             android:paddingLeft="2dp"
@@ -605,8 +570,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:layout_above="@+id/fab4"
-                                            android:layout_toLeftOf="@+id/fab5"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center_vertical"
                                             android:paddingLeft="2dp"
@@ -619,12 +582,9 @@
                                     </LinearLayout>
 
 
-
-
                                 </LinearLayout>
 
                             </LinearLayout>
-
 
 
                         </androidx.cardview.widget.CardView>
@@ -634,19 +594,17 @@
                             android:id="@+id/tabLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:tabTextColor="@color/black"
-                            app:tabIndicatorColor="@color/colorPrimary"
+                            android:background="@color/white"
                             android:scrollbars="horizontal"
-                            android:background="@color/white">
-                        </com.google.android.material.tabs.TabLayout>
+                            app:tabIndicatorColor="@color/colorPrimary"
+                            app:tabTextColor="@color/black"></com.google.android.material.tabs.TabLayout>
 
-                    <LinearLayout
-                        android:id="@+id/llMainDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        tools:ignore="MissingConstraints"/>
-
+                        <LinearLayout
+                            android:id="@+id/llMainDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints" />
 
 
                     </LinearLayout>
@@ -656,30 +614,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="0dp"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/txtHistory"
+                            android:id="@+id/txtCloseLead"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab4"
+                            android:layout_above="@+id/fabEditLead"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fab5"
-                            android:background="@color/greylight"
+                            android:layout_toLeftOf="@+id/fabCloseLead"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="History"
-                            android:textColor="@color/black"
+                            android:text="Close Lead"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab5"
+                            android:id="@+id/fabCloseLead"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab4"
+                            android:layout_above="@+id/fabEditLead"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
                             android:layout_marginRight="20dp"
@@ -689,26 +647,26 @@
                             app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
                         <TextView
-                            android:id="@+id/txtNxtAction"
+                            android:id="@+id/txtEditLead"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab3"
+                            android:layout_above="@+id/fabAddQuotation"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fab4"
-                            android:background="@color/greylight"
+                            android:layout_toLeftOf="@+id/fabEditLead"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="Next Action"
-                            android:textColor="@color/black"
+                            android:text="Edit Lead"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab4"
+                            android:id="@+id/fabEditLead"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab3"
+                            android:layout_above="@+id/fabAddQuotation"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
                             android:layout_marginRight="20dp"
@@ -718,26 +676,26 @@
                             app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
                         <TextView
-                            android:id="@+id/txtNewAction"
+                            android:id="@+id/txtAddQuotation"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab2"
+                            android:layout_above="@+id/fabAddDocument"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fab3"
-                            android:background="@color/greylight"
+                            android:layout_toLeftOf="@+id/fabAddQuotation"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="New Action"
-                            android:textColor="@color/black"
+                            android:text="Add Quotation"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab3"
+                            android:id="@+id/fabAddQuotation"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab2"
+                            android:layout_above="@+id/fabAddDocument"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
                             android:layout_marginRight="20dp"
@@ -747,26 +705,56 @@
                             app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
                         <TextView
-                            android:id="@+id/txtFollowupDeatils"
+                            android:id="@+id/txtAddDocument"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab1"
+                            android:layout_above="@+id/fabAddActivities"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fab2"
-                            android:background="@color/greylight"
+                            android:layout_toLeftOf="@+id/fabAddDocument"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="Follow Up Details"
-                            android:textColor="@color/black"
+                            android:text="Add Document"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab2"
+                            android:id="@+id/fabAddDocument"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fab1"
+                            android:layout_above="@+id/fabAddActivities"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            android:tint="@color/black"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@drawable/add_document" />
+
+                        <TextView
+                            android:id="@+id/txtAddActivities"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddNote"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fabAddActivities"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Add Activities"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabAddActivities"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddNote"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
                             android:layout_marginRight="20dp"
@@ -777,24 +765,24 @@
                             app:srcCompat="@android:drawable/ic_menu_camera" />
 
                         <TextView
-                            android:id="@+id/txtLeadInfo"
+                            android:id="@+id/txtAddNote"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:layout_above="@+id/fab"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fab2"
-                            android:background="@color/greylight"
+                            android:layout_toLeftOf="@+id/fabAddActivities"
+                            android:background="@color/tabbgColor"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="Lead Info"
-                            android:textColor="@color/black"
+                            android:text="Add Note"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab1"
+                            android:id="@+id/fabAddNote"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_above="@+id/fab"
@@ -803,8 +791,9 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
+                            android:tint="@color/black"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_dialog_map" />
+                            app:srcCompat="@drawable/add_notes" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/fab"
@@ -813,10 +802,15 @@
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_gravity="end"
-                            android:layout_margin="20dp"
-                            android:backgroundTint="@color/white"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:tint="@color/white"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_dialog_email" />
+                            app:rippleColor="@color/white"
+                            app:srcCompat="@drawable/ic_adding" />
                     </RelativeLayout>
 
 
@@ -824,7 +818,6 @@
 
 
             </RelativeLayout>
-
 
 
         </LinearLayout>
