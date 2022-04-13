@@ -44,6 +44,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
     private var llservice: LinearLayout? = null
+    private var rlnotification: RelativeLayout? = null
     private var ll_dashboard: LinearLayout? = null
     private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
@@ -106,6 +107,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         btn_menu = findViewById(R.id.btn_menu)
         lllead = findViewById(R.id.lllead)
         llservice = findViewById(R.id.llservice)
+        rlnotification= findViewById(R.id.rlnotification)
         ll_dashboard = findViewById(R.id.ll_dashboard)
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
@@ -119,6 +121,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_reminder!!.setOnClickListener(this)
         ll_report =findViewById(R.id.ll_report)
         ll_report!!.setOnClickListener(this)
+        rlnotification!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -157,6 +160,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)            }
             R.id.ll_report -> {
                 val i = Intent(this@HomeActivity, ReportActivity::class.java)
+                startActivity(i)            }
+            R.id.rlnotification -> {
+                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
                 startActivity(i)            }
         }
     }

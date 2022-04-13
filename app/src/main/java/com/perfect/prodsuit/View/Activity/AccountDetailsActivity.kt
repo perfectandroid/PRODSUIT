@@ -64,6 +64,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
     var llMessages: LinearLayout? = null
+    var llLocation: LinearLayout? = null
+    var llImages: LinearLayout? = null
 
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
@@ -281,6 +283,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
         llMessages = findViewById<LinearLayout>(R.id.llMessages)
+        llLocation = findViewById<LinearLayout>(R.id.llLocation)
+        llImages = findViewById<LinearLayout>(R.id.llImages)
+
 
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
@@ -327,6 +332,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabEditLead!!.setOnClickListener(this)
         fabCloseLead!!.setOnClickListener(this)
         llMessages!!.setOnClickListener(this)
+        llLocation!!.setOnClickListener(this)
+        llImages!!.setOnClickListener(this)
 
 
     }
@@ -645,6 +652,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
                 i.putExtra("LgCusMobile",LgCusMobile)
                 i.putExtra("LgCusEmail",LgCusEmail)
+                startActivity(i)
+            }
+
+            R.id.llLocation->{
+                val i = Intent(this@AccountDetailsActivity, LocationActivity::class.java)
+                i.putExtra("prodid",ID_LeadGenerateProduct)
+                startActivity(i)
+            }
+
+            R.id.llImages->{
+                val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
+
                 startActivity(i)
             }
 

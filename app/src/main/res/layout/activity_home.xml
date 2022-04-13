@@ -35,6 +35,7 @@
                     android:src="@drawable/logowhitehorizontal"
                     android:scaleType="fitXY"/>
                 <RelativeLayout
+                    android:id="@+id/rlnotification"
                     android:layout_width="60dp"
                     android:src="@drawable/ic_notifications"
                     android:layout_alignParentRight="true"

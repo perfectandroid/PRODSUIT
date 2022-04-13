@@ -90,7 +90,6 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
         })
     }
 
-
     private fun setReminder() {
         try
         {
@@ -141,7 +140,6 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
         catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
@@ -183,7 +181,6 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
         }catch (e: Exception){
             e.printStackTrace()
         }
-
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Reminder set successfully.")
                 .setCancelable(false)
@@ -193,14 +190,12 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
                 }
         val alert = builder.create()
         alert.show()
-
     }
 
     fun timeSelector() {
         val c = Calendar.getInstance()
         mHour = c.get(Calendar.HOUR_OF_DAY)
         mMinute = c.get(Calendar.MINUTE)
-        // Launch Time Picker Dialog
         val timePickerDialog = TimePickerDialog(this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                     val strDate = String.format(
