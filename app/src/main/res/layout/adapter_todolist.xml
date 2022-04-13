@@ -25,7 +25,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Date                  : "
+                        android:text="Date                   : "
                         android:maxLines="5"
                         android:textStyle="bold"
                         android:id="@+id/txtv_dte" />
@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Customer         : "
+                        android:text="Customer          : "
                         android:maxLines="5"
                         android:textStyle="bold"
                         android:id="@+id/txtv_cu" />
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Product             : "
+                        android:text="Product              : "
                         android:maxLines="5"
                         android:textStyle="bold"
                         android:id="@+id/txtv_prdct" />
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:textSize="15dp"
-                        android:text="Collected By     : "
+                        android:text="Collected By      : "
                         android:maxLines="5"
                         android:textStyle="bold"
                         android:id="@+id/txtv_clct" />
