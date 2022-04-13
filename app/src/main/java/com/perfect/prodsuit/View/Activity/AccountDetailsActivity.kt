@@ -33,10 +33,6 @@ import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
 import org.json.JSONArray
-import java.util.Map.entry
-
-import android.view.ViewManager
-
 
 
 import java.text.ParseException
@@ -67,6 +63,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
+    var llMessages: LinearLayout? = null
 
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
@@ -115,6 +112,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     companion object{
         var ID_LeadGenerateProduct :String = ""
+        var LgCusMobile :String = ""
+        var LgCusEmail  :String = ""
     }
 
 
@@ -132,6 +131,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
+//        LgCusMobile = jsonObj!!.getString("LgCusMobile")
+//        LgCusEmail = jsonObj!!.getString("LgCusEmail")
         setRegViews()
         bottombarnav()
 
@@ -157,19 +158,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
 
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                Log.e(TAG,"onTabSelected  113  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
 
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_activities, null, false)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
                     llMainDetail!!.addView(inflatedLayout);
 
                 }
@@ -177,6 +186,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
 
                     llMainDetail!!.removeAllViews()
+                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
+                    llMainDetail!!.addView(inflatedLayout);
+
 
                 }
                 if (tab.position == 3){
@@ -184,7 +197,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_document, null, false)
+                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
                     llMainDetail!!.addView(inflatedLayout);
 
                 }
@@ -192,7 +205,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_quotation, null, false)
+                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
                     llMainDetail!!.addView(inflatedLayout1);
                 }
             }
@@ -267,6 +280,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
+        llMessages = findViewById<LinearLayout>(R.id.llMessages)
 
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
@@ -312,6 +326,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddQuotation!!.setOnClickListener(this)
         fabEditLead!!.setOnClickListener(this)
         fabCloseLead!!.setOnClickListener(this)
+        llMessages!!.setOnClickListener(this)
 
 
     }
@@ -626,6 +641,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                // getHistory("1")
             }
+            R.id.llMessages->{
+                val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
+                i.putExtra("LgCusMobile",LgCusMobile)
+                i.putExtra("LgCusEmail",LgCusEmail)
+                startActivity(i)
+            }
 
         }
     }
@@ -748,6 +769,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
                                         txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
                                         txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
+
+                                        LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
+                                        LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
                                     }
 
                                 }

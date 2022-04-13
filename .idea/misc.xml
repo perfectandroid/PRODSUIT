@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.3148148148148148" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour1.xml" value="0.3148148148148148" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bggrey.xml" value="0.3148148148148148" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgwhite.xml" value="0.3148148148148148" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/cbselector.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_deselect.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_select.xml" value="0.2851851851851852" />
@@ -38,6 +42,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.20520833333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_messages.xml" value="0.2989583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_product.xml" value="0.22864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_quotation.xml" value="0.23125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.3046875" />

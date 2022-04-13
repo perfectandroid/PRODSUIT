@@ -41,6 +41,7 @@
     <color name="headertoolbar1">#e6451c</color>
     <color name="headertoolbar2">#f27b5a</color>
     <color name="headertoolbar3">#fdaf97</color>
+    <color name="btnColor">#3D3A3A</color>
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>
