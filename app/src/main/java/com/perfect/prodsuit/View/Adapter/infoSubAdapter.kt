@@ -39,12 +39,12 @@ class infoSubAdapter(internal var context: Context, internal var jsonArray: JSON
                 holder.txtAddress.text     = jsonObject!!.getString("LgCusAddress")
                 holder.txtMobile.text      = jsonObject!!.getString("LgCusMobile")
 
-                if (position % 2 == 0){
-                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
 //
 //                holder.llfollowuptype!!.setTag(position)
 //                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {

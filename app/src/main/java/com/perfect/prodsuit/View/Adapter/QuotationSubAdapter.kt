@@ -38,12 +38,12 @@ class QuotationSubAdapter(internal var context: Context, internal var jsonArray:
                 holder.txtEnquiry.text     = jsonObject!!.getString("EnquiryAbout")
                 holder.txtStatus.text      = jsonObject!!.getString("Status")
 
-                if (position % 2 == 0){
-                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
 //
 //                holder.llfollowuptype!!.setTag(position)
 //                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
