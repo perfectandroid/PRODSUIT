@@ -30,12 +30,13 @@ import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AccountDetailAdapter
-import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
+import com.perfect.prodsuit.View.Adapter.QuotationSubAdapter
 import com.perfect.prodsuit.View.Adapter.infoSubAdapter
 import com.perfect.prodsuit.Viewmodel.InfoViewModel
 import com.perfect.prodsuit.Viewmodel.LeadHistoryViewModel
 import com.perfect.prodsuit.Viewmodel.LeadInfoViewModel
+import com.perfect.prodsuit.Viewmodel.QuotationViewModel
 import org.json.JSONArray
 
 
@@ -77,9 +78,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
+    lateinit var quotationViewModel: QuotationViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
+    lateinit var quotationArrayList : JSONArray
 
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
@@ -133,6 +136,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
+        quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -884,6 +888,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMainDetail!!.addView(inflatedLayout);
 
         var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
+//        var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
         imDocumentLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
 
@@ -896,51 +901,58 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMainDetail!!.addView(inflatedLayout);
 
         var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
-        imQuotationLoading.visibility = View.VISIBLE
+        var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.recySubQuotation)
+//        imQuotationLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
 
-        //        var Info = 0
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                imInfoLoading.visibility = View.VISIBLE
-//                Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
-//                InfoViewModel.getInfo(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   458   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                imInfoLoading.visibility = View.GONE
-//                                val jobjt = jObject.getJSONObject("LeadInfoetails")
-//                                leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
-//                                if (leadInfoArrayList.length()>0){
-//                                    if (Info == 0){
-//                                        Info++
-//
-//                                    }
-//
-//                                }
-//                            } else {
-//                                imInfoLoading.visibility = View.GONE
-//                            }
-//                        } else {
-//                            imInfoLoading.visibility = View.GONE
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                // progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
+        var quotation = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+
+                imQuotationLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
+                quotationViewModel.getQuotation(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                imQuotationLoading.visibility = View.GONE
+                                val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                quotationArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                if (quotationArrayList.length()>0){
+                                    if (quotation == 0){
+                                        quotation++
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recySubQuotation!!.setHasFixedSize(true)
+                                        val adapter = QuotationSubAdapter(this@AccountDetailsActivity, quotationArrayList)
+                                        recySubQuotation!!.adapter = adapter
+                                        //adapter.setClickListener(this@AccountDetailsActivity)
+                                    }
+
+                                }
+                            } else {
+                                imQuotationLoading.visibility = View.GONE
+                            }
+                        } else {
+                            imQuotationLoading.visibility = View.GONE
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                // progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
     }
 
