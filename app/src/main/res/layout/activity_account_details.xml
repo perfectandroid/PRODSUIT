@@ -240,6 +240,7 @@
                                                 android:orientation="horizontal">
 
                                                 <LinearLayout
+                                                    android:id="@+id/llCall"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
@@ -257,6 +258,7 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llLocation"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
@@ -274,6 +276,7 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llMessages"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
@@ -291,6 +294,7 @@
                                                 </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/llImages"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
