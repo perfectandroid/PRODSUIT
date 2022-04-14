@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -15,6 +16,15 @@ import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
+import android.R
+import android.graphics.Color
+
+
+
+
+
+
+
 
 object Config {
 
@@ -109,6 +119,13 @@ object Config {
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
+    }
+
+    fun snackBars(context: Context, view: View, message: String) {
+        val snackbar: Snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_LONG)
+        snackbar.setActionTextColor(Color.WHITE)
+        snackbar.setBackgroundTint(context.resources.getColor(R.color.black))
+        snackbar.show()
     }
 
 }

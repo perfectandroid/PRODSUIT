@@ -496,7 +496,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1.5"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:layout_marginLeft="5dp">
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -597,7 +598,10 @@
                             android:background="@color/white"
                             android:scrollbars="horizontal"
                             app:tabIndicatorColor="@color/colorPrimary"
-                            app:tabTextColor="@color/black"></com.google.android.material.tabs.TabLayout>
+                            app:tabTextColor="@color/black"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"/>
+
 
                         <LinearLayout
                             android:id="@+id/llMainDetail"
@@ -625,11 +629,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabCloseLead"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Close Lead"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -654,11 +658,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabEditLead"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Edit Lead"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -683,11 +687,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabAddQuotation"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Add Quotation"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -712,11 +716,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabAddDocument"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Add Document"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -742,11 +746,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabAddActivities"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Add Activities"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
@@ -772,11 +776,11 @@
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabAddActivities"
                             android:background="@color/tabbgColor"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="Add Note"
+                            android:textColor="@color/white"
                             android:textSize="18dp"
                             android:textStyle="bold" />
 

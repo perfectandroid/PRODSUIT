@@ -48,6 +48,11 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.3046875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.20364583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subactivities.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subdocument.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subinfo.xml" value="0.2" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subnote.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subquotation.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.23229166666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.2671875" />
@@ -66,6 +71,13 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_priority.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_status.xml" value="0.2994791666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.26458333333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_history.xml" value="0.253125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_info.xml" value="0.20833333333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_quotation.xml" value="0.26458333333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_subcall_history.xml" value="0.2722222222222222" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_submeeting_history.xml" value="0.27760416666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_submessage_history.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />

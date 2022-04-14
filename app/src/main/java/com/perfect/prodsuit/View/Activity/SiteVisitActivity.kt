@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +13,7 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -18,22 +21,32 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
 import com.perfect.prodsuit.R
+import org.json.JSONArray
 import java.io.*
 import java.util.*
-import com.perfect.prodsuit.Helper.Config as Config1
+import com.perfect.prodsuit.Helper.Config
+import org.json.JSONObject
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
+import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
+import com.perfect.prodsuit.Viewmodel.FollowUpTypeViewModel
+import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
+import com.perfect.prodsuit.Viewmodel.SaveSiteVisitViewModel
 
-class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
+class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickListener {
 
     val TAG : String = "SiteVisitActivity"
+    private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -45,6 +58,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var llMentionDate: LinearLayout? = null
     var llMentionDatePick: LinearLayout? = null
     var llRiskType: LinearLayout? = null
+    var llFollowType: LinearLayout? = null
+    var llStatus: LinearLayout? = null
 
     var txtFromDate: TextView? = null
     var txtFromSubmit: TextView? = null
@@ -55,6 +70,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var txtLatitude: TextView? = null
     var txtLongitude: TextView? = null
     var txtRiskType: TextView? = null
+    var txtFollowType: TextView? = null
+    var txtStatus: TextView? = null
+
+    var edtAgentNote: EditText? = null
+    var edtCustNote: EditText? = null
 
     var imFromDate: ImageView? = null
     var imToDate: ImageView? = null
@@ -64,6 +84,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var datePickerFrom: DatePicker? = null
     var datePickerTo: TimePicker? = null
     var datePickerMention: DatePicker? = null
+
+    var btnReset: Button? = null
+    var btnSubmit: Button? = null
 
     var imgv_upload1: ImageView? = null
     var imgv_upload2: ImageView? = null
@@ -80,9 +103,36 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
     var toDateMode : String?= "1"  // GONE
     var MentionDateMode : String?= "1"  // GONE
 
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    lateinit var followUpTypeArrayList : JSONArray
+    private var dialogFollowupType : Dialog? = null
+    var recyFollowupType: RecyclerView? = null
+
+    lateinit var productStatusViewModel: ProductStatusViewModel
+    lateinit var prodStatusArrayList : JSONArray
+    private var dialogProdStatus : Dialog? = null
+    var recyProdStatus: RecyclerView? = null
+
+    lateinit var saveSiteVisitViewModel: SaveSiteVisitViewModel
+    lateinit var saveSiteVisitArrayList : JSONArray
+
+
     companion object {
 
+        var ID_LeadGenerateProduct :String = ""
+        var strDate : String?= ""
+        var strTime : String?= ""
+        var strDateTime : String?= ""
         var strRiskType : String?= ""
+        var strAgentNote : String?= ""
+        var strCustomerNote : String?= ""
+        var ID_ActionType : String?= ""
+        var ID_Status : String?= ""
+        var strMentionDate : String?= ""
+        var strLatitude : String?= ""
+        var strLongitude : String?= ""
+        var encode1 : String?= ""
+        var encode2 : String?= ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,18 +142,20 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_site_visit)
         context = this@SiteVisitActivity
-
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
+        saveSiteVisitViewModel = ViewModelProvider(this).get(SaveSiteVisitViewModel::class.java)
         setRegViews()
         removeData()
+
+        ID_LeadGenerateProduct = intent!!.getStringExtra("ID_LeadGenerateProduct").toString()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLastLocation()
 
     }
 
-    private fun removeData() {
-        CallRemarkActivity.strRiskType = ""
-    }
+
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -118,6 +170,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         txtLatitude = findViewById(R.id.txtLatitude) as TextView
         txtLongitude = findViewById(R.id.txtLongitude) as TextView
         txtRiskType = findViewById(R.id.txtRiskType) as TextView
+        txtFollowType = findViewById(R.id.txtFollowType) as TextView
+        txtStatus = findViewById(R.id.txtStatus) as TextView
+
+        edtAgentNote = findViewById(R.id.edtAgentNote) as EditText
+        edtCustNote = findViewById(R.id.edtCustNote) as EditText
 
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
@@ -132,15 +189,22 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         llMentionDate = findViewById(R.id.llMentionDate) as LinearLayout
         llMentionDatePick = findViewById(R.id.llMentionDatePick) as LinearLayout
         llRiskType = findViewById(R.id.llRiskType) as LinearLayout
+        llFollowType = findViewById(R.id.llFollowType) as LinearLayout
+        llStatus = findViewById(R.id.llStatus) as LinearLayout
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
         datePickerTo = findViewById(R.id.datePickerTo) as TimePicker
         datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
 
+        btnReset = findViewById(R.id.btnReset) as Button
+        btnSubmit = findViewById(R.id.btnSubmit) as Button
+
         llFromdate!!.setOnClickListener(this)
         llToDate!!.setOnClickListener(this)
         llMentionDate!!.setOnClickListener(this)
         llRiskType!!.setOnClickListener(this)
+        llFollowType!!.setOnClickListener(this)
+        llStatus!!.setOnClickListener(this)
 
         txtLatitude!!.setOnClickListener(this)
         txtLongitude!!.setOnClickListener(this)
@@ -153,6 +217,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
         imFromDate!!.setOnClickListener(this)
         imToDate!!.setOnClickListener(this)
         imMentionDate!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
 
 
         datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
@@ -269,7 +336,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
            R.id.imgv_upload1->{
                try
                {
-                   Config1.Utils.hideSoftKeyBoard(this@SiteVisitActivity,v)
+                   Config.Utils.hideSoftKeyBoard(this@SiteVisitActivity,v)
                    strImage="1"
                    showPictureDialog()
                }
@@ -282,7 +349,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
            }
            R.id.imgv_upload2->{
                try {
-                   Config1.Utils.hideSoftKeyBoard(this@SiteVisitActivity,v)
+                   Config.Utils.hideSoftKeyBoard(this@SiteVisitActivity,v)
                    strImage="2"
                    showPictureDialog()
                }
@@ -362,6 +429,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                    txtFromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                    llFromDatePick!!.visibility=View.GONE
                    fromDateMode = "1"
+                   strDate = strDay+"-"+strMonth+"-"+strYear
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -373,6 +441,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                    var am_pm = ""
                    var hour: Int = datePickerTo!!.hour
                    var min: Int = datePickerTo!!.minute
+
 
                    when {hour == 0 -> { hour += 12
                        am_pm = "AM"
@@ -394,9 +463,10 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                        minutes = "0"+min
                    }
 
-                   txtToDate!!.setText(""+hour+"-"+minutes+"-"+"00")
+                   txtToDate!!.setText(""+hours+":"+minutes+":"+"00")
                    llToDatePick!!.visibility=View.GONE
                    toDateMode = "1"
+                   strTime = hours+":"+minutes+":"+"00"
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -422,6 +492,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                    txtMentionDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                    llMentionDatePick!!.visibility=View.GONE
                    MentionDateMode = "1"
+
+                   strMentionDate = strDay+"-"+strMonth+"-"+strYear
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -431,9 +503,27 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
            R.id.llRiskType->{
                getRiskType()
            }
+           R.id.llFollowType->{
+               getFollowupType()
+           }
+           R.id.llStatus->{
+               getProductStatus()
+           }
+           R.id.btnReset->{
+               removeData()
+           }
+           R.id.btnSubmit->{
+
+               Config.Utils.hideSoftKeyBoard(context,v)
+               Validations(v)
+
+           }
 
        }
     }
+
+
+
 
     private fun getRiskType() {
         try {
@@ -463,6 +553,169 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
                 alertDialog.dismiss()
             })
             alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getFollowupType() {
+        var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followUpTypeArrayList.length()>0){
+                                    if (followUpType == 0){
+                                        followUpType++
+                                        followupTypePopup(followUpTypeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeArrayList)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@SiteVisitActivity)
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getProductStatus() {
+        var prodstatus = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productStatusViewModel.getProductStatus(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   333   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                if (prodStatusArrayList.length()>0){
+                                    if (prodstatus == 0){
+                                        prodstatus++
+                                        productStatusPopup(prodStatusArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productStatusPopup(prodStatusArrayList: JSONArray) {
+
+        try {
+
+            dialogProdStatus = Dialog(this)
+            dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdStatus!! .setContentView(R.layout.product_status_popup)
+            dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
+            recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusArrayList)
+            recyProdStatus!!.adapter = adapter
+            adapter.setClickListener(this@SiteVisitActivity)
+
+            dialogProdStatus!!.show()
+            dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -507,6 +760,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
             arrayOf<String>(Manifest.permission.CAMERA),
             PERMISSION_REQUEST_CODE)
     }
+
     fun getRealPathFromURI(uri: Uri): String {
         var path = ""
         if (getContentResolver() != null) {
@@ -650,4 +904,216 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener  {
 
         }
     }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("followuptype")){
+            dialogFollowupType!!.dismiss()
+            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            txtFollowType!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
+        if (data.equals("prodstatus")){
+            dialogProdStatus!!.dismiss()
+            val jsonObject = prodStatusArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+            ID_Status = jsonObject.getString("ID_Status")
+            txtStatus!!.setText(jsonObject.getString("StatusName"))
+
+        }
+    }
+
+    private fun Validations(v : View) {
+        strAgentNote = edtAgentNote!!.text.toString()
+        strCustomerNote = edtCustNote!!.text.toString()
+        strLatitude = txtLatitude!!.text.toString()
+        strLongitude = txtLongitude!!.text.toString()
+
+        if (strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (strTime.equals("")){
+            Config.snackBars(context,v,"Select Time")
+        }
+        else if (strRiskType.equals("")){
+            Config.snackBars(context,v,"Select Risk type")
+        }
+        else if (strAgentNote.equals("")){
+            Config.snackBars(context,v,"Enter Agent Note")
+        }
+        else if (strCustomerNote.equals("")){
+            Config.snackBars(context,v,"Enter Customer Note")
+        }
+        else if (ID_ActionType.equals("")){
+            Config.snackBars(context,v,"Select Followup type")
+        }
+        else if (ID_Status.equals("")){
+            Config.snackBars(context,v,"Select Status")
+        }
+        else if (strMentionDate.equals("")){
+            Config.snackBars(context,v,"Select Mention Date")
+        }
+        else if (strLatitude.equals("")){
+            Config.snackBars(context,v,"Select Latitude")
+        }
+        else if (strLongitude.equals("")){
+            Config.snackBars(context,v,"Select Longitude")
+        }else{
+
+//            "2022-04-17 03:30:00"
+            strDateTime = strDate+" "+ strTime
+
+            if(image1.equals(""))
+            {
+                encode1 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image1)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                } else {
+                    encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+            if(image2.equals(""))
+            {
+                encode2 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image2)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                } else {
+                    encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+
+            Log.e(TAG,"SITEVISIT  1003"
+                    +"\n"+"ID_LeadGenerateProduct   :  "+ ID_LeadGenerateProduct
+                    +"\n"+"strDate                  :  "+ strDate
+                    +"\n"+"strTime                  :  "+ strTime
+                    +"\n"+"strDateTime              :  "+ strDateTime
+                    +"\n"+"strRiskType              :  "+ strRiskType
+                    +"\n"+"strAgentNote             :  "+ strAgentNote
+                    +"\n"+"strCustomerNote          :  "+ strCustomerNote
+                    +"\n"+"Followup ID              :  "+ ID_ActionType
+                    +"\n"+"ID_Status                :  "+ ID_Status
+                    +"\n"+"strMentionDate           :  "+ strMentionDate
+                    +"\n"+"strLatitude              :  "+ strLatitude
+                    +"\n"+"strLongitude             :  "+ strLongitude
+                    +"\n"+"encode1                  :  "+ encode1
+                    +"\n"+"encode2                  :  "+ encode2)
+
+            Log.e(TAG,"SITEVISIT  10031"
+                    +"\n"+"encode1          :  "+ encode1)
+            Log.e(TAG,"SITEVISIT  10032"
+                    +"\n"+"encode2          :  "+ encode2)
+
+            saveSiteVisit()
+        }
+    }
+
+    private fun saveSiteVisit() {
+
+
+        var saveSiteVisit = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveSiteVisitViewModel.saveSiteVisit(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1058   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (followUpTypeArrayList.length()>0){
+//                                    if (saveSiteVisit == 0){
+//                                        saveSiteVisit++
+//                                        followupTypePopup(followUpTypeArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun removeData() {
+        ID_LeadGenerateProduct = ""
+        strDate = ""
+        strTime = ""
+        strDateTime = ""
+        strRiskType = ""
+        strAgentNote = ""
+        strCustomerNote = ""
+        ID_ActionType = ""
+        ID_Status = ""
+        strMentionDate = ""
+        strLatitude = ""
+        strLongitude = ""
+        encode1 = ""
+        encode2 = ""
+
+        txtFromDate!!.setText("")
+        txtToDate!!.setText("")
+        txtRiskType!!.setText("")
+        edtAgentNote!!.setText("")
+        edtCustNote!!.setText("")
+        txtFollowType!!.setText("")
+        txtStatus!!.setText("")
+        txtMentionDate!!.setText("")
+        txtLatitude!!.setText("")
+        txtLongitude!!.setText("")
+
+        image1 = ""
+        image2 = ""
+        imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
+        imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
+
+    }
+
+
 }
