@@ -147,6 +147,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         saveSiteVisitViewModel = ViewModelProvider(this).get(SaveSiteVisitViewModel::class.java)
         setRegViews()
         removeData()
+
         ID_LeadGenerateProduct = intent!!.getStringExtra("ID_LeadGenerateProduct").toString()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -154,23 +155,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
 
     }
 
-    private fun removeData() {
-        ID_LeadGenerateProduct = ""
-        strDate = ""
-        strTime = ""
-        strDateTime = ""
-        strRiskType = ""
-        strAgentNote = ""
-        strCustomerNote = ""
-        ID_ActionType = ""
-        ID_Status = ""
-        strMentionDate = ""
-        strLatitude = ""
-        strLongitude = ""
-        encode1 = ""
-        encode2 = ""
 
-    }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -525,7 +510,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                getProductStatus()
            }
            R.id.btnReset->{
-
+               removeData()
            }
            R.id.btnSubmit->{
 
@@ -1093,6 +1078,40 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     .show()
             }
         }
+
+    }
+
+    private fun removeData() {
+        ID_LeadGenerateProduct = ""
+        strDate = ""
+        strTime = ""
+        strDateTime = ""
+        strRiskType = ""
+        strAgentNote = ""
+        strCustomerNote = ""
+        ID_ActionType = ""
+        ID_Status = ""
+        strMentionDate = ""
+        strLatitude = ""
+        strLongitude = ""
+        encode1 = ""
+        encode2 = ""
+
+        txtFromDate!!.setText("")
+        txtToDate!!.setText("")
+        txtRiskType!!.setText("")
+        edtAgentNote!!.setText("")
+        edtCustNote!!.setText("")
+        txtFollowType!!.setText("")
+        txtStatus!!.setText("")
+        txtMentionDate!!.setText("")
+        txtLatitude!!.setText("")
+        txtLongitude!!.setText("")
+
+        image1 = ""
+        image2 = ""
+        imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
+        imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
 
     }
 
