@@ -102,6 +102,9 @@ interface ApiInterface {
     @POST("UserValidations/LeadHistoryDetails")
     fun getHistoryActtails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UpdateLeadGenerateAction")
+    fun updateLeadGenerateAction(@Body body: RequestBody): Call<String>
+
 
 
 

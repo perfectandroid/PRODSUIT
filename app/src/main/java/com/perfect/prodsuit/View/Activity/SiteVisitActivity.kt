@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -40,7 +41,7 @@ import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
 import com.perfect.prodsuit.Viewmodel.FollowUpTypeViewModel
 import com.perfect.prodsuit.Viewmodel.ProductStatusViewModel
-import java.text.SimpleDateFormat
+import com.perfect.prodsuit.Viewmodel.SaveSiteVisitViewModel
 
 class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickListener {
 
@@ -72,6 +73,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     var txtFollowType: TextView? = null
     var txtStatus: TextView? = null
 
+    var edtAgentNote: EditText? = null
+    var edtCustNote: EditText? = null
+
     var imFromDate: ImageView? = null
     var imToDate: ImageView? = null
     var imMentionDate: ImageView? = null
@@ -80,6 +84,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     var datePickerFrom: DatePicker? = null
     var datePickerTo: TimePicker? = null
     var datePickerMention: DatePicker? = null
+
+    var btnReset: Button? = null
+    var btnSubmit: Button? = null
 
     var imgv_upload1: ImageView? = null
     var imgv_upload2: ImageView? = null
@@ -106,11 +113,26 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private var dialogProdStatus : Dialog? = null
     var recyProdStatus: RecyclerView? = null
 
+    lateinit var saveSiteVisitViewModel: SaveSiteVisitViewModel
+    lateinit var saveSiteVisitArrayList : JSONArray
+
+
     companion object {
 
+        var ID_LeadGenerateProduct :String = ""
+        var strDate : String?= ""
+        var strTime : String?= ""
+        var strDateTime : String?= ""
         var strRiskType : String?= ""
+        var strAgentNote : String?= ""
+        var strCustomerNote : String?= ""
         var ID_ActionType : String?= ""
         var ID_Status : String?= ""
+        var strMentionDate : String?= ""
+        var strLatitude : String?= ""
+        var strLongitude : String?= ""
+        var encode1 : String?= ""
+        var encode2 : String?= ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,8 +144,10 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         context = this@SiteVisitActivity
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
+        saveSiteVisitViewModel = ViewModelProvider(this).get(SaveSiteVisitViewModel::class.java)
         setRegViews()
         removeData()
+        ID_LeadGenerateProduct = intent!!.getStringExtra("ID_LeadGenerateProduct").toString()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         getLastLocation()
@@ -131,9 +155,21 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     }
 
     private fun removeData() {
+        ID_LeadGenerateProduct = ""
+        strDate = ""
+        strTime = ""
+        strDateTime = ""
         strRiskType = ""
+        strAgentNote = ""
+        strCustomerNote = ""
         ID_ActionType = ""
         ID_Status = ""
+        strMentionDate = ""
+        strLatitude = ""
+        strLongitude = ""
+        encode1 = ""
+        encode2 = ""
+
     }
 
     private fun setRegViews() {
@@ -151,6 +187,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         txtRiskType = findViewById(R.id.txtRiskType) as TextView
         txtFollowType = findViewById(R.id.txtFollowType) as TextView
         txtStatus = findViewById(R.id.txtStatus) as TextView
+
+        edtAgentNote = findViewById(R.id.edtAgentNote) as EditText
+        edtCustNote = findViewById(R.id.edtCustNote) as EditText
 
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
@@ -172,6 +211,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         datePickerTo = findViewById(R.id.datePickerTo) as TimePicker
         datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
 
+        btnReset = findViewById(R.id.btnReset) as Button
+        btnSubmit = findViewById(R.id.btnSubmit) as Button
+
         llFromdate!!.setOnClickListener(this)
         llToDate!!.setOnClickListener(this)
         llMentionDate!!.setOnClickListener(this)
@@ -190,6 +232,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         imFromDate!!.setOnClickListener(this)
         imToDate!!.setOnClickListener(this)
         imMentionDate!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
 
 
         datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
@@ -399,6 +444,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    txtFromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                    llFromDatePick!!.visibility=View.GONE
                    fromDateMode = "1"
+                   strDate = strDay+"-"+strMonth+"-"+strYear
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -432,9 +478,10 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                        minutes = "0"+min
                    }
 
-                   txtToDate!!.setText(""+hour+"-"+minutes+"-"+"00")
+                   txtToDate!!.setText(""+hours+":"+minutes+":"+"00")
                    llToDatePick!!.visibility=View.GONE
                    toDateMode = "1"
+                   strTime = hours+":"+minutes+":"+"00"
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -460,6 +507,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    txtMentionDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                    llMentionDatePick!!.visibility=View.GONE
                    MentionDateMode = "1"
+
+                   strMentionDate = strDay+"-"+strMonth+"-"+strYear
                }
                catch (e: Exception){
                    Log.e(TAG,"Exception   428   "+e.toString())
@@ -475,9 +524,19 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
            R.id.llStatus->{
                getProductStatus()
            }
+           R.id.btnReset->{
+
+           }
+           R.id.btnSubmit->{
+
+               Config.Utils.hideSoftKeyBoard(context,v)
+               Validations(v)
+
+           }
 
        }
     }
+
 
 
 
@@ -716,6 +775,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
             arrayOf<String>(Manifest.permission.CAMERA),
             PERMISSION_REQUEST_CODE)
     }
+
     fun getRealPathFromURI(uri: Uri): String {
         var path = ""
         if (getContentResolver() != null) {
@@ -880,4 +940,161 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
 
         }
     }
+
+    private fun Validations(v : View) {
+        strAgentNote = edtAgentNote!!.text.toString()
+        strCustomerNote = edtCustNote!!.text.toString()
+        strLatitude = txtLatitude!!.text.toString()
+        strLongitude = txtLongitude!!.text.toString()
+
+        if (strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (strTime.equals("")){
+            Config.snackBars(context,v,"Select Time")
+        }
+        else if (strRiskType.equals("")){
+            Config.snackBars(context,v,"Select Risk type")
+        }
+        else if (strAgentNote.equals("")){
+            Config.snackBars(context,v,"Enter Agent Note")
+        }
+        else if (strCustomerNote.equals("")){
+            Config.snackBars(context,v,"Enter Customer Note")
+        }
+        else if (ID_ActionType.equals("")){
+            Config.snackBars(context,v,"Select Followup type")
+        }
+        else if (ID_Status.equals("")){
+            Config.snackBars(context,v,"Select Status")
+        }
+        else if (strMentionDate.equals("")){
+            Config.snackBars(context,v,"Select Mention Date")
+        }
+        else if (strLatitude.equals("")){
+            Config.snackBars(context,v,"Select Latitude")
+        }
+        else if (strLongitude.equals("")){
+            Config.snackBars(context,v,"Select Longitude")
+        }else{
+
+//            "2022-04-17 03:30:00"
+            strDateTime = strDate+" "+ strTime
+
+            if(image1.equals(""))
+            {
+                encode1 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image1)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                } else {
+                    encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+            if(image2.equals(""))
+            {
+                encode2 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image2)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                } else {
+                    encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+
+            Log.e(TAG,"SITEVISIT  1003"
+                    +"\n"+"ID_LeadGenerateProduct   :  "+ ID_LeadGenerateProduct
+                    +"\n"+"strDate                  :  "+ strDate
+                    +"\n"+"strTime                  :  "+ strTime
+                    +"\n"+"strDateTime              :  "+ strDateTime
+                    +"\n"+"strRiskType              :  "+ strRiskType
+                    +"\n"+"strAgentNote             :  "+ strAgentNote
+                    +"\n"+"strCustomerNote          :  "+ strCustomerNote
+                    +"\n"+"Followup ID              :  "+ ID_ActionType
+                    +"\n"+"ID_Status                :  "+ ID_Status
+                    +"\n"+"strMentionDate           :  "+ strMentionDate
+                    +"\n"+"strLatitude              :  "+ strLatitude
+                    +"\n"+"strLongitude             :  "+ strLongitude
+                    +"\n"+"encode1                  :  "+ encode1
+                    +"\n"+"encode2                  :  "+ encode2)
+
+            Log.e(TAG,"SITEVISIT  10031"
+                    +"\n"+"encode1          :  "+ encode1)
+            Log.e(TAG,"SITEVISIT  10032"
+                    +"\n"+"encode2          :  "+ encode2)
+
+            saveSiteVisit()
+        }
+    }
+
+    private fun saveSiteVisit() {
+
+
+        var saveSiteVisit = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveSiteVisitViewModel.saveSiteVisit(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1058   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (followUpTypeArrayList.length()>0){
+//                                    if (saveSiteVisit == 0){
+//                                        saveSiteVisit++
+//                                        followupTypePopup(followUpTypeArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
 }

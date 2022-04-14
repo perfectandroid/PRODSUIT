@@ -646,6 +646,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 llHistory!!.visibility = View.GONE
 
                 val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 startActivity(i)
             }
             R.id.fabAddDocument->{
