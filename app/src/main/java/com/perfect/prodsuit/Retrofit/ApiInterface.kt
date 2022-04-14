@@ -103,6 +103,10 @@ interface ApiInterface {
     fun getHistoryActtails(@Body body: RequestBody): Call<String>
 
 
+    @POST("UserValidations/NotificationDetailsList")
+    fun getNotification(@Body body: RequestBody): Call<String>
+
+
 
 
 
