@@ -88,6 +88,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
     private var fabAddActivities : FloatingActionButton? = null
+    private var fabAddNextAction : FloatingActionButton? = null
+    private var fabAddNewAction : FloatingActionButton? = null
     private var fabAddDocument : FloatingActionButton? = null
     private var fabAddQuotation : FloatingActionButton? = null
     private var fabEditLead : FloatingActionButton? = null
@@ -103,6 +105,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtAddQuotation : TextView? = null
     private var txtAddDocument : TextView? = null
     private var txtAddActivities : TextView? = null
+    private var txtAddNextAction : TextView? = null
+    private var txtAddNewAction : TextView? = null
     private var txtAddNote : TextView? = null
 
     private var txtName : TextView? = null
@@ -253,6 +257,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             fabAddNote!!.startAnimation(fab_close);
             fabAddActivities!!.startAnimation(fab_close);
+            fabAddNextAction!!.startAnimation(fab_close);
+            fabAddNewAction!!.startAnimation(fab_close);
             fabAddDocument!!.startAnimation(fab_close);
             fabAddQuotation!!.startAnimation(fab_close);
             fabEditLead!!.startAnimation(fab_close);
@@ -262,6 +268,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             txtAddQuotation!!.startAnimation(fab_close)
             txtAddDocument!!.startAnimation(fab_close)
             txtAddActivities!!.startAnimation(fab_close)
+            txtAddNextAction!!.startAnimation(fab_close)
+            txtAddNewAction!!.startAnimation(fab_close)
             txtAddNote!!.startAnimation(fab_close)
 
 
@@ -269,6 +277,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fab_main!!.startAnimation(fab_anticlock);
             fabAddNote!!.setClickable(false);
             fabAddActivities!!.setClickable(false);
+            fabAddNextAction!!.setClickable(false);
+            fabAddNewAction!!.setClickable(false);
             fabAddDocument!!.setClickable(false);
             fabAddQuotation!!.setClickable(false);
             fabEditLead!!.setClickable(false);
@@ -278,6 +288,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             fabAddNote!!.startAnimation(fab_open);
             fabAddActivities!!.startAnimation(fab_open);
+            fabAddNextAction!!.startAnimation(fab_open);
+            fabAddNewAction!!.startAnimation(fab_open);
             fabAddDocument!!.startAnimation(fab_open);
             fabAddQuotation!!.startAnimation(fab_open);
             fabEditLead!!.startAnimation(fab_open);
@@ -288,11 +300,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             txtAddQuotation!!.startAnimation(fab_open)
             txtAddDocument!!.startAnimation(fab_open)
             txtAddActivities!!.startAnimation(fab_open)
+            txtAddNextAction!!.startAnimation(fab_open)
+            txtAddNewAction!!.startAnimation(fab_open)
             txtAddNote!!.startAnimation(fab_open)
 
             fab_main!!.startAnimation(fab_clock);
             fabAddNote!!.setClickable(true);
             fabAddActivities!!.setClickable(true);
+            fabAddNextAction!!.setClickable(true);
+            fabAddNewAction!!.setClickable(true);
             fabAddDocument!!.setClickable(true);
             fabAddQuotation!!.setClickable(true);
             fabEditLead!!.setClickable(true);
@@ -320,6 +336,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fab_main = findViewById(R.id.fab);
         fabAddNote = findViewById(R.id.fabAddNote);
         fabAddActivities = findViewById(R.id.fabAddActivities);
+        fabAddNextAction = findViewById(R.id.fabAddNextAction);
+        fabAddNewAction = findViewById(R.id.fabAddNewAction);
         fabAddDocument = findViewById(R.id.fabAddDocument);
         fabAddQuotation = findViewById(R.id.fabAddQuotation);
         fabEditLead = findViewById(R.id.fabEditLead);
@@ -335,6 +353,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtAddQuotation = findViewById(R.id.txtAddQuotation);
         txtAddDocument = findViewById(R.id.txtAddDocument);
         txtAddActivities = findViewById(R.id.txtAddActivities);
+        txtAddNextAction = findViewById(R.id.txtAddNextAction);
+        txtAddNewAction = findViewById(R.id.txtAddNewAction);
         txtAddNote = findViewById(R.id.txtAddNote);
 
         txtName = findViewById(R.id.txtName);
@@ -352,6 +372,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fab_main!!.setOnClickListener(this)
         fabAddNote!!.setOnClickListener(this)
         fabAddActivities!!.setOnClickListener(this)
+        fabAddNextAction!!.setOnClickListener(this)
+        fabAddNewAction!!.setOnClickListener(this)
         fabAddDocument!!.setOnClickListener(this)
         fabAddQuotation!!.setOnClickListener(this)
         fabEditLead!!.setOnClickListener(this)
@@ -647,6 +669,21 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                 val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                startActivity(i)
+            }
+            R.id.fabAddNextAction->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+                val i = Intent(this@AccountDetailsActivity, LeadNextActionActivity::class.java)
+                startActivity(i)
+            }
+            R.id.fabAddNewAction->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+
+                val i = Intent(this@AccountDetailsActivity, LeadNewActionActivity::class.java)
                 startActivity(i)
             }
             R.id.fabAddDocument->{

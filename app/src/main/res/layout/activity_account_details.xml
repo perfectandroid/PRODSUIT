@@ -714,7 +714,7 @@
                             android:id="@+id/txtAddDocument"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddActivities"
+                            android:layout_above="@+id/fabAddNewAction"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@+id/fabAddDocument"
                             android:background="@color/tabbgColor"
@@ -730,7 +730,7 @@
                             android:id="@+id/fabAddDocument"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddActivities"
+                            android:layout_above="@+id/fabAddNewAction"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="end"
                             android:layout_marginRight="20dp"
@@ -739,6 +739,70 @@
                             android:tint="@color/black"
                             app:fabCustomSize="50dp"
                             app:srcCompat="@drawable/add_document" />
+
+                        <TextView
+                            android:id="@+id/txtAddNewAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddNextAction"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fabAddNewAction"
+                            android:background="@color/tabbgColor"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="New Action"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabAddNewAction"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddNextAction"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            android:scaleType="center"
+                            android:tint="@color/black"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@drawable/add_activities" />
+
+
+                        <TextView
+                            android:id="@+id/txtAddNextAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddActivities"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/fabAddNextAction"
+                            android:background="@color/tabbgColor"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Next Action"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabAddNextAction"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_above="@+id/fabAddActivities"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="@color/white"
+                            android:scaleType="center"
+                            android:tint="@color/black"
+                            app:fabCustomSize="50dp"
+                            app:srcCompat="@drawable/add_activities" />
+
 
                         <TextView
                             android:id="@+id/txtAddActivities"
@@ -766,8 +830,8 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
-                            android:scaleType="center"
                             android:tint="@color/black"
+                            android:scaleType="center"
                             app:fabCustomSize="50dp"
                             app:srcCompat="@drawable/add_activities" />
 
