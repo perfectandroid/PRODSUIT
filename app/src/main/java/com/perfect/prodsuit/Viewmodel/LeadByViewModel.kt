@@ -9,10 +9,10 @@ import com.perfect.prodsuit.Repository.LeadByRepository
 class LeadByViewModel : ViewModel()  {
 
     var leadByData: MutableLiveData<LeadByModel>? = null
+
     fun getLeadBy(context: Context) : MutableLiveData<LeadByModel>? {
         leadByData = LeadByRepository.getServicesApiCall(context)
         return leadByData
     }
-
 
 }

@@ -32,7 +32,6 @@ object SaveSiteVisitRepository {
     }
 
     private fun saveSiteVisit(context: Context) {
-
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -57,35 +56,14 @@ object SaveSiteVisitRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-//                "ReqMode":"31",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "TrnsDate":"2022-04-17 03:30:00"
-//                "ID_RiskType":"1"
-//                "CustomerNote":"Test",
-//                "EmployeeNote":"Test",
-//                "Id_Status":"1",
-//                "CusMensDate":"2022-04-17",
-//                "LocLatitude":"75.12364",
-//                "LocLongitude":"75.1256360,
-//                "LocationLandMark1":"djfdfjkf",
-//                "LocationLandMark2":"jgniurhgiurehfu",
-//                "ID_LeadGenerateProduct":1
-//                "ID_FollowUpType":"1"
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("31"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
                 requestObject1.put("TrnsDate", ProdsuitApplication.encryptStart(SiteVisitActivity.strDateTime))
                 requestObject1.put("ID_RiskType", ProdsuitApplication.encryptStart(SiteVisitActivity.strRiskType))
                 requestObject1.put("CustomerNote", ProdsuitApplication.encryptStart(SiteVisitActivity.strCustomerNote))
@@ -98,9 +76,7 @@ object SaveSiteVisitRepository {
                 requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(SiteVisitActivity.encode2))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(SiteVisitActivity.ID_LeadGenerateProduct))
                 requestObject1.put("ID_FollowUpType", ProdsuitApplication.encryptStart(SiteVisitActivity.ID_ActionType))
-
                 Log.e(TAG,"requestObject1   102   "+requestObject1)
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -133,13 +109,11 @@ object SaveSiteVisitRepository {
                     Log.e(TAG,"onFailure  1402   "+t.message)
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
             Log.e(TAG,"Exception  1403   "+e.toString())
         }
     }
+
 }

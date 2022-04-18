@@ -37,25 +37,21 @@ class BranchAdapter(internal var context: Context, internal var jsonArray: JSONA
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtBranch.text        = jsonObject!!.getString("BranchName")
-
                 if (position % 2 == 0){
                     holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llbranch!!.setTag(position)
                 holder.llbranch!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "branch")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class BranchAdapter(internal var context: Context, internal var jsonArray: JSONA
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtBranch   : TextView
         internal var txtsino         : TextView
         internal var llbranch    : LinearLayout
-
         init {
             txtBranch          = v.findViewById<View>(R.id.txtBranch) as TextView
             txtsino            = v.findViewById<View>(R.id.txtsino) as TextView
@@ -86,4 +80,5 @@ class BranchAdapter(internal var context: Context, internal var jsonArray: JSONA
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

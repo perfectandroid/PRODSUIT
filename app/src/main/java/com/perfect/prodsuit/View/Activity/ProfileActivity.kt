@@ -90,7 +90,6 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
         })
     }
 
-
     private fun setReminder() {
         try
         {

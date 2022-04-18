@@ -8,11 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.perfect.prodsuit.Model.DashrrporttypeModel
 import com.perfect.prodsuit.R
-
 import java.util.ArrayList
 
 class DashReporttypeListAdapter(internal var mContext: Context, private val arraylist: ArrayList<DashrrporttypeModel>) :
     BaseAdapter() {
+
     internal var inflater: LayoutInflater
 
     init {

@@ -37,25 +37,21 @@ class ProductStatusAdapter(internal var context: Context, internal var jsonArray
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtStatus.text        = jsonObject!!.getString("StatusName")
-
                 if (position % 2 == 0){
                     holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llprodstatus!!.setTag(position)
                 holder.llprodstatus!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodstatus")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class ProductStatusAdapter(internal var context: Context, internal var jsonArray
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtStatus          : TextView
         internal var txtsino          : TextView
         internal var llprodstatus    : LinearLayout
-
         init {
             txtStatus        = v.findViewById<View>(R.id.txtStatus) as TextView
             txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
@@ -86,4 +80,5 @@ class ProductStatusAdapter(internal var context: Context, internal var jsonArray
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

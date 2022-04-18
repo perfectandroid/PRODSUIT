@@ -14,4 +14,5 @@ class InfoViewModel: ViewModel() {
         InfoData = InfoRepository.getServicesApiCall(context)
         return InfoData
     }
+
 }

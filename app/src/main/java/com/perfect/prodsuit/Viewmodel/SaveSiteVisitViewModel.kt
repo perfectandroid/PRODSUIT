@@ -10,8 +10,10 @@ import com.perfect.prodsuit.Repository.SaveSiteVisitRepository
 class SaveSiteVisitViewModel : ViewModel() {
 
     var saveSiteVisitData: MutableLiveData<SaveSiteVisitModel>? = null
+
     fun saveSiteVisit(context: Context) : LiveData<SaveSiteVisitModel>? {
         saveSiteVisitData = SaveSiteVisitRepository.getServicesApiCall(context)
         return saveSiteVisitData
     }
+
 }

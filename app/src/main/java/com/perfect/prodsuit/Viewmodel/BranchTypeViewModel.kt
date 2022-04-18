@@ -14,4 +14,5 @@ class BranchTypeViewModel: ViewModel() {
         branchtypeData = BranchTypeRepository.getServicesApiCall(context)
         return branchtypeData
     }
+
 }

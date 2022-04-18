@@ -59,7 +59,6 @@ class WelcomeSliderActivity : AppCompatActivity() {
         btnNext!!.setOnClickListener {
             val current = getItem(+1)
             if (current < layouts.size) {
-                // move to next screen
                 viewPager!!.currentItem = current
             } else {
                 launchHomeScreen()
@@ -99,7 +98,6 @@ class WelcomeSliderActivity : AppCompatActivity() {
                 btnNext!!.text = "GOT IT"
                 btnSkip!!.visibility = View.GONE
             } else {
-                // still pages are left
                 btnNext!!.text = "NEXT"
                 btnSkip!!.visibility = View.VISIBLE
             }
@@ -132,18 +130,15 @@ class WelcomeSliderActivity : AppCompatActivity() {
             container.addView(view)
             return view
         }
-
         override fun getCount(): Int {
             return layouts.size
         }
-
         override fun isViewFromObject(
             view: View,
             obj: Any
         ): Boolean {
             return view === obj
         }
-
         override fun destroyItem(
             container: ViewGroup,
             position: Int,

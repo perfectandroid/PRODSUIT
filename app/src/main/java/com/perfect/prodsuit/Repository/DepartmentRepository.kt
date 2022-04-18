@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-
 import com.perfect.prodsuit.Model.DepartmentModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -58,26 +57,14 @@ object DepartmentRepository {
             val requestObject1 = JSONObject()
 
             try {
-
-//                "ReqMode":"20",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg
-
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
-
                 Log.e(TAG,"getDepartment  78   "+requestObject1)
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -106,9 +93,6 @@ object DepartmentRepository {
                     progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()

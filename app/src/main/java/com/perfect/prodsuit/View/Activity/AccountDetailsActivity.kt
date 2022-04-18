@@ -32,13 +32,10 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
-
-
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
 
@@ -59,32 +56,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
-
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
     var llMessages: LinearLayout? = null
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
-
     var recyAccountDetail: RecyclerView? = null
     var recyHistory: RecyclerView? = null
     lateinit var jsonArray : JSONArray
     var jsonObj: JSONObject? = null
-
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
     lateinit var quotationViewModel: QuotationViewModel
     lateinit var documentViewModel: DocumentViewModel
     lateinit var historyActViewModel: HistoryActViewModel
-
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
     lateinit var documentArrayList : JSONArray
     lateinit var historyActArrayList : JSONArray
-
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
     private var fabAddActivities : FloatingActionButton? = null
@@ -94,12 +86,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var fabAddQuotation : FloatingActionButton? = null
     private var fabEditLead : FloatingActionButton? = null
     private var fabCloseLead : FloatingActionButton? = null
-
     private var fab_open : Animation? = null
     private var fab_close : Animation? = null
     private var fab_clock : Animation? = null
     private var fab_anticlock : Animation? = null
-
     private var txtCloseLead : TextView? = null
     private var txtEditLead : TextView? = null
     private var txtAddQuotation : TextView? = null
@@ -108,7 +98,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtAddNextAction : TextView? = null
     private var txtAddNewAction : TextView? = null
     private var txtAddNote : TextView? = null
-
     private var txtName : TextView? = null
     private var txtAddress : TextView? = null
     private var txtPhone : TextView? = null
@@ -118,29 +107,22 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtProduct : TextView? = null
     private var txtTargetDate : TextView? = null
     private var txtAction : TextView? = null
-
     private var tabLayout : TabLayout? = null
-
     var llCall : LinearLayout? = null
     var llMessage : LinearLayout? = null
     var llMeeting : LinearLayout? = null
-
     var imActCall : ImageView? = null
     var imActMessage : ImageView? = null
     var imActMeeting : ImageView? = null
     var recyActCall  : RecyclerView? = null
     var recyActMessage  : RecyclerView? = null
     var recyActMeeting   : RecyclerView? = null
-
-
     private var isOpen  : Boolean? = true
-
     companion object{
         var ID_LeadGenerateProduct :String = ""
         var LgCusMobile :String = ""
         var LgCusEmail  :String = ""
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,35 +130,21 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_account_details)
         context = this@AccountDetailsActivity
-
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
         documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
-
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
-//        LgCusMobile = jsonObj!!.getString("LgCusMobile")
-//        LgCusEmail = jsonObj!!.getString("LgCusEmail")
         setRegViews()
         bottombarnav()
-
-       // getAccountDetails()
         fabOpenClose()
-
-//
-//        fab_main!!.setOnClickListener {
-//
-//            fabOpenClose()
-//        }
-
         getLeadInfoetails()
         addTabItem()
-
     }
 
     private fun addTabItem() {
@@ -186,75 +154,49 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
-
-
-
-
         getInfoetails()
-
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                Log.e(TAG,"onTabSelected  113  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-//                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-//                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
-//                    llMainDetail!!.addView(inflatedLayout);
-
                     getInfoetails()
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-
                     getActivitieDtails()
-
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-
                     llMainDetail!!.removeAllViews()
                     val inflater = LayoutInflater.from(this@AccountDetailsActivity)
                     val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
                     llMainDetail!!.addView(inflatedLayout);
-
-
                 }
                 if (tab.position == 3){
-
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-
                     getDocumenttails()
-
                 }
                 if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-//                    val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
-//                    val inflatedLayout1: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
-//                    llMainDetail!!.addView(inflatedLayout1);
-
                     getQuotationtails()
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabUnselected  162  "+tab.position)
-
             }
             override fun onTabReselected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabReselected  165  "+tab.position)
             }
         })
-
     }
-
-
 
     private fun fabOpenClose() {
         if (isOpen!!) {
-
             fabAddNote!!.startAnimation(fab_close);
             fabAddActivities!!.startAnimation(fab_close);
             fabAddNextAction!!.startAnimation(fab_close);
@@ -271,9 +213,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             txtAddNextAction!!.startAnimation(fab_close)
             txtAddNewAction!!.startAnimation(fab_close)
             txtAddNote!!.startAnimation(fab_close)
-
-
-
             fab_main!!.startAnimation(fab_anticlock);
             fabAddNote!!.setClickable(false);
             fabAddActivities!!.setClickable(false);
@@ -285,7 +224,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabCloseLead!!.setClickable(false);
             isOpen = false;
         } else {
-
             fabAddNote!!.startAnimation(fab_open);
             fabAddActivities!!.startAnimation(fab_open);
             fabAddNextAction!!.startAnimation(fab_open);
@@ -294,7 +232,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabAddQuotation!!.startAnimation(fab_open);
             fabEditLead!!.startAnimation(fab_open);
             fabCloseLead!!.startAnimation(fab_open);
-
             txtCloseLead!!.startAnimation(fab_open)
             txtEditLead!!.startAnimation(fab_open)
             txtAddQuotation!!.startAnimation(fab_open)
@@ -303,7 +240,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             txtAddNextAction!!.startAnimation(fab_open)
             txtAddNewAction!!.startAnimation(fab_open)
             txtAddNote!!.startAnimation(fab_open)
-
             fab_main!!.startAnimation(fab_clock);
             fabAddNote!!.setClickable(true);
             fabAddActivities!!.setClickable(true);
@@ -317,22 +253,16 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
-
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
         llMessages = findViewById<LinearLayout>(R.id.llMessages)
         llLocation = findViewById<LinearLayout>(R.id.llLocation)
         llImages = findViewById<LinearLayout>(R.id.llImages)
-
-
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
-
         imback!!.setOnClickListener(this)
-
         fab_main = findViewById(R.id.fab);
         fabAddNote = findViewById(R.id.fabAddNote);
         fabAddActivities = findViewById(R.id.fabAddActivities);
@@ -342,12 +272,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddQuotation = findViewById(R.id.fabAddQuotation);
         fabEditLead = findViewById(R.id.fabEditLead);
         fabCloseLead = findViewById(R.id.fabCloseLead);
-
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
-
         txtCloseLead = findViewById(R.id.txtCloseLead);
         txtEditLead = findViewById(R.id.txtEditLead);
         txtAddQuotation = findViewById(R.id.txtAddQuotation);
@@ -356,7 +284,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtAddNextAction = findViewById(R.id.txtAddNextAction);
         txtAddNewAction = findViewById(R.id.txtAddNewAction);
         txtAddNote = findViewById(R.id.txtAddNote);
-
         txtName = findViewById(R.id.txtName);
         txtAddress = findViewById(R.id.txtAddress);
         txtPhone = findViewById(R.id.txtPhone);
@@ -366,9 +293,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtProduct = findViewById(R.id.txtProduct);
         txtTargetDate = findViewById(R.id.txtTargetDate);
         txtAction = findViewById(R.id.txtAction);
-
         tabLayout = findViewById(R.id.tabLayout);
-
         fab_main!!.setOnClickListener(this)
         fabAddNote!!.setOnClickListener(this)
         fabAddActivities!!.setOnClickListener(this)
@@ -381,12 +306,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
-
-
     }
 
     private fun getAccountDetails() {
-
         val arrayList = ArrayList<String>()
         arrayList.add("Lead Info")
         arrayList.add("Follow Up Details")
@@ -403,20 +325,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             jObject.put("image", R.drawable.applogo);
             jsonArray!!.put(jObject)
         }
-
         Log.e(TAG,"arrayList   8311   "+arrayList)
         Log.e(TAG,"jsonArray   8312   "+jsonArray)
-
-//        detailObj.put("Accounts", jsonArray);
-//
-//        Log.e(TAG,"detailObj   "+detailObj)
-
         recyAccountDetail!!.setLayoutManager(LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false))
         val adapter = AccountDetailAdapter(this@AccountDetailsActivity, jsonArray)
         recyAccountDetail!!.adapter = adapter
         adapter.setClickListener(this@AccountDetailsActivity)
     }
-
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -453,11 +368,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             etdate = layout.findViewById(R.id.etdate) as EditText
             ettime = layout.findViewById(R.id.ettime) as EditText
             etdis = layout.findViewById(R.id.etdis) as EditText
-            /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
-             val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
-             etdate = layout.findViewById(R.id.etdate) as TextView
-             ettime = layout.findViewById(R.id.ettime) as TextView
-             val etdis = layout.findViewById(R.id.etdis) as EditText*/
             etdate!!.setKeyListener(null)
             ettime!!.setKeyListener(null)
             builder.setView(layout)
@@ -492,7 +402,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
@@ -534,7 +443,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }catch (e: Exception){
             e.printStackTrace()
         }
-
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Reminder set successfully.")
                 .setCancelable(false)
@@ -544,14 +452,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 }
         val alert = builder.create()
         alert.show()
-
     }
 
     fun timeSelector() {
         val c = Calendar.getInstance()
         mHour = c.get(Calendar.HOUR_OF_DAY)
         mMinute = c.get(Calendar.MINUTE)
-        // Launch Time Picker Dialog
         val timePickerDialog = TimePickerDialog(this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                     val strDate = String.format(
@@ -583,7 +489,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
-
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -641,7 +546,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     finishAffinity()
                 }
-
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -666,7 +570,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
-
                 val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 startActivity(i)
@@ -704,12 +607,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                 getHistory("1")
             }
-
             R.id.fabCloseLead->{
                 isOpen = true
                 fabOpenClose()
-
-               // getHistory("1")
             }
             R.id.llMessages->{
                 val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
@@ -717,19 +617,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 i.putExtra("LgCusEmail",LgCusEmail)
                 startActivity(i)
             }
-
             R.id.llLocation->{
                 val i = Intent(this@AccountDetailsActivity, LocationActivity::class.java)
                 i.putExtra("prodid",ID_LeadGenerateProduct)
                 startActivity(i)
             }
-
             R.id.llImages->{
                 val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
-
                 startActivity(i)
             }
-
         }
     }
 
@@ -740,7 +636,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             val layout = inflater1.inflate(R.layout.send_message_popup, null)
             builder.setView(layout)
             val alertDialog = builder.create()
-
             alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -778,16 +673,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                     if (leadHisory == 0){
                                         llHistory!!.visibility = View.VISIBLE
                                         leadHisory++
-//                                        productCategoryPopup(leadHistoryArrayList)
-
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recyHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        recyCustomer!!.setHasFixedSize(true)
                                         val adapter = LeadHistoryAdapter(this@AccountDetailsActivity, leadHistoryArrayList)
                                         recyHistory!!.adapter = adapter
-                                       // adapter.setClickListener(this@AccountDetailsActivity)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -822,12 +712,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var leadInfo = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
                 leadInfoViewModel.getLeadInfo(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -851,23 +735,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
                                         txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
                                         txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
-
                                         LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
                                         LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
                                     }
-
                                 }
                             } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@AccountDetailsActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
                             }
                         } else {
                             Toast.makeText(
@@ -877,7 +749,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             ).show()
                         }
                     })
-               // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -890,12 +761,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
         llMainDetail!!.addView(inflatedLayout);
-
         var imInfoLoading = inflatedLayout.findViewById<ImageView>(R.id.imInfoLoading)
         var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
-//        imInfoLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
-
         var Info = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -915,16 +783,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 if (infoArrayList.length()>0){
                                     if (Info == 0){
                                         Info++
-
                                         Log.e(TAG,"infoArrayList  845   "+infoArrayList)
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recySubInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         recySubInfo!!.setHasFixedSize(true)
                                         val adapter = infoSubAdapter(this@AccountDetailsActivity, infoArrayList)
                                         recySubInfo!!.adapter = adapter
-                                        //adapter.setClickListener(this@AccountDetailsActivity)
                                     }
-
                                 }
                             } else {
                                 imInfoLoading.visibility = View.GONE
@@ -938,27 +803,21 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             ).show()
                         }
                     })
-                // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
         }
-
-
     }
 
     private fun getDocumenttails() {
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
         llMainDetail!!.addView(inflatedLayout);
-
         var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
         var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.recySubDocs)
-       // imDocumentLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
-
         var docs = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -978,16 +837,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 if (documentArrayList.length()>0){
                                     if (docs == 0){
                                         docs++
-
                                         Log.e(TAG,"documentArrayList  845   "+documentArrayList)
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recySubDocs!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         recySubDocs!!.setHasFixedSize(true)
                                         val adapter = DocumentSubAdapter(this@AccountDetailsActivity, documentArrayList)
                                         recySubDocs!!.adapter = adapter
-                                        //adapter.setClickListener(this@AccountDetailsActivity)
                                     }
-
                                 }
                             } else {
                                 imDocumentLoading.visibility = View.GONE
@@ -1001,31 +857,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             ).show()
                         }
                     })
-                // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
         }
-
     }
-
 
     private fun getQuotationtails() {
         val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
         llMainDetail!!.addView(inflatedLayout);
-
         var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
         var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.recySubQuotation)
-//        imQuotationLoading.visibility = View.VISIBLE
         Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
-
         var quotation = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-
                 imQuotationLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
                 quotationViewModel.getQuotation(this)!!.observe(
@@ -1047,9 +896,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         recySubQuotation!!.setHasFixedSize(true)
                                         val adapter = QuotationSubAdapter(this@AccountDetailsActivity, quotationArrayList)
                                         recySubQuotation!!.adapter = adapter
-                                        //adapter.setClickListener(this@AccountDetailsActivity)
                                     }
-
                                 }
                             } else {
                                 imQuotationLoading.visibility = View.GONE
@@ -1063,62 +910,50 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             ).show()
                         }
                     })
-                // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
         }
-
     }
 
     private fun getActivitieDtails() {
-
         var rbActMode = "1"
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
         llMainDetail!!.addView(inflatedLayout);
-
         llCall = inflatedLayout.findViewById<LinearLayout>(R.id.llCall)
         llMessage = inflatedLayout.findViewById<LinearLayout>(R.id.llMessage)
         llMeeting = inflatedLayout.findViewById<LinearLayout>(R.id.llMeeting)
-
         var rbCall = inflatedLayout.findViewById<RadioButton>(R.id.rbCall)
         var rbMessage = inflatedLayout.findViewById<RadioButton>(R.id.rbMessage)
         var rbMeeting = inflatedLayout.findViewById<RadioButton>(R.id.rbMeeting)
-
         imActCall = inflatedLayout.findViewById<ImageView>(R.id.imActCall)
         imActMessage = inflatedLayout.findViewById<ImageView>(R.id.imActMessage)
         imActMeeting = inflatedLayout.findViewById<ImageView>(R.id.imActMeeting)
         recyActCall = inflatedLayout.findViewById<RecyclerView>(R.id.recyActCall)
         recyActMessage = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMessage)
         recyActMeeting = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMeeting)
-
         Glide.with(this).load(R.drawable.loadinggif).into(imActCall!!);
         Glide.with(this).load(R.drawable.loadinggif).into(imActMessage!!);
         Glide.with(this).load(R.drawable.loadinggif).into(imActMeeting!!);
-
         getHistoryAct(rbActMode)
-
         rbCall!!.setOnClickListener {
             var rbActMode = "1"
             Log.e(TAG,"rbCall  1029")
             getHistoryAct(rbActMode)
         }
-
         rbMessage!!.setOnClickListener {
             var rbActMode = "2"
             Log.e(TAG,"rbMessage  1029")
             getHistoryAct(rbActMode)
         }
-
         rbMeeting!!.setOnClickListener {
             var rbActMode = "3"
             Log.e(TAG,"rbMeeting  1029")
             getHistoryAct(rbActMode)
         }
-
     }
 
     private fun getHistoryAct(rbActMode: String) {
@@ -1126,10 +961,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llCall!!.visibility = View.GONE
         llMessage!!.visibility = View.GONE
         llMeeting!!.visibility = View.GONE
-
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-
                 if (rbActMode.equals("1")){
                     imActCall!!.visibility = View.VISIBLE
                     llCall!!.visibility = View.VISIBLE
@@ -1142,7 +975,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     imActMeeting!!.visibility = View.VISIBLE
                     llMeeting!!.visibility = View.VISIBLE
                 }
-
                 try {
                     historyActViewModel.getHistoryAct(this)!!.observe(
                         this,
@@ -1152,9 +984,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             imActMessage!!.visibility = View.GONE
                             imActMeeting!!.visibility = View.GONE
                         if (msg!!.length > 0) {
-
-
-
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1062   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -1162,43 +991,30 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 historyActArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
                                 if (historyActArrayList.length()>0){
                                     if (historyAct == 0){
-
                                         Log.e(TAG,"leadHistoryArrayList  1067  "+historyActArrayList)
                                         historyAct++
-////                                        productCategoryPopup(leadHistoryArrayList)
-
                                         if (rbActMode.equals("1")){
                                             recyActCall!!.visibility = View.VISIBLE
                                             val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                             recyActCall!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        recyCustomer!!.setHasFixedSize(true)
                                             val adapter = HistoryActCallAdapter(this@AccountDetailsActivity, historyActArrayList)
                                             recyActCall!!.adapter = adapter
-                                            // adapter.setClickListener(this@AccountDetailsActivity)
                                         }
                                         if (rbActMode.equals("2")){
                                             recyActMessage!!.visibility = View.VISIBLE
                                             val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                             recyActMessage!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        recyCustomer!!.setHasFixedSize(true)
                                             val adapter = HistoryActMesssageAdapter(this@AccountDetailsActivity, historyActArrayList)
                                             recyActMessage!!.adapter = adapter
-                                            // adapter.setClickListener(this@AccountDetailsActivity)
                                         }
-
                                         if (rbActMode.equals("3")){
                                             recyActMeeting!!.visibility = View.VISIBLE
                                             val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                             recyActMeeting!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        recyCustomer!!.setHasFixedSize(true)
                                             val adapter = HistoryActMeetingAdapter(this@AccountDetailsActivity, historyActArrayList)
                                             recyActMeeting!!.adapter = adapter
-                                            // adapter.setClickListener(this@AccountDetailsActivity)
                                         }
-//
-
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -1224,17 +1040,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 catch (e : Exception){
                     Log.e(TAG,"Exception  1104   "+e.toString())
                 }
-
-
-
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
         }
-
     }
-
 
 }

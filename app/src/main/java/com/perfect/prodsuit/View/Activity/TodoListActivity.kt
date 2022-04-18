@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -21,15 +20,16 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class TodoListActivity : AppCompatActivity(), View.OnClickListener{
+
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var todolistViewModel: TodoListViewModel
     private var rv_todolist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todolist)
-
         setRegViews()
         getTodoList()
     }
@@ -37,12 +37,10 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
     private fun setRegViews() {
         rv_todolist = findViewById(R.id.rv_todolist)
         val imback = findViewById<ImageView>(R.id.imback)
-
         imback!!.setOnClickListener(this)
     }
 
     private fun getTodoList() {
-
         context = this@TodoListActivity
         todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -59,18 +57,15 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
                             val msg = todolistSetterGetter.message
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
-
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                     todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                   // var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val lLayout = GridLayoutManager(this@TodoListActivity, 1)
                                     rv_todolist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_todolist!!.setHasFixedSize(true)
                                     val adapter = TodoListAdapter(applicationContext, todoArrayList)
                                     rv_todolist!!.adapter = adapter
-
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@TodoListActivity,
@@ -82,7 +77,6 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -108,4 +102,5 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
 }

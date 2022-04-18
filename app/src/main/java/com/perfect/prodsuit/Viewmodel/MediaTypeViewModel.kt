@@ -9,8 +9,10 @@ import com.perfect.prodsuit.Repository.MediaTypeRepository
 class MediaTypeViewModel: ViewModel() {
 
     var mediaTypeData: MutableLiveData<MediaTypeModel>? = null
+
     fun getMediaType(context: Context) : MutableLiveData<MediaTypeModel>? {
         mediaTypeData = MediaTypeRepository.getServicesApiCall(context)
         return mediaTypeData
     }
+
 }

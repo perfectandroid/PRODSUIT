@@ -37,27 +37,22 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtpriority.text        = jsonObject!!.getString("PriorityName")
-
                 if (position % 2 == 0){
                     holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llprodpriority!!.setTag(position)
                 holder.llprodpriority!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodpriority")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
-
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -72,11 +67,9 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtpriority       : TextView
         internal var txtsino           : TextView
         internal var llprodpriority    : LinearLayout
-
         init {
             txtpriority        = v.findViewById<View>(R.id.txtpriority) as TextView
             txtsino            = v.findViewById<View>(R.id.txtsino) as TextView
@@ -87,4 +80,5 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

@@ -10,6 +10,7 @@ import com.perfect.prodsuit.Repository.MaintanaceMessageRepository
 class MaintanceMessageViewModel : ViewModel() {
 
     var maintanaceLiveData: MutableLiveData<MaintananceMessageModel>? = null
+
     fun getMaintanceMessgae(context: Context) : LiveData<MaintananceMessageModel>? {
         maintanaceLiveData = MaintanaceMessageRepository.getServicesApiCall(context)
         return maintanaceLiveData

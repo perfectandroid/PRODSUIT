@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CustomerAddModel
 import com.perfect.prodsuit.Repository.CustomerAddRepository
 
-
 class CustomerAddViewModel   : ViewModel() {
     var customerAddData: MutableLiveData<CustomerAddModel>? = null
 
@@ -14,4 +13,5 @@ class CustomerAddViewModel   : ViewModel() {
         customerAddData = CustomerAddRepository.getServicesApiCall(context)
         return customerAddData
     }
+
 }

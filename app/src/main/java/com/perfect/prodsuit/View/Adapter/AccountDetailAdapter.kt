@@ -37,30 +37,24 @@ class AccountDetailAdapter(internal var context: Context, internal var jsonArray
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-
                 holder.txtAccount.text        = jsonObject!!.getString("name")
                 holder.imgIcon.setImageResource(jsonObject!!.getInt("image"))
-
                 if (position == row_index){
                     holder.llaccontdetail!!.setBackgroundResource(R.drawable.shape_selected)
                 }else{
                     holder.llaccontdetail!!.setBackgroundResource(R.drawable.shape_default)
                 }
-
-
                 holder.llaccontdetail!!.setTag(position)
                 holder.llaccontdetail!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, jsonObject!!.getString("name"))
                     row_index=position;
                     notifyDataSetChanged()
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -76,11 +70,9 @@ class AccountDetailAdapter(internal var context: Context, internal var jsonArray
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var imgIcon           : ImageView
         internal var txtAccount        : TextView
         internal var llaccontdetail    : LinearLayout
-
         init {
             imgIcon                  = v.findViewById<View>(R.id.imgIcon) as ImageView
             txtAccount               = v.findViewById<View>(R.id.txtAccount) as TextView
@@ -91,4 +83,5 @@ class AccountDetailAdapter(internal var context: Context, internal var jsonArray
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

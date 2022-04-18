@@ -15,4 +15,5 @@ class ProductCategoryViewModel: ViewModel() {
         productcategoryData = ProductCategoryRepository.getServicesApiCall(context)
         return productcategoryData
     }
+
 }
