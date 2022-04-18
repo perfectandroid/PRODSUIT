@@ -49,7 +49,8 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var txtEmployee: TextView? = null
     private var txtok1: TextView? = null
 
-
+    private var btnReset: Button? = null
+    private var btnSubmit: Button? = null
 
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
@@ -82,6 +83,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         var ID_Priority : String?= ""
         var ID_Department : String = ""
         var ID_Employee : String = ""
+        var strDate : String = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,6 +130,9 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         txtEmployee = findViewById<TextView>(R.id.txtEmployee)
         txtok1 = findViewById<TextView>(R.id.txtok1)
 
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
+
         llAction!!.setOnClickListener(this)
         llActionType!!.setOnClickListener(this)
         llFollowUpDate!!.setOnClickListener(this)
@@ -139,6 +144,9 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
         imDateclose!!.setOnClickListener(this)
 
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
+
     }
 
     private fun ResetData() {
@@ -149,6 +157,14 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         ID_Priority = ""
         ID_Department = ""
         ID_Employee = ""
+        strDate = ""
+
+        txtAction!!.setText("")
+        txtActionType!!.setText("")
+        txtFollowUpDate!!.setText("")
+        txtLeadType!!.setText("")
+        txtDepartment!!.setText("")
+        txtEmployee!!.setText("")
     }
 
     override fun onClick(v: View) {
@@ -213,7 +229,8 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                     }
                     txtFollowUpDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                     ll_Todate!!.visibility=View.GONE
-                    LeadGenerationActivity.dateMode = "1"
+                    dateMode = "1"
+                    strDate = strDay+"-"+strMonth+"-"+strYear
                 }
                 catch (e: Exception){
                     Log.e(TAG,"Exception   428   "+e.toString())
@@ -221,9 +238,19 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
             }
 
+            R.id.btnReset->{
+                ResetData()
+            }
+
+            R.id.btnSubmit->{
+
+                validations(v)
+            }
+
 
         }
     }
+
 
 
 
@@ -679,6 +706,39 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             txtEmployee!!.setText(jsonObject.getString("EmpName"))
 
 
+        }
+    }
+
+    private fun validations(v: View) {
+
+        if (ID_NextAction.equals("")){
+            Config.snackBars(context,v,"Select Action")
+        }
+        else if (ID_ActionType.equals("")){
+            Config.snackBars(context,v,"Select Action Type")
+        }
+        else if (strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (ID_Priority.equals("")){
+            Config.snackBars(context,v,"Select Lead")
+        }
+        else if (ID_Department.equals("")){
+            Config.snackBars(context,v,"Select Department")
+        }
+        else if (ID_Employee.equals("")){
+            Config.snackBars(context,v,"Select Employee")
+        }
+        else{
+            Log.e(TAG,"SAVE NEXT ACTION"
+                    +"\n"+"ID_NextAction   : "+ID_NextAction
+                    +"\n"+"ID_ActionType   : "+ID_ActionType
+                    +"\n"+"strDate         : "+strDate
+                    +"\n"+"ID_Priority     : "+ID_Priority
+                    +"\n"+"ID_Department   : "+ID_Department
+                    +"\n"+"ID_Employee     : "+ID_Employee)
+
+            Config.snackBars(context,v,"Save API not implement")
         }
     }
 }
