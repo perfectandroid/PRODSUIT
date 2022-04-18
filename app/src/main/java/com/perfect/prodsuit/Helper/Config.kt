@@ -18,10 +18,7 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 import android.R
 import android.graphics.Color
-
-
-
-
+import android.widget.TextView
 
 
 
@@ -126,6 +123,8 @@ object Config {
         snackbar.setActionTextColor(Color.WHITE)
         snackbar.setBackgroundTint(context.resources.getColor(R.color.black))
         snackbar.show()
+
+
     }
 
 }
