@@ -10,6 +10,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.google.android.material.tabs.TabLayout
 import com.perfect.prodsuit.R
 
@@ -20,6 +21,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var context: Context
 
     private var tabLayout : TabLayout? = null
+    var llMainDetail: LinearLayout? = null
+    var llPending: LinearLayout? = null
+    var llUpComing: LinearLayout? = null
+    var llComplete: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
         imback!!.setOnClickListener(this)
 
         tabLayout = findViewById(R.id.tabLayout);
+        llMainDetail = findViewById(R.id.llMainDetail);
+        llPending = findViewById(R.id.llPending);
+        llUpComing = findViewById(R.id.llUpComing);
+        llComplete = findViewById(R.id.llComplete);
     }
 
     private fun addTabItem() {
@@ -48,7 +57,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
 
 
 
-
+        PendingTab()
 
 
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -56,28 +65,19 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
                 Log.e(TAG,"onTabSelected  113  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-//                    llMainDetail!!.removeAllViews()
-//                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-//                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
-//                    llMainDetail!!.addView(inflatedLayout);
 
+                    PendingTab()
 
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-//                    llMainDetail!!.removeAllViews()
-
-
+                    UpComingTab()
 
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
 
-//                    llMainDetail!!.removeAllViews()
-//                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-//                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
-//                    llMainDetail!!.addView(inflatedLayout);
-
+                    CompleteTab()
 
                 }
 
@@ -91,6 +91,27 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
             }
         })
 
+    }
+
+    private fun PendingTab() {
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AgendaActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subpending, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+    }
+
+    private fun UpComingTab() {
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AgendaActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subupcoming, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+    }
+
+    private fun CompleteTab() {
+        llMainDetail!!.removeAllViews()
+        val inflater = LayoutInflater.from(this@AgendaActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subcomplete, null, false)
+        llMainDetail!!.addView(inflatedLayout);
     }
 
     override fun onClick(v: View) {
