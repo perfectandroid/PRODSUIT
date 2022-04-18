@@ -2489,7 +2489,7 @@ import java.util.*
                  progressDialog!!.setIndeterminate(true)
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                  progressDialog!!.show()
-                 employeeViewModel.getEmployee(this)!!.observe(
+                 employeeViewModel.getEmployee(this, ID_Department)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
                          val msg = serviceSetterGetter.message
