@@ -46,6 +46,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var llservice: LinearLayout? = null
     private var rlnotification: RelativeLayout? = null
     private var ll_dashboard: LinearLayout? = null
+    private var ll_agenda: LinearLayout? = null
     private var lllead: LinearLayout? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var mPager: ViewPager? = null
@@ -109,10 +110,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         llservice = findViewById(R.id.llservice)
         rlnotification= findViewById(R.id.rlnotification)
         ll_dashboard = findViewById(R.id.ll_dashboard)
+        ll_agenda = findViewById(R.id.ll_agenda)
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
         llservice!!.setOnClickListener(this)
         ll_dashboard!!.setOnClickListener(this)
+        ll_agenda!!.setOnClickListener(this)
         nav_view!!.setNavigationItemSelectedListener(this)
         nav_view!!.setItemIconTintList(null);
         mPager = findViewById(R.id.pager)
@@ -148,6 +151,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.lllead -> {
                 val i = Intent(this@HomeActivity, LeadActivity::class.java)
+                startActivity(i)
+            }
+            R.id.ll_agenda -> {
+//                https://github.com/PhilJay/MPAndroidChart
+                val i = Intent(this@HomeActivity, AgendaActivity::class.java)
                 startActivity(i)
             }
             R.id.ll_dashboard -> {
