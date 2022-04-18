@@ -116,5 +116,10 @@
         <item name="android:headerBackground">@color/white</item>
     </style>
 
+    <style name="customfontstyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/myfont</item>
+    </style>
+
+
 
 </resources>

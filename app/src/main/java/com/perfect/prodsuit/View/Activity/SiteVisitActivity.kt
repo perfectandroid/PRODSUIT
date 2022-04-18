@@ -279,6 +279,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
 
     override fun onClick(v: View) {
        when(v.id){
+
            R.id.imback->{
                finish()
            }
@@ -315,6 +316,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    }
                }
            }
+
            R.id.llFromdate->{
                if (fromDateMode.equals("0")){
                    llFromDatePick!!.visibility = View.GONE
@@ -518,6 +520,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                         followUpType++
                                         followupTypePopup(followUpTypeArrayList)
                                     }
+
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -923,6 +926,27 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1058   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+//                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+//                                if (followUpTypeArrayList.length()>0){
+//                                    if (saveSiteVisit == 0){
+//                                        saveSiteVisit++
+//                                        followupTypePopup(followUpTypeArrayList)
+//                                    }
+//
+//                                }
+
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    finish()
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,

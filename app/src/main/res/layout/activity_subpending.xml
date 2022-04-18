@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="visible">
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/segmented2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            segmentedgroup:sc_tint_color="#000204"
+            android:layout_alignParentTop="true"
+            segmentedgroup:sc_checked_text_color="@color/white"
+            segmentedgroup:sc_border_width="2dp"
+            segmentedgroup:sc_corner_radius="5dp">
+
+            <RadioButton
+                android:id="@+id/rbCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/myfont"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:checked="true"
+                android:singleLine="true"
+                android:text="Call"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/rbMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/myfont"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:singleLine="true"
+                android:text="Message"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/rbMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/myfont"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="Meeting"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/rbDocument"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/myfont"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:layout_weight="1"
+                android:text="Document"
+                android:singleLine="true"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/rbQuotation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/myfont"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="Quotation"
+                style="@style/RadioButton" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
