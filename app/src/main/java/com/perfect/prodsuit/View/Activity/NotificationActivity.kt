@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
+import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -23,28 +24,28 @@ import org.json.JSONObject
 class NotificationActivity : AppCompatActivity(), View.OnClickListener{
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
-    lateinit var todolistViewModel: TodoListViewModel
-    private var rv_todolist: RecyclerView?=null
+    lateinit var notificationViewModel: NotificationViewModel
+    private var rv_notificationlist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
-        //setRegViews()
-       // getTodoList()
+        setRegViews()
+        getNotificationList()
     }
 
     private fun setRegViews() {
-        rv_todolist = findViewById(R.id.rv_todolist)
+        rv_notificationlist = findViewById(R.id.rv_notificationlist)
         val imback = findViewById<ImageView>(R.id.imback)
 
         imback!!.setOnClickListener(this)
     }
 
-    private fun getTodoList() {
+    private fun getNotificationList() {
 
         context = this@NotificationActivity
-        todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
+        notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -53,15 +54,15 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                todolistViewModel.getTodolist(this)!!.observe(
+                notificationViewModel.getNotificaationlist(this)!!.observe(
                         this,
-                        Observer { todolistSetterGetter ->
-                            val msg = todolistSetterGetter.message
+                        Observer { notificationSetterGetter ->
+                            val msg = notificationSetterGetter.message
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
 
                                 if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
+                                  /*  val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                     todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
                                    // var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val lLayout = GridLayoutManager(this@NotificationActivity, 1)
@@ -70,7 +71,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                                     rv_todolist!!.setHasFixedSize(true)
                                     val adapter = TodoListAdapter(applicationContext, todoArrayList)
                                     rv_todolist!!.adapter = adapter
-
+*/
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@NotificationActivity,
@@ -104,7 +105,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(v: View) {
         when(v.id) {
             R.id.imback -> {
-              //  finish()
+                finish()
             }
         }
     }

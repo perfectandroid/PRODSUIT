@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -46,8 +47,14 @@ object NotificationRepository {
             val requestObject1 = JSONObject()
             try {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("30"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("12"))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -55,7 +62,7 @@ object NotificationRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getBannerDetails(body)
+            val call = apiService.getNotification(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -63,6 +70,7 @@ object NotificationRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
+                        Log.i("Notification Response",response.body())
                         val users = ArrayList<NotificationModel>()
                         users.add(NotificationModel(response.body()))
                         val msg = users[0].message
