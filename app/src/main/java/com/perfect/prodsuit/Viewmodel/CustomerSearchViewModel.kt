@@ -15,4 +15,5 @@ class CustomerSearchViewModel  : ViewModel(){
         customerLiveData = CustomerSearchRepository.getServicesApiCall(context)
         return customerLiveData
     }
+
 }

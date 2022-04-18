@@ -14,4 +14,5 @@ class DocumentViewModel : ViewModel() {
         documentData = DocumentRepository.getServicesApiCall(context)
         return documentData
     }
+
 }

@@ -37,25 +37,21 @@ class DepartmentAdapter(internal var context: Context, internal var jsonArray: J
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtDepartment.text        = jsonObject!!.getString("DeptName")
-
                 if (position % 2 == 0){
                     holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.lldepartment!!.setTag(position)
                 holder.lldepartment!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "department")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class DepartmentAdapter(internal var context: Context, internal var jsonArray: J
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtDepartment   : TextView
         internal var txtsino         : TextView
         internal var lldepartment    : LinearLayout
-
         init {
             txtDepartment          = v.findViewById<View>(R.id.txtDepartment) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
@@ -86,4 +80,5 @@ class DepartmentAdapter(internal var context: Context, internal var jsonArray: J
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

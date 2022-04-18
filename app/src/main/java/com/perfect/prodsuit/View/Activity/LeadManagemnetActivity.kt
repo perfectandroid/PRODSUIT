@@ -60,9 +60,9 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        lltodolist = findViewById<LinearLayout>(R.id.lltodolist)
-        lloverdue = findViewById<LinearLayout>(R.id.lloverdue)
-        lloverUpcoming = findViewById<LinearLayout>(R.id.lloverUpcoming)
+        lltodolist = findViewById(R.id.lltodolist)
+        lloverdue = findViewById(R.id.lloverdue)
+        lloverUpcoming = findViewById(R.id.lloverUpcoming)
 
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
@@ -163,7 +163,6 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
@@ -254,7 +253,6 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
-
         } catch (e: ParseException) {
             e.printStackTrace()
         }

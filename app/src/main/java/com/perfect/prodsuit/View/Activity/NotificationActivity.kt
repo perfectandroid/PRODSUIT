@@ -4,20 +4,16 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
-import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -30,7 +26,6 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
-
         setRegViews()
         getNotificationList()
     }
@@ -38,12 +33,10 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
     private fun setRegViews() {
         rv_notificationlist = findViewById(R.id.rv_notificationlist)
         val imback = findViewById<ImageView>(R.id.imback)
-
         imback!!.setOnClickListener(this)
     }
 
     private fun getNotificationList() {
-
         context = this@NotificationActivity
         notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -60,7 +53,6 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                             val msg = notificationSetterGetter.message
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
-
                                 if (jObject.getString("StatusCode") == "0") {
                                   /*  val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                     todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
@@ -83,7 +75,6 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -109,4 +100,5 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
 }

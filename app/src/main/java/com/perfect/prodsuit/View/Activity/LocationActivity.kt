@@ -26,6 +26,7 @@ import com.perfect.prodsuit.Viewmodel.LocationViewModel
 import org.json.JSONObject
 
 class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener{
+
     private var progressDialog: ProgressDialog? = null
     private var Id_leadgenrteprod: String? = null
     lateinit var context: Context
@@ -34,18 +35,16 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     internal var mCurrLocationMarker: Marker? = null
     var latitude=""
     var longitude=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
-
          Id_leadgenrteprod = intent.getStringExtra("prodid")
-
         setRegViews()
         getLocationDetails()
     }
 
     private fun setRegViews() {
-
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
     }
@@ -73,14 +72,11 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                         val msg = locationSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-
                             if (jObject.getString("StatusCode") == "0") {
-
                                 val jobjt = jObject.getJSONObject("LeadImageDetails")
                                 latitude = jobjt!!.getString("LocationLatitude")
                                 longitude = jobjt!!.getString("LocationLongitude")
                                 Log.i("LocationDetails", latitude + "\n" + longitude)
-
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@LocationActivity,
@@ -92,7 +88,6 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
                                 alertDialog.show()
-
                             }
                         } else {
                             Toast.makeText(
@@ -123,7 +118,6 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         try {
             val lati=intent.getStringExtra("lat")
             val longi=intent.getStringExtra("long")
-
             if(lati!!.isEmpty()&& longi!!.isEmpty()){
                 val dialogBuilder = android.app.AlertDialog.Builder(
                     this@LocationActivity,
@@ -143,20 +137,14 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     alert.getButton(DialogInterface.BUTTON_POSITIVE)
                 pbutton.setTextColor(Color.RED)
             }else {
-
                 mMap = googleMap
                 val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
-
                 Log.i("LatLng", latLng.toString())
                 val markerOptions = MarkerOptions()
                 markerOptions.position(latLng)
                 markerOptions.title("Current Location")
-
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                 mCurrLocationMarker = mMap!!.addMarker(markerOptions)
-
-              //  mMap.addMarker(markerOptions)
-
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
             }
@@ -164,4 +152,5 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             e.printStackTrace()
         }
     }
+
 }

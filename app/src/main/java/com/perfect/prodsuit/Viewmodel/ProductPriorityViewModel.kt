@@ -17,4 +17,5 @@ class ProductPriorityViewModel : ViewModel()  {
         productpriorityData = ProductPriorityRepository.getServicesApiCall(context)
         return productpriorityData
     }
+
 }

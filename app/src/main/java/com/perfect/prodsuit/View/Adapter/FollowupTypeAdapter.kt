@@ -37,25 +37,21 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtFollowupType.text        = jsonObject!!.getString("ActnTypeName")
-
                 if (position % 2 == 0){
                     holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llfollowuptype!!.setTag(position)
                 holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "followuptype")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtFollowupType   : TextView
         internal var txtsino           : TextView
         internal var llfollowuptype    : LinearLayout
-
         init {
             txtFollowupType      = v.findViewById<View>(R.id.txtFollowupType) as TextView
             txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
@@ -86,4 +80,5 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

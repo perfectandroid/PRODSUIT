@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     private val RC_SIGN_IN = 1
     var strName: String? = null
     var strEmail: String? = null
-
     companion object {
         var strEPhone = ""
     }
@@ -48,7 +47,6 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         var btlogin = findViewById<Button>(R.id.btlogin)
         etxt_mob = findViewById<EditText>(R.id.etxt_mob)
         progress = findViewById(R.id.progress)
-        //Glide.with(this).load(R.drawable.progressgif).into(progress!!);
         btlogin.setOnClickListener {
             validation()
         }
@@ -185,7 +183,6 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val account = result.signInAccount
             strName=account!!.displayName
             strEmail=account.email
-          //  login(account!!.displayName, account.email)
         } else {
             Toast.makeText(applicationContext, "Sign in cancel", Toast.LENGTH_LONG).show()
         }

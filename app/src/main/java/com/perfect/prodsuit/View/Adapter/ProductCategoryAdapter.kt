@@ -37,27 +37,22 @@ class ProductCategoryAdapter(internal var context: Context, internal var jsonArr
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtCategory.text        = jsonObject!!.getString("CategoryName")
-
                 if (position % 2 == 0){
                     holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llprodcategory!!.setTag(position)
                 holder.llprodcategory!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodcategory")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
-
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -72,11 +67,9 @@ class ProductCategoryAdapter(internal var context: Context, internal var jsonArr
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtCategory          : TextView
         internal var txtsino          : TextView
         internal var llprodcategory    : LinearLayout
-
         init {
             txtCategory        = v.findViewById<View>(R.id.txtCategory) as TextView
             txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
@@ -87,4 +80,5 @@ class ProductCategoryAdapter(internal var context: Context, internal var jsonArr
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

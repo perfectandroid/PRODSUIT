@@ -14,24 +14,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.OverdueListAdapter
 import com.perfect.prodsuit.View.Adapter.UpcmngtaskListAdapter
-import com.perfect.prodsuit.Viewmodel.OverDueListViewModel
-import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import com.perfect.prodsuit.Viewmodel.UpcomingtasksListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
 class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
+
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var upcomingtaskslistViewModel: UpcomingtasksListViewModel
     private var rv_upcmngtasklist: RecyclerView?=null
     lateinit var upcmngtaskArrayList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcomingtask)
-
         setRegViews()
         getUpcomingtasksList()
     }
@@ -39,15 +37,12 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
     private fun setRegViews() {
         rv_upcmngtasklist = findViewById(R.id.rv_upcmngtasklist)
         val imback = findViewById<ImageView>(R.id.imback)
-
         imback!!.setOnClickListener(this)
     }
 
     private fun getUpcomingtasksList() {
-
         context = this@UpcomingtaskActivity
         upcomingtaskslistViewModel = ViewModelProvider(this).get(UpcomingtasksListViewModel::class.java)
-
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -63,7 +58,6 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                  //  var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                     upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
                                     val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
@@ -84,7 +78,6 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -110,4 +103,5 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
 }

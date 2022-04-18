@@ -1,7 +1,9 @@
 package com.perfect.prodsuit.Helper
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
@@ -16,12 +18,6 @@ import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
-import android.R
-import android.graphics.Color
-import android.widget.TextView
-
-
-
 
 object Config {
 
@@ -94,8 +90,6 @@ object Config {
         sslContext.init(null, wrappedTrustManagers, null)
         return sslContext.socketFactory
     }
-
-
 
     object Utils {
         fun hideSoftKeyBoard(context: Context, view: View) {

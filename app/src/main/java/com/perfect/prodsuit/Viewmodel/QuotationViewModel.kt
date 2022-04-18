@@ -10,8 +10,10 @@ import com.perfect.prodsuit.Repository.QuotationRepository
 class QuotationViewModel: ViewModel() {
 
     var quotationData: MutableLiveData<QuotationModel>? = null
+
     fun getQuotation(context: Context) : LiveData<QuotationModel>? {
         quotationData = QuotationRepository.getServicesApiCall(context)
         return quotationData
     }
+
 }

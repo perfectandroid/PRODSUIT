@@ -40,12 +40,10 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private fun setRegViews() {
         rv_overduelist = findViewById(R.id.rv_overduelist)
         val imback = findViewById<ImageView>(R.id.imback)
-
         imback!!.setOnClickListener(this)
     }
 
     private fun getOverdueList() {
-
         context = this@OverDueActivity
         overduelistViewModel = ViewModelProvider(this).get(OverDueListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -74,7 +72,6 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     val adapter = OverdueListAdapter(applicationContext, overdueArrayList)
                                     rv_overduelist!!.adapter = adapter
                                     adapter.setClickListener(this@OverDueActivity)
-
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@OverDueActivity,
@@ -86,7 +83,6 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -114,7 +110,6 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     }
 
     override fun onClick(position: Int, data: String) {
-
         if (data.equals("overdue")){
             val jsonObject = overdueArrayList.getJSONObject(position)
             val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)

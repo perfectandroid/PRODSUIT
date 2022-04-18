@@ -181,11 +181,6 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
             etdate = layout.findViewById(R.id.etdate) as EditText
             ettime = layout.findViewById(R.id.ettime) as EditText
             etdis = layout.findViewById(R.id.etdis) as EditText
-            /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
-             val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
-             etdate = layout.findViewById(R.id.etdate) as TextView
-             ettime = layout.findViewById(R.id.ettime) as TextView
-             val etdis = layout.findViewById(R.id.etdis) as EditText*/
             etdate!!.setKeyListener(null)
             ettime!!.setKeyListener(null)
             builder.setView(layout)
@@ -262,7 +257,6 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         }catch (e: Exception){
             e.printStackTrace()
         }
-
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Reminder set successfully.")
                 .setCancelable(false)
@@ -272,7 +266,6 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
                 }
         val alert = builder.create()
         alert.show()
-
     }
 
     fun timeSelector() {
@@ -311,7 +304,6 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
-
         } catch (e: ParseException) {
             e.printStackTrace()
         }

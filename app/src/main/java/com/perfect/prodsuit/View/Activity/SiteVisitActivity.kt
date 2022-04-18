@@ -50,7 +50,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     lateinit var context: Context
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-
     var llFromdate: LinearLayout? = null
     var llFromDatePick: LinearLayout? = null
     var llToDate: LinearLayout? = null
@@ -60,7 +59,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     var llRiskType: LinearLayout? = null
     var llFollowType: LinearLayout? = null
     var llStatus: LinearLayout? = null
-
     var txtFromDate: TextView? = null
     var txtFromSubmit: TextView? = null
     var txtToDate: TextView? = null
@@ -72,22 +70,16 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     var txtRiskType: TextView? = null
     var txtFollowType: TextView? = null
     var txtStatus: TextView? = null
-
     var edtAgentNote: EditText? = null
     var edtCustNote: EditText? = null
-
     var imFromDate: ImageView? = null
     var imToDate: ImageView? = null
     var imMentionDate: ImageView? = null
-
-
     var datePickerFrom: DatePicker? = null
     var datePickerTo: TimePicker? = null
     var datePickerMention: DatePicker? = null
-
     var btnReset: Button? = null
     var btnSubmit: Button? = null
-
     var imgv_upload1: ImageView? = null
     var imgv_upload2: ImageView? = null
     private val GALLERY = 1
@@ -98,27 +90,21 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private var image1 = ""
     private var image2 = ""
     private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
-
     var fromDateMode : String?= "1"  // GONE
     var toDateMode : String?= "1"  // GONE
     var MentionDateMode : String?= "1"  // GONE
-
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var followUpTypeArrayList : JSONArray
     private var dialogFollowupType : Dialog? = null
     var recyFollowupType: RecyclerView? = null
-
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
     private var dialogProdStatus : Dialog? = null
     var recyProdStatus: RecyclerView? = null
-
     lateinit var saveSiteVisitViewModel: SaveSiteVisitViewModel
     lateinit var saveSiteVisitArrayList : JSONArray
 
-
     companion object {
-
         var ID_LeadGenerateProduct :String = ""
         var strDate : String?= ""
         var strTime : String?= ""
@@ -136,7 +122,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -147,20 +132,14 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         saveSiteVisitViewModel = ViewModelProvider(this).get(SaveSiteVisitViewModel::class.java)
         setRegViews()
         removeData()
-
         ID_LeadGenerateProduct = intent!!.getStringExtra("ID_LeadGenerateProduct").toString()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         getLastLocation()
-
     }
-
-
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-
         txtFromDate = findViewById(R.id.txtFromDate) as TextView
         txtFromSubmit = findViewById(R.id.txtFromSubmit) as TextView
         txtToDate = findViewById(R.id.txtToDate) as TextView
@@ -172,16 +151,13 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         txtRiskType = findViewById(R.id.txtRiskType) as TextView
         txtFollowType = findViewById(R.id.txtFollowType) as TextView
         txtStatus = findViewById(R.id.txtStatus) as TextView
-
         edtAgentNote = findViewById(R.id.edtAgentNote) as EditText
         edtCustNote = findViewById(R.id.edtCustNote) as EditText
-
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
         imFromDate = findViewById(R.id.imFromDate) as ImageView
         imToDate = findViewById(R.id.imToDate) as ImageView
         imMentionDate = findViewById(R.id.imMentionDate) as ImageView
-
         llFromdate = findViewById(R.id.llFromdate) as LinearLayout
         llFromDatePick = findViewById(R.id.llFromDatePick) as LinearLayout
         llToDate = findViewById(R.id.llToDate) as LinearLayout
@@ -191,48 +167,36 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         llRiskType = findViewById(R.id.llRiskType) as LinearLayout
         llFollowType = findViewById(R.id.llFollowType) as LinearLayout
         llStatus = findViewById(R.id.llStatus) as LinearLayout
-
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
         datePickerTo = findViewById(R.id.datePickerTo) as TimePicker
         datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
-
         btnReset = findViewById(R.id.btnReset) as Button
         btnSubmit = findViewById(R.id.btnSubmit) as Button
-
         llFromdate!!.setOnClickListener(this)
         llToDate!!.setOnClickListener(this)
         llMentionDate!!.setOnClickListener(this)
         llRiskType!!.setOnClickListener(this)
         llFollowType!!.setOnClickListener(this)
         llStatus!!.setOnClickListener(this)
-
         txtLatitude!!.setOnClickListener(this)
         txtLongitude!!.setOnClickListener(this)
         txtFromSubmit!!.setOnClickListener(this)
         txtToSubmit!!.setOnClickListener(this)
         txtMentionSubmit!!.setOnClickListener(this)
-
         imgv_upload1!!.setOnClickListener(this)
         imgv_upload2!!.setOnClickListener(this)
         imFromDate!!.setOnClickListener(this)
         imToDate!!.setOnClickListener(this)
         imMentionDate!!.setOnClickListener(this)
-
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
-
-
         datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
-      //  datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
-
     }
-
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     var location: Location? = task.result
                     if (location == null) {
@@ -240,8 +204,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     } else {
                         txtLongitude!!.text = location.longitude.toString()
                         txtLatitude!!.text = location.latitude.toString()
-//                        findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
-//                        findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
                     }
                 }
             } else {
@@ -254,7 +216,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         }
     }
 
-
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
         var mLocationRequest = LocationRequest()
@@ -262,7 +223,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
         mLocationRequest.numUpdates = 1
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient!!.requestLocationUpdates(
             mLocationRequest, mLocationCallback,
@@ -273,12 +233,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
-
             txtLongitude!!.text = mLastLocation.longitude.toString()
             txtLatitude!!.text = mLastLocation.latitude.toString()
-
-//            findViewById<TextView>(R.id.latTextView).text = mLastLocation.latitude.toString()
-//            findViewById<TextView>(R.id.lonTextView).text = mLastLocation.longitude.toString()
         }
     }
 
@@ -323,7 +279,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
 
     override fun onClick(v: View) {
        when(v.id){
-
            R.id.imback->{
                finish()
            }
@@ -360,7 +315,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    }
                }
            }
-
            R.id.llFromdate->{
                if (fromDateMode.equals("0")){
                    llFromDatePick!!.visibility = View.GONE
@@ -383,7 +337,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                llFromDatePick!!.visibility = View.GONE
                fromDateMode = "1"
            }
-
            R.id.llMentionDate->{
                if (MentionDateMode.equals("0")){
                    llMentionDatePick!!.visibility = View.GONE
@@ -392,11 +345,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    llMentionDatePick!!.visibility = View.VISIBLE
                    MentionDateMode = "0"
                }
-
            }
-
-
-
            R.id.imFromDate->{
                llFromDatePick!!.visibility = View.GONE
                fromDateMode = "1"
@@ -409,7 +358,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                llMentionDatePick!!.visibility = View.GONE
                MentionDateMode = "1"
            }
-
            R.id.txtFromSubmit->{
                try {
                    datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
@@ -437,12 +385,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
            }
            R.id.txtToSubmit->{
                try {
-//                   datePickerTo!!.minDate = Calendar.getInstance().timeInMillis
                    var am_pm = ""
                    var hour: Int = datePickerTo!!.hour
                    var min: Int = datePickerTo!!.minute
-
-
                    when {hour == 0 -> { hour += 12
                        am_pm = "AM"
                    }
@@ -452,17 +397,14 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                        }
                        else -> am_pm = "AM"
                    }
-
                    var hours : String = ""+hour
                    var minutes : String = ""+min
-
                    if (hour<10){
                        hours = "0"+hour
                    }
                    if (min<10){
                        minutes = "0"+min
                    }
-
                    txtToDate!!.setText(""+hours+":"+minutes+":"+"00")
                    llToDatePick!!.visibility=View.GONE
                    toDateMode = "1"
@@ -472,7 +414,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    Log.e(TAG,"Exception   428   "+e.toString())
                }
            }
-
            R.id.txtMentionSubmit->{
                try {
                    datePickerMention!!.minDate = Calendar.getInstance().timeInMillis
@@ -499,7 +440,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                    Log.e(TAG,"Exception   428   "+e.toString())
                }
            }
-
            R.id.llRiskType->{
                getRiskType()
            }
@@ -513,17 +453,12 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                removeData()
            }
            R.id.btnSubmit->{
-
                Config.Utils.hideSoftKeyBoard(context,v)
                Validations(v)
-
            }
 
        }
     }
-
-
-
 
     private fun getRiskType() {
         try {
@@ -583,7 +518,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                         followUpType++
                                         followupTypePopup(followUpTypeArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -615,28 +549,22 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     }
 
     private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
-
         try {
-
             dialogFollowupType = Dialog(this)
             dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
-
             val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeArrayList)
             recyFollowupType!!.adapter = adapter
             adapter.setClickListener(this@SiteVisitActivity)
-
             dialogFollowupType!!.show()
             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun getProductStatus() {
@@ -657,7 +585,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   333   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-
                                 val jobjt = jObject.getJSONObject("StatusDetailsList")
                                 prodStatusArrayList = jobjt.getJSONArray("StatusList")
                                 if (prodStatusArrayList.length()>0){
@@ -665,9 +592,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                         prodstatus++
                                         productStatusPopup(prodStatusArrayList)
                                     }
-
                                 }
-
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,
@@ -698,22 +623,17 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     }
 
     private fun productStatusPopup(prodStatusArrayList: JSONArray) {
-
         try {
-
             dialogProdStatus = Dialog(this)
             dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProdStatus!! .setContentView(R.layout.product_status_popup)
             dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
-
             val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
             recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusArrayList)
             recyProdStatus!!.adapter = adapter
             adapter.setClickListener(this@SiteVisitActivity)
-
             dialogProdStatus!!.show()
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -725,6 +645,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, GALLERY)
     }
+
     private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(this)
         pictureDialog.setTitle("Select From")
@@ -741,7 +662,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private fun checkCamera(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
             return false;
         }
         return true;
@@ -754,7 +674,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     }
 
     private fun requestPermission() {
-
         ActivityCompat.requestPermissions(
             this,
             arrayOf<String>(Manifest.permission.CAMERA),
@@ -778,7 +697,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
-
         if (requestCode == GALLERY ) {
             if (data != null) {
                 val contentURI = data!!.data
@@ -786,16 +704,12 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     var selectedImageUri: Uri = data.getData()!!
                     data.getData()
                     if(strImage.equals("1")) {
-
-                        //   val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                         imgv_upload1!!.setImageURI(contentURI)
                         image1 = getRealPathFromURI(selectedImageUri)
                         if (image1 != null) {
                         }
                     }
                     if(strImage.equals("2")) {
-
-                        //  val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
                         imgv_upload2!!.setImageURI(contentURI)
                         image2 = getRealPathFromURI(selectedImageUri)
                         if (image2 != null) {
@@ -806,7 +720,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     Toast.makeText(this@SiteVisitActivity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
             }
-
         } else if (requestCode == CAMERA) {
             if (data != null) {
                 try {
@@ -820,12 +733,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE
                             )
                         ) {
-                            // Show an explanation to the user *asynchronously* -- don't block
-                            // this thread waiting for the user's response! After the user
-                            // sees the explanation, try again to request the permission.
-
                         } else {
-                            // No explanation needed; request the permission
                             ActivityCompat.requestPermissions(
                                 this,
                                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -834,7 +742,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                         }
                     }
                     else {
-
                         val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
                         val bytes = ByteArrayOutputStream()
                         thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
@@ -844,7 +751,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                             "IMG_" + System.currentTimeMillis() + ".jpg"
                         )
                         val fo: FileOutputStream
-
                         try {
                             if (!destination!!.getParentFile().exists()) {
                                 destination!!.getParentFile().mkdirs()
@@ -861,39 +767,28 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
-
                         if (strImage.equals("1")) {
                             image1 = destination!!.getAbsolutePath()
                             destination = File(image1)
-
-
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                            //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                             if (imgv_upload1 != null) {
                                 imgv_upload1!!.setImageBitmap(myBitmap)
                             }
                             imgv_upload1!!.setImageBitmap(myBitmap)
-
                             if (image1 != null) {
-
                             }
                         }
                         if (strImage.equals("2")) {
                             image2 = destination!!.getAbsolutePath()
                             destination = File(image2)
-
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                            //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
                             if (imgv_upload2 != null) {
                                 imgv_upload2!!.setImageBitmap(myBitmap)
                             }
                             imgv_upload2!!.setImageBitmap(myBitmap)
-
                             if (image2 != null) {
-
                             }
                         }
-
                     }
                 }
                 catch (e: IOException) {
@@ -901,7 +796,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     Toast.makeText(this@SiteVisitActivity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 
@@ -912,17 +806,13 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             txtFollowType!!.setText(jsonObject.getString("ActnTypeName"))
-
-
         }
-
         if (data.equals("prodstatus")){
             dialogProdStatus!!.dismiss()
             val jsonObject = prodStatusArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
             txtStatus!!.setText(jsonObject.getString("StatusName"))
-
         }
     }
 
@@ -931,7 +821,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         strCustomerNote = edtCustNote!!.text.toString()
         strLatitude = txtLatitude!!.text.toString()
         strLongitude = txtLongitude!!.text.toString()
-
         if (strDate.equals("")){
             Config.snackBars(context,v,"Select Date")
         }
@@ -962,10 +851,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         else if (strLongitude.equals("")){
             Config.snackBars(context,v,"Select Longitude")
         }else{
-
-//            "2022-04-17 03:30:00"
             strDateTime = strDate+" "+ strTime
-
             if(image1.equals(""))
             {
                 encode1 = ""
@@ -996,7 +882,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
                 }
             }
-
             Log.e(TAG,"SITEVISIT  1003"
                     +"\n"+"ID_LeadGenerateProduct   :  "+ ID_LeadGenerateProduct
                     +"\n"+"strDate                  :  "+ strDate
@@ -1012,19 +897,15 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     +"\n"+"strLongitude             :  "+ strLongitude
                     +"\n"+"encode1                  :  "+ encode1
                     +"\n"+"encode2                  :  "+ encode2)
-
             Log.e(TAG,"SITEVISIT  10031"
                     +"\n"+"encode1          :  "+ encode1)
             Log.e(TAG,"SITEVISIT  10032"
                     +"\n"+"encode2          :  "+ encode2)
-
             saveSiteVisit()
         }
     }
 
     private fun saveSiteVisit() {
-
-
         var saveSiteVisit = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1042,15 +923,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1058   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-//                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-//                                if (followUpTypeArrayList.length()>0){
-//                                    if (saveSiteVisit == 0){
-//                                        saveSiteVisit++
-//                                        followupTypePopup(followUpTypeArrayList)
-//                                    }
-//
-//                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,
@@ -1078,7 +950,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     .show()
             }
         }
-
     }
 
     private fun removeData() {
@@ -1096,7 +967,6 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         strLongitude = ""
         encode1 = ""
         encode2 = ""
-
         txtFromDate!!.setText("")
         txtToDate!!.setText("")
         txtRiskType!!.setText("")
@@ -1107,13 +977,10 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         txtMentionDate!!.setText("")
         txtLatitude!!.setText("")
         txtLongitude!!.setText("")
-
         image1 = ""
         image2 = ""
         imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
         imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
-
     }
-
 
 }

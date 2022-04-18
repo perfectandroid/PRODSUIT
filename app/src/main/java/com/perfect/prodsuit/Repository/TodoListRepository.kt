@@ -38,8 +38,6 @@ object TodoListRepository {
             progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
                 R.drawable.progress))
             progressDialog!!.show()
-
-
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -58,7 +56,6 @@ object TodoListRepository {
             try {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))

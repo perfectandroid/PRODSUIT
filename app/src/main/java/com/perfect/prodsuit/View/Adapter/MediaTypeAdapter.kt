@@ -38,25 +38,21 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtMediaType.text        = jsonObject!!.getString("MdaName")
-
                 if (position % 2 == 0){
                     holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llmediatype!!.setTag(position)
                 holder.llmediatype!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "mediatype")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
 
@@ -73,11 +69,9 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtMediaType     : TextView
         internal var txtsino          : TextView
         internal var llmediatype      : LinearLayout
-
         init {
             txtMediaType        = v.findViewById<View>(R.id.txtMediaType) as TextView
             txtsino             = v.findViewById<View>(R.id.txtsino) as TextView
@@ -88,4 +82,5 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

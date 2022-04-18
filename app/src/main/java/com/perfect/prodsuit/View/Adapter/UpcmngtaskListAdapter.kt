@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -43,37 +42,17 @@ class UpcmngtaskListAdapter(internal var context: Context, internal var jsonArra
                 date = spf.format(newDate)
                 println(date)
                 Log.i("upcoming Date1", date)
-
-
                 holder.txtv_dte1.text        = date
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
                 holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
-               /* val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
-
-                if (position % 2 == 0){
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
-                }
-
-                holder.llemployee!!.setTag(position)
-                holder.llemployee!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "employee")
-
-                })*/
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
-
 
     override fun getItemCount(): Int {
        return jsonArray.length()
@@ -88,15 +67,11 @@ class UpcmngtaskListAdapter(internal var context: Context, internal var jsonArra
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtv_dte1   : TextView
         internal var tv_custmr       : TextView
         internal var txtv_prdctnme       : TextView
         internal var txtv_clct1       : TextView
         internal var txtv_asgndto       : TextView
-
-
-
         init {
             txtv_dte1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
             tv_custmr              = v.findViewById<View>(R.id.tv_custmr) as TextView
@@ -109,4 +84,5 @@ class UpcmngtaskListAdapter(internal var context: Context, internal var jsonArra
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }
