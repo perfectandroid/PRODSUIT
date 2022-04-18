@@ -676,8 +676,9 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
+                            android:tint="@color/black"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+                            app:srcCompat="@drawable/add_lead" />
 
                         <TextView
                             android:id="@+id/txtAddQuotation"
@@ -705,8 +706,9 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
+                            android:tint="@color/black"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+                            app:srcCompat="@drawable/add_quotation" />
 
                         <TextView
                             android:id="@+id/txtAddDocument"
@@ -764,9 +766,10 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
+                            android:tint="@color/black"
                             android:scaleType="center"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_menu_camera" />
+                            app:srcCompat="@drawable/add_activities" />
 
                         <TextView
                             android:id="@+id/txtAddNote"
