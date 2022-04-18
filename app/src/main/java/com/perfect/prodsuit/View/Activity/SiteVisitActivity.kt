@@ -1051,6 +1051,18 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
 //                                    }
 //
 //                                }
+
+                                val builder = AlertDialog.Builder(
+                                    this@SiteVisitActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    finish()
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,

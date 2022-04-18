@@ -70,6 +70,226 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/greydark">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center"
+                            android:fontFamily="@font/myfont"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="30dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="out of 13 activity completed today"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/myfont"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="15dp"/>
+
+
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="5dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="15dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:src="@drawable/pending"
+                                        android:layout_centerInParent="true"/>
+
+                                    <TextView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_marginLeft="40dp"
+                                        android:background="@drawable/shape_pending"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center"
+                                        android:text="123"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="PENDING"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="10dp"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:src="@drawable/pending"
+                                        android:layout_centerInParent="true"/>
+
+                                    <TextView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_marginLeft="40dp"
+                                        android:background="@drawable/shape_upcoming"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center"
+                                        android:text="123"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="UPCOMING"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="10dp"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:src="@drawable/pending"
+                                        android:layout_centerInParent="true"/>
+
+                                    <TextView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_marginLeft="40dp"
+                                        android:background="@drawable/shape_complete"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center"
+                                        android:text="123"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="COMPLETED"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="10dp"/>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/greydark"
+                        android:scrollbars="horizontal"
+                        app:tabIndicatorColor="@color/colorPrimary"
+                        app:tabSelectedTextColor="@color/colorPrimary"
+                        app:tabTextColor="@color/white"
+                        app:tabGravity="center"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        style="@style/customfontstyle"/>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

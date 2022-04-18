@@ -766,8 +766,8 @@
                             android:layout_marginRight="20dp"
                             android:layout_marginBottom="5dp"
                             android:backgroundTint="@color/white"
-                            android:tint="@color/black"
                             android:scaleType="center"
+                            android:tint="@color/black"
                             app:fabCustomSize="50dp"
                             app:srcCompat="@drawable/add_activities" />
 
