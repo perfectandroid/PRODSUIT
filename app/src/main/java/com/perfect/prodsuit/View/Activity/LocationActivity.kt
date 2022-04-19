@@ -34,11 +34,14 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     internal var mCurrLocationMarker: Marker? = null
     var latitude=""
     var longitude=""
+    var count =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
 
          Id_leadgenrteprod = intent.getStringExtra("prodid")
+         count =NotificationActivity.count
+       //  Log.i("COUNT",count)
 
         setRegViews()
         getLocationDetails()
@@ -123,6 +126,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         try {
             val lati=intent.getStringExtra("lat")
             val longi=intent.getStringExtra("long")
+            Log.i("locationdet",lati+"\n"+longi)
 
             if(lati!!.isEmpty()&& longi!!.isEmpty()){
                 val dialogBuilder = android.app.AlertDialog.Builder(
