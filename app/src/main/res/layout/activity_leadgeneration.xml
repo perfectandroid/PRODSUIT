@@ -99,11 +99,12 @@
 
                                     <ImageView
                                         android:layout_width="40dp"
-                                        android:layout_height="50dp"
+                                        android:layout_height="40dp"
                                         android:layout_gravity="left|center"
                                         android:background="@color/color_activity_transparent"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/date"/>
+                                        android:padding="10dp"
+                                        android:src="@drawable/fromdate"/>
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -240,7 +241,7 @@
                                 android:orientation="horizontal">
                                 <ImageView
                                     android:background="@color/color_activity_transparent"
-                                    android:padding="1dp"
+                                    android:padding="10dp"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="left|center"
@@ -303,7 +304,8 @@
                                         android:layout_gravity="left|center"
                                         android:background="@color/color_activity_transparent"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/customer"/>
+                                        android:padding="10dp"
+                                        android:src="@drawable/customerdetail"/>
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -565,10 +567,11 @@
                                     <ImageView
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
+                                        android:padding="10dp"
                                         android:layout_gravity="left|center"
                                         android:background="@color/color_activity_transparent"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/products"/>
+                                        android:src="@drawable/productdetail"/>
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -1051,10 +1054,11 @@
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
+                                    android:padding="10dp"
                                     android:layout_gravity="left|center"
                                     android:background="@color/color_activity_transparent"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/terminal"/>
+                                    android:src="@drawable/leadfrom"/>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
