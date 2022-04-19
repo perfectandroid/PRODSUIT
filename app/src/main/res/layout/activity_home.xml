@@ -21,7 +21,7 @@
                     android:id="@+id/btn_menu"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:tint="@color/black"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/homemenu"/>
@@ -32,7 +32,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_centerInParent="true"
                     android:padding="10dp"
-                    android:src="@drawable/logowhitehorizontal"
+                    android:src="@drawable/logopink"
                     android:scaleType="fitXY"/>
                 <RelativeLayout
                     android:id="@+id/rlnotification"
@@ -46,24 +46,25 @@
                         android:layout_width="60dp"
                         android:src="@drawable/ic_notifications"
                         android:layout_alignParentRight="true"
-                        android:padding="8dp"
+                        android:padding="18dp"
                         android:tint="@color/black"
-                        android:layout_gravity="right"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:layout_height="60dp"/>
 
                     <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/ic_circle"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:text="100"
                         android:textColor="@color/white"
-                        android:textSize="10dp"
+                        android:textSize="7dp"
                         android:textStyle="bold" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -74,7 +75,9 @@
              android:layout_height="match_parent">
              <RelativeLayout
                  android:layout_width="fill_parent"
-                 android:layout_height="match_parent">
+                 android:layout_height="match_parent"
+                 android:layout_marginRight="10dp"
+                 android:layout_marginLeft="10dp">
                  <androidx.viewpager.widget.ViewPager
                      android:id="@+id/pager"
                      android:layout_width="fill_parent"
@@ -104,6 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -111,24 +116,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rightcurve_bg"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/leadnewbg"
                         android:gravity="center"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="40dp"
-                            android:scaleType="fitXY"
-                            android:padding="5dp"
-                            android:tint="@color/white"
-                            android:src="@drawable/filter"
-                            android:visibility="visible"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -136,9 +128,11 @@
                             android:layout_gravity="center"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
+                            android:layout_marginLeft="30dp"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="Leads"
-                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
                             android:textSize="18dp" />
                     </LinearLayout>
 
@@ -147,33 +141,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rightcurve_whitebg"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/servicenewbg"
                         android:gravity="center"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="40dp"
-                            android:scaleType="fitXY"
-                            android:tint="@color/white"
-                            android:src="@drawable/service"
-                            android:visibility="visible"/>
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
+                            android:layout_marginRight="40dp"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="Services"
-                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
                             android:textSize="18dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -181,192 +164,146 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/gridbg"
                     android:orientation="vertical">
+
                     <LinearLayout
-                        android:id="@+id/ll_agenda"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:padding="3dp"
-                        android:background="@drawable/myreminderbg"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="2.5dp">
+                        android:orientation="horizontal">
+
                         <LinearLayout
+                            android:id="@+id/ll_agenda"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_weight="2.5"
-                            android:visibility="invisible"
-                            android:background="@drawable/homesectiondarkyellow_bg">
-
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:scaleType="fitXY"
-                                android:padding="5dp"
-                                android:layout_margin="10dp"
-                                android:tint="@color/white"
-                                android:src="@drawable/agenda"/>
-                        </LinearLayout>
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:scaleType="fitXY"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:tint="@color/white"
+                                    android:padding="10dp"
+                                    android:src="@drawable/agenda"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|center"
-                            android:layout_weight="1"
-                            android:gravity="left|center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="My Agenda"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/myfont"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"/>
-                    </LinearLayout>
-                    <LinearLayout
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="My Agenda"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"/>
+                        </LinearLayout>
+                        <LinearLayout
                         android:id="@+id/ll_dashboard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:layout_marginLeft="10dp"
-                        android:padding="3dp"
-                        android:background="@drawable/mydashboardbg">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="fitXY"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_weight="2.5"
-                            android:visibility="invisible"
-                            android:background="@drawable/homesectiondarkblue_bg">
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:src="@drawable/dashboardicon"/>
 
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:scaleType="fitXY"
-                                android:padding="5dp"
-                                android:layout_margin="10dp"
-                                android:tint="@color/white"
-                                android:src="@drawable/monitor"/>
-                        </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left|center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_gravity="center"
                             android:text="Dashboard"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:textStyle="bold"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:src="@drawable/rightcurve_whitebg"/>
+                            android:textColor="@color/white"
+                            android:textSize="20dp"/>
+                        </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:id="@+id/ll_report"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:padding="3dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/myreportbg">
-
+                        android:orientation="horizontal">
                         <LinearLayout
+                            android:id="@+id/ll_report"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_weight="2.5"
-                            android:visibility="invisible"
-                            android:background="@drawable/homesectiondarkviolet_bg">
-
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:scaleType="fitXY"
-                                android:padding="5dp"
-                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:tint="@color/white"
-                                android:src="@drawable/report"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="Reports"
-                            android:textStyle="bold"
-                            android:gravity="left|center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:src="@drawable/rightcurve_whitebg"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/ll_reminder"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:padding="3dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/myagandabg">
+                                android:src="@drawable/reportlogobg"/>
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Reports"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"/>
+                        </LinearLayout>
                         <LinearLayout
+                            android:id="@+id/ll_reminder"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_weight="2.5"
-                            android:visibility="invisible"
-                            android:background="@drawable/homesectiondarkgreen_bg">
-
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
                             <ImageView
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:scaleType="fitXY"
-                                android:padding="5dp"
-                                android:layout_margin="10dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:padding="10dp"
                                 android:tint="@color/white"
-                                android:src="@drawable/icreminder"/>
-                        </LinearLayout>
+                                android:src="@drawable/expenses"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="left|center"
-                            android:src="@drawable/rightcurve_whitebg"
-                            android:text="Expense"
-                            android:layout_marginBottom="5dp"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Expense"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
