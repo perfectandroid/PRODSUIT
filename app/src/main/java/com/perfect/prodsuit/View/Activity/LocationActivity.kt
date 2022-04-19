@@ -35,6 +35,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     internal var mCurrLocationMarker: Marker? = null
     var latitude=""
     var longitude=""
+    var count =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +89,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
                                 alertDialog.show()
+
                             }
                         } else {
                             Toast.makeText(
@@ -118,6 +120,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         try {
             val lati=intent.getStringExtra("lat")
             val longi=intent.getStringExtra("long")
+            Log.i("locationdet",lati+"\n"+longi)
+
             if(lati!!.isEmpty()&& longi!!.isEmpty()){
                 val dialogBuilder = android.app.AlertDialog.Builder(
                     this@LocationActivity,

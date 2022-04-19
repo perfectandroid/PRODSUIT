@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.NotificationAdapter
+import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -29,7 +31,9 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
         setRegViews()
         getNotificationList()
     }
-
+    companion object {
+        var count= ""
+    }
     private fun setRegViews() {
         rv_notificationlist = findViewById(R.id.rv_notificationlist)
         val imback = findViewById<ImageView>(R.id.imback)
@@ -54,16 +58,21 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                  /*  val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                    todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                   val jobjt = jObject.getJSONObject("NotificationDetails")
+                                    todoArrayList = jobjt.getJSONArray("NotificationInfo")
+                                    count = todoArrayList.length().toString();
+                                    Log.i("Array size", count)
+
                                    // var jobj = jObject.getJSONObject("UserLoginDetails")
                                     val lLayout = GridLayoutManager(this@NotificationActivity, 1)
-                                    rv_todolist!!.layoutManager =
+                                    rv_notificationlist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
-                                    rv_todolist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, todoArrayList)
-                                    rv_todolist!!.adapter = adapter
-*/
+                                    rv_notificationlist!!.setHasFixedSize(true)
+                                    val adapter = NotificationAdapter(applicationContext, todoArrayList)
+                                    rv_notificationlist!!.adapter = adapter
+
+
+
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@NotificationActivity,
@@ -75,6 +84,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
+
                                 }
                             } else {
                                 Toast.makeText(
@@ -100,5 +110,4 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
-
 }
