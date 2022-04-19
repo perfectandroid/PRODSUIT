@@ -37,25 +37,21 @@ class FollowupActionAdapter(internal var context: Context, internal var jsonArra
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtFollowupAction.text        = jsonObject!!.getString("NxtActnName")
-
                 if (position % 2 == 0){
                     holder.llfollowupaction!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llfollowupaction!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llfollowupaction!!.setTag(position)
                 holder.llfollowupaction!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "followupaction")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class FollowupActionAdapter(internal var context: Context, internal var jsonArra
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtFollowupAction   : TextView
         internal var txtsino             : TextView
         internal var llfollowupaction    : LinearLayout
-
         init {
             txtFollowupAction      = v.findViewById<View>(R.id.txtFollowupAction) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView

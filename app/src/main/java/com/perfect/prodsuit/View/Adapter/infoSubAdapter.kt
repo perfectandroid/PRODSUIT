@@ -18,7 +18,6 @@ class infoSubAdapter(internal var context: Context, internal var jsonArray: JSON
 
     internal val TAG : String = "infoSubAdapter"
     internal var jsonObject: JSONObject? = null
-   // private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -38,25 +37,11 @@ class infoSubAdapter(internal var context: Context, internal var jsonArray: JSON
                 holder.txtName.text        = jsonObject!!.getString("LgCusName")
                 holder.txtAddress.text     = jsonObject!!.getString("LgCusAddress")
                 holder.txtMobile.text      = jsonObject!!.getString("LgCusMobile")
-
-//                if (position % 2 == 0){
-//                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llSubInfo!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-//
-//                holder.llfollowuptype!!.setTag(position)
-//                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "followuptype")
-//
-//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -72,12 +57,10 @@ class infoSubAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtName      : TextView
         internal var txtAddress   : TextView
         internal var txtMobile    : TextView
         internal var llSubInfo    : LinearLayout
-
         init {
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtAddress     = v.findViewById<View>(R.id.txtAddress) as TextView
@@ -86,7 +69,4 @@ class infoSubAdapter(internal var context: Context, internal var jsonArray: JSON
         }
     }
 
-//    fun setClickListener(itemClickListener: ItemClickListener?) {
-//        clickListener = itemClickListener
-//    }
 }

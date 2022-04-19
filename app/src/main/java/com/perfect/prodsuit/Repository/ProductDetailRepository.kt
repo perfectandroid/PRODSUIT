@@ -56,27 +56,17 @@ object ProductDetailRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-//                "ReqMode":"14",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_Category:"1"
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ProductActivity.ID_Category))
-
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
                 Log.e(TAG,"ID_Category   80   "+ProductActivity.ID_Category)
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -106,12 +96,10 @@ object ProductDetailRepository {
                     progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
     }
+
 }

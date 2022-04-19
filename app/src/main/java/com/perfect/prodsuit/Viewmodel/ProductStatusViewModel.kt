@@ -10,8 +10,10 @@ import com.perfect.prodsuit.Repository.ProductStatusRepository
 class ProductStatusViewModel : ViewModel() {
 
     var productstatusData: MutableLiveData<ProductStatusModel>? = null
+
     fun getProductStatus(context: Context) : LiveData<ProductStatusModel>? {
         productstatusData = ProductStatusRepository.getServicesApiCall(context)
         return productstatusData
     }
+
 }

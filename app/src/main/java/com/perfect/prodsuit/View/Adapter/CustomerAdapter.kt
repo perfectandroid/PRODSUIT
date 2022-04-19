@@ -15,6 +15,7 @@ import org.json.JSONObject
 
 class CustomerAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
     internal val TAG : String = "CustomerAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
@@ -37,21 +38,16 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                 holder.txtEmail.text        = jsonObject!!.getString("Email")
                 holder.txtMobile.text     = jsonObject!!.getString("MobileNumber")
                 holder.txtAddress.text      = jsonObject!!.getString("Address")
-
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "customer")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
-
-
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -66,13 +62,11 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtName          : TextView
         internal var txtEmail         : TextView
         internal var txtMobile        : TextView
         internal var txtAddress       : TextView
         internal var lladpcustomer    : LinearLayout
-
         init {
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtEmail       = v.findViewById<View>(R.id.txtEmail) as TextView

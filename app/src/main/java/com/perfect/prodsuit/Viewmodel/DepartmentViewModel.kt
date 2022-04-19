@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.DepartmentModel
 import com.perfect.prodsuit.Repository.DepartmentRepository
 
-
 class DepartmentViewModel: ViewModel()  {
 
     var departmenthData: MutableLiveData<DepartmentModel>? = null
@@ -16,4 +15,5 @@ class DepartmentViewModel: ViewModel()  {
         departmenthData = DepartmentRepository.getServicesApiCall(context)
         return departmenthData
     }
+
 }

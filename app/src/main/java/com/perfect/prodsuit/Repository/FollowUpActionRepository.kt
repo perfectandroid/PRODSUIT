@@ -19,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-
 object FollowUpActionRepository {
 
     private var progressDialog: ProgressDialog? = null
@@ -32,7 +31,6 @@ object FollowUpActionRepository {
     }
 
     private fun getFollowUpAction(context: Context) {
-
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -57,27 +55,15 @@ object FollowUpActionRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-//                "ReqMode":"17",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("17"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
-
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -106,12 +92,10 @@ object FollowUpActionRepository {
                     progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
     }
+
 }

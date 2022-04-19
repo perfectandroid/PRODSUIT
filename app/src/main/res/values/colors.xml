@@ -42,6 +42,11 @@
     <color name="headertoolbar2">#f27b5a</color>
     <color name="headertoolbar3">#fdaf97</color>
     <color name="btnColor">#3D3A3A</color>
+
+    <color name="pending">#F87C2F</color>
+    <color name="upcoming">#34BCFA</color>
+    <color name="completed">#80F184</color>
+
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>

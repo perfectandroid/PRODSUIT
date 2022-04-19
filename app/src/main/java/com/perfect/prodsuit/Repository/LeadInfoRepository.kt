@@ -33,16 +33,8 @@ object LeadInfoRepository {
     }
 
     private fun getLeadInfo(context: Context) {
-
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-//                R.drawable.progress))
-//            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -58,30 +50,16 @@ object LeadInfoRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-
-//                "ReqMode":"28",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_LeadGenerateProduct":1
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("28"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
-
-
                 Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -96,29 +74,20 @@ object LeadInfoRepository {
                     Response<String>
                 ) {
                     try {
-                    //    progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<LeadInfoModel>()
                         leads.add(LeadInfoModel(response.body()))
                         val msg = leads[0].message
                         leadInfoSetterGetter.value = LeadInfoModel(msg)
                     } catch (e: Exception) {
-                     //   progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                   // progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
-           // progressDialog!!.dismiss()
         }
-
-
     }
 
 }

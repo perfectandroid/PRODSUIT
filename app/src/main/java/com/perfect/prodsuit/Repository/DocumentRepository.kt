@@ -6,7 +6,6 @@ import com.perfect.prodsuit.Model.DocumentModel
 
 object DocumentRepository {
 
-
     val documentSetterGetter = MutableLiveData<DocumentModel>()
     val TAG: String = "DocumentRepository"
 
@@ -16,7 +15,6 @@ object DocumentRepository {
     }
 
     private fun getLeadHistory(context: Context) {
-
     }
 
 }

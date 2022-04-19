@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.FollowUpActionModel
 import com.perfect.prodsuit.Repository.FollowUpActionRepository
 
-
 class FollowUpActionViewModel: ViewModel()  {
 
     var followupactionData: MutableLiveData<FollowUpActionModel>? = null
@@ -15,4 +14,5 @@ class FollowUpActionViewModel: ViewModel()  {
         followupactionData = FollowUpActionRepository.getServicesApiCall(context)
         return followupactionData
     }
+
 }

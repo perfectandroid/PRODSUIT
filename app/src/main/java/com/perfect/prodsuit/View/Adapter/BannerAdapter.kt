@@ -12,8 +12,10 @@ import com.perfect.prodsuit.R
 import java.util.ArrayList
 
 class BannerAdapter(private val context: Context, mResources: List<String>) : PagerAdapter() {
+
     var layoutInflater: LayoutInflater
     var mResources: List<String> = ArrayList()
+
     override fun getCount(): Int {
         return mResources.size
     }
@@ -38,4 +40,5 @@ class BannerAdapter(private val context: Context, mResources: List<String>) : Pa
         this.mResources = mResources
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     }
+
 }

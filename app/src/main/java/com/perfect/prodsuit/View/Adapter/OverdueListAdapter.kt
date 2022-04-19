@@ -35,8 +35,6 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-
-
                 var date = jsonObject!!.getString("LgLeadDate")
                 var spf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
                 val newDate = spf.parse(date)
@@ -44,37 +42,21 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
                 date = spf.format(newDate)
                 println(date)
                 Log.i("Overdue Date1", date)
-
-
                 holder.txtv_dte1.text        = date
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
                 holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
-//                val pos = position+1
-//                holder.txtsino.text        = pos.toString()
-//                holder.txtEmployee.text        = jsonObject!!.getString("ActnTypeName")
-//
-//                if (position % 2 == 0){
-//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-
                 holder.llOverDue!!.setTag(position)
                 holder.llOverDue!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "overdue")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
-
 
     override fun getItemCount(): Int {
        return jsonArray.length()
@@ -89,14 +71,12 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtv_dte1   : TextView
         internal var tv_custmr       : TextView
         internal var txtv_prdctnme    : TextView
         internal var txtv_clct1    : TextView
         internal var txtv_asgndto    : TextView
         internal var llOverDue    : LinearLayout
-
         init {
             txtv_dte1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
             tv_custmr              = v.findViewById<View>(R.id.tv_custmr) as TextView
@@ -110,4 +90,5 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

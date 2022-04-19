@@ -15,4 +15,5 @@ class ProductDetailViewModel : ViewModel() {
         productdetailData = ProductDetailRepository.getServicesApiCall(context)
         return productdetailData
     }
+
 }

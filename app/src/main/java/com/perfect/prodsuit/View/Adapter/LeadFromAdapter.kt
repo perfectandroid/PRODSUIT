@@ -37,14 +37,12 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtName.text        = jsonObject!!.getString("LeadFromName")
-
                 if (position % 2 == 0){
                     holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llleadfrom!!.setTag(position)
                 holder.llleadfrom!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadfrom")
@@ -55,7 +53,6 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
 
@@ -72,11 +69,9 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtName          : TextView
         internal var txtsino          : TextView
         internal var llleadfrom    : LinearLayout
-
         init {
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
@@ -87,4 +82,5 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

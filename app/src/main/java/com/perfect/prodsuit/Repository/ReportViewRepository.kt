@@ -6,9 +6,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.Model.ReportvieModel
-import com.perfect.prodsuit.View.Activity.MpinActivity
 import com.perfect.prodsuit.View.Activity.ReportViewDetailsActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody

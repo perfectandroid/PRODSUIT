@@ -35,26 +35,12 @@ class LeadHistoryAdapter(internal var context: Context, internal var jsonArray: 
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-
                 holder.txtAbout.text         = jsonObject!!.getString("EnquiryAbout")
                 holder.txtAction.text        = jsonObject!!.getString("Action")
                 holder.txtActiondate.text    = jsonObject!!.getString("ActionDate")
                 holder.txtStatus.text        = jsonObject!!.getString("Status")
                 holder.txtAgentRemark.text   = jsonObject!!.getString("Agentremarks")
                 holder.txtFollowedBy.text    = jsonObject!!.getString("FollowedBy")
-
-//                if (position % 2 == 0){
-//                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llleadHistory!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-
-//                holder.llleadHistory!!.setTag(position)
-//                holder.llleadHistory!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "prodcategory")
-//
-//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -76,7 +62,6 @@ class LeadHistoryAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtAbout         : TextView
         internal var txtAction        : TextView
         internal var txtActiondate    : TextView
@@ -84,7 +69,6 @@ class LeadHistoryAdapter(internal var context: Context, internal var jsonArray: 
         internal var txtAgentRemark   : TextView
         internal var txtFollowedBy    : TextView
         internal var llleadHistory    : LinearLayout
-
         init {
             txtAbout         = v.findViewById<View>(R.id.txtAbout) as TextView
             txtAction        = v.findViewById<View>(R.id.txtAction) as TextView
@@ -95,6 +79,5 @@ class LeadHistoryAdapter(internal var context: Context, internal var jsonArray: 
             llleadHistory    = v.findViewById<View>(R.id.llleadHistory) as LinearLayout
         }
     }
-
 
 }

@@ -54,7 +54,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var SELECT_PRODUCT: Int? = 102
-
     var edt_category: EditText? = null
     var edt_product: EditText? = null
     var edt_status: EditText? = null
@@ -68,15 +67,11 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var edt_Employee: EditText? = null
     var edt_qty: EditText? = null
     var edt_feedback: EditText? = null
-
     var btnReset: Button? = null
     var btnSubmit: Button? = null
-
     var img_search: ImageView? = null
-
     var llfollowup: LinearLayout? = null
     var llNeedTransfer: LinearLayout? = null
-
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
     var recyProdStatus: RecyclerView? = null
@@ -87,9 +82,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     var recyBranch: RecyclerView? = null
     var recyDeaprtment: RecyclerView? = null
     var recyEmployee: RecyclerView? = null
-
     var switchTransfer: Switch? = null
-
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var productStatusViewModel: ProductStatusViewModel
@@ -100,9 +93,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var branchViewModel: BranchViewModel
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var employeeViewModel: EmployeeViewModel
-
-
-
     lateinit var prodCategoryArrayList : JSONArray
     lateinit var prodDetailArrayList : JSONArray
     lateinit var prodStatusArrayList : JSONArray
@@ -113,7 +103,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     lateinit var branchArrayList : JSONArray
     lateinit var departmentArrayList : JSONArray
     lateinit var employeeArrayList : JSONArray
-
     private var dialogProdCat : Dialog? = null
     private var dialogProdDet : Dialog? = null
     private var dialogProdStatus : Dialog? = null
@@ -137,7 +126,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var ID_Branch : String = ""
         var ID_Department : String = ""
         var ID_Employee : String = ""
-
         var strQty : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
@@ -161,9 +149,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
-
-
-
         setRegViews()
         bottombarnav()
         clearData()
@@ -177,18 +162,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 edt_Employee!!.setText("")
                 strNeedCheck = "1"
             } else {
-
                 llNeedTransfer!!.visibility = View.GONE
                 edt_barnchtype!!.setText("")
                 edt_branch!!.setText("")
                 edt_department!!.setText("")
                 edt_Employee!!.setText("")
                 strNeedCheck = "0"
-
-
             }
         }
-
     }
 
     private fun clearData() {
@@ -199,25 +180,19 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
-
         ID_NextAction = ""
         ID_ActionType = ""
         strFollowupdate = ""
         strNeedCheck = "0"
-
         ID_BranchType = ""
         ID_Branch = ""
         ID_Department = ""
         ID_Employee = ""
-
-
-
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         img_search = findViewById<ImageView>(R.id.img_search)
-
         edt_category = findViewById<EditText>(R.id.edt_category)
         edt_product = findViewById<EditText>(R.id.edt_product)
         edt_status = findViewById<EditText>(R.id.edt_status)
@@ -231,17 +206,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_Employee = findViewById<EditText>(R.id.edt_Employee)
         edt_qty = findViewById<EditText>(R.id.edt_qty)
         edt_feedback = findViewById<EditText>(R.id.edt_feedback)
-
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
         switchTransfer = findViewById<Switch>(R.id.switchTransfer)
-
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
-
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
-
         edt_category!!.setOnClickListener(this)
         edt_product!!.setOnClickListener(this)
         edt_status!!.setOnClickListener(this)
@@ -253,7 +224,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_branch!!.setOnClickListener(this)
         edt_department!!.setOnClickListener(this)
         edt_Employee!!.setOnClickListener(this)
-
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
     }
@@ -273,14 +243,12 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
-
                 }
                 else if (strProdName.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Enter Product", Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
-
                 }
                 else{
                     getProductDetail(strProdName)
@@ -292,18 +260,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     snackbar.setActionTextColor(Color.WHITE)
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
-
                 }else{
                     getProductDetail(strProdName)
                 }
             }
             R.id.edt_priority->{
-
                 getProductPriority()
             }
-
             R.id.edt_status->{
-
                 getProductStatus()
             }
             R.id.edt_date->{
@@ -348,14 +312,10 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 Config.Utils.hideSoftKeyBoard(this@ProductActivity,v)
               validations(v)
             }
-
         }
     }
 
-
-
     private fun resetData() {
-
         edt_category!!.setText("")
         edt_product!!.setText("")
         edt_qty!!.setText("")
@@ -369,11 +329,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         edt_branch!!.setText("")
         edt_department!!.setText("")
         edt_Employee!!.setText("")
-
         switchTransfer!!.isChecked = false
         llfollowup!!.visibility = View.GONE
         llNeedTransfer!!.visibility = View.GONE
-
         ID_Category = ""
         ID_Product = ""
         strProdName = ""
@@ -381,17 +339,14 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
-
         ID_NextAction = ""
         ID_ActionType = ""
         strFollowupdate = ""
         strNeedCheck = "0"
-
         ID_BranchType = ""
         ID_Branch = ""
         ID_Department = ""
         ID_Employee = ""
-
     }
 
     private fun validations(v: View) {
@@ -409,9 +364,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         else if (ID_Priority.equals("")){
             warningMessage(v,"Select Priority")
         }
-//        else if (ID_Product.equals("")){
-//            warningMessage(v,"")
-//        }
         else if (ID_Status.equals("")){
             warningMessage(v,"Select Status")
         }
@@ -445,8 +397,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         }
     }
 
-
-
     private fun validations2(v: View) {
         if (ID_BranchType.equals("")){
             warningMessage(v,"Select Branch Type")
@@ -463,7 +413,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         else{
             PassDatas()
         }
-
     }
 
     private fun PassDatas() {
@@ -483,22 +432,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         intent.putExtra("ID_Branch", ID_Branch)
         intent.putExtra("ID_Department", ID_Department)
         intent.putExtra("ID_Employee", ID_Employee)
-
-
         setResult(SELECT_PRODUCT!!, intent)
         finish()
-
     }
 
     private fun warningMessage(v: View ,message: String) {
-
         val snackbar: Snackbar = Snackbar.make(v, ""+message, Snackbar.LENGTH_LONG)
         snackbar.setActionTextColor(Color.WHITE)
         snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
         snackbar.show()
-
     }
-
 
     private fun getCategory() {
         var prodcategory = 0
@@ -525,7 +468,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         prodcategory++
                                         productCategoryPopup(prodCategoryArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -558,20 +500,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun productCategoryPopup(prodCategoryArrayList: JSONArray) {
         try {
-
             dialogProdCat = Dialog(this)
             dialogProdCat!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProdCat!! .setContentView(R.layout.product_category_popup)
             dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdCategory = dialogProdCat!! .findViewById(R.id.recyProdCategory) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = ProductCategoryAdapter(this@ProductActivity, prodCategoryArrayList)
             recyProdCategory!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogProdCat!!.show()
             dialogProdCat!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -605,9 +543,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         proddetail++
                                         productDetailPopup(prodDetailArrayList)
                                     }
-
                                 }
-
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -635,32 +571,25 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                     .show()
             }
         }
-
     }
 
     private fun productDetailPopup(prodDetailArrayList: JSONArray) {
-
         try {
-
             dialogProdDet = Dialog(this)
             dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProdDet!! .setContentView(R.layout.product_detail_popup)
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = ProductDetailAdapter(this@ProductActivity, prodDetailArrayList)
             recyProdDetail!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogProdDet!!.show()
             dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun getProductPriority() {
@@ -689,9 +618,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         prodpriority++
                                         productPriorityPopup(prodPriorityArrayList)
                                     }
-
                                 }
-
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -722,28 +649,22 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun productPriorityPopup(prodPriorityArrayList: JSONArray) {
-
         try {
-
             dialogProdPriority = Dialog(this)
             dialogProdPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
             dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = ProductPriorityAdapter(this@ProductActivity, prodPriorityArrayList)
             recyProdPriority!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogProdPriority!!.show()
             dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun getProductStatus() {
@@ -772,9 +693,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         prodstatus++
                                         productStatusPopup(prodStatusArrayList)
                                     }
-
                                 }
-
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@ProductActivity,
@@ -805,22 +724,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun productStatusPopup(prodStatusArrayList: JSONArray) {
-
         try {
-
             dialogProdStatus = Dialog(this)
             dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProdStatus!! .setContentView(R.layout.product_status_popup)
             dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = ProductStatusAdapter(this@ProductActivity, prodStatusArrayList)
             recyProdStatus!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogProdStatus!!.show()
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -853,7 +767,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         followUpAction++
                                         followUpActionPopup(followUpActionArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -885,28 +798,22 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
-
         try {
-
             dialogFollowupAction = Dialog(this)
             dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogFollowupAction!! .setContentView(R.layout.followup_action)
             dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = FollowupActionAdapter(this@ProductActivity, followUpActionArrayList)
             recyFollowupAction!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogFollowupAction!!.show()
             dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun getFollowupType() {
@@ -934,7 +841,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         followUpType++
                                         followupTypePopup(followUpTypeArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -966,92 +872,60 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
-
         try {
-
             dialogFollowupType = Dialog(this)
             dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = FollowupTypeAdapter(this@ProductActivity, followUpTypeArrayList)
             recyFollowupType!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogFollowupType!!.show()
             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
 
     private fun datePickerPopup() {
         try {
-
             val dialogDate = Dialog(this)
             dialogDate!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogDate!! .setContentView(R.layout.dialog_datepicker)
             dialogDate!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             dialogDate.setCancelable(false)
-
             val date_Picker = dialogDate!! .findViewById(R.id.date_Picker) as DatePicker
             val txtcancel = dialogDate!! .findViewById(R.id.txtcancel) as TextView
             val txtok = dialogDate!! .findViewById(R.id.txtok) as TextView
-
             date_Picker.minDate = Calendar.getInstance().timeInMillis
-
             txtok.setOnClickListener {
                 dialogDate.dismiss()
-//                val today = Calendar.getInstance()
-//                date_Picker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-//                    today.get(Calendar.DAY_OF_MONTH)
-//
-//                ) { view, year, month, day ->
-//                    val month = month + 1
-//                    val msg = "You Selected: $day/$month/$year"
-//                    Toast.makeText(this@ProductActivity, msg, Toast.LENGTH_SHORT).show()
-//                }
-
                 val day: Int = date_Picker.getDayOfMonth()
                 val mon: Int = date_Picker.getMonth()
                 val month: Int = mon+1
                 val year: Int = date_Picker.getYear()
-
-
-
                 var strDay = day.toString()
                 var strMonth = month.toString()
                 var strYear = year.toString()
-
                 if (strDay.length == 1){
                     strDay ="0"+day
                 }
                 if (strMonth.length == 1){
                     strMonth ="0"+strMonth
                 }
-
                 edt_date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-
-
             }
-
             txtcancel.setOnClickListener {
                 dialogDate.dismiss()
             }
-
             dialogDate!!.show()
-           // dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
 
     private fun getBranchType() {
         var branchType = 0
@@ -1078,7 +952,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         branchType++
                                         branchTypePopup(branchTypeArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -1110,22 +983,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun branchTypePopup(branchTypeArrayList: JSONArray) {
-
         try {
-
             dialogBranchType = Dialog(this)
             dialogBranchType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogBranchType!! .setContentView(R.layout.branchtype_popup)
             dialogBranchType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranchType = dialogBranchType!! .findViewById(R.id.recyBranchType) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyBranchType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = BranchTypeAdapter(this@ProductActivity, branchTypeArrayList)
             recyBranchType!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogBranchType!!.show()
             dialogBranchType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -1158,7 +1026,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         branch++
                                         branchPopup(branchArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -1190,22 +1057,17 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
     }
 
     private fun branchPopup(branchArrayList: JSONArray) {
-
         try {
-
             dialogBranch = Dialog(this)
             dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogBranch!! .setContentView(R.layout.branch_popup)
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = BranchAdapter(this@ProductActivity, branchArrayList)
             recyBranch!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogBranch!!.show()
             dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -1239,7 +1101,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         department++
                                         departmentPopup(departmentArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -1272,20 +1133,16 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun departmentPopup(departmentArrayList: JSONArray) {
         try {
-
             dialogDepartment = Dialog(this)
             dialogDepartment!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogDepartment!! .setContentView(R.layout.department_popup)
             dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = DepartmentAdapter(this@ProductActivity, departmentArrayList)
             recyDeaprtment!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogDepartment!!.show()
             dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -1303,7 +1160,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeViewModel.getEmployee(this)!!.observe(
+                employeeViewModel.getEmployee(this, ID_Department)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -1318,7 +1175,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                                         employee++
                                         employeePopup(employeeArrayList)
                                     }
-
                                 }
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -1351,27 +1207,22 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun employeePopup(employeeArrayList: JSONArray) {
         try {
-
             dialogEmployee = Dialog(this)
             dialogEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogEmployee!! .setContentView(R.layout.employee_popup)
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
-
             val lLayout = GridLayoutManager(this@ProductActivity, 1)
             recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
             val adapter = EmployeeAdapter(this@ProductActivity, employeeArrayList)
             recyEmployee!!.adapter = adapter
             adapter.setClickListener(this@ProductActivity)
-
             dialogEmployee!!.show()
             dialogEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -1408,11 +1259,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             etdate = layout.findViewById(R.id.etdate) as EditText
             ettime = layout.findViewById(R.id.ettime) as EditText
             etdis = layout.findViewById(R.id.etdis) as EditText
-            /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
-             val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
-             etdate = layout.findViewById(R.id.etdate) as TextView
-             ettime = layout.findViewById(R.id.ettime) as TextView
-             val etdis = layout.findViewById(R.id.etdis) as EditText*/
             etdate!!.setKeyListener(null)
             ettime!!.setKeyListener(null)
             builder.setView(layout)
@@ -1447,7 +1293,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
@@ -1489,7 +1334,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         }catch (e: Exception){
             e.printStackTrace()
         }
-
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Reminder set successfully.")
                 .setCancelable(false)
@@ -1499,7 +1343,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 }
         val alert = builder.create()
         alert.show()
-
     }
 
     fun timeSelector() {
@@ -1538,7 +1381,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
-
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -1611,7 +1453,6 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             ID_Category = jsonObject.getString("ID_Category")
             edt_category!!.setText(jsonObject.getString("CategoryName"))
         }
-
         if (data.equals("proddetails")){
             dialogProdDet!!.dismiss()
             val jsonObject = prodDetailArrayList.getJSONObject(position)
@@ -1625,101 +1466,70 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
             ID_Priority = jsonObject.getString("ID_Priority")
             edt_priority!!.setText(jsonObject.getString("PriorityName"))
-
-
         }
-
         if (data.equals("prodstatus")){
             dialogProdStatus!!.dismiss()
             val jsonObject = prodStatusArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
             edt_status!!.setText(jsonObject.getString("StatusName"))
-
             edt_action!!.setText("")
             ID_NextAction=""
             edt_type!!.setText("")
             ID_ActionType = ""
-
             if (jsonObject.getString("ID_Status").equals("1")){
                 llfollowup!!.visibility  =View.VISIBLE
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
                 edt_date!!.setText(currentDate)
                 switchTransfer!!.isChecked = false
-
             }else{
                 llfollowup!!.visibility  =View.GONE
                 switchTransfer!!.isChecked = false
             }
         }
-
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
             val jsonObject = followUpActionArrayList.getJSONObject(position)
             Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
             ID_NextAction = jsonObject.getString("ID_NextAction")
             edt_action!!.setText(jsonObject.getString("NxtActnName"))
-
-
         }
-
         if (data.equals("followuptype")){
             dialogFollowupType!!.dismiss()
             val jsonObject = followUpTypeArrayList.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             edt_type!!.setText(jsonObject.getString("ActnTypeName"))
-
-
         }
-
         if (data.equals("branchtype")){
             dialogBranchType!!.dismiss()
             val jsonObject = branchTypeArrayList.getJSONObject(position)
             Log.e(TAG,"ID_BranchType   "+jsonObject.getString("ID_BranchType"))
             ID_BranchType = jsonObject.getString("ID_BranchType")
             edt_barnchtype!!.setText(jsonObject.getString("BranchTypeName"))
-
-
         }
-
         if (data.equals("branch")){
             dialogBranch!!.dismiss()
             val jsonObject = branchArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
             ID_Branch = jsonObject.getString("ID_Branch")
             edt_branch!!.setText(jsonObject.getString("BranchName"))
-
-
         }
-
         if (data.equals("department")){
             dialogDepartment!!.dismiss()
             val jsonObject = departmentArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
             ID_Department = jsonObject.getString("ID_Department")
             edt_department!!.setText(jsonObject.getString("DeptName"))
-
-
         }
-
         if (data.equals("employee")){
             dialogEmployee!!.dismiss()
             val jsonObject = employeeArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
             edt_Employee!!.setText(jsonObject.getString("EmpName"))
-
-
         }
-
-
-
-
-
-
     }
-
 
 }

@@ -26,12 +26,12 @@ object EmployeeRepository {
     val employeeSetterGetter = MutableLiveData<EmployeeModel>()
     val TAG: String = "EmployeeRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<EmployeeModel> {
-        getEmployee(context)
+    fun getServicesApiCall(context: Context,ID_Department: String): MutableLiveData<EmployeeModel> {
+        getEmployee(context,ID_Department)
         return employeeSetterGetter
     }
 
-    private fun getEmployee(context: Context) {
+    private fun getEmployee(context: Context,ID_Department: String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -74,7 +74,7 @@ object EmployeeRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ProductActivity.ID_Department))
+                requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ID_Department))
 
 
                 Log.e(TAG,"78"+requestObject1)
@@ -116,4 +116,5 @@ object EmployeeRepository {
             progressDialog!!.dismiss()
         }
     }
+
 }

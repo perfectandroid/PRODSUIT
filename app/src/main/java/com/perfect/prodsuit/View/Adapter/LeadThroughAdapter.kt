@@ -37,25 +37,21 @@ class LeadThroughAdapter(internal var context: Context, internal var jsonArray: 
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtName.text        = jsonObject!!.getString("LeadThroughName")
-
                 if (position % 2 == 0){
                     holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.greylight))
                 }
                 else{
                     holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.white))
                 }
-
                 holder.llleadthrogh!!.setTag(position)
                 holder.llleadthrogh!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadthrough")
-
                 })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,11 +67,9 @@ class LeadThroughAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtName          : TextView
         internal var txtsino          : TextView
         internal var llleadthrogh    : LinearLayout
-
         init {
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
@@ -86,4 +80,5 @@ class LeadThroughAdapter(internal var context: Context, internal var jsonArray: 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

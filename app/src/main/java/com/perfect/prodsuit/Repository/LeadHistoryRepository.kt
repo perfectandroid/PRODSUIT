@@ -31,7 +31,6 @@ object LeadHistoryRepository {
     }
 
     private fun getLeadHistory(context: Context) {
-
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -56,23 +55,10 @@ object LeadHistoryRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-
-//
-//                "ReqMode":"27",
-//                "SubMode:"1",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_LeadGenerateProduct":1,
-//                "PrductOnly":"1 "
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("27"))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -80,11 +66,7 @@ object LeadHistoryRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart("1"))
-
-
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -113,14 +95,10 @@ object LeadHistoryRepository {
                     progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
-
-
     }
+
 }

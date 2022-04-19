@@ -14,4 +14,5 @@ class FollowUpTypeViewModel: ViewModel() {
         followuptypeData = FollowUpTypeRepository.getServicesApiCall(context)
         return followuptypeData
     }
+
 }

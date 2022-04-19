@@ -30,7 +30,6 @@ object QuotationRepository {
     }
 
     private fun getQuotation(context: Context) {
-
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
 
@@ -49,20 +48,10 @@ object QuotationRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-
-//                "ReqMode":"28",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_LeadGenerateProduct":1
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("27"))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -70,11 +59,7 @@ object QuotationRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart("1"))
-
-
                 Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -89,7 +74,6 @@ object QuotationRepository {
                     Response<String>
                 ) {
                     try {
-                        //    progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<QuotationModel>()
                         leads.add(QuotationModel(response.body()))
@@ -100,15 +84,11 @@ object QuotationRepository {
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
-
         }
     }
+
 }

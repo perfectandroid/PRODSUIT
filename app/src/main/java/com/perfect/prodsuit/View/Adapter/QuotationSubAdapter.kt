@@ -17,7 +17,6 @@ class QuotationSubAdapter(internal var context: Context, internal var jsonArray:
 
     internal val TAG : String = "infoSubAdapter"
     internal var jsonObject: JSONObject? = null
-    // private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -37,25 +36,11 @@ class QuotationSubAdapter(internal var context: Context, internal var jsonArray:
                 holder.txtProduct.text     = jsonObject!!.getString("Product")
                 holder.txtEnquiry.text     = jsonObject!!.getString("EnquiryAbout")
                 holder.txtStatus.text      = jsonObject!!.getString("Status")
-
-//                if (position % 2 == 0){
-//                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llSubQuotation!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-//
-//                holder.llfollowuptype!!.setTag(position)
-//                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "followuptype")
-//
-//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -71,12 +56,10 @@ class QuotationSubAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var txtProduct      : TextView
         internal var txtEnquiry      : TextView
         internal var txtStatus       : TextView
         internal var llSubQuotation  : LinearLayout
-
         init {
             txtProduct        = v.findViewById<View>(R.id.txtProduct) as TextView
             txtEnquiry        = v.findViewById<View>(R.id.txtEnquiry) as TextView
@@ -84,9 +67,5 @@ class QuotationSubAdapter(internal var context: Context, internal var jsonArray:
             llSubQuotation    = v.findViewById<View>(R.id.llSubQuotation) as LinearLayout
         }
     }
-
-//    fun setClickListener(itemClickListener: ItemClickListener?) {
-//        clickListener = itemClickListener
-//    }
 
 }

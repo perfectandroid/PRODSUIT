@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.Model.UpcomingtasksModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -31,8 +30,6 @@ object UpcomingtasksRepository {
 
     private fun getUpcomingtasks(context: Context) {
         try {
-
-
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -41,7 +38,6 @@ object UpcomingtasksRepository {
             progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
                 R.drawable.progress))
             progressDialog!!.show()
-
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -60,7 +56,6 @@ object UpcomingtasksRepository {
             try {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))

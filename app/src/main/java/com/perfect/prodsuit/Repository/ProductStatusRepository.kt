@@ -30,7 +30,6 @@ object ProductStatusRepository {
         return productstatusSetterGetter
     }
 
-
     private fun getProductStatus(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -56,25 +55,15 @@ object ProductStatusRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
-
-//                "ReqMode":"15",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -104,9 +93,6 @@ object ProductStatusRepository {
                     progressDialog!!.dismiss()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()

@@ -14,4 +14,5 @@ class HistoryActViewModel: ViewModel() {
         historyActData = HistoryActRepository.getServicesApiCall(context)
         return historyActData
     }
+
 }
