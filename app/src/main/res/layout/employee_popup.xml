@@ -12,6 +12,7 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:background="@color/pophead"
+        android:fontFamily="@font/myfont"
         android:padding="15dp"
         android:text="Employee"/>
 
