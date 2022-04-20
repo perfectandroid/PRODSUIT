@@ -291,7 +291,7 @@ import java.util.*
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
 
         setRegViews()
-        bottombarnav()
+        //bottombarnav()
         clearData()
 
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
@@ -1174,7 +1174,7 @@ import java.util.*
 
     }
 
-    private fun bottombarnav() {
+    /*private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         chipNavigationBar!!.setItemSelected(R.id.home, true)
         chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener{
@@ -1209,11 +1209,11 @@ import java.util.*
              etdate = layout.findViewById(R.id.etdate) as EditText
              ettime = layout.findViewById(R.id.ettime) as EditText
              etdis = layout.findViewById(R.id.etdis) as EditText
-             /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
+             *//* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
               val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
               etdate = layout.findViewById(R.id.etdate) as TextView
               ettime = layout.findViewById(R.id.ettime) as TextView
-              val etdis = layout.findViewById(R.id.etdis) as EditText*/
+              val etdis = layout.findViewById(R.id.etdis) as EditText*//*
              etdate!!.setKeyListener(null)
              ettime!!.setKeyListener(null)
              builder.setView(layout)
@@ -1403,7 +1403,7 @@ import java.util.*
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
