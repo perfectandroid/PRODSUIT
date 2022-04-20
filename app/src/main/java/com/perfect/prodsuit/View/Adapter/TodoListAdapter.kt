@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -47,6 +48,11 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
                 holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
+
+                holder.lToDoList!!.setTag(position)
+                holder.lToDoList!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "todolist")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,12 +78,14 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
         internal var txtv_prdctnme    : TextView
         internal var txtv_clct1    : TextView
         internal var txtv_asgndto    : TextView
+        internal var lToDoList    : LinearLayout
        init {
             txtv_date1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
             tv_custmr              = v.findViewById<View>(R.id.tv_custmr) as TextView
             txtv_prdctnme           = v.findViewById<View>(R.id.txtv_prdctnme) as TextView
             txtv_clct1           = v.findViewById<View>(R.id.txtv_clct1) as TextView
             txtv_asgndto           = v.findViewById<View>(R.id.txtv_asgndto) as TextView
+            lToDoList           = v.findViewById<View>(R.id.lToDoList) as LinearLayout
         }
     }
 
