@@ -11,6 +11,7 @@
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
+        android:fontFamily="@font/myfont"
         android:background="@color/pophead"
         android:padding="15dp"
         android:text="Branch"/>

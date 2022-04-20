@@ -13,6 +13,7 @@
         android:textStyle="bold"
         android:background="@color/pophead"
         android:padding="15dp"
+        android:fontFamily="@font/myfont"
         android:text="Action"/>
 
     <androidx.recyclerview.widget.RecyclerView

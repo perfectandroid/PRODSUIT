@@ -73,6 +73,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        edtSearch = findViewById(R.id.edtSearch)
         txtSearch = findViewById(R.id.txtSearch)
         txtSubmit = findViewById(R.id.txtSubmit)
         imgSearch = findViewById(R.id.imgSearch)
@@ -160,6 +161,12 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(p0: GoogleMap) {
+
+        try {
+
+        }catch (e: Exception){
+
+        }
         googleMap = p0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -210,53 +217,73 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
 
     @SuppressLint("MissingPermission")
     override fun onConnected(bundle: Bundle?) {
-        mLocationRequest = LocationRequest()
-        mLocationRequest!!.setInterval(1000)
-        mLocationRequest!!.setFastestInterval(1000)
-        mLocationRequest!!.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient!!,
-                mLocationRequest!!,
-                this
-            )
+
+        try {
+            mLocationRequest = LocationRequest()
+            mLocationRequest!!.setInterval(1000)
+            mLocationRequest!!.setFastestInterval(1000)
+            mLocationRequest!!.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient!!,
+                    mLocationRequest!!,
+                    this
+                )
+            }
+        }catch (e: Exception){
+            Log.e(TAG,"Exception   2381   "+e.toString())
         }
+
     }
 
     override fun onConnectionSuspended(i: Int) {}
 
     override fun onLocationChanged(location: Location) {
-        mLastLocation = location
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker!!.remove()
+
+        try {
+            mLastLocation = location
+
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker!!.remove()
+            }
+
+            geocoder = Geocoder(this, Locale.getDefault())
+            addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+            address = addresses!!.get(0).getAddressLine(0)
+            city = addresses!!.get(0).locality
+            state = addresses!!.get(0).adminArea
+            country = addresses!!.get(0).countryName
+            postalCode = addresses!!.get(0).postalCode
+            knownName = addresses!!.get(0).featureName
+            strLongitue = location.longitude.toString()
+            strLatitude = location.latitude.toString()
+            val latLng = LatLng(location.latitude, location.longitude)
+
+            val markerOptions = MarkerOptions()
+            markerOptions.position(latLng)
+
+            markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
+
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+
+            mCurrLocationMarker = googleMap.addMarker(markerOptions)
+
+            edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+            if (mGoogleApiClient != null) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
+            }
+        }catch (e: Exception){
+            Log.e(TAG,"Exception   2382   "+e.toString())
         }
-        geocoder = Geocoder(this, Locale.getDefault())
-        addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-        address = addresses!!.get(0).getAddressLine(0)
-        city = addresses!!.get(0).locality
-        state = addresses!!.get(0).adminArea
-        country = addresses!!.get(0).countryName
-        postalCode = addresses!!.get(0).postalCode
-        knownName = addresses!!.get(0).featureName
-        strLongitue = location.longitude.toString()
-        strLatitude = location.latitude.toString()
-        val latLng = LatLng(location.latitude, location.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        mCurrLocationMarker = googleMap.addMarker(markerOptions)
-        edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
-        }
+
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
