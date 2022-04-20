@@ -12,7 +12,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/chipNavigation"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -88,7 +87,7 @@
                                     app:cardBackgroundColor="@color/white"
                                     app:cardCornerRadius="5dp"
                                     app:cardElevation="5dp"
-                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginBottom="2.5dp"
@@ -99,7 +98,7 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/tv_abt_us"
+                                            android:id="@+id/tv_CustClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
@@ -120,7 +119,7 @@
                                             android:orientation="vertical"
                                             android:layout_margin="5dp"
                                             android:background="@drawable/etselect_bggrey"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
 
 
@@ -134,6 +133,7 @@
                                                 android:background="@color/color_activity_transparent"
                                                 android:gravity="end"
                                                 android:scaleType="fitXY"
+                                                android:visibility="gone"
                                                 android:src="@drawable/ic_cancel_" />
 
                                             <RelativeLayout
@@ -257,6 +257,7 @@
                                                     android:paddingBottom="3dp"
                                                     android:inputType="textMultiLine"
                                                     android:maxLines="3"
+                                                    android:layout_marginBottom="10dp"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
 
@@ -269,7 +270,8 @@
                                                     android:layout_marginLeft="5dp"
                                                     android:layout_marginRight="5dp"
                                                     android:layout_marginBottom="20dp"
-                                                    android:gravity="center">
+                                                    android:gravity="center"
+                                                    android:visibility="gone">
 
                                                     <Button
                                                         android:id="@+id/btnCustReset"
@@ -332,19 +334,471 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-
-                                    <TextView
-                                        android:id="@+id/tv_contact_us"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Product Details"
-                                        android:textStyle="bold"
-                                        android:fontFamily="@font/myfont"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_ProductClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Product Details"
+                                            android:textStyle="bold"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llProdDetail"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:background="@drawable/etselect_bggrey"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <ImageView
+                                                android:id="@+id/imProdclose"
+                                                android:layout_width="25dp"
+                                                android:layout_height="25dp"
+                                                android:layout_gravity="end"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:background="@color/color_activity_transparent"
+                                                android:gravity="end"
+                                                android:scaleType="fitXY"
+                                                android:visibility="gone"
+                                                android:src="@drawable/ic_cancel_" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="10dp"
+                                                android:orientation="vertical">
+
+                                                <EditText
+                                                    android:id="@+id/edtProdcategory"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:drawableRight="@drawable/arrow_down"
+                                                    android:editable="false"
+                                                    android:hint="Category"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:orientation="horizontal">
+
+                                                    <RelativeLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:orientation="horizontal">
+
+                                                        <EditText
+                                                            android:id="@+id/edtProdproduct"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:background="@android:color/transparent"
+                                                            android:drawableRight="@drawable/arrow_down"
+                                                            android:editable="false"
+                                                            android:hint="Product"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:padding="10dp"
+                                                            android:singleLine="true"
+                                                            android:text=""
+                                                            android:textSize="15dp" />
+
+
+
+
+                                                    </RelativeLayout>
+
+                                                    <EditText
+                                                        android:id="@+id/edtProdqty"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="2dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="3.5"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:gravity="center"
+                                                        android:hint="Qty"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:inputType="number"
+                                                        android:maxLength="3"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                </LinearLayout>
+
+                                                <EditText
+                                                    android:id="@+id/edtProdpriority"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:drawableRight="@drawable/arrow_down"
+                                                    android:editable="false"
+                                                    android:hint="Priority"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+                                                <EditText
+                                                    android:id="@+id/edtProdfeedback"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:hint="Feedback"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+                                                <EditText
+                                                    android:id="@+id/edtProdstatus"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:drawableRight="@drawable/arrow_down"
+                                                    android:editable="false"
+                                                    android:hint="Status"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/llfollowup"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="10dp"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_weight="1"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center"
+                                                    android:text="Follow Up"
+                                                    android:textColor="@color/black"
+                                                    android:textSize="20dp"
+                                                    android:textStyle="bold" />
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <EditText
+                                                        android:id="@+id/edtFollowaction"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Action"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+
+                                                    <EditText
+                                                        android:id="@+id/edtFollowtype"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Type"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <EditText
+                                                        android:id="@+id/edtFollowdate"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/calendar_icon"
+                                                        android:editable="false"
+                                                        android:hint="Date"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                    <LinearLayout
+                                                        android:id="@+id/llFollowdate"
+                                                        android:orientation="vertical"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginBottom="30dp"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_marginLeft="10dp"
+                                                        android:layout_marginRight="10dp"
+                                                        android:layout_gravity="center"
+                                                        android:background="@drawable/etselect_bggrey"
+                                                        android:gravity = "center"
+                                                        android:visibility="gone">
+
+                                                        <RelativeLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="center">
+
+                                                            <TextView
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginTop="10dp"
+                                                                android:background="@color/greylight"
+                                                                android:gravity="center"
+                                                                android:text="Select Date"
+                                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                                android:textSize="13dp"
+                                                                android:textStyle="bold" />
+
+                                                            <ImageView
+                                                                android:id="@+id/imFollowDateclose"
+                                                                android:layout_width="25dp"
+                                                                android:layout_height="25dp"
+                                                                android:layout_alignParentRight="true"
+                                                                android:layout_gravity="center"
+                                                                android:layout_marginTop="5dp"
+                                                                android:layout_marginRight="5dp"
+                                                                android:background="@color/color_activity_transparent"
+                                                                android:gravity="center"
+                                                                android:scaleType="fitXY"
+                                                                android:src="@drawable/ic_cancel_" />
+                                                        </RelativeLayout>
+
+                                                        <DatePicker
+                                                            android:id="@+id/date_Picker2"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:datePickerMode = "spinner"
+                                                            android:background="@color/greylight"
+                                                            android:calendarViewShown="false"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="center"
+                                                            android:layout_marginBottom="10dp"
+                                                            android:orientation="horizontal">
+
+
+                                                            <TextView
+                                                                android:id="@+id/txtok2"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center"
+                                                                android:gravity="center"
+                                                                android:textSize="15dp"
+                                                                android:textColor="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:background="@drawable/btn_bgcolour"
+                                                                android:paddingLeft="20dp"
+                                                                android:paddingRight="20dp"
+                                                                android:paddingBottom="5dp"
+                                                                android:paddingTop="5dp"
+                                                                android:textAllCaps="false"
+                                                                android:text="Submit" />
+
+
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
+
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_weight="1"
+                                                        android:orientation="horizontal">
+
+
+                                                        <Switch
+                                                            android:id="@+id/switchTransfer"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:checked="false"
+                                                            android:gravity="center_vertical"
+                                                            android:text="Need to Transfer"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textSize="15dp" />
+
+
+                                                    </LinearLayout>
+
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/llNeedTransfer"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="10dp"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <EditText
+                                                        android:id="@+id/edtbarnchtype"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Branch Type"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+
+                                                    <EditText
+                                                        android:id="@+id/edtbranch"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Branch"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <EditText
+                                                        android:id="@+id/edtdepartment"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Department"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                    <EditText
+                                                        android:id="@+id/edtEmployee"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:editable="false"
+                                                        android:hint="Employee"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="10dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
+
+
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -358,18 +812,58 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-                                    <TextView
-                                        android:id="@+id/tv_rate_us"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Location Details"
-                                        android:textStyle="bold"
-                                        android:fontFamily="@font/myfont"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_LocationClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Location Details"
+                                            android:textStyle="bold"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llLocDetail"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:visibility="gone">
+
+
+                                            <TextView
+                                                android:id="@+id/txtLocation"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="2dp"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/ic_location"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Location"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                        </LinearLayout>
+
+
+
+                                    </LinearLayout>
+
 
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
@@ -384,18 +878,143 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-                                    <TextView
-                                        android:id="@+id/tv_feed_back"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Date"
-                                        android:fontFamily="@font/myfont"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_DateClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Date"
+                                            android:fontFamily="@font/myfont"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/ll_Todate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="2dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/calendar_icon"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Date"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imDateclose"
+                                                        android:layout_width="25dp"
+                                                        android:layout_height="25dp"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_gravity="center"
+                                                        android:layout_marginTop="5dp"
+                                                        android:layout_marginRight="5dp"
+                                                        android:background="@color/color_activity_transparent"
+                                                        android:gravity="center"
+                                                        android:scaleType="fitXY"
+                                                        android:src="@drawable/ic_cancel_"
+                                                        android:visibility="gone"/>
+                                                </RelativeLayout>
+
+                                                <DatePicker
+                                                    android:id="@+id/date_Picker1"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:datePickerMode = "spinner"
+                                                    android:background="@color/greylight"
+                                                    android:layout_marginLeft="20dp"
+                                                    android:layout_marginRight="20dp"
+                                                    android:calendarViewShown="false"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:layout_marginBottom="10dp"
+                                                    android:orientation="horizontal">
+
+
+                                                    <TextView
+                                                        android:id="@+id/txtok1"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:gravity="center"
+                                                        android:textSize="15dp"
+                                                        android:textColor="@color/white"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:paddingLeft="20dp"
+                                                        android:paddingRight="20dp"
+                                                        android:paddingBottom="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:textAllCaps="false"
+                                                        android:text="Submit" />
+
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
 
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
@@ -410,17 +1029,92 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Lead From"
-                                        android:fontFamily="@font/myfont"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_LeadFromClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Lead From"
+                                            android:fontFamily="@font/myfont"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llLeadFrom"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtleadfrom"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="2dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead From"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+
+                                                </RelativeLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+
+                                    </LinearLayout>
+
+
 
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
@@ -435,18 +1129,91 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Lead Though"
-                                        android:fontFamily="@font/myfont"
-                                        android:textColor="@color/black"
-                                        android:textStyle="bold"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_LeadThroughClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Lead Though"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/black"
+                                            android:textStyle="bold"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llleadthrough"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtleadthrough"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="2dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead Through"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+
+                                                </RelativeLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -460,17 +1227,90 @@
                                     android:layout_marginBottom="2.5dp"
                                     app:cardMaxElevation="1dp">
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:drawableRight="@drawable/ic_arrow_down"
-                                        android:padding="5dp"
-                                        android:text="Lead By"
-                                        android:fontFamily="@font/myfont"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"/>
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_LeadByClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:padding="5dp"
+                                            android:text="Lead By"
+                                            android:fontFamily="@font/myfont"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llleadby"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtleadby"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="2dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead By"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+
+                                                </RelativeLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
 
                                 </androidx.cardview.widget.CardView>
                                 <androidx.cardview.widget.CardView
@@ -585,107 +1425,11 @@
                                             android:layout_weight="1"
                                             android:fontFamily="@font/myfont" />
 
-                                        <TextView
-                                            android:id="@+id/txtDate"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="left"
-                                            android:textColor="@color/black"
-                                            android:textSize="15dp"
-                                            android:hint="Date"
-                                            android:textStyle="bold"
-                                            android:layout_weight="1"
-                                            android:fontFamily="@font/myfont" />
+
                                     </LinearLayout>
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:id="@+id/ll_Todate"
-                                    android:orientation="vertical"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="30dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/etselect_bggrey"
-                                    android:gravity = "center"
-                                    android:visibility="gone">
 
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:background="@color/greylight"
-                                            android:gravity="center"
-                                            android:text="Select Date"
-                                            android:textColor="@color/colorPrimaryExtraDark"
-                                            android:textSize="13dp"
-                                            android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/imDateclose"
-                                            android:layout_width="25dp"
-                                            android:layout_height="25dp"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_marginRight="5dp"
-                                            android:background="@color/color_activity_transparent"
-                                            android:gravity="center"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/ic_cancel_" />
-                                    </RelativeLayout>
-
-                                    <DatePicker
-                                        android:id="@+id/date_Picker1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:datePickerMode = "spinner"
-                                        android:background="@color/greylight"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:calendarViewShown="false"/>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_marginBottom="10dp"
-                                        android:orientation="horizontal">
-
-
-                                        <TextView
-                                            android:id="@+id/txtok1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:textSize="15dp"
-                                            android:textColor="@color/white"
-                                            android:fontFamily="@font/myfont"
-                                            android:background="@drawable/btn_bgcolour"
-                                            android:paddingLeft="20dp"
-                                            android:paddingRight="20dp"
-                                            android:paddingBottom="5dp"
-                                            android:paddingTop="5dp"
-                                            android:textAllCaps="false"
-                                            android:text="Submit" />
-
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
 
                             </LinearLayout>
                             <LinearLayout
@@ -727,7 +1471,7 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
-                                        android:id="@+id/txtLocation"
+                                        android:id="@+id/txtLocation1"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -1072,452 +1816,14 @@
 
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:id="@+id/llProdDetail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:background="@drawable/etselect_bggrey"
-                                    android:orientation="vertical"
-                                    android:visibility="gone">
 
-                                    <ImageView
-                                        android:id="@+id/imProdclose"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="end"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:background="@color/color_activity_transparent"
-                                        android:gravity="end"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/ic_cancel_" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="10dp"
-                                        android:orientation="vertical">
-
-                                        <EditText
-                                            android:id="@+id/edtProdcategory"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_toLeftOf="@+id/img_search"
-                                            android:background="@drawable/shape_bg"
-                                            android:drawableRight="@drawable/arrow_down"
-                                            android:editable="false"
-                                            android:hint="Category"
-                                            android:fontFamily="@font/myfont"
-                                            android:padding="10dp"
-                                            android:singleLine="true"
-                                            android:text=""
-                                            android:textSize="15dp" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:orientation="horizontal">
-
-                                            <RelativeLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="1"
-                                                android:background="@drawable/shape_bg"
-                                                android:orientation="horizontal">
-
-                                                <EditText
-                                                    android:id="@+id/edtProdproduct"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:background="@android:color/transparent"
-                                                    android:drawableRight="@drawable/arrow_down"
-                                                    android:editable="false"
-                                                    android:hint="Product"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
-                                                    android:singleLine="true"
-                                                    android:text=""
-                                                    android:textSize="15dp" />
-
-
-
-
-                                            </RelativeLayout>
-
-                                            <EditText
-                                                android:id="@+id/edtProdqty"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginLeft="2dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:layout_weight="3.5"
-                                                android:background="@drawable/shape_bg"
-                                                android:gravity="center"
-                                                android:hint="Qty"
-                                                android:fontFamily="@font/myfont"
-                                                android:inputType="number"
-                                                android:maxLength="3"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                        </LinearLayout>
-
-                                        <EditText
-                                            android:id="@+id/edtProdpriority"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_toLeftOf="@+id/img_search"
-                                            android:background="@drawable/shape_bg"
-                                            android:drawableRight="@drawable/arrow_down"
-                                            android:editable="false"
-                                            android:hint="Priority"
-                                            android:fontFamily="@font/myfont"
-                                            android:padding="10dp"
-                                            android:singleLine="true"
-                                            android:text=""
-                                            android:textSize="15dp" />
-
-                                        <EditText
-                                            android:id="@+id/edtProdfeedback"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_toLeftOf="@+id/img_search"
-                                            android:background="@drawable/shape_bg"
-                                            android:hint="Feedback"
-                                            android:fontFamily="@font/myfont"
-                                            android:padding="10dp"
-                                            android:singleLine="true"
-                                            android:text=""
-                                            android:textSize="15dp" />
-
-                                        <EditText
-                                            android:id="@+id/edtProdstatus"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_toLeftOf="@+id/img_search"
-                                            android:background="@drawable/shape_bg"
-                                            android:drawableRight="@drawable/arrow_down"
-                                            android:editable="false"
-                                            android:hint="Status"
-                                            android:fontFamily="@font/myfont"
-                                            android:padding="10dp"
-                                            android:singleLine="true"
-                                            android:text=""
-                                            android:textSize="15dp" />
-
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:id="@+id/llfollowup"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="10dp"
-                                        android:orientation="vertical"
-                                        android:visibility="gone">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="1"
-                                            android:fontFamily="@font/myfont"
-                                            android:gravity="center"
-                                            android:text="Follow Up"
-                                            android:textColor="@color/black"
-                                            android:textSize="20dp"
-                                            android:textStyle="bold" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <EditText
-                                                android:id="@+id/edtFollowaction"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:layout_weight="1"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Action"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-
-                                            <EditText
-                                                android:id="@+id/edtFollowtype"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:layout_weight="1"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Type"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <EditText
-                                                android:id="@+id/edtFollowdate"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:layout_weight="1"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/calendar_icon"
-                                                android:editable="false"
-                                                android:hint="Date"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                            <LinearLayout
-                                                android:id="@+id/llFollowdate"
-                                                android:orientation="vertical"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginBottom="30dp"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_gravity="center"
-                                                android:background="@drawable/etselect_bggrey"
-                                                android:gravity = "center"
-                                                android:visibility="gone">
-
-                                                <RelativeLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:gravity="center">
-
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
-                                                        android:background="@color/greylight"
-                                                        android:gravity="center"
-                                                        android:text="Select Date"
-                                                        android:textColor="@color/colorPrimaryExtraDark"
-                                                        android:textSize="13dp"
-                                                        android:textStyle="bold" />
-
-                                                    <ImageView
-                                                        android:id="@+id/imFollowDateclose"
-                                                        android:layout_width="25dp"
-                                                        android:layout_height="25dp"
-                                                        android:layout_alignParentRight="true"
-                                                        android:layout_gravity="center"
-                                                        android:layout_marginTop="5dp"
-                                                        android:layout_marginRight="5dp"
-                                                        android:background="@color/color_activity_transparent"
-                                                        android:gravity="center"
-                                                        android:scaleType="fitXY"
-                                                        android:src="@drawable/ic_cancel_" />
-                                                </RelativeLayout>
-
-                                                <DatePicker
-                                                    android:id="@+id/date_Picker2"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:datePickerMode = "spinner"
-                                                    android:background="@color/greylight"
-                                                    android:calendarViewShown="false"/>
-
-                                                <LinearLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:gravity="center"
-                                                    android:layout_marginBottom="10dp"
-                                                    android:orientation="horizontal">
-
-
-                                                    <TextView
-                                                        android:id="@+id/txtok2"
-                                                        android:layout_width="wrap_content"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_gravity="center"
-                                                        android:gravity="center"
-                                                        android:textSize="15dp"
-                                                        android:textColor="@color/white"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:background="@drawable/btn_bgcolour"
-                                                        android:paddingLeft="20dp"
-                                                        android:paddingRight="20dp"
-                                                        android:paddingBottom="5dp"
-                                                        android:paddingTop="5dp"
-                                                        android:textAllCaps="false"
-                                                        android:text="Submit" />
-
-
-                                                </LinearLayout>
-
-
-                                            </LinearLayout>
-
-
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_weight="1"
-                                                android:orientation="horizontal">
-
-
-                                                <Switch
-                                                    android:id="@+id/switchTransfer"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:checked="false"
-                                                    android:gravity="center_vertical"
-                                                    android:text="Need to Transfer"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:textSize="15dp" />
-
-
-                                            </LinearLayout>
-
-
-                                        </LinearLayout>
-
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:id="@+id/llNeedTransfer"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="10dp"
-                                        android:orientation="vertical"
-                                        android:visibility="gone">
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <EditText
-                                                android:id="@+id/edtbarnchtype"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Branch Type"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-
-                                            <EditText
-                                                android:id="@+id/edtbranch"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Branch"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <EditText
-                                                android:id="@+id/edtdepartment"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Department"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                            <EditText
-                                                android:id="@+id/edtEmployee"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrow_down"
-                                                android:editable="false"
-                                                android:hint="Employee"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
 
 
 
 
                             </LinearLayout>
                             <LinearLayout
-                                android:id="@+id/llLeadFrom"
+                                android:id="@+id/llLeadFrom1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -1555,22 +1861,10 @@
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont" />
 
-                                    <TextView
-                                        android:id="@+id/txtleadfrom"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="left"
-                                        android:hint="Select Lead From"
-                                        android:textColor="@color/black"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont" />
+
                                 </LinearLayout>
                             </LinearLayout>
                             <LinearLayout
-                                android:id="@+id/llleadthrough"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -1608,7 +1902,6 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
-                                        android:id="@+id/txtleadthrough"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -1622,7 +1915,7 @@
                                 </LinearLayout>
                             </LinearLayout>
                             <LinearLayout
-                                android:id="@+id/llleadby"
+                                android:id="@+id/llleadby1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -1660,7 +1953,7 @@
                                         android:fontFamily="@font/myfont" />
 
                                     <TextView
-                                        android:id="@+id/txtleadby"
+                                        android:id="@+id/txtleadby1"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"

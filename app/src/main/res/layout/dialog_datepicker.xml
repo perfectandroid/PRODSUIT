@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/greypink"
+        android:background="@color/grey"
         android:gravity="center"
         android:padding="10dp"
         android:text="SELECT DATE"

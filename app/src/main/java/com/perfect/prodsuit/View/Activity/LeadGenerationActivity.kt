@@ -68,6 +68,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var ll_Todate: LinearLayout? = null
     private var llFollowdate: LinearLayout? = null
     private var llNeedTransfer: LinearLayout? = null
+    private var llLocDetail: LinearLayout? = null
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
@@ -179,6 +180,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      var recyDeaprtment: RecyclerView? = null
      var recyEmployee: RecyclerView? = null
 
+    private var tv_CustClick: TextView? = null
+    private var tv_ProductClick: TextView? = null
+    private var tv_LocationClick: TextView? = null
+    private var tv_DateClick: TextView? = null
+    private var tv_LeadFromClick: TextView? = null
+    private var tv_LeadThroughClick: TextView? = null
+    private var tv_LeadByClick: TextView? = null
+
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
@@ -203,6 +212,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var dateMode : String?= "1"  // GONE
         var dateFollowMode : String?= "1"  // GONE
         var custProdlMode : String?= "1" // GONE
+        var locationMode : String?= "1" // GONE
+        var leadfromMode : String?= "1" // GONE
+        var leadThroughMode : String?= "1" // GONE
+        var leadByMode : String?= "1" // GONE
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
@@ -315,7 +328,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
         imFollowDateclose = findViewById<ImageView>(R.id.imFollowDateclose)
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
-        llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
+      //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
@@ -329,6 +342,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llFollowdate = findViewById<LinearLayout>(R.id.llFollowdate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
+        llLocDetail = findViewById<LinearLayout>(R.id.llLocDetail)
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
@@ -358,6 +372,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
         btnCustReset = findViewById<Button>(R.id.btnCustReset)
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
+
+        tv_CustClick = findViewById<TextView>(R.id.tv_CustClick)
+        tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
+        tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
+        tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
+        tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
+        tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
+        tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
+
+
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
         imCustclose!!.setOnClickListener(this)
@@ -368,7 +392,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         btnCustSubmit!!.setOnClickListener(this)
         txtok1!!.setOnClickListener(this)
         txtok2!!.setOnClickListener(this)
-        llCustomer!!.setOnClickListener(this)
+       // llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
@@ -391,6 +415,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtbranch!!.setOnClickListener(this)
         edtdepartment!!.setOnClickListener(this)
         edtEmployee!!.setOnClickListener(this)
+        tv_CustClick!!.setOnClickListener(this)
+        tv_ProductClick!!.setOnClickListener(this)
+        tv_LocationClick!!.setOnClickListener(this)
+        tv_DateClick!!.setOnClickListener(this)
+        tv_LeadFromClick!!.setOnClickListener(this)
+        tv_LeadThroughClick!!.setOnClickListener(this)
+        tv_LeadByClick!!.setOnClickListener(this)
+        txtleadfrom!!.setOnClickListener(this)
+        txtleadthrough!!.setOnClickListener(this)
+        txtleadby!!.setOnClickListener(this)
+        txtDate!!.setOnClickListener(this)
+        txtLocation!!.setOnClickListener(this)
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
@@ -406,7 +442,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             R.id.imback->{
                 finish()
             }
-            R.id.llCustomer->{
+//            R.id.llCustomer->{
+//                if (custDetailMode.equals("0")){
+//                    llCustomerDetail!!.visibility = View.GONE
+//                    custDetailMode = "1"
+//                }else{
+//                    llCustomerDetail!!.visibility = View.VISIBLE
+//                    custDetailMode = "0"
+//                }
+//            }
+            R.id.tv_CustClick->{
                 if (custDetailMode.equals("0")){
                     llCustomerDetail!!.visibility = View.GONE
                     custDetailMode = "1"
@@ -464,11 +509,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             }
 
-            R.id.llproduct->{
+//            R.id.llproduct->{
+//
+//
+////                val intent = Intent(this@LeadGenerationActivity, ProductActivity::class.java)
+////                startActivityForResult(intent, SELECT_PRODUCT!!);
+//
+//                if (custProdlMode.equals("0")){
+//                    llProdDetail!!.visibility = View.GONE
+//                    custProdlMode = "1"
+//                }else{
+//                    llProdDetail!!.visibility = View.VISIBLE
+//                    custProdlMode = "0"
+//                }
+//
+//            }
 
-
-//                val intent = Intent(this@LeadGenerationActivity, ProductActivity::class.java)
-//                startActivityForResult(intent, SELECT_PRODUCT!!);
+            R.id.tv_ProductClick->{
 
                 if (custProdlMode.equals("0")){
                     llProdDetail!!.visibility = View.GONE
@@ -480,10 +537,32 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             }
 
+               R.id.tv_LocationClick->{
+
+                if (locationMode.equals("0")){
+                    llLocDetail!!.visibility = View.GONE
+                    locationMode = "1"
+                }else{
+                    llLocDetail!!.visibility = View.VISIBLE
+                    locationMode = "0"
+                }
+
+            }
+
             R.id.llmediatype->{
                 getMediaType()
             }
-            R.id.lldate->{
+//            R.id.lldate->{
+//               // datePickerPopup()
+//                if (dateMode.equals("0")){
+//                    ll_Todate!!.visibility = View.GONE
+//                    dateMode = "1"
+//                }else{
+//                    ll_Todate!!.visibility = View.VISIBLE
+//                    dateMode = "0"
+//                }
+//            }
+             R.id.tv_DateClick->{
                // datePickerPopup()
                 if (dateMode.equals("0")){
                     ll_Todate!!.visibility = View.GONE
@@ -493,12 +572,67 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     dateMode = "0"
                 }
             }
+            R.id.txtDate->{
+                datePickerPopup()
+            }
+
+             R.id.tv_LeadFromClick->{
+                 if (leadfromMode.equals("0")){
+                     llLeadFrom!!.visibility = View.GONE
+                     leadfromMode = "1"
+                 }else{
+                     llLeadFrom!!.visibility = View.VISIBLE
+                     leadfromMode = "0"
+                 }
+            }
+
+
+
+            R.id.txtleadfrom->{
+                getLeadFrom(v)
+            }
+
+            R.id.tv_LeadThroughClick->{
+                 if (leadThroughMode.equals("0")){
+                     llleadthrough!!.visibility = View.GONE
+                     leadThroughMode = "1"
+                 }else{
+                     llleadthrough!!.visibility = View.VISIBLE
+                     leadThroughMode = "0"
+                 }
+            }
+
+            R.id.txtleadthrough->{
+                getLeadThrough(v)
+            }
+
+            R.id.tv_LeadByClick->{
+                 if (leadByMode.equals("0")){
+                     llleadby!!.visibility = View.GONE
+                     leadByMode = "1"
+                 }else{
+                     llleadby!!.visibility = View.VISIBLE
+                     leadByMode = "0"
+                 }
+            }
+
+            R.id.txtleadby->{
+                getLeadBy(v)
+            }
+
 
             R.id.lllocation->{
 
                 val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
                 startActivityForResult(intent, SELECT_LOCATION!!);
             }
+
+            R.id.txtLocation->{
+
+                val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
+            }
+
 
             R.id.img_search->{
                 try {
@@ -2502,6 +2636,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogCustSearch!!.dismiss()
             val jsonObject = customerArrayList.getJSONObject(position)
             txtcustomer!!.text = jsonObject!!.getString("Name")
+            edt_customer!!.setText(jsonObject!!.getString("Name"))
 
             custDetailMode = "1"
             Customer_Mode     = "1"  // SEARCH
