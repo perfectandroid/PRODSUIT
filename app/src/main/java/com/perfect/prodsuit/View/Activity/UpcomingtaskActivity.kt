@@ -109,7 +109,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     override fun onClick(position: Int, data: String) {
-        if (data.equals("upcoming")){
+        if (data.equals("todolist")){
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             val i = Intent(this@UpcomingtaskActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
