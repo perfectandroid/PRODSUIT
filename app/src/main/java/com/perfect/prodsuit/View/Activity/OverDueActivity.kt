@@ -69,7 +69,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     rv_overduelist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_overduelist!!.setHasFixedSize(true)
-                                    val adapter = OverdueListAdapter(applicationContext, overdueArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList)
                                     rv_overduelist!!.adapter = adapter
                                     adapter.setClickListener(this@OverDueActivity)
                                 } else {

@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -42,17 +42,16 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 spf = SimpleDateFormat("dd-MM-yyyy")
                 date = spf.format(newDate)
                 println(date)
-                Log.i("Todo Date1", date)
-                holder.txtv_date1.text        = date
-                holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
-                holder.txtv_prdctnme.text        = jsonObject!!.getString("ProdName")
-                holder.txtv_clct1.text        = jsonObject!!.getString("LgCollectedBy")
-                holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
 
-                holder.lToDoList!!.setTag(position)
-                holder.lToDoList!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "todolist")
-                })
+             //   internal var impreference    : ImageView
+
+                holder.txtv_date.text        = date
+                holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
+                holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
+                holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
+                holder.txtv_preference.text        = jsonObject!!.getString("Preference")
+                holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -73,19 +72,29 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtv_date1   : TextView
-        internal var tv_custmr       : TextView
-        internal var txtv_prdctnme    : TextView
-        internal var txtv_clct1    : TextView
-        internal var txtv_asgndto    : TextView
-        internal var lToDoList    : LinearLayout
+        internal var txtv_date   : TextView
+        internal var txtv_preference       : TextView
+        internal var tv_leadno    : TextView
+        internal var tv_custmr    : TextView
+        internal var tv_address    : TextView
+        internal var tv_product    : TextView
+        internal var tv_nextdate    : TextView
+        internal var txtv_collectedby    : TextView
+        internal var impreference    : ImageView
+        internal var imcall    : ImageView
+        internal var immessage    : ImageView
        init {
-            txtv_date1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
-            tv_custmr              = v.findViewById<View>(R.id.tv_custmr) as TextView
-            txtv_prdctnme           = v.findViewById<View>(R.id.txtv_prdctnme) as TextView
-            txtv_clct1           = v.findViewById<View>(R.id.txtv_clct1) as TextView
-            txtv_asgndto           = v.findViewById<View>(R.id.txtv_asgndto) as TextView
-            lToDoList           = v.findViewById<View>(R.id.lToDoList) as LinearLayout
+           txtv_date          = v.findViewById<View>(R.id.txtv_date) as TextView
+           txtv_preference          = v.findViewById<View>(R.id.txtv_preference) as TextView
+           tv_leadno          = v.findViewById<View>(R.id.tv_leadno) as TextView
+           tv_custmr          = v.findViewById<View>(R.id.tv_custmr) as TextView
+           tv_address              = v.findViewById<View>(R.id.tv_address) as TextView
+           tv_product           = v.findViewById<View>(R.id.tv_product) as TextView
+           tv_nextdate           = v.findViewById<View>(R.id.tv_nextdate) as TextView
+           txtv_collectedby           = v.findViewById<View>(R.id.txtv_collectedby) as TextView
+           impreference           = v.findViewById<View>(R.id.impreference) as ImageView
+           imcall           = v.findViewById<View>(R.id.imcall) as ImageView
+           immessage           = v.findViewById<View>(R.id.immessage) as ImageView
         }
     }
 

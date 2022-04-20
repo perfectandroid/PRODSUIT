@@ -2,7 +2,6 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.app.*
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,19 +10,17 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.CalendarContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -36,11 +33,10 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
- class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
+class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
 
      internal var etdate: EditText? = null
      internal var ettime: EditText? = null
@@ -72,7 +68,6 @@ import java.util.*
     private var ll_Todate: LinearLayout? = null
     private var llFollowdate: LinearLayout? = null
     private var llNeedTransfer: LinearLayout? = null
-
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
@@ -83,40 +78,31 @@ import java.util.*
     private var txtLocation: TextView? = null
     private var txtok1: TextView? = null
     private var txtok2: TextView? = null
-
     private var edt_customer: EditText? = null
     private var edtCustname: EditText? = null
     private var edtCustphone: EditText? = null
     private var edtCustemail: EditText? = null
     private var edtCustaddress: EditText? = null
-
-
-
     private var img_search: ImageView? = null
     var date_Picker1: DatePicker? = null
     var date_Picker2: DatePicker? = null
-
     private var btnCustReset: Button? = null
     private var btnCustSubmit: Button? = null
     private var imCustclose: ImageView? = null
     private var imDateclose: ImageView? = null
     private var imFollowDateclose: ImageView? = null
     private var imProdclose: ImageView? = null
-
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
     private var SELECT_LOCATION: Int? = 103
-
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
     lateinit var leadByViewModel: LeadByViewModel
     lateinit var mediaTypeViewModel: MediaTypeViewModel
-
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
     var recyLeadby: RecyclerView? = null
     var recyMediaType: RecyclerView? = null
-
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
     private val GALLERY = 1
@@ -131,26 +117,19 @@ import java.util.*
     lateinit var leadThroughArrayList : JSONArray
     lateinit var leadByArrayList : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
-
-
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
     var dialogMediaType : Dialog? = null
     var dialogCustSearch : Dialog? = null
-
      lateinit var customersearchViewModel: CustomerSearchViewModel
      lateinit var customerAddViewModel: CustomerAddViewModel
      lateinit var customerArrayList : JSONArray
-
-
      private var llfollowup: LinearLayout? = null
-
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
      private var edtProdpriority: EditText? = null
      private var edtProdstatus: EditText? = null
-
      private var edtFollowaction: EditText? = null
      private var edtFollowtype: EditText? = null
      private var edtFollowdate: EditText? = null
@@ -159,8 +138,6 @@ import java.util.*
      private var edtbranch: EditText? = null
      private var edtdepartment: EditText? = null
      private var edtEmployee: EditText? = null
-
-
      lateinit var productCategoryViewModel: ProductCategoryViewModel
      lateinit var productDetailViewModel: ProductDetailViewModel
      lateinit var productStatusViewModel: ProductStatusViewModel
@@ -171,7 +148,6 @@ import java.util.*
      lateinit var branchViewModel: BranchViewModel
      lateinit var departmentViewModel: DepartmentViewModel
      lateinit var employeeViewModel: EmployeeViewModel
-
      lateinit var prodCategoryArrayList : JSONArray
      lateinit var prodDetailArrayList : JSONArray
      lateinit var prodStatusArrayList : JSONArray
@@ -182,7 +158,6 @@ import java.util.*
      lateinit var branchArrayList : JSONArray
      lateinit var departmentArrayList : JSONArray
      lateinit var employeeArrayList : JSONArray
-
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
      private var dialogProdStatus : Dialog? = null
@@ -193,7 +168,6 @@ import java.util.*
      private var dialogBranch : Dialog? = null
      private var dialogDepartment : Dialog? = null
      private var dialogEmployee : Dialog? = null
-
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
@@ -205,19 +179,11 @@ import java.util.*
      var recyDeaprtment: RecyclerView? = null
      var recyEmployee: RecyclerView? = null
 
-
-
-
-
-
-     //GONE
-
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
-
         var custDetailMode : String?= "1"
         var Customer_Mode : String?= ""
         var ID_Customer : String?= ""
@@ -226,8 +192,6 @@ import java.util.*
         var Customer_Email : String?= ""
         var Customer_Address : String?= ""
         var strCustomer = ""
-
-
         var locAddress : String?= ""
         var locCity : String?= ""
         var locState : String?= ""
@@ -236,12 +200,9 @@ import java.util.*
         var locKnownName : String?= ""
         var strLatitude : String?= ""
         var strLongitue : String?= ""
-
         var dateMode : String?= "1"  // GONE
         var dateFollowMode : String?= "1"  // GONE
-
         var custProdlMode : String?= "1" // GONE
-
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
@@ -253,17 +214,10 @@ import java.util.*
         var ID_Branch : String = ""
         var ID_Department : String = ""
         var ID_Employee : String = ""
-
         var strQty : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
-
-
-
-
-
-
     }
 
 
@@ -289,11 +243,8 @@ import java.util.*
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
-
         setRegViews()
-        //bottombarnav()
         clearData()
-
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -303,18 +254,14 @@ import java.util.*
                 edtEmployee!!.setText("")
                 ProductActivity.strNeedCheck = "1"
             } else {
-
                 llNeedTransfer!!.visibility = View.GONE
                 edtbarnchtype!!.setText("")
                 edtbranch!!.setText("")
                 edtdepartment!!.setText("")
                 edtEmployee!!.setText("")
                 strNeedCheck = "0"
-
-
             }
         }
-
     }
 
     private fun clearData() {
@@ -322,7 +269,6 @@ import java.util.*
         ID_LeadThrough = ""
         ID_CollectedBy = ""
         ID_MediaMaster = ""
-
         custDetailMode = "1"
         Customer_Mode = ""
         ID_Customer = ""
@@ -331,7 +277,6 @@ import java.util.*
         Customer_Email = ""
         Customer_Address = ""
         strCustomer = ""
-
         locAddress = ""
         locCity = ""
         locState = ""
@@ -340,26 +285,12 @@ import java.util.*
         locKnownName = ""
         strLatitude = ""
         strLongitue = ""
-
-
         edtProdcategory!!.setText("")
         edtProdproduct!!.setText("")
-//        edt_qty!!.setText("")
         edtProdpriority!!.setText("")
-//        edt_feedback!!.setText("")
         edtProdstatus!!.setText("")
         edtFollowaction!!.setText("")
         edtFollowtype!!.setText("")
-//        edt_date!!.setText("")
-//        edt_barnchtype!!.setText("")
-//        edt_branch!!.setText("")
-//        edt_department!!.setText("")
-//        edt_Employee!!.setText("")
-//
-//        switchTransfer!!.isChecked = false
-//        llfollowup!!.visibility = View.GONE
-//        llNeedTransfer!!.visibility = View.GONE
-
         ID_Category = ""
         ID_Product = ""
         strProdName = ""
@@ -367,12 +298,10 @@ import java.util.*
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
-
         ID_NextAction = ""
         ID_ActionType = ""
         strFollowupdate = ""
         strNeedCheck = "0"
-
         ID_BranchType = ""
         ID_Branch = ""
         ID_Department = ""
@@ -386,7 +315,6 @@ import java.util.*
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
         imFollowDateclose = findViewById<ImageView>(R.id.imFollowDateclose)
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
-
         llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
@@ -401,7 +329,6 @@ import java.util.*
         llFollowdate = findViewById<LinearLayout>(R.id.llFollowdate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
-
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
@@ -412,47 +339,35 @@ import java.util.*
         txtLocation = findViewById<TextView>(R.id.txtLocation)
         txtok1 = findViewById<TextView>(R.id.txtok1)
         txtok2 = findViewById<TextView>(R.id.txtok2)
-
-
         edt_customer = findViewById<EditText>(R.id.edt_customer)
-
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
         edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
-
         edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
         edtFollowtype = findViewById<EditText>(R.id.edtFollowtype)
         edtFollowdate = findViewById<EditText>(R.id.edtFollowdate)
-
         edtbarnchtype = findViewById<EditText>(R.id.edtbarnchtype)
         edtbranch = findViewById<EditText>(R.id.edtbranch)
         edtdepartment = findViewById<EditText>(R.id.edtdepartment)
         edtEmployee = findViewById<EditText>(R.id.edtEmployee)
-
         switchTransfer = findViewById<Switch>(R.id.switchTransfer)
-
         edtCustname= findViewById<EditText>(R.id.edtCustname)
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
-
         btnCustReset = findViewById<Button>(R.id.btnCustReset)
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
-
-
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
         imCustclose!!.setOnClickListener(this)
         imDateclose!!.setOnClickListener(this)
         imFollowDateclose!!.setOnClickListener(this)
         imProdclose!!.setOnClickListener(this)
-
         btnCustReset!!.setOnClickListener(this)
         btnCustSubmit!!.setOnClickListener(this)
         txtok1!!.setOnClickListener(this)
         txtok2!!.setOnClickListener(this)
-
         llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
@@ -465,12 +380,10 @@ import java.util.*
         imgvupload2 = findViewById(R.id.imgv_upload2)
         imgvupload1!!.setOnClickListener(this)
         imgvupload2!!.setOnClickListener(this)
-
         edtProdcategory!!.setOnClickListener(this)
         edtProdproduct!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
         edtProdstatus!!.setOnClickListener(this)
-
         edtFollowaction!!.setOnClickListener(this)
         edtFollowtype!!.setOnClickListener(this)
         edtFollowdate!!.setOnClickListener(this)
@@ -478,12 +391,10 @@ import java.util.*
         edtbranch!!.setOnClickListener(this)
         edtdepartment!!.setOnClickListener(this)
         edtEmployee!!.setOnClickListener(this)
-
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
         txtDate!!.setText(currentDate)
-
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
         date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
@@ -496,11 +407,6 @@ import java.util.*
                 finish()
             }
             R.id.llCustomer->{
-//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-//                CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
-//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-//                startActivityForResult(intent, CUSTOMER_SEARCH!!);
-
                 if (custDetailMode.equals("0")){
                     llCustomerDetail!!.visibility = View.GONE
                     custDetailMode = "1"
@@ -508,7 +414,6 @@ import java.util.*
                     llCustomerDetail!!.visibility = View.VISIBLE
                     custDetailMode = "0"
                 }
-
             }
             R.id.llleadthrough->{
                 if (ID_LeadFrom.equals("")){
