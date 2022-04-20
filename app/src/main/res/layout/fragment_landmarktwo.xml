@@ -31,7 +31,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
                 app:cardBackgroundColor="@color/color_activity_transparent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -99,7 +100,7 @@
 
             </androidx.cardview.widget.CardView>
             <ImageView
-                android:id="@+id/imLandmark"
+                android:id="@+id/imLandmark2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"

@@ -19,16 +19,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/imback"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="left"
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
-                    android:layout_weight="2"
                     android:tint="@color/black"
                     android:src="@drawable/icback"/>
                 <TextView
@@ -43,8 +43,6 @@
                     android:layout_marginRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
                     android:fontFamily="@font/myfont" />
 
                 <!--  <ImageView
