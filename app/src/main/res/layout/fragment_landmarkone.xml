@@ -30,6 +30,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/color_activity_transparent"
                 android:layout_height="wrap_content">
                 <LinearLayout

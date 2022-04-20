@@ -624,6 +624,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
             R.id.llImages->{
                 val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
+                i.putExtra("prodid",ID_LeadGenerateProduct)
                 startActivity(i)
             }
         }
