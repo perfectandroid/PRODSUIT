@@ -247,11 +247,11 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
 
         try {
             mLastLocation = location
-            Log.e(TAG,"Exception   23821   "+mLastLocation)
+
             if (mCurrLocationMarker != null) {
                 mCurrLocationMarker!!.remove()
             }
-            Log.e(TAG,"Exception   23822   "+mLastLocation)
+
             geocoder = Geocoder(this, Locale.getDefault())
             addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
             address = addresses!!.get(0).getAddressLine(0)
@@ -263,18 +263,18 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
             strLongitue = location.longitude.toString()
             strLatitude = location.latitude.toString()
             val latLng = LatLng(location.latitude, location.longitude)
-            Log.e(TAG,"Exception   23823   "+mLastLocation)
+
             val markerOptions = MarkerOptions()
             markerOptions.position(latLng)
-            Log.e(TAG,"Exception   23824   "+mLastLocation)
+
             markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
-            Log.e(TAG,"Exception   23825   "+mLastLocation)
+
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            Log.e(TAG,"Exception   23826   "+mLastLocation)
+
             mCurrLocationMarker = googleMap.addMarker(markerOptions)
-            Log.e(TAG,"Exception   23827   "+mLastLocation)
+
             edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
-            Log.e(TAG,"Exception   23828   "+mLastLocation)
+
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
             if (mGoogleApiClient != null) {
