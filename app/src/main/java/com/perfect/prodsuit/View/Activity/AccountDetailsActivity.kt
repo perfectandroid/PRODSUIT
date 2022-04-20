@@ -627,6 +627,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
             R.id.llImages->{
                 val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
+                i.putExtra("prodid",ID_LeadGenerateProduct)
                 startActivity(i)
             }
         }
@@ -721,7 +722,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   458   "+msg)
+                            Log.e(TAG,"msg   724   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("LeadInfoetails")
                                 leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
@@ -766,6 +767,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMainDetail!!.addView(inflatedLayout);
         var imInfoLoading = inflatedLayout.findViewById<ImageView>(R.id.imInfoLoading)
         var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
+
+        var llInfoDetail = inflatedLayout.findViewById<LinearLayout>(R.id.llInfoDetail)
+
+        var txtName1 = inflatedLayout.findViewById<TextView>(R.id.txtName)
+        var txtAddress1 = inflatedLayout.findViewById<TextView>(R.id.txtAddress)
+        var txtMobile1 = inflatedLayout.findViewById<TextView>(R.id.txtMobile)
+        var txtEmail1 = inflatedLayout.findViewById<TextView>(R.id.txtEmail)
+        var txtAssigned1 = inflatedLayout.findViewById<TextView>(R.id.txtAssigned)
+        var txtLeadNo1 = inflatedLayout.findViewById<TextView>(R.id.txtLeadNo)
+        var txtProject1 = inflatedLayout.findViewById<TextView>(R.id.txtProject)
+        var txtProduct1 = inflatedLayout.findViewById<TextView>(R.id.txtProduct)
+        var txtCategoryName1 = inflatedLayout.findViewById<TextView>(R.id.txtCategoryName)
+        var txtNextAction1 = inflatedLayout.findViewById<TextView>(R.id.txtNextAction)
+        var txtNextActionDate1 = inflatedLayout.findViewById<TextView>(R.id.txtNextActionDate)
+        var txtActionType1 = inflatedLayout.findViewById<TextView>(R.id.txtActionType)
+
+        llInfoDetail.visibility = View.GONE
+
         Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
         var Info = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -778,20 +797,35 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   458   "+msg)
+                            Log.e(TAG,"msg   795   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 imInfoLoading.visibility = View.GONE
+                                llInfoDetail.visibility = View.VISIBLE
                                 val jobjt = jObject.getJSONObject("LeadInfoetails")
                                 infoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
                                 if (infoArrayList.length()>0){
                                     if (Info == 0){
                                         Info++
-                                        Log.e(TAG,"infoArrayList  845   "+infoArrayList)
-                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
-                                        recySubInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        recySubInfo!!.setHasFixedSize(true)
-                                        val adapter = infoSubAdapter(this@AccountDetailsActivity, infoArrayList)
-                                        recySubInfo!!.adapter = adapter
+//                                        Log.e(TAG,"infoArrayList  845   "+infoArrayList)
+//                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+//                                        recySubInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        recySubInfo!!.setHasFixedSize(true)
+//                                        val adapter = infoSubAdapter(this@AccountDetailsActivity, infoArrayList)
+//                                        recySubInfo!!.adapter = adapter
+
+                                        val jsonObject1 = infoArrayList.getJSONObject(0)
+                                        txtName1.setText(jsonObject1.getString("LgCusName"))
+                                        txtAddress1.setText(jsonObject1.getString("LgCusAddress"))
+                                        txtMobile1.setText(jsonObject1.getString("LgCusMobile"))
+                                        txtEmail1.setText(jsonObject1.getString("LgCusEmail"))
+                                        txtAssigned1.setText(jsonObject1.getString("AssignedTo"))
+                                        txtLeadNo1.setText(jsonObject1.getString("LgLeadNo"))
+                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
+                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
+                                        txtCategoryName1.setText(jsonObject1.getString("CatName"))
+                                        txtNextAction1.setText(jsonObject1.getString("NxtActnName"))
+                                        txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
+                                        txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
                                     }
                                 }
                             } else {

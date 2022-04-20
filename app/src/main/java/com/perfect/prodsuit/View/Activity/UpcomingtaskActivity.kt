@@ -3,6 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.View.Adapter.UpcmngtaskListAdapter
@@ -20,7 +22,7 @@ import com.perfect.prodsuit.Viewmodel.UpcomingtasksListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
+class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -67,6 +69,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
                                     rv_upcmngtasklist!!.setHasFixedSize(true)
                                     val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList)
                                     rv_upcmngtasklist!!.adapter = adapter
+                                    adapter.setClickListener(this@UpcomingtaskActivity)
 
                                 } else {
                                     val builder = AlertDialog.Builder(
@@ -102,6 +105,15 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener {
             R.id.imback -> {
                 finish()
             }
+        }
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("upcoming")){
+            val jsonObject = upcmngtaskArrayList.getJSONObject(position)
+            val i = Intent(this@UpcomingtaskActivity, AccountDetailsActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
+            startActivity(i)
         }
     }
 
