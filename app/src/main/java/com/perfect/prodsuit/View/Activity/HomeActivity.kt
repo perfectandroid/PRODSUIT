@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.CubeInScalingAnimation
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.Viewmodel.BannerListViewModel
@@ -34,6 +35,10 @@ import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.graphics.drawable.AnimationDrawable
+
+
+
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -438,7 +443,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                                             }
                                         }
-
+                                      //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
                                         val handler = Handler()
                                         val Update = Runnable {
                                             Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
@@ -446,6 +451,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                                 currentPage = 0
                                             }
                                             mPager!!.setCurrentItem(currentPage++, true)
+
                                         }
                                         val swipeTimer = Timer()
                                         swipeTimer.schedule(object : TimerTask() {
