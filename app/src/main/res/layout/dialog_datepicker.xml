@@ -15,6 +15,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="SELECT DATE"
+        android:fontFamily="@font/myfont"
         android:textColor="@color/black"
         android:textSize="17dp"
         android:textStyle="bold" />
@@ -26,6 +27,7 @@
         android:datePickerMode = "spinner"
         android:background="@color/white"
         android:layout_marginLeft="20dp"
+        android:fontFamily="@font/myfont"
         android:layout_marginRight="20dp"
         android:calendarTextColor="@color/blue"
         android:backgroundTint="@color/white"
@@ -47,6 +49,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:padding="15dp"
+            android:fontFamily="@font/myfont"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:text="CANCEL"/>
@@ -60,6 +63,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:padding="15dp"
+            android:fontFamily="@font/myfont"
             android:textSize="15dp"
             android:text="OK"/>
 

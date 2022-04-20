@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sree"
+        android:fontFamily="@font/myfont"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold" />
@@ -30,6 +31,7 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:text="Item"
+            android:fontFamily="@font/myfont"
             android:textSize="15dp"
             android:textStyle="normal" />
 
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Item"
+            android:fontFamily="@font/myfont"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="normal" />
@@ -50,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Item"
+        android:fontFamily="@font/myfont"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:textStyle="normal" />

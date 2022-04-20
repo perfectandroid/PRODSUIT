@@ -25,13 +25,18 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_complete.xml" value="0.28615384615384615" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_default.xml" value="0.27760416666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_pending.xml" value="0.28615384615384615" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_selected.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_tab1.xml" value="0.27760416666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_upcoming.xml" value="0.28615384615384615" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/white_rounded_corner.xml" value="0.22135416666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.22395833333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.21041666666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_activities.xml" value="0.30364583333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2515625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
@@ -39,6 +44,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.22" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_new_action.xml" value="0.30625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_next_action.xml" value="0.30625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.20520833333333333" />
@@ -49,10 +56,14 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.20364583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subactivities.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subcomplete.xml" value="0.30625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subdocument.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subinfo.xml" value="0.2" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subnote.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subpending.xml" value="0.30625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subquotation.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subupcoming.xml" value="0.30625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.23229166666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.2671875" />
@@ -66,6 +77,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_history.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.2869791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_media_type.xml" value="0.2552083333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_notification.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_overdue.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.3078125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.21614583333333334" />
@@ -82,6 +94,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.22395833333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/changepin_popup.xml" value="0.35104166666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.19444444444444445" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.36666666666666664" />
@@ -98,6 +112,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_priority_popup.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_status_popup.xml" value="0.2994791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttype_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.22395833333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/snackbar_view.xml" value="0.32395833333333335" />

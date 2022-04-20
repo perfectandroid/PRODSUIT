@@ -72,7 +72,7 @@
                             <LinearLayout
                                 android:id="@+id/llleadgeneration"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:layout_marginBottom="10dp"
@@ -95,7 +95,7 @@
                                     android:text="Lead Generation"
                                     android:textStyle="bold"
                                     android:textColor="@color/black"
-                                    android:textSize="18dp"
+                                    android:textSize="20dp"
                                     android:fontFamily="@font/myfont" />
                             </LinearLayout>
 
@@ -103,7 +103,7 @@
                             <LinearLayout
                                 android:id="@+id/llleadmanagement"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
+                                android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:layout_marginBottom="20dp"
@@ -125,7 +125,7 @@
                                     android:text="Lead Management"
                                     android:textStyle="bold"
                                     android:textColor="@color/black"
-                                    android:textSize="18dp"
+                                    android:textSize="20dp"
                                     android:fontFamily="@font/myfont" />
                             </LinearLayout>
 

@@ -593,6 +593,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
+                val i = Intent(this@AccountDetailsActivity, AddDocumentActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                startActivity(i)
             }
             R.id.fabAddQuotation->{
                 isOpen = true
