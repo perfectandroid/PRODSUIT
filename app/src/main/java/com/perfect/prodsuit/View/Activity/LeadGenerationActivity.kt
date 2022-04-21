@@ -150,6 +150,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var dialogDistrict : Dialog? = null
     var recyDistrict: RecyclerView? = null
 
+    lateinit var postViewModel: PostViewModel
+    lateinit var postArrayList : JSONArray
+    private var dialogPost : Dialog? = null
+    var recyPost: RecyclerView? = null
+
     private var edtPincode: EditText? = null
     private var edtCountry: EditText? = null
     private var edtState: EditText? = null
@@ -287,6 +292,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -598,7 +604,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 getDistrict(v)
             }
             R.id.edtPost->{
-
+                getPost(v)
             }
 
             R.id.llleadthrough->{
@@ -2284,6 +2290,67 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   2286   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (distDet == 0){
+//                                        distDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getPost(v: View) {
+        var distDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                postViewModel.getPost(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2353   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
 //                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
