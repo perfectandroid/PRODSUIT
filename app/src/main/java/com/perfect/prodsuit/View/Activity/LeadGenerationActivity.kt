@@ -140,6 +140,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var dialogCountry : Dialog? = null
     var recyCountry: RecyclerView? = null
 
+    lateinit var stateViewModel: StateViewModel
+    lateinit var stateArrayList : JSONArray
+    private var dialogState : Dialog? = null
+    var recyState: RecyclerView? = null
+
     private var edtPincode: EditText? = null
     private var edtCountry: EditText? = null
     private var edtState: EditText? = null
@@ -275,6 +280,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+        stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -579,7 +585,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.edtState->{
-
+                getState(v)
             }
 
             R.id.edtDistrict->{
@@ -2157,6 +2163,68 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                if (prodCategoryArrayList.length()>0){
 //                                    if (countryDet == 0){
 //                                        countryDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getState(v: View) {
+
+        var stateDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                stateViewModel.getState(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2219   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (stateDet == 0){
+//                                        stateDet++
 //                                        productCategoryPopup(prodCategoryArrayList)
 //                                    }
 //
