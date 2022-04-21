@@ -63,6 +63,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
+    private var llUploadImages: LinearLayout? = null
     private var lldate: LinearLayout? = null
     private var lllocation: LinearLayout? = null
     private var ll_Todate: LinearLayout? = null
@@ -187,6 +188,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var tv_LeadFromClick: TextView? = null
     private var tv_LeadThroughClick: TextView? = null
     private var tv_LeadByClick: TextView? = null
+    private var tv_MediaTypeClick: TextView? = null
+    private var tv_UploadImage: TextView? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -216,6 +219,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var leadfromMode : String?= "1" // GONE
         var leadThroughMode : String?= "1" // GONE
         var leadByMode : String?= "1" // GONE
+        var mediaTypeMode : String?= "1" // GONE
+        var uploadImageMode : String?= "1" // GONE
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
@@ -336,6 +341,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
+        llUploadImages = findViewById<LinearLayout>(R.id.llUploadImages)
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
@@ -380,6 +386,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
         tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
         tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
+        tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
+        tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
 
 
         imback!!.setOnClickListener(this)
@@ -422,9 +430,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_LeadFromClick!!.setOnClickListener(this)
         tv_LeadThroughClick!!.setOnClickListener(this)
         tv_LeadByClick!!.setOnClickListener(this)
+        tv_MediaTypeClick!!.setOnClickListener(this)
+        tv_UploadImage!!.setOnClickListener(this)
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
         txtleadby!!.setOnClickListener(this)
+        txtMediatype!!.setOnClickListener(this)
         txtDate!!.setOnClickListener(this)
         txtLocation!!.setOnClickListener(this)
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -618,6 +629,30 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.txtleadby->{
                 getLeadBy(v)
+            }
+
+            R.id.tv_MediaTypeClick->{
+                if (mediaTypeMode.equals("0")){
+                    llmediatype!!.visibility = View.GONE
+                    mediaTypeMode = "1"
+                }else{
+                    llmediatype!!.visibility = View.VISIBLE
+                    mediaTypeMode = "0"
+                }
+            }
+
+            R.id.txtMediatype->{
+                getMediaType()
+            }
+
+             R.id.tv_UploadImage->{
+                if (uploadImageMode.equals("0")){
+                    llUploadImages!!.visibility = View.GONE
+                    uploadImageMode = "1"
+                }else{
+                    llUploadImages!!.visibility = View.VISIBLE
+                    uploadImageMode = "0"
+                }
             }
 
 
@@ -1510,7 +1545,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
         } else if (requestCode == CAMERA) {
-            try {
+
+            if (data != null){
+                   try {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -1601,6 +1638,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 e.printStackTrace()
                 Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
             }
+            }
+
         }
     }
     private fun choosePhotoFromGallary() {
@@ -1608,16 +1647,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         startActivityForResult(galleryIntent, GALLERY)
     }
     private fun showPictureDialog() {
-        val pictureDialog = AlertDialog.Builder(this)
-        pictureDialog.setTitle("Select From")
-        val pictureDialogItems = arrayOf("Gallery", "Camera")
-        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
-            when (which) {
-                0 -> choosePhotoFromGallary()
-                1 -> takePhotoFromCamera()
-            }
+
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val pictureDialog = AlertDialog.Builder(this)
+                    pictureDialog.setTitle("Select From")
+                    val pictureDialogItems = arrayOf("Gallery", "Camera")
+                    pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+                        when (which) {
+                            0 -> choosePhotoFromGallary()
+                            1 -> takePhotoFromCamera()
+                        }
+                    }
+                    pictureDialog.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                 CAMERA
+            )
+        }catch (e : Exception){
+
         }
-        pictureDialog.show()
+
     }
 
     private fun checkCamera(): Boolean {
