@@ -135,6 +135,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var dialogPinCode : Dialog? = null
     var recyPinCode: RecyclerView? = null
 
+    lateinit var countryViewModel: CountryViewModel
+    lateinit var countryArrayList : JSONArray
+    private var dialogCountry : Dialog? = null
+    var recyCountry: RecyclerView? = null
+
     private var edtPincode: EditText? = null
     private var edtCountry: EditText? = null
     private var edtState: EditText? = null
@@ -269,6 +274,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -550,6 +556,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.imgPinSearch->{
+                Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
                 try {
                     strPincode = edtPincode!!.text.toString()
                     if (strPincode.equals("")){
@@ -568,7 +575,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.edtCountry->{
                 Log.e(TAG,"edtCountry  549  ")
-
+                getCountry(v)
             }
 
             R.id.edtState->{
@@ -1064,6 +1071,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         }
     }
+
 
 
 
@@ -2093,6 +2101,67 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //
 //                                }
 //
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getCountry(v: View) {
+        var countryDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                countryViewModel.getCountry(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2151   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (countryDet == 0){
+//                                        countryDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
 
                             } else {
                                 val builder = AlertDialog.Builder(
