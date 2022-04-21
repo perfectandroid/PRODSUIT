@@ -128,6 +128,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var customerAddViewModel: CustomerAddViewModel
      lateinit var customerArrayList : JSONArray
      private var llfollowup: LinearLayout? = null
+     private var llMoreCommInfo: LinearLayout? = null
+
+    private var edtPincode: EditText? = null
+    private var edtCountry: EditText? = null
+    private var edtState: EditText? = null
+    private var edtDistrict: EditText? = null
+    private var edtPost: EditText? = null
+    private var edtLandLine: EditText? = null
+    private var imgPinSearch: ImageView? = null
+
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
      private var edtProdpriority: EditText? = null
@@ -190,6 +200,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var tv_LeadByClick: TextView? = null
     private var tv_MediaTypeClick: TextView? = null
     private var tv_UploadImage: TextView? = null
+    private var tv_MoreCommInfoClick: TextView? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -197,6 +208,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
         var custDetailMode : String?= "1"
+        var moreCommInfoMode : String?= "1"
         var Customer_Mode : String?= ""
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
@@ -347,6 +359,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
         llFollowdate = findViewById<LinearLayout>(R.id.llFollowdate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llMoreCommInfo = findViewById<LinearLayout>(R.id.llMoreCommInfo)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
         llLocDetail = findViewById<LinearLayout>(R.id.llLocDetail)
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
@@ -376,6 +389,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
+
+        edtPincode= findViewById<EditText>(R.id.edtPincode)
+        edtCountry= findViewById<EditText>(R.id.edtCountry)
+        edtState= findViewById<EditText>(R.id.edtState)
+        edtDistrict= findViewById<EditText>(R.id.edtDistrict)
+        edtPost= findViewById<EditText>(R.id.edtPost)
+        edtLandLine= findViewById<EditText>(R.id.edtLandLine)
+
+        imgPinSearch= findViewById<ImageView>(R.id.imgPinSearch)
+
         btnCustReset = findViewById<Button>(R.id.btnCustReset)
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
 
@@ -388,6 +411,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
         tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
         tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
+        tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
 
 
         imback!!.setOnClickListener(this)
@@ -432,12 +456,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_LeadByClick!!.setOnClickListener(this)
         tv_MediaTypeClick!!.setOnClickListener(this)
         tv_UploadImage!!.setOnClickListener(this)
+        tv_MoreCommInfoClick!!.setOnClickListener(this)
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
         txtleadby!!.setOnClickListener(this)
         txtMediatype!!.setOnClickListener(this)
         txtDate!!.setOnClickListener(this)
         txtLocation!!.setOnClickListener(this)
+
+        edtCountry!!.setOnClickListener(this)
+        edtState!!.setOnClickListener(this)
+        edtDistrict!!.setOnClickListener(this)
+        edtPost!!.setOnClickListener(this)
+        imgPinSearch!!.setOnClickListener(this)
+
+
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
@@ -468,9 +501,65 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     custDetailMode = "1"
                 }else{
                     llCustomerDetail!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
                     custDetailMode = "0"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
                 }
             }
+
+            R.id.tv_MoreCommInfoClick->{
+                if (moreCommInfoMode.equals("0")){
+                    llMoreCommInfo!!.visibility = View.GONE
+                    moreCommInfoMode = "1"
+                }else{
+                    llMoreCommInfo!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "0"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+            }
+
+            R.id.imgPinSearch->{
+
+            }
+
+            R.id.edtCountry->{
+                Log.e(TAG,"edtCountry  549  ")
+            }
+
+            R.id.edtState->{
+
+            }
+
+            R.id.edtDistrict->{
+
+            }
+            R.id.edtPost->{
+
+            }
+
             R.id.llleadthrough->{
                 if (ID_LeadFrom.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
@@ -543,7 +632,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     custProdlMode = "1"
                 }else{
                     llProdDetail!!.visibility = View.VISIBLE
+                   // custProdlMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
                     custProdlMode = "0"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
                 }
 
             }
@@ -555,7 +657,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     locationMode = "1"
                 }else{
                     llLocDetail!!.visibility = View.VISIBLE
+                    //locationMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
                     locationMode = "0"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
                 }
 
             }
@@ -580,7 +696,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     dateMode = "1"
                 }else{
                     ll_Todate!!.visibility = View.VISIBLE
+                   // dateMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
                     dateMode = "0"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+                    hideViews()
                 }
             }
             R.id.txtDate->{
@@ -593,7 +721,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadfromMode = "1"
                  }else{
                      llLeadFrom!!.visibility = View.VISIBLE
+                     //leadfromMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
                      leadfromMode = "0"
+                     leadThroughMode = "1"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
@@ -609,7 +749,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadThroughMode = "1"
                  }else{
                      llleadthrough!!.visibility = View.VISIBLE
+                    // leadThroughMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
                      leadThroughMode = "0"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
@@ -623,7 +775,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadByMode = "1"
                  }else{
                      llleadby!!.visibility = View.VISIBLE
+                    // leadByMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
+                     leadThroughMode = "1"
                      leadByMode = "0"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
@@ -637,7 +801,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     mediaTypeMode = "1"
                 }else{
                     llmediatype!!.visibility = View.VISIBLE
+                  //  mediaTypeMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
                     mediaTypeMode = "0"
+                    uploadImageMode = "1"
+                    hideViews()
                 }
             }
 
@@ -651,7 +827,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     uploadImageMode = "1"
                 }else{
                     llUploadImages!!.visibility = View.VISIBLE
+                   // uploadImageMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
                     uploadImageMode = "0"
+
+                    hideViews()
                 }
             }
 
@@ -696,9 +885,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 edtCustemail!!.setText("")
                 edtCustaddress!!.setText("")
                 custDetailMode = "1"
+                moreCommInfoMode = "1"
                 ID_Customer = ""
                 edt_customer!!.setText("")
-                custDetailMode = "1"
+                moreCommInfoMode = "1"
                 Customer_Mode = ""
                 ID_Customer  = ""
                 Customer_Name  = ""
@@ -851,6 +1041,43 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
         }
+    }
+
+    private fun hideViews() {
+
+        if (custDetailMode.equals("1")){
+            llCustomerDetail!!.visibility = View.GONE
+        }
+        if (moreCommInfoMode.equals("1")){
+            llMoreCommInfo!!.visibility = View.GONE
+        }
+        if (custProdlMode.equals("1")){
+            llProdDetail!!.visibility = View.GONE
+        }
+        if (locationMode.equals("1")){
+            llLocDetail!!.visibility = View.GONE
+        }
+        if (dateMode.equals("1")){
+            ll_Todate!!.visibility = View.GONE
+        }
+        if (leadfromMode.equals("1")){
+            llLeadFrom!!.visibility = View.GONE
+        }
+        if (leadThroughMode.equals("1")){
+            llleadthrough!!.visibility = View.GONE
+        }
+        if (leadByMode.equals("1")){
+            llleadby!!.visibility = View.GONE
+        }
+
+        if (mediaTypeMode.equals("1")){
+            llmediatype!!.visibility = View.GONE
+        }
+        if (uploadImageMode.equals("1")){
+            llUploadImages!!.visibility = View.GONE
+        }
+
+
     }
 
     private fun datePickerPopup() {
