@@ -11,8 +11,8 @@ class DistrictViewModel  : ViewModel(){
 
     var districtLiveData: MutableLiveData<DistrictModel>? = null
 
-    fun getDistrict(context: Context) : LiveData<DistrictModel>? {
-        districtLiveData = DistrictRepository.getServicesApiCall(context)
+    fun getDistrict(context: Context,FK_States :String) : LiveData<DistrictModel>? {
+        districtLiveData = DistrictRepository.getServicesApiCall(context,FK_States)
         return districtLiveData
     }
 }

@@ -2249,7 +2249,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2151   "+msg)
+                            Log.e(TAG,"msg   2252   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
 //                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
@@ -2305,7 +2305,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                stateViewModel.getState(this)!!.observe(
+                stateViewModel.getState(this,FK_Country)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -2366,7 +2366,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                districtViewModel.getDistrict(this)!!.observe(
+                districtViewModel.getDistrict(this, FK_States)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -2427,7 +2427,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                postViewModel.getPost(this)!!.observe(
+                postViewModel.getPost(this, FK_District)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

@@ -112,6 +112,18 @@ interface ApiInterface {
     @POST("UserValidations/PincodeDetails")
     fun getPincodeDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CountryDetails")
+    fun getCountryDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/StatesDetails")
+    fun getStatesDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/DistrictDetails")
+    fun getDistrictDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/PostDetails")
+    fun getPostDetails(@Body body: RequestBody): Call<String>
+
 
 
 

@@ -12,6 +12,7 @@ import com.perfect.prodsuit.Model.DistrictModel
 import com.perfect.prodsuit.Model.StateModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -26,12 +27,12 @@ object DistrictRepository {
     val districtSetterGetter = MutableLiveData<DistrictModel>()
     val TAG: String = "DistrictRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<DistrictModel> {
-        getDistrict(context)
+    fun getServicesApiCall(context: Context,FK_States :String): MutableLiveData<DistrictModel> {
+        getDistrict(context, LeadGenerationActivity.FK_States)
         return districtSetterGetter
     }
 
-    private fun getDistrict(context: Context) {
+    private fun getDistrict(context: Context,FK_States : String) {
         Log.e("TAG","getDistrict  ")
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -58,14 +59,25 @@ object DistrictRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                "ReqMode":"34",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+//                "SubMode:"3",
+//                "FK_States":"1"
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("34"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(CustomerSearchActivity.strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("3"))
+                requestObject1.put("FK_States", ProdsuitApplication.encryptStart(FK_States))
+
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -74,7 +86,7 @@ object DistrictRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCustomerDetails(body)
+            val call = apiService.getDistrictDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

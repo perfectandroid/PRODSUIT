@@ -11,8 +11,8 @@ class PostViewModel : ViewModel() {
 
     var postLiveData: MutableLiveData<PostModel>? = null
 
-    fun getPost(context: Context) : LiveData<PostModel>? {
-        postLiveData = PostRepository.getServicesApiCall(context)
+    fun getPost(context: Context,FK_District : String) : LiveData<PostModel>? {
+        postLiveData = PostRepository.getServicesApiCall(context,FK_District)
         return postLiveData
     }
 }

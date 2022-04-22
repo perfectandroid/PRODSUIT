@@ -11,8 +11,8 @@ class StateViewModel : ViewModel() {
 
     var stateLiveData: MutableLiveData<StateModel>? = null
 
-    fun getState(context: Context) : LiveData<StateModel>? {
-        stateLiveData = StateRepository.getServicesApiCall(context)
+    fun getState(context: Context,FK_Country: String) : LiveData<StateModel>? {
+        stateLiveData = StateRepository.getServicesApiCall(context,FK_Country)
         return stateLiveData
     }
 }
