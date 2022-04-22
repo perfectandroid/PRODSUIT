@@ -164,7 +164,7 @@
                                                     android:layout_centerInParent="true"
                                                     android:layout_marginRight="5dp"
                                                     android:background="@drawable/ic_search"
-                                                    android:backgroundTint="@color/greylight"
+                                                    android:backgroundTint="@color/greydark"
                                                     android:padding="5dp" />
 
 
@@ -395,7 +395,7 @@
                                                     android:layout_centerInParent="true"
                                                     android:layout_marginRight="5dp"
                                                     android:background="@drawable/ic_search"
-                                                    android:backgroundTint="@color/black"
+                                                    android:backgroundTint="@color/greydark"
                                                     android:padding="5dp" />
 
 
