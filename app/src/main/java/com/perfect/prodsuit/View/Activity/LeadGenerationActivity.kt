@@ -2338,16 +2338,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             Log.e(TAG,"msg   2338   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                stateArrayList = jobjt.getJSONArray("CustomerDetails")
-//
-//                                if (stateArrayList.length()>0){
-//                                    if (stateDet == 0){
-//                                        stateDet++
-//                                        stateDetailPopup(stateArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("StatesDetails")
+                                stateArrayList = jobjt.getJSONArray("StatesDetailsList")
+
+                                if (stateArrayList.length()>0){
+                                    if (stateDet == 0){
+                                        stateDet++
+                                        stateDetailPopup(stateArrayList)
+                                    }
+
+                                }
 
 
                             } else {
@@ -2425,16 +2425,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             Log.e(TAG,"msg   2286   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                districtArrayList = jobjt.getJSONArray("CustomerDetails")
-//
-//                                if (districtArrayList.length()>0){
-//                                    if (distDet == 0){
-//                                        distDet++
-//                                        districtDetailPopup(districtArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("DistrictDetails")
+                                districtArrayList = jobjt.getJSONArray("DistrictDetailsList")
+
+                                if (districtArrayList.length()>0){
+                                    if (distDet == 0){
+                                        distDet++
+                                        districtDetailPopup(districtArrayList)
+                                    }
+
+                                }
 
 
                             } else {
@@ -2493,7 +2493,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getPost(v: View) {
-        var distDet = 0
+        var postDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2512,16 +2512,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             Log.e(TAG,"msg   2353   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
-//
-//                                if (prodCategoryArrayList.length()>0){
-//                                    if (distDet == 0){
-//                                        distDet++
-//                                        productCategoryPopup(prodCategoryArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("PostDetails")
+                                postArrayList = jobjt.getJSONArray("PostDetailsList")
+
+                                if (postArrayList.length()>0){
+                                    if (postDet == 0){
+                                        postDet++
+                                        postDetailPopup(postArrayList)
+                                    }
+
+                                }
 
 
                             } else {
@@ -2553,7 +2553,33 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
     }
 
-     private fun validations(v: View) {
+    private fun postDetailPopup(postArrayList: JSONArray) {
+
+        try {
+
+            dialogPost = Dialog(this)
+            dialogPost!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPost!! .setContentView(R.layout.post_list_popup)
+            dialogPost!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycPost = dialogPost!! .findViewById(R.id.recycPost) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycPost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+            recycPost!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogPost!!.show()
+            dialogPost!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPost!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun validations(v: View) {
 
          val Cust_Name =  edtCustname!!.text.toString()
          val Cust_Email =  edtCustemail!!.text.toString()
@@ -3596,6 +3622,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              edtState!!.setText("")
              edtDistrict!!.setText("")
              edtPost!!.setText("")
+             edtPincode!!.setText("")
              edtLandLine!!.setText("")
 
 
@@ -3615,6 +3642,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              edtDistrict!!.setText("")
              edtPost!!.setText("")
+             edtPincode!!.setText("")
              edtLandLine!!.setText("")
 
 
@@ -3632,6 +3660,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              FK_Post     = ""
 
              edtPost!!.setText("")
+             edtPincode!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("postdetail")){
+             dialogPost!!.dismiss()
+             val jsonObject = postArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_Post  3672    "+jsonObject.getString("FK_Post"))
+             Log.e(TAG,"PinCode  3672    "+jsonObject.getString("PinCode"))
+             FK_Post = jsonObject.getString("FK_Post")
+             edtPost!!.setText(jsonObject.getString("PostName"))
+             edtPincode!!.setText(jsonObject.getString("PinCode"))
+
              edtLandLine!!.setText("")
 
 
