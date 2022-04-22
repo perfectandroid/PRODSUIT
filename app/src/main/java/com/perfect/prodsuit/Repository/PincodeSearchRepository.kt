@@ -10,7 +10,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.PincodeSearchModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -26,12 +25,12 @@ object PincodeSearchRepository {
     val pincodeSetterGetter = MutableLiveData<PincodeSearchModel>()
     val TAG: String = "PincodeSearchRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<PincodeSearchModel> {
-        getPinCode(context)
+    fun getServicesApiCall(context: Context,strPincode : String): MutableLiveData<PincodeSearchModel> {
+        getPinCode(context,strPincode)
         return pincodeSetterGetter
     }
 
-    private fun getPinCode(context: Context) {
+    private fun getPinCode(context: Context,strPincode : String) {
 
         Log.e("TAG","getPinCode  ")
         try {
@@ -59,15 +58,25 @@ object PincodeSearchRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                "ReqMode":"33",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+//                "Pincode":"641231"
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("33"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(CustomerSearchActivity.strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                requestObject1.put("Pincode", ProdsuitApplication.encryptStart(strPincode))
+
+
+                Log.e(TAG,"requestObject1   79   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -75,7 +84,7 @@ object PincodeSearchRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCustomerDetails(body)
+            val call = apiService.getPincodeDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -83,6 +92,7 @@ object PincodeSearchRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"response  95   "+response.body())
                         val jObject = JSONObject(response.body())
                         val pincode = ArrayList<PincodeSearchModel>()
                         pincode.add(PincodeSearchModel(response.body()))

@@ -242,6 +242,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var Customer_Address : String?= ""
         var strCustomer = ""
         var strPincode = ""
+        var FK_Country = ""
+        var FK_States = ""
+        var FK_District = ""
+        var FK_Area = ""
+        var FK_Place = ""
+        var FK_Post = ""
         var locAddress : String?= ""
         var locCity : String?= ""
         var locState : String?= ""
@@ -274,6 +280,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
+
+
     }
 
 
@@ -339,6 +347,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         Customer_Address = ""
         strCustomer = ""
         strPincode = ""
+        FK_Country = ""
+        FK_States = ""
+        FK_District = ""
+        FK_Area = ""
+        FK_Place = ""
+        FK_Post = ""
         locAddress = ""
         locCity = ""
         locState = ""
@@ -584,7 +598,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         snackbar.show()
 
                     }else{
-                        getPinCodeSearch()
+                        getPinCodeSearch(strPincode)
                     }
                 }catch (e  :Exception){
                     Log.e("TAG","Exception  64   "+e.toString())
@@ -2088,8 +2102,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
      }
 
-    private fun getPinCodeSearch() {
+    private fun getPinCodeSearch(strPincode: String) {
         var pinCodeDet = 0
+        clearCommunicationInfo()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2099,46 +2114,75 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                pinCodeSearchViewModel.getPincode(this)!!.observe(
+                pinCodeSearchViewModel.getPincode(this,strPincode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2028   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
-//
-//                                if (prodCategoryArrayList.length()>0){
+                        try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                 if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   21081   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("PincodeDetails")
+
+                                    FK_Country  = jobjt.getString("FK_Country")
+                                    FK_States   = jobjt.getString("FK_States")
+                                    FK_District = jobjt.getString("FK_District")
+                                    FK_Area     = jobjt.getString("FK_Area")
+                                    FK_Place    = jobjt.getString("FK_Place")
+                                    FK_Post     = jobjt.getString("FK_Post")
+
+                                    edtCountry!!.setText(jobjt.getString("Country"))
+                                    edtState!!.setText(jobjt.getString("States"))
+                                    edtDistrict!!.setText(jobjt.getString("District"))
+                                    edtPost!!.setText(jobjt.getString("Post"))
+
+                                    Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
+//                                if (pinCodeArrayList.length()>0){
 //                                    if (pinCodeDet == 0){
 //                                        pinCodeDet++
-//                                        productCategoryPopup(prodCategoryArrayList)
+//                                        pincodeDetailPopup(pinCodeArrayList)
 //                                    }
 //
 //                                }
-//
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@LeadGenerationActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                } else {
+
+                                    clearCommunicationInfo()
+
+                                    clearCommunicationInfo()
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                clearCommunicationInfo()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                          //  }
+
+
+                        }catch (e: Exception){
+
+
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -2146,6 +2190,45 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun clearCommunicationInfo() {
+        FK_Country  = ""
+        FK_States   = ""
+        FK_District = ""
+        FK_Area     = ""
+        FK_Place    = ""
+        FK_Post     = ""
+
+        edtCountry!!.setText("")
+        edtState!!.setText("")
+        edtDistrict!!.setText("")
+        edtPost!!.setText("")
+        edtLandLine!!.setText("")
+    }
+
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+//            dialogPinCode = Dialog(this)
+//            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+//            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+//            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+//
+//            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+//            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PicodeDetailAdapter(this@LeadGenerationActivity, pinCodeArrayList)
+//            recyPincodeDetails!!.adapter = adapter
+//            adapter.setClickListener(this@LeadGenerationActivity)
+//
+//            dialogPinCode!!.show()
+//            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

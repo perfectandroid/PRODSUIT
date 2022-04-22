@@ -11,8 +11,8 @@ class PinCodeSearchViewModel : ViewModel() {
 
     var pincodeLiveData: MutableLiveData<PincodeSearchModel>? = null
 
-    fun getPincode(context: Context) : LiveData<PincodeSearchModel>? {
-        pincodeLiveData = PincodeSearchRepository.getServicesApiCall(context)
+    fun getPincode(context: Context,strPincode : String) : LiveData<PincodeSearchModel>? {
+        pincodeLiveData = PincodeSearchRepository.getServicesApiCall(context,strPincode)
         return pincodeLiveData
     }
 }
