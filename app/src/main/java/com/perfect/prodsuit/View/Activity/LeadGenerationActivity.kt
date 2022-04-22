@@ -227,6 +227,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var tv_UploadImage: TextView? = null
     private var tv_MoreCommInfoClick: TextView? = null
 
+    private var btnReset: Button? = null
+    private var btnSubmit: Button? = null
+
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
@@ -459,6 +462,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
         tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
 
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
+
 
         imback!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
@@ -515,6 +521,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtDistrict!!.setOnClickListener(this)
         edtPost!!.setOnClickListener(this)
         imgPinSearch!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
 
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -1099,6 +1108,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }else{
                     getEmployee()
                 }
+            }
+
+            R.id.btnReset->{
+
+            }
+
+            R.id.btnSubmit->{
+
             }
 
         }
