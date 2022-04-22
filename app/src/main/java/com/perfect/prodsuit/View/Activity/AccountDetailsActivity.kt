@@ -58,6 +58,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var chipNavigationBar: ChipNavigationBar? = null
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
+    lateinit var locationViewModel: LocationViewModel
     var llMessages: LinearLayout? = null
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
@@ -118,10 +119,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyActMessage  : RecyclerView? = null
     var recyActMeeting   : RecyclerView? = null
     private var isOpen  : Boolean? = true
+    var latitude=""
+    var longitude=""
+    private var Id_leadgenrteprod: String? = null
     companion object{
         var ID_LeadGenerateProduct :String = ""
         var LgCusMobile :String = ""
         var LgCusEmail  :String = ""
+        var strid= ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,6 +150,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabOpenClose()
         getLeadInfoetails()
         addTabItem()
+
     }
 
     private fun addTabItem() {
@@ -621,9 +627,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 startActivity(i)
             }
             R.id.llLocation->{
-                val i = Intent(this@AccountDetailsActivity, LocationActivity::class.java)
-                i.putExtra("prodid",ID_LeadGenerateProduct)
-                startActivity(i)
+                getLocationDetails()
+
             }
             R.id.llImages->{
                 val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
@@ -1084,5 +1089,64 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
         }
     }
+    private fun getLocationDetails() {
+        strid = ID_LeadGenerateProduct!!
+        Log.i("Id", strid)
+        context = this@AccountDetailsActivity
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationViewModel.getLocation(this)!!.observe(
+                    this,
+                    Observer { locationSetterGetter ->
+                        val msg = locationSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadImageDetails")
+                                latitude = jobjt!!.getString("LocationLatitude")
+                                longitude = jobjt!!.getString("LocationLongitude")
+                                Log.i("LocationDetails", latitude + "\n" + longitude)
 
+                                val i = Intent(this@AccountDetailsActivity, LocationActivity::class.java)
+                                i.putExtra("prodid",ID_LeadGenerateProduct)
+                                i.putExtra("lat",latitude)
+                                i.putExtra("long",longitude)
+                                startActivity(i)
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 }

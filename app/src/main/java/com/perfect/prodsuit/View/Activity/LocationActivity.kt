@@ -1,21 +1,29 @@
 package com.perfect.prodsuit.View.Activity
-
+import android.Manifest
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -24,6 +32,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LocationViewModel
 import org.json.JSONObject
+import java.util.*
 
 class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener{
 
@@ -33,6 +42,9 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     lateinit var locationViewModel: LocationViewModel
     private lateinit var mMap: GoogleMap
     internal var mCurrLocationMarker: Marker? = null
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val REQUEST_CODE = 101
+    private lateinit var currentLocation: Location
     var latitude=""
     var longitude=""
     var count =""
@@ -40,11 +52,44 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
-         Id_leadgenrteprod = intent.getStringExtra("prodid")
-        setRegViews()
-        getLocationDetails()
-    }
+        Id_leadgenrteprod = intent.getStringExtra("prodid")
 
+        latitude= intent.getStringExtra("lat")!!
+        longitude= intent.getStringExtra("long")!!
+
+        setRegViews()
+
+        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@LocationActivity)
+        fetchLocation()
+
+
+    }
+    private fun fetchLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) !=
+            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE
+            )
+            return
+        }
+        val task = fusedLocationProviderClient.lastLocation
+        task.addOnSuccessListener { location ->
+            if (location != null) {
+                currentLocation = location
+
+                val supportMapFragment =
+                    (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
+                supportMapFragment!!.getMapAsync(this@LocationActivity)
+            }
+        }
+    }
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
@@ -54,59 +99,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         var strid= ""
     }
 
-   private fun getLocationDetails() {
-       strid = Id_leadgenrteprod!!
-       Log.i("Id", strid)
-        context = this@LocationActivity
-       locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                locationViewModel.getLocation(this)!!.observe(
-                    this,
-                    Observer { locationSetterGetter ->
-                        val msg = locationSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                latitude = jobjt!!.getString("LocationLatitude")
-                                longitude = jobjt!!.getString("LocationLongitude")
-                                Log.i("LocationDetails", latitude + "\n" + longitude)
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@LocationActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
 
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
 
     override fun onClick(v: View) {
         when(v.id) {
@@ -117,44 +110,39 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        try {
-            val lati=intent.getStringExtra("lat")
-            val longi=intent.getStringExtra("long")
-            Log.i("locationdet",lati+"\n"+longi)
+        mMap = googleMap
+        Log.i("locationdet",latitude+"\n"+longitude)
 
-            if(lati!!.isEmpty()&& longi!!.isEmpty()){
-                val dialogBuilder = android.app.AlertDialog.Builder(
-                    this@LocationActivity,
-                    R.style.MyDialogTheme
-                )
-                dialogBuilder.setMessage("No data found.")
-                    .setCancelable(false)
-                    .setPositiveButton(
-                        "OK",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            dialog.dismiss()
-                            finish()
-                        })
-                val alert = dialogBuilder.create()
-                alert.show()
-                val pbutton =
-                    alert.getButton(DialogInterface.BUTTON_POSITIVE)
-                pbutton.setTextColor(Color.RED)
-            }else {
-                mMap = googleMap
-                val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
-                Log.i("LatLng", latLng.toString())
-                val markerOptions = MarkerOptions()
-                markerOptions.position(latLng)
-                markerOptions.title("Current Location")
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                mCurrLocationMarker = mMap!!.addMarker(markerOptions)
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
+
+    //    val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+
+        val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
+
+        val geocoder: Geocoder
+        var addresses: List<Address?>
+        geocoder = Geocoder(this, Locale.getDefault())
+        addresses = geocoder.getFromLocation(currentLocation.latitude,currentLocation.longitude, 1);
+        val city = addresses.get(0)!!.getAddressLine(0);
+        Log.i("City",city)
+
+
+        val markerOptions = MarkerOptions().position(latLng).title(city)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
+        googleMap.addMarker(markerOptions)
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+              //  fetchLocation()
             }
-        }catch (e: Exception){
-            e.printStackTrace()
         }
     }
-
 }
+
+

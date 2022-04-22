@@ -8,6 +8,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LocationModel
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.LocationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -53,7 +54,7 @@ object LocationRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(LocationActivity.strid))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
 
 
                 Log.i("TAG33",requestObject1.toString())
