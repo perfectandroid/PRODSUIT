@@ -72,6 +72,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_country_list.xml" value="0.23697916666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_department.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_district_list.xml" value="0.22864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followup_action.xml" value="0.20520833333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.20520833333333333" />
@@ -87,6 +88,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_priority.xml" value="0.2421875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_status.xml" value="0.2994791666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_state_list.xml" value="0.22864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.26458333333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_history.xml" value="0.253125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_sub_info.xml" value="0.20833333333333334" />

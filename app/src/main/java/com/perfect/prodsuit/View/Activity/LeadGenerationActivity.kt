@@ -2335,16 +2335,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2219   "+msg)
+                            Log.e(TAG,"msg   2338   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
 //                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//                                stateArrayList = jobjt.getJSONArray("CustomerDetails")
 //
-//                                if (prodCategoryArrayList.length()>0){
+//                                if (stateArrayList.length()>0){
 //                                    if (stateDet == 0){
 //                                        stateDet++
-//                                        productCategoryPopup(prodCategoryArrayList)
+//                                        stateDetailPopup(stateArrayList)
 //                                    }
 //
 //                                }
@@ -2379,6 +2379,32 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
     }
 
+    private fun stateDetailPopup(stateArrayList: JSONArray) {
+
+        try {
+
+            dialogState = Dialog(this)
+            dialogState!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogState!! .setContentView(R.layout.state_list_popup)
+            dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycState = dialogState!! .findViewById(R.id.recycState) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+            recycState!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogState!!.show()
+            dialogState!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogState!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
     private fun getDistrict(v: View) {
         var distDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2400,12 +2426,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             if (jObject.getString("StatusCode") == "0") {
 
 //                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//                                districtArrayList = jobjt.getJSONArray("CustomerDetails")
 //
-//                                if (prodCategoryArrayList.length()>0){
+//                                if (districtArrayList.length()>0){
 //                                    if (distDet == 0){
 //                                        distDet++
-//                                        productCategoryPopup(prodCategoryArrayList)
+//                                        districtDetailPopup(districtArrayList)
 //                                    }
 //
 //                                }
@@ -2438,6 +2464,32 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     .show()
             }
         }
+    }
+
+    private fun districtDetailPopup(districtArrayList: JSONArray) {
+
+        try {
+
+            dialogDistrict = Dialog(this)
+            dialogDistrict!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDistrict!! .setContentView(R.layout.district_list_popup)
+            dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycDistrict = dialogDistrict!! .findViewById(R.id.recycDistrict) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+            recycDistrict!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogDistrict!!.show()
+            dialogDistrict!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogDistrict!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun getPost(v: View) {
@@ -3543,6 +3595,42 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              edtState!!.setText("")
              edtDistrict!!.setText("")
+             edtPost!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("statedetail")){
+             dialogState!!.dismiss()
+             val jsonObject = stateArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_States   "+jsonObject.getString("FK_States"))
+             FK_States = jsonObject.getString("FK_States")
+             edtState!!.setText(jsonObject.getString("States"))
+
+             FK_District = ""
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
+             edtDistrict!!.setText("")
+             edtPost!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("districtdetail")){
+             dialogDistrict!!.dismiss()
+             val jsonObject = districtArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_District   "+jsonObject.getString("FK_District"))
+             FK_District = jsonObject.getString("FK_District")
+             edtDistrict!!.setText(jsonObject.getString("District"))
+
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
              edtPost!!.setText("")
              edtLandLine!!.setText("")
 
