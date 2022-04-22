@@ -2,7 +2,6 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.app.*
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,19 +10,17 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.CalendarContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -36,11 +33,10 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
- class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
+class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
 
      internal var etdate: EditText? = null
      internal var ettime: EditText? = null
@@ -67,12 +63,13 @@ import java.util.*
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
+    private var llUploadImages: LinearLayout? = null
     private var lldate: LinearLayout? = null
     private var lllocation: LinearLayout? = null
     private var ll_Todate: LinearLayout? = null
     private var llFollowdate: LinearLayout? = null
     private var llNeedTransfer: LinearLayout? = null
-
+    private var llLocDetail: LinearLayout? = null
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
@@ -83,40 +80,31 @@ import java.util.*
     private var txtLocation: TextView? = null
     private var txtok1: TextView? = null
     private var txtok2: TextView? = null
-
     private var edt_customer: EditText? = null
     private var edtCustname: EditText? = null
     private var edtCustphone: EditText? = null
     private var edtCustemail: EditText? = null
     private var edtCustaddress: EditText? = null
-
-
-
     private var img_search: ImageView? = null
     var date_Picker1: DatePicker? = null
     var date_Picker2: DatePicker? = null
-
     private var btnCustReset: Button? = null
     private var btnCustSubmit: Button? = null
     private var imCustclose: ImageView? = null
     private var imDateclose: ImageView? = null
     private var imFollowDateclose: ImageView? = null
     private var imProdclose: ImageView? = null
-
     private var CUSTOMER_SEARCH: Int? = 101
     private var SELECT_PRODUCT: Int? = 102
     private var SELECT_LOCATION: Int? = 103
-
     lateinit var leadThroughViewModel: LeadThroughViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
     lateinit var leadByViewModel: LeadByViewModel
     lateinit var mediaTypeViewModel: MediaTypeViewModel
-
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
     var recyLeadby: RecyclerView? = null
     var recyMediaType: RecyclerView? = null
-
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
     private val GALLERY = 1
@@ -131,26 +119,54 @@ import java.util.*
     lateinit var leadThroughArrayList : JSONArray
     lateinit var leadByArrayList : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
-
-
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
     var dialogMediaType : Dialog? = null
     var dialogCustSearch : Dialog? = null
-
      lateinit var customersearchViewModel: CustomerSearchViewModel
      lateinit var customerAddViewModel: CustomerAddViewModel
      lateinit var customerArrayList : JSONArray
-
-
      private var llfollowup: LinearLayout? = null
+     private var llMoreCommInfo: LinearLayout? = null
+
+    lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
+    lateinit var pinCodeArrayList : JSONArray
+    private var dialogPinCode : Dialog? = null
+    var recyPinCode: RecyclerView? = null
+
+    lateinit var countryViewModel: CountryViewModel
+    lateinit var countryArrayList : JSONArray
+    private var dialogCountry : Dialog? = null
+    var recyCountry: RecyclerView? = null
+
+    lateinit var stateViewModel: StateViewModel
+    lateinit var stateArrayList : JSONArray
+    private var dialogState : Dialog? = null
+    var recyState: RecyclerView? = null
+
+    lateinit var districtViewModel: DistrictViewModel
+    lateinit var districtArrayList : JSONArray
+    private var dialogDistrict : Dialog? = null
+    var recyDistrict: RecyclerView? = null
+
+    lateinit var postViewModel: PostViewModel
+    lateinit var postArrayList : JSONArray
+    private var dialogPost : Dialog? = null
+    var recyPost: RecyclerView? = null
+
+    private var edtPincode: EditText? = null
+    private var edtCountry: EditText? = null
+    private var edtState: EditText? = null
+    private var edtDistrict: EditText? = null
+    private var edtPost: EditText? = null
+    private var edtLandLine: EditText? = null
+    private var imgPinSearch: ImageView? = null
 
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
      private var edtProdpriority: EditText? = null
      private var edtProdstatus: EditText? = null
-
      private var edtFollowaction: EditText? = null
      private var edtFollowtype: EditText? = null
      private var edtFollowdate: EditText? = null
@@ -159,8 +175,6 @@ import java.util.*
      private var edtbranch: EditText? = null
      private var edtdepartment: EditText? = null
      private var edtEmployee: EditText? = null
-
-
      lateinit var productCategoryViewModel: ProductCategoryViewModel
      lateinit var productDetailViewModel: ProductDetailViewModel
      lateinit var productStatusViewModel: ProductStatusViewModel
@@ -171,7 +185,6 @@ import java.util.*
      lateinit var branchViewModel: BranchViewModel
      lateinit var departmentViewModel: DepartmentViewModel
      lateinit var employeeViewModel: EmployeeViewModel
-
      lateinit var prodCategoryArrayList : JSONArray
      lateinit var prodDetailArrayList : JSONArray
      lateinit var prodStatusArrayList : JSONArray
@@ -182,7 +195,6 @@ import java.util.*
      lateinit var branchArrayList : JSONArray
      lateinit var departmentArrayList : JSONArray
      lateinit var employeeArrayList : JSONArray
-
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
      private var dialogProdStatus : Dialog? = null
@@ -193,7 +205,6 @@ import java.util.*
      private var dialogBranch : Dialog? = null
      private var dialogDepartment : Dialog? = null
      private var dialogEmployee : Dialog? = null
-
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
@@ -205,20 +216,24 @@ import java.util.*
      var recyDeaprtment: RecyclerView? = null
      var recyEmployee: RecyclerView? = null
 
-
-
-
-
-
-     //GONE
+    private var tv_CustClick: TextView? = null
+    private var tv_ProductClick: TextView? = null
+    private var tv_LocationClick: TextView? = null
+    private var tv_DateClick: TextView? = null
+    private var tv_LeadFromClick: TextView? = null
+    private var tv_LeadThroughClick: TextView? = null
+    private var tv_LeadByClick: TextView? = null
+    private var tv_MediaTypeClick: TextView? = null
+    private var tv_UploadImage: TextView? = null
+    private var tv_MoreCommInfoClick: TextView? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
-
         var custDetailMode : String?= "1"
+        var moreCommInfoMode : String?= "1"
         var Customer_Mode : String?= ""
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
@@ -226,8 +241,13 @@ import java.util.*
         var Customer_Email : String?= ""
         var Customer_Address : String?= ""
         var strCustomer = ""
-
-
+        var strPincode = ""
+        var FK_Country = ""
+        var FK_States = ""
+        var FK_District = ""
+        var FK_Area = ""
+        var FK_Place = ""
+        var FK_Post = ""
         var locAddress : String?= ""
         var locCity : String?= ""
         var locState : String?= ""
@@ -236,12 +256,15 @@ import java.util.*
         var locKnownName : String?= ""
         var strLatitude : String?= ""
         var strLongitue : String?= ""
-
         var dateMode : String?= "1"  // GONE
         var dateFollowMode : String?= "1"  // GONE
-
         var custProdlMode : String?= "1" // GONE
-
+        var locationMode : String?= "1" // GONE
+        var leadfromMode : String?= "1" // GONE
+        var leadThroughMode : String?= "1" // GONE
+        var leadByMode : String?= "1" // GONE
+        var mediaTypeMode : String?= "1" // GONE
+        var uploadImageMode : String?= "1" // GONE
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
@@ -253,15 +276,10 @@ import java.util.*
         var ID_Branch : String = ""
         var ID_Department : String = ""
         var ID_Employee : String = ""
-
         var strQty : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
-
-
-
-
 
 
     }
@@ -278,6 +296,11 @@ import java.util.*
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
+        pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+        stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
+        districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -289,11 +312,8 @@ import java.util.*
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
-
         setRegViews()
-        //bottombarnav()
         clearData()
-
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -303,18 +323,14 @@ import java.util.*
                 edtEmployee!!.setText("")
                 ProductActivity.strNeedCheck = "1"
             } else {
-
                 llNeedTransfer!!.visibility = View.GONE
                 edtbarnchtype!!.setText("")
                 edtbranch!!.setText("")
                 edtdepartment!!.setText("")
                 edtEmployee!!.setText("")
                 strNeedCheck = "0"
-
-
             }
         }
-
     }
 
     private fun clearData() {
@@ -322,7 +338,6 @@ import java.util.*
         ID_LeadThrough = ""
         ID_CollectedBy = ""
         ID_MediaMaster = ""
-
         custDetailMode = "1"
         Customer_Mode = ""
         ID_Customer = ""
@@ -331,7 +346,13 @@ import java.util.*
         Customer_Email = ""
         Customer_Address = ""
         strCustomer = ""
-
+        strPincode = ""
+        FK_Country = ""
+        FK_States = ""
+        FK_District = ""
+        FK_Area = ""
+        FK_Place = ""
+        FK_Post = ""
         locAddress = ""
         locCity = ""
         locState = ""
@@ -340,26 +361,12 @@ import java.util.*
         locKnownName = ""
         strLatitude = ""
         strLongitue = ""
-
-
         edtProdcategory!!.setText("")
         edtProdproduct!!.setText("")
-//        edt_qty!!.setText("")
         edtProdpriority!!.setText("")
-//        edt_feedback!!.setText("")
         edtProdstatus!!.setText("")
         edtFollowaction!!.setText("")
         edtFollowtype!!.setText("")
-//        edt_date!!.setText("")
-//        edt_barnchtype!!.setText("")
-//        edt_branch!!.setText("")
-//        edt_department!!.setText("")
-//        edt_Employee!!.setText("")
-//
-//        switchTransfer!!.isChecked = false
-//        llfollowup!!.visibility = View.GONE
-//        llNeedTransfer!!.visibility = View.GONE
-
         ID_Category = ""
         ID_Product = ""
         strProdName = ""
@@ -367,12 +374,10 @@ import java.util.*
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
-
         ID_NextAction = ""
         ID_ActionType = ""
         strFollowupdate = ""
         strNeedCheck = "0"
-
         ID_BranchType = ""
         ID_Branch = ""
         ID_Department = ""
@@ -386,8 +391,7 @@ import java.util.*
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
         imFollowDateclose = findViewById<ImageView>(R.id.imFollowDateclose)
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
-
-        llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
+      //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
@@ -395,13 +399,15 @@ import java.util.*
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
+        llUploadImages = findViewById<LinearLayout>(R.id.llUploadImages)
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
         llFollowdate = findViewById<LinearLayout>(R.id.llFollowdate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llMoreCommInfo = findViewById<LinearLayout>(R.id.llMoreCommInfo)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
-
+        llLocDetail = findViewById<LinearLayout>(R.id.llLocDetail)
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
@@ -412,33 +418,46 @@ import java.util.*
         txtLocation = findViewById<TextView>(R.id.txtLocation)
         txtok1 = findViewById<TextView>(R.id.txtok1)
         txtok2 = findViewById<TextView>(R.id.txtok2)
-
-
         edt_customer = findViewById<EditText>(R.id.edt_customer)
-
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
         edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
-
         edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
         edtFollowtype = findViewById<EditText>(R.id.edtFollowtype)
         edtFollowdate = findViewById<EditText>(R.id.edtFollowdate)
-
         edtbarnchtype = findViewById<EditText>(R.id.edtbarnchtype)
         edtbranch = findViewById<EditText>(R.id.edtbranch)
         edtdepartment = findViewById<EditText>(R.id.edtdepartment)
         edtEmployee = findViewById<EditText>(R.id.edtEmployee)
-
         switchTransfer = findViewById<Switch>(R.id.switchTransfer)
-
         edtCustname= findViewById<EditText>(R.id.edtCustname)
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
 
+        edtPincode= findViewById<EditText>(R.id.edtPincode)
+        edtCountry= findViewById<EditText>(R.id.edtCountry)
+        edtState= findViewById<EditText>(R.id.edtState)
+        edtDistrict= findViewById<EditText>(R.id.edtDistrict)
+        edtPost= findViewById<EditText>(R.id.edtPost)
+        edtLandLine= findViewById<EditText>(R.id.edtLandLine)
+
+        imgPinSearch= findViewById<ImageView>(R.id.imgPinSearch)
+
         btnCustReset = findViewById<Button>(R.id.btnCustReset)
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
+
+        tv_CustClick = findViewById<TextView>(R.id.tv_CustClick)
+        tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
+        tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
+        tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
+        tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
+        tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
+        tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
+        tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
+        tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
+        tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
 
 
         imback!!.setOnClickListener(this)
@@ -447,13 +466,11 @@ import java.util.*
         imDateclose!!.setOnClickListener(this)
         imFollowDateclose!!.setOnClickListener(this)
         imProdclose!!.setOnClickListener(this)
-
         btnCustReset!!.setOnClickListener(this)
         btnCustSubmit!!.setOnClickListener(this)
         txtok1!!.setOnClickListener(this)
         txtok2!!.setOnClickListener(this)
-
-        llCustomer!!.setOnClickListener(this)
+       // llCustomer!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
@@ -465,12 +482,10 @@ import java.util.*
         imgvupload2 = findViewById(R.id.imgv_upload2)
         imgvupload1!!.setOnClickListener(this)
         imgvupload2!!.setOnClickListener(this)
-
         edtProdcategory!!.setOnClickListener(this)
         edtProdproduct!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
         edtProdstatus!!.setOnClickListener(this)
-
         edtFollowaction!!.setOnClickListener(this)
         edtFollowtype!!.setOnClickListener(this)
         edtFollowdate!!.setOnClickListener(this)
@@ -478,12 +493,34 @@ import java.util.*
         edtbranch!!.setOnClickListener(this)
         edtdepartment!!.setOnClickListener(this)
         edtEmployee!!.setOnClickListener(this)
+        tv_CustClick!!.setOnClickListener(this)
+        tv_ProductClick!!.setOnClickListener(this)
+        tv_LocationClick!!.setOnClickListener(this)
+        tv_DateClick!!.setOnClickListener(this)
+        tv_LeadFromClick!!.setOnClickListener(this)
+        tv_LeadThroughClick!!.setOnClickListener(this)
+        tv_LeadByClick!!.setOnClickListener(this)
+        tv_MediaTypeClick!!.setOnClickListener(this)
+        tv_UploadImage!!.setOnClickListener(this)
+        tv_MoreCommInfoClick!!.setOnClickListener(this)
+        txtleadfrom!!.setOnClickListener(this)
+        txtleadthrough!!.setOnClickListener(this)
+        txtleadby!!.setOnClickListener(this)
+        txtMediatype!!.setOnClickListener(this)
+        txtDate!!.setOnClickListener(this)
+        txtLocation!!.setOnClickListener(this)
+
+        edtCountry!!.setOnClickListener(this)
+        edtState!!.setOnClickListener(this)
+        edtDistrict!!.setOnClickListener(this)
+        edtPost!!.setOnClickListener(this)
+        imgPinSearch!!.setOnClickListener(this)
+
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtDate!!.setText(currentDate)
         txtDate!!.setText(currentDate)
-
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
         date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
@@ -495,21 +532,95 @@ import java.util.*
             R.id.imback->{
                 finish()
             }
-            R.id.llCustomer->{
-//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-//                CUSTOMER_SEARCH?.let { startActivityForResult(intent, it) } // Activity is started with requestCode 2
-//                val intent = Intent(this@LeadGenerationActivity, CustomerSearchActivity::class.java)
-//                startActivityForResult(intent, CUSTOMER_SEARCH!!);
-
+//            R.id.llCustomer->{
+//                if (custDetailMode.equals("0")){
+//                    llCustomerDetail!!.visibility = View.GONE
+//                    custDetailMode = "1"
+//                }else{
+//                    llCustomerDetail!!.visibility = View.VISIBLE
+//                    custDetailMode = "0"
+//                }
+//            }
+            R.id.tv_CustClick->{
                 if (custDetailMode.equals("0")){
                     llCustomerDetail!!.visibility = View.GONE
                     custDetailMode = "1"
                 }else{
                     llCustomerDetail!!.visibility = View.VISIBLE
-                    custDetailMode = "0"
-                }
+                    //custDetailMode = "0"
 
+                    custDetailMode = "0"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
             }
+
+            R.id.tv_MoreCommInfoClick->{
+                if (moreCommInfoMode.equals("0")){
+                    llMoreCommInfo!!.visibility = View.GONE
+                    moreCommInfoMode = "1"
+                }else{
+                    llMoreCommInfo!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "0"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+            }
+
+            R.id.imgPinSearch->{
+                Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                try {
+                    strPincode = edtPincode!!.text.toString()
+                    if (strPincode.equals("")){
+                        val snackbar: Snackbar = Snackbar.make(v, "Enter Pincode", Snackbar.LENGTH_LONG)
+                        snackbar.setActionTextColor(Color.WHITE)
+                        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                        snackbar.show()
+
+                    }else{
+                        getPinCodeSearch(strPincode)
+                    }
+                }catch (e  :Exception){
+                    Log.e("TAG","Exception  64   "+e.toString())
+                }
+            }
+
+            R.id.edtCountry->{
+                Log.e(TAG,"edtCountry  549  ")
+                getCountry(v)
+            }
+
+            R.id.edtState->{
+                getState(v)
+            }
+
+            R.id.edtDistrict->{
+                getDistrict(v)
+            }
+            R.id.edtPost->{
+                getPost(v)
+            }
+
             R.id.llleadthrough->{
                 if (ID_LeadFrom.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
@@ -559,18 +670,69 @@ import java.util.*
 
             }
 
-            R.id.llproduct->{
+//            R.id.llproduct->{
+//
+//
+////                val intent = Intent(this@LeadGenerationActivity, ProductActivity::class.java)
+////                startActivityForResult(intent, SELECT_PRODUCT!!);
+//
+//                if (custProdlMode.equals("0")){
+//                    llProdDetail!!.visibility = View.GONE
+//                    custProdlMode = "1"
+//                }else{
+//                    llProdDetail!!.visibility = View.VISIBLE
+//                    custProdlMode = "0"
+//                }
+//
+//            }
 
-
-//                val intent = Intent(this@LeadGenerationActivity, ProductActivity::class.java)
-//                startActivityForResult(intent, SELECT_PRODUCT!!);
+            R.id.tv_ProductClick->{
 
                 if (custProdlMode.equals("0")){
                     llProdDetail!!.visibility = View.GONE
                     custProdlMode = "1"
                 }else{
                     llProdDetail!!.visibility = View.VISIBLE
+                   // custProdlMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
                     custProdlMode = "0"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+
+            }
+
+               R.id.tv_LocationClick->{
+
+                if (locationMode.equals("0")){
+                    llLocDetail!!.visibility = View.GONE
+                    locationMode = "1"
+                }else{
+                    llLocDetail!!.visibility = View.VISIBLE
+                    //locationMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "0"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
                 }
 
             }
@@ -578,22 +740,184 @@ import java.util.*
             R.id.llmediatype->{
                 getMediaType()
             }
-            R.id.lldate->{
+//            R.id.lldate->{
+//               // datePickerPopup()
+//                if (dateMode.equals("0")){
+//                    ll_Todate!!.visibility = View.GONE
+//                    dateMode = "1"
+//                }else{
+//                    ll_Todate!!.visibility = View.VISIBLE
+//                    dateMode = "0"
+//                }
+//            }
+             R.id.tv_DateClick->{
                // datePickerPopup()
                 if (dateMode.equals("0")){
                     ll_Todate!!.visibility = View.GONE
                     dateMode = "1"
                 }else{
                     ll_Todate!!.visibility = View.VISIBLE
+                   // dateMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
                     dateMode = "0"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+                    hideViews()
                 }
             }
+            R.id.txtDate->{
+                datePickerPopup()
+            }
+
+             R.id.tv_LeadFromClick->{
+                 if (leadfromMode.equals("0")){
+                     llLeadFrom!!.visibility = View.GONE
+                     leadfromMode = "1"
+                 }else{
+                     llLeadFrom!!.visibility = View.VISIBLE
+                     //leadfromMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "0"
+                     leadThroughMode = "1"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
+                 }
+            }
+
+
+
+            R.id.txtleadfrom->{
+                getLeadFrom(v)
+            }
+
+            R.id.tv_LeadThroughClick->{
+                 if (leadThroughMode.equals("0")){
+                     llleadthrough!!.visibility = View.GONE
+                     leadThroughMode = "1"
+                 }else{
+                     llleadthrough!!.visibility = View.VISIBLE
+                    // leadThroughMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
+                     leadThroughMode = "0"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
+                 }
+            }
+
+            R.id.txtleadthrough->{
+                getLeadThrough(v)
+            }
+
+            R.id.tv_LeadByClick->{
+                 if (leadByMode.equals("0")){
+                     llleadby!!.visibility = View.GONE
+                     leadByMode = "1"
+                 }else{
+                     llleadby!!.visibility = View.VISIBLE
+                    // leadByMode = "0"
+
+                     custDetailMode = "1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
+                     leadThroughMode = "1"
+                     leadByMode = "0"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
+                 }
+            }
+
+            R.id.txtleadby->{
+                getLeadBy(v)
+            }
+
+            R.id.tv_MediaTypeClick->{
+                if (mediaTypeMode.equals("0")){
+                    llmediatype!!.visibility = View.GONE
+                    mediaTypeMode = "1"
+                }else{
+                    llmediatype!!.visibility = View.VISIBLE
+                  //  mediaTypeMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "0"
+                    uploadImageMode = "1"
+                    hideViews()
+                }
+            }
+
+            R.id.txtMediatype->{
+                getMediaType()
+            }
+
+             R.id.tv_UploadImage->{
+                if (uploadImageMode.equals("0")){
+                    llUploadImages!!.visibility = View.GONE
+                    uploadImageMode = "1"
+                }else{
+                    llUploadImages!!.visibility = View.VISIBLE
+                   // uploadImageMode = "0"
+
+                    custDetailMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "0"
+
+                    hideViews()
+                }
+            }
+
 
             R.id.lllocation->{
 
                 val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
                 startActivityForResult(intent, SELECT_LOCATION!!);
             }
+
+            R.id.txtLocation->{
+
+                val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
+            }
+
 
             R.id.img_search->{
                 try {
@@ -622,9 +946,10 @@ import java.util.*
                 edtCustemail!!.setText("")
                 edtCustaddress!!.setText("")
                 custDetailMode = "1"
+                moreCommInfoMode = "1"
                 ID_Customer = ""
                 edt_customer!!.setText("")
-                custDetailMode = "1"
+                moreCommInfoMode = "1"
                 Customer_Mode = ""
                 ID_Customer  = ""
                 Customer_Name  = ""
@@ -777,6 +1102,46 @@ import java.util.*
             }
 
         }
+    }
+
+
+
+
+    private fun hideViews() {
+
+        if (custDetailMode.equals("1")){
+            llCustomerDetail!!.visibility = View.GONE
+        }
+        if (moreCommInfoMode.equals("1")){
+            llMoreCommInfo!!.visibility = View.GONE
+        }
+        if (custProdlMode.equals("1")){
+            llProdDetail!!.visibility = View.GONE
+        }
+        if (locationMode.equals("1")){
+            llLocDetail!!.visibility = View.GONE
+        }
+        if (dateMode.equals("1")){
+            ll_Todate!!.visibility = View.GONE
+        }
+        if (leadfromMode.equals("1")){
+            llLeadFrom!!.visibility = View.GONE
+        }
+        if (leadThroughMode.equals("1")){
+            llleadthrough!!.visibility = View.GONE
+        }
+        if (leadByMode.equals("1")){
+            llleadby!!.visibility = View.GONE
+        }
+
+        if (mediaTypeMode.equals("1")){
+            llmediatype!!.visibility = View.GONE
+        }
+        if (uploadImageMode.equals("1")){
+            llUploadImages!!.visibility = View.GONE
+        }
+
+
     }
 
     private fun datePickerPopup() {
@@ -1471,7 +1836,9 @@ import java.util.*
             }
 
         } else if (requestCode == CAMERA) {
-            try {
+
+            if (data != null){
+                   try {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -1562,6 +1929,8 @@ import java.util.*
                 e.printStackTrace()
                 Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
             }
+            }
+
         }
     }
     private fun choosePhotoFromGallary() {
@@ -1569,16 +1938,52 @@ import java.util.*
         startActivityForResult(galleryIntent, GALLERY)
     }
     private fun showPictureDialog() {
-        val pictureDialog = AlertDialog.Builder(this)
-        pictureDialog.setTitle("Select From")
-        val pictureDialogItems = arrayOf("Gallery", "Camera")
-        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
-            when (which) {
-                0 -> choosePhotoFromGallary()
-                1 -> takePhotoFromCamera()
-            }
+
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val pictureDialog = AlertDialog.Builder(this)
+                    pictureDialog.setTitle("Select From")
+                    val pictureDialogItems = arrayOf("Gallery", "Camera")
+                    pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+                        when (which) {
+                            0 -> choosePhotoFromGallary()
+                            1 -> takePhotoFromCamera()
+                        }
+                    }
+                    pictureDialog.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                 CAMERA
+            )
+        }catch (e : Exception){
+
         }
-        pictureDialog.show()
+
     }
 
     private fun checkCamera(): Boolean {
@@ -1616,6 +2021,7 @@ import java.util.*
         }
         return path
     }
+
 
 
      private fun getCustomerSearch() {
@@ -1695,6 +2101,381 @@ import java.util.*
              e.printStackTrace()
          }
      }
+
+    private fun getPinCodeSearch(strPincode: String) {
+        var pinCodeDet = 0
+        clearCommunicationInfo()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                pinCodeSearchViewModel.getPincode(this,strPincode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+
+                        try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                 if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   21081   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("PincodeDetails")
+
+                                    FK_Country  = jobjt.getString("FK_Country")
+                                    FK_States   = jobjt.getString("FK_States")
+                                    FK_District = jobjt.getString("FK_District")
+                                    FK_Area     = jobjt.getString("FK_Area")
+                                    FK_Place    = jobjt.getString("FK_Place")
+                                    FK_Post     = jobjt.getString("FK_Post")
+
+                                    edtCountry!!.setText(jobjt.getString("Country"))
+                                    edtState!!.setText(jobjt.getString("States"))
+                                    edtDistrict!!.setText(jobjt.getString("District"))
+                                    edtPost!!.setText(jobjt.getString("Post"))
+
+                                    Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
+//                                if (pinCodeArrayList.length()>0){
+//                                    if (pinCodeDet == 0){
+//                                        pinCodeDet++
+//                                        pincodeDetailPopup(pinCodeArrayList)
+//                                    }
+//
+//                                }
+
+
+                                } else {
+
+                                    clearCommunicationInfo()
+
+                                    clearCommunicationInfo()
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                clearCommunicationInfo()
+                            }
+                          //  }
+
+
+                        }catch (e: Exception){
+
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun clearCommunicationInfo() {
+        FK_Country  = ""
+        FK_States   = ""
+        FK_District = ""
+        FK_Area     = ""
+        FK_Place    = ""
+        FK_Post     = ""
+
+        edtCountry!!.setText("")
+        edtState!!.setText("")
+        edtDistrict!!.setText("")
+        edtPost!!.setText("")
+        edtLandLine!!.setText("")
+    }
+
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+//            dialogPinCode = Dialog(this)
+//            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+//            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+//            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+//
+//            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+//            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PicodeDetailAdapter(this@LeadGenerationActivity, pinCodeArrayList)
+//            recyPincodeDetails!!.adapter = adapter
+//            adapter.setClickListener(this@LeadGenerationActivity)
+//
+//            dialogPinCode!!.show()
+//            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCountry(v: View) {
+        var countryDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                countryViewModel.getCountry(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2151   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (countryDet == 0){
+//                                        countryDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getState(v: View) {
+
+        var stateDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                stateViewModel.getState(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2219   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (stateDet == 0){
+//                                        stateDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getDistrict(v: View) {
+        var distDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                districtViewModel.getDistrict(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2286   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (distDet == 0){
+//                                        distDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getPost(v: View) {
+        var distDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                postViewModel.getPost(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2353   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                if (prodCategoryArrayList.length()>0){
+//                                    if (distDet == 0){
+//                                        distDet++
+//                                        productCategoryPopup(prodCategoryArrayList)
+//                                    }
+//
+//                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
      private fun validations(v: View) {
 
@@ -2597,6 +3378,7 @@ import java.util.*
             dialogCustSearch!!.dismiss()
             val jsonObject = customerArrayList.getJSONObject(position)
             txtcustomer!!.text = jsonObject!!.getString("Name")
+            edt_customer!!.setText(jsonObject!!.getString("Name"))
 
             custDetailMode = "1"
             Customer_Mode     = "1"  // SEARCH

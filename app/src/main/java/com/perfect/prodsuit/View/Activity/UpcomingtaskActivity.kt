@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.View.Adapter.UpcmngtaskListAdapter
 import com.perfect.prodsuit.Viewmodel.UpcomingtasksListViewModel
 import org.json.JSONArray
@@ -66,7 +67,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                     rv_upcmngtasklist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_upcmngtasklist!!.setHasFixedSize(true)
-                                    val adapter = UpcmngtaskListAdapter(applicationContext, upcmngtaskArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList)
                                     rv_upcmngtasklist!!.adapter = adapter
                                     adapter.setClickListener(this@UpcomingtaskActivity)
 
@@ -108,7 +109,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     override fun onClick(position: Int, data: String) {
-        if (data.equals("upcoming")){
+        if (data.equals("todolist")){
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             val i = Intent(this@UpcomingtaskActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())

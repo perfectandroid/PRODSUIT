@@ -1,183 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:id="@+id/lToDoList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:id="@+id/lToDoList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
-                <LinearLayout
+
+                <TextView
+                    android:id="@+id/tv_leadno"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="12dp"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="@drawable/btn_bgcolouryellow"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/impreference"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/txtv_preference"
+                    android:fontFamily="@font/myfont"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Date                   : "
-                        android:maxLines="5"
-                        android:textStyle="bold"
-                        android:id="@+id/txtv_dte" />
-                    <TextView
-                        android:id="@+id/txtv_dte1"
-                        android:padding="10dp"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:text=""
-                        android:maxLines="5"
-                        android:textColor="@color/black"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="10dp"
+                    android:drawablePadding="10dp"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/txtv_date"
+                    android:fontFamily="@font/myfont"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Customer          : "
-                        android:maxLines="5"
-                        android:textStyle="bold"
-                        android:id="@+id/txtv_cu" />
-                    <TextView
-                        android:id="@+id/tv_custmr"
-                        android:padding="10dp"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:text=""
-                        android:maxLines="5"
-                        android:textColor="@color/black"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Product              : "
-                        android:maxLines="5"
-                        android:textStyle="bold"
-                        android:id="@+id/txtv_prdct" />
-                    <TextView
-                        android:id="@+id/txtv_prdctnme"
-                        android:padding="10dp"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:text=""
-                        android:maxLines="5"
-                        android:textColor="@color/black"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Collected By     : "
-                        android:maxLines="5"
-                        android:textStyle="bold"
-                        android:id="@+id/txtv_clct" />
-                    <TextView
-                        android:id="@+id/txtv_clct1"
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text=""
-                        android:maxLines="5"
-                        android:textColor="@color/black"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Assigned To      : "
-                        android:maxLines="5"
-                        android:textStyle="bold"
-                        android:id="@+id/txtv_asgnd" />
-                    <TextView
-                        android:id="@+id/txtv_asgndto"
-                        android:padding="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="15dp"
-                        android:fontFamily="@font/myfont"
-                        android:text=""
-                        android:maxLines="5"
-                        android:textColor="@color/black"
-                        />
-
-                </LinearLayout>
-
-
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="10dp"
+                    android:drawablePadding="10dp"
+                    android:layout_margin="5dp"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imCart"
-                android:padding="3dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/arrowright"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:visibility="visible"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_custmr"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textSize="12dp"
+                    android:drawableLeft="@drawable/addressicon"
+                    android:drawablePadding="10dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/tv_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:drawableLeft="@drawable/trolley"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="left|center"
+                    android:textColor="@color/black"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_nextdate"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="10dp"
+                    android:drawableLeft="@drawable/deadline"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey"/>
+                <TextView
+                    android:id="@+id/txtv_collectedby"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:textSize="10dp"
+                    android:drawablePadding="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.2"
+                android:background="@color/grey"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imcall"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/phonecallicon"
+                    android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/immessage"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/messageicon"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -597,10 +597,10 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:scrollbars="horizontal"
-                            app:tabIndicatorColor="@color/colorPrimary"
                             app:tabTextColor="@color/black"
                             android:layout_marginRight="10dp"
-                            android:layout_marginLeft="10dp"/>
+                            android:layout_marginLeft="10dp"
+                            app:tabTextAppearance="@style/customfontstyle"/>
 
 
                         <LinearLayout

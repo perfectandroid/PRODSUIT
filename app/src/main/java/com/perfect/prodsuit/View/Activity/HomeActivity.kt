@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.CalendarContract
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.CubeInScalingAnimation
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.Viewmodel.BannerListViewModel
@@ -33,6 +35,10 @@ import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.graphics.drawable.AnimationDrawable
+
+
+
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -395,6 +401,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun getBannerlist() {
+        var bannerDetail = 0
         context = this@HomeActivity
         bannerListViewModel = ViewModelProvider(this).get(BannerListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -415,25 +422,36 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
 
                                 val jresult = jsonObj.getJSONArray("BannerDetailsList")
+                                if (jresult.length()>0){
+                                    if (bannerDetail == 0){
+                                        bannerDetail++
 
-                                for (i in 0 until jresult!!.length()) {
-                                    try {
-                                        val json = jresult!!.getJSONObject(i)
+                                        for (i in 0 until jresult!!.length()) {
+                                            try {
+                                                val json = jresult!!.getJSONObject(i)
+                                                var s = ""+ json.getString("ImagePath")
 
-                                        var s = ""+ json.getString("ImagePath")
+                                                XMENArray!!.add(s)
+                                                mPager!!.adapter = BannerAdapter(
+                                                    this@HomeActivity,
+                                                    XMENArray
+                                                )
+                                                indicator!!.setViewPager(mPager)
 
-                                        XMENArray!!.add(s)
-                                        mPager!!.adapter = BannerAdapter(
-                                            this@HomeActivity,
-                                            XMENArray
-                                        )
-                                        indicator!!.setViewPager(mPager)
+
+                                            }catch (e  :Exception){
+
+                                            }
+                                        }
+                                      //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
                                         val handler = Handler()
                                         val Update = Runnable {
-                                            if (currentPage === jresult!!.length()) {
+                                            Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                            if (currentPage == jresult!!.length()) {
                                                 currentPage = 0
                                             }
                                             mPager!!.setCurrentItem(currentPage++, true)
+
                                         }
                                         val swipeTimer = Timer()
                                         swipeTimer.schedule(object : TimerTask() {
@@ -441,10 +459,42 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                                 handler.post(Update)
                                             }
                                         }, 3000, 3000)
-                                    } catch (e: JSONException) {
-                                        e.printStackTrace()
+
+
+//                                        for (i in 0 until jresult!!.length()) {
+//                                            try {
+//                                                val json = jresult!!.getJSONObject(i)
+//
+//                                                var s = ""+ json.getString("ImagePath")
+//
+//                                                XMENArray!!.add(s)
+//                                                mPager!!.adapter = BannerAdapter(
+//                                                    this@HomeActivity,
+//                                                    XMENArray
+//                                                )
+//                                                indicator!!.setViewPager(mPager)
+//                                                val handler = Handler()
+//                                                val Update = Runnable {
+//                                                    Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+//                                                    if (currentPage == jresult!!.length()) {
+//                                                        currentPage = 0
+//                                                    }
+//                                                    mPager!!.setCurrentItem(currentPage++, true)
+//                                                }
+//                                                val swipeTimer = Timer()
+//                                                swipeTimer.schedule(object : TimerTask() {
+//                                                    override fun run() {
+//                                                        handler.post(Update)
+//                                                    }
+//                                                }, 3000, 3000)
+//                                            } catch (e: JSONException) {
+//                                                e.printStackTrace()
+//                                            }
+//
+//                                        }
                                     }
                                 }
+
                             }
                            else {
                                 val builder = AlertDialog.Builder(

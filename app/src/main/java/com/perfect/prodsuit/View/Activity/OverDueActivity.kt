@@ -69,7 +69,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     rv_overduelist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_overduelist!!.setHasFixedSize(true)
-                                    val adapter = OverdueListAdapter(applicationContext, overdueArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList)
                                     rv_overduelist!!.adapter = adapter
                                     adapter.setClickListener(this@OverDueActivity)
                                 } else {
@@ -110,7 +110,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     }
 
     override fun onClick(position: Int, data: String) {
-        if (data.equals("overdue")){
+        if (data.equals("todolist")){
             val jsonObject = overdueArrayList.getJSONObject(position)
             val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())

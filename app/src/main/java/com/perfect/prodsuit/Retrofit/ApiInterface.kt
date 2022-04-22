@@ -109,6 +109,9 @@ interface ApiInterface {
     @POST("UserValidations/NotificationDetailsList")
     fun getNotification(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/PincodeDetails")
+    fun getPincodeDetails(@Body body: RequestBody): Call<String>
+
 
 
 
