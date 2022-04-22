@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -28,6 +29,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.SiteVisitActivity.Companion.encode1
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -165,6 +167,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
+     private var edtProdqty: EditText? = null
+     private var edtProdfeedback: EditText? = null
      private var edtProdpriority: EditText? = null
      private var edtProdstatus: EditText? = null
      private var edtFollowaction: EditText? = null
@@ -237,7 +241,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_MediaMaster : String?= ""
         var custDetailMode : String?= "1"
         var moreCommInfoMode : String?= "1"
-        var Customer_Mode : String?= ""
+        var Customer_Mode : String?= "0"
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
@@ -280,9 +284,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_Department : String = ""
         var ID_Employee : String = ""
         var strQty : String = ""
+        var strDate : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
+        var strMoreLandPhone : String = ""
+
+        var encode1 : String = ""
+        var encode2 : String = ""
 
 
     }
@@ -324,7 +333,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 edtbranch!!.setText("")
                 edtdepartment!!.setText("")
                 edtEmployee!!.setText("")
-                ProductActivity.strNeedCheck = "1"
+                strNeedCheck = "1"
             } else {
                 llNeedTransfer!!.visibility = View.GONE
                 edtbarnchtype!!.setText("")
@@ -342,7 +351,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_CollectedBy = ""
         ID_MediaMaster = ""
         custDetailMode = "1"
-        Customer_Mode = ""
+        Customer_Mode = "0"
         ID_Customer = ""
         Customer_Name = ""
         Customer_Mobile = ""
@@ -366,6 +375,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         strLongitue = ""
         edtProdcategory!!.setText("")
         edtProdproduct!!.setText("")
+        edtProdqty!!.setText("")
+        edtProdfeedback!!.setText("")
         edtProdpriority!!.setText("")
         edtProdstatus!!.setText("")
         edtFollowaction!!.setText("")
@@ -374,6 +385,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Product = ""
         strProdName = ""
         strQty = ""
+        strDate = ""
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
@@ -385,6 +397,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Branch = ""
         ID_Department = ""
         ID_Employee = ""
+        strMoreLandPhone = ""
+
+        encode1 = ""
+        encode2 = ""
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        txtDate!!.setText(currentDate)
+        strDate = currentDate
     }
 
     private fun setRegViews() {
@@ -424,6 +445,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
+        edtProdqty = findViewById<EditText>(R.id.edtProdqty)
+        edtProdfeedback = findViewById<EditText>(R.id.edtProdfeedback)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
         edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
         edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
@@ -526,10 +549,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         btnSubmit!!.setOnClickListener(this)
 
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        txtDate!!.setText(currentDate)
-        txtDate!!.setText(currentDate)
+
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
         date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
@@ -946,26 +966,26 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnCustSubmit->{
-                validations(v)
+               // validations(v)
             }
             R.id.btnCustReset->{
 
-                edtCustname!!.setText("")
-                edtCustphone!!.setText("")
-                edtCustemail!!.setText("")
-                edtCustaddress!!.setText("")
-                custDetailMode = "1"
-                moreCommInfoMode = "1"
-                ID_Customer = ""
-                edt_customer!!.setText("")
-                moreCommInfoMode = "1"
-                Customer_Mode = ""
-                ID_Customer  = ""
-                Customer_Name  = ""
-                Customer_Mobile = ""
-                Customer_Email = ""
-                Customer_Address = ""
-                strCustomer = ""
+//                edtCustname!!.setText("")
+//                edtCustphone!!.setText("")
+//                edtCustemail!!.setText("")
+//                edtCustaddress!!.setText("")
+//                custDetailMode = "1"
+//                moreCommInfoMode = "1"
+//                ID_Customer = ""
+//                edt_customer!!.setText("")
+//                moreCommInfoMode = "1"
+//                Customer_Mode = "0"
+//                ID_Customer  = ""
+//                Customer_Name  = ""
+//                Customer_Mobile = ""
+//                Customer_Email = ""
+//                Customer_Address = ""
+//                strCustomer = ""
             }
 
             R.id.imCustclose->{
@@ -1003,6 +1023,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         strMonth ="0"+strMonth
                     }
                     txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strDate = strDay+"-"+strMonth+"-"+strYear
                     ll_Todate!!.visibility=View.GONE
                     dateMode = "1"
                 }
@@ -1028,6 +1049,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         strMonth ="0"+strMonth
                     }
                     edtFollowdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strFollowupdate = strDay+"-"+strMonth+"-"+strYear
                     llFollowdate!!.visibility=View.GONE
                     dateFollowMode = "1"
                 }
@@ -1115,7 +1137,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnSubmit->{
-
+                LeadValidations(v)
             }
 
         }
@@ -1197,6 +1219,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
 
                 txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                strDate = strDay+"-"+strMonth+"-"+strYear
 
 
             }
@@ -1792,14 +1815,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
         if (requestCode == CUSTOMER_SEARCH){
             if (data!=null){
-                txtcustomer!!.text = data!!.getStringExtra("Name")
-
-                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
-                ID_Customer       = data!!.getStringExtra("ID_Customer")
-                Customer_Name     = data!!.getStringExtra("Name")
-                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
-                Customer_Email    = data!!.getStringExtra("Email")
-                Customer_Address  = data!!.getStringExtra("Address")
+//                txtcustomer!!.text = data!!.getStringExtra("Name")
+//
+//                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
+//                ID_Customer       = data!!.getStringExtra("ID_Customer")
+//                Customer_Name     = data!!.getStringExtra("Name")
+//                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
+//                Customer_Email    = data!!.getStringExtra("Email")
+//                Customer_Address  = data!!.getStringExtra("Address")
             }
 
         }
@@ -3542,7 +3565,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdStatus!!.dismiss()
              val jsonObject = prodStatusArrayList.getJSONObject(position)
              Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-             ProductActivity.ID_Status = jsonObject.getString("ID_Status")
+             ID_Status = jsonObject.getString("ID_Status")
              edtProdstatus!!.setText(jsonObject.getString("StatusName"))
 
              edtFollowaction!!.setText("")
@@ -3555,6 +3578,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  val sdf = SimpleDateFormat("dd-MM-yyyy")
                  val currentDate = sdf.format(Date())
                  edtFollowdate!!.setText(currentDate)
+                 strFollowupdate = currentDate
                  switchTransfer!!.isChecked = false
 
              }else{
@@ -3698,4 +3722,218 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
 
      }
+
+    private fun LeadValidations(v : View) {
+        Log.e(TAG,"LeadValidations  3732   "+ ID_Customer+"  "+ID_Customer!!.length)
+        if (ID_Customer!!.equals("")){
+            Customer_Mode = "0"
+            Customer_Name = edtCustname!!.text.toString()
+            Customer_Mobile = edtCustphone!!.text.toString()
+            Customer_Email = edtCustemail!!.text.toString()
+            Customer_Address = edtCustaddress!!.text.toString()
+          //  Config.snackBars(context,v,"Search OR Add Customer ")
+            if (Customer_Name.equals("")){
+                Config.snackBars(context,v,"Enter Customer Name")
+            }
+            else if (Customer_Mobile.equals("")){
+                Config.snackBars(context,v,"Enter Customer Mobile")
+            }
+            else if (Customer_Email.equals("")){
+                Config.snackBars(context,v,"Enter Customer Email")
+            }
+            else if (Customer_Address.equals("")){
+                Config.snackBars(context,v,"Enter Customer Address")
+            }
+            else{
+                MoreValidations(v)
+            }
+        }
+        else{
+            Customer_Mode = "1"
+            MoreValidations(v)
+        }
+
+    }
+
+    private fun MoreValidations(v: View) {
+
+        Log.e(TAG,"LeadValidations  37321"
+                +"\n"+"Customer_Mode     : "+Customer_Mode
+                +"\n"+"ID_Customer       : "+ID_Customer
+                +"\n"+"Customer_Name     : "+ Customer_Name
+                +"\n"+"Customer_Mobile   : "+ Customer_Mobile
+                +"\n"+"Customer_Email    : "+ Customer_Email
+                +"\n"+"Customer_Address  : "+ Customer_Address)
+
+        strMoreLandPhone = edtLandLine!!.text.toString()
+
+        if (FK_Country.equals("")){
+            Config.snackBars(context,v,"Select Country")
+        }
+        else if (FK_States.equals("")){
+            Config.snackBars(context,v,"Select State")
+        }
+        else if (FK_District.equals("")){
+            Config.snackBars(context,v,"Select District")
+        }
+        else if (FK_Post.equals("")){
+            Config.snackBars(context,v,"Select Post")
+        }
+        else if (strMoreLandPhone.equals("")){
+            Config.snackBars(context,v,"Enter LandLine")
+        }
+        else{
+            ProductValidations(v)
+        }
+
+
+    }
+
+    private fun ProductValidations(v: View) {
+        Log.e(TAG,"MoreValidations  37322"
+                +"\n"+"FK_Country        : "+FK_Country
+                +"\n"+"FK_States         : "+FK_States
+                +"\n"+"FK_District       : "+ FK_District
+                +"\n"+"FK_Post           : "+ FK_Post
+                +"\n"+"strMoreLandPhone  : "+ strMoreLandPhone)
+        strQty = edtProdqty!!.text.toString()
+        strFeedback = edtProdfeedback!!.text.toString()
+        if (ID_Category.equals("")){
+            Config.snackBars(context,v,"Select Category")
+        }
+        else if (ID_Product.equals("")){
+            Config.snackBars(context,v,"Select Product")
+        }
+        else if (strQty.equals("")){
+            Config.snackBars(context,v,"Enter Quantity ")
+        }
+        else if (ID_Priority.equals("")){
+            Config.snackBars(context,v,"Select Priority")
+        }
+        else if (strFeedback.equals("")){
+            Config.snackBars(context,v,"Enter Feedback ")
+        }
+        else if (ID_Status.equals("")){
+            Config.snackBars(context,v,"Select Status")
+        }
+        else if (ID_Status.equals("1")){
+            Log.e(TAG,"ProductValidations  373221   "+ ID_Status)
+            if (ID_NextAction.equals("")){
+                Config.snackBars(context,v,"Select Followup Action")
+            }
+            else if (ID_ActionType.equals("")){
+                Config.snackBars(context,v,"Select Followup Action type")
+            }
+            else if (strFollowupdate.equals("")){
+                Config.snackBars(context,v,"Select Followup Date")
+            }
+            else{
+               if (strNeedCheck.equals("1")){
+                   if (ID_Branch.equals("")){
+                       Config.snackBars(context,v,"Select Branch")
+                   }
+                   else if (ID_BranchType.equals("")){
+                       Config.snackBars(context,v,"Select Branch Type")
+                   }
+                   else if (ID_Department.equals("")){
+                       Config.snackBars(context,v,"Select Department")
+                   }
+                   else if (ID_Employee.equals("")){
+                       Config.snackBars(context,v,"Select Employee")
+                   }
+                   else{
+                       LocationValidation(v)
+                   }
+               }
+               else{
+                    LocationValidation(v)
+               }
+            }
+        }
+        else{
+            Log.e(TAG,"ProductValidations  373222   "+ ID_Status)
+            LocationValidation(v)
+        }
+    }
+
+    private fun LocationValidation(v: View) {
+        Log.e(TAG,"ProductValidations  37323"
+                +"\n"+"ID_Category        : "+ ID_Category
+                +"\n"+"ID_Product         : "+ ID_Product
+                +"\n"+"strQty             : "+ strQty
+                +"\n"+"ID_Priority        : "+ ID_Priority
+                +"\n"+"strFeedback        : "+ strFeedback
+                +"\n"+"ID_Status          : "+ ID_Status
+                +"\n"+"ID_NextAction      : "+ ID_NextAction
+                +"\n"+"ID_ActionType      : "+ ID_ActionType
+                +"\n"+"strFollowupdate    : "+ strFollowupdate
+                +"\n"+"strNeedCheck       : "+ strNeedCheck
+                +"\n"+"ID_Branch          : "+ ID_Branch
+                +"\n"+"ID_BranchType      : "+ ID_BranchType
+                +"\n"+"ID_Department      : "+ ID_Department
+                +"\n"+"ID_Employee        : "+ ID_Employee)
+
+        if (strLatitude.equals("") && strLongitue.equals("")){
+            Config.snackBars(context,v,"Select Location")
+        }
+        else if (strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (ID_LeadFrom.equals("")){
+            Config.snackBars(context,v,"Select Lead From")
+        }
+        else if (ID_LeadThrough.equals("")){
+            Config.snackBars(context,v,"Select Lead Through")
+        }
+        else if (ID_CollectedBy.equals("")){
+            Config.snackBars(context,v,"Select Lead By")
+        }
+        else if (ID_MediaMaster.equals("")){
+            Config.snackBars(context,v,"Select Media Type")
+        }
+        else{
+            Log.e(TAG,"LocationValidation  37324"
+                    +"\n"+"strLatitude        : "+ strLatitude
+                    +"\n"+"strLongitue        : "+ strLongitue
+                    +"\n"+"locAddress         : "+ locAddress+","+ locCity+","+ locState+","+ locCountry+","+ locpostalCode
+                    +"\n"+"strDate            : "+ strDate
+                    +"\n"+"ID_LeadFrom        : "+ ID_LeadFrom
+                    +"\n"+"ID_LeadThrough     : "+ ID_LeadThrough
+                    +"\n"+"ID_CollectedBy     : "+ ID_CollectedBy
+                    +"\n"+"ID_MediaMaster     : "+ ID_MediaMaster)
+
+            if(image1.equals(""))
+            {
+                encode1 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image1)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                } else {
+                    encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+            if(image2.equals(""))
+            {
+                encode2 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image2)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                } else {
+                    encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+        }
+    }
+
+
 }
