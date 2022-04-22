@@ -2236,12 +2236,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var countryDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
                 countryViewModel.getCountry(this)!!.observe(
                     this,
@@ -2252,16 +2252,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             Log.e(TAG,"msg   2252   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-//                                val jobjt = jObject.getJSONObject("CustomerDetailsList")
-//                                customerArrayList = jobjt.getJSONArray("CustomerDetails")
-//
-//                                if (prodCategoryArrayList.length()>0){
-//                                    if (countryDet == 0){
-//                                        countryDet++
-//                                        productCategoryPopup(prodCategoryArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("CountryDetails")
+                                countryArrayList = jobjt.getJSONArray("CountryDetailsList")
+
+                                if (countryArrayList.length()>0){
+                                    if (countryDet == 0){
+                                        countryDet++
+                                        countryListPopup(countryArrayList)
+                                    }
+
+                                }
 
 
                             } else {
@@ -2284,12 +2284,36 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+              //  progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun countryListPopup(countryArrayList: JSONArray) {
+        try {
+
+            dialogCountry = Dialog(this)
+            dialogCountry!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCountry!! .setContentView(R.layout.country_list_popup)
+            dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycCountry = dialogCountry!! .findViewById(R.id.recycCountry) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            recycCountry!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogCountry!!.show()
+            dialogCountry!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogCountry!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -3499,6 +3523,28 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
              ID_Employee = jsonObject.getString("ID_Employee")
              edtEmployee!!.setText(jsonObject.getString("EmpName"))
+
+
+         }
+
+         if (data.equals("countrydetail")){
+             dialogCountry!!.dismiss()
+             val jsonObject = countryArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
+             FK_Country = jsonObject.getString("FK_Country")
+             edtCountry!!.setText(jsonObject.getString("Country"))
+
+
+             FK_States   = ""
+             FK_District = ""
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
+             edtState!!.setText("")
+             edtDistrict!!.setText("")
+             edtPost!!.setText("")
+             edtLandLine!!.setText("")
 
 
          }

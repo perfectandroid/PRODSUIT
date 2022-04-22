@@ -23,7 +23,7 @@ import java.util.ArrayList
 
 object CountryRepository {
 
-    //private var progressDialog: ProgressDialog? = null
+    private var progressDialog: ProgressDialog? = null
     val coutrySetterGetter = MutableLiveData<CountryModel>()
     val TAG: String = "CountryRepository"
 
@@ -37,13 +37,13 @@ object CountryRepository {
         Log.e("TAG","getCountry  ")
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-//                R.drawable.progress))
-//            progressDialog!!.show()
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+                R.drawable.progress))
+            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -93,7 +93,7 @@ object CountryRepository {
                     Response<String>
                 ) {
                     try {
-                     //   progressDialog!!.dismiss()
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val country = ArrayList<CountryModel>()
                         country.add(CountryModel(response.body()))
@@ -101,16 +101,16 @@ object CountryRepository {
                         coutrySetterGetter.value = CountryModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                       // progressDialog!!.dismiss()
+                        progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                   // progressDialog!!.dismiss()
+                    progressDialog!!.dismiss()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-           // progressDialog!!.dismiss()
+            progressDialog!!.dismiss()
         }
 
     }
