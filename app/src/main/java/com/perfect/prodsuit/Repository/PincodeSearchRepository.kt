@@ -95,6 +95,7 @@ object PincodeSearchRepository {
                         Log.e(TAG,"response  95   "+response.body())
                         val jObject = JSONObject(response.body())
                         val pincode = ArrayList<PincodeSearchModel>()
+                        Log.e(TAG,"pincode  95   "+pincode)
                         pincode.add(PincodeSearchModel(response.body()))
                         val msg = pincode[0].message
                         pincodeSetterGetter.value = PincodeSearchModel(msg)

@@ -2159,6 +2159,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
 
+
+
+
+
                         try {
 //                            if (pinCodeDet == 0){
 //                                pinCodeDet++
@@ -3932,7 +3936,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
                 }
             }
+
+            Log.e(TAG,"LocationValidation  encode1  373241   "+ encode1)
+            Log.e(TAG,"LocationValidation  encode2  373241   "+ encode2)
+
+            saveLeadGeneration()
         }
+    }
+
+    private fun saveLeadGeneration() {
+
     }
 
 
