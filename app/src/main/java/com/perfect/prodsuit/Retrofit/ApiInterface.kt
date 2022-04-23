@@ -124,6 +124,9 @@ interface ApiInterface {
     @POST("UserValidations/PostDetails")
     fun getPostDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UpdateLeadGeneration")
+    fun saveUpdateLeadGeneration(@Body body: RequestBody): Call<String>
+
 
 
 

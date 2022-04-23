@@ -59,6 +59,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
     private var llCustomerDetail: LinearLayout? = null
+    private var llCompanyName: LinearLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
@@ -87,6 +88,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var edtCustphone: EditText? = null
     private var edtCustemail: EditText? = null
     private var edtCustaddress: EditText? = null
+    private var edtCompanyName: EditText? = null
     private var img_search: ImageView? = null
     var date_Picker1: DatePicker? = null
     var date_Picker2: DatePicker? = null
@@ -136,6 +138,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var pinCodeArrayList : JSONArray
     private var dialogPinCode : Dialog? = null
     var recyPinCode: RecyclerView? = null
+
+    lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
+    lateinit var saveLeadGenArrayList : JSONArray
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList : JSONArray
@@ -221,6 +226,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      var recyEmployee: RecyclerView? = null
 
     private var tv_CustClick: TextView? = null
+    private var tv_CompanyNameClick: TextView? = null
     private var tv_ProductClick: TextView? = null
     private var tv_LocationClick: TextView? = null
     private var tv_DateClick: TextView? = null
@@ -241,12 +247,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_MediaMaster : String?= ""
         var custDetailMode : String?= "1"
         var moreCommInfoMode : String?= "1"
+        var companyNameMode : String?= "1"
         var Customer_Mode : String?= "0"
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
         var Customer_Email : String?= ""
         var Customer_Address : String?= ""
+        var strComapnyName : String?= ""
         var strCustomer = ""
         var strPincode = ""
         var FK_Country = ""
@@ -309,6 +317,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
@@ -346,41 +355,38 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun clearData() {
-        ID_LeadFrom  = ""
-        ID_LeadThrough = ""
-        ID_CollectedBy = ""
-        ID_MediaMaster = ""
-        custDetailMode = "1"
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+
         Customer_Mode = "0"
         ID_Customer = ""
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
         Customer_Address = ""
+        edt_customer!!.setText("")
+        edtCustname!!.setText("")
+        edtCustphone!!.setText("")
+        edtCustemail!!.setText("")
+        edtCustaddress!!.setText("")
         strCustomer = ""
-        strPincode = ""
+        strComapnyName = ""
+
+        edtCompanyName!!.setText("")
+
         FK_Country = ""
         FK_States = ""
         FK_District = ""
         FK_Area = ""
         FK_Place = ""
         FK_Post = ""
-        locAddress = ""
-        locCity = ""
-        locState = ""
-        locCountry = ""
-        locpostalCode = ""
-        locKnownName = ""
-        strLatitude = ""
-        strLongitue = ""
-        edtProdcategory!!.setText("")
-        edtProdproduct!!.setText("")
-        edtProdqty!!.setText("")
-        edtProdfeedback!!.setText("")
-        edtProdpriority!!.setText("")
-        edtProdstatus!!.setText("")
-        edtFollowaction!!.setText("")
-        edtFollowtype!!.setText("")
+        edtPincode!!.setText("")
+        edtCountry!!.setText("")
+        edtState!!.setText("")
+        edtDistrict!!.setText("")
+        edtPost!!.setText("")
+        edtLandLine!!.setText("")
+
         ID_Category = ""
         ID_Product = ""
         strProdName = ""
@@ -397,15 +403,81 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Branch = ""
         ID_Department = ""
         ID_Employee = ""
+
+        edtProdcategory!!.setText("")
+        edtProdproduct!!.setText("")
+        edtProdqty!!.setText("")
+        edtProdfeedback!!.setText("")
+        edtProdpriority!!.setText("")
+        edtProdstatus!!.setText("")
+        edtFollowaction!!.setText("")
+        edtFollowtype!!.setText("")
+        edtFollowdate!!.setText(currentDate)
+        switchTransfer!!.isChecked = false
+        edtbarnchtype!!.setText("")
+        edtbranch!!.setText("")
+        edtdepartment!!.setText("")
+        edtEmployee!!.setText("")
+
+        strPincode = ""
+        FK_Country = ""
+        FK_States = ""
+        FK_District = ""
+        FK_Area = ""
+        FK_Place = ""
+        FK_Post = ""
+        locAddress = ""
+        locCity = ""
+        locState = ""
+        locCountry = ""
+        locpostalCode = ""
+        locKnownName = ""
+        strLatitude = ""
+        strLongitue = ""
+
+        txtLocation!!.setText("")
+
+        txtDate!!.setText(currentDate)
+        strDate =currentDate
+
+        ID_LeadFrom  = ""
+        ID_LeadThrough = ""
+        ID_CollectedBy = ""
+        ID_MediaMaster = ""
+
+        txtleadfrom!!.setText("")
+        txtleadthrough!!.setText("")
+        txtleadby!!.setText("")
+        txtMediatype!!.setText("")
+
+        custDetailMode = "1"
         strMoreLandPhone = ""
 
+        image1 = ""
+        image2 = ""
         encode1 = ""
         encode2 = ""
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        txtDate!!.setText(currentDate)
-        strDate = currentDate
+        imgvupload1!!.setImageResource(R.drawable.uploadimg)
+        imgvupload2!!.setImageResource(R.drawable.uploadimg)
+
+        llfollowup!!.visibility = View.GONE
+        llNeedTransfer!!.visibility = View.GONE
+
+        custDetailMode = "1"
+        companyNameMode="1"
+        moreCommInfoMode = "1"
+        custProdlMode = "1"
+        locationMode = "1"
+        dateMode = "1"
+        leadfromMode = "1"
+        leadThroughMode = "1"
+        leadByMode = "1"
+        mediaTypeMode = "1"
+        uploadImageMode = "1"
+
+        hideViews()
+
     }
 
     private fun setRegViews() {
@@ -417,6 +489,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
       //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
+        llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
@@ -461,6 +534,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
+        edtCompanyName= findViewById<EditText>(R.id.edtCompanyName)
 
         edtPincode= findViewById<EditText>(R.id.edtPincode)
         edtCountry= findViewById<EditText>(R.id.edtCountry)
@@ -475,6 +549,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
 
         tv_CustClick = findViewById<TextView>(R.id.tv_CustClick)
+        tv_CompanyNameClick = findViewById<TextView>(R.id.tv_CompanyNameClick)
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
         tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
         tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
@@ -523,6 +598,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtdepartment!!.setOnClickListener(this)
         edtEmployee!!.setOnClickListener(this)
         tv_CustClick!!.setOnClickListener(this)
+        tv_CompanyNameClick!!.setOnClickListener(this)
         tv_ProductClick!!.setOnClickListener(this)
         tv_LocationClick!!.setOnClickListener(this)
         tv_DateClick!!.setOnClickListener(this)
@@ -580,6 +656,30 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                     custDetailMode = "0"
                     moreCommInfoMode = "1"
+                    companyNameMode="1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+            }
+
+            R.id.tv_CompanyNameClick->{
+                if (companyNameMode.equals("0")){
+                    llCompanyName!!.visibility = View.GONE
+                    companyNameMode = "1"
+                }else{
+                    llCompanyName!!.visibility = View.VISIBLE
+
+                    custDetailMode = "1"
+                    companyNameMode="0"
+                    moreCommInfoMode = "1"
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
@@ -602,6 +702,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     //custDetailMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "0"
                     custProdlMode = "1"
                     locationMode = "1"
@@ -725,6 +826,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                    // custProdlMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "1"
                     custProdlMode = "0"
                     locationMode = "1"
@@ -750,6 +852,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     //locationMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "1"
                     custProdlMode = "1"
                     locationMode = "0"
@@ -789,6 +892,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                    // dateMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "1"
                     custProdlMode = "1"
                     locationMode = "1"
@@ -814,6 +918,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      //leadfromMode = "0"
 
                      custDetailMode = "1"
+                     companyNameMode="1"
                      moreCommInfoMode = "1"
                      custProdlMode = "1"
                      locationMode = "1"
@@ -842,6 +947,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     // leadThroughMode = "0"
 
                      custDetailMode = "1"
+                     companyNameMode="1"
                      moreCommInfoMode = "1"
                      custProdlMode = "1"
                      locationMode = "1"
@@ -868,6 +974,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     // leadByMode = "0"
 
                      custDetailMode = "1"
+                     companyNameMode="1"
                      moreCommInfoMode = "1"
                      custProdlMode = "1"
                      locationMode = "1"
@@ -894,6 +1001,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                   //  mediaTypeMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "1"
                     custProdlMode = "1"
                     locationMode = "1"
@@ -920,6 +1028,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                    // uploadImageMode = "0"
 
                     custDetailMode = "1"
+                    companyNameMode="1"
                     moreCommInfoMode = "1"
                     custProdlMode = "1"
                     locationMode = "1"
@@ -1134,6 +1243,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.btnReset->{
 
+                clearData()
+//                finish();
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0);
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0);
             }
 
             R.id.btnSubmit->{
@@ -1150,6 +1265,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         if (custDetailMode.equals("1")){
             llCustomerDetail!!.visibility = View.GONE
+        }
+        if (companyNameMode.equals("1")){
+            llCompanyName!!.visibility = View.GONE
         }
         if (moreCommInfoMode.equals("1")){
             llMoreCommInfo!!.visibility = View.GONE
@@ -3729,6 +3847,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private fun LeadValidations(v : View) {
         Log.e(TAG,"LeadValidations  3732   "+ ID_Customer+"  "+ID_Customer!!.length)
+        strComapnyName = edtCompanyName!!.text.toString()
         if (ID_Customer!!.equals("")){
             Customer_Mode = "0"
             Customer_Name = edtCustname!!.text.toString()
@@ -3748,13 +3867,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             else if (Customer_Address.equals("")){
                 Config.snackBars(context,v,"Enter Customer Address")
             }
+            else if (strComapnyName.equals("")){
+                Config.snackBars(context,v,"Enter Company Name")
+            }
             else{
                 MoreValidations(v)
             }
         }
         else{
             Customer_Mode = "1"
-            MoreValidations(v)
+            if (strComapnyName.equals("")){
+                Config.snackBars(context,v,"Enter Company Name")
+            }
+            else{
+                MoreValidations(v)
+            }
+
+
         }
 
     }
@@ -3890,7 +4019,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Config.snackBars(context,v,"Select Lead Through")
         }
         else if (ID_CollectedBy.equals("")){
-            Config.snackBars(context,v,"Select Lead By")
+            Config.snackBars(context,v,"Select Collected By")
         }
         else if (ID_MediaMaster.equals("")){
             Config.snackBars(context,v,"Select Media Type")
@@ -3945,6 +4074,78 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun saveLeadGeneration() {
+        var saveLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                    leadGenerateSaveViewModel.saveLeadGenerate(this, strDate, ID_LeadFrom!!,
+                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address!!,
+                        Customer_Mobile!!, Customer_Email!!,strComapnyName!!,"", ID_MediaMaster!!, FK_Country, FK_States,
+                        FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
+                        strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
+                        ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
+                        encode1, encode2)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   21081   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //  }
+
+
+                            }catch (e: Exception){
+
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+        catch (e : Exception){
+            Log.e(TAG,"Exception  226666    "+e.toString())
+        }
+
 
     }
 
