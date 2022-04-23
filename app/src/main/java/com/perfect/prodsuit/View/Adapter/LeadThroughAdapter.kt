@@ -37,12 +37,12 @@ class LeadThroughAdapter(internal var context: Context, internal var jsonArray: 
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtName.text        = jsonObject!!.getString("LeadThroughName")
-                if (position % 2 == 0){
-                    holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llleadthrogh!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llleadthrogh!!.setTag(position)
                 holder.llleadthrogh!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadthrough")
