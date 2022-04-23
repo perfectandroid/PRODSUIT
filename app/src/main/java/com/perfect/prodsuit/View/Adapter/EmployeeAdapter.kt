@@ -37,12 +37,12 @@ class EmployeeAdapter(internal var context: Context, internal var jsonArray: JSO
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtEmployee.text        = jsonObject!!.getString("EmpName")
-                if (position % 2 == 0){
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llemployee!!.setTag(position)
                 holder.llemployee!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "employee")

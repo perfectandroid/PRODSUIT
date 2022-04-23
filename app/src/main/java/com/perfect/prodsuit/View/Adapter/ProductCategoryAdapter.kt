@@ -37,12 +37,12 @@ class ProductCategoryAdapter(internal var context: Context, internal var jsonArr
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtCategory.text        = jsonObject!!.getString("CategoryName")
-                if (position % 2 == 0){
-                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llprodcategory!!.setTag(position)
                 holder.llprodcategory!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodcategory")
