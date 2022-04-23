@@ -25,6 +25,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangles.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shadow_white.xml" value="0.35333333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_complete.xml" value="0.28615384615384615" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_default.xml" value="0.27760416666666665" />
@@ -69,7 +70,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.23229166666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.2671875" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_country_list.xml" value="0.23697916666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_country_list.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_department.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_district_list.xml" value="0.22864583333333333" />
@@ -104,7 +105,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.22395833333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/changepin_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.35104166666666664" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/country_list_popup.xml" value="0.27708333333333335" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/country_list_popup.xml" value="0.5" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.19444444444444445" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.36666666666666664" />
