@@ -1539,7 +1539,7 @@
                                                 android:drawableTint="@color/greydark"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Lead By"
+                                                android:hint="Collected By"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="10dp"
                                                 android:singleLine="true"
