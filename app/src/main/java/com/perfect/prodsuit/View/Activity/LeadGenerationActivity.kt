@@ -4117,8 +4117,24 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                pinCodeDet++
                                 if (msg!!.length > 0) {
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   21081   "+msg)
+                                    Log.e(TAG,"msg   4120   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setMessage(jobjt.getString("ResponseMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+                                            startActivity(i)
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
 
 
                                     } else {
