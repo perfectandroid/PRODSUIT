@@ -571,6 +571,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
+
+                val i = Intent(this@AccountDetailsActivity, AddNoteActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                startActivity(i)
             }
             R.id.fabAddActivities->{
                 isOpen = true
@@ -608,7 +612,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
 
-                messagePopup()
+                val i = Intent(this@AccountDetailsActivity, AddQuotationActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct", AccountDetailsActivity.ID_LeadGenerateProduct)
+                startActivity(i)
+
+                //messagePopup()
             }
             R.id.fabEditLead->{
                 isOpen = true
