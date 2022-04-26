@@ -4130,6 +4130,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                             }catch (e: Exception){
 
+                                Log.e(TAG,"Exception  4133    "+e.toString())
 
                             }
 
