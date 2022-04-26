@@ -8,7 +8,6 @@
     android:layout_margin="20dp"
     app:cardBackgroundColor="@color/white"
     app:cardMaxElevation="1dp"
-    android:padding="5dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -26,18 +25,18 @@
             android:textSize="17dp"
             android:textStyle="bold"
             android:fontFamily="@font/myfont"
-            android:background="@color/white"
+            android:background="@drawable/shadow_white"
             android:padding="10dp"
             android:textAllCaps="true"
-            android:text="Customer"/>
-
+            android:text="Country"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey"/>
+<!--        android:background="@color/pophead"-->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyCustomer"
+            android:id="@+id/recycCountry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"

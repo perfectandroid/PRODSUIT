@@ -25,11 +25,11 @@
             android:textColor="@color/black"
             android:textSize="17dp"
             android:textStyle="bold"
+            android:textAllCaps="true"
             android:fontFamily="@font/myfont"
             android:background="@color/white"
             android:padding="10dp"
-            android:textAllCaps="true"
-            android:text="Customer"/>
+            android:text="Post"/>
 
         <View
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:background="@color/grey"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyCustomer"
+            android:id="@+id/recycPost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"

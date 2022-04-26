@@ -11,7 +11,7 @@
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
-        android:id="@+id/llbranchtype"
+        android:id="@+id/llPost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -19,7 +19,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/txtsino"
+            android:id="@+id/txtSino"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="2"
@@ -32,10 +32,10 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/txtBranchType"
+            android:id="@+id/txtPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sree"
+            android:text=""
             android:fontFamily="@font/myfont"
             android:singleLine="true"
             android:textColor="@color/black"

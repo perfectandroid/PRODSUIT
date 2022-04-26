@@ -37,12 +37,12 @@ class DepartmentAdapter(internal var context: Context, internal var jsonArray: J
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtDepartment.text        = jsonObject!!.getString("DeptName")
-                if (position % 2 == 0){
-                    holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.lldepartment!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.lldepartment!!.setTag(position)
                 holder.lldepartment!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "department")

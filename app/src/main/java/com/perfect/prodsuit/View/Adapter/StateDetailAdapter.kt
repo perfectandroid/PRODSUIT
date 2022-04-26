@@ -13,17 +13,17 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class FollowupTypeAdapter(internal var context: Context, internal var jsonArray: JSONArray):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StateDetailAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
-    internal val TAG : String = "FollowupTypeAdapter"
+    internal val TAG : String = "StateDetailAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_followup_type, parent, false
+            R.layout.adapter_state_list, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -35,17 +35,12 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtFollowupType.text        = jsonObject!!.getString("ActnTypeName")
-//                if (position % 2 == 0){
-//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-                holder.llfollowuptype!!.setTag(position)
-                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "followuptype")
+                holder.txtSino.text        = pos.toString()
+                holder.txtState.text        = jsonObject!!.getString("States")
+
+                holder.llState!!.setTag(position)
+                holder.llState!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "statedetail")
                 })
             }
         } catch (e: Exception) {
@@ -67,13 +62,13 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtFollowupType   : TextView
-        internal var txtsino           : TextView
-        internal var llfollowuptype    : LinearLayout
+        internal var txtSino          : TextView
+        internal var txtState          : TextView
+        internal var llState    : LinearLayout
         init {
-            txtFollowupType      = v.findViewById<View>(R.id.txtFollowupType) as TextView
-            txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
-            llfollowuptype       = v.findViewById<View>(R.id.llfollowuptype) as LinearLayout
+            txtSino        = v.findViewById<View>(R.id.txtSino) as TextView
+            txtState        = v.findViewById<View>(R.id.txtState) as TextView
+            llState  = v.findViewById<View>(R.id.llState) as LinearLayout
         }
     }
 

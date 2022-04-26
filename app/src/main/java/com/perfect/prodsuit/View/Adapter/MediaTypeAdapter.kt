@@ -38,12 +38,12 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtMediaType.text        = jsonObject!!.getString("MdaName")
-                if (position % 2 == 0){
-                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llmediatype!!.setTag(position)
                 holder.llmediatype!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "mediatype")

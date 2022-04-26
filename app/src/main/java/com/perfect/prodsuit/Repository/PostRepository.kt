@@ -27,12 +27,12 @@ object PostRepository {
     val postSetterGetter = MutableLiveData<PostModel>()
     val TAG: String = "PostRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<PostModel> {
-        getPost(context)
+    fun getServicesApiCall(context: Context,FK_District :String): MutableLiveData<PostModel> {
+        getPost(context,FK_District)
         return postSetterGetter
     }
 
-    private fun getPost(context: Context) {
+    private fun getPost(context: Context,FK_District :String) {
 
         Log.e("TAG","getPost  ")
         try {
@@ -60,14 +60,25 @@ object PostRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                "ReqMode":"34",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+//                "SubMode:"4",
+//                "FK_District":"1"
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("34"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(CustomerSearchActivity.strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("4"))
+                requestObject1.put("FK_States", ProdsuitApplication.encryptStart(FK_District))
+
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -76,7 +87,7 @@ object PostRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCustomerDetails(body)
+            val call = apiService.getPostDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

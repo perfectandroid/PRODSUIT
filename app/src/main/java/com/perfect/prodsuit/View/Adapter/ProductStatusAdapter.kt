@@ -37,12 +37,12 @@ class ProductStatusAdapter(internal var context: Context, internal var jsonArray
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtStatus.text        = jsonObject!!.getString("StatusName")
-                if (position % 2 == 0){
-                    holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llprodstatus!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llprodstatus!!.setTag(position)
                 holder.llprodstatus!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodstatus")

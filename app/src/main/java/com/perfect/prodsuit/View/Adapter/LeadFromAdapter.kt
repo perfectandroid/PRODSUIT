@@ -37,12 +37,12 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtName.text        = jsonObject!!.getString("LeadFromName")
-                if (position % 2 == 0){
-                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llleadfrom!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llleadfrom!!.setTag(position)
                 holder.llleadfrom!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadfrom")

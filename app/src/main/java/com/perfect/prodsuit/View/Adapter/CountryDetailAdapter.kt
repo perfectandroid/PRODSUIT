@@ -13,21 +13,22 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class FollowupTypeAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class CountryDetailAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "FollowupTypeAdapter"
+    internal val TAG : String = "CountryDetailAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_followup_type, parent, false
+            R.layout.adapter_country_list, parent, false
         )
         vh = MainViewHolder(v)
         return vh
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
@@ -35,17 +36,12 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtFollowupType.text        = jsonObject!!.getString("ActnTypeName")
-//                if (position % 2 == 0){
-//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-                holder.llfollowuptype!!.setTag(position)
-                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "followuptype")
+                holder.txtSino.text        = pos.toString()
+                holder.txtCountry.text        = jsonObject!!.getString("Country")
+
+                holder.llCountry!!.setTag(position)
+                holder.llCountry!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "countrydetail")
                 })
             }
         } catch (e: Exception) {
@@ -53,6 +49,7 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
+
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -67,18 +64,17 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtFollowupType   : TextView
-        internal var txtsino           : TextView
-        internal var llfollowuptype    : LinearLayout
+        internal var txtSino          : TextView
+        internal var txtCountry          : TextView
+        internal var llCountry    : LinearLayout
         init {
-            txtFollowupType      = v.findViewById<View>(R.id.txtFollowupType) as TextView
-            txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
-            llfollowuptype       = v.findViewById<View>(R.id.llfollowuptype) as LinearLayout
+            txtSino        = v.findViewById<View>(R.id.txtSino) as TextView
+            txtCountry        = v.findViewById<View>(R.id.txtCountry) as TextView
+            llCountry  = v.findViewById<View>(R.id.llCountry) as LinearLayout
         }
     }
 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
-
 }
