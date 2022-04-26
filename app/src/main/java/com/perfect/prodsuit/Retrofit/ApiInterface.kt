@@ -112,7 +112,8 @@ interface ApiInterface {
     @POST("UserValidations/PincodeDetails")
     fun getPincodeDetails(@Body body: RequestBody): Call<String>
 
-
+    @POST("UserValidations/AddAgentCustomerRemarks")
+    fun getAgentnote(@Body body: RequestBody): Call<String>
 
 
 
