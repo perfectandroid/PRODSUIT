@@ -103,6 +103,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_submessage_history.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.21614583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_upcmng.xml" value="0.265625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.26666666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.22395833333333334" />
@@ -118,6 +119,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_action.xml" value="0.20520833333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_type_popup.xml" value="0.20520833333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.26979166666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_editdetail_adapter.xml" value="0.26666666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_from_popup.xml" value="0.18489583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_through_popup.xml" value="0.2869791666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/mediatype_popup.xml" value="0.2552083333333333" />

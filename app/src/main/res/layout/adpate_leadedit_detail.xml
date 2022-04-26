@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    android:backgroundTint="@color/white"
+    android:layout_margin="0dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="2dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/llleadEdit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Agent Remark"
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:drawableTint="@color/black"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/txtAgentRemark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:drawableTint="@color/black"
+                android:textStyle="normal" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Followed By"
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:drawableTint="@color/black"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:text=":"/>
+
+            <TextView
+                android:id="@+id/txtFollowedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:drawableTint="@color/black"
+                android:textStyle="normal" />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
