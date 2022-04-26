@@ -19,89 +19,44 @@
         android:gravity="center_vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtCustName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="2dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Name"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Agent Remark"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"/>
-
-            <TextView
-                android:id="@+id/txtAgentRemark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtCustAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="2dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Name"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Followed By"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"/>
-
-            <TextView
-                android:id="@+id/txtFollowedBy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtProdName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Name"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
 
 
     </LinearLayout>

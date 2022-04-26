@@ -59,6 +59,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
     private var llCustomerDetail: LinearLayout? = null
+    private var llCustSearch: LinearLayout? = null
     private var llCompanyName: LinearLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
@@ -245,6 +246,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+
+    var saveUpdateMode : String?= ""
+
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -483,6 +487,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         mediaTypeMode = "1"
         uploadImageMode = "1"
 
+        llCustSearch!!.visibility = View.VISIBLE
+        btnSubmit!!.setText("Submit")
+        saveUpdateMode = "0"  //SAVE
+
         hideViews()
 
     }
@@ -497,6 +505,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
       //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
+        llCustSearch = findViewById<LinearLayout>(R.id.llCustSearch)
         llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
@@ -3858,6 +3867,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          }
 
+         if (data.equals("leadedit")){
+
+             Toast.makeText(applicationContext,"Lead Edit selection",Toast.LENGTH_SHORT).show()
+             dialogLeadEdit!!.dismiss()
+
+             llCustSearch!!.visibility = View.GONE
+             btnSubmit!!.setText("Update")
+             saveUpdateMode = "1"  //Update
+
+             val jsonObject = leadEditArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
+             FK_Country = jsonObject.getString("FK_Country")
+             edtCountry!!.setText(jsonObject.getString("Country"))
+         }
+
      }
 
     private fun LeadValidations(v : View) {
@@ -4195,7 +4219,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
+//                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
+                    countryViewModel.getCountry(this)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -4208,9 +4233,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   21081   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("CountryDetails")
+                                        leadEditArrayList = jobjt.getJSONArray("CountryDetailsList")
+                                        if (leadEditArrayList.length()>0){
+                                            if (editLeadGenDet == 0){
+                                                editLeadGenDet++
+                                                LeadEditDetailPopup(leadEditArrayList)
+                                            }
+
+                                        }
 
 
-                                        LeadEditDetailPopup(leadEditArrayList)
+
 
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -4261,7 +4295,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             dialogLeadEdit = Dialog(this)
             dialogLeadEdit!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogLeadEdit!! .setContentView(R.layout.employee_popup)
+            dialogLeadEdit!! .setContentView(R.layout.lead_editdetail_popup)
             dialogLeadEdit!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadDetail = dialogLeadEdit!! .findViewById(R.id.recyLeadDetail) as RecyclerView
 
