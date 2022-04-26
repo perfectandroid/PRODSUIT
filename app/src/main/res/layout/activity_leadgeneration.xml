@@ -9,9 +9,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/llBtn"
+                android:layout_marginBottom="2dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -65,7 +69,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llHeader"
-                    android:layout_marginBottom="50dp"
                     android:orientation="vertical">
                     <ScrollView
                         android:layout_width="match_parent"
@@ -109,7 +112,7 @@
                                             android:fontFamily="@font/myfont"
                                             android:text="Customer Details"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -350,7 +353,7 @@
                                             android:padding="5dp"
                                             android:text="Company Name"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textStyle="bold"
                                             android:textSize="18sp"/>
 
@@ -414,7 +417,7 @@
                                             android:fontFamily="@font/myfont"
                                             android:text="More Communication Info"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -607,7 +610,7 @@
                                             android:text="Product Details"
                                             android:textStyle="bold"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1095,7 +1098,7 @@
                                             android:text="Location Details"
                                             android:textStyle="bold"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1162,7 +1165,7 @@
                                             android:text="Date"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1313,7 +1316,7 @@
                                             android:text="Lead From"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1414,7 +1417,7 @@
                                             android:padding="5dp"
                                             android:text="Lead Though"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textStyle="bold"
                                             android:textSize="18sp"/>
 
@@ -1515,7 +1518,7 @@
                                             android:text="Collected By"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1615,7 +1618,7 @@
                                             android:padding="5dp"
                                             android:text="Media Type"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp" />
 
                                         <LinearLayout
@@ -1715,7 +1718,7 @@
                                             android:text="Upload Images"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -2491,7 +2494,10 @@
 
 
             </LinearLayout>
+
+
         <LinearLayout
+            android:id="@+id/llBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -2501,10 +2507,10 @@
             <Button
                 android:id="@+id/btnReset"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:layout_weight="2"
-                android:background="@drawable/btn_bgcolourwhite"
+                android:background="@drawable/btn_bgcolourshadow"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="Reset"
@@ -2513,16 +2519,18 @@
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolourblack"
+                android:background="@drawable/btn_bgcolourshadow1"
                 android:padding="2dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="Submit" />
+
+<!--            btn_bgcolourblack-->
         </LinearLayout>
 
     </RelativeLayout>
