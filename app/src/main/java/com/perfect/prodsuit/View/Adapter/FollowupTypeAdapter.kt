@@ -37,12 +37,12 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtFollowupType.text        = jsonObject!!.getString("ActnTypeName")
-                if (position % 2 == 0){
-                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llfollowuptype!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llfollowuptype!!.setTag(position)
                 holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "followuptype")

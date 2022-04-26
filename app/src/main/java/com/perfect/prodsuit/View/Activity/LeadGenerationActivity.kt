@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -28,6 +29,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.SiteVisitActivity.Companion.encode1
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -57,12 +59,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
     private var llCustomerDetail: LinearLayout? = null
+    private var llCompanyName: LinearLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
+    private var llUploadImages: LinearLayout? = null
     private var lldate: LinearLayout? = null
     private var lllocation: LinearLayout? = null
     private var ll_Todate: LinearLayout? = null
@@ -84,6 +88,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var edtCustphone: EditText? = null
     private var edtCustemail: EditText? = null
     private var edtCustaddress: EditText? = null
+    private var edtCompanyName: EditText? = null
     private var img_search: ImageView? = null
     var date_Picker1: DatePicker? = null
     var date_Picker2: DatePicker? = null
@@ -127,8 +132,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var customerAddViewModel: CustomerAddViewModel
      lateinit var customerArrayList : JSONArray
      private var llfollowup: LinearLayout? = null
+     private var llMoreCommInfo: LinearLayout? = null
+
+    lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
+    lateinit var pinCodeArrayList : JSONArray
+    private var dialogPinCode : Dialog? = null
+    var recyPinCode: RecyclerView? = null
+
+    lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
+    lateinit var saveLeadGenArrayList : JSONArray
+
+    lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
+    lateinit var leadEditArrayList : JSONArray
+
+
+    lateinit var countryViewModel: CountryViewModel
+    lateinit var countryArrayList : JSONArray
+    private var dialogCountry : Dialog? = null
+    var recyCountry: RecyclerView? = null
+
+    lateinit var stateViewModel: StateViewModel
+    lateinit var stateArrayList : JSONArray
+    private var dialogState : Dialog? = null
+    var recyState: RecyclerView? = null
+
+    lateinit var districtViewModel: DistrictViewModel
+    lateinit var districtArrayList : JSONArray
+    private var dialogDistrict : Dialog? = null
+    var recyDistrict: RecyclerView? = null
+
+    lateinit var postViewModel: PostViewModel
+    lateinit var postArrayList : JSONArray
+    private var dialogPost : Dialog? = null
+    var recyPost: RecyclerView? = null
+
+    private var edtPincode: EditText? = null
+    private var edtCountry: EditText? = null
+    private var edtState: EditText? = null
+    private var edtDistrict: EditText? = null
+    private var edtPost: EditText? = null
+    private var edtLandLine: EditText? = null
+    private var imgPinSearch: ImageView? = null
+
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
+     private var edtProdqty: EditText? = null
+     private var edtProdfeedback: EditText? = null
      private var edtProdpriority: EditText? = null
      private var edtProdstatus: EditText? = null
      private var edtFollowaction: EditText? = null
@@ -169,6 +218,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      private var dialogBranch : Dialog? = null
      private var dialogDepartment : Dialog? = null
      private var dialogEmployee : Dialog? = null
+     private var dialogLeadEdit : Dialog? = null
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
@@ -179,14 +229,22 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      var recyBranch: RecyclerView? = null
      var recyDeaprtment: RecyclerView? = null
      var recyEmployee: RecyclerView? = null
+     var recyLeadDetail: RecyclerView? = null
 
     private var tv_CustClick: TextView? = null
+    private var tv_CompanyNameClick: TextView? = null
     private var tv_ProductClick: TextView? = null
     private var tv_LocationClick: TextView? = null
     private var tv_DateClick: TextView? = null
     private var tv_LeadFromClick: TextView? = null
     private var tv_LeadThroughClick: TextView? = null
     private var tv_LeadByClick: TextView? = null
+    private var tv_MediaTypeClick: TextView? = null
+    private var tv_UploadImage: TextView? = null
+    private var tv_MoreCommInfoClick: TextView? = null
+
+    private var btnReset: Button? = null
+    private var btnSubmit: Button? = null
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -194,13 +252,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
         var custDetailMode : String?= "1"
-        var Customer_Mode : String?= ""
+        var moreCommInfoMode : String?= "1"
+        var companyNameMode : String?= "1"
+        var Customer_Mode : String?= "0"
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
         var Customer_Email : String?= ""
         var Customer_Address : String?= ""
+        var strComapnyName : String?= ""
         var strCustomer = ""
+        var strPincode = ""
+        var FK_Country = ""
+        var FK_States = ""
+        var FK_District = ""
+        var FK_Area = ""
+        var FK_Place = ""
+        var FK_Post = ""
         var locAddress : String?= ""
         var locCity : String?= ""
         var locState : String?= ""
@@ -216,6 +284,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var leadfromMode : String?= "1" // GONE
         var leadThroughMode : String?= "1" // GONE
         var leadByMode : String?= "1" // GONE
+        var mediaTypeMode : String?= "1" // GONE
+        var uploadImageMode : String?= "1" // GONE
         var ID_Category : String?= ""
         var ID_Product : String?= ""
         var ID_Status : String?= ""
@@ -228,9 +298,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_Department : String = ""
         var ID_Employee : String = ""
         var strQty : String = ""
+        var strDate : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
+        var strMoreLandPhone : String = ""
+
+        var encode1 : String = ""
+        var encode2 : String = ""
+
+
     }
 
 
@@ -245,6 +322,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
+        pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+        leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
+        countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+        stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
+        districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
@@ -265,7 +349,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 edtbranch!!.setText("")
                 edtdepartment!!.setText("")
                 edtEmployee!!.setText("")
-                ProductActivity.strNeedCheck = "1"
+                strNeedCheck = "1"
             } else {
                 llNeedTransfer!!.visibility = View.GONE
                 edtbarnchtype!!.setText("")
@@ -278,36 +362,43 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun clearData() {
-        ID_LeadFrom  = ""
-        ID_LeadThrough = ""
-        ID_CollectedBy = ""
-        ID_MediaMaster = ""
-        custDetailMode = "1"
-        Customer_Mode = ""
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+
+        Customer_Mode = "0"
         ID_Customer = ""
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
         Customer_Address = ""
+        edt_customer!!.setText("")
+        edtCustname!!.setText("")
+        edtCustphone!!.setText("")
+        edtCustemail!!.setText("")
+        edtCustaddress!!.setText("")
         strCustomer = ""
-        locAddress = ""
-        locCity = ""
-        locState = ""
-        locCountry = ""
-        locpostalCode = ""
-        locKnownName = ""
-        strLatitude = ""
-        strLongitue = ""
-        edtProdcategory!!.setText("")
-        edtProdproduct!!.setText("")
-        edtProdpriority!!.setText("")
-        edtProdstatus!!.setText("")
-        edtFollowaction!!.setText("")
-        edtFollowtype!!.setText("")
+        strComapnyName = ""
+
+        edtCompanyName!!.setText("")
+
+        FK_Country = ""
+        FK_States = ""
+        FK_District = ""
+        FK_Area = ""
+        FK_Place = ""
+        FK_Post = ""
+        edtPincode!!.setText("")
+        edtCountry!!.setText("")
+        edtState!!.setText("")
+        edtDistrict!!.setText("")
+        edtPost!!.setText("")
+        edtLandLine!!.setText("")
+
         ID_Category = ""
         ID_Product = ""
         strProdName = ""
         strQty = ""
+        strDate = ""
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
@@ -319,10 +410,86 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Branch = ""
         ID_Department = ""
         ID_Employee = ""
+
+        edtProdcategory!!.setText("")
+        edtProdproduct!!.setText("")
+        edtProdqty!!.setText("")
+        edtProdfeedback!!.setText("")
+        edtProdpriority!!.setText("")
+        edtProdstatus!!.setText("")
+        edtFollowaction!!.setText("")
+        edtFollowtype!!.setText("")
+        edtFollowdate!!.setText(currentDate)
+        switchTransfer!!.isChecked = false
+        edtbarnchtype!!.setText("")
+        edtbranch!!.setText("")
+        edtdepartment!!.setText("")
+        edtEmployee!!.setText("")
+
+        strPincode = ""
+        FK_Country = ""
+        FK_States = ""
+        FK_District = ""
+        FK_Area = ""
+        FK_Place = ""
+        FK_Post = ""
+        locAddress = ""
+        locCity = ""
+        locState = ""
+        locCountry = ""
+        locpostalCode = ""
+        locKnownName = ""
+        strLatitude = ""
+        strLongitue = ""
+
+        txtLocation!!.setText("")
+
+        txtDate!!.setText(currentDate)
+        strDate =currentDate
+
+        ID_LeadFrom  = ""
+        ID_LeadThrough = ""
+        ID_CollectedBy = ""
+        ID_MediaMaster = ""
+
+        txtleadfrom!!.setText("")
+        txtleadthrough!!.setText("")
+        txtleadby!!.setText("")
+        txtMediatype!!.setText("")
+
+        custDetailMode = "1"
+        strMoreLandPhone = ""
+
+        image1 = ""
+        image2 = ""
+        encode1 = ""
+        encode2 = ""
+
+        imgvupload1!!.setImageResource(R.drawable.uploadimg)
+        imgvupload2!!.setImageResource(R.drawable.uploadimg)
+
+        llfollowup!!.visibility = View.GONE
+        llNeedTransfer!!.visibility = View.GONE
+
+        custDetailMode = "1"
+        companyNameMode="1"
+        moreCommInfoMode = "1"
+        custProdlMode = "1"
+        locationMode = "1"
+        dateMode = "1"
+        leadfromMode = "1"
+        leadThroughMode = "1"
+        leadByMode = "1"
+        mediaTypeMode = "1"
+        uploadImageMode = "1"
+
+        hideViews()
+
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
         img_search = findViewById<ImageView>(R.id.img_search)
         imCustclose = findViewById<ImageView>(R.id.imCustclose)
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
@@ -330,17 +497,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
       //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
+        llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
+        llUploadImages = findViewById<LinearLayout>(R.id.llUploadImages)
         lldate = findViewById<LinearLayout>(R.id.lldate)
         lllocation = findViewById<LinearLayout>(R.id.lllocation)
         ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
         llFollowdate = findViewById<LinearLayout>(R.id.llFollowdate)
         llfollowup = findViewById<LinearLayout>(R.id.llfollowup)
+        llMoreCommInfo = findViewById<LinearLayout>(R.id.llMoreCommInfo)
         llNeedTransfer = findViewById<LinearLayout>(R.id.llNeedTransfer)
         llLocDetail = findViewById<LinearLayout>(R.id.llLocDetail)
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
@@ -356,6 +526,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
+        edtProdqty = findViewById<EditText>(R.id.edtProdqty)
+        edtProdfeedback = findViewById<EditText>(R.id.edtProdfeedback)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
         edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
         edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
@@ -370,19 +542,38 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
         edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
+        edtCompanyName= findViewById<EditText>(R.id.edtCompanyName)
+
+        edtPincode= findViewById<EditText>(R.id.edtPincode)
+        edtCountry= findViewById<EditText>(R.id.edtCountry)
+        edtState= findViewById<EditText>(R.id.edtState)
+        edtDistrict= findViewById<EditText>(R.id.edtDistrict)
+        edtPost= findViewById<EditText>(R.id.edtPost)
+        edtLandLine= findViewById<EditText>(R.id.edtLandLine)
+
+        imgPinSearch= findViewById<ImageView>(R.id.imgPinSearch)
+
         btnCustReset = findViewById<Button>(R.id.btnCustReset)
         btnCustSubmit = findViewById<Button>(R.id.btnCustSubmit)
 
         tv_CustClick = findViewById<TextView>(R.id.tv_CustClick)
+        tv_CompanyNameClick = findViewById<TextView>(R.id.tv_CompanyNameClick)
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
         tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
         tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
         tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
         tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
         tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
+        tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
+        tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
+        tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
+
+        btnReset = findViewById<Button>(R.id.btnReset)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
 
         imback!!.setOnClickListener(this)
+        imLeadedit!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
         imCustclose!!.setOnClickListener(this)
         imDateclose!!.setOnClickListener(this)
@@ -416,21 +607,34 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtdepartment!!.setOnClickListener(this)
         edtEmployee!!.setOnClickListener(this)
         tv_CustClick!!.setOnClickListener(this)
+        tv_CompanyNameClick!!.setOnClickListener(this)
         tv_ProductClick!!.setOnClickListener(this)
         tv_LocationClick!!.setOnClickListener(this)
         tv_DateClick!!.setOnClickListener(this)
         tv_LeadFromClick!!.setOnClickListener(this)
         tv_LeadThroughClick!!.setOnClickListener(this)
         tv_LeadByClick!!.setOnClickListener(this)
+        tv_MediaTypeClick!!.setOnClickListener(this)
+        tv_UploadImage!!.setOnClickListener(this)
+        tv_MoreCommInfoClick!!.setOnClickListener(this)
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
         txtleadby!!.setOnClickListener(this)
+        txtMediatype!!.setOnClickListener(this)
         txtDate!!.setOnClickListener(this)
         txtLocation!!.setOnClickListener(this)
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        txtDate!!.setText(currentDate)
-        txtDate!!.setText(currentDate)
+
+        edtCountry!!.setOnClickListener(this)
+        edtState!!.setOnClickListener(this)
+        edtDistrict!!.setOnClickListener(this)
+        edtPost!!.setOnClickListener(this)
+        imgPinSearch!!.setOnClickListener(this)
+
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
+
+
+
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
         date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
@@ -441,6 +645,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.imLeadedit->{
+
+                getLeadEdit(v)
+             // Config.snackBars(context,v,"Lead Edit")
+
             }
 //            R.id.llCustomer->{
 //                if (custDetailMode.equals("0")){
@@ -457,9 +667,105 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     custDetailMode = "1"
                 }else{
                     llCustomerDetail!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
                     custDetailMode = "0"
+                    moreCommInfoMode = "1"
+                    companyNameMode="1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
                 }
             }
+
+            R.id.tv_CompanyNameClick->{
+                if (companyNameMode.equals("0")){
+                    llCompanyName!!.visibility = View.GONE
+                    companyNameMode = "1"
+                }else{
+                    llCompanyName!!.visibility = View.VISIBLE
+
+                    custDetailMode = "1"
+                    companyNameMode="0"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+            }
+
+            R.id.tv_MoreCommInfoClick->{
+                if (moreCommInfoMode.equals("0")){
+                    llMoreCommInfo!!.visibility = View.GONE
+                    moreCommInfoMode = "1"
+                }else{
+                    llMoreCommInfo!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "0"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+                }
+            }
+
+            R.id.imgPinSearch->{
+                Config.Utils.hideSoftKeyBoard(this@LeadGenerationActivity,v)
+                try {
+                    strPincode = edtPincode!!.text.toString()
+                    if (strPincode.equals("")){
+                        val snackbar: Snackbar = Snackbar.make(v, "Enter Pincode", Snackbar.LENGTH_LONG)
+                        snackbar.setActionTextColor(Color.WHITE)
+                        snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                        snackbar.show()
+
+                    }else{
+                        getPinCodeSearch(strPincode)
+                    }
+                }catch (e  :Exception){
+                    Log.e("TAG","Exception  64   "+e.toString())
+                }
+            }
+
+            R.id.edtCountry->{
+                Log.e(TAG,"edtCountry  549  ")
+                getCountry(v)
+            }
+
+            R.id.edtState->{
+                getState(v)
+            }
+
+            R.id.edtDistrict->{
+                getDistrict(v)
+            }
+            R.id.edtPost->{
+                getPost(v)
+            }
+
             R.id.llleadthrough->{
                 if (ID_LeadFrom.equals("")){
                     val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
@@ -532,7 +838,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     custProdlMode = "1"
                 }else{
                     llProdDetail!!.visibility = View.VISIBLE
+                   // custProdlMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "1"
                     custProdlMode = "0"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
                 }
 
             }
@@ -544,7 +864,22 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     locationMode = "1"
                 }else{
                     llLocDetail!!.visibility = View.VISIBLE
+                    //locationMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
                     locationMode = "0"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
                 }
 
             }
@@ -569,7 +904,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     dateMode = "1"
                 }else{
                     ll_Todate!!.visibility = View.VISIBLE
+                   // dateMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
                     dateMode = "0"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+                    hideViews()
                 }
             }
             R.id.txtDate->{
@@ -582,7 +930,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadfromMode = "1"
                  }else{
                      llLeadFrom!!.visibility = View.VISIBLE
+                     //leadfromMode = "0"
+
+                     custDetailMode = "1"
+                     companyNameMode="1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
                      leadfromMode = "0"
+                     leadThroughMode = "1"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
@@ -598,7 +959,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadThroughMode = "1"
                  }else{
                      llleadthrough!!.visibility = View.VISIBLE
+                    // leadThroughMode = "0"
+
+                     custDetailMode = "1"
+                     companyNameMode="1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
                      leadThroughMode = "0"
+                     leadByMode = "1"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
@@ -612,12 +986,76 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                      leadByMode = "1"
                  }else{
                      llleadby!!.visibility = View.VISIBLE
+                    // leadByMode = "0"
+
+                     custDetailMode = "1"
+                     companyNameMode="1"
+                     moreCommInfoMode = "1"
+                     custProdlMode = "1"
+                     locationMode = "1"
+                     dateMode = "1"
+                     leadfromMode = "1"
+                     leadThroughMode = "1"
                      leadByMode = "0"
+                     mediaTypeMode = "1"
+                     uploadImageMode = "1"
+                     hideViews()
                  }
             }
 
             R.id.txtleadby->{
                 getLeadBy(v)
+            }
+
+            R.id.tv_MediaTypeClick->{
+                if (mediaTypeMode.equals("0")){
+                    llmediatype!!.visibility = View.GONE
+                    mediaTypeMode = "1"
+                }else{
+                    llmediatype!!.visibility = View.VISIBLE
+                  //  mediaTypeMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "0"
+                    uploadImageMode = "1"
+                    hideViews()
+                }
+            }
+
+            R.id.txtMediatype->{
+                getMediaType()
+            }
+
+             R.id.tv_UploadImage->{
+                if (uploadImageMode.equals("0")){
+                    llUploadImages!!.visibility = View.GONE
+                    uploadImageMode = "1"
+                }else{
+                    llUploadImages!!.visibility = View.VISIBLE
+                   // uploadImageMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode="1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "0"
+
+                    hideViews()
+                }
             }
 
 
@@ -652,25 +1090,26 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnCustSubmit->{
-                validations(v)
+               // validations(v)
             }
             R.id.btnCustReset->{
 
-                edtCustname!!.setText("")
-                edtCustphone!!.setText("")
-                edtCustemail!!.setText("")
-                edtCustaddress!!.setText("")
-                custDetailMode = "1"
-                ID_Customer = ""
-                edt_customer!!.setText("")
-                custDetailMode = "1"
-                Customer_Mode = ""
-                ID_Customer  = ""
-                Customer_Name  = ""
-                Customer_Mobile = ""
-                Customer_Email = ""
-                Customer_Address = ""
-                strCustomer = ""
+//                edtCustname!!.setText("")
+//                edtCustphone!!.setText("")
+//                edtCustemail!!.setText("")
+//                edtCustaddress!!.setText("")
+//                custDetailMode = "1"
+//                moreCommInfoMode = "1"
+//                ID_Customer = ""
+//                edt_customer!!.setText("")
+//                moreCommInfoMode = "1"
+//                Customer_Mode = "0"
+//                ID_Customer  = ""
+//                Customer_Name  = ""
+//                Customer_Mobile = ""
+//                Customer_Email = ""
+//                Customer_Address = ""
+//                strCustomer = ""
             }
 
             R.id.imCustclose->{
@@ -708,6 +1147,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         strMonth ="0"+strMonth
                     }
                     txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strDate = strDay+"-"+strMonth+"-"+strYear
                     ll_Todate!!.visibility=View.GONE
                     dateMode = "1"
                 }
@@ -733,6 +1173,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         strMonth ="0"+strMonth
                     }
                     edtFollowdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strFollowupdate = strDay+"-"+strMonth+"-"+strYear
                     llFollowdate!!.visibility=View.GONE
                     dateFollowMode = "1"
                 }
@@ -815,7 +1256,64 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
             }
 
+            R.id.btnReset->{
+
+                clearData()
+//                finish();
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0);
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0);
+            }
+
+            R.id.btnSubmit->{
+                LeadValidations(v)
+            }
+
         }
+    }
+
+
+
+
+    private fun hideViews() {
+
+        if (custDetailMode.equals("1")){
+            llCustomerDetail!!.visibility = View.GONE
+        }
+        if (companyNameMode.equals("1")){
+            llCompanyName!!.visibility = View.GONE
+        }
+        if (moreCommInfoMode.equals("1")){
+            llMoreCommInfo!!.visibility = View.GONE
+        }
+        if (custProdlMode.equals("1")){
+            llProdDetail!!.visibility = View.GONE
+        }
+        if (locationMode.equals("1")){
+            llLocDetail!!.visibility = View.GONE
+        }
+        if (dateMode.equals("1")){
+            ll_Todate!!.visibility = View.GONE
+        }
+        if (leadfromMode.equals("1")){
+            llLeadFrom!!.visibility = View.GONE
+        }
+        if (leadThroughMode.equals("1")){
+            llleadthrough!!.visibility = View.GONE
+        }
+        if (leadByMode.equals("1")){
+            llleadby!!.visibility = View.GONE
+        }
+
+        if (mediaTypeMode.equals("1")){
+            llmediatype!!.visibility = View.GONE
+        }
+        if (uploadImageMode.equals("1")){
+            llUploadImages!!.visibility = View.GONE
+        }
+
+
     }
 
     private fun datePickerPopup() {
@@ -854,6 +1352,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
 
                 txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                strDate = strDay+"-"+strMonth+"-"+strYear
 
 
             }
@@ -1449,14 +1948,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
         if (requestCode == CUSTOMER_SEARCH){
             if (data!=null){
-                txtcustomer!!.text = data!!.getStringExtra("Name")
-
-                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
-                ID_Customer       = data!!.getStringExtra("ID_Customer")
-                Customer_Name     = data!!.getStringExtra("Name")
-                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
-                Customer_Email    = data!!.getStringExtra("Email")
-                Customer_Address  = data!!.getStringExtra("Address")
+//                txtcustomer!!.text = data!!.getStringExtra("Name")
+//
+//                Customer_Mode     = data!!.getStringExtra("Customer_Mode")
+//                ID_Customer       = data!!.getStringExtra("ID_Customer")
+//                Customer_Name     = data!!.getStringExtra("Name")
+//                Customer_Mobile   = data!!.getStringExtra("MobileNumber")
+//                Customer_Email    = data!!.getStringExtra("Email")
+//                Customer_Address  = data!!.getStringExtra("Address")
             }
 
         }
@@ -1510,7 +2009,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
         } else if (requestCode == CAMERA) {
-            try {
+
+            if (data != null){
+                   try {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -1601,6 +2102,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 e.printStackTrace()
                 Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
             }
+            }
+
         }
     }
     private fun choosePhotoFromGallary() {
@@ -1608,16 +2111,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         startActivityForResult(galleryIntent, GALLERY)
     }
     private fun showPictureDialog() {
-        val pictureDialog = AlertDialog.Builder(this)
-        pictureDialog.setTitle("Select From")
-        val pictureDialogItems = arrayOf("Gallery", "Camera")
-        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
-            when (which) {
-                0 -> choosePhotoFromGallary()
-                1 -> takePhotoFromCamera()
-            }
+
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val pictureDialog = AlertDialog.Builder(this)
+                    pictureDialog.setTitle("Select From")
+                    val pictureDialogItems = arrayOf("Gallery", "Camera")
+                    pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+                        when (which) {
+                            0 -> choosePhotoFromGallary()
+                            1 -> takePhotoFromCamera()
+                        }
+                    }
+                    pictureDialog.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                 CAMERA
+            )
+        }catch (e : Exception){
+
         }
-        pictureDialog.show()
+
     }
 
     private fun checkCamera(): Boolean {
@@ -1655,6 +2194,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         return path
     }
+
 
 
      private fun getCustomerSearch() {
@@ -1735,7 +2275,488 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
      }
 
-     private fun validations(v: View) {
+    private fun getPinCodeSearch(strPincode: String) {
+        var pinCodeDet = 0
+        clearCommunicationInfo()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                pinCodeSearchViewModel.getPincode(this,strPincode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+
+
+
+
+
+                        try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                 if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   21081   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("PincodeDetails")
+
+                                    FK_Country  = jobjt.getString("FK_Country")
+                                    FK_States   = jobjt.getString("FK_States")
+                                    FK_District = jobjt.getString("FK_District")
+                                    FK_Area     = jobjt.getString("FK_Area")
+                                    FK_Place    = jobjt.getString("FK_Place")
+                                    FK_Post     = jobjt.getString("FK_Post")
+
+                                    edtCountry!!.setText(jobjt.getString("Country"))
+                                    edtState!!.setText(jobjt.getString("States"))
+                                    edtDistrict!!.setText(jobjt.getString("District"))
+                                    edtPost!!.setText(jobjt.getString("Post"))
+
+                                    Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
+//                                if (pinCodeArrayList.length()>0){
+//                                    if (pinCodeDet == 0){
+//                                        pinCodeDet++
+//                                        pincodeDetailPopup(pinCodeArrayList)
+//                                    }
+//
+//                                }
+
+
+                                } else {
+
+                                    clearCommunicationInfo()
+
+                                    clearCommunicationInfo()
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                clearCommunicationInfo()
+                            }
+                          //  }
+
+
+                        }catch (e: Exception){
+
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun clearCommunicationInfo() {
+        FK_Country  = ""
+        FK_States   = ""
+        FK_District = ""
+        FK_Area     = ""
+        FK_Place    = ""
+        FK_Post     = ""
+
+        edtCountry!!.setText("")
+        edtState!!.setText("")
+        edtDistrict!!.setText("")
+        edtPost!!.setText("")
+        edtLandLine!!.setText("")
+    }
+
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+//            dialogPinCode = Dialog(this)
+//            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+//            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+//            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+//
+//            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+//            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PicodeDetailAdapter(this@LeadGenerationActivity, pinCodeArrayList)
+//            recyPincodeDetails!!.adapter = adapter
+//            adapter.setClickListener(this@LeadGenerationActivity)
+//
+//            dialogPinCode!!.show()
+//            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCountry(v: View) {
+        var countryDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                countryViewModel.getCountry(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2252   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("CountryDetails")
+                                countryArrayList = jobjt.getJSONArray("CountryDetailsList")
+
+                                if (countryArrayList.length()>0){
+                                    if (countryDet == 0){
+                                        countryDet++
+                                        countryListPopup(countryArrayList)
+                                    }
+
+                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+              //  progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun countryListPopup(countryArrayList: JSONArray) {
+        try {
+
+            dialogCountry = Dialog(this)
+            dialogCountry!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCountry!! .setContentView(R.layout.country_list_popup)
+            dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycCountry = dialogCountry!! .findViewById(R.id.recycCountry) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            recycCountry!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogCountry!!.show()
+            dialogCountry!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogCountry!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getState(v: View) {
+
+        var stateDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                stateViewModel.getState(this,FK_Country)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2338   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("StatesDetails")
+                                stateArrayList = jobjt.getJSONArray("StatesDetailsList")
+
+                                if (stateArrayList.length()>0){
+                                    if (stateDet == 0){
+                                        stateDet++
+                                        stateDetailPopup(stateArrayList)
+                                    }
+
+                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun stateDetailPopup(stateArrayList: JSONArray) {
+
+        try {
+
+            dialogState = Dialog(this)
+            dialogState!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogState!! .setContentView(R.layout.state_list_popup)
+            dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycState = dialogState!! .findViewById(R.id.recycState) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+            recycState!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogState!!.show()
+            dialogState!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogState!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getDistrict(v: View) {
+        var distDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                districtViewModel.getDistrict(this, FK_States)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2286   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("DistrictDetails")
+                                districtArrayList = jobjt.getJSONArray("DistrictDetailsList")
+
+                                if (districtArrayList.length()>0){
+                                    if (distDet == 0){
+                                        distDet++
+                                        districtDetailPopup(districtArrayList)
+                                    }
+
+                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun districtDetailPopup(districtArrayList: JSONArray) {
+
+        try {
+
+            dialogDistrict = Dialog(this)
+            dialogDistrict!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDistrict!! .setContentView(R.layout.district_list_popup)
+            dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycDistrict = dialogDistrict!! .findViewById(R.id.recycDistrict) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+            recycDistrict!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogDistrict!!.show()
+            dialogDistrict!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogDistrict!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getPost(v: View) {
+        var postDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                postViewModel.getPost(this, FK_District)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2353   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("PostDetails")
+                                postArrayList = jobjt.getJSONArray("PostDetailsList")
+
+                                if (postArrayList.length()>0){
+                                    if (postDet == 0){
+                                        postDet++
+                                        postDetailPopup(postArrayList)
+                                    }
+
+                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun postDetailPopup(postArrayList: JSONArray) {
+
+        try {
+
+            dialogPost = Dialog(this)
+            dialogPost!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPost!! .setContentView(R.layout.post_list_popup)
+            dialogPost!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycPost = dialogPost!! .findViewById(R.id.recycPost) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycPost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+            recycPost!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogPost!!.show()
+            dialogPost!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPost!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun validations(v: View) {
 
          val Cust_Name =  edtCustname!!.text.toString()
          val Cust_Email =  edtCustemail!!.text.toString()
@@ -2681,7 +3702,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdStatus!!.dismiss()
              val jsonObject = prodStatusArrayList.getJSONObject(position)
              Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-             ProductActivity.ID_Status = jsonObject.getString("ID_Status")
+             ID_Status = jsonObject.getString("ID_Status")
              edtProdstatus!!.setText(jsonObject.getString("StatusName"))
 
              edtFollowaction!!.setText("")
@@ -2694,6 +3715,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  val sdf = SimpleDateFormat("dd-MM-yyyy")
                  val currentDate = sdf.format(Date())
                  edtFollowdate!!.setText(currentDate)
+                 strFollowupdate = currentDate
                  switchTransfer!!.isChecked = false
 
              }else{
@@ -2761,5 +3783,501 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          }
 
+         if (data.equals("countrydetail")){
+             dialogCountry!!.dismiss()
+             val jsonObject = countryArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
+             FK_Country = jsonObject.getString("FK_Country")
+             edtCountry!!.setText(jsonObject.getString("Country"))
+
+
+             FK_States   = ""
+             FK_District = ""
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
+             edtState!!.setText("")
+             edtDistrict!!.setText("")
+             edtPost!!.setText("")
+             edtPincode!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("statedetail")){
+             dialogState!!.dismiss()
+             val jsonObject = stateArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_States   "+jsonObject.getString("FK_States"))
+             FK_States = jsonObject.getString("FK_States")
+             edtState!!.setText(jsonObject.getString("States"))
+
+             FK_District = ""
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
+             edtDistrict!!.setText("")
+             edtPost!!.setText("")
+             edtPincode!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("districtdetail")){
+             dialogDistrict!!.dismiss()
+             val jsonObject = districtArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_District   "+jsonObject.getString("FK_District"))
+             FK_District = jsonObject.getString("FK_District")
+             edtDistrict!!.setText(jsonObject.getString("District"))
+
+             FK_Area     = ""
+             FK_Place    = ""
+             FK_Post     = ""
+
+             edtPost!!.setText("")
+             edtPincode!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("postdetail")){
+             dialogPost!!.dismiss()
+             val jsonObject = postArrayList.getJSONObject(position)
+             Log.e(TAG,"FK_Post  3672    "+jsonObject.getString("FK_Post"))
+             Log.e(TAG,"PinCode  3672    "+jsonObject.getString("PinCode"))
+             FK_Post = jsonObject.getString("FK_Post")
+             edtPost!!.setText(jsonObject.getString("PostName"))
+             edtPincode!!.setText(jsonObject.getString("PinCode"))
+
+             edtLandLine!!.setText("")
+
+
+         }
+
      }
+
+    private fun LeadValidations(v : View) {
+        Log.e(TAG,"LeadValidations  3732   "+ ID_Customer+"  "+ID_Customer!!.length)
+        strComapnyName = edtCompanyName!!.text.toString()
+        if (ID_Customer!!.equals("")){
+            Customer_Mode = "0"
+            Customer_Name = edtCustname!!.text.toString()
+            Customer_Mobile = edtCustphone!!.text.toString()
+            Customer_Email = edtCustemail!!.text.toString()
+            Customer_Address = edtCustaddress!!.text.toString()
+          //  Config.snackBars(context,v,"Search OR Add Customer ")
+            if (Customer_Name.equals("")){
+                Config.snackBars(context,v,"Enter Customer Name")
+            }
+            else if (Customer_Mobile.equals("")){
+                Config.snackBars(context,v,"Enter Customer Mobile")
+            }
+            else if (Customer_Email.equals("")){
+                Config.snackBars(context,v,"Enter Customer Email")
+            }
+            else if (Customer_Address.equals("")){
+                Config.snackBars(context,v,"Enter Customer Address")
+            }
+            else if (strComapnyName.equals("")){
+                Config.snackBars(context,v,"Enter Company Name")
+            }
+            else{
+                MoreValidations(v)
+            }
+        }
+        else{
+            Customer_Mode = "1"
+            if (strComapnyName.equals("")){
+                Config.snackBars(context,v,"Enter Company Name")
+            }
+            else{
+                MoreValidations(v)
+            }
+
+
+        }
+
+    }
+
+    private fun MoreValidations(v: View) {
+
+        Log.e(TAG,"LeadValidations  37321"
+                +"\n"+"Customer_Mode     : "+Customer_Mode
+                +"\n"+"ID_Customer       : "+ID_Customer
+                +"\n"+"Customer_Name     : "+ Customer_Name
+                +"\n"+"Customer_Mobile   : "+ Customer_Mobile
+                +"\n"+"Customer_Email    : "+ Customer_Email
+                +"\n"+"Customer_Address  : "+ Customer_Address)
+
+        strMoreLandPhone = edtLandLine!!.text.toString()
+
+        if (FK_Country.equals("")){
+            Config.snackBars(context,v,"Select Country")
+        }
+        else if (FK_States.equals("")){
+            Config.snackBars(context,v,"Select State")
+        }
+        else if (FK_District.equals("")){
+            Config.snackBars(context,v,"Select District")
+        }
+        else if (FK_Post.equals("")){
+            Config.snackBars(context,v,"Select Post")
+        }
+        else if (strMoreLandPhone.equals("")){
+            Config.snackBars(context,v,"Enter LandLine")
+        }
+        else{
+            ProductValidations(v)
+        }
+
+
+    }
+
+    private fun ProductValidations(v: View) {
+        Log.e(TAG,"MoreValidations  37322"
+                +"\n"+"FK_Country        : "+FK_Country
+                +"\n"+"FK_States         : "+FK_States
+                +"\n"+"FK_District       : "+ FK_District
+                +"\n"+"FK_Post           : "+ FK_Post
+                +"\n"+"strMoreLandPhone  : "+ strMoreLandPhone)
+        strQty = edtProdqty!!.text.toString()
+        strFeedback = edtProdfeedback!!.text.toString()
+        if (ID_Category.equals("")){
+            Config.snackBars(context,v,"Select Category")
+        }
+        else if (ID_Product.equals("")){
+            Config.snackBars(context,v,"Select Product")
+        }
+        else if (strQty.equals("")){
+            Config.snackBars(context,v,"Enter Quantity ")
+        }
+        else if (ID_Priority.equals("")){
+            Config.snackBars(context,v,"Select Priority")
+        }
+        else if (strFeedback.equals("")){
+            Config.snackBars(context,v,"Enter Feedback ")
+        }
+        else if (ID_Status.equals("")){
+            Config.snackBars(context,v,"Select Status")
+        }
+        else if (ID_Status.equals("1")){
+            Log.e(TAG,"ProductValidations  373221   "+ ID_Status)
+            if (ID_NextAction.equals("")){
+                Config.snackBars(context,v,"Select Followup Action")
+            }
+            else if (ID_ActionType.equals("")){
+                Config.snackBars(context,v,"Select Followup Action type")
+            }
+            else if (strFollowupdate.equals("")){
+                Config.snackBars(context,v,"Select Followup Date")
+            }
+            else{
+               if (strNeedCheck.equals("1")){
+                   if (ID_Branch.equals("")){
+                       Config.snackBars(context,v,"Select Branch")
+                   }
+                   else if (ID_BranchType.equals("")){
+                       Config.snackBars(context,v,"Select Branch Type")
+                   }
+                   else if (ID_Department.equals("")){
+                       Config.snackBars(context,v,"Select Department")
+                   }
+                   else if (ID_Employee.equals("")){
+                       Config.snackBars(context,v,"Select Employee")
+                   }
+                   else{
+                       LocationValidation(v)
+                   }
+               }
+               else{
+                    LocationValidation(v)
+               }
+            }
+        }
+        else{
+            Log.e(TAG,"ProductValidations  373222   "+ ID_Status)
+            LocationValidation(v)
+        }
+    }
+
+    private fun LocationValidation(v: View) {
+        Log.e(TAG,"ProductValidations  37323"
+                +"\n"+"ID_Category        : "+ ID_Category
+                +"\n"+"ID_Product         : "+ ID_Product
+                +"\n"+"strQty             : "+ strQty
+                +"\n"+"ID_Priority        : "+ ID_Priority
+                +"\n"+"strFeedback        : "+ strFeedback
+                +"\n"+"ID_Status          : "+ ID_Status
+                +"\n"+"ID_NextAction      : "+ ID_NextAction
+                +"\n"+"ID_ActionType      : "+ ID_ActionType
+                +"\n"+"strFollowupdate    : "+ strFollowupdate
+                +"\n"+"strNeedCheck       : "+ strNeedCheck
+                +"\n"+"ID_Branch          : "+ ID_Branch
+                +"\n"+"ID_BranchType      : "+ ID_BranchType
+                +"\n"+"ID_Department      : "+ ID_Department
+                +"\n"+"ID_Employee        : "+ ID_Employee)
+
+        if (strLatitude.equals("") && strLongitue.equals("")){
+            Config.snackBars(context,v,"Select Location")
+        }
+        else if (strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (ID_LeadFrom.equals("")){
+            Config.snackBars(context,v,"Select Lead From")
+        }
+        else if (ID_LeadThrough.equals("")){
+            Config.snackBars(context,v,"Select Lead Through")
+        }
+        else if (ID_CollectedBy.equals("")){
+            Config.snackBars(context,v,"Select Collected By")
+        }
+        else if (ID_MediaMaster.equals("")){
+            Config.snackBars(context,v,"Select Media Type")
+        }
+        else{
+            Log.e(TAG,"LocationValidation  37324"
+                    +"\n"+"strLatitude        : "+ strLatitude
+                    +"\n"+"strLongitue        : "+ strLongitue
+                    +"\n"+"locAddress         : "+ locAddress+","+ locCity+","+ locState+","+ locCountry+","+ locpostalCode
+                    +"\n"+"strDate            : "+ strDate
+                    +"\n"+"ID_LeadFrom        : "+ ID_LeadFrom
+                    +"\n"+"ID_LeadThrough     : "+ ID_LeadThrough
+                    +"\n"+"ID_CollectedBy     : "+ ID_CollectedBy
+                    +"\n"+"ID_MediaMaster     : "+ ID_MediaMaster)
+
+            if(image1.equals(""))
+            {
+                encode1 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image1)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                } else {
+                    encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+            if(image2.equals(""))
+            {
+                encode2 = ""
+            }
+            else
+            {
+                val bitmap = BitmapFactory.decodeFile(image2)
+                val stream =  ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                } else {
+                    encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+            }
+
+            Log.e(TAG,"LocationValidation  encode1  373241   "+ encode1)
+            Log.e(TAG,"LocationValidation  encode2  373241   "+ encode2)
+
+            saveLeadGeneration()
+        }
+    }
+
+    private fun saveLeadGeneration() {
+        var saveLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                    leadGenerateSaveViewModel.saveLeadGenerate(this, strDate, ID_LeadFrom!!,
+                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address!!,
+                        Customer_Mobile!!, Customer_Email!!,strComapnyName!!,"", ID_MediaMaster!!, FK_Country, FK_States,
+                        FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
+                        strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
+                        ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
+                        encode1, encode2)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   4120   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setMessage(jobjt.getString("ResponseMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+                                            startActivity(i)
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //  }
+
+
+                            }catch (e: Exception){
+
+                                Log.e(TAG,"Exception  4133    "+e.toString())
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+        catch (e : Exception){
+            Log.e(TAG,"Exception  226666    "+e.toString())
+        }
+
+
+    }
+
+
+    private fun getLeadEdit(v: View) {
+
+        var editLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   21081   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+
+                                        LeadEditDetailPopup(leadEditArrayList)
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //  }
+
+
+                            }catch (e: Exception){
+
+                                Log.e(TAG,"Exception  4133    "+e.toString())
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+        catch (e : Exception){
+            Log.e(TAG,"Exception  226666    "+e.toString())
+        }
+
+    }
+
+    private fun LeadEditDetailPopup(leadEditArrayList: JSONArray) {
+
+        try {
+
+            dialogLeadEdit = Dialog(this)
+            dialogLeadEdit!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogLeadEdit!! .setContentView(R.layout.employee_popup)
+            dialogLeadEdit!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadDetail = dialogLeadEdit!! .findViewById(R.id.recyLeadDetail) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recyLeadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+            recyLeadDetail!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogLeadEdit!!.show()
+            dialogLeadEdit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
 }

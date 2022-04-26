@@ -9,12 +9,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textSize="17dp"
         android:textStyle="bold"
-        android:background="@color/pophead"
-        android:padding="15dp"
+        android:textAllCaps="true"
+        android:background="@color/white"
+        android:padding="10dp"
         android:fontFamily="@font/myfont"
         android:text="Product"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyProdDetail"

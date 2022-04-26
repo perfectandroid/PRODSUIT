@@ -164,46 +164,49 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
 
         try {
 
-        }catch (e: Exception){
-
-        }
-        googleMap = p0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+            googleMap = p0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                    buildGoogleApiClient();
+                    googleMap.setMyLocationEnabled(false);
+                    googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+                }
+            }
+            else {
                 buildGoogleApiClient();
                 googleMap.setMyLocationEnabled(false);
                 googleMap.getUiSettings().setMyLocationButtonEnabled(false);
             }
+            googleMap.setOnMapClickListener(OnMapClickListener { latLng ->
+                googleMap.clear()
+                geocoder = Geocoder(this, Locale.getDefault())
+                addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                address = addresses!!.get(0).getAddressLine(0)
+                city = addresses!!.get(0).locality
+                state = addresses!!.get(0).adminArea
+                country = addresses!!.get(0).countryName
+                postalCode = addresses!!.get(0).postalCode
+                knownName = addresses!!.get(0).featureName
+                strLongitue = latLng.longitude.toString()
+                strLatitude = latLng.latitude.toString()
+                val latLng = LatLng(latLng.latitude, latLng.longitude)
+                val markerOptions = MarkerOptions()
+                markerOptions.position(latLng)
+                markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                mCurrLocationMarker = googleMap.addMarker(markerOptions)
+                edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+            })
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception   207    "+e.toString())
         }
-        else {
-            buildGoogleApiClient();
-            googleMap.setMyLocationEnabled(false);
-            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        }
-         googleMap.setOnMapClickListener(OnMapClickListener { latLng ->
-            googleMap.clear()
-            geocoder = Geocoder(this, Locale.getDefault())
-            addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            address = addresses!!.get(0).getAddressLine(0)
-            city = addresses!!.get(0).locality
-            state = addresses!!.get(0).adminArea
-            country = addresses!!.get(0).countryName
-            postalCode = addresses!!.get(0).postalCode
-            knownName = addresses!!.get(0).featureName
-            strLongitue = latLng.longitude.toString()
-            strLatitude = latLng.latitude.toString()
-            val latLng = LatLng(latLng.latitude, latLng.longitude)
-            val markerOptions = MarkerOptions()
-            markerOptions.position(latLng)
-            markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            mCurrLocationMarker = googleMap.addMarker(markerOptions)
-            edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        })
+
     }
 
     @Synchronized

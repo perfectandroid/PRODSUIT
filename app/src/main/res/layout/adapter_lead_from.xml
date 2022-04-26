@@ -7,7 +7,7 @@
     app:cardCornerRadius="3dp"
     android:backgroundTint="@color/white"
     android:layout_marginTop="2dp"
-    app:cardElevation="1dp">
+    app:cardElevation="0.7dp">
 <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:drawableTint="@color/black"
+            android:drawableTint="@color/grey"
             android:drawableRight="@drawable/ic_arrow_right"
             android:textStyle="normal" />
 

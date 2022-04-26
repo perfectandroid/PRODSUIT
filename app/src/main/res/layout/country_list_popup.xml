@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardMaxElevation="1dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/myfont"
+            android:background="@drawable/shadow_white"
+            android:padding="10dp"
+            android:textAllCaps="true"
+            android:text="Country"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+<!--        android:background="@color/pophead"-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycCountry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

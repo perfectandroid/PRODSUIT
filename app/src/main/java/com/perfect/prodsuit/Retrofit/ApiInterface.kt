@@ -109,6 +109,26 @@ interface ApiInterface {
     @POST("UserValidations/NotificationDetailsList")
     fun getNotification(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/PincodeDetails")
+    fun getPincodeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/AddAgentCustomerRemarks")
+    fun getAgentnote(@Body body: RequestBody): Call<String>
+    @POST("UserValidations/CountryDetails")
+    fun getCountryDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/StatesDetails")
+    fun getStatesDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/DistrictDetails")
+    fun getDistrictDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/PostDetails")
+    fun getPostDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/UpdateLeadGeneration")
+    fun saveUpdateLeadGeneration(@Body body: RequestBody): Call<String>
+
 
 
 

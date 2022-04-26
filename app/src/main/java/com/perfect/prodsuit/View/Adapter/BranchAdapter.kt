@@ -37,12 +37,12 @@ class BranchAdapter(internal var context: Context, internal var jsonArray: JSONA
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtBranch.text        = jsonObject!!.getString("BranchName")
-                if (position % 2 == 0){
-                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llbranch!!.setTag(position)
                 holder.llbranch!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "branch")

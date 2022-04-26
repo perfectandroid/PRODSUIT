@@ -37,12 +37,12 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtpriority.text        = jsonObject!!.getString("PriorityName")
-                if (position % 2 == 0){
-                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
-                }
-                else{
-                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.white))
-                }
+//                if (position % 2 == 0){
+//                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
                 holder.llprodpriority!!.setTag(position)
                 holder.llprodpriority!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "prodpriority")
