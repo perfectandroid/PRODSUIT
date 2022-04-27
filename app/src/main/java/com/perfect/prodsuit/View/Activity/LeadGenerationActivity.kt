@@ -3879,7 +3879,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              val jsonObject = leadEditArrayList.getJSONObject(position)
              Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
              //FK_Country = jsonObject.getString("FK_Country")
-             edtCustname!!.setText(jsonObject.getString("CustomerName"))
+//             edtCustname!!.setText(jsonObject.getString("CustomerName"))
+//             edtFollowdate!!.setText(jsonObject.getString("NextActionDate"))
+//             txtleadby!!.text = jsonObject.getString("CollectedBy")
+//
+//             edtProdproduct!!.setText(jsonObject.getString("product"))
          }
 
      }
