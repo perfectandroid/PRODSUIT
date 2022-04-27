@@ -221,7 +221,9 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
                 llFromDatePick1!!.visibility = View.GONE
                 fromDateMode1 = "1"
             }
-
+            R.id.btnReset->{
+                ResetData()
+            }
             R.id.txtFromSubmit->{
 
 
@@ -280,6 +282,14 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
             }
 
         }
+
+    }
+
+    private fun ResetData() {
+        txtv_Date!!.setText("")
+        txtnxt_actndte!!.setText("")
+        etxt_custremrk!!.setText("")
+        etxt_agentremrk!!.setText("")
 
     }
 
