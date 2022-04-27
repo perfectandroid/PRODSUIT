@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.SaveNextActionModel
 import com.perfect.prodsuit.Repository.SaveNextActionRepository
-import com.perfect.prodsuit.View.Activity.LeadNextActionActivity
 
 
 class SaveNextActionViewModel: ViewModel() {
