@@ -29,9 +29,11 @@ import java.util.*
 
 class AddQuotationActivity : AppCompatActivity() , View.OnClickListener {
 
-    internal var etdate: EditText? = null
-    internal var ettime: EditText? = null
-    internal var etdis: EditText? = null
+    internal var llattachmnt: LinearLayout? = null
+    internal var ll_imgv: LinearLayout? = null
+    internal var btnReset: Button? = null
+    internal var btnSubmit: Button? = null
+    internal var imgv_attachment: ImageView? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -47,21 +49,31 @@ class AddQuotationActivity : AppCompatActivity() , View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addquotation)
-     //   setRegViews()
+        setRegViews()
 
     }
 
-  /*  private fun setRegViews() {
+    private fun setRegViews() {
 
-        val imback = findViewById<ImageView>(R.id.imback)
-        imback!!.setOnClickListener(this)
+        llattachmnt= findViewById<LinearLayout>(R.id.llattachmnt)
+        ll_imgv= findViewById<LinearLayout>(R.id.ll_imgv)
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        btnReset = findViewById<Button>(R.id.btnReset)
+        imgv_attachment= findViewById<ImageView>(R.id.imgv_attachment)
 
-    }*/
+    }
+
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.btnSubmit->{
+
+            }
+            R.id.btnReset->{
+
             }
         }
     }
