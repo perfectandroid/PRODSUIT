@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
@@ -128,11 +129,33 @@ object SaveNewActionRepository {
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    progressDialog!!.dismiss()
+                    val builder = AlertDialog.Builder(
+                        context,
+                        R.style.MyDialogTheme
+                    )
+                    builder.setMessage("Some Technical Issue")
+                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                    }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            progressDialog!!.dismiss()
+            val builder = AlertDialog.Builder(
+                context,
+                R.style.MyDialogTheme
+            )
+            builder.setMessage("Some Technical Issue")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
     }

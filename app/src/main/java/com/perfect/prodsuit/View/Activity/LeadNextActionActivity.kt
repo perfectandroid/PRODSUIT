@@ -760,9 +760,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+
+                        Log.e(TAG,"msg   1224   "+msg)
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1224   "+msg)
+                            Log.e(TAG,"msg   12241   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("EmployeeDetails")
                                 employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")

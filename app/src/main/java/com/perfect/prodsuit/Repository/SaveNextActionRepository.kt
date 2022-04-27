@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
@@ -115,22 +116,45 @@ object SaveNextActionRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"saveAddNextAction  118   "+response.body())
                         val jObject = JSONObject(response.body())
                         val nxtAction = ArrayList<SaveNextActionModel>()
                         nxtAction.add(SaveNextActionModel(response.body()))
                         val msg = nxtAction[0].message
+                        Log.e(TAG,"saveAddNextAction  1181   "+msg)
                         savenextactionsetterGetter.value = SaveNextActionModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
+
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    val builder = AlertDialog.Builder(
+                        context,
+                        R.style.MyDialogTheme
+                    )
+                    builder.setMessage("Some Technical Issue")
+                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                    }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            val builder = AlertDialog.Builder(
+                context,
+                R.style.MyDialogTheme
+            )
+            builder.setMessage("Some Technical Issue")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
     }
