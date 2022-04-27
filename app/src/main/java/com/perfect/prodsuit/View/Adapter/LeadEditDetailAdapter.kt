@@ -35,7 +35,9 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtCustName.text        = jsonObject!!.getString("Country")
+                holder.txtCustName.text        = jsonObject!!.getString("CustomerName")
+                holder.txtProdName.text        = jsonObject!!.getString("product")
+                holder.txtNextActionDate.text  = jsonObject!!.getString("NextActionDate")
                 holder.llleadEdit!!.setTag(position)
                 holder.llleadEdit!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadedit")
@@ -60,14 +62,16 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtCustName     : TextView
-        internal var txtCustAddress  : TextView
-        internal var txtProdName     : TextView
-        internal var llleadEdit      : LinearLayout
+        internal var txtCustName        : TextView
+        internal var txtCustAddress     : TextView
+        internal var txtProdName        : TextView
+        internal var txtNextActionDate  : TextView
+        internal var llleadEdit         : LinearLayout
         init {
             txtCustName          = v.findViewById<View>(R.id.txtCustName) as TextView
             txtCustAddress       = v.findViewById<View>(R.id.txtCustAddress) as TextView
             txtProdName          = v.findViewById<View>(R.id.txtProdName) as TextView
+            txtNextActionDate    = v.findViewById<View>(R.id.txtNextActionDate) as TextView
             llleadEdit           = v.findViewById<View>(R.id.llleadEdit) as LinearLayout
         }
     }

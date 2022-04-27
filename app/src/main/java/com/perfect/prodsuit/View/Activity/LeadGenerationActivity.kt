@@ -3877,9 +3877,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              saveUpdateMode = "1"  //Update
 
              val jsonObject = leadEditArrayList.getJSONObject(position)
-             Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
-             FK_Country = jsonObject.getString("FK_Country")
-             edtCountry!!.setText(jsonObject.getString("Country"))
+             Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
+             //FK_Country = jsonObject.getString("FK_Country")
+             edtCustname!!.setText(jsonObject.getString("CustomerName"))
          }
 
      }
@@ -4207,7 +4207,6 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
     private fun getLeadEdit(v: View) {
-
         var editLeadGenDet = 0
         try {
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -4219,8 +4218,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-//                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
-                    countryViewModel.getCountry(this)!!.observe(
+                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -4231,10 +4229,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                pinCodeDet++
                                 if (msg!!.length > 0) {
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   21081   "+msg)
+                                    Log.e(TAG,"msg   4233   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("CountryDetails")
-                                        leadEditArrayList = jobjt.getJSONArray("CountryDetailsList")
+                                        val jobjt = jObject.getJSONObject("LeadGenerationDetails")
+                                        leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
                                         if (leadEditArrayList.length()>0){
                                             if (editLeadGenDet == 0){
                                                 editLeadGenDet++
