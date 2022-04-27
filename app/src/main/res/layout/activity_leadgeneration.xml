@@ -120,7 +120,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:orientation="vertical"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
 
@@ -629,12 +629,12 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
                                             android:drawableRight="@drawable/ic_arrow_down"
+                                            android:fontFamily="@font/myfont"
                                             android:padding="5dp"
                                             android:text="Product Details"
-                                            android:textStyle="bold"
-                                            android:fontFamily="@font/myfont"
                                             android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textSize="18sp"
+                                            android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:id="@+id/llProdDetail"

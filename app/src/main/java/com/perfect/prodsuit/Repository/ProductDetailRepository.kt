@@ -26,12 +26,12 @@ object ProductDetailRepository {
     val productdetailSetterGetter = MutableLiveData<ProductDetailModel>()
     val TAG: String = "ProductDetailRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ProductDetailModel> {
-        getProductDetail(context)
+    fun getServicesApiCall(context: Context,ID_Category :String): MutableLiveData<ProductDetailModel> {
+        getProductDetail(context,ID_Category)
         return productdetailSetterGetter
     }
 
-    private fun getProductDetail(context: Context) {
+    private fun getProductDetail(context: Context,ID_Category : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -66,7 +66,7 @@ object ProductDetailRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ProductActivity.ID_Category))
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
-                Log.e(TAG,"ID_Category   80   "+ProductActivity.ID_Category)
+                Log.e(TAG,"ID_Category   80   "+ID_Category)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

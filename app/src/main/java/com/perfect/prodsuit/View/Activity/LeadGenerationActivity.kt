@@ -1206,7 +1206,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 }
                 else{
-                    getProductDetail(strProdName)
+                    getProductDetail(ID_Category!!)
                 }
             }
 
@@ -2896,7 +2896,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
      }
 
-     private fun getProductDetail(strProdName: String) {
+     private fun getProductDetail(ID_Category: String) {
          var proddetail = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
@@ -2906,7 +2906,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  progressDialog!!.setIndeterminate(true)
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                  progressDialog!!.show()
-                 productDetailViewModel.getProductDetail(this)!!.observe(
+                 productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
                          val msg = serviceSetterGetter.message

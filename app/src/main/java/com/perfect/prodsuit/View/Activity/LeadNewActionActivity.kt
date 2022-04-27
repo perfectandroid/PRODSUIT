@@ -18,12 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
-import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
-import com.perfect.prodsuit.Viewmodel.DepartmentViewModel
-import com.perfect.prodsuit.Viewmodel.EmployeeViewModel
-import com.perfect.prodsuit.Viewmodel.FollowUpActionViewModel
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -33,7 +29,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-    private var llProject: LinearLayout? = null
+    private var llCategory: LinearLayout? = null
+    private var llProduct: LinearLayout? = null
     private var llAction: LinearLayout? = null
     private var llFollowUpDate: LinearLayout? = null
     private var llDepartment: LinearLayout? = null
@@ -43,6 +40,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
     private var imDateclose: ImageView? = null
     var date_Picker1: DatePicker? = null
 
+    private var txtCategory: TextView? = null
+    private var txtProduct: TextView? = null
     private var txtAction: TextView? = null
     private var txtActionType: TextView? = null
     private var txtFollowUpDate: TextView? = null
@@ -52,6 +51,16 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
+    lateinit var prodCategoryArrayList : JSONArray
+    var recyProdCategory: RecyclerView? = null
+    private var dialogProdCat : Dialog? = null
+
+    lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var prodDetailArrayList : JSONArray
+    var recyProdDetail: RecyclerView? = null
+    private var dialogProdDet : Dialog? = null
 
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var departmentViewModel: DepartmentViewModel
@@ -71,6 +80,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
     companion object{
         var ID_NextAction : String = ""
+        var ID_Category : String?= ""
+        var ID_Product : String?= ""
         var dateMode : String?= "1"  // GONE
         var ID_Department : String = ""
         var ID_Employee : String = ""
@@ -84,6 +95,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
         setContentView(R.layout.activity_lead_new_action)
         context = this@LeadNewActionActivity
 
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
@@ -98,7 +111,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        llProject = findViewById<LinearLayout>(R.id.llProject)
+        llCategory = findViewById<LinearLayout>(R.id.llCategory)
+        llProduct = findViewById<LinearLayout>(R.id.llProduct)
         llAction = findViewById<LinearLayout>(R.id.llAction)
         llFollowUpDate = findViewById<LinearLayout>(R.id.llFollowUpDate)
         llDepartment = findViewById<LinearLayout>(R.id.llDepartment)
@@ -109,6 +123,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
 
+        txtCategory = findViewById<TextView>(R.id.txtCategory)
+        txtProduct = findViewById<TextView>(R.id.txtProduct)
         txtAction = findViewById<TextView>(R.id.txtAction)
         txtFollowUpDate = findViewById<TextView>(R.id.txtFollowUpDate)
         txtDepartment = findViewById<TextView>(R.id.txtDepartment)
@@ -118,6 +134,8 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
+        llCategory!!.setOnClickListener(this)
+        llProduct!!.setOnClickListener(this)
         llAction!!.setOnClickListener(this)
         llFollowUpDate!!.setOnClickListener(this)
         llDepartment!!.setOnClickListener(this)
@@ -134,11 +152,15 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
     private fun ResetData() {
         ID_NextAction = ""
+        ID_Category   = ""
+        ID_Product = ""
         dateMode = "1"
         ID_Department = ""
         ID_Employee = ""
         strDate = ""
 
+        txtCategory!!.setText("")
+        txtProduct!!.setText("")
         txtAction!!.setText("")
         txtFollowUpDate!!.setText("")
         txtDepartment!!.setText("")
@@ -149,6 +171,22 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.llCategory->{
+                  getCategory()
+            }
+             R.id.llProduct->{
+
+                 if (ID_Category.equals("")){
+                     val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
+                     snackbar.setActionTextColor(Color.WHITE)
+                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+                     snackbar.show()
+
+                 }
+                 else{
+                     getProductDetail(ID_Category!!)
+                 }
             }
             R.id.llAction->{
                 getFollowupAction()
@@ -212,6 +250,169 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                 ResetData()
             }
         }
+    }
+
+    private fun getCategory() {
+        var prodcategory = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+                                if (prodCategoryArrayList.length()>0){
+                                    if (prodcategory == 0){
+                                        prodcategory++
+                                        productCategoryPopup(prodCategoryArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadNewActionActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productCategoryPopup(prodCategoryArrayList: JSONArray) {
+        try {
+
+            dialogProdCat = Dialog(this)
+            dialogProdCat!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdCat!! .setContentView(R.layout.product_category_popup)
+            dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdCategory = dialogProdCat!! .findViewById(R.id.recyProdCategory) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadNewActionActivity, 1)
+            recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductCategoryAdapter(this@LeadNewActionActivity, prodCategoryArrayList)
+            recyProdCategory!!.adapter = adapter
+            adapter.setClickListener(this@LeadNewActionActivity)
+
+            dialogProdCat!!.show()
+            dialogProdCat!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getProductDetail(ID_Category: String) {
+        var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   227   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                if (prodDetailArrayList.length()>0){
+                                    if (proddetail == 0){
+                                        proddetail++
+                                        productDetailPopup(prodDetailArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadNewActionActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!! .setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadNewActionActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductDetailAdapter(this@LeadNewActionActivity, prodDetailArrayList)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@LeadNewActionActivity)
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun getFollowupAction() {
@@ -384,7 +585,7 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeViewModel.getEmployee(this, LeadGenerationActivity.ID_Department)!!.observe(
+                employeeViewModel.getEmployee(this, ID_Department)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -454,6 +655,23 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
     }
 
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("prodcategory")){
+            dialogProdCat!!.dismiss()
+            val jsonObject = prodCategoryArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
+            ID_Category = jsonObject.getString("ID_Category")
+            txtCategory!!.setText(jsonObject.getString("CategoryName"))
+        }
+
+        if (data.equals("proddetails")){
+            dialogProdDet!!.dismiss()
+            val jsonObject = prodDetailArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
+            ID_Product = jsonObject.getString("ID_Product")
+            txtProduct!!.setText(jsonObject.getString("ProductName"))
+        }
+
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
             val jsonObject = followUpActionArrayList.getJSONObject(position)
