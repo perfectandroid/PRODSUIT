@@ -145,6 +145,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadEditListViewModel: LeadEditListViewModel
     lateinit var leadEditArrayList : JSONArray
 
+    lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
+    lateinit var leadEditDetArrayList : JSONArray
+
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList : JSONArray
@@ -329,6 +332,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
         leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
         leadEditListViewModel = ViewModelProvider(this).get(LeadEditListViewModel::class.java)
+        leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
@@ -3885,10 +3889,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //
 //             edtProdproduct!!.setText(jsonObject.getString("product"))
 
+         //    getLeadEditDetail()
+
 
          }
 
      }
+
+
 
     private fun LeadValidations(v : View) {
         Log.e(TAG,"LeadValidations  3732   "+ ID_Customer+"  "+ID_Customer!!.length)
@@ -4314,6 +4322,86 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadEdit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun getLeadEditDetail() {
+        var editLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                    leadEditDetailViewModel.getLeadEditDetail(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   4233   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+//                                        val jobjt = jObject.getJSONObject("LeadGenerationDetails")
+//                                        leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
+//                                        if (leadEditArrayList.length()>0){
+//                                            if (editLeadGenDet == 0){
+//                                                editLeadGenDet++
+//                                                LeadEditDetailPopup(leadEditArrayList)
+//                                            }
+//
+//                                        }
+
+
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //  }
+
+
+                            }catch (e: Exception){
+
+                                Log.e(TAG,"Exception  4133    "+e.toString())
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+        catch (e : Exception){
+            Log.e(TAG,"Exception  226666    "+e.toString())
         }
     }
 
