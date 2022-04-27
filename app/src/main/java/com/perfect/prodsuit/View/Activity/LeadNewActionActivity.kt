@@ -249,8 +249,15 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
             R.id.btnReset->{
                 ResetData()
             }
+
+            R.id.btnSubmit->{
+                Config.Utils.hideSoftKeyBoard(context,v)
+                NewActionValidations(v)
+            }
         }
     }
+
+
 
     private fun getCategory() {
         var prodcategory = 0
@@ -701,5 +708,38 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
 
         }
+    }
+
+    private fun NewActionValidations(v: View) {
+
+        if (ID_Category!!.equals("")){
+            Config.snackBars(context,v,"Select Category")
+        }
+        else if (ID_Product!!.equals("")){
+            Config.snackBars(context,v,"Select Product")
+        }
+        else if (ID_NextAction!!.equals("")){
+            Config.snackBars(context,v,"Select Action")
+        }
+        else if (strDate!!.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if (ID_Department!!.equals("")){
+            Config.snackBars(context,v,"Select Department")
+        }
+        else if (ID_Employee!!.equals("")){
+            Config.snackBars(context,v,"Select Employee")
+        }
+        else{
+            Log.e(TAG,"NewActionValidations  733"
+                    +"\n"+"ID_Category      : "+ ID_Category
+                    +"\n"+"ID_Product       : "+ ID_Product
+                    +"\n"+"ID_NextAction    : "+ ID_NextAction
+                    +"\n"+"strDate          : "+ strDate
+                    +"\n"+"ID_Department    : "+ ID_Department
+                    +"\n"+"ID_Employee      : "+ ID_Employee
+            )
+        }
+
     }
 }
