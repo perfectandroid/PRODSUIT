@@ -43,7 +43,6 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
 
 
                 holder.txtv_date1.text        = date
-                holder.txtv_status.text        = jsonObject!!.getString("readStatus")
                 holder.tv_msg.text        = jsonObject!!.getString("NotificationMessage")
 
 
@@ -73,13 +72,11 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         internal var txtv_date1   : TextView
-        internal var txtv_status       : TextView
         internal var tv_msg    : TextView
 
 
         init {
             txtv_date1          = v.findViewById<View>(R.id.txtv_dte1) as TextView
-            txtv_status              = v.findViewById<View>(R.id.txtv_status) as TextView
             tv_msg           = v.findViewById<View>(R.id.tv_msg) as TextView
         }
     }

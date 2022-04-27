@@ -57,6 +57,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var employeeViewModel: EmployeeViewModel
+    lateinit var saveNextActionViewModel: SaveNextActionViewModel
 
     lateinit var followUpActionArrayList : JSONArray
     lateinit var followUpTypeArrayList : JSONArray
@@ -98,6 +99,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        saveNextActionViewModel = ViewModelProvider(this).get(SaveNextActionViewModel::class.java)
 
         setRegViews()
         ResetData()
@@ -738,7 +740,67 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                     +"\n"+"ID_Department   : "+ID_Department
                     +"\n"+"ID_Employee     : "+ID_Employee)
 
-            Config.snackBars(context,v,"Save API not implement")
+          //  Config.snackBars(context,v,"Save API not implement")
+
+            saveNextAction()
+        }
+    }
+
+    private fun saveNextAction() {
+        var saveNexr = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveNextActionViewModel.saveNextAction(this, ID_NextAction,ID_ActionType,strDate,ID_Priority!!,ID_Department,ID_Employee)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+
+                        Log.e(TAG,"msg   1224   "+msg)
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   12241   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                if (employeeArrayList.length()>0){
+                                    if (saveNexr == 0){
+                                        saveNexr++
+                                        employeePopup(employeeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadNextActionActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 }

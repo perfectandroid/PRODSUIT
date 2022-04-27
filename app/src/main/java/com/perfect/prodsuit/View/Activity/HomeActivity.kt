@@ -446,7 +446,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                       //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
                                         val handler = Handler()
                                         val Update = Runnable {
-                                            Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
                                             if (currentPage == jresult!!.length()) {
                                                 currentPage = 0
                                             }

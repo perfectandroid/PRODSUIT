@@ -9,9 +9,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/llBtn"
+                android:layout_marginBottom="2dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -65,7 +69,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llHeader"
-                    android:layout_marginBottom="50dp"
                     android:orientation="vertical">
                     <ScrollView
                         android:layout_width="match_parent"
@@ -109,7 +112,7 @@
                                             android:fontFamily="@font/myfont"
                                             android:text="Customer Details"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -135,57 +138,70 @@
                                                 android:visibility="gone"
                                                 android:src="@drawable/ic_cancel_" />
 
-                                            <RelativeLayout
+                                            <LinearLayout
+                                                android:id="@+id/llCustSearch"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:background="@drawable/shape_bg"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginTop="10dp">
+                                                android:orientation="vertical">
 
-
-                                                <EditText
-                                                    android:id="@+id/edt_customer"
+                                                <RelativeLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:background="@android:color/transparent"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginTop="10dp">
+
+
+                                                    <EditText
+                                                        android:id="@+id/edt_customer"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@android:color/transparent"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:hint="Search"
+                                                        android:padding="5dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+                                                    <ImageView
+                                                        android:id="@+id/img_search"
+                                                        android:layout_width="30dp"
+                                                        android:layout_height="30dp"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_centerInParent="true"
+                                                        android:layout_marginRight="5dp"
+                                                        android:background="@drawable/ic_search"
+                                                        android:backgroundTint="@color/greydark"
+                                                        android:padding="5dp" />
+
+
+
+                                                </RelativeLayout>
+
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="---------- OR ----------"
+                                                    android:gravity="center"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold"
                                                     android:fontFamily="@font/myfont"
-                                                    android:hint="Search"
-                                                    android:padding="5dp"
-                                                    android:singleLine="true"
-                                                    android:text="" />
-
-                                                <ImageView
-                                                    android:id="@+id/img_search"
-                                                    android:layout_width="30dp"
-                                                    android:layout_height="30dp"
-                                                    android:layout_alignParentRight="true"
-                                                    android:layout_centerInParent="true"
-                                                    android:layout_marginRight="5dp"
-                                                    android:background="@drawable/ic_search"
-                                                    android:backgroundTint="@color/greydark"
-                                                    android:padding="5dp" />
+                                                    android:textColor="@color/grey"
+                                                    android:layout_margin="20dp"/>
 
 
 
-                                            </RelativeLayout>
+                                            </LinearLayout>
 
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:text="---------- OR ----------"
-                                                android:gravity="center"
-                                                android:textSize="20dp"
-                                                android:textStyle="bold"
-                                                android:fontFamily="@font/myfont"
-                                                android:textColor="@color/black"
-                                                android:layout_margin="20dp"/>
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
                                                 android:orientation="vertical">
 
 
@@ -200,6 +216,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
@@ -220,6 +237,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:padding="5dp"
                                                     android:maxLength="10"
+                                                    android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
                                                     android:background="@drawable/shape_bg"
@@ -236,6 +254,7 @@
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="textEmailAddress"
                                                     android:background="@drawable/shape_bg"
@@ -254,6 +273,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:paddingLeft="10dp"
                                                     android:paddingTop="3dp"
+                                                    android:textSize="15dp"
                                                     android:paddingRight="10dp"
                                                     android:paddingBottom="3dp"
                                                     android:inputType="textMultiLine"
@@ -350,7 +370,7 @@
                                             android:padding="5dp"
                                             android:text="Company Name"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textStyle="bold"
                                             android:textSize="18sp"/>
 
@@ -414,7 +434,7 @@
                                             android:fontFamily="@font/myfont"
                                             android:text="More Communication Info"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -445,6 +465,7 @@
                                                     android:background="@android:color/transparent"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Pincode"
+                                                    android:textSize="15dp"
                                                     android:inputType="number"
                                                     android:padding="5dp"
                                                     android:singleLine="true"
@@ -483,6 +504,7 @@
                                                     android:drawableRight="@drawable/arrowright"
                                                     android:drawableTint="@color/greydark"
                                                     android:editable="false"
+                                                    android:textSize="15dp"
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
@@ -506,6 +528,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
@@ -525,6 +548,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
@@ -543,6 +567,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
@@ -562,6 +587,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="10dp"
                                                     android:padding="5dp"
+                                                    android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
                                                     android:background="@drawable/shape_bg"
@@ -603,12 +629,12 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
                                             android:drawableRight="@drawable/ic_arrow_down"
+                                            android:fontFamily="@font/myfont"
                                             android:padding="5dp"
                                             android:text="Product Details"
-                                            android:textStyle="bold"
-                                            android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydark"
+                                            android:textSize="18sp"
+                                            android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:id="@+id/llProdDetail"
@@ -776,7 +802,7 @@
                                                     android:gravity="center"
                                                     android:text="Follow Up"
                                                     android:textColor="@color/black"
-                                                    android:textSize="20dp"
+                                                    android:textSize="18dp"
                                                     android:textStyle="bold" />
 
                                                 <LinearLayout
@@ -1095,7 +1121,7 @@
                                             android:text="Location Details"
                                             android:textStyle="bold"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1162,7 +1188,7 @@
                                             android:text="Date"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1313,7 +1339,7 @@
                                             android:text="Lead From"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1414,7 +1440,7 @@
                                             android:padding="5dp"
                                             android:text="Lead Though"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textStyle="bold"
                                             android:textSize="18sp"/>
 
@@ -1515,7 +1541,7 @@
                                             android:text="Collected By"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1615,7 +1641,7 @@
                                             android:padding="5dp"
                                             android:text="Media Type"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp" />
 
                                         <LinearLayout
@@ -1715,7 +1741,7 @@
                                             android:text="Upload Images"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/greydark"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -2491,7 +2517,10 @@
 
 
             </LinearLayout>
+
+
         <LinearLayout
+            android:id="@+id/llBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -2501,10 +2530,10 @@
             <Button
                 android:id="@+id/btnReset"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:layout_weight="2"
-                android:background="@drawable/btn_bgcolourwhite"
+                android:background="@drawable/btn_bgcolourshadow"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="Reset"
@@ -2513,16 +2542,18 @@
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolourblack"
+                android:background="@drawable/btn_bgcolourshadow1"
                 android:padding="2dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="Submit" />
+
+<!--            btn_bgcolourblack-->
         </LinearLayout>
 
     </RelativeLayout>

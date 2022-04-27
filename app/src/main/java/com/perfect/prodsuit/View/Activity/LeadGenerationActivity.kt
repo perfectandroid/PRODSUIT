@@ -59,6 +59,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
     private var llCustomerDetail: LinearLayout? = null
+    private var llCustSearch: LinearLayout? = null
     private var llCompanyName: LinearLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
@@ -142,6 +143,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
     lateinit var saveLeadGenArrayList : JSONArray
 
+    lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
+    lateinit var leadEditArrayList : JSONArray
+
+
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList : JSONArray
     private var dialogCountry : Dialog? = null
@@ -214,6 +219,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      private var dialogBranch : Dialog? = null
      private var dialogDepartment : Dialog? = null
      private var dialogEmployee : Dialog? = null
+     private var dialogLeadEdit : Dialog? = null
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
@@ -224,6 +230,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      var recyBranch: RecyclerView? = null
      var recyDeaprtment: RecyclerView? = null
      var recyEmployee: RecyclerView? = null
+     var recyLeadDetail: RecyclerView? = null
 
     private var tv_CustClick: TextView? = null
     private var tv_CompanyNameClick: TextView? = null
@@ -239,6 +246,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+
+    var saveUpdateMode : String?= ""
+
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -319,6 +329,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
         leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+        leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
@@ -477,12 +488,17 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         mediaTypeMode = "1"
         uploadImageMode = "1"
 
+        llCustSearch!!.visibility = View.VISIBLE
+        btnSubmit!!.setText("Submit")
+        saveUpdateMode = "0"  //SAVE
+
         hideViews()
 
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
         img_search = findViewById<ImageView>(R.id.img_search)
         imCustclose = findViewById<ImageView>(R.id.imCustclose)
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
@@ -490,6 +506,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         imProdclose = findViewById<ImageView>(R.id.imProdclose)
       //  llCustomer = findViewById<LinearLayout>(R.id.llCustomer)
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
+        llCustSearch = findViewById<LinearLayout>(R.id.llCustSearch)
         llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
@@ -566,6 +583,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
         imback!!.setOnClickListener(this)
+        imLeadedit!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
         imCustclose!!.setOnClickListener(this)
         imDateclose!!.setOnClickListener(this)
@@ -637,6 +655,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.imLeadedit->{
+
+                getLeadEdit(v)
+             // Config.snackBars(context,v,"Lead Edit")
+
             }
 //            R.id.llCustomer->{
 //                if (custDetailMode.equals("0")){
@@ -1183,7 +1207,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 }
                 else{
-                    getProductDetail(strProdName)
+                    getProductDetail(ID_Category!!)
                 }
             }
 
@@ -2873,7 +2897,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
      }
 
-     private fun getProductDetail(strProdName: String) {
+     private fun getProductDetail(ID_Category: String) {
          var proddetail = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
@@ -2883,7 +2907,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  progressDialog!!.setIndeterminate(true)
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                  progressDialog!!.show()
-                 productDetailViewModel.getProductDetail(this)!!.observe(
+                 productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
                          val msg = serviceSetterGetter.message
@@ -3844,6 +3868,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          }
 
+         if (data.equals("leadedit")){
+
+             Toast.makeText(applicationContext,"Lead Edit selection",Toast.LENGTH_SHORT).show()
+             dialogLeadEdit!!.dismiss()
+
+             llCustSearch!!.visibility = View.GONE
+             btnSubmit!!.setText("Update")
+             saveUpdateMode = "1"  //Update
+
+             val jsonObject = leadEditArrayList.getJSONObject(position)
+             Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
+             //FK_Country = jsonObject.getString("FK_Country")
+             edtCustname!!.setText(jsonObject.getString("CustomerName"))
+         }
+
      }
 
     private fun LeadValidations(v : View) {
@@ -4103,8 +4142,24 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                pinCodeDet++
                                 if (msg!!.length > 0) {
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   21081   "+msg)
+                                    Log.e(TAG,"msg   4120   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setMessage(jobjt.getString("ResponseMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+                                            startActivity(i)
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
 
 
                                     } else {
@@ -4131,6 +4186,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                             }catch (e: Exception){
 
+                                Log.e(TAG,"Exception  4133    "+e.toString())
 
                             }
 
@@ -4148,6 +4204,112 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
 
 
+    }
+
+
+    private fun getLeadEdit(v: View) {
+        var editLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   4233   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("LeadGenerationDetails")
+                                        leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
+                                        if (leadEditArrayList.length()>0){
+                                            if (editLeadGenDet == 0){
+                                                editLeadGenDet++
+                                                LeadEditDetailPopup(leadEditArrayList)
+                                            }
+
+                                        }
+
+
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //  }
+
+
+                            }catch (e: Exception){
+
+                                Log.e(TAG,"Exception  4133    "+e.toString())
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+        catch (e : Exception){
+            Log.e(TAG,"Exception  226666    "+e.toString())
+        }
+
+    }
+
+    private fun LeadEditDetailPopup(leadEditArrayList: JSONArray) {
+
+        try {
+
+            dialogLeadEdit = Dialog(this)
+            dialogLeadEdit!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogLeadEdit!! .setContentView(R.layout.lead_editdetail_popup)
+            dialogLeadEdit!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadDetail = dialogLeadEdit!! .findViewById(R.id.recyLeadDetail) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recyLeadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+            recyLeadDetail!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogLeadEdit!!.show()
+            dialogLeadEdit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
