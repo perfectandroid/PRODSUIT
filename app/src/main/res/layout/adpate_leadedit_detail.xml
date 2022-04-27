@@ -8,7 +8,7 @@
     android:backgroundTint="@color/white"
     android:layout_margin="0dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="2dp">
+    app:cardElevation="1dp">
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
@@ -24,12 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:text="Sahid"
             android:fontFamily="@font/myfont"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:drawableTint="@color/black"
             android:textStyle="normal" />
 
         <TextView
@@ -39,12 +38,11 @@
             android:layout_weight="1"
             android:text=""
             android:fontFamily="@font/myfont"
-            android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            android:drawableTint="@color/black"
+            android:justificationMode="inter_word"
+            android:textSize="13dp"
             android:textStyle="normal"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/txtProdName"
@@ -55,8 +53,7 @@
             android:fontFamily="@font/myfont"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            android:drawableTint="@color/black"
+            android:textSize="13dp"
             android:textStyle="normal" />
 
         <TextView
@@ -68,8 +65,8 @@
             android:fontFamily="@font/myfont"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            android:drawableTint="@color/black"
+            android:gravity="end"
+            android:textSize="13dp"
             android:textStyle="normal" />
 
 

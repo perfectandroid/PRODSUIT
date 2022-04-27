@@ -36,6 +36,7 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtCustName.text        = jsonObject!!.getString("CustomerName")
+                holder.txtCustAddress.text        = jsonObject!!.getString("Address")
                 holder.txtProdName.text        = jsonObject!!.getString("product")
                 holder.txtNextActionDate.text  = jsonObject!!.getString("NextActionDate")
                 holder.llleadEdit!!.setTag(position)
