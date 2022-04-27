@@ -8,8 +8,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CountryModel
-import com.perfect.prodsuit.Model.LeadEditDetailModel
+import com.perfect.prodsuit.Model.LeadEditListModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,13 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadEditDetailRepository {
+object LeadEditListRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val leadEditSetterGetter = MutableLiveData<LeadEditDetailModel>()
+    val leadEditSetterGetter = MutableLiveData<LeadEditListModel>()
     val TAG: String = "LeadEditRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadEditDetailModel> {
+    fun getServicesApiCall(context: Context): MutableLiveData<LeadEditListModel> {
         getLeadEditDetails(context)
         return leadEditSetterGetter
     }
@@ -93,10 +92,10 @@ object LeadEditDetailRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val country = ArrayList<LeadEditDetailModel>()
-                        country.add(LeadEditDetailModel(response.body()))
+                        val country = ArrayList<LeadEditListModel>()
+                        country.add(LeadEditListModel(response.body()))
                         val msg = country[0].message
-                        leadEditSetterGetter.value = LeadEditDetailModel(msg)
+                        leadEditSetterGetter.value = LeadEditListModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()

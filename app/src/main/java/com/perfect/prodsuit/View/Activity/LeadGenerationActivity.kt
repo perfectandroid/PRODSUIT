@@ -29,7 +29,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.SiteVisitActivity.Companion.encode1
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -143,7 +142,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
     lateinit var saveLeadGenArrayList : JSONArray
 
-    lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
+    lateinit var leadEditListViewModel: LeadEditListViewModel
     lateinit var leadEditArrayList : JSONArray
 
 
@@ -329,7 +328,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
         leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
-        leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
+        leadEditListViewModel = ViewModelProvider(this).get(LeadEditListViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
@@ -658,7 +657,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
             R.id.imLeadedit->{
 
-                getLeadEdit(v)
+                getLeadEditList(v)
              // Config.snackBars(context,v,"Lead Edit")
 
             }
@@ -3885,6 +3884,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //             txtleadby!!.text = jsonObject.getString("CollectedBy")
 //
 //             edtProdproduct!!.setText(jsonObject.getString("product"))
+
+
          }
 
      }
@@ -4211,7 +4212,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
 
-    private fun getLeadEdit(v: View) {
+    private fun getLeadEditList(v: View) {
         var editLeadGenDet = 0
         try {
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -4223,7 +4224,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                    leadEditDetailViewModel.getLeadEditDetails(this)!!.observe(
+                    leadEditListViewModel.getLeadEditList(this)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
