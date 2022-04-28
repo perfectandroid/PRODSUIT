@@ -88,7 +88,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/llProject"
+                            android:id="@+id/llCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -119,20 +119,20 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
-                                    android:text="Project / Product"
+                                    android:text="Category"
                                     android:textColor="@color/colorPrimaryExtraDark"
                                     android:textSize="12dp"
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/txtProject"
+                                    android:id="@+id/txtCategory"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
-                                    android:hint="Project / Product"
+                                    android:hint="Category"
                                     android:textColor="@color/black"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />
@@ -153,7 +153,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/llName"
+                            android:id="@+id/llProduct"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -184,24 +184,25 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
-                                    android:text="Name"
+                                    android:text="Product"
                                     android:textColor="@color/colorPrimaryExtraDark"
                                     android:textSize="12dp"
                                     android:textStyle="bold" />
 
-                                <EditText
-                                    android:id="@+id/edtName"
+
+                                <TextView
+                                    android:id="@+id/txtProduct"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/myfont"
-                                    android:background="@android:color/transparent"
                                     android:gravity="left"
-                                    android:hint="Name"
+                                    android:hint="Product"
                                     android:textColor="@color/black"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />
+
                             </LinearLayout>
 
                         </LinearLayout>

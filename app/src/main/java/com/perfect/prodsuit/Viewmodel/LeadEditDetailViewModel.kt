@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadEditDetailModel
 import com.perfect.prodsuit.Repository.LeadEditDetailRepository
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 
-class LeadEditDetailViewModel : ViewModel() {
+class LeadEditDetailViewModel : ViewModel()  {
 
-    var leadEditData: MutableLiveData<LeadEditDetailModel>? = null
+    var leadEditDetData: MutableLiveData<LeadEditDetailModel>? = null
 
-    fun getLeadEditDetails(context: Context) : LiveData<LeadEditDetailModel>? {
-        leadEditData = LeadEditDetailRepository.getServicesApiCall(context)
-        return leadEditData
+    fun getLeadEditDetail(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct  :String) : LiveData<LeadEditDetailModel>? {
+        leadEditDetData = LeadEditDetailRepository.getServicesApiCall(context, ID_LeadGenerate, ID_LeadGenerateProduct)
+        return leadEditDetData
     }
 }

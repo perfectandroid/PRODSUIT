@@ -8,7 +8,7 @@
     android:backgroundTint="@color/white"
     android:layout_margin="0dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="2dp">
+    app:cardElevation="1dp">
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
@@ -19,89 +19,55 @@
         android:gravity="center_vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtCustName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="2dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Sahid"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="normal" />
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Agent Remark"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"/>
-
-            <TextView
-                android:id="@+id/txtAgentRemark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtCustAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="2dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text=""
+            android:fontFamily="@font/myfont"
+            android:textColor="@color/black"
+            android:justificationMode="inter_word"
+            android:textSize="13dp"
+            android:textStyle="normal"
+            android:visibility="visible"/>
 
-            <TextView
+        <TextView
+            android:id="@+id/txtProdName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:textStyle="normal" />
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Followed By"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"/>
-
-            <TextView
-                android:id="@+id/txtFollowedBy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtNextActionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:gravity="end"
+            android:textSize="13dp"
+            android:textStyle="normal" />
 
 
     </LinearLayout>
