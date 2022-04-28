@@ -11,6 +11,7 @@ import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LeadEditDetailModel
 import com.perfect.prodsuit.Model.LeadEditListModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -26,12 +27,12 @@ object LeadEditDetailRepository {
     val leadEditDetSetterGetter = MutableLiveData<LeadEditDetailModel>()
     val TAG: String = "LeadEditDetailRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadEditDetailModel> {
-        getLeadEditDetail(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct : String): MutableLiveData<LeadEditDetailModel> {
+        getLeadEditDetail(context,ID_LeadGenerate,ID_LeadGenerateProduct)
         return leadEditDetSetterGetter
     }
 
-    private fun getLeadEditDetail(context: Context) {
+    private fun getLeadEditDetail(context: Context,ID_LeadGenerate :String,ID_LeadGenerateProduct : String) {
 
         Log.e(LeadEditListRepository.TAG,"getLeadEditDetails  ")
         try {
@@ -60,19 +61,25 @@ object LeadEditDetailRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                "ReqMode":"35",
+
+//                "ReqMode":"36",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg,
+//                "ID_LeadGenerate":1,
+//                "ID_LeadGenerateProduct":2
+
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("35"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("36"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
 
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
@@ -84,7 +91,7 @@ object LeadEditDetailRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadGenerationList(body)
+            val call = apiService.getLeadGenerationListDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

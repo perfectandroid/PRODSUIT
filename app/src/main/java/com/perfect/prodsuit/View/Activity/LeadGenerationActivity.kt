@@ -313,6 +313,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var encode1 : String = ""
         var encode2 : String = ""
 
+        var ID_LeadGenerate : String = ""
+        var ID_LeadGenerateProduct : String = ""
+
 
     }
 
@@ -494,6 +497,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llCustSearch!!.visibility = View.VISIBLE
         btnSubmit!!.setText("Submit")
         saveUpdateMode = "0"  //SAVE
+
+        ID_LeadGenerate = ""
+        ID_LeadGenerateProduct = ""
 
         hideViews()
 
@@ -3873,7 +3879,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("leadedit")){
 
-             Toast.makeText(applicationContext,"Lead Edit selection",Toast.LENGTH_SHORT).show()
+            // Toast.makeText(applicationContext,"Lead Edit selection",Toast.LENGTH_SHORT).show()
              dialogLeadEdit!!.dismiss()
 
              llCustSearch!!.visibility = View.GONE
@@ -3882,6 +3888,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              val jsonObject = leadEditArrayList.getJSONObject(position)
              Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
+
+             ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
+             ID_LeadGenerateProduct = jsonObject.getString("ID_LeadGenerateProduct")
+
+
              //FK_Country = jsonObject.getString("FK_Country")
 //             edtCustname!!.setText(jsonObject.getString("CustomerName"))
 //             edtFollowdate!!.setText(jsonObject.getString("NextActionDate"))
@@ -3889,7 +3900,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //
 //             edtProdproduct!!.setText(jsonObject.getString("product"))
 
-         //    getLeadEditDetail()
+             getLeadEditDetail(ID_LeadGenerate,ID_LeadGenerateProduct)
 
 
          }
@@ -4325,7 +4336,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
     }
 
-    private fun getLeadEditDetail() {
+    private fun getLeadEditDetail(ID_LeadGenerate  :String,ID_LeadGenerateProduct : String) {
         var editLeadGenDet = 0
         try {
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -4337,7 +4348,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                    leadEditDetailViewModel.getLeadEditDetail(this)!!.observe(
+                    leadEditDetailViewModel.getLeadEditDetail(this, ID_LeadGenerate, ID_LeadGenerateProduct)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -4348,18 +4359,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                pinCodeDet++
                                 if (msg!!.length > 0) {
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   4233   "+msg)
+                                    Log.e(TAG,"msg   4362   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-//                                        val jobjt = jObject.getJSONObject("LeadGenerationDetails")
-//                                        leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
-//                                        if (leadEditArrayList.length()>0){
+                                        val jobjt = jObject.getJSONObject("LeadGenerationListDetails")
+
+                                        Log.e(TAG,"ID_LeadGenerateProduct   4366   "+jobjt.getString("ID_LeadGenerateProduct"))
+//                                        leadEditDetArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
+//                                        if (leadEditDetArrayList.length()>0){
 //                                            if (editLeadGenDet == 0){
-//                                                editLeadGenDet++
-//                                                LeadEditDetailPopup(leadEditArrayList)
+////                                                editLeadGenDet++
+////                                                LeadEditDetailPopup(leadEditArrayList)
 //                                            }
 //
 //                                        }
-
 
 
 
