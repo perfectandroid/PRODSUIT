@@ -51,9 +51,15 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
                 holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_preference.text        = jsonObject!!.getString("Preference")
+                if(jsonObject!!.getString("Preference").equals("Hot")){
+                    holder.impreference.setImageResource(R.drawable.preference2)
+                }else if (jsonObject!!.getString("Preference").equals("Warm")){
+                    holder.impreference.setImageResource(R.drawable.preference3)
+                }else if (jsonObject!!.getString("Preference").equals("Cold")){
+                    holder.impreference.setImageResource(R.drawable.preference1)
+                }
                 holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
-
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "todolist")
@@ -100,9 +106,9 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
            tv_product           = v.findViewById<View>(R.id.tv_product) as TextView
            tv_nextdate           = v.findViewById<View>(R.id.tv_nextdate) as TextView
            txtv_collectedby           = v.findViewById<View>(R.id.txtv_collectedby) as TextView
-           impreference           = v.findViewById<View>(R.id.impreference) as ImageView
            imcall           = v.findViewById<View>(R.id.imcall) as ImageView
            immessage           = v.findViewById<View>(R.id.immessage) as ImageView
+           impreference           = v.findViewById<View>(R.id.impreference) as ImageView
         }
     }
 
