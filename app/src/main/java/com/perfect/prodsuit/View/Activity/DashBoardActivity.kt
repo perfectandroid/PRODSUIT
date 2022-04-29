@@ -1,51 +1,38 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
-import android.content.ContentValues
+import android.app.*
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.app.ActivityCompat
+import android.widget.*
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.*
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.github.mikephil.charting.components.LimitLine.LimitLabelPosition
-
-import com.github.mikephil.charting.components.Legend.LegendForm
+import androidx.lifecycle.Observer
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
-import java.text.ParseException
-import java.text.SimpleDateFormat
+import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
 class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
+
+    val TAG : String = "LeadNextActionActivity"
+    lateinit var context: Context
+    private var progressDialog: ProgressDialog? = null
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -65,6 +52,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     var lineData: LineData? = null
     var entryList: List<Map.Entry<*, *>> = ArrayList()
 
+    lateinit var leadDashViewModel: LeadDashViewModel
+    lateinit var leadDashArrayList : JSONArray
+
 
     //Barchart
     private lateinit var barChart: BarChart
@@ -76,9 +66,13 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
+        context = this@DashBoardActivity
 
+        leadDashViewModel = ViewModelProvider(this).get(LeadDashViewModel::class.java)
         setRegViews()
       //  bottombarnav()
+
+        getLeadsDashBoard()
 
         setLineChart()
         setBarchart()  //working
@@ -86,7 +80,64 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
+    private fun getLeadsDashBoard() {
 
+        var leadDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadDashViewModel.getLeadDashboard(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   100   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+//                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+//                                if (followUpActionArrayList.length()>0){
+//                                    if (followUpAction == 0){
+//                                        followUpAction++
+//                                        followUpActionPopup(followUpActionArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@DashBoardActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
+    }
 
 
     private fun setRegViews() {
