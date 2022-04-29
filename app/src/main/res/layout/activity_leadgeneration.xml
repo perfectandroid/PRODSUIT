@@ -449,6 +449,7 @@
 
 
                                             <RelativeLayout
+                                                android:id="@+id/rltvPinCode"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:background="@drawable/shape_bg"
@@ -465,11 +466,11 @@
                                                     android:background="@android:color/transparent"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Pincode"
-                                                    android:textSize="15dp"
                                                     android:inputType="number"
                                                     android:padding="5dp"
                                                     android:singleLine="true"
-                                                    android:text="" />
+                                                    android:text=""
+                                                    android:textSize="15dp" />
 
                                                 <ImageView
                                                     android:id="@+id/imgPinSearch"
