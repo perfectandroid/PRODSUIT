@@ -72,11 +72,7 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
     var etxt_remark: EditText? = null
     lateinit var addQuotationViewModel: AddQuotationViewModel
     private var progressDialog: ProgressDialog? = null
-    companion object{
-        var transdate= ""
-        var remarks= ""
 
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addquotation)
@@ -153,7 +149,9 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
 
         else
         {
+
             getQuotation()
+
         }
 
     }
@@ -326,9 +324,9 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
         } else if (requestCode == PICK_DOCUMRNT_GALLERY) {
             if (data != null) {
                 val uri = data.data
-                selectedFilePath = UriUtil.getPath(this, uri!!).toString()
-                destination = File(selectedFilePath.toString())
-                txtAttachmentPath!!.setText(selectedFilePath)
+                imgPath = UriUtil.getPath(this, uri!!).toString()
+                destination = File(imgPath.toString())
+                txtAttachmentPath!!.setText(imgPath)
                 ll_imgv!!.visibility=View.GONE
                 /*    if(destination!!.exists())
                     {
@@ -350,9 +348,17 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
         return cursor.getString(column_index)
     }
 
+    companion object{
+        var transdate= ""
+        var remarks= ""
+        var imgpth= ""
+
+    }
+
     private fun getQuotation() {
         transdate = txtv_date!!.text.toString()
         remarks =etxt_remark!!.text.toString()
+        imgpth = imgPath.toString()
         Log.i("Details", transdate +"\n"+ remarks )
 
 
