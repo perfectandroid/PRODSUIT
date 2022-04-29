@@ -138,6 +138,8 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerationList")
     fun getLeadGenerationList(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AddQuatation")
+    fun getquotation(@Body body: RequestBody): Call<String>
     @POST("UserValidations/LeadGenerationListDetails")
     fun getLeadGenerationListDetails(@Body body: RequestBody): Call<String>
 
