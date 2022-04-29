@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/reminderlogo"
+                android:src="@drawable/reminder_clock"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"/>
         </LinearLayout>
@@ -37,10 +37,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -53,6 +53,7 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/myfont"
                 android:text="Personal Reminder"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/black"/>
             <TextView
                 android:layout_width="match_parent"
@@ -63,6 +64,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:fontFamily="@font/myfont"
                 android:text="Set your convenient date &amp; time."
                 android:textColor="@color/black"/>
@@ -128,20 +130,22 @@
                 android:id="@+id/etdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Select Date"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="14dp"
-                android:padding="5dp"
                 android:layout_gravity="center"
-                android:background="@drawable/et_bggrey"
-                android:gravity="center"
-                android:fontFamily="@font/myfont"
-                android:drawableRight="@drawable/ic_date"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="2.5dp"/>
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:background="@drawable/et_bggreybottom"
+                android:drawableLeft="@drawable/ic_date"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/myfont"
+                android:gravity="left"
+                android:hint="Select Date"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/ettime"
@@ -150,12 +154,14 @@
                 android:hint="Select Time"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:padding="5dp"
                 android:layout_gravity="center"
-                android:background="@drawable/et_bggrey"
-                android:gravity="center"
-                android:drawableRight="@drawable/ic_time"
+                android:background="@drawable/et_bggreybottom"
+                android:drawablePadding="10dp"
+                android:gravity="left"
+                android:drawableLeft="@drawable/ic_time"
+                android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/myfont"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -171,15 +177,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="2.5dp"
-                android:background="@drawable/et_bggrey"
-                android:drawableRight="@drawable/ic_remindermessage"
+                android:background="@drawable/et_bggreybottom"
+                android:drawableLeft="@drawable/ic_remindermessage"
                 android:fontFamily="@font/myfont"
-                android:gravity="center"
+                android:drawableTint="@color/colorPrimary"
+                android:drawablePadding="10dp"
+                android:gravity="left|center"
                 android:hint="Set Reminder Message"
-                android:lines="3"
+                android:lines="2"
                 android:padding="5dp"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -235,7 +243,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="center">
                 <Button
                     android:id="@+id/btnsubmit"

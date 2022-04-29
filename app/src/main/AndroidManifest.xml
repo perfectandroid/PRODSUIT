@@ -40,6 +40,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:name=".View.Activity.ExpenseAddActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.LeadNewActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
