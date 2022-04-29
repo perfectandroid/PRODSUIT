@@ -112,7 +112,9 @@
                                     android:gravity="center"
                                     android:padding="15dp"
                                     android:layout_weight="1"
-                                    android:src="@drawable/dash3"/>
+                                    android:tint="@color/white"
+                                    android:src="@drawable/dash1"
+                                    tools:ignore="UseAppTint" />
 
 
                             </LinearLayout>
@@ -182,7 +184,9 @@
                                 android:gravity="center"
                                 android:padding="15dp"
                                 android:layout_weight="1"
-                                android:src="@drawable/dash2"/>
+                                android:tint="@color/white"
+                                android:src="@drawable/dash3"
+                                tools:ignore="UseAppTint" />
 
 
                         </LinearLayout>
@@ -248,7 +252,9 @@
                                 android:gravity="center"
                                 android:padding="15dp"
                                 android:layout_weight="1"
-                                android:src="@drawable/dash3"/>
+                                android:tint="@color/white"
+                                android:src="@drawable/dash2"
+                                tools:ignore="UseAppTint" />
 
 
                         </LinearLayout>
