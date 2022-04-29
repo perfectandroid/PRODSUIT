@@ -23,6 +23,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
+import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -59,6 +60,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
     lateinit var leadStatusDashArrayList : JSONArray
 
+    lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
+    lateinit var leadStagesDashArrayList : JSONArray
+
 
 
     //Barchart
@@ -75,18 +79,21 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         leadDashViewModel = ViewModelProvider(this).get(LeadDashViewModel::class.java)
         leadStatusDashViewModel = ViewModelProvider(this).get(LeadStatusDashViewModel::class.java)
+        leadStagesDashViewModel = ViewModelProvider(this).get(LeadStagesDashViewModel::class.java)
+
         setRegViews()
       //  bottombarnav()
 
-     //   getLeadsDashBoard()
-
-        getLeadStatusDashBoard()
+//        getLeadsDashBoard()
+//        getLeadStatusDashBoard()
+        getLeadStagesDashBoard()
 
         setLineChart()
         setBarchart()  //working
         setPieChart()
 
     }
+
 
 
 
@@ -203,6 +210,10 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                     .show()
             }
         }
+
+    }
+
+    private fun getLeadStagesDashBoard() {
 
     }
 
