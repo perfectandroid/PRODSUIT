@@ -60,6 +60,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llCustomerDetail: LinearLayout? = null
     private var llCustSearch: LinearLayout? = null
     private var llCompanyName: LinearLayout? = null
+    private var rltvPinCode: RelativeLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
@@ -415,7 +416,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Status = ""
         ID_NextAction = ""
         ID_ActionType = ""
-        strFollowupdate = ""
+        strFollowupdate = currentDate
         strNeedCheck = "0"
         ID_BranchType = ""
         ID_Branch = ""
@@ -496,7 +497,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         llCustSearch!!.visibility = View.VISIBLE
         btnSubmit!!.setText("Submit")
-        saveUpdateMode = "0"  //SAVE
+        saveUpdateMode = "1"  //SAVE
+        rltvPinCode!!.visibility = View.VISIBLE
 
         ID_LeadGenerate = ""
         ID_LeadGenerateProduct = ""
@@ -517,6 +519,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llCustomerDetail = findViewById<LinearLayout>(R.id.llCustomerDetail)
         llCustSearch = findViewById<LinearLayout>(R.id.llCustSearch)
         llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
+        rltvPinCode = findViewById<RelativeLayout>(R.id.rltvPinCode)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
@@ -3882,9 +3885,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             // Toast.makeText(applicationContext,"Lead Edit selection",Toast.LENGTH_SHORT).show()
              dialogLeadEdit!!.dismiss()
 
-             llCustSearch!!.visibility = View.GONE
-             btnSubmit!!.setText("Update")
-             saveUpdateMode = "1"  //Update
+//             llCustSearch!!.visibility = View.GONE
+//             btnSubmit!!.setText("Update")
+//             saveUpdateMode = "1"  //Update
+//             rltvPinCode!!.visibility = View.VISIBLE
 
              val jsonObject = leadEditArrayList.getJSONObject(position)
              Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
@@ -4155,7 +4159,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
                         strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
                         ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
-                        encode1, encode2)!!.observe(
+                        encode1, encode2,saveUpdateMode!!)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -4364,6 +4368,130 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                         val jobjt = jObject.getJSONObject("LeadGenerationListDetails")
 
                                         Log.e(TAG,"ID_LeadGenerateProduct   4366   "+jobjt.getString("ID_LeadGenerateProduct"))
+
+                                        llCustSearch!!.visibility = View.GONE
+                                        btnSubmit!!.setText("Update")
+                                        saveUpdateMode = "2"  //Update
+                                        rltvPinCode!!.visibility = View.GONE
+
+                                        ID_Customer = jobjt.getString("FK_Customer")
+                                        edtCustname!!.setText(jobjt.getString("LgCusName"))
+                                        edtCustphone!!.setText(jobjt.getString("LgCusMobile"))
+                                        edtCustemail!!.setText(jobjt.getString("LgCusEmail"))
+                                        edtCustaddress!!.setText(jobjt.getString("LgCusAddress"))
+
+                                        edtCompanyName!!.setText(jobjt.getString("CusCompany"))
+
+                                        FK_Country = jobjt.getString("FK_Country")
+                                        FK_States = jobjt.getString("FK_States")
+                                        FK_District = jobjt.getString("FK_District")
+                                        FK_Post = jobjt.getString("FK_Post")
+
+                                        edtCountry!!.setText(jobjt.getString("Country"))
+                                        edtState!!.setText(jobjt.getString("States"))
+                                        edtDistrict!!.setText(jobjt.getString("District"))
+                                        edtPost!!.setText(jobjt.getString("Post"))
+                                        edtLandLine!!.setText(jobjt.getString("CusPhone"))
+
+                                        ID_Category = jobjt.getString("FK_Category")
+                                        ID_Product = jobjt.getString("FK_Category")
+                                        ID_Priority = jobjt.getString("FK_Category")
+                                        ID_Status = jobjt.getString("FK_Category")
+
+                                        edtProdcategory!!.setText(jobjt.getString("CategoryName"))
+                                        edtProdproduct!!.setText(jobjt.getString("ProdName"))
+                                        edtProdpriority!!.setText(jobjt.getString("PriorityName"))
+                                        edtProdfeedback!!.setText(jobjt.getString("LgpDescription"))
+
+
+                                        ///////////
+                                        edtProdqty!!.setText(jobjt.getString("LgpPQuantity"))
+
+                                        if (ID_Status.equals("1")){
+                                            ID_NextAction = jobjt.getString("FK_NetAction")
+                                            ID_ActionType = jobjt.getString("FK_ActionType")
+
+
+                                            edtFollowaction!!.setText(jobjt.getString("ActionName"))
+                                            edtFollowtype!!.setText(jobjt.getString("ActionTypeName"))
+                                            edtFollowdate!!.setText(jobjt.getString("NextActionDate"))
+                                            strFollowupdate = jobjt.getString("NextActionDate")
+
+                                            val brName = jobjt.getString("BranchName")
+
+                                            if (!brName.equals("")){
+
+                                                strNeedCheck = "0"
+                                                switchTransfer!!.isChecked = false
+                                                ID_BranchType = ""
+                                                ID_Branch = ""
+                                                ID_Department=""
+                                                ID_Employee=""
+
+                                                edtbarnchtype!!.setText("")
+                                                edtbranch!!.setText("")
+                                                edtdepartment!!.setText("")
+                                                edtEmployee!!.setText("")
+
+                                            }
+                                            else {
+                                                strNeedCheck = "1"
+                                                switchTransfer!!.isChecked = true
+                                                ID_BranchType =  jobjt.getString("BranchTypeID")
+                                                ID_Branch =  jobjt.getString("BranchID")
+                                                ID_Department= jobjt.getString("FK_Departement")
+                                                ID_Employee= jobjt.getString("FK_AssignEmp")
+
+                                                edtbarnchtype!!.setText(jobjt.getString("BranchTypeName"))
+                                                edtbranch!!.setText(jobjt.getString("BranchName"))
+                                                edtdepartment!!.setText(jobjt.getString("DepartementName"))
+                                                edtEmployee!!.setText(jobjt.getString("AssignEmp"))
+                                            }
+
+                                        }else{
+                                            val sdf = SimpleDateFormat("dd-MM-yyyy")
+                                            val currentDate = sdf.format(Date())
+                                            ID_NextAction = ""
+                                            ID_ActionType = ""
+                                            edtFollowdate!!.setText(currentDate)
+                                            strFollowupdate = currentDate
+
+                                            strNeedCheck = "0"
+                                            switchTransfer!!.isChecked = false
+                                            ID_BranchType = ""
+                                            ID_Branch = ""
+                                            ID_Department=""
+                                            ID_Employee=""
+
+                                            edtbarnchtype!!.setText("")
+                                            edtbranch!!.setText("")
+                                            edtdepartment!!.setText("")
+                                            edtEmployee!!.setText("")
+                                        }
+
+                                        strLatitude = jobjt.getString("LocLatitude")
+                                        strLongitue = jobjt.getString("LocLongitude")
+                                        txtLocation!!.setText(jobjt.getString("LocationAddress"))
+
+
+//                                        txtDate!!.setText(jobjt.getString("LocLatitude"))
+//                                        strDate = jobjt.getString("LocLatitude")
+
+                                        ID_LeadFrom = jobjt.getString("FK_LeadFrom")
+                                        txtleadfrom!!.setText(jobjt.getString("LeadFrom"))
+
+                                        ID_LeadThrough = jobjt.getString("FK_LeadBy")
+                                        txtleadthrough!!.setText(jobjt.getString("LeadBy"))
+
+                                        ID_CollectedBy = jobjt.getString("LgCollectedBy")
+                                        txtleadby!!.text= jobjt.getString("CollectedBy")
+
+                                        ID_MediaMaster = jobjt.getString("FK_MediaMaster")
+                                        txtMediatype!!.setText(jobjt.getString("MediaMaster"))
+
+
+
+
 //                                        leadEditDetArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
 //                                        if (leadEditDetArrayList.length()>0){
 //                                            if (editLeadGenDet == 0){
