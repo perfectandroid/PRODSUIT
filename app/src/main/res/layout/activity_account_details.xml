@@ -94,15 +94,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:backgroundTint="@color/white"
-                            app:cardCornerRadius="3dp"
-                            app:cardElevation="5dp"
-                            app:cardUseCompatPadding="true">
+
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -129,16 +121,7 @@
                                         android:layout_weight="1.5"
                                         android:orientation="vertical">
 
-                                        <!--                                <androidx.cardview.widget.CardView-->
-                                        <!--                                    xmlns:android="http://schemas.android.com/apk/res/android"-->
-                                        <!--                                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-                                        <!--                                    android:layout_width="match_parent"-->
-                                        <!--                                    android:layout_height="wrap_content"-->
-                                        <!--                                    app:cardCornerRadius="3dp"-->
-                                        <!--                                    android:backgroundTint="@color/white"-->
-                                        <!--                                    android:layout_marginTop="2dp"-->
-                                        <!--                                    app:cardElevation="1dp"-->
-                                        <!--                                    app:cardUseCompatPadding="true">-->
+
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -588,7 +571,6 @@
                             </LinearLayout>
 
 
-                        </androidx.cardview.widget.CardView>
 
 
                         <com.google.android.material.tabs.TabLayout
@@ -608,281 +590,280 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints" >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="0dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/txtCloseLead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabEditLead"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabCloseLead"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Close Lead"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabCloseLead"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabEditLead"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+                                <TextView
+                                    android:id="@+id/txtEditLead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddQuotation"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabEditLead"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Edit Lead"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabEditLead"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddQuotation"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_lead" />
+
+                                <TextView
+                                    android:id="@+id/txtAddQuotation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddDocument"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddQuotation"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Add Quotation"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddQuotation"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddDocument"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_quotation" />
+
+                                <TextView
+                                    android:id="@+id/txtAddDocument"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNewAction"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddDocument"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Add Document"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddDocument"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNewAction"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_document" />
+
+                                <TextView
+                                    android:id="@+id/txtAddNewAction"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNextAction"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddNewAction"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="New Action"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddNewAction"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNextAction"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:scaleType="center"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_activities" />
+
+
+                                <TextView
+                                    android:id="@+id/txtAddNextAction"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddActivities"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddNextAction"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Next Action"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddNextAction"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddActivities"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:scaleType="center"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_activities" />
+
+
+                                <TextView
+                                    android:id="@+id/txtAddActivities"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNote"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddActivities"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Add Activities"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddActivities"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fabAddNote"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:scaleType="center"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_activities" />
+
+                                <TextView
+                                    android:id="@+id/txtAddNote"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fab"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/fabAddActivities"
+                                    android:background="@color/tabbgColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Add Note"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabAddNote"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_above="@+id/fab"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:tint="@color/black"
+                                    app:fabCustomSize="50dp"
+                                    app:srcCompat="@drawable/add_notes" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fab"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_gravity="end"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:tint="@color/white"
+                                    app:fabCustomSize="50dp"
+                                    app:rippleColor="@color/white"
+                                    app:srcCompat="@drawable/ic_adding" />
+                            </RelativeLayout>
+                        </LinearLayout>
 
 
                     </LinearLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="0dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtCloseLead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabEditLead"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabCloseLead"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Close Lead"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabCloseLead"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabEditLead"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@android:drawable/ic_btn_speak_now" />
-
-                        <TextView
-                            android:id="@+id/txtEditLead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddQuotation"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabEditLead"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Edit Lead"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabEditLead"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddQuotation"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_lead" />
-
-                        <TextView
-                            android:id="@+id/txtAddQuotation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddDocument"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddQuotation"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Add Quotation"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddQuotation"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddDocument"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_quotation" />
-
-                        <TextView
-                            android:id="@+id/txtAddDocument"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNewAction"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddDocument"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Add Document"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddDocument"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNewAction"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_document" />
-
-                        <TextView
-                            android:id="@+id/txtAddNewAction"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNextAction"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddNewAction"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="New Action"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddNewAction"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNextAction"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:scaleType="center"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_activities" />
-
-
-                        <TextView
-                            android:id="@+id/txtAddNextAction"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddActivities"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddNextAction"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Next Action"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddNextAction"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddActivities"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:scaleType="center"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_activities" />
-
-
-                        <TextView
-                            android:id="@+id/txtAddActivities"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNote"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddActivities"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Add Activities"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddActivities"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fabAddNote"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:tint="@color/black"
-                            android:scaleType="center"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_activities" />
-
-                        <TextView
-                            android:id="@+id/txtAddNote"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fab"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/fabAddActivities"
-                            android:background="@color/tabbgColor"
-                            android:fontFamily="@font/myfont"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Add Note"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fabAddNote"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_above="@+id/fab"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:backgroundTint="@color/white"
-                            android:tint="@color/black"
-                            app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/add_notes" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_gravity="end"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:tint="@color/white"
-                            app:fabCustomSize="50dp"
-                            app:rippleColor="@color/white"
-                            app:srcCompat="@drawable/ic_adding" />
-                    </RelativeLayout>
 
 
                 </RelativeLayout>

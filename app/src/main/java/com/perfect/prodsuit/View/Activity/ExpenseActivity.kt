@@ -21,12 +21,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class ExpenseActivity : AppCompatActivity() , View.OnClickListener {
 
@@ -43,13 +45,16 @@ class ExpenseActivity : AppCompatActivity() , View.OnClickListener {
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
-    private var chipNavigationBar: ChipNavigationBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense)
         setRegViews()
-        bottombarnav()
+        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+        fab.setOnClickListener { view ->
+            val i = Intent(this@ExpenseActivity, ExpenseAddActivity::class.java)
+            startActivity(i)
+        }
     }
 
     private fun setRegViews() {
@@ -59,34 +64,10 @@ class ExpenseActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onClick(v: View) {
         when(v.id){
-            R.id.imback->{
+            R.id.imback -> {
                 finish()
             }
         }
-    }
-
-    private fun bottombarnav() {
-        chipNavigationBar = findViewById(R.id.chipNavigation)
-        chipNavigationBar!!.setItemSelected(R.id.home, true)
-        chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener{
-            override fun onItemSelected(i: Int) {
-                when (i) {
-                    R.id.home -> {
-                        val i = Intent(this@ExpenseActivity, HomeActivity::class.java)
-                        startActivity(i)
-                    }
-                    R.id.reminder -> {
-                        setReminder()
-                    }
-                    R.id.logout -> {
-                        doLogout()
-                    }
-                    R.id.quit -> {
-                        quit()
-                    }
-                }
-            }
-        })
     }
 
 

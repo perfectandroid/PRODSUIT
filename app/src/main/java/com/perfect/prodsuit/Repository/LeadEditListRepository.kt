@@ -8,10 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadEditDetailModel
 import com.perfect.prodsuit.Model.LeadEditListModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -21,20 +19,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadEditDetailRepository {
+object LeadEditListRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val leadEditDetSetterGetter = MutableLiveData<LeadEditDetailModel>()
-    val TAG: String = "LeadEditDetailRepository"
+    val leadEditSetterGetter = MutableLiveData<LeadEditListModel>()
+    val TAG: String = "LeadEditRepository"
 
-    fun getServicesApiCall(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct : String): MutableLiveData<LeadEditDetailModel> {
-        getLeadEditDetail(context,ID_LeadGenerate,ID_LeadGenerateProduct)
-        return leadEditDetSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<LeadEditListModel> {
+        getLeadEditList(context)
+        return leadEditSetterGetter
     }
 
-    private fun getLeadEditDetail(context: Context,ID_LeadGenerate :String,ID_LeadGenerateProduct : String) {
+    private fun getLeadEditList(context: Context) {
 
-        Log.e(LeadEditListRepository.TAG,"getLeadEditDetails  ")
+        Log.e(TAG,"getLeadEditDetails  ")
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -61,25 +59,19 @@ object LeadEditDetailRepository {
             val requestObject1 = JSONObject()
             try {
 
-
-//                "ReqMode":"36",
+//                "ReqMode":"35",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg,
-//                "ID_LeadGenerate":1,
-//                "ID_LeadGenerateProduct":2
-
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("36"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("35"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
 
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
@@ -91,7 +83,7 @@ object LeadEditDetailRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadGenerationListDetails(body)
+            val call = apiService.getLeadGenerationList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -100,10 +92,10 @@ object LeadEditDetailRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leadEdt = ArrayList<LeadEditDetailModel>()
-                        leadEdt.add(LeadEditDetailModel(response.body()))
-                        val msg = leadEdt[0].message
-                        leadEditDetSetterGetter.value = LeadEditDetailModel(msg)
+                        val country = ArrayList<LeadEditListModel>()
+                        country.add(LeadEditListModel(response.body()))
+                        val msg = country[0].message
+                        leadEditSetterGetter.value = LeadEditListModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -117,7 +109,5 @@ object LeadEditDetailRepository {
             e.printStackTrace()
             progressDialog!!.dismiss()
         }
-
     }
-
 }
