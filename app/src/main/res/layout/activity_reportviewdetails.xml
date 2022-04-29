@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
             android:background="@drawable/loginbgmain"
             android:orientation="vertical">
             <LinearLayout
@@ -28,7 +27,8 @@
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
                     android:tint="@color/black"
-                    android:src="@drawable/icback"/>
+                    android:src="@drawable/icback"
+                    tools:ignore="UseAppTint" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,14 +56,6 @@
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
-        <com.ismaeldivita.chipnavigation.ChipNavigationBar
-            android:id="@+id/chipNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            app:cnb_menuResource="@menu/navbottom_item"
-            app:cnb_textAppearance="@style/CustomTextStyle" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
