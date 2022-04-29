@@ -184,7 +184,38 @@
                         </LinearLayout>
 
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.5"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="left"
+                                android:layout_marginLeft="15dp"
+                                android:text="Date  : "
+                                android:textColor="@color/blue"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
 
+                            <TextView
+                                android:id="@+id/txtv_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.25"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="left"
+                                android:layout_marginLeft="5dp"
+                                android:text=""
+                                android:textColor="@color/blue"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
 
                         <LinearLayout
@@ -197,6 +228,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/etselect_bg"
                             android:orientation="vertical">
+
 
                             <LinearLayout
                                 android:id="@+id/llattachmnt"
@@ -271,24 +303,133 @@
                             android:orientation="vertical">
 
 
-
-
-
                             <ImageView
+                                android:id="@+id/imgv_attachment"
+                                android:layout_width="200dp"
+                                android:layout_height="320dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="10dp"
+                                android:scaleType="fitXY"/>
+
+
+                         <!--   <ImageView
                                 android:id="@+id/imgv_attachment"
                                 android:layout_width="match_parent"
                                 android:layout_height="170dp"
                                 android:layout_margin="20dp"
                                 android:scaleType="fitXY"/>
-
+-->
 
 
 
                         </LinearLayout>
 
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/etselect_bg"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/llAddremrk"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
+                                    android:background="@color/color_activity_transparent"
+                                    android:padding="10dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/subject" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="left"
+                                        android:text="Add Remark"
+                                        android:textColor="@color/colorPrimaryExtraDark"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold" />
+
+                                    <EditText
+                                        android:id="@+id/etxt_remark"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:background="@android:color/transparent"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="left"
+                                        android:hint="Add remark "
+                                        android:padding="2dp"
+                                        android:singleLine="true"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
 
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnReset"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/btn_bgcolorprimary"
+                                android:fontFamily="@font/myfont"
+                                android:padding="2dp"
+                                android:text="Reset"
+                                android:textAllCaps="false"
+                                android:textSize="15dp" />
+
+                            <Button
+                                android:id="@+id/btnSubmit"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/btn_bgcolour"
+                                android:fontFamily="@font/myfont"
+                                android:padding="2dp"
+                                android:text="Submit"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="15dp" />
+                        </LinearLayout>
                     </LinearLayout>
 
 
@@ -296,7 +437,9 @@
 
 
 
-                <LinearLayout
+
+
+           <!--     <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -335,9 +478,7 @@
                         android:textSize="15dp" />
                 </LinearLayout>
 
-
-
-
+-->
 
 
 

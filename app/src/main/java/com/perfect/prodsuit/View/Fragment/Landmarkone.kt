@@ -27,7 +27,7 @@ class Landmarkone : Fragment(){
         super.onCreate(savedInstanceState)
     }
 
-    @SuppressLint("UseRequireInsteadOfGet")
+    @SuppressLint("UseRequireInsteadOfGet", "WrongThread")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_landmarkone, container, false)
 
