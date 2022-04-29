@@ -8,8 +8,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.FollowUpActionModel
-import com.perfect.prodsuit.Model.LeadDashModel
+import com.perfect.prodsuit.Model.LeadStatusDashModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,18 +19,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadDashRepository {
-
+object LeadStatusDashRepository {
     private var progressDialog: ProgressDialog? = null
-    val leaddashSetterGetter = MutableLiveData<LeadDashModel>()
-    val TAG: String = "LeadDashRepository"
+    val leadstatusdashSetterGetter = MutableLiveData<LeadStatusDashModel>()
+    val TAG: String = "LeadStatusDashRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadDashModel> {
-        getLeadDashboard(context)
-        return leaddashSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<LeadStatusDashModel> {
+      //  getLeadStatusDashboard(context)
+        return leadstatusdashSetterGetter
     }
 
-    private fun getLeadDashboard(context: Context) {
+    private fun getLeadStatusDashboard(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -94,10 +92,10 @@ object LeadDashRepository {
                         Log.e(TAG,"response  94   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadDashModel>()
-                        leads.add(LeadDashModel(response.body()))
+                        val leads = ArrayList<LeadStatusDashModel>()
+                        leads.add(LeadStatusDashModel(response.body()))
                         val msg = leads[0].message
-                        leaddashSetterGetter.value = LeadDashModel(msg)
+                        leadstatusdashSetterGetter.value = LeadStatusDashModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                     }

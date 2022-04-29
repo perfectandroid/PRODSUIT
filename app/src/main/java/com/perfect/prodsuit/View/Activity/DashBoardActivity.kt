@@ -23,6 +23,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
+import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -55,6 +56,10 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var leadDashViewModel: LeadDashViewModel
     lateinit var leadDashArrayList : JSONArray
 
+    lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
+    lateinit var leadStatusDashArrayList : JSONArray
+
+
 
     //Barchart
     private lateinit var barChart: BarChart
@@ -69,16 +74,21 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         context = this@DashBoardActivity
 
         leadDashViewModel = ViewModelProvider(this).get(LeadDashViewModel::class.java)
+        leadStatusDashViewModel = ViewModelProvider(this).get(LeadStatusDashViewModel::class.java)
         setRegViews()
       //  bottombarnav()
 
-        getLeadsDashBoard()
+     //   getLeadsDashBoard()
+
+        getLeadStatusDashBoard()
 
         setLineChart()
         setBarchart()  //working
         setPieChart()
 
     }
+
+
 
     private fun getLeadsDashBoard() {
 
@@ -136,6 +146,63 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
             }
         }
 
+
+    }
+
+    private fun getLeadStatusDashBoard() {
+        var leadStatusDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadStatusDashViewModel.getLeadStatusDashboard(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   100   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+//                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+//                                if (followUpActionArrayList.length()>0){
+//                                    if (followUpAction == 0){
+//                                        followUpAction++
+//                                        followUpActionPopup(followUpActionArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@DashBoardActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
     }
 
