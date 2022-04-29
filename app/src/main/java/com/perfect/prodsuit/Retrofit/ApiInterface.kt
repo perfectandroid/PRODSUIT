@@ -1,9 +1,11 @@
 package com.perfect.prodsuit.Api
 
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ApiInterface {
 
@@ -139,7 +141,10 @@ interface ApiInterface {
     fun getLeadGenerationList(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/AddQuatation")
-    fun getquotation(@Body body: RequestBody): Call<String>
+    fun getquotation(@Part body: RequestBody, @Part file: MultipartBody.Part): Call<String>
+
+
+
     @POST("UserValidations/LeadGenerationListDetails")
     fun getLeadGenerationListDetails(@Body body: RequestBody): Call<String>
 
