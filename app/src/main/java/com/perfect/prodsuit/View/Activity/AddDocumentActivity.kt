@@ -8,7 +8,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -65,6 +67,14 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     private var bitmap: Bitmap? = null
 
     var fromDateMode : String?= "1"  // GONE
+    var encodeDoc : String = ""
+
+
+    var ID_LeadGenerateProduct :String = ""
+    var strDate : String = ""
+    var strSubject : String = ""
+    var strDescription : String = ""
+    var documentPath : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +85,9 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         context = this@AddDocumentActivity
 
         setRegViews()
+        ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")!!
+        Log.e(TAG,"ID_LeadGenerateProduct  89    "+ID_LeadGenerateProduct)
+
     }
 
     private fun setRegViews() {
@@ -159,17 +172,21 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnSubmit->{
                 Config.Utils.hideSoftKeyBoard(context,v)
-               // Validations(v)
+                Validations(v)
             }
         }
 
     }
+
+
 
     private fun removeData() {
         txtFromDate!!.setText("")
         edtSubject!!.setText("")
         edtDescription!!.setText("")
         txtAttachmentPath!!.setText("")
+        documentPath = ""
+        encodeDoc = ""
     }
 
     private fun selectImage() {
@@ -305,6 +322,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     imgPath = destination!!.getAbsolutePath()
                     destination = File(imgPath)
+                    documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
                 } else {
                     Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
@@ -319,6 +337,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
                     imgPath = getRealPathFromURI(selectedImage)
                     destination = File(imgPath.toString())
+                    documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -331,6 +350,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                 val uri = data.data
                 selectedFilePath = UriUtil.getPath(this, uri!!).toString()
                 destination = File(selectedFilePath.toString())
+                documentPath = selectedFilePath!!
                 txtAttachmentPath!!.setText(selectedFilePath)
             } else {
                 Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
@@ -346,5 +366,51 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         return cursor.getString(column_index)
     }
 
+
+    private fun Validations(v: View) {
+        strDate = txtFromDate!!.text.toString()
+        strSubject = edtSubject!!.text.toString()
+        strDescription = edtDescription!!.text.toString()
+
+        if(strDate.equals("")){
+            Config.snackBars(context,v,"Select Date")
+        }
+        else if(strSubject.equals("")){
+            Config.snackBars(context,v,"Enter Subject")
+        }
+        else if(strDescription.equals("")){
+            Config.snackBars(context,v,"Enter Description")
+        }
+        else if(documentPath.equals("")){
+            Config.snackBars(context,v,"Pick Documents")
+        }
+        else{
+            Log.e(TAG,"Validations  382"
+                    +"\n"+"strDate          : "+ strDate
+                    +"\n"+"strSubject       : "+ strSubject
+                    +"\n"+"strDescription   : "+ strDescription
+                    +"\n"+"documentPath     : "+ documentPath
+            )
+
+            val bitmap = BitmapFactory.decodeFile(documentPath)
+            val stream =  ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
+            } else {
+                encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+            }
+
+            saveDocuments(strDate,strSubject,strDescription,encodeDoc)
+        }
+
+
+    }
+
+    private fun saveDocuments(strDate: String, strSubject: String, strDescription: String, encodeDoc: String?) {
+
+
+
+    }
 
 }

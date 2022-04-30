@@ -112,13 +112,120 @@
                                     android:src="@drawable/dash1"
                                     tools:ignore="UseAppTint" />
                             </LinearLayout>
-                                <com.github.mikephil.charting.charts.LineChart
-                                    android:id="@+id/chart1"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:orientation="horizontal">
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/chart1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:layout_alignParentTop="true"
+                                android:visibility="visible"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_weight="2">
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="150dp"
-                                    android:layout_margin="10dp"
-                                    android:layout_alignParentTop="true"
-                                    android:visibility="visible"/>
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:background="@color/greydark"
+                                        android:textColor="@color/black"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="HOT"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/black"/>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:background="@color/red"
+                                        android:textColor="@color/black"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="COOL"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/black"/>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:background="@color/green"
+                                        android:textColor="@color/black"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="WARM"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/black"/>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -180,12 +287,118 @@
                                 android:src="@drawable/dash3"
                                 tools:ignore="UseAppTint" />
                         </LinearLayout>
-                                <com.github.mikephil.charting.charts.BarChart
-                                    android:id="@+id/barChart"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="horizontal">
+
+                         <com.github.mikephil.charting.charts.BarChart
+                             android:id="@+id/barChart"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:layout_weight="1"
+                             android:layout_margin="5dp"
+                             android:visibility="visible" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_weight="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/greydark"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
                                     android:layout_width="match_parent"
-                                    android:layout_height="150dp"
-                                    android:layout_margin="10dp"
-                                    android:visibility="visible" />
+                                    android:layout_height="wrap_content"
+                                    android:text="DUE"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/red"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="TODAY"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/green"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="UPCOMUNG"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -244,12 +457,118 @@
                                 android:src="@drawable/dash2"
                                 tools:ignore="UseAppTint" />
                         </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="horizontal">
+
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChart"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_margin="10dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
                             android:visibility="visible" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_weight="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/greydark"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="NEW"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/red"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="FINAL STAGE"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:background="@color/green"
+                                    android:textColor="@color/black"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="PROCESSING"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"/>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

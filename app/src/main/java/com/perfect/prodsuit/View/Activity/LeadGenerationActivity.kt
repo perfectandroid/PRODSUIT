@@ -2049,6 +2049,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         //   val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                         imgvupload1!!.setImageURI(contentURI)
                         image1 = getRealPathFromURI(selectedImageUri)
+                        Log.e(TAG,"image1  2052    "+image1)
                         if (image1 != null) {
                         }
                     }
@@ -2124,6 +2125,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                     if (strImage.equals("1")) {
                         image1 = destination!!.getAbsolutePath()
+                        Log.e(TAG,"image1  20522    "+image1)
                         destination = File(image1)
 
 
@@ -2140,6 +2142,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     }
                     if (strImage.equals("2")) {
                         image2 = destination!!.getAbsolutePath()
+                        Log.e(TAG,"image2  20522    "+image2)
                         destination = File(image2)
 
                         val myBitmap = BitmapFactory.decodeFile(destination.toString())
