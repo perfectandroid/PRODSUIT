@@ -140,10 +140,10 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun validations(v: View) {
 
-       /* if (txtAttachmentPath!!.text.toString().equals("")){
+        if (txtAttachmentPath!!.text.toString().equals("")){
             Config.snackBars(context,v,"Please Select Attachment.")
         }
-        else*/ if (etxt_remark!!.text.toString().equals("")){
+        else if (etxt_remark!!.text.toString().equals("")){
             Config.snackBars(context,v,"Please Add Remark.")
         }
 
@@ -377,26 +377,25 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
                             val msg = addnquotationSetterGetter.message
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
-                               // val jobjt = jObject.getJSONObject("AddAgentCustomerRemarks")
+
                                 if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("AddQuatation")
+                                   var responsemessage = jobjt.getString("ResponseMessage")
 
-                              /*      var responsemessage = jobjt.getString("ResponseMessage")
-                                    val jobjt = jObject.getJSONObject("AddAgentCustomerRemarks")
-                                    var responsemsg = jobjt!!.getString("ResponseMessage")
 
-                                    Log.i("Result",responsemsg)
+                                    Log.i("Result",responsemessage)
                                     val builder = AlertDialog.Builder(
-                                            this@AddNoteActivity,
+                                            this@AddQuotationActivity,
                                             R.style.MyDialogTheme
                                     )
-                                    builder.setMessage(responsemsg)
+                                    builder.setMessage(responsemessage)
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
                                         //  val i = Intent(this@AddNoteActivity, AccountDetailsActivity::class.java)
                                         // startActivity(i)
                                     }
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
-                                    alertDialog.show()*/
+                                    alertDialog.show()
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@AddQuotationActivity,
