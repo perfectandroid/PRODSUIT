@@ -22,6 +22,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
+import com.perfect.prodsuit.Model.ScoreLine
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
@@ -51,6 +52,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     private var mMinute:Int = 0
   //  private var chipNavigationBar: ChipNavigationBar? = null
     private var lineChart: LineChart? = null
+    private var scoreListLine = ArrayList<ScoreLine>()
+    lateinit var chartLineArrayList : JSONArray
     var lineData: LineData? = null
     var entryList: List<Map.Entry<*, *>> = ArrayList()
 
@@ -84,9 +87,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         setRegViews()
       //  bottombarnav()
 
-//        getLeadsDashBoard()
+ //       getLeadsDashBoard()
 //        getLeadStatusDashBoard()
-        getLeadStagesDashBoard()
+//        getLeadStagesDashBoard()
 
         setLineChart()
         setBarchart()  //working
@@ -116,8 +119,11 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   100   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
-//                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                val ss = "[{\"Hot\": 20,\"Name\": \"Hot\"},{\"Cool\": 20,\"Name\": \"Cool\"},{\"Warm\": 20,\"Name\": \"Warm\"}]"
+                             //   chartLineArrayList = ss.
+//                                chartLineArrayList.
+//                                chartLineArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
 //                                if (followUpActionArrayList.length()>0){
 //                                    if (followUpAction == 0){
 //                                        followUpAction++
@@ -264,7 +270,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        xAxis.valueFormatter = MyAxisFormatter()
+        xAxis.valueFormatter = MyAxisFormatterLine()
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
@@ -274,26 +280,36 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         ///////////////
 
 
-        val entries: ArrayList<Entry> = ArrayList()
+        val entries1: ArrayList<Entry> = ArrayList()
 
-        scoreList = getScoreList1()
+        scoreListLine = getScoreList1()
+        Log.e(TAG,"scoreListLine  281    "+scoreListLine)
 
         //you can replace this data object with  your custom object
-        for (i in scoreList.indices) {
-            val score = scoreList[i]
-            entries.add(Entry(i.toFloat(), score.score.toFloat()))
+        for (i in scoreListLine.indices) {
+            val score1 = scoreListLine[i]
+            entries1.add(Entry(i.toFloat(), score1.Linescore.toFloat()))
+            Log.e(TAG,"Linename 281  "+score1.Linename)
         }
 
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(Color.parseColor("#676666"))
+        colors.add(Color.parseColor("#E91E1E"))
+        colors.add(Color.parseColor("#4CAF50"))
 
-        val lineDataSet = LineDataSet(entries, "")
+        val lineDataSet = LineDataSet(entries1, "")
         lineDataSet.setCircleColor(Color.RED)
         lineDataSet.setDrawCircleHole(true)
-        lineDataSet.enableDashedLine(20f,0f,0f)
+       // lineDataSet.colors = colors
+        lineDataSet.setCircleSize(8f);
+        lineDataSet.circleColors = colors
+        lineDataSet.disableDashedLine()
+        lineDataSet.circleHoleRadius = 2f
+      //  lineDataSet.enableDashedLine(20f,0f,0f)
         val data = LineData(lineDataSet)
-        data.setValueTextSize(15f)
-        data.setValueTextColor(Color.RED)
+        data.setValueTextSize(12f)
+        data.setValueTextColor(Color.BLACK)
         lineChart!!.data = data
-
 
         lineChart!!.invalidate()
 
@@ -372,14 +388,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         return scoreList
     }
 
-    private fun getScoreList1(): ArrayList<Score> {
-        scoreList.add(Score("John", 10))
-        scoreList.add(Score("Rey", 45))
-        scoreList.add(Score("Steve", 55))
-        scoreList.add(Score("Kevin", 65))
-        scoreList.add(Score("Jeff", 85))
+    private fun getScoreList1(): ArrayList<ScoreLine> {
+        scoreListLine.add(ScoreLine("", 10))
+        scoreListLine.add(ScoreLine("", 45))
+        scoreListLine.add(ScoreLine("", 55))
 
-        return scoreList
+//        scoreList.add(Score("HOT", 10))
+//        scoreList.add(Score("COOL", 45))
+//        scoreList.add(Score("WARM", 55))
+
+
+        return scoreListLine
     }
 
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
@@ -394,6 +413,21 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
             }
         }
     }
+
+    inner class MyAxisFormatterLine : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < scoreListLine.size) {
+                scoreListLine[index].Linename
+            } else {
+                ""
+            }
+        }
+    }
+
+
 
     private fun setPieChart() {
 

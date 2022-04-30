@@ -30,4 +30,10 @@
         <item>Low</item>
     </string-array>
 
+    <integer-array name="color1">
+        <item>@color/greydark</item>
+        <item>@color/red</item>
+        <item>@color/green</item>
+    </integer-array>
+
 </resources>
