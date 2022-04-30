@@ -35,35 +35,15 @@ class ExpenseAdapter(internal var context: Context, internal var jsonArray: JSON
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG, "onBindViewHolder   1051   ")
-                Log.i("Todo Date", jsonObject!!.getString("LgLeadDate"))
-                var date = jsonObject!!.getString("LgLeadDate")
-                var spf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-                val newDate = spf.parse(date)
-                spf = SimpleDateFormat("dd-MM-yyyy")
-                date = spf.format(newDate)
-                println(date)
 
-             //   internal var impreference    : ImageView
+                holder.txtv_transdate.text        = jsonObject!!.getString("TrnsDate")
+                holder.txtv_amt.text        = "$ "+jsonObject!!.getString("Amount")
+                holder.txtv_expnsnme.text        = jsonObject!!.getString("ExpenseName")
 
-                holder.txtv_date.text        = date
-                holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
-                holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
-                holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
-                holder.txtv_preference.text        = jsonObject!!.getString("Preference")
-                if(jsonObject!!.getString("Preference").equals("Hot")){
-                    holder.impreference.setImageResource(R.drawable.preference2)
-                }else if (jsonObject!!.getString("Preference").equals("Warm")){
-                    holder.impreference.setImageResource(R.drawable.preference3)
-                }else if (jsonObject!!.getString("Preference").equals("Cold")){
-                    holder.impreference.setImageResource(R.drawable.preference1)
-                }
-                holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
-                holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
-                holder.lToDoList!!.setTag(position)
+            /*    holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "todolist")
-                })
+                })*/
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -84,31 +64,18 @@ class ExpenseAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var lToDoList   : LinearLayout
-        internal var txtv_date   : TextView
-        internal var txtv_preference       : TextView
-        internal var tv_leadno    : TextView
-        internal var tv_custmr    : TextView
-        internal var tv_address    : TextView
-        internal var tv_product    : TextView
-        internal var tv_nextdate    : TextView
-        internal var txtv_collectedby    : TextView
-        internal var impreference    : ImageView
-        internal var imcall    : ImageView
-        internal var immessage    : ImageView
-       init {
-           lToDoList          = v.findViewById<View>(R.id.lToDoList) as LinearLayout
-           txtv_date          = v.findViewById<View>(R.id.txtv_date) as TextView
-           txtv_preference          = v.findViewById<View>(R.id.txtv_preference) as TextView
-           tv_leadno          = v.findViewById<View>(R.id.tv_leadno) as TextView
-           tv_custmr          = v.findViewById<View>(R.id.tv_custmr) as TextView
-           tv_address              = v.findViewById<View>(R.id.tv_address) as TextView
-           tv_product           = v.findViewById<View>(R.id.tv_product) as TextView
-           tv_nextdate           = v.findViewById<View>(R.id.tv_nextdate) as TextView
-           txtv_collectedby           = v.findViewById<View>(R.id.txtv_collectedby) as TextView
-           imcall           = v.findViewById<View>(R.id.imcall) as ImageView
-           immessage           = v.findViewById<View>(R.id.immessage) as ImageView
-           impreference           = v.findViewById<View>(R.id.impreference) as ImageView
+
+        internal var txtv_transdate   : TextView
+        internal var txtv_amt       : TextView
+        internal var txtv_expnsnme    : TextView
+
+
+        init {
+
+           txtv_transdate          = v.findViewById<View>(R.id.txtv_transdate) as TextView
+           txtv_amt          = v.findViewById<View>(R.id.txtv_amt) as TextView
+           txtv_expnsnme          = v.findViewById<View>(R.id.txtv_expnsnme) as TextView
+
         }
     }
 

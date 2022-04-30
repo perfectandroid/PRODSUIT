@@ -21,6 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 object ExpenseRepository {
@@ -67,8 +68,13 @@ object ExpenseRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
               //  requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
               //  Log.i("prodct",AccountDetailsActivity.strid)
-                requestObject1.put("FromDate",  ProdsuitApplication.encryptStart("2022-04-17"))
-                requestObject1.put("ToDate", ProdsuitApplication.encryptStart("2022-04-30"))
+                val c = Calendar.getInstance().time
+                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val formattedDate = simpleDateFormat.format(c)
+
+
+                requestObject1.put("FromDate",  ProdsuitApplication.encryptStart(formattedDate))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(formattedDate))
                 Log.i("requestobject expense",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()

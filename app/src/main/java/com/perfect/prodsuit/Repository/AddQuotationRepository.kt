@@ -31,6 +31,7 @@ object AddQuotationRepository {
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context): MutableLiveData<AddQuotationModel> {
         getQuotation(context)
+
         return addnquotationSetterGetter
     }
 
@@ -43,8 +44,11 @@ object AddQuotationRepository {
               progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
               progressDialog!!.setCancelable(false)
               progressDialog!!.setIndeterminate(true)
-              progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                      R.drawable.progress))
+              progressDialog!!.setIndeterminateDrawable(
+                  context.resources.getDrawable(
+                      R.drawable.progress
+                  )
+              )
               progressDialog!!.show()
 
 
@@ -69,15 +73,50 @@ object AddQuotationRepository {
                   val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                   val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                   requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("32"))
-                  requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                  requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                  requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
+                  requestObject1.put(
+                      "BankKey", ProdsuitApplication.encryptStart(
+                          BankKeySP.getString(
+                              "BANK_KEY",
+                              null
+                          )
+                      )
+                  )
+                  requestObject1.put(
+                      "FK_Employee", ProdsuitApplication.encryptStart(
+                          FK_EmployeeSP.getString(
+                              "FK_Employee",
+                              null
+                          )
+                      )
+                  )
+                  requestObject1.put(
+                      "Token", ProdsuitApplication.encryptStart(
+                          TokenSP.getString(
+                              "Token",
+                              null
+                          )
+                      )
+                  )
+                  requestObject1.put(
+                      "ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(
+                          AccountDetailsActivity.strid
+                      )
+                  )
                   Log.i("prodct", AccountDetailsActivity.strid)
-                  requestObject1.put("TrnsDate", ProdsuitApplication.encryptStart(AddQuotationActivity.transdate))
+                  requestObject1.put(
+                      "TrnsDate", ProdsuitApplication.encryptStart(
+                          AddQuotationActivity.transdate
+                      )
+                  )
                 //  requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(AddQuotationActivity.imgpth))
-                  requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(""))
-                   requestObject1.put("Remark", ProdsuitApplication.encryptStart(ProdsuitApplication.encryptStart(AddQuotationActivity.remarks)))
+                 // requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(""))
+                   requestObject1.put(
+                       "Remark", ProdsuitApplication.encryptStart(
+                           ProdsuitApplication.encryptStart(
+                               AddQuotationActivity.remarks
+                           )
+                       )
+                   )
                   Log.i("requestobject", requestObject1.toString())
               } catch (e: Exception) {
                   e.printStackTrace()
@@ -102,16 +141,26 @@ object AddQuotationRepository {
                       .addFormDataPart("QuotationImge", files, files.toString().asRequestBody())
                       .build()
 */
+              val file: File = File(AddQuotationActivity.imgpth)
+
+              val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+              val fbody = MultipartBody.Part.createFormData("QuotationImge", file.name, requestFile)
 
               val body = RequestBody.create(
-                      okhttp3.MediaType.parse("application/json; charset=utf-8"),
-                      requestObject1.toString()
+                  okhttp3.MediaType.parse("multipart/form-data"),
+                  requestObject1.toString()
               )
+
+
+            /*  val body = RequestBody.create(
+                  okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                  requestObject1.toString()
+              )*/
              val call = apiService.getquotation(body)
               call.enqueue(object : retrofit2.Callback<String> {
                   override fun onResponse(
-                          call: retrofit2.Call<String>, response:
-                          Response<String>
+                      call: retrofit2.Call<String>, response:
+                      Response<String>
                   ) {
                       try {
                           progressDialog!!.dismiss()
