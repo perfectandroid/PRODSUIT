@@ -140,10 +140,10 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun validations(v: View) {
 
-        if (txtAttachmentPath!!.text.toString().equals("")){
+       /* if (txtAttachmentPath!!.text.toString().equals("")){
             Config.snackBars(context,v,"Please Select Attachment.")
         }
-        else if (etxt_remark!!.text.toString().equals("")){
+        else*/ if (etxt_remark!!.text.toString().equals("")){
             Config.snackBars(context,v,"Please Add Remark.")
         }
 
