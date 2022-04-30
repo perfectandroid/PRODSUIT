@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-
         <LinearLayout
             android:id="@+id/llback"
             android:layout_width="match_parent"
@@ -52,7 +51,6 @@
                 android:layout_height="match_parent"
                 android:background="@color/greylight"
                 android:orientation="vertical">
-
                 <androidx.cardview.widget.CardView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -72,7 +70,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
@@ -80,7 +77,6 @@
                                 android:gravity="center"
                                 android:background="@color/dot_dark_screen3"
                                 android:orientation="horizontal">
-
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -115,8 +111,6 @@
                                     android:tint="@color/white"
                                     android:src="@drawable/dash1"
                                     tools:ignore="UseAppTint" />
-
-
                             </LinearLayout>
                                 <com.github.mikephil.charting.charts.LineChart
                                     android:id="@+id/chart1"
@@ -144,7 +138,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -152,7 +145,6 @@
                             android:gravity="center"
                             android:background="@color/blue"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -187,8 +179,6 @@
                                 android:tint="@color/white"
                                 android:src="@drawable/dash3"
                                 tools:ignore="UseAppTint" />
-
-
                         </LinearLayout>
                                 <com.github.mikephil.charting.charts.BarChart
                                     android:id="@+id/barChart"
@@ -213,7 +203,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -221,7 +210,6 @@
                             android:gravity="center"
                             android:background="@color/purple_700"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -255,10 +243,7 @@
                                 android:tint="@color/white"
                                 android:src="@drawable/dash2"
                                 tools:ignore="UseAppTint" />
-
-
                         </LinearLayout>
-
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChart"
                             android:layout_width="match_parent"
