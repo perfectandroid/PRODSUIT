@@ -498,12 +498,20 @@
                             android:gravity="center"
                             android:layout_weight="2">
 
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycPieChart"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:visibility="visible" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="12dp"
@@ -532,7 +540,8 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="12dp"
@@ -561,7 +570,8 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="12dp"

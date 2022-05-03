@@ -38,11 +38,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.data.PieData
 
 import com.github.mikephil.charting.data.PieDataSet
-
-
-
-
-
+import com.perfect.prodsuit.View.Adapter.PieChartAdapter
 
 
 class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
@@ -274,21 +270,12 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                                 Log.e(TAG,"array  264   "+leadStagesDashArrayList)
 
                                 setPieChart()
-//                                val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
-//                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
-//                                recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                val adapter = BarChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
-//                                recycBarChart!!.adapter = adapter
+                                val recycPieChart = findViewById(R.id.recycPieChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycPieChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = PieChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
+                                recycPieChart!!.adapter = adapter
 
-//                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
-//                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
-//                                if (followUpActionArrayList.length()>0){
-//                                    if (followUpAction == 0){
-//                                        followUpAction++
-//                                        followUpActionPopup(followUpActionArrayList)
-//                                    }
-//
-//                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@DashBoardActivity,
