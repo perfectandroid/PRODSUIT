@@ -43,6 +43,12 @@
     <color name="headertoolbar3">#fdaf97</color>
     <color name="btnColor">#3D3A3A</color>
 
+    <color name="line_color1">#676666</color>
+    <color name="line_color2">#E91E1E</color>
+    <color name="line_color3">#4CAF50</color>
+<!--    <color name="line_color4"></color>-->
+<!--    <color name="line_color5"></color>-->
+
 
     <color name="pending">#F87C2F</color>
     <color name="upcoming">#34BCFA</color>
@@ -60,4 +66,6 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+
+
 </resources>

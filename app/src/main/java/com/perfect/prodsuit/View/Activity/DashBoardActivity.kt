@@ -17,12 +17,16 @@ import com.github.mikephil.charting.components.*
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
 import com.perfect.prodsuit.Model.ScoreLine
+import com.perfect.prodsuit.View.Adapter.DistrictDetailAdapter
+import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
@@ -87,11 +91,11 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         setRegViews()
       //  bottombarnav()
 
- //       getLeadsDashBoard()
+        getLeadsDashBoard()
 //        getLeadStatusDashBoard()
 //        getLeadStagesDashBoard()
 
-        setLineChart()
+//        setLineChart()
         setBarchart()  //working
         setPieChart()
 
@@ -119,9 +123,24 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   100   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                               // val ss = "[{\"Count\": 10,\"Fileds\": \"Hot\"},{\"Count\": 25,\"Fileds\": \"Cool\"},{\"Count\": 55,\"Fileds\": \"Warm\"}]"
+                               //  chartLineArrayList = JSONArray(ss)
+
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                val ss = "[{\"Hot\": 20,\"Name\": \"Hot\"},{\"Cool\": 20,\"Name\": \"Cool\"},{\"Warm\": 20,\"Name\": \"Warm\"}]"
-                             //   chartLineArrayList = ss.
+                                chartLineArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                Log.e(TAG,"array  125   "+chartLineArrayList)
+
+                                setLineChart()
+                                val recycLineChart = findViewById(R.id.recycLineChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycLineChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = LineChartAdapter(this@DashBoardActivity, chartLineArrayList)
+                                recycLineChart!!.adapter = adapter
+                              //  adapter.setClickListener(this@DashBoardActivity)
+
+
+                                //   chartLineArrayList = ss.
 //                                chartLineArrayList.
 //                                chartLineArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
 //                                if (followUpActionArrayList.length()>0){
@@ -264,6 +283,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         //remove description label
         lineChart!!.description.isEnabled = false
 
+        lineChart!!.setScaleEnabled(false)
+
 
         //add animation
         lineChart!!.animateX(1000, Easing.EaseInSine)
@@ -292,10 +313,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
             Log.e(TAG,"Linename 281  "+score1.Linename)
         }
 
+//        val colors: ArrayList<Int> = ArrayList()
+//        colors.add(Color.parseColor("#676666"))
+//        colors.add(Color.parseColor("#E91E1E"))
+//        colors.add(Color.parseColor("#4CAF50"))
+
+
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#676666"))
-        colors.add(Color.parseColor("#E91E1E"))
-        colors.add(Color.parseColor("#4CAF50"))
+        colors.add(resources.getColor(R.color.line_color1))
+        colors.add(resources.getColor(R.color.line_color2))
+        colors.add(resources.getColor(R.color.line_color3))
+
 
         val lineDataSet = LineDataSet(entries1, "")
         lineDataSet.setCircleColor(Color.RED)
@@ -389,9 +417,18 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun getScoreList1(): ArrayList<ScoreLine> {
-        scoreListLine.add(ScoreLine("", 10))
-        scoreListLine.add(ScoreLine("", 45))
-        scoreListLine.add(ScoreLine("", 55))
+
+
+//        scoreListLine.add(ScoreLine("", 10))
+//        scoreListLine.add(ScoreLine("", 45))
+//        scoreListLine.add(ScoreLine("", 55))
+
+        for (i in 0 until chartLineArrayList.length()) {
+            //apply your logic
+            var jsonObject = chartLineArrayList.getJSONObject(i)
+            Log.e(TAG,"404  Count   "+jsonObject.getString("Count"))
+            scoreListLine.add(ScoreLine("", jsonObject.getString("Count").toInt()))
+        }
 
 //        scoreList.add(Score("HOT", 10))
 //        scoreList.add(Score("COOL", 45))
