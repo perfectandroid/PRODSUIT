@@ -34,6 +34,16 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.PieData
+
+import com.github.mikephil.charting.data.PieDataSet
+
+
+
+
+
+
 
 class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -565,24 +575,24 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         scoreListPie.clear()
         scoreListPie = getScoreList2()
-
-        pieChart.setUsePercentValues(true)
-        pieChart.description.text = ""
-        //hollow pie chart
-        pieChart.isDrawHoleEnabled = false
-        pieChart.setTouchEnabled(false)
-        pieChart.setDrawEntryLabels(false)
-        //adding padding
-        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
-        pieChart.setUsePercentValues(true)
-        pieChart.isRotationEnabled = false
-        pieChart.setDrawEntryLabels(false)
-        pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-        pieChart.legend.isWordWrapEnabled = true
-
-        ////
-
-        pieChart.setUsePercentValues(true)
+//
+//        pieChart.setUsePercentValues(true)
+//        pieChart.description.text = ""
+//        //hollow pie chart
+//        pieChart.isDrawHoleEnabled = false
+//        pieChart.setTouchEnabled(false)
+//        pieChart.setDrawEntryLabels(false)
+//        //adding padding
+//        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
+//        pieChart.setUsePercentValues(true)
+//        pieChart.isRotationEnabled = false
+//        pieChart.setDrawEntryLabels(false)
+//        pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+//        pieChart.legend.isWordWrapEnabled = true
+//
+//        ////
+//
+//        pieChart.setUsePercentValues(true)
 //        val dataEntries = ArrayList<PieEntry>()
 //        dataEntries.add(PieEntry(72f, "Android"))
 //        dataEntries.add(PieEntry(26f, "Ios"))
@@ -591,50 +601,110 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 //        val dataEntries: ArrayList<PieEntry> = ArrayList()
 
-        val dataEntries = ArrayList<PieEntry>()
-        for (i in 0 until scoreListPie.size){
-       // for (i in scoreListPie.indices) {
-            val score = scoreListPie[i]
+//        val dataEntries = ArrayList<PieEntry>()
+//        for (i in 0 until scoreListPie.size){
+//       // for (i in scoreListPie.indices) {
+//            val score = scoreListPie[i]
+//
+//            Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
+//        //    dataEntries.add(PieEntry(i.toFloat(), score.Piescore.toFloat()))
+//            dataEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+////            dataEntries.add(PieEntry(2f, "ere"))
+//////            dataEntries.add(PieEntry(2f, "Other"))
+//////            dataEntries.add(PieEntry(2f, "Other"))
+//        }
 
+
+
+
+//        Log.e(TAG,"Piescore  5941   "+dataEntries)
+//        val colors: ArrayList<Int> = ArrayList()
+//        colors.add(Color.parseColor("#4DD0E1"))
+//        colors.add(Color.parseColor("#FFF176"))
+//        colors.add(Color.parseColor("#FF8A65"))
+//        colors.add(Color.parseColor("#FFF176"))
+//        colors.add(Color.parseColor("#FF8A65"))
+//
+//        val dataSet = PieDataSet(dataEntries, "")
+//        Log.e(TAG,"dataSet  614   "+dataSet)
+//        val data = PieData(dataSet)
+//        Log.e(TAG,"dataSet  6141   "+data)
+//        // In Percentage
+//        data.setValueFormatter(PercentFormatter())
+//        dataSet.sliceSpace = 4f
+//        dataSet.colors = colors
+//        pieChart.data = data
+//        data.setValueTextSize(15f)
+//       // pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+//        pieChart.animateY(1400, Easing.EaseInOutQuad)
+//
+//        //create hole in center
+//        pieChart.holeRadius = 58f
+//        pieChart.transparentCircleRadius = 61f
+//        pieChart.isDrawHoleEnabled = true
+//        pieChart.setHoleColor(Color.WHITE)
+//
+//
+//        //add text in center
+//        pieChart.setDrawCenterText(false);
+//        pieChart.centerText = "Lead Stages"
+//
+//
+//
+//        pieChart.invalidate()
+
+
+
+
+        val pieEntries: ArrayList<PieEntry> = ArrayList()
+        val label = ""
+        pieChart.setUsePercentValues(false)
+        pieChart.description.text = ""
+        pieChart.isDrawHoleEnabled = true
+        pieChart.setTouchEnabled(false)
+        pieChart.setDrawEntryLabels(false)
+        //adding padding
+        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
+        pieChart.setUsePercentValues(false)
+        pieChart.isRotationEnabled = false
+        pieChart.setDrawEntryLabels(false)
+        pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+        pieChart.legend.isWordWrapEnabled = true
+
+        //initializing data
+
+        //initializing data
+        val typeAmountMap: MutableMap<String, Int> = HashMap()
+//        typeAmountMap["Toys"] = 200
+//        typeAmountMap["Snacks"] = 230
+//        typeAmountMap["Clothes"] = 100
+//        typeAmountMap["Stationary"] = 500
+//        typeAmountMap["Phone"] = 50
+
+        for (i in 0 until scoreListPie.size){
+            val score = scoreListPie[i]
             Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
-        //    dataEntries.add(PieEntry(i.toFloat(), score.Piescore.toFloat()))
-            dataEntries.add(PieEntry(score.Piescore.toFloat(), ""))
-//            dataEntries.add(PieEntry(2f, "ere"))
-////            dataEntries.add(PieEntry(2f, "Other"))
-////            dataEntries.add(PieEntry(2f, "Other"))
+            //typeAmountMap[""] = score.Piescore
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+
         }
 
-        Log.e(TAG,"Piescore  5941   "+dataEntries)
-        val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#4DD0E1"))
-        colors.add(Color.parseColor("#FFF176"))
-        colors.add(Color.parseColor("#FF8A65"))
+        val colorsStage: ArrayList<Int> = ArrayList()
+        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+        colorsStage.add(resources.getColor(R.color.leadstages_color3))
 
-        val dataSet = PieDataSet(dataEntries, "")
-        val data = PieData(dataSet)
+        val pieDataSet = PieDataSet(pieEntries, label)
+        pieDataSet.valueTextSize = 12f
+        pieDataSet.setColors(colorsStage)
+        val pieData = PieData(pieDataSet)
+        pieData.setValueFormatter(PercentFormatter())
+        pieData.setDrawValues(true)
 
-        // In Percentage
-        data.setValueFormatter(PercentFormatter())
-       // dataSet.sliceSpace = 3f
-        dataSet.colors = colors
-        pieChart.data = data
-        data.setValueTextSize(15f)
-       // pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
+        val l: Legend = pieChart.getLegend()
+        l.isEnabled = false
 
-        //create hole in center
-        pieChart.holeRadius = 58f
-        pieChart.transparentCircleRadius = 61f
-        pieChart.isDrawHoleEnabled = true
-        pieChart.setHoleColor(Color.WHITE)
-
-
-        //add text in center
-        pieChart.setDrawCenterText(false);
-        pieChart.centerText = "Lead Stages"
-
-
-
+        pieChart.data = pieData
         pieChart.invalidate()
     }
 
