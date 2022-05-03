@@ -91,11 +91,12 @@
                                     android:layout_weight=".8"
                                     android:fontFamily="@font/myfont" />
                                 <TextView
+                                    android:id="@+id/tv_leadTotal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="30"
+                                    android:text=""
                                     android:textStyle="bold"
                                     android:textColor="@color/white"
                                     android:textSize="20dp"
@@ -239,8 +240,6 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="5dp"
@@ -276,11 +275,12 @@
                                 android:layout_weight=".8"
                                 android:fontFamily="@font/myfont" />
                             <TextView
+                                android:id="@+id/tv_leadStatusTotal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="30"
+                                android:text=""
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
@@ -303,13 +303,13 @@
                         android:layout_height="200dp"
                         android:orientation="horizontal">
 
-                         <com.github.mikephil.charting.charts.BarChart
-                             android:id="@+id/barChart"
-                             android:layout_width="match_parent"
-                             android:layout_height="match_parent"
-                             android:layout_weight="1"
-                             android:layout_margin="5dp"
-                             android:visibility="visible" />
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:visibility="visible" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -456,16 +456,18 @@
                                 android:textSize="18dp"
                                 android:layout_weight=".8"
                                 android:fontFamily="@font/myfont" />
+
                             <TextView
+                                android:id="@+id/tv_leadStageTotal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center"
-                                android:gravity="left"
-                                android:textStyle="bold"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
                                 android:textColor="@color/white"
                                 android:textSize="20dp"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont" />
+                                android:gravity="center"
+                                android:textStyle="bold" />
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
