@@ -11,18 +11,18 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class LineChartAdapter(internal var context: Context, internal var jsonArray: JSONArray):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BarChartAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     internal val TAG : String = "LineChartAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(R.color.line_color1, R.color.line_color2, R.color.line_color3)
+    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_line_chart, parent, false
+            R.layout.adapter_bar_chart, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -34,8 +34,8 @@ class LineChartAdapter(internal var context: Context, internal var jsonArray: JS
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
                 val pos = position+1
-                holder.tv_lineBox.setBackgroundResource(color[position])
-                holder.tv_lineName.text        = jsonObject!!.getString("Fileds")
+                holder.tv_BarBox.setBackgroundResource(color[position])
+                holder.tv_BarName.text        = jsonObject!!.getString("Fileds")
 
 
             }
@@ -44,6 +44,7 @@ class LineChartAdapter(internal var context: Context, internal var jsonArray: JS
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
+
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -58,11 +59,11 @@ class LineChartAdapter(internal var context: Context, internal var jsonArray: JS
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var tv_lineBox          : TextView
-        internal var tv_lineName         : TextView
+        internal var tv_BarBox          : TextView
+        internal var tv_BarName         : TextView
         init {
-            tv_lineBox        = v.findViewById<View>(R.id.tv_lineBox) as TextView
-            tv_lineName       = v.findViewById<View>(R.id.tv_lineName) as TextView
+            tv_BarBox        = v.findViewById<View>(R.id.tv_BarBox) as TextView
+            tv_BarName       = v.findViewById<View>(R.id.tv_BarName) as TextView
 
         }
     }

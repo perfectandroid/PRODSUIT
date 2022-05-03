@@ -49,6 +49,14 @@
 <!--    <color name="line_color4"></color>-->
 <!--    <color name="line_color5"></color>-->
 
+    <color name="leadstatus_color1">#676666</color>
+    <color name="leadstatus_color2">#E91E1E</color>
+    <color name="leadstatus_color3">#4CAF50</color>
+
+    <color name="leadstages_color1">#676666</color>
+    <color name="leadstages_color2">#E91E1E</color>
+    <color name="leadstages_color3">#4CAF50</color>
+
 
     <color name="pending">#F87C2F</color>
     <color name="upcoming">#34BCFA</color>

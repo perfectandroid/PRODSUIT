@@ -25,7 +25,7 @@ object LeadStatusDashRepository {
     val TAG: String = "LeadStatusDashRepository"
 
     fun getServicesApiCall(context: Context): MutableLiveData<LeadStatusDashModel> {
-      //  getLeadStatusDashboard(context)
+        getLeadStatusDashboard(context)
         return leadstatusdashSetterGetter
     }
 
@@ -56,13 +56,6 @@ object LeadStatusDashRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                "ReqMode":"38",
-//                "SubMode":"1",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -73,7 +66,8 @@ object LeadStatusDashRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
+                Log.e(LeadDashRepository.TAG,"requestObject1   78   "+requestObject1)
+
 
             } catch (e: Exception) {
                 e.printStackTrace()

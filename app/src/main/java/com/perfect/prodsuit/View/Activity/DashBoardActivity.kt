@@ -24,7 +24,9 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.perfect.prodsuit.Model.Score
+import com.perfect.prodsuit.Model.ScoreBar
 import com.perfect.prodsuit.Model.ScoreLine
+import com.perfect.prodsuit.View.Adapter.BarChartAdapter
 import com.perfect.prodsuit.View.Adapter.DistrictDetailAdapter
 import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
@@ -74,7 +76,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     //Barchart
     private lateinit var barChart: BarChart
-    private var scoreList = ArrayList<Score>()
+    private var scoreListBar = ArrayList<ScoreBar>()
+    lateinit var chartBarArrayList : JSONArray
 
 //    PiChart
     private lateinit var pieChart: PieChart
@@ -92,11 +95,11 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
       //  bottombarnav()
 
         getLeadsDashBoard()
-//        getLeadStatusDashBoard()
+        getLeadStatusDashBoard()
 //        getLeadStagesDashBoard()
 
 //        setLineChart()
-        setBarchart()  //working
+//        setBarchart()  //working
         setPieChart()
 
     }
@@ -140,16 +143,6 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                               //  adapter.setClickListener(this@DashBoardActivity)
 
 
-                                //   chartLineArrayList = ss.
-//                                chartLineArrayList.
-//                                chartLineArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
-//                                if (followUpActionArrayList.length()>0){
-//                                    if (followUpAction == 0){
-//                                        followUpAction++
-//                                        followUpActionPopup(followUpActionArrayList)
-//                                    }
-//
-//                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@DashBoardActivity,
@@ -197,8 +190,20 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   100   "+msg)
+                            Log.e(TAG,"msg   190   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                chartBarArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                Log.e(TAG,"array  125   "+chartBarArrayList)
+
+                                setBarchart()
+                                val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = BarChartAdapter(this@DashBoardActivity, chartBarArrayList)
+                                recycBarChart!!.adapter = adapter
+
 //                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
 //                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
 //                                if (followUpActionArrayList.length()>0){
@@ -346,8 +351,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     private fun setBarchart() {
 //        https://intensecoder.com/bar-chart-tutorial-in-android-using-kotlin/
-        scoreList.clear()
-        scoreList = getScoreList()
+        scoreListBar.clear()
+        scoreListBar = getScoreList()
 
         barChart.axisLeft.setDrawGridLines(false)
         val xAxis: XAxis = barChart.xAxis
@@ -360,18 +365,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         //remove legend
         barChart.legend.isEnabled = false
-
-
+        barChart!!.setScaleEnabled(false)
         //remove description label
         barChart.description.isEnabled = false
 
 
         //add animation
-        barChart.animateY(3000)
+        barChart.animateY(1000)
 
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        xAxis.valueFormatter = MyAxisFormatter()
+        xAxis.valueFormatter = MyAxisFormatterBar()
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
@@ -382,22 +386,26 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 //        barChart.legend.textSize = 15f
 //        barChart.legend.textColor = Color.RED
 
-
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstatus_color1))
+        colors.add(resources.getColor(R.color.leadstatus_color2))
+        colors.add(resources.getColor(R.color.leadstatus_color3))
 
         /////////////////////
 
         val entries: ArrayList<BarEntry> = ArrayList()
-        for (i in scoreList.indices) {
-            val score = scoreList[i]
-            entries.add(BarEntry(i.toFloat(), score.score.toFloat()))
+        for (i in scoreListBar.indices) {
+            val score = scoreListBar[i]
+            entries.add(BarEntry(i.toFloat(), score.Barscore.toFloat()))
         }
 
         val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+       // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
 
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
-        data.setValueTextColor(Color.RED)
+        data.setValueTextColor(Color.BLACK)
         barChart.data = data
 
 
@@ -406,14 +414,25 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("John", 56))
-        scoreList.add(Score("Rey", 75))
-        scoreList.add(Score("Steve", 85))
-        scoreList.add(Score("Kevin", 45))
-        scoreList.add(Score("Jeff", 63))
+    private fun getScoreList(): ArrayList<ScoreBar> {
 
-        return scoreList
+
+     //   chartBarArrayList
+
+//        scoreListBar.add(Score("John", 56))
+//        scoreListBar.add(Score("Rey", 75))
+//        scoreListBar.add(Score("Steve", 85))
+//        scoreListBar.add(Score("Kevin", 45))
+//        scoreListBar.add(Score("Jeff", 63))
+
+        for (i in 0 until chartBarArrayList.length()) {
+            //apply your logic
+            var jsonObject = chartBarArrayList.getJSONObject(i)
+            Log.e(TAG,"422  Count   "+jsonObject.getString("Count"))
+            scoreListBar.add(ScoreBar("", jsonObject.getString("Count").toInt()))
+        }
+
+        return scoreListBar
     }
 
     private fun getScoreList1(): ArrayList<ScoreLine> {
@@ -440,15 +459,15 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
 
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            val index = value.toInt()
-            Log.d("TAG", "getAxisLabel: index $index")
-            return if (index < scoreList.size) {
-                scoreList[index].name
-            } else {
-                ""
-            }
-        }
+//        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+//            val index = value.toInt()
+//            Log.d("TAG", "getAxisLabel: index $index")
+//            return if (index < scoreList.size) {
+//                scoreList[index].name
+//            } else {
+//                ""
+//            }
+//        }
     }
 
     inner class MyAxisFormatterLine : IndexAxisValueFormatter() {
@@ -458,6 +477,19 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
             Log.d("TAG", "getAxisLabel: index $index")
             return if (index < scoreListLine.size) {
                 scoreListLine[index].Linename
+            } else {
+                ""
+            }
+        }
+    }
+
+    inner class MyAxisFormatterBar : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < scoreListBar.size) {
+                scoreListBar[index].Barname
             } else {
                 ""
             }
