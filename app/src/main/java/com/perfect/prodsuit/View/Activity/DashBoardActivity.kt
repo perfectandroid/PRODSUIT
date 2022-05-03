@@ -57,17 +57,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     private var mHour:Int = 0
     private var mMinute:Int = 0
   //  private var chipNavigationBar: ChipNavigationBar? = null
-    private var lineChart: LineChart? = null
-    private var scoreListLine = ArrayList<ScoreLine>()
+
     lateinit var chartLineArrayList : JSONArray
     var lineData: LineData? = null
     var entryList: List<Map.Entry<*, *>> = ArrayList()
 
+    private var lineChart: LineChart? = null
+    private var scoreListLine = ArrayList<ScoreLine>()
     lateinit var leadDashViewModel: LeadDashViewModel
     lateinit var leadDashArrayList : JSONArray
 
-    lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
-    lateinit var leadStatusDashArrayList : JSONArray
+
 
     lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
     lateinit var leadStagesDashArrayList : JSONArray
@@ -78,6 +78,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     private lateinit var barChart: BarChart
     private var scoreListBar = ArrayList<ScoreBar>()
     lateinit var chartBarArrayList : JSONArray
+    lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
+    lateinit var leadStatusDashArrayList : JSONArray
 
 //    PiChart
     private lateinit var pieChart: PieChart
@@ -96,11 +98,11 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         getLeadsDashBoard()
         getLeadStatusDashBoard()
-//        getLeadStagesDashBoard()
+        getLeadStagesDashBoard()
 
 //        setLineChart()
 //        setBarchart()  //working
-        setPieChart()
+//        setPieChart()
 
     }
 
@@ -131,14 +133,14 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                                //  chartLineArrayList = JSONArray(ss)
 
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                chartLineArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                Log.e(TAG,"array  125   "+chartLineArrayList)
+                                leadDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                Log.e(TAG,"array  125   "+leadDashArrayList)
 
                                 setLineChart()
                                 val recycLineChart = findViewById(R.id.recycLineChart) as RecyclerView
                                 val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
                                 recycLineChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                val adapter = LineChartAdapter(this@DashBoardActivity, chartLineArrayList)
+                                val adapter = LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
                                 recycLineChart!!.adapter = adapter
                               //  adapter.setClickListener(this@DashBoardActivity)
 
@@ -194,14 +196,14 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                             if (jObject.getString("StatusCode") == "0") {
 
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                chartBarArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                Log.e(TAG,"array  125   "+chartBarArrayList)
+                                leadStatusDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                Log.e(TAG,"array  125   "+leadStatusDashArrayList)
 
                                 setBarchart()
                                 val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
                                 val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
                                 recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                val adapter = BarChartAdapter(this@DashBoardActivity, chartBarArrayList)
+                                val adapter = BarChartAdapter(this@DashBoardActivity, leadStatusDashArrayList)
                                 recycBarChart!!.adapter = adapter
 
 //                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
@@ -425,9 +427,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 //        scoreListBar.add(Score("Kevin", 45))
 //        scoreListBar.add(Score("Jeff", 63))
 
-        for (i in 0 until chartBarArrayList.length()) {
+        for (i in 0 until leadStatusDashArrayList.length()) {
             //apply your logic
-            var jsonObject = chartBarArrayList.getJSONObject(i)
+            var jsonObject = leadStatusDashArrayList.getJSONObject(i)
             Log.e(TAG,"422  Count   "+jsonObject.getString("Count"))
             scoreListBar.add(ScoreBar("", jsonObject.getString("Count").toInt()))
         }
@@ -442,9 +444,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 //        scoreListLine.add(ScoreLine("", 45))
 //        scoreListLine.add(ScoreLine("", 55))
 
-        for (i in 0 until chartLineArrayList.length()) {
+        for (i in 0 until leadDashArrayList.length()) {
             //apply your logic
-            var jsonObject = chartLineArrayList.getJSONObject(i)
+            var jsonObject = leadDashArrayList.getJSONObject(i)
             Log.e(TAG,"404  Count   "+jsonObject.getString("Count"))
             scoreListLine.add(ScoreLine("", jsonObject.getString("Count").toInt()))
         }
