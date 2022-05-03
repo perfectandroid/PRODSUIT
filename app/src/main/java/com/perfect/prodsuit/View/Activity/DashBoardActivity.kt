@@ -22,12 +22,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.perfect.prodsuit.Model.Score
 import com.perfect.prodsuit.Model.ScoreBar
 import com.perfect.prodsuit.Model.ScoreLine
+import com.perfect.prodsuit.Model.ScorePie
 import com.perfect.prodsuit.View.Adapter.BarChartAdapter
-import com.perfect.prodsuit.View.Adapter.DistrictDetailAdapter
 import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
@@ -68,12 +66,6 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var leadDashArrayList : JSONArray
 
 
-
-    lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
-    lateinit var leadStagesDashArrayList : JSONArray
-
-
-
     //Barchart
     private lateinit var barChart: BarChart
     private var scoreListBar = ArrayList<ScoreBar>()
@@ -83,6 +75,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 //    PiChart
     private lateinit var pieChart: PieChart
+    private var scoreListPie = ArrayList<ScorePie>()
+    lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
+    lateinit var leadStagesDashArrayList : JSONArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -246,7 +241,71 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun getLeadStagesDashBoard() {
+        var leadStagesDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadStagesDashViewModel.getLeadStagesDashboard(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   190   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
 
+                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                leadStagesDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                Log.e(TAG,"array  264   "+leadStagesDashArrayList)
+
+                                setPieChart()
+//                                val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
+//                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+//                                recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                val adapter = BarChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
+//                                recycBarChart!!.adapter = adapter
+
+//                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+//                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+//                                if (followUpActionArrayList.length()>0){
+//                                    if (followUpAction == 0){
+//                                        followUpAction++
+//                                        followUpActionPopup(followUpActionArrayList)
+//                                    }
+//
+//                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@DashBoardActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 
@@ -504,6 +563,9 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 //        https://intensecoder.com/piechart-tutorial-using-mpandroidchart-in-kotlin/
 
+        scoreListPie.clear()
+        scoreListPie = getScoreList2()
+
         pieChart.setUsePercentValues(true)
         pieChart.description.text = ""
         //hollow pie chart
@@ -521,11 +583,28 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         ////
 
         pieChart.setUsePercentValues(true)
-        val dataEntries = ArrayList<PieEntry>()
-        dataEntries.add(PieEntry(72f, "Android"))
-        dataEntries.add(PieEntry(26f, "Ios"))
-        dataEntries.add(PieEntry(2f, "Other"))
+//        val dataEntries = ArrayList<PieEntry>()
+//        dataEntries.add(PieEntry(72f, "Android"))
+//        dataEntries.add(PieEntry(26f, "Ios"))
+//        dataEntries.add(PieEntry(2f, "Other"))
+//        dataEntries.add(PieEntry(29f, "gfghg"))
 
+//        val dataEntries: ArrayList<PieEntry> = ArrayList()
+
+        val dataEntries = ArrayList<PieEntry>()
+        for (i in 0 until scoreListPie.size){
+       // for (i in scoreListPie.indices) {
+            val score = scoreListPie[i]
+
+            Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
+        //    dataEntries.add(PieEntry(i.toFloat(), score.Piescore.toFloat()))
+            dataEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+//            dataEntries.add(PieEntry(2f, "ere"))
+////            dataEntries.add(PieEntry(2f, "Other"))
+////            dataEntries.add(PieEntry(2f, "Other"))
+        }
+
+        Log.e(TAG,"Piescore  5941   "+dataEntries)
         val colors: ArrayList<Int> = ArrayList()
         colors.add(Color.parseColor("#4DD0E1"))
         colors.add(Color.parseColor("#FFF176"))
@@ -536,11 +615,11 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         // In Percentage
         data.setValueFormatter(PercentFormatter())
-        dataSet.sliceSpace = 3f
+       // dataSet.sliceSpace = 3f
         dataSet.colors = colors
         pieChart.data = data
         data.setValueTextSize(15f)
-        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+       // pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
         pieChart.animateY(1400, Easing.EaseInOutQuad)
 
         //create hole in center
@@ -551,12 +630,24 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 
         //add text in center
-        pieChart.setDrawCenterText(true);
-        pieChart.centerText = "Mobile OS Market share"
+        pieChart.setDrawCenterText(false);
+        pieChart.centerText = "Lead Stages"
 
 
 
         pieChart.invalidate()
+    }
+
+    private fun getScoreList2(): ArrayList<ScorePie> {
+
+        for (i in 0 until leadStagesDashArrayList.length()) {
+            //apply your logic
+            var jsonObject = leadStagesDashArrayList.getJSONObject(i)
+            Log.e(TAG,"422  Count   "+jsonObject.getString("Count"))
+            scoreListPie.add(ScorePie("", jsonObject.getString("Count").toInt()))
+        }
+
+        return scoreListPie
     }
 
 

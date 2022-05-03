@@ -10,7 +10,7 @@ import com.perfect.prodsuit.Repository.LeadStagesDashRepository
 class LeadStagesDashViewModel : ViewModel() {
 
     var leadstagesdashData: MutableLiveData<LeadStagesDashModel>? = null
-    fun getLeadStatusDashboard(context: Context) : LiveData<LeadStagesDashModel>? {
+    fun getLeadStagesDashboard(context: Context) : LiveData<LeadStagesDashModel>? {
         leadstagesdashData = LeadStagesDashRepository.getServicesApiCall(context)
         return leadstagesdashData
     }
