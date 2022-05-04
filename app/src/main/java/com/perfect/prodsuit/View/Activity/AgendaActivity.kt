@@ -22,6 +22,8 @@ import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
 import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
+import com.perfect.prodsuit.Viewmodel.AgendaDetailViewModel
+import com.perfect.prodsuit.Viewmodel.LeadEditDetailViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -50,9 +52,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var tv_actionType: TextView? = null
     var agendaTypeClick : String?= "0"
     var ID_ActionType : String?= ""
+    var SubMode : String?= ""
 
     lateinit var agendaCountViewModel: AgendaCountViewModel
     lateinit var agendaActionViewModel: AgendaActionViewModel
+    lateinit var agendaDetailViewModel: AgendaDetailViewModel
     lateinit var agendaActionArrayList : JSONArray
     var dialogAgendaAction : Dialog? = null
     var recyActionType: RecyclerView? = null
@@ -75,10 +79,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         context = this@AgendaActivity
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
+        agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
 
         setRegViews()
       //  addTabItem()
-
+        SubMode ="1"
         getAgendaCounts()
         getActionTypes()
 
@@ -205,6 +210,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
+                SubMode ="1"
                 getActionTypes()
             }
             R.id.tv_tab_upcoming->{
@@ -213,6 +219,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_color);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
+                SubMode ="2"
                 getActionTypes()
             }
             R.id.tv_tab_completed->{
@@ -221,6 +228,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_color);
                 agendaTypeClick = "0"
+                SubMode ="3"
                 getActionTypes()
             }
             R.id.tv_actionType->{
@@ -368,6 +376,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val jsonObject = agendaActionArrayList.getJSONObject(0)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+
+            getAgendaDetails(ID_ActionType!!)
+
         }else{
 
             try {
@@ -402,7 +413,74 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val jsonObject = agendaActionArrayList.getJSONObject(position)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+
+            getAgendaDetails(ID_ActionType!!)
+
+
         }
+    }
+
+    private fun getAgendaDetails(ID_ActionType: String) {
+
+        var agendaDetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   443   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("ActionType")
+//                                agendaActionArrayList = jobjt.getJSONArray("ActionTypeList")
+//                                if (agendaActionArrayList.length()>0){
+//                                    if (agendaAction == 0){
+//                                        agendaAction++
+//                                        agendaTypePopup(agendaActionArrayList)
+//                                    }
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AgendaActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
 }
