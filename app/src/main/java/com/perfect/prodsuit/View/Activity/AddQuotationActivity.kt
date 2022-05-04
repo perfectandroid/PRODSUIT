@@ -25,8 +25,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AddQuotationRepository
-import com.perfect.prodsuit.Viewmodel.AddNoteViewModel
 import com.perfect.prodsuit.Viewmodel.AddQuotationViewModel
 import org.json.JSONObject
 

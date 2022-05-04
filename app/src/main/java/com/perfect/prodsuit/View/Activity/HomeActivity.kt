@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -24,20 +26,16 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.CubeInScalingAnimation
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
+import com.perfect.prodsuit.View.Service.NotifyService
 import com.perfect.prodsuit.Viewmodel.BannerListViewModel
 import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
 import me.relex.circleindicator.CircleIndicator
-import org.json.JSONException
 import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.graphics.drawable.AnimationDrawable
-
-
 
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -75,7 +73,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
-
+    val PERMISSION_REQUEST_WRITE_CALENDAR=2
+    val callbackId = 42
+    val CALENDAR_PROJECTION=3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -83,12 +83,15 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setRegViews()
         bottombarnav()
         getBannerlist()
+        getCalendarId(context)
     }
+
+
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         chipNavigationBar!!.setItemSelected(R.id.home, true)
-        chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener{
+        chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
@@ -97,6 +100,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     }
                     R.id.reminder -> {
                         setReminder()
+
                     }
                     R.id.logout -> {
                         doLogout()
@@ -108,6 +112,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
         })
     }
+
+
 
     private fun setRegViews() {
         drawer_layout = findViewById(R.id.drawer_layout)
@@ -172,13 +178,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.ll_reminder -> {
                 val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
-                startActivity(i)            }
+                startActivity(i)
+            }
             R.id.ll_report -> {
                 val i = Intent(this@HomeActivity, ReportActivity::class.java)
-                startActivity(i)            }
+                startActivity(i)
+            }
             R.id.rlnotification -> {
                 val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                startActivity(i)            }
+                startActivity(i)
+            }
         }
     }
 
@@ -204,8 +213,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 shareIntent.action = Intent.ACTION_SEND
                 shareIntent.type = "text/plain"
                 shareIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    getString(R.string.app_name) + "\t" + "Invite You  \n\n For Android Users \n\n http://play.google.com/store/apps/details?id=" + getPackageName() + "\n"
+                        Intent.EXTRA_TEXT,
+                        getString(R.string.app_name) + "\t" + "Invite You  \n\n For Android Users \n\n http://play.google.com/store/apps/details?id=" + getPackageName() + "\n"
                 )
                 startActivity(Intent.createChooser(shareIntent, "Invite this App to your friends"))
             }
@@ -304,8 +313,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     val dialog: AlertDialog.Builder = AlertDialog.Builder(this)
                     dialog.setMessage("New & Confirm mPin doesn't match")
                     dialog.setPositiveButton("Ok",
-                        DialogInterface.OnClickListener { dialog, which ->
-                        })
+                            DialogInterface.OnClickListener { dialog, which ->
+                            })
                     val alertDialog: AlertDialog = dialog.create()
                     alertDialog.show()
                 }
@@ -319,7 +328,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     etxt_confirmnewpin.setError("Please Enter 6 digit mPin")
                 }else{
                     dialog1 .dismiss()
-                    changempinverficationcode(etxt_oldpin!!.text.toString(),etxt_newpin!!.text.toString())
+                    changempinverficationcode(etxt_oldpin!!.text.toString(), etxt_newpin!!.text.toString())
                 }
             }
             btnreset.setOnClickListener {
@@ -353,49 +362,49 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 changempinViewModel.changeMpin(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                var jobj = jObject.getJSONObject("MPINDetails")
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    var jobj = jObject.getJSONObject("MPINDetails")
 
-                                val builder = AlertDialog.Builder(
-                                    this@HomeActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jobj.getString("ResponseMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    val builder = AlertDialog.Builder(
+                                            this@HomeActivity,
+                                            R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobj.getString("ResponseMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                            this@HomeActivity,
+                                            R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@HomeActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                                Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
+                        })
                 progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+                        .show()
             }
         }
     }
@@ -413,52 +422,52 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 bannerListViewModel.getBannerlist(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
 
-                                val jresult = jsonObj.getJSONArray("BannerDetailsList")
-                                if (jresult.length()>0){
-                                    if (bannerDetail == 0){
-                                        bannerDetail++
+                                    val jresult = jsonObj.getJSONArray("BannerDetailsList")
+                                    if (jresult.length() > 0) {
+                                        if (bannerDetail == 0) {
+                                            bannerDetail++
 
-                                        for (i in 0 until jresult!!.length()) {
-                                            try {
-                                                val json = jresult!!.getJSONObject(i)
-                                                var s = ""+ json.getString("ImagePath")
+                                            for (i in 0 until jresult!!.length()) {
+                                                try {
+                                                    val json = jresult!!.getJSONObject(i)
+                                                    var s = "" + json.getString("ImagePath")
 
-                                                XMENArray!!.add(s)
-                                                mPager!!.adapter = BannerAdapter(
-                                                    this@HomeActivity,
-                                                    XMENArray
-                                                )
-                                                indicator!!.setViewPager(mPager)
+                                                    XMENArray!!.add(s)
+                                                    mPager!!.adapter = BannerAdapter(
+                                                            this@HomeActivity,
+                                                            XMENArray
+                                                    )
+                                                    indicator!!.setViewPager(mPager)
 
 
-                                            }catch (e  :Exception){
+                                                } catch (e: Exception) {
+
+                                                }
+                                            }
+                                            //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
+                                            val handler = Handler()
+                                            val Update = Runnable {
+                                                //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                                if (currentPage == jresult!!.length()) {
+                                                    currentPage = 0
+                                                }
+                                                mPager!!.setCurrentItem(currentPage++, true)
 
                                             }
-                                        }
-                                      //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
-                                        val handler = Handler()
-                                        val Update = Runnable {
-                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-                                            if (currentPage == jresult!!.length()) {
-                                                currentPage = 0
-                                            }
-                                            mPager!!.setCurrentItem(currentPage++, true)
-
-                                        }
-                                        val swipeTimer = Timer()
-                                        swipeTimer.schedule(object : TimerTask() {
-                                            override fun run() {
-                                                handler.post(Update)
-                                            }
-                                        }, 3000, 3000)
+                                            val swipeTimer = Timer()
+                                            swipeTimer.schedule(object : TimerTask() {
+                                                override fun run() {
+                                                    handler.post(Update)
+                                                }
+                                            }, 3000, 3000)
 
 
 //                                        for (i in 0 until jresult!!.length()) {
@@ -492,35 +501,34 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                                            }
 //
 //                                        }
+                                        }
                                     }
-                                }
 
-                            }
-                           else {
-                                val builder = AlertDialog.Builder(
-                                    this@HomeActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                            this@HomeActivity,
+                                            R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                            } else {
+                                Toast.makeText(
+                                        applicationContext,
+                                        "Some Technical Issues.",
+                                        Toast.LENGTH_LONG
+                                ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
+                        })
                 progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+                        .show()
             }
         }
     }
@@ -585,14 +593,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
         if (ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.WRITE_CALENDAR
-            ) != PackageManager.PERMISSION_GRANTED
+                        applicationContext,
+                        Manifest.permission.WRITE_CALENDAR
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_CALENDAR),
-                1
+                    this,
+                    arrayOf(Manifest.permission.WRITE_CALENDAR),
+                    1
             )
         }
         val cr = contentResolver
@@ -604,18 +612,31 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
         values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
         values.put(CalendarContract.Events.TITLE, Title)
-        values.put(CalendarContract.Events.DESCRIPTION, "[ $descriptn ]")
-        values.put(CalendarContract.Events.CALENDAR_ID, 1)
+        values.put(CalendarContract.Events.DESCRIPTION, descriptn)
+
+
+        val calendarId = getCalendarId(context)
+        Log.i("Calender", calendarId.toString())
+        if(calendarId != null) {
+            values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
+        }
+
+
         val tz = TimeZone.getDefault()
         values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
         values.put(CalendarContract.Events.EVENT_LOCATION, "India")
+
+
+
+
+
         try {
             val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
             val reminders = ContentValues()
             reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
             reminders.put(
-                CalendarContract.Reminders.METHOD,
-                CalendarContract.Reminders.METHOD_ALERT
+                    CalendarContract.Reminders.METHOD,
+                    CalendarContract.Reminders.METHOD_ALERT
             )
             reminders.put(CalendarContract.Reminders.MINUTES, 10)
             cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
@@ -627,7 +648,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         builder.setMessage("Reminder set successfully.")
             .setCancelable(false)
             .setPositiveButton(
-                "OK"
+                    "OK"
             ) { dialog, id -> dialog.dismiss()
             }
         val alert = builder.create()
@@ -635,21 +656,76 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     }
 
+   private fun getCalendarId(context: Context): Long? {
+
+       if (ActivityCompat.checkSelfPermission(
+                       applicationContext,
+                       Manifest.permission.READ_CALENDAR
+               ) != PackageManager.PERMISSION_GRANTED
+       ) {
+           ActivityCompat.requestPermissions(
+                   this,
+                   arrayOf(Manifest.permission.READ_CALENDAR),
+                   1
+           )
+       }
+
+       val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
+
+       var calCursor = context.contentResolver.query(
+               CalendarContract.Calendars.CONTENT_URI,
+               projection,
+               CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
+               null,
+               CalendarContract.Calendars._ID + " ASC"
+       )
+       if (calCursor != null && calCursor.count <= 0) {
+           calCursor = context.contentResolver.query(
+                   CalendarContract.Calendars.CONTENT_URI,
+                   projection,
+                   CalendarContract.Calendars.VISIBLE + " = 1",
+                   null,
+                   CalendarContract.Calendars._ID + " ASC"
+           )
+       }
+       if (calCursor != null) {
+           if (calCursor.moveToFirst()) {
+               val calName: String
+               val calID: String
+               val nameCol = calCursor.getColumnIndex(projection[1])
+               val idCol = calCursor.getColumnIndex(projection[0])
+
+               calName = calCursor.getString(nameCol)
+               calID = calCursor.getString(idCol)
+
+           //    Log.d("Calendar name = $calName Calendar ID = $calID")
+
+               calCursor.close()
+               return calID.toLong()
+           }
+       }
+       return null
+
+
+
+
+   }
+
     fun timeSelector() {
         val c = Calendar.getInstance()
         mHour = c.get(Calendar.HOUR_OF_DAY)
         mMinute = c.get(Calendar.MINUTE)
         // Launch Time Picker Dialog
         val timePickerDialog = TimePickerDialog(this,
-            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                val strDate = String.format(
-                    "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
-                    minute, if (hourOfDay < 12) "am" else "pm"
-                )
-                ettime!!.setText(strDate)
-                hr = hourOfDay
-                min = minute
-            }, mHour, mMinute, false
+                TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    val strDate = String.format(
+                            "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
+                            minute, if (hourOfDay < 12) "am" else "pm"
+                    )
+                    ettime!!.setText(strDate)
+                    hr = hourOfDay
+                    min = minute
+                }, mHour, mMinute, false
         )
         timePickerDialog.show()
     }
@@ -662,12 +738,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             mMonth = c.get(Calendar.MONTH)
             mDay = c.get(Calendar.DAY_OF_MONTH)
             val datePickerDialog = DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    yr = year
-                    month = monthOfYear
-                    day = dayOfMonth
-                    etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                }, mYear, mMonth, mDay
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        yr = year
+                        month = monthOfYear
+                        day = dayOfMonth
+                        etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                    }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()

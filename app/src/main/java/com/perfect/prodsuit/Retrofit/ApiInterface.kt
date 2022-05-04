@@ -141,9 +141,27 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerationList")
     fun getLeadGenerationList(@Body body: RequestBody): Call<String>
 
-
+  /*  @Multipart
     @POST("UserValidations/AddQuatation")
-    fun getquotation(@Body body: RequestBody): Call<String>
+    fun getquotation(
+            @Part("ReqMode") reqmode: RequestBody,
+            @Part("BankKey") bankkey: RequestBody,
+            @Part("FK_Employee") fkemployee: RequestBody,
+            @Part("Token") token: RequestBody,
+            @Part("ID_LeadGenerateProduct") id_lead: RequestBody,
+            @Part("TrnsDate") date: RequestBody,
+            @Part filePart: MultipartBody.Part,
+            @Part("Remark") remrk: RequestBody
+
+    ): Call<String>
+
+*/
+    @Multipart
+    @POST("UserValidations/AddQuatation")
+    fun getquotation(@Part("JsonData") JsonData: RequestBody?,
+                                   @Part Body: MultipartBody.Part?): Call<String>
+ /* fun getquotation( @Part file: MultipartBody.Part, @Part("json") json: RequestBody): Call<String>*/
+
 
     @POST("UserValidations/LeadGenerationListDetails")
     fun getLeadGenerationListDetails(@Body body: RequestBody): Call<String>
