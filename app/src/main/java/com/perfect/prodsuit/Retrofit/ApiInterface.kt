@@ -172,6 +172,9 @@ interface ApiInterface {
     @POST("UserValidations/DateWiseExpenseDetails")
     fun getExpense(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AddDocument")
+    fun saveAddDocument(@Body body: RequestBody): Call<String>
+
 
 
 

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
@@ -17,12 +19,15 @@ import com.github.mikephil.charting.components.*
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.perfect.prodsuit.Model.Score
+import com.perfect.prodsuit.Model.ScoreBar
 import com.perfect.prodsuit.Model.ScoreLine
+import com.perfect.prodsuit.Model.ScorePie
+import com.perfect.prodsuit.View.Adapter.BarChartAdapter
+import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
@@ -30,6 +35,14 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.PieData
+
+import com.github.mikephil.charting.data.PieDataSet
+import com.perfect.prodsuit.Helper.DecimalRemover
+import com.perfect.prodsuit.View.Adapter.PieChartAdapter
+import java.text.DecimalFormat
+
 
 class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -51,32 +64,38 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     private var mHour:Int = 0
     private var mMinute:Int = 0
   //  private var chipNavigationBar: ChipNavigationBar? = null
-    private var lineChart: LineChart? = null
-    private var scoreListLine = ArrayList<ScoreLine>()
+
     lateinit var chartLineArrayList : JSONArray
     var lineData: LineData? = null
     var entryList: List<Map.Entry<*, *>> = ArrayList()
 
+    private var lineChart: LineChart? = null
+    private var scoreListLine = ArrayList<ScoreLine>()
     lateinit var leadDashViewModel: LeadDashViewModel
     lateinit var leadDashArrayList : JSONArray
-
-    lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
-    lateinit var leadStatusDashArrayList : JSONArray
-
-    lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
-    lateinit var leadStagesDashArrayList : JSONArray
-
 
 
     //Barchart
     private lateinit var barChart: BarChart
-    private var scoreList = ArrayList<Score>()
+    private var scoreListBar = ArrayList<ScoreBar>()
+    lateinit var chartBarArrayList : JSONArray
+    lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
+    lateinit var leadStatusDashArrayList : JSONArray
 
 //    PiChart
     private lateinit var pieChart: PieChart
+    private var scoreListPie = ArrayList<ScorePie>()
+    lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
+    lateinit var leadStagesDashArrayList : JSONArray
+
+    var tv_leadTotal: TextView? = null
+    var tv_leadStatusTotal: TextView? = null
+    var tv_leadStageTotal: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_dash_board)
         context = this@DashBoardActivity
 
@@ -87,13 +106,13 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         setRegViews()
       //  bottombarnav()
 
- //       getLeadsDashBoard()
-//        getLeadStatusDashBoard()
-//        getLeadStagesDashBoard()
+        getLeadsDashBoard()
+        getLeadStatusDashBoard()
+        getLeadStagesDashBoard()
 
-        setLineChart()
-        setBarchart()  //working
-        setPieChart()
+//        setLineChart()
+//        setBarchart()  //working
+//        setPieChart()
 
     }
 
@@ -119,18 +138,24 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   100   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                               // val ss = "[{\"Count\": 10,\"Fileds\": \"Hot\"},{\"Count\": 25,\"Fileds\": \"Cool\"},{\"Count\": 55,\"Fileds\": \"Warm\"}]"
+                               //  chartLineArrayList = JSONArray(ss)
+
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                val ss = "[{\"Hot\": 20,\"Name\": \"Hot\"},{\"Cool\": 20,\"Name\": \"Cool\"},{\"Warm\": 20,\"Name\": \"Warm\"}]"
-                             //   chartLineArrayList = ss.
-//                                chartLineArrayList.
-//                                chartLineArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
-//                                if (followUpActionArrayList.length()>0){
-//                                    if (followUpAction == 0){
-//                                        followUpAction++
-//                                        followUpActionPopup(followUpActionArrayList)
-//                                    }
-//
-//                                }
+                                leadDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadTotal!!.setText(jobjt.getString("TotalCount"))
+                                Log.e(TAG,"array  125   "+leadDashArrayList)
+
+                                setLineChart()
+                                val recycLineChart = findViewById(R.id.recycLineChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycLineChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
+                                recycLineChart!!.adapter = adapter
+                              //  adapter.setClickListener(this@DashBoardActivity)
+
+
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@DashBoardActivity,
@@ -178,8 +203,21 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   100   "+msg)
+                            Log.e(TAG,"msg   190   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                leadStatusDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
+                                Log.e(TAG,"array  125   "+leadStatusDashArrayList)
+
+                                setBarchart()
+                                val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = BarChartAdapter(this@DashBoardActivity, leadStatusDashArrayList)
+                                recycBarChart!!.adapter = adapter
+
 //                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
 //                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
 //                                if (followUpActionArrayList.length()>0){
@@ -220,7 +258,63 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun getLeadStagesDashBoard() {
+        var leadStagesDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadStagesDashViewModel.getLeadStagesDashboard(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   190   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
 
+                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                leadStagesDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
+                                Log.e(TAG,"array  264   "+leadStagesDashArrayList)
+
+                                setPieChart()
+                                val recycPieChart = findViewById(R.id.recycPieChart) as RecyclerView
+                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                recycPieChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                val adapter = PieChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
+                                recycPieChart!!.adapter = adapter
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@DashBoardActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 
@@ -230,6 +324,10 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         lineChart = findViewById<LineChart>(R.id.chart1);
         barChart = findViewById<BarChart>(R.id.barChart);
         pieChart = findViewById<PieChart>(R.id.pieChart);
+
+        tv_leadTotal = findViewById<TextView>(R.id.tv_leadTotal)
+        tv_leadStatusTotal = findViewById<TextView>(R.id.tv_leadStatusTotal)
+        tv_leadStageTotal = findViewById<TextView>(R.id.tv_leadStageTotal)
 
 
     }
@@ -264,6 +362,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         //remove description label
         lineChart!!.description.isEnabled = false
 
+        lineChart!!.setScaleEnabled(false)
+
 
         //add animation
         lineChart!!.animateX(1000, Easing.EaseInSine)
@@ -281,7 +381,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 
         val entries1: ArrayList<Entry> = ArrayList()
-
+        scoreListLine.clear()
         scoreListLine = getScoreList1()
         Log.e(TAG,"scoreListLine  281    "+scoreListLine)
 
@@ -292,10 +392,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
             Log.e(TAG,"Linename 281  "+score1.Linename)
         }
 
+//        val colors: ArrayList<Int> = ArrayList()
+//        colors.add(Color.parseColor("#676666"))
+//        colors.add(Color.parseColor("#E91E1E"))
+//        colors.add(Color.parseColor("#4CAF50"))
+
+
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#676666"))
-        colors.add(Color.parseColor("#E91E1E"))
-        colors.add(Color.parseColor("#4CAF50"))
+        colors.add(resources.getColor(R.color.line_color1))
+        colors.add(resources.getColor(R.color.line_color2))
+        colors.add(resources.getColor(R.color.line_color3))
+
 
         val lineDataSet = LineDataSet(entries1, "")
         lineDataSet.setCircleColor(Color.RED)
@@ -305,11 +412,14 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         lineDataSet.circleColors = colors
         lineDataSet.disableDashedLine()
         lineDataSet.circleHoleRadius = 2f
+        lineDataSet.setValueFormatter(DecimalRemover())
       //  lineDataSet.enableDashedLine(20f,0f,0f)
         val data = LineData(lineDataSet)
         data.setValueTextSize(12f)
         data.setValueTextColor(Color.BLACK)
         lineChart!!.data = data
+
+
 
         lineChart!!.invalidate()
 
@@ -318,8 +428,8 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     private fun setBarchart() {
 //        https://intensecoder.com/bar-chart-tutorial-in-android-using-kotlin/
-        scoreList.clear()
-        scoreList = getScoreList()
+        scoreListBar.clear()
+        scoreListBar = getScoreList()
 
         barChart.axisLeft.setDrawGridLines(false)
         val xAxis: XAxis = barChart.xAxis
@@ -332,18 +442,17 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
         //remove legend
         barChart.legend.isEnabled = false
-
-
+        barChart!!.setScaleEnabled(false)
         //remove description label
         barChart.description.isEnabled = false
 
 
         //add animation
-        barChart.animateY(3000)
+        barChart.animateY(1000)
 
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        xAxis.valueFormatter = MyAxisFormatter()
+        xAxis.valueFormatter = MyAxisFormatterBar()
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
@@ -354,22 +463,27 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 //        barChart.legend.textSize = 15f
 //        barChart.legend.textColor = Color.RED
 
-
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstatus_color1))
+        colors.add(resources.getColor(R.color.leadstatus_color2))
+        colors.add(resources.getColor(R.color.leadstatus_color3))
 
         /////////////////////
 
         val entries: ArrayList<BarEntry> = ArrayList()
-        for (i in scoreList.indices) {
-            val score = scoreList[i]
-            entries.add(BarEntry(i.toFloat(), score.score.toFloat()))
+        for (i in scoreListBar.indices) {
+            val score = scoreListBar[i]
+            entries.add(BarEntry(i.toFloat(), score.Barscore.toFloat()))
         }
 
         val barDataSet = BarDataSet(entries, "")
-        barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+       // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        barDataSet.setValueFormatter(DecimalRemover())
 
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
-        data.setValueTextColor(Color.RED)
+        data.setValueTextColor(Color.BLACK)
         barChart.data = data
 
 
@@ -378,20 +492,40 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
-    private fun getScoreList(): ArrayList<Score> {
-        scoreList.add(Score("John", 56))
-        scoreList.add(Score("Rey", 75))
-        scoreList.add(Score("Steve", 85))
-        scoreList.add(Score("Kevin", 45))
-        scoreList.add(Score("Jeff", 63))
+    private fun getScoreList(): ArrayList<ScoreBar> {
 
-        return scoreList
+
+     //   chartBarArrayList
+
+//        scoreListBar.add(Score("John", 56))
+//        scoreListBar.add(Score("Rey", 75))
+//        scoreListBar.add(Score("Steve", 85))
+//        scoreListBar.add(Score("Kevin", 45))
+//        scoreListBar.add(Score("Jeff", 63))
+
+        for (i in 0 until leadStatusDashArrayList.length()) {
+            //apply your logic
+            var jsonObject = leadStatusDashArrayList.getJSONObject(i)
+            Log.e(TAG,"422  Count   "+jsonObject.getString("Count"))
+            scoreListBar.add(ScoreBar("", jsonObject.getString("Count").toInt()))
+        }
+
+        return scoreListBar
     }
 
     private fun getScoreList1(): ArrayList<ScoreLine> {
-        scoreListLine.add(ScoreLine("", 10))
-        scoreListLine.add(ScoreLine("", 45))
-        scoreListLine.add(ScoreLine("", 55))
+
+
+//        scoreListLine.add(ScoreLine("", 10))
+//        scoreListLine.add(ScoreLine("", 45))
+//        scoreListLine.add(ScoreLine("", 55))
+
+        for (i in 0 until leadDashArrayList.length()) {
+            //apply your logic
+            var jsonObject = leadDashArrayList.getJSONObject(i)
+            Log.e(TAG,"404  Count   "+jsonObject.getString("Count"))
+            scoreListLine.add(ScoreLine("", jsonObject.getString("Count").toInt()))
+        }
 
 //        scoreList.add(Score("HOT", 10))
 //        scoreList.add(Score("COOL", 45))
@@ -403,24 +537,37 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
     inner class MyAxisFormatter : IndexAxisValueFormatter() {
 
+//        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+//            val index = value.toInt()
+//            Log.d("TAG", "getAxisLabel: index $index")
+//            return if (index < scoreList.size) {
+//                scoreList[index].name
+//            } else {
+//                ""
+//            }
+//        }
+    }
+
+    inner class MyAxisFormatterLine : IndexAxisValueFormatter() {
+
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            val index = value.toInt()
+                val index = value.toInt()
             Log.d("TAG", "getAxisLabel: index $index")
-            return if (index < scoreList.size) {
-                scoreList[index].name
+            return if (index < scoreListLine.size) {
+                scoreListLine[index].Linename
             } else {
                 ""
             }
         }
     }
 
-    inner class MyAxisFormatterLine : IndexAxisValueFormatter() {
+    inner class MyAxisFormatterBar : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
             Log.d("TAG", "getAxisLabel: index $index")
-            return if (index < scoreListLine.size) {
-                scoreListLine[index].Linename
+            return if (index < scoreListBar.size) {
+                scoreListBar[index].Barname
             } else {
                 ""
             }
@@ -433,59 +580,155 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 //        https://intensecoder.com/piechart-tutorial-using-mpandroidchart-in-kotlin/
 
-        pieChart.setUsePercentValues(true)
+        scoreListPie.clear()
+        scoreListPie = getScoreList2()
+//
+//        pieChart.setUsePercentValues(true)
+//        pieChart.description.text = ""
+//        //hollow pie chart
+//        pieChart.isDrawHoleEnabled = false
+//        pieChart.setTouchEnabled(false)
+//        pieChart.setDrawEntryLabels(false)
+//        //adding padding
+//        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
+//        pieChart.setUsePercentValues(true)
+//        pieChart.isRotationEnabled = false
+//        pieChart.setDrawEntryLabels(false)
+//        pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+//        pieChart.legend.isWordWrapEnabled = true
+//
+//        ////
+//
+//        pieChart.setUsePercentValues(true)
+//        val dataEntries = ArrayList<PieEntry>()
+//        dataEntries.add(PieEntry(72f, "Android"))
+//        dataEntries.add(PieEntry(26f, "Ios"))
+//        dataEntries.add(PieEntry(2f, "Other"))
+//        dataEntries.add(PieEntry(29f, "gfghg"))
+
+//        val dataEntries: ArrayList<PieEntry> = ArrayList()
+
+//        val dataEntries = ArrayList<PieEntry>()
+//        for (i in 0 until scoreListPie.size){
+//       // for (i in scoreListPie.indices) {
+//            val score = scoreListPie[i]
+//
+//            Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
+//        //    dataEntries.add(PieEntry(i.toFloat(), score.Piescore.toFloat()))
+//            dataEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+////            dataEntries.add(PieEntry(2f, "ere"))
+//////            dataEntries.add(PieEntry(2f, "Other"))
+//////            dataEntries.add(PieEntry(2f, "Other"))
+//        }
+
+
+
+
+//        Log.e(TAG,"Piescore  5941   "+dataEntries)
+//        val colors: ArrayList<Int> = ArrayList()
+//        colors.add(Color.parseColor("#4DD0E1"))
+//        colors.add(Color.parseColor("#FFF176"))
+//        colors.add(Color.parseColor("#FF8A65"))
+//        colors.add(Color.parseColor("#FFF176"))
+//        colors.add(Color.parseColor("#FF8A65"))
+//
+//        val dataSet = PieDataSet(dataEntries, "")
+//        Log.e(TAG,"dataSet  614   "+dataSet)
+//        val data = PieData(dataSet)
+//        Log.e(TAG,"dataSet  6141   "+data)
+//        // In Percentage
+//        data.setValueFormatter(PercentFormatter())
+//        dataSet.sliceSpace = 4f
+//        dataSet.colors = colors
+//        pieChart.data = data
+//        data.setValueTextSize(15f)
+//       // pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+//        pieChart.animateY(1400, Easing.EaseInOutQuad)
+//
+//        //create hole in center
+//        pieChart.holeRadius = 58f
+//        pieChart.transparentCircleRadius = 61f
+//        pieChart.isDrawHoleEnabled = true
+//        pieChart.setHoleColor(Color.WHITE)
+//
+//
+//        //add text in center
+//        pieChart.setDrawCenterText(false);
+//        pieChart.centerText = "Lead Stages"
+//
+//
+//
+//        pieChart.invalidate()
+
+
+
+
+        val pieEntries: ArrayList<PieEntry> = ArrayList()
+        val label = ""
+        pieChart.setUsePercentValues(false)
         pieChart.description.text = ""
-        //hollow pie chart
-        pieChart.isDrawHoleEnabled = false
+        pieChart.isDrawHoleEnabled = true
         pieChart.setTouchEnabled(false)
         pieChart.setDrawEntryLabels(false)
         //adding padding
         pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
-        pieChart.setUsePercentValues(true)
+        pieChart.setUsePercentValues(false)
         pieChart.isRotationEnabled = false
         pieChart.setDrawEntryLabels(false)
         pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChart.legend.isWordWrapEnabled = true
 
-        ////
 
-        pieChart.setUsePercentValues(true)
-        val dataEntries = ArrayList<PieEntry>()
-        dataEntries.add(PieEntry(72f, "Android"))
-        dataEntries.add(PieEntry(26f, "Ios"))
-        dataEntries.add(PieEntry(2f, "Other"))
+        //initializing data
 
-        val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#4DD0E1"))
-        colors.add(Color.parseColor("#FFF176"))
-        colors.add(Color.parseColor("#FF8A65"))
+        //initializing data
+        val typeAmountMap: MutableMap<String, Int> = HashMap()
+//        typeAmountMap["Toys"] = 200
+//        typeAmountMap["Snacks"] = 230
+//        typeAmountMap["Clothes"] = 100
+//        typeAmountMap["Stationary"] = 500
+//        typeAmountMap["Phone"] = 50
 
-        val dataSet = PieDataSet(dataEntries, "")
-        val data = PieData(dataSet)
+        for (i in 0 until scoreListPie.size){
+            val score = scoreListPie[i]
+            Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
+            //typeAmountMap[""] = score.Piescore
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), ""))
 
-        // In Percentage
-        data.setValueFormatter(PercentFormatter())
-        dataSet.sliceSpace = 3f
-        dataSet.colors = colors
-        pieChart.data = data
-        data.setValueTextSize(15f)
-        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
+        }
 
-        //create hole in center
-        pieChart.holeRadius = 58f
-        pieChart.transparentCircleRadius = 61f
-        pieChart.isDrawHoleEnabled = true
-        pieChart.setHoleColor(Color.WHITE)
+        val colorsStage: ArrayList<Int> = ArrayList()
+        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+        colorsStage.add(resources.getColor(R.color.leadstages_color3))
 
+        val pieDataSet = PieDataSet(pieEntries, label)
+        pieDataSet.setValueFormatter(DecimalRemover())
+        pieDataSet.valueTextSize = 12f
+        pieDataSet.setColors(colorsStage)
+        val pieData = PieData(pieDataSet)
+       // pieData.setValueFormatter(PercentFormatter())
+    //    pieData.setValueFormatter(DecimalRemover(DecimalFormat("########")))
+        pieData.setDrawValues(true)
 
-        //add text in center
-        pieChart.setDrawCenterText(true);
-        pieChart.centerText = "Mobile OS Market share"
+        val l: Legend = pieChart.getLegend()
+        l.isEnabled = false
 
-
+        pieChart.data = pieData
 
         pieChart.invalidate()
+    }
+
+    private fun getScoreList2(): ArrayList<ScorePie> {
+
+        for (i in 0 until leadStagesDashArrayList.length()) {
+            //apply your logic
+            var jsonObject = leadStagesDashArrayList.getJSONObject(i)
+            Log.e(TAG,"422  Count   "+jsonObject.getString("Count"))
+            scoreListPie.add(ScorePie("", jsonObject.getString("Count").toInt()))
+        }
+
+        return scoreListPie
     }
 
 

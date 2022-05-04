@@ -43,6 +43,47 @@
     <color name="headertoolbar3">#fdaf97</color>
     <color name="btnColor">#3D3A3A</color>
 
+    <color name="line_color1">#fca404</color>
+    <color name="line_color2">#E91E1E</color>
+    <color name="line_color3">#d56645</color>
+    <color name="line_color4">#4CAF50</color>
+    <color name="line_color5">#4CAF50</color>
+
+    <color name="leadstatus_color1">#4CAF50</color>
+    <color name="leadstatus_color2">#8f9c5d</color>
+    <color name="leadstatus_color3">#528264</color>
+    <color name="leadstatus_color4">#40868b</color>
+    <color name="leadstatus_color5">#987b73</color>
+
+    <color name="leadstages_color1">#c6806d</color>
+    <color name="leadstages_color2">#B8A064</color>
+    <color name="leadstages_color3">#7CB864</color>
+    <color name="leadstages_color4">#A6B864</color>
+    <color name="leadstages_color5">#B87664</color>
+
+
+<!--    <color name="leadstages_color1">#fca404</color>-->
+<!--    <color name="leadstages_color2">#4CB8D3</color>-->
+<!--    <color name="leadstages_color3">#EA6E62</color>-->
+<!--    <color name="leadstages_color4">#1cbb9f</color>-->
+<!--    <color name="leadstages_color5">#6763b8</color>-->
+<!--    <color name="leadstages_color6">#743175</color>-->
+
+<!--    <color name="leadstages_color1">#4DD0E1</color>-->
+<!--    <color name="leadstages_color2">#FFF176</color>-->
+<!--    <color name="leadstages_color3">#FF8A65</color>-->
+<!--    <color name="leadstages_color4">#FFF176</color>-->
+<!--    <color name="leadstages_color5">#FF8A65</color>-->
+<!--    <color name="leadstages_color6">#743175</color>-->
+
+<!--    <color name="leadstages_color1">#01486c</color>-->
+<!--    <color name="leadstages_color2">#279bb3</color>-->
+<!--    <color name="leadstages_color3">#2eaa6b</color>-->
+<!--    <color name="leadstages_color4">#ca7532</color>-->
+<!--    <color name="leadstages_color5">#c44233</color>-->
+<!--    <color name="leadstages_color6">#743175</color>-->
+
+
 
     <color name="pending">#F87C2F</color>
     <color name="upcoming">#34BCFA</color>
@@ -60,4 +101,6 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+
+
 </resources>

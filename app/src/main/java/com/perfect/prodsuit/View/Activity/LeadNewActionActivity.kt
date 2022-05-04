@@ -768,15 +768,15 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   1224   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                if (employeeArrayList.length()>0){
-                                    if (saveNexr == 0){
-                                        saveNexr++
-                                        employeePopup(employeeArrayList)
-                                    }
-
-                                }
+//                                val jobjt = jObject.getJSONObject("EmployeeDetails")
+//                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+//                                if (employeeArrayList.length()>0){
+//                                    if (saveNexr == 0){
+//                                        saveNexr++
+//                                        employeePopup(employeeArrayList)
+//                                    }
+//
+//                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,

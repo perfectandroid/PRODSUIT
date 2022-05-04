@@ -22,12 +22,16 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.SaveDocumentViewModel
+import org.json.JSONObject
 import java.io.*
 import java.lang.Exception
 import java.util.*
+import androidx.lifecycle.Observer
 
 class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -77,12 +81,17 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     var documentPath : String = ""
 
 
+    lateinit var saveDocumentViewModel: SaveDocumentViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_add_document)
         context = this@AddDocumentActivity
+
+        saveDocumentViewModel = ViewModelProvider(this).get(SaveDocumentViewModel::class.java)
 
         setRegViews()
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")!!
@@ -409,7 +418,65 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun saveDocuments(strDate: String, strSubject: String, strDescription: String, encodeDoc: String?) {
 
+        var saveDoc = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveDocumentViewModel.saveDocuments(this,ID_LeadGenerateProduct,strDate,strSubject,strDescription,encodeDoc!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("AddDocument")
 
+                                val builder = AlertDialog.Builder(
+                                    this@AddDocumentActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jobjt.getString("ResponseMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    val i = Intent(this@AddDocumentActivity, AccountDetailsActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AddDocumentActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
     }
 
