@@ -1,13 +1,13 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,14 +18,9 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ExpenseAdapter
-import com.perfect.prodsuit.View.Adapter.TodoListAdapter
-import com.perfect.prodsuit.Viewmodel.AddNoteViewModel
 import com.perfect.prodsuit.Viewmodel.ExpenseViewModel
-import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
-import java.util.*
 
 class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener{
 
@@ -91,7 +86,7 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
                              val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
                                 var tot = jobjt.getString("Total")
-                                txtv_totexp!!.text="$ "+tot
+                                txtv_totexp!!.text="\u20B9 "+tot
 
                                 expenseArrayList = jobjt.getJSONArray("DateWiseExpenseDetailsList")
                                     val lLayout = GridLayoutManager(this@ExpenseActivity, 1)

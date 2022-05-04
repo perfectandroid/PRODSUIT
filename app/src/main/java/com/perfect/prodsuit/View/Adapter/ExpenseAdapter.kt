@@ -37,7 +37,7 @@ class ExpenseAdapter(internal var context: Context, internal var jsonArray: JSON
             if (holder is MainViewHolder) {
 
                 holder.txtv_transdate.text        = jsonObject!!.getString("TrnsDate")
-                holder.txtv_amt.text        = "$ "+jsonObject!!.getString("Amount")
+                holder.txtv_amt.text        = "\u20B9 "+jsonObject!!.getString("Amount")
                 holder.txtv_expnsnme.text        = jsonObject!!.getString("ExpenseName")
 
             /*    holder.lToDoList!!.setTag(position)

@@ -236,7 +236,7 @@
                             app:cardPreventCornerOverlap="true"
                             app:cardUseCompatPadding="true">
                         <LinearLayout
-                            android:id="@+id/llDashboardreporttype"
+                            android:id="@+id/llexpensetype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -270,7 +270,7 @@
                                     android:fontFamily="@font/myfont" />
 
                                 <TextView
-                                    android:id="@+id/txtdashboardtype"
+                                    android:id="@+id/txtexpensetype"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"

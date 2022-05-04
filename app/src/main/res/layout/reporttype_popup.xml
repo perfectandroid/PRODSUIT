@@ -49,7 +49,7 @@
                         android:id="@+id/etsearch"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:hint="Search for dashboard report.."
+                        android:hint="Search..."
                         android:lines="1"
                         android:scrollHorizontally="true"
                         android:ellipsize="end"
