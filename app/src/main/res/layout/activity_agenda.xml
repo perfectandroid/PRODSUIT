@@ -71,7 +71,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
@@ -85,7 +85,7 @@
                         app:cardUseCompatPadding="true">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -95,6 +95,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_today_comp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -105,9 +106,10 @@
                             android:textSize="30dp"/>
 
                         <TextView
+                            android:id="@+id/tv_today_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="out of 13 activity completed today"
+                            android:text="out of 0 activity completed today"
                             android:layout_marginLeft="10dp"
                             android:gravity="center_vertical"
                             android:fontFamily="@font/myfont"
@@ -153,6 +155,7 @@
                                         android:layout_centerInParent="true"/>
 
                                     <TextView
+                                        android:id="@+id/tv_count_pending"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:layout_alignParentTop="true"
@@ -161,7 +164,7 @@
                                         android:background="@drawable/shape_pending"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center"
-                                        android:text="123"
+                                        android:text="0"
                                         android:textColor="@color/white"
                                         android:textSize="10dp" />
 
@@ -200,16 +203,17 @@
                                         android:layout_centerInParent="true"/>
 
                                     <TextView
+                                        android:id="@+id/tv_count_upcoming"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:layout_alignParentTop="true"
                                         android:layout_marginLeft="40dp"
-                                        android:textSize="10dp"
                                         android:background="@drawable/shape_upcoming"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center"
-                                        android:text="123"
-                                        android:textColor="@color/white"/>
+                                        android:text="0"
+                                        android:textColor="@color/white"
+                                        android:textSize="10dp" />
 
 
                                 </RelativeLayout>
@@ -246,16 +250,17 @@
                                         android:layout_centerInParent="true"/>
 
                                     <TextView
+                                        android:id="@+id/tv_count_complete"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:layout_alignParentTop="true"
                                         android:layout_marginLeft="40dp"
-                                        android:textSize="10dp"
                                         android:background="@drawable/shape_complete"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center"
-                                        android:text="123"
-                                        android:textColor="@color/white"/>
+                                        android:text="0"
+                                        android:textColor="@color/white"
+                                        android:textSize="10dp" />
 
 
                                 </RelativeLayout>
@@ -281,7 +286,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:backgroundTint="@color/white"
                         app:cardCornerRadius="3dp"
                         android:layout_marginLeft="10dp"
@@ -303,7 +308,8 @@
                                 app:tabTextColor="@color/greydark"
                                 app:tabGravity="center"
                                 android:layout_marginTop="10dp"
-                                style="@style/customfontstyle"/>
+                                style="@style/customfontstyle"
+                                android:visibility="gone"/>
                             <LinearLayout
                                 android:id="@+id/llMainDetail"
                                 android:layout_width="match_parent"
@@ -312,6 +318,87 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_tab_pending"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Pending"
+                                        android:gravity="center"
+                                        android:padding="5dp"
+                                        android:textSize="15dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:textColor="@color/black"
+                                        android:singleLine="true"
+                                        android:background="@drawable/under_line_color"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_tab_upcoming"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Upcoming"
+                                        android:padding="5dp"
+                                        android:textSize="15dp"
+                                        android:gravity="center"
+                                        android:singleLine="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:textColor="@color/black"
+                                        android:background="@drawable/under_line_trans"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_tab_completed"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Completed"
+                                        android:gravity="center"
+                                        android:textSize="15dp"
+                                        android:padding="5dp"
+                                        android:singleLine="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:textColor="@color/black"
+                                        android:background="@drawable/under_line_trans"
+                                        android:textStyle="bold"/>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_actionType"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_toLeftOf="@+id/img_search"
+                                        android:background="@drawable/shape_bg"
+                                        android:drawableRight="@drawable/arrowright"
+                                        android:drawableTint="@color/greydark"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:hint="Type"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="8dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textSize="15dp" />
+
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:id="@+id/llPending"
@@ -374,6 +461,8 @@
                                 </LinearLayout>
 
                             </LinearLayout>
+
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
