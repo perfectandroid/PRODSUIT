@@ -1,26 +1,31 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
+import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
+import org.json.JSONArray
 import org.json.JSONObject
 
-class AgendaActivity : AppCompatActivity() , View.OnClickListener {
+class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickListener {
 
     val TAG : String = "AgendaActivity"
     private var progressDialog: ProgressDialog? = null
@@ -43,9 +48,14 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
     var tv_tab_upcoming: TextView? = null
     var tv_tab_completed: TextView? = null
     var tv_actionType: TextView? = null
+    var agendaTypeClick : String?= "0"
+    var ID_ActionType : String?= ""
 
     lateinit var agendaCountViewModel: AgendaCountViewModel
     lateinit var agendaActionViewModel: AgendaActionViewModel
+    lateinit var agendaActionArrayList : JSONArray
+    var dialogAgendaAction : Dialog? = null
+    var recyActionType: RecyclerView? = null
 
 
 
@@ -194,21 +204,29 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
                 tv_tab_pending!!.setBackgroundResource(R.drawable.under_line_color);
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
+                agendaTypeClick = "0"
+                getActionTypes()
             }
             R.id.tv_tab_upcoming->{
                 Log.e(TAG,"tv_tab_upcoming  232   ")
                 tv_tab_pending!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_color);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
+                agendaTypeClick = "0"
+                getActionTypes()
             }
             R.id.tv_tab_completed->{
                 Log.e(TAG,"tv_tab_completed  232   ")
                 tv_tab_pending!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_upcoming!!.setBackgroundResource(R.drawable.under_line_trans);
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_color);
+                agendaTypeClick = "0"
+                getActionTypes()
             }
             R.id.tv_actionType->{
                 Log.e(TAG,"tv_actionType  232   ")
+                agendaTypeClick = "1"
+                getActionTypes()
 
             }
         }
@@ -241,7 +259,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
                                 tv_count_complete!!.setText(jobjt.getString("Completed"))
 
                                 tv_today_comp!!.setText(jobjt.getString("TodayCompletedCount"))
-                                tv_today_count!!.setText("out of " +jobjt.getString("TodayCount")+ "activity completed today")
+                                tv_today_count!!.setText("out of " +jobjt.getString("TodayCount")+ " activity completed today")
 //
 //                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
 //                                if (leadFromArrayList.length()>0){
@@ -304,15 +322,15 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   284   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("ActionType")
+                                agendaActionArrayList = jobjt.getJSONArray("ActionTypeList")
+                                if (agendaActionArrayList.length()>0){
+                                    if (agendaAction == 0){
+                                        agendaAction++
+                                        agendaTypePopup(agendaActionArrayList)
+                                    }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -341,6 +359,49 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener {
                     .show()
             }
 
+        }
+    }
+
+    private fun agendaTypePopup(agendaActionArrayList: JSONArray) {
+
+        if (agendaTypeClick.equals("0")){
+            val jsonObject = agendaActionArrayList.getJSONObject(0)
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+        }else{
+
+            try {
+
+                dialogAgendaAction = Dialog(this)
+                dialogAgendaAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogAgendaAction!! .setContentView(R.layout.agenda_action_popup)
+                dialogAgendaAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                recyActionType = dialogAgendaAction!! .findViewById(R.id.recyActionType) as RecyclerView
+
+                val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                recyActionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+                val adapter = AgendaActionTypeAdapter(this@AgendaActivity, agendaActionArrayList)
+                recyActionType!!.adapter = adapter
+                adapter.setClickListener(this@AgendaActivity)
+
+                dialogAgendaAction!!.show()
+                dialogAgendaAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
+
+    }
+
+    override fun onClick(position: Int, data: String) {
+
+        if (data.equals("agendaactiontype")){
+            dialogAgendaAction!!.dismiss()
+            val jsonObject = agendaActionArrayList.getJSONObject(position)
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
         }
     }
 
