@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
@@ -21,7 +23,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.PercentFormatter
 import com.perfect.prodsuit.Model.ScoreBar
 import com.perfect.prodsuit.Model.ScoreLine
 import com.perfect.prodsuit.Model.ScorePie
@@ -38,7 +39,9 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.data.PieData
 
 import com.github.mikephil.charting.data.PieDataSet
+import com.perfect.prodsuit.Helper.DecimalRemover
 import com.perfect.prodsuit.View.Adapter.PieChartAdapter
+import java.text.DecimalFormat
 
 
 class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
@@ -85,8 +88,14 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
     lateinit var leadStagesDashArrayList : JSONArray
 
+    var tv_leadTotal: TextView? = null
+    var tv_leadStatusTotal: TextView? = null
+    var tv_leadStageTotal: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_dash_board)
         context = this@DashBoardActivity
 
@@ -135,6 +144,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
                                 leadDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadTotal!!.setText(jobjt.getString("TotalCount"))
                                 Log.e(TAG,"array  125   "+leadDashArrayList)
 
                                 setLineChart()
@@ -198,6 +208,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
                                 leadStatusDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
                                 Log.e(TAG,"array  125   "+leadStatusDashArrayList)
 
                                 setBarchart()
@@ -267,6 +278,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
                                 val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
                                 leadStagesDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                 Log.e(TAG,"array  264   "+leadStagesDashArrayList)
 
                                 setPieChart()
@@ -312,6 +324,10 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         lineChart = findViewById<LineChart>(R.id.chart1);
         barChart = findViewById<BarChart>(R.id.barChart);
         pieChart = findViewById<PieChart>(R.id.pieChart);
+
+        tv_leadTotal = findViewById<TextView>(R.id.tv_leadTotal)
+        tv_leadStatusTotal = findViewById<TextView>(R.id.tv_leadStatusTotal)
+        tv_leadStageTotal = findViewById<TextView>(R.id.tv_leadStageTotal)
 
 
     }
@@ -365,7 +381,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 
 
         val entries1: ArrayList<Entry> = ArrayList()
-
+        scoreListLine.clear()
         scoreListLine = getScoreList1()
         Log.e(TAG,"scoreListLine  281    "+scoreListLine)
 
@@ -396,11 +412,14 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         lineDataSet.circleColors = colors
         lineDataSet.disableDashedLine()
         lineDataSet.circleHoleRadius = 2f
+        lineDataSet.setValueFormatter(DecimalRemover())
       //  lineDataSet.enableDashedLine(20f,0f,0f)
         val data = LineData(lineDataSet)
         data.setValueTextSize(12f)
         data.setValueTextColor(Color.BLACK)
         lineChart!!.data = data
+
+
 
         lineChart!!.invalidate()
 
@@ -460,6 +479,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         val barDataSet = BarDataSet(entries, "")
        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         barDataSet.setColors(colors)
+        barDataSet.setValueFormatter(DecimalRemover())
 
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
@@ -531,7 +551,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
     inner class MyAxisFormatterLine : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            val index = value.toInt()
+                val index = value.toInt()
             Log.d("TAG", "getAxisLabel: index $index")
             return if (index < scoreListLine.size) {
                 scoreListLine[index].Linename
@@ -658,6 +678,7 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChart.legend.isWordWrapEnabled = true
 
+
         //initializing data
 
         //initializing data
@@ -682,16 +703,19 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
         colorsStage.add(resources.getColor(R.color.leadstages_color3))
 
         val pieDataSet = PieDataSet(pieEntries, label)
+        pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
         pieDataSet.setColors(colorsStage)
         val pieData = PieData(pieDataSet)
-        pieData.setValueFormatter(PercentFormatter())
+       // pieData.setValueFormatter(PercentFormatter())
+    //    pieData.setValueFormatter(DecimalRemover(DecimalFormat("########")))
         pieData.setDrawValues(true)
 
         val l: Legend = pieChart.getLegend()
         l.isEnabled = false
 
         pieChart.data = pieData
+
         pieChart.invalidate()
     }
 
