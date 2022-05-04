@@ -178,6 +178,9 @@ interface ApiInterface {
     @POST("UserValidations/ExpenseType")
     fun getExpenseType(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UpdateExpenseDetails")
+    fun getUpdateExpenseDetails(@Body body: RequestBody): Call<String>
+
 
 
 

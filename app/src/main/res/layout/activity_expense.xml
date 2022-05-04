@@ -41,6 +41,7 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/myfont" />
             <ImageView
+                android:id="@+id/imexpense"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="left"

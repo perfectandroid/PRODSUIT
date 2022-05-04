@@ -21,40 +21,49 @@ import com.perfect.prodsuit.View.Adapter.ExpenseAdapter
 import com.perfect.prodsuit.Viewmodel.ExpenseViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener{
-
 
     private var progressDialog: ProgressDialog? = null
     lateinit var espenseViewModel: ExpenseViewModel
     lateinit var context: Context
     private var rv_expenselist: RecyclerView?=null
     private var txtv_totexp: TextView?=null
+    private var imexpense: ImageView?=null
     lateinit var expenseArrayList : JSONArray
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense)
         context = this@ExpenseActivity
         setRegViews()
-        getExpenses()
+
+        val c = Calendar.getInstance().time
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val formattedDate = simpleDateFormat.format(c)
+
+        getExpenses(formattedDate, formattedDate)
 
     }
 
     private fun setRegViews() {
-
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        imexpense = findViewById(R.id.imexpense)
+        imexpense!!.setOnClickListener(this)
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
         fab!!.setOnClickListener(this)
         rv_expenselist = findViewById(R.id.rv_expenselist)
         txtv_totexp = findViewById<TextView>(R.id.txtv_totexp)
     }
 
-
-
     override fun onClick(v: View) {
         when(v.id) {
             R.id.imback -> {
+                finish()
+            }
+            R.id.imexpense -> {
                 finish()
             }
             R.id.fab -> {
@@ -64,7 +73,15 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         }
     }
 
-    private fun getExpenses() {
+    companion object {
+        var strfdate= ""
+        var strtdate= ""
+    }
+
+    private fun getExpenses(formDate: String, toDate: String) {
+
+        strfdate = formDate
+        strtdate = toDate
 
         espenseViewModel = ViewModelProvider(this).get(ExpenseViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {

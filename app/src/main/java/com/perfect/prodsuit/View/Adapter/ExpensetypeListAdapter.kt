@@ -47,7 +47,7 @@ class ExpensetypeListAdapter(internal var mContext: Context, private val arrayli
         } else {
             holder = view.tag as ViewHolder
         }
-        holder.tvAreaName!!.text = arraylist[position].SettingsName
+        holder.tvAreaName!!.text = arraylist[position].ExpenseName
         return view
     }
 

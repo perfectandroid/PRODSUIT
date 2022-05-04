@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.365625" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.36666666666666664" />
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.33" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.36666666666666664" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.3149171270718232" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.36666666666666664" />
