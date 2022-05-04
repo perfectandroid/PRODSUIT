@@ -53,7 +53,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var mHour:Int = 0
     private var mMinute:Int = 0
     val TAG : String = "AccountDetailsActivity"
-    lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     var llHistory: LinearLayout? = null
@@ -119,6 +118,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyActMessage  : RecyclerView? = null
     var recyActMeeting   : RecyclerView? = null
     private var isOpen  : Boolean? = true
+    lateinit var context: Context
     var latitude=""
     var longitude=""
     private var Id_leadgenrteprod: String? = null
@@ -134,6 +134,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_account_details)
+
         context = this@AccountDetailsActivity
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
@@ -149,6 +150,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         bottombarnav()
         fabOpenClose()
         getLeadInfoetails()
+        getCalendarId(context)
         addTabItem()
 
     }
@@ -410,55 +412,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
-        if (ActivityCompat.checkSelfPermission(
-                        applicationContext,
-                        Manifest.permission.WRITE_CALENDAR
-                ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.WRITE_CALENDAR),
-                    1
-            )
-        }
-        val cr = contentResolver
-        val beginTime = Calendar.getInstance()
-        beginTime.set(2022, 11 - 1, 28, 9, 30)
-        val endTime = Calendar.getInstance()
-        endTime.set(iyr, imnth, iday, ihour, imin)
-        val values = ContentValues()
-        values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
-        values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
-        values.put(CalendarContract.Events.TITLE, Title)
-        values.put(CalendarContract.Events.DESCRIPTION, "[ $descriptn ]")
-        values.put(CalendarContract.Events.CALENDAR_ID, 1)
-        val tz = TimeZone.getDefault()
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
-        values.put(CalendarContract.Events.EVENT_LOCATION, "India")
-        try {
-            val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
-            val reminders = ContentValues()
-            reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
-            reminders.put(
-                    CalendarContract.Reminders.METHOD,
-                    CalendarContract.Reminders.METHOD_ALERT
-            )
-            reminders.put(CalendarContract.Reminders.MINUTES, 10)
-            cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage("Reminder set successfully.")
-                .setCancelable(false)
-                .setPositiveButton(
-                        "OK"
-                ) { dialog, id -> dialog.dismiss()
-                }
-        val alert = builder.create()
-        alert.show()
-    }
+
 
     fun timeSelector() {
         val c = Calendar.getInstance()
@@ -1156,5 +1110,123 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     .show()
             }
         }
+    }
+    private fun getCalendarId(context: Context): Long? {
+
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_CALENDAR
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_CALENDAR),
+                1
+            )
+        }
+
+        val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
+
+        var calCursor = context.contentResolver.query(
+            CalendarContract.Calendars.CONTENT_URI,
+            projection,
+            CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
+            null,
+            CalendarContract.Calendars._ID + " ASC"
+        )
+        if (calCursor != null && calCursor.count <= 0) {
+            calCursor = context.contentResolver.query(
+                CalendarContract.Calendars.CONTENT_URI,
+                projection,
+                CalendarContract.Calendars.VISIBLE + " = 1",
+                null,
+                CalendarContract.Calendars._ID + " ASC"
+            )
+        }
+        if (calCursor != null) {
+            if (calCursor.moveToFirst()) {
+                val calName: String
+                val calID: String
+                val nameCol = calCursor.getColumnIndex(projection[1])
+                val idCol = calCursor.getColumnIndex(projection[0])
+
+                calName = calCursor.getString(nameCol)
+                calID = calCursor.getString(idCol)
+
+                //    Log.d("Calendar name = $calName Calendar ID = $calID")
+
+                calCursor.close()
+                return calID.toLong()
+            }
+        }
+        return null
+
+
+
+
+    }
+    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.WRITE_CALENDAR
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_CALENDAR),
+                1
+            )
+        }
+        val cr = contentResolver
+        val beginTime = Calendar.getInstance()
+        beginTime.set(2022, 11 - 1, 28, 9, 30)
+        val endTime = Calendar.getInstance()
+        endTime.set(iyr, imnth, iday, ihour, imin)
+        val values = ContentValues()
+        values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
+        values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
+        values.put(CalendarContract.Events.TITLE, Title)
+        values.put(CalendarContract.Events.DESCRIPTION, descriptn)
+
+
+        val calendarId = getCalendarId(context)
+        Log.i("Calender", calendarId.toString())
+        if(calendarId != null) {
+            values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
+        }
+
+
+        val tz = TimeZone.getDefault()
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
+        values.put(CalendarContract.Events.EVENT_LOCATION, "India")
+
+
+
+
+
+        try {
+            val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
+            val reminders = ContentValues()
+            reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
+            reminders.put(
+                CalendarContract.Reminders.METHOD,
+                CalendarContract.Reminders.METHOD_ALERT
+            )
+            reminders.put(CalendarContract.Reminders.MINUTES, 10)
+            cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Reminder set successfully.")
+            .setCancelable(false)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, id -> dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+
     }
 }

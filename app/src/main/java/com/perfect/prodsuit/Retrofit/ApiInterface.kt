@@ -175,11 +175,20 @@ interface ApiInterface {
     @POST("UserValidations/AddDocument")
     fun saveAddDocument(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/PendingCountDetails")
+    fun getPendingCountDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ActionType")
+    fun getActionType(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/ExpenseType")
     fun getExpenseType(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/UpdateExpenseDetails")
     fun getUpdateExpenseDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/AgendaDetails")
+    fun getAgendaDetails(@Body body: RequestBody): Call<String>
 
 
 
