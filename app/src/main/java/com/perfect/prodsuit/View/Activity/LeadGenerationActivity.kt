@@ -328,6 +328,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_leadgeneration)
 
+
         context = this@LeadGenerationActivity
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
@@ -354,6 +355,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         setRegViews()
+       // getCalendarId(context)
+
         clearData()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
