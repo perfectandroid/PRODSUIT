@@ -44,20 +44,20 @@
     <color name="headertoolbar3">#fdaf97</color>
     <color name="btnColor">#3D3A3A</color>
 
-    <color name="line_color1">#fca404</color>
-    <color name="line_color2">#E91E1E</color>
-    <color name="line_color3">#d56645</color>
+    <color name="line_color1">#e65100</color>
+    <color name="line_color2">#ab47bc</color>
+    <color name="line_color3">#1ca4fc</color>
     <color name="line_color4">#4CAF50</color>
     <color name="line_color5">#4CAF50</color>
 
-    <color name="leadstatus_color2">#AAB3F3</color>
     <color name="leadstatus_color1">#EF93FF</color>
+    <color name="leadstatus_color2">#AAB3F3</color>
     <color name="leadstatus_color3">#FDA525</color>
     <color name="leadstatus_color4">#40868b</color>
     <color name="leadstatus_color5">#987b73</color>
 
-    <color name="leadstages_color2">#50CFFD</color>
     <color name="leadstages_color1">#F68484</color>
+    <color name="leadstages_color2">#50CFFD</color>
     <color name="leadstages_color3">#FFEB3B</color>
     <color name="leadstages_color4">#0BAADC</color>
     <color name="leadstages_color5">#BC8F8F</color>
