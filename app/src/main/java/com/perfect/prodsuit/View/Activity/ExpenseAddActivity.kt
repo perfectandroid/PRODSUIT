@@ -18,6 +18,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.ExpensetypelistModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ExpensetypeListAdapter
+import com.perfect.prodsuit.Viewmodel.ExpenseAddViewModel
 import com.perfect.prodsuit.Viewmodel.ExpenseTypeViewModel
 import org.json.JSONObject
 import java.text.ParseException
@@ -43,12 +44,14 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
     var date_Picker: DatePicker? = null
     var txtok: TextView? = null
     var txtexpensetype: TextView? = null
+    var etamount: TextView? = null
     var txtfromDate: TextView? = null
     var ll_Fromdate: LinearLayout? = null
     var llfromdate: LinearLayout? = null
     var llexpensetype: LinearLayout? = null
     var im_close: ImageView? = null
     var btnSubmit: Button? = null
+    var btnReset: Button? = null
 
     private var textlength = 0
     private var etxtsearch: EditText? =null
@@ -59,6 +62,7 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var context: Context
     lateinit var expenseTypeViewModel: ExpenseTypeViewModel
+    lateinit var expenseAddViewModel: ExpenseAddViewModel
 
     private var strExpenseType           : String?                   = ""
     private var strExpenseTypeId        : String?                   = ""
@@ -74,7 +78,7 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
-       // imclose = findViewById(R.id.imclose)
+        etamount = findViewById(R.id.etamount)
         im_close = findViewById(R.id.im_close)
         llexpensetype = findViewById(R.id.llexpensetype)
         txtexpensetype = findViewById(R.id.txtexpensetype)
@@ -85,6 +89,8 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
         date_Picker = findViewById(R.id.date_Picker)
         txtok = findViewById(R.id.txtok)
         llfromdate!!.setOnClickListener(this)
+        btnReset = findViewById(R.id.btnReset)
+        btnReset!!.setOnClickListener(this)
        // imclose!!.setOnClickListener(this)
         txtok!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
@@ -105,8 +111,12 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                 ll_Fromdate!!.visibility=View.GONE
             }
 
-            R.id.btnSubmit->{
+            R.id.btnReset->{
+                reset()
+            }
 
+            R.id.btnSubmit->{
+                addExpense()
             }
             R.id.llexpensetype->{
                 getExpenseType()
@@ -214,13 +224,13 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                    var jobj = jObject.getJSONObject("RoportSettingsList")
-                                    if (jobj.getString("RoportSettings") == "null") {
+                                    var jobj = jObject.getJSONObject("ExpenseType")
+                                    if (jobj.getString("ExpenseTypeList") == "null") {
                                     }
                                     else {
 
 
-                                        val jarray = jobj.getJSONArray("RoportSettings")
+                                        val jarray = jobj.getJSONArray("ExpenseTypeList")
                                         array_sort = java.util.ArrayList<ExpensetypelistModel>()
                                         expensetypeArrayList = ArrayList<ExpensetypelistModel>()
                                         for (k in 0 until jarray.length()) {
@@ -228,14 +238,14 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
 
                                             expensetypeArrayList.add(
                                                 ExpensetypelistModel(
-                                                    jsonObject.getString("ID_ReportSettings"),
-                                                    jsonObject.getString("SettingsName")
+                                                    jsonObject.getString("ID_Expense"),
+                                                    jsonObject.getString("ExpenseName")
                                                 )
                                             )
                                             array_sort.add(
                                                 ExpensetypelistModel(
-                                                    jsonObject.getString("ID_ReportSettings"),
-                                                    jsonObject.getString("SettingsName")
+                                                    jsonObject.getString("ID_Expense"),
+                                                    jsonObject.getString("ExpenseName")
                                                 )
                                             )
                                         }
@@ -243,10 +253,10 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                                         list_view!!.setAdapter(sadapter)
                                         list_view!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
                                             Config.Utils.hideSoftKeyBoard(this@ExpenseAddActivity,view)
-                                            array_sort.get(position).SettingsName
-                                            txtexpensetype!!.text = array_sort[position].SettingsName
-                                            strExpenseType=array_sort[position].SettingsName
-                                            strExpenseTypeId=array_sort[position].ID_ReportSettings
+                                            array_sort.get(position).ExpenseName
+                                            txtexpensetype!!.text = array_sort[position].ExpenseName
+                                            strExpenseType=array_sort[position].ExpenseName
+                                            strExpenseTypeId=array_sort[position].ID_Expense
                                             dialog.dismiss()
                                         })
                                     }
@@ -263,8 +273,8 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                                             textlength = etxtsearch!!.text.length
                                             array_sort.clear()
                                             for (i in expensetypeArrayList.indices) {
-                                                if (textlength <= expensetypeArrayList[i].SettingsName!!.length) {
-                                                    if (expensetypeArrayList[i].SettingsName!!.toLowerCase().trim().contains(
+                                                if (textlength <= expensetypeArrayList[i].ExpenseName!!.length) {
+                                                    if (expensetypeArrayList[i].ExpenseName!!.toLowerCase().trim().contains(
                                                             etxtsearch!!.text.toString().toLowerCase().trim { it <= ' ' })
                                                     ) {
                                                         array_sort.add(expensetypeArrayList[i])
@@ -307,6 +317,90 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    companion object {
+        var strExtypeid= ""
+        var strExamount= ""
+    }
+
+    private fun addExpense() {
+        try {
+
+            strExtypeid= strExpenseTypeId!!
+            strExamount= etamount!!.text.toString()
+
+            context = this@ExpenseAddActivity
+            expenseAddViewModel = ViewModelProvider(this).get(ExpenseAddViewModel::class.java)
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(this, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    expenseAddViewModel.addExpenselist(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    var jobj = jObject.getJSONObject("UpdateExpenseDetails")
+                                    val builder = AlertDialog.Builder(
+                                        this@ExpenseAddActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobj.getString("ResponseMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        reset()
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                                else {
+                                    val builder = AlertDialog.Builder(
+                                        this@ExpenseAddActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+                            else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun reset() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        txtfromDate!!.text = currentDate
+        txtexpensetype!!.text = ""
+        etamount!!.text = ""
+        strExpenseType=""
+        strExpenseTypeId=""
     }
 
 }
