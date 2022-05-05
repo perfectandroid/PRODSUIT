@@ -50,16 +50,19 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                 if (jsonObject!!.getString("ID_ActionType").equals("3")){
                     holder.ll_Meeting.visibility = View.VISIBLE
                     holder.tvMeeting_name.setText(jsonObject!!.getString("ActionTypeName"))
+                    holder.tvMeeting_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
                 }
 
                 if (jsonObject!!.getString("ID_ActionType").equals("4")){
                     holder.ll_Document.visibility = View.VISIBLE
                     holder.tvDocument_name.setText(jsonObject!!.getString("ActionTypeName"))
+                    holder.tvDocument_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
                 }
 
                 if (jsonObject!!.getString("ID_ActionType").equals("5")){
                     holder.ll_Quotation.visibility = View.VISIBLE
                     holder.tvQuotation_name.setText(jsonObject!!.getString("ActionTypeName"))
+                    holder.tvQuotation_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
                 }
 
 
@@ -109,8 +112,13 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvMessage_TrnsDate    : TextView
 
         internal var tvMeeting_name    : TextView
+        internal var tvMeeting_TrnsDate    : TextView
+
         internal var tvDocument_name   : TextView
+        internal var tvDocument_TrnsDate   : TextView
+
         internal var tvQuotation_name  : TextView
+        internal var tvQuotation_TrnsDate  : TextView
 
         init {
 
@@ -127,8 +135,13 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvMessage_TrnsDate     = v.findViewById<View>(R.id.tvMessage_TrnsDate) as TextView
 
             tvMeeting_name     = v.findViewById<View>(R.id.tvMeeting_name) as TextView
+            tvMeeting_TrnsDate     = v.findViewById<View>(R.id.tvMeeting_TrnsDate) as TextView
+
             tvDocument_name    = v.findViewById<View>(R.id.tvDocument_name) as TextView
+            tvDocument_TrnsDate    = v.findViewById<View>(R.id.tvDocument_TrnsDate) as TextView
+
             tvQuotation_name   = v.findViewById<View>(R.id.tvQuotation_name) as TextView
+            tvQuotation_TrnsDate   = v.findViewById<View>(R.id.tvQuotation_TrnsDate) as TextView
         }
     }
 

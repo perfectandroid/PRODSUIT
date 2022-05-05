@@ -88,6 +88,8 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/trans_call"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <RelativeLayout
@@ -123,12 +125,6 @@
                 
                 
             </LinearLayout>
-
-
-
-
-          
-
 
 
         </LinearLayout>
@@ -206,6 +202,8 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/trans_call"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
@@ -223,6 +221,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/message_icon"
+                        android:tint="@color/green"
                         android:gravity="center"
                         tools:ignore="UseAppTint" />
 
@@ -251,18 +250,121 @@
             android:visibility="gone">
 
 
-            <TextView
-                android:id="@+id/tvMeeting_name"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Meeting With"
+                    android:textColor="@color/green1"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+                <!--                android:background="@drawable/rounded_shape"-->
+
+                <TextView
+                    android:id="@+id/tvMeeting_TrnsDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="04-05-2022"
+                    android:textColor="@color/greydark"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Meeting"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/grey"
-                android:textStyle="normal" />
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvMeeting_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ranjith"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/trans_call"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kozhikode"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="false"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/trans_location"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/immeeting"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/location_icon"
+                        android:tint="@color/green"
+                        android:gravity="center"
+                        tools:ignore="UseAppTint" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -273,18 +375,106 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tvDocument_name"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Document With"
+                    android:textColor="@color/green1"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+                <!--                android:background="@drawable/rounded_shape"-->
+
+                <TextView
+                    android:id="@+id/tvDocument_TrnsDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="04-05-2022"
+                    android:textColor="@color/greydark"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Document"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/grey"
-                android:textStyle="normal" />
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDocument_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ranjith"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/imdocument"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/document_icon"
+                        android:tint="@color/green"
+                        android:gravity="center"
+                        tools:ignore="UseAppTint" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -296,18 +486,106 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tvQuotation_name"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Quotation With"
+                    android:textColor="@color/green1"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+                <!--                android:background="@drawable/rounded_shape"-->
+
+                <TextView
+                    android:id="@+id/tvQuotation_TrnsDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="04-05-2022"
+                    android:textColor="@color/greydark"
+                    android:textSize="10dp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quotation"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/grey"
-                android:textStyle="normal" />
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvQuotation_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ranjith"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/imquotation"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/quotation_icon"
+                        android:tint="@color/green"
+                        android:gravity="center"
+                        tools:ignore="UseAppTint" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
