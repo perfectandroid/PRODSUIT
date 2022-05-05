@@ -33,6 +33,7 @@
     <color name="redDark">#7E1212</color>
     <color name="blue">#03A9F4</color>
     <color name="green">#4CAF50</color>
+    <color name="green1">#006C05</color>
     <color name="yellow">#FFEB3B</color>
     <color name="navbottom">#FF8B9C</color>
     <color name="colorlist">#FA8898</color>
@@ -55,9 +56,9 @@
     <color name="leadstatus_color4">#40868b</color>
     <color name="leadstatus_color5">#987b73</color>
 
-    <color name="leadstages_color1">#6157D4</color>
-    <color name="leadstages_color2">#72BB2C</color>
-    <color name="leadstages_color3">#fc7303</color>
+    <color name="leadstages_color1">#b2ebf2</color>
+    <color name="leadstages_color2">#b388ff</color>
+    <color name="leadstages_color3">#f8bbd0</color>
     <color name="leadstages_color4">#0BAADC</color>
     <color name="leadstages_color5">#BC8F8F</color>
     <color name="leadstages_color6">#FF9700</color>

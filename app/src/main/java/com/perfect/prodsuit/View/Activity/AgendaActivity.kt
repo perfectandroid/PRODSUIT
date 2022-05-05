@@ -19,6 +19,8 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
+import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
+import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
@@ -58,8 +60,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     lateinit var agendaActionViewModel: AgendaActionViewModel
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
     lateinit var agendaActionArrayList : JSONArray
+    lateinit var agendaDetailArrayList : JSONArray
     var dialogAgendaAction : Dialog? = null
     var recyActionType: RecyclerView? = null
+    var recyAgendaDetail: RecyclerView? = null
 
 
 
@@ -113,6 +117,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         tv_tab_upcoming = findViewById(R.id.tv_tab_upcoming);
         tv_tab_completed = findViewById(R.id.tv_tab_completed);
         tv_actionType = findViewById(R.id.tv_actionType);
+
+        recyAgendaDetail = findViewById(R.id.recyAgendaDetail)
 
         tv_tab_pending!!.setOnClickListener(this)
         tv_tab_upcoming!!.setOnClickListener(this)
@@ -310,6 +316,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     }
 
     private fun getActionTypes() {
+//        if (progressDialog != null && progressDialog!!.isShowing()) {
+//            progressDialog!!.dismiss()
+//        }
         var agendaAction = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -324,6 +333,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+                        progressDialog!!.dismiss()
                         if (msg!!.length > 0) {
 
 
@@ -360,7 +370,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                             ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -421,7 +431,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     }
 
     private fun getAgendaDetails(ID_ActionType: String) {
-
+//        if (progressDialog != null && progressDialog!!.isShowing()) {
+//            progressDialog!!.dismiss()
+//        }
         var agendaDetail = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -436,21 +448,28 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+                        progressDialog!!.dismiss()
                         if (msg!!.length > 0) {
 
 
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   443   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("ActionType")
-//                                agendaActionArrayList = jobjt.getJSONArray("ActionTypeList")
-//                                if (agendaActionArrayList.length()>0){
-//                                    if (agendaAction == 0){
-//                                        agendaAction++
-//                                        agendaTypePopup(agendaActionArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("AgendaDetails")
+                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
+                                if (agendaDetailArrayList.length()>0){
+                                    if (agendaDetail == 0){
+                                        agendaDetail++
+                                      //  agendaTypePopup(agendaActionArrayList)
+
+                                        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
+                                        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
+                                        recyAgendaDetail!!.adapter = adapter
+                                    }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
@@ -472,7 +491,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                             ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+               // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -480,6 +499,36 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             }
 
         }
+
+//        var ss = ""
+//
+//        if (ID_ActionType.equals("1")){
+//            ss = "[{\"ID_ActionType\": 1,\"Fileds\": \"Call1\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call2\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call3\"}]"
+//        }
+//        else if (ID_ActionType.equals("2")){
+//
+//            ss = "[{\"ID_ActionType\": 2,\"Fileds\": \"Message1\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message2\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message3\"}]"
+//        }
+//        else if (ID_ActionType.equals("3")){
+//
+//            ss = "[{\"ID_ActionType\": 3,\"Fileds\": \"Meeting1\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting2\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting3\"}]"
+//        }
+//        else if (ID_ActionType.equals("4")){
+//
+//            ss = "[{\"ID_ActionType\": 4,\"Fileds\": \"Document1\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document2\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document3\"}]"
+//        }
+//        else if (ID_ActionType.equals("5")){
+//
+//            ss = "[{\"ID_ActionType\": 5,\"Fileds\": \"Quotation1\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation2\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation3\"}]"
+//        }
+//
+//        agendaDetailArrayList = JSONArray(ss)
+//
+//        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
+//        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+//        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
+//        recyAgendaDetail!!.adapter = adapter
 
     }
 
