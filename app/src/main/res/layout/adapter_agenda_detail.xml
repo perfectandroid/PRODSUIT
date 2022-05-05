@@ -136,6 +136,20 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="This is Hint"/>-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -224,6 +238,7 @@
                         android:tint="@color/green"
                         android:gravity="center"
                         tools:ignore="UseAppTint" />
+<!--                    android:src="@drawable/message_icon"-->
 
 
                 </LinearLayout>
