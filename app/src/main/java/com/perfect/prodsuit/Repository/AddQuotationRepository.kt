@@ -8,11 +8,13 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Model.AddNoteModel
 import com.perfect.prodsuit.Model.AddQuotationModel
+import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
+import com.perfect.prodsuit.View.Activity.AddNoteActivity
 import com.perfect.prodsuit.View.Activity.AddQuotationActivity
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -24,19 +26,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.*
 
-
 object AddQuotationRepository {
 
-    val addnquotationSetterGetter = MutableLiveData<AddQuotationModel>()
+    val addquotationSetterGetter = MutableLiveData<AddQuotationModel>()
     private var progressDialog: ProgressDialog? = null
-    private var fileimage: File? = null
+    private var fileimg: File? = null
     fun getServicesApiCall(context: Context): MutableLiveData<AddQuotationModel> {
-        getQuotation(context)
-
-        return addnquotationSetterGetter
+        var s =AddQuotationActivity.imgpth
+        fileimg = File(s)
+        Log.i("Fileimg", fileimg.toString())
+        getAddQuotation(context)
+        return addquotationSetterGetter
     }
 
-    private fun getQuotation(context: Context) {
+    private fun getAddQuotation(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -44,21 +47,21 @@ object AddQuotationRepository {
             progressDialog!!.setCancelable(false)
             progressDialog!!.setIndeterminate(true)
             progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                    R.drawable.progress))
+                R.drawable.progress))
             progressDialog!!.show()
             val client = OkHttpClient.Builder()
-                    .sslSocketFactory(Config.getSSLSocketFactory(context))
-                    .hostnameVerifier(Config.getHostnameVerifier())
-                    .build()
+                .sslSocketFactory(Config.getSSLSocketFactory(context))
+                .hostnameVerifier(Config.getHostnameVerifier())
+                .build()
             val gson = GsonBuilder()
-                    .setLenient()
-                    .create()
+                .setLenient()
+                .create()
             val retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URLSP.getString("BASE_URL", null))
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(client)
-                    .build()
+                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
@@ -70,58 +73,43 @@ object AddQuotationRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
-                Log.i("prodct", AccountDetailsActivity.strid)
-                requestObject1.put("TrnsDate", ProdsuitApplication.encryptStart(AddQuotationActivity.transdate))
-            //    requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("Remark", ProdsuitApplication.encryptStart(ProdsuitApplication.encryptStart(AddQuotationActivity.remarks)))
-
-            //    Log.i("requestobject", requestObject1.toString())
-
+                Log.i("prodct",AccountDetailsActivity.strid)
+                requestObject1.put("TrnsDate",  ProdsuitApplication.encryptStart(AddQuotationActivity.transdate))
+                requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("Remark", ProdsuitApplication.encryptStart(AddQuotationActivity.remarks))
+                Log.i("requestobject",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            val body = RequestBody.create(
+                okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                requestObject1.toString()
+            )
 
-            val s =AddQuotationActivity.imgpth
-            val file: File = File(s)
-            var imageFiles: MultipartBody.Part? = null
-            var body:RequestBody?=null
-                    if(file!=null)
-            {
-                /* body = RequestBody.create(
-                         okhttp3.MediaType.parse("application/json; charset=utf-8"),
-                         requestObject1.toString()
-                 )*/
+                Log.e("jsondat file", "DATA    $body")
 
-                body= RequestBody.create(
-                        MediaType.parse("multipart/form-data"), requestObject1.toString())
-              //  val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), AddQuotationActivity.imgpth)
-                val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+              val requestFile = RequestBody.create(okhttp3.MediaType.parse("multipart/form-data"), fileimg)
 
-              //  imageFiles = MultipartBody.Part.createFormData("JsonData", AddQuotationActivity.imgpth, requestFile)
-                imageFiles = MultipartBody.Part.createFormData("QuotationImge", file.name, requestFile)
-            }
-            else
-                    {
-                        body= RequestBody.create(MediaType.parse("multipart/form-data"), requestObject1.toString())
-                        val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                        imageFiles = MultipartBody.Part.createFormData("QuotationImge", "", requestFile)
-                    }
-            Log.i("requestobject", requestObject1.toString())
+                var imageFiles: MultipartBody.Part? = null
+                imageFiles = MultipartBody.Part.createFormData("QuotationImge",  ProdsuitApplication.encryptStart(fileimg!!.name),requestFile)
+
+
+               Log.e("jsondat ", "BODY $imageFiles")
+
             val call = apiService.getquotation(body,imageFiles)
-         //   val call = apiService.getquotation(imageFiles, body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
-                        call: retrofit2.Call<String>, response:
-                        Response<String>
+                    call: retrofit2.Call<String>, response:
+                    Response<String>
                 ) {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("AddQuotation", response.body())
+                        Log.i("Addquotation", response.body())
                         val users = ArrayList<AddQuotationModel>()
                         users.add(AddQuotationModel(response.body()))
                         val msg = users[0].message
-                        addnquotationSetterGetter.value = AddQuotationModel(msg)
+                        addquotationSetterGetter.value = AddQuotationModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -132,7 +120,7 @@ object AddQuotationRepository {
                     progressDialog!!.dismiss()
                 }
             })
-         }
+        }
         catch (e: Exception) {
             e.printStackTrace()
         }
