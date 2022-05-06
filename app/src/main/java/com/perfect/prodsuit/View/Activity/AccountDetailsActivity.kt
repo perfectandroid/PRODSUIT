@@ -144,6 +144,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
+        activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
@@ -176,7 +177,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getActivitieDtails()
+                    getActivityDtails()
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -924,17 +925,17 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    private fun getActivitieDtails() {
+    private fun getActivityDtails() {
         var rbActMode = "1"
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
         llMainDetail!!.addView(inflatedLayout);
         var rv_activity = inflatedLayout.findViewById<RecyclerView>(R.id.rv_activity)
-        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
+        var imActivityLoading = inflatedLayout.findViewById<ImageView>(R.id.imActivityLoading)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                imQuotationLoading.visibility = View.VISIBLE
-                Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
+                imActivityLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imActivityLoading);
                 activitylistViewModel.getActivitylist(this)!!.observe(
                     this,
                     Observer { activitylistSetterGetter ->

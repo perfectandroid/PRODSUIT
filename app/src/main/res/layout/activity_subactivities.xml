@@ -28,7 +28,7 @@
                 android:visibility="gone"/>
 
             <ImageView
-                android:id="@+id/imDocumentLoading"
+                android:id="@+id/imActivityLoading"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_alignParentBottom="true"
