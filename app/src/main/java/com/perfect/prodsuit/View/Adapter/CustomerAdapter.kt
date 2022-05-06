@@ -69,7 +69,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
-                    biggerCircle.paint.color = context.getColor(R.color.leadstatus_color1)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color1)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
                    // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color1))
                 }
@@ -79,7 +79,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
-                    biggerCircle.paint.color = context.getColor(R.color.leadstatus_color2)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color2)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
                 }
                 if (position%3 == 0){
@@ -88,7 +88,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
-                    biggerCircle.paint.color = context.getColor(R.color.leadstatus_color3)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color3)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
                 }
                 if (position%4 == 0){
@@ -97,7 +97,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
-                    biggerCircle.paint.color = context.getColor(R.color.leadstatus_color4)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color4)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
                 }
                 if (position%5 == 0){
@@ -107,7 +107,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
-                    biggerCircle.paint.color = context.getColor(R.color.leadstatus_color5)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color5)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
                 }
 
