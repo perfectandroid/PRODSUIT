@@ -356,7 +356,7 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
     private fun getQuotation() {
         transdate = txtv_date!!.text.toString()
         remarks =etxt_remark!!.text.toString()
-        imgpth = imgPath.toString()
+        imgpth = destination.toString()
         Log.i("Details", transdate +"\n"+ remarks )
 
 
