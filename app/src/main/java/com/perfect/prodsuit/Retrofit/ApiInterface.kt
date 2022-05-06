@@ -141,7 +141,7 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerationList")
     fun getLeadGenerationList(@Body body: RequestBody): Call<String>
 
-  /*  @POST("UserValidations/AddQuatation")
+   /* @POST("UserValidations/AddQuatation")
     fun getquotation(@Body body: RequestBody): Call<String>*/
 
 
@@ -179,6 +179,9 @@ interface ApiInterface {
 
     @POST("UserValidations/AgendaDetails")
     fun getAgendaDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ActivitiesDetails")
+    fun getActivitylist(@Body body: RequestBody): Call<String>
 
 
 
