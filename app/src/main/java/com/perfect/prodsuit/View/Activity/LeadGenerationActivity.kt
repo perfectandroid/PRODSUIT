@@ -2262,6 +2262,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
      private fun getCustomerSearch() {
+         var custDet = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2281,10 +2282,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                              if (jObject.getString("StatusCode") == "0") {
                                  val jobjt = jObject.getJSONObject("CustomerDetailsList")
                                  customerArrayList = jobjt.getJSONArray("CustomerDetails")
+
                                  if (customerArrayList.length()>0){
                                      Log.e(TAG,"msg   1052   "+msg)
+                                     if (custDet == 0){
+                                         custDet++
+                                         customerSearchPopup(customerArrayList)
+                                     }
 
-                                     customerSearchPopup(customerArrayList)
                                  }
                              } else {
                                  val builder = AlertDialog.Builder(
