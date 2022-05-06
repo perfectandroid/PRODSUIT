@@ -939,7 +939,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { activitylistSetterGetter ->
                         val msg = activitylistSetterGetter.message
-          /*              if (msg!!.length > 0) {
+                 /*       if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -952,7 +952,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         recySubQuotation!!.setHasFixedSize(true)
-                                        val adapter = QuotationSubAdapter(this@AccountDetailsActivity, quotationArrayList)
+                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, quotationArrayList)
                                         recySubQuotation!!.adapter = adapter
                                     }
                                 }
