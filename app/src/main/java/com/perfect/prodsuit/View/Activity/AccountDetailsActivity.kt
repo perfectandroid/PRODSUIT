@@ -73,6 +73,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var quotationViewModel: QuotationViewModel
     lateinit var documentViewModel: DocumentViewModel
     lateinit var historyActViewModel: HistoryActViewModel
+    lateinit var notelistViewModel: NoteListViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
@@ -145,6 +146,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
         activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
+        notelistViewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
+
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
@@ -177,14 +180,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getActivityDtails()
+                    getActivityDetails()
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
-                    llMainDetail!!.addView(inflatedLayout);
+                    getNotelist()
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -925,7 +926,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    private fun getActivityDtails() {
+    private fun getActivityDetails() {
         var rbActMode = "1"
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
@@ -968,6 +969,59 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 Toast.LENGTH_LONG
                             ).show()
                         }*/
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun getNotelist() {
+        var rbActMode = "1"
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+        var rv_note = inflatedLayout.findViewById<RecyclerView>(R.id.rv_note)
+        var imgv_note = inflatedLayout.findViewById<ImageView>(R.id.imgv_nte)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imgv_note.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imgv_note);
+                notelistViewModel.getActivitylist(this)!!.observe(
+                    this,
+                    Observer { notelistSetterGetter ->
+                        val msg = notelistSetterGetter.message
+                   /*           if (msg!!.length > 0) {
+                                   val jObject = JSONObject(msg)
+                                   Log.e(TAG,"msg   458   "+msg)
+                                   if (jObject.getString("StatusCode") == "0") {
+                                       imgv_note.visibility = View.GONE
+                                       val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                       quotationArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                       if (quotationArrayList.length()>0){
+                                           if (quotation == 0){
+                                               quotation++
+                                               val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                               recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                               recySubQuotation!!.setHasFixedSize(true)
+                                               val adapter = NoteListAdapter(this@AccountDetailsActivity, quotationArrayList)
+                                               recySubQuotation!!.adapter = adapter
+                                           }
+                                       }
+                                   } else {
+                                       imQuotationLoading.visibility = View.GONE
+                                   }
+                               } else {
+                                   imQuotationLoading.visibility = View.GONE
+                                   Toast.makeText(
+                                       applicationContext,
+                                       "Some Technical Issues.",
+                                       Toast.LENGTH_LONG
+                                   ).show()
+                               }*/
                     })
             }
             false -> {
