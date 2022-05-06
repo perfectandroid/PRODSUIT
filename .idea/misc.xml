@@ -3,71 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.3149171270718232" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.36666666666666664" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_rounded.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.3148148148148148" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour1.xml" value="0.3148148148148148" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourshadow.xml" value="0.3769230769230769" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourshadow1.xml" value="0.3769230769230769" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourwhite.xml" value="0.25" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bggrey.xml" value="0.3148148148148148" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgwhite.xml" value="0.3148148148148148" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/cbselector.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_deselect.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_select.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/checkbox_selector.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/circle_shape.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/document_svg.xml" value="0.30416666666666664" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/headertoolbar.xml" value="0.24010416666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/ic_circle.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logo_white.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logoname_white.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_regular.xml" value="0.2833333333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selected.xml" value="0.2833333333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selector.xml" value="0.2833333333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle.xml" value="0.24010416666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_grey.xml" value="0.21979166666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_greylight.xml" value="0.3101851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_right_arrow.xml" value="0.15" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_rightarrow.xml" value="0.24010416666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangles.xml" value="0.24010416666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_bg.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2851851851851852" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_shape.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shadow_white.xml" value="0.35333333333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bggrey.xml" value="0.3828125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_complete.xml" value="0.28615384615384615" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_default.xml" value="0.27760416666666665" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_pending.xml" value="0.28615384615384615" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_selected.xml" value="0.27760416666666665" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_tab1.xml" value="0.27760416666666665" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_upcoming.xml" value="0.28615384615384615" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/under_line_color.xml" value="0.2598958333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/under_line_trans.xml" value="0.2598958333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/white_rounded_corner.xml" value="0.22135416666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.22395833333333334" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.21041666666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_activities.xml" value="0.30364583333333334" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2515625" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.25" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.25" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/activity_about_us.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/activity_call_remark.xml" value="0.13802083333333334" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/activity_subactivities.xml" value="0.13802083333333334" />
+        <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/activity_subdocument.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/activity_subnote.xml" value="0.18" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/adapter_activity_list.xml" value="0.33" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.17604166666666668" />
+        <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/adapter_sub_document.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/MAY2/app/src/main/res/layout/adapter_sub_note.xml" value="0.3546875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.25" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_document.xml" value="0.23125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />

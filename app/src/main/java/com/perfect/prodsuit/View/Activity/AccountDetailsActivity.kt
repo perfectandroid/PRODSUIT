@@ -30,6 +30,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Repository.ActivityListRepository
+import com.perfect.prodsuit.Repository.DocumentListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -71,7 +72,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
     lateinit var quotationViewModel: QuotationViewModel
-    lateinit var documentViewModel: DocumentViewModel
+    lateinit var documentViewModel: DocumentListViewModel
     lateinit var historyActViewModel: HistoryActViewModel
     lateinit var notelistViewModel: NoteListViewModel
     lateinit var leadHistoryArrayList : JSONArray
@@ -142,7 +143,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
-        documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
+        documentViewModel = ViewModelProvider(this).get(DocumentListViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
         activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
@@ -823,19 +824,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
         llMainDetail!!.addView(inflatedLayout);
-        var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
-        var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.recySubDocs)
+        var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imgv_docmnt)
+        var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.rv_docmnt)
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
         var docs = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 imDocumentLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
-                infoViewModel.getInfo(this)!!.observe(
+                documentViewModel.getDocumentlist(this)!!.observe(
                     this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                    Observer { documentlistSetterGetter ->
+                        val msg = documentlistSetterGetter.message
+                 /*       if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -863,7 +864,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }
+                        }*/
                     })
             }
             false -> {
@@ -990,7 +991,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             true -> {
                 imgv_note.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imgv_note);
-                notelistViewModel.getActivitylist(this)!!.observe(
+                notelistViewModel.getNotelist(this)!!.observe(
                     this,
                     Observer { notelistSetterGetter ->
                         val msg = notelistSetterGetter.message

@@ -7,19 +7,19 @@ import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ActivityListModel
 import com.perfect.prodsuit.Model.AddNoteModel
 import com.perfect.prodsuit.Model.BannerModel
-import com.perfect.prodsuit.Model.NoteListModel
+import com.perfect.prodsuit.Model.DocumentListModel
 import com.perfect.prodsuit.Repository.ActivityListRepository
 import com.perfect.prodsuit.Repository.AddNoteRepository
 import com.perfect.prodsuit.Repository.BannersRepository
-import com.perfect.prodsuit.Repository.NoteListRepository
+import com.perfect.prodsuit.Repository.DocumentListRepository
 
-class NoteListViewModel : ViewModel() {
+class DocumentListViewModel : ViewModel() {
 
-    var notelistLiveData: MutableLiveData<NoteListModel>? = null
+    var documentlistLiveData: MutableLiveData<DocumentListModel>? = null
 
-    fun getNotelist(context: Context) : LiveData<NoteListModel>? {
-        notelistLiveData = NoteListRepository.getServicesApiCall(context)
-        return notelistLiveData
+    fun getDocumentlist(context: Context) : LiveData<DocumentListModel>? {
+        documentlistLiveData = DocumentListRepository.getServicesApiCall(context)
+        return documentlistLiveData
     }
 
 }
