@@ -71,7 +71,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
-    lateinit var quotationViewModel: QuotationViewModel
+    lateinit var quotationlistViewModel: QuotationListViewModel
     lateinit var documentViewModel: DocumentListViewModel
     lateinit var historyActViewModel: HistoryActViewModel
     lateinit var notelistViewModel: NoteListViewModel
@@ -144,7 +144,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
         documentViewModel = ViewModelProvider(this).get(DocumentListViewModel::class.java)
-        quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
+        quotationlistViewModel = ViewModelProvider(this).get(QuotationListViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
         activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
         notelistViewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
@@ -878,19 +878,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
         llMainDetail!!.addView(inflatedLayout);
-        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
-        var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.recySubQuotation)
+        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imgv_quotatn)
+        var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.rv_quotatn)
         Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
         var quotation = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 imQuotationLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
-                quotationViewModel.getQuotation(this)!!.observe(
+                quotationlistViewModel.getQuotationlist(this)!!.observe(
                     this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                    Observer { quotationlistSetterGetter ->
+                        val msg = quotationlistSetterGetter.message
+                      /*  if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -917,7 +917,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }
+                        }*/
                     })
             }
             false -> {

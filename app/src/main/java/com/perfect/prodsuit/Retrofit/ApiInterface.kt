@@ -189,7 +189,8 @@ interface ApiInterface {
     @POST("UserValidations/DocumentDetails")
     fun getDocumentlist(@Body body: RequestBody): Call<String>
 
-
+    @POST("UserValidations/QuatationDetails")
+    fun getQuotationlist(@Body body: RequestBody): Call<String>
 
 
 }
