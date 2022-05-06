@@ -6,10 +6,8 @@
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.36666666666666664" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.3149171270718232" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.33" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.18697916666666667" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.365625" />
         <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_rounded.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.3148148148148148" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour1.xml" value="0.3148148148148148" />
@@ -26,6 +24,9 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/document_svg.xml" value="0.30416666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/headertoolbar.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/ic_circle.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logo_white.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logoname_white.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_regular.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selected.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selector.xml" value="0.2833333333333333" />
@@ -59,7 +60,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_document.xml" value="0.23125" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.22" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_lead_new_action.xml" value="0.30625" />
