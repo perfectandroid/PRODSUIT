@@ -23,7 +23,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_agenda_detail, parent, false
+            R.layout.adapter_activity_list, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -35,7 +35,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
-                if (jsonObject!!.getString("ID_ActionType").equals("1")){
+             /*   if (jsonObject!!.getString("ID_ActionType").equals("1")){
                     holder.ll_Call.visibility = View.VISIBLE
                     holder.tvCall_name.setText(jsonObject!!.getString("ActionTypeName"))
                     holder.tvCall_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
@@ -63,21 +63,9 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     holder.ll_Quotation.visibility = View.VISIBLE
                     holder.tvQuotation_name.setText(jsonObject!!.getString("ActionTypeName"))
                     holder.tvQuotation_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
-                }
+                }*/
 
 
-//                holder.txtsino.text        = pos.toString()
-//                holder.txtactionType.text        = jsonObject!!.getString("ActionTypeName")
-////                if (position % 2 == 0){
-////                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.greylight))
-////                }
-////                else{
-////                    holder.llmediatype!!.setBackgroundColor(context.getColor(R.color.white))
-////                }
-//                holder.llactionType!!.setTag(position)
-//                holder.llactionType!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "agendaactiontype")
-//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()

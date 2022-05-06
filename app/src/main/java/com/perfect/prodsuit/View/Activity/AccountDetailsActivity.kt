@@ -29,6 +29,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Repository.ActivityListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -58,6 +59,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var llHistory: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
     lateinit var locationViewModel: LocationViewModel
+    lateinit var activitylistViewModel: ActivityListViewModel
     var llMessages: LinearLayout? = null
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
@@ -142,6 +144,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
         quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
+        activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
@@ -174,7 +177,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getActivitieDtails()
+                    getActivityDtails()
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -922,42 +925,57 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    private fun getActivitieDtails() {
+    private fun getActivityDtails() {
         var rbActMode = "1"
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
         llMainDetail!!.addView(inflatedLayout);
-        llCall = inflatedLayout.findViewById<LinearLayout>(R.id.llCall)
-        llMessage = inflatedLayout.findViewById<LinearLayout>(R.id.llMessage)
-        llMeeting = inflatedLayout.findViewById<LinearLayout>(R.id.llMeeting)
-        var rbCall = inflatedLayout.findViewById<RadioButton>(R.id.rbCall)
-        var rbMessage = inflatedLayout.findViewById<RadioButton>(R.id.rbMessage)
-        var rbMeeting = inflatedLayout.findViewById<RadioButton>(R.id.rbMeeting)
-        imActCall = inflatedLayout.findViewById<ImageView>(R.id.imActCall)
-        imActMessage = inflatedLayout.findViewById<ImageView>(R.id.imActMessage)
-        imActMeeting = inflatedLayout.findViewById<ImageView>(R.id.imActMeeting)
-        recyActCall = inflatedLayout.findViewById<RecyclerView>(R.id.recyActCall)
-        recyActMessage = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMessage)
-        recyActMeeting = inflatedLayout.findViewById<RecyclerView>(R.id.recyActMeeting)
-        Glide.with(this).load(R.drawable.loadinggif).into(imActCall!!);
-        Glide.with(this).load(R.drawable.loadinggif).into(imActMessage!!);
-        Glide.with(this).load(R.drawable.loadinggif).into(imActMeeting!!);
-        getHistoryAct(rbActMode)
-        rbCall!!.setOnClickListener {
-            var rbActMode = "1"
-            Log.e(TAG,"rbCall  1029")
-            getHistoryAct(rbActMode)
+        var rv_activity = inflatedLayout.findViewById<RecyclerView>(R.id.rv_activity)
+        var imActivityLoading = inflatedLayout.findViewById<ImageView>(R.id.imActivityLoading)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imActivityLoading.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imActivityLoading);
+                activitylistViewModel.getActivitylist(this)!!.observe(
+                    this,
+                    Observer { activitylistSetterGetter ->
+                        val msg = activitylistSetterGetter.message
+                 /*       if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   458   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                imQuotationLoading.visibility = View.GONE
+                                val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                quotationArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                if (quotationArrayList.length()>0){
+                                    if (quotation == 0){
+                                        quotation++
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recySubQuotation!!.setHasFixedSize(true)
+                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, quotationArrayList)
+                                        recySubQuotation!!.adapter = adapter
+                                    }
+                                }
+                            } else {
+                                imQuotationLoading.visibility = View.GONE
+                            }
+                        } else {
+                            imQuotationLoading.visibility = View.GONE
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }*/
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
-        rbMessage!!.setOnClickListener {
-            var rbActMode = "2"
-            Log.e(TAG,"rbMessage  1029")
-            getHistoryAct(rbActMode)
-        }
-        rbMeeting!!.setOnClickListener {
-            var rbActMode = "3"
-            Log.e(TAG,"rbMeeting  1029")
-            getHistoryAct(rbActMode)
-        }
+
     }
 
     private fun getHistoryAct(rbActMode: String) {
