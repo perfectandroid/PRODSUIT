@@ -26,17 +26,40 @@
                     android:background="@color/white"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imback"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_gravity="left"
-                        android:background="@color/color_activity_transparent"
-                        android:padding="10dp"
-                        android:layout_weight="2"
-                        android:tint="@color/black"
-                        android:src="@drawable/icback"
-                        tools:ignore="UseAppTint" />
+                        android:orientation="vertical"
+                        android:gravity="left|center"
+                        android:layout_weight="2">
+
+                          <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:paddingLeft="10dp"
+                            android:tint="@color/black"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imback"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:layout_gravity="left"-->
+<!--                        android:background="@color/color_activity_transparent"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:tint="@color/black"-->
+<!--                        android:src="@drawable/icback"-->
+<!--                        tools:ignore="UseAppTint" />-->
+
+
+<!--                    icback-->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -113,6 +136,8 @@
                                             android:text="Customer Details"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/user_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -371,6 +396,8 @@
                                             android:text="Company Name"
                                             android:fontFamily="@font/myfont"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/company_color"
+                                            android:drawablePadding="10dp"
                                             android:textStyle="bold"
                                             android:textSize="18sp"/>
 
@@ -435,6 +462,8 @@
                                             android:text="More Communication Info"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/communication_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -635,6 +664,8 @@
                                             android:text="Product Details"
                                             android:textColor="@color/greydark"
                                             android:textSize="18sp"
+                                            android:drawableLeft="@drawable/product_color"
+                                            android:drawablePadding="10dp"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
@@ -1123,6 +1154,8 @@
                                             android:textStyle="bold"
                                             android:fontFamily="@font/myfont"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/location_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1190,6 +1223,8 @@
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/calendar_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1543,6 +1578,8 @@
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/collected_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
@@ -1743,6 +1780,8 @@
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydark"
+                                            android:drawableLeft="@drawable/upload_color"
+                                            android:drawablePadding="10dp"
                                             android:textSize="18sp"/>
 
                                         <LinearLayout
