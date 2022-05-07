@@ -15,14 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:padding="10dp">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/ll_Call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
             <RelativeLayout
@@ -80,6 +80,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvCall_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="987654321"
@@ -88,7 +89,21 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvCall_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
@@ -104,6 +119,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Call_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -134,6 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
             <!--            <com.google.android.material.textfield.TextInputLayout-->
@@ -208,6 +225,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvMessage_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="987654321"
@@ -216,13 +234,28 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvMessage_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Message_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -262,6 +295,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -321,6 +355,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvMeeting_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="987654321"
@@ -329,20 +364,21 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <TextView
+                        android:id="@+id/tvMeeting_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kozhikode"
+                        android:text="987654321"
                         android:fontFamily="@font/myfont"
-                        android:singleLine="false"
+                        android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_location"
+                        android:drawableLeft="@drawable/call_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
@@ -358,6 +394,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Meeting_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -388,6 +425,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -446,6 +484,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvDocument_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="987654321"
@@ -454,6 +493,22 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvDocument_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <RelativeLayout
@@ -468,6 +523,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Document_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -499,6 +555,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -557,6 +614,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvQuotation_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="987654321"
@@ -565,6 +623,22 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvQuotation_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="987654321"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <RelativeLayout
@@ -579,6 +653,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Quotation_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"

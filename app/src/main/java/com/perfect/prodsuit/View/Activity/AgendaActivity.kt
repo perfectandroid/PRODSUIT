@@ -458,8 +458,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                 val jobjt = jObject.getJSONObject("AgendaDetails")
                                 agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
                                 if (agendaDetailArrayList.length()>0){
-                                    if (agendaDetail == 0){
-                                        agendaDetail++
+//                                    if (agendaDetail == 0){
+//                                        agendaDetail++
                                       //  agendaTypePopup(agendaActionArrayList)
 
                                         recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
@@ -467,7 +467,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                         recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
                                         recyAgendaDetail!!.adapter = adapter
-                                    }
+                                  // }
 
                                 }
 

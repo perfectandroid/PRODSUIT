@@ -79,6 +79,7 @@ object AgendaDetailRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
+                Log.e(TAG,"requestObject1   78   "+SubMode+"   "+ID_ActionType)
 
             } catch (e: Exception) {
                 e.printStackTrace()
