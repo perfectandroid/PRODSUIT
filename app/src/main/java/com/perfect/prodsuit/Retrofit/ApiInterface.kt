@@ -183,6 +183,9 @@ interface ApiInterface {
     @POST("UserValidations/ActivitiesDetails")
     fun getActivitylist(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UpdateUserLoginStatus")
+    fun addUpdateUserLoginStatus(@Body body: RequestBody): Call<String>
+
 
 
 

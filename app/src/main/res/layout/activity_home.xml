@@ -124,37 +124,42 @@
                              android:layout_width="match_parent"
                              android:layout_height="match_parent"
                              android:layout_weight="1"
-                             android:paddingLeft="20dp"
-                             android:orientation="vertical">
+                             android:orientation="vertical"
+                             android:paddingLeft="20dp">
+
                              <LinearLayout
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
                                  android:orientation="horizontal">
-                             <TextView
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:text="Welcome "
-                                 android:textStyle="normal"
-                                 android:fontFamily="@font/myfont"
-                                 android:textSize="13dp"
-                                 android:textColor="@color/white"/>
-                             <TextView
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:text="Ranjith Kumar N V"
-                                 android:textStyle="bold"
-                                 android:textSize="17dp"
-                                 android:fontFamily="@font/myfont"
-                                 android:textColor="@color/white"/>
+
+                                 <TextView
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:fontFamily="@font/myfont"
+                                     android:text="Welcome "
+                                     android:textColor="@color/white"
+                                     android:textSize="13dp"
+                                     android:textStyle="normal"
+                                     android:visibility="gone"/>
+
+                                 <TextView
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:fontFamily="@font/myfont"
+                                     android:text="Ranjith Kumar N V"
+                                     android:textColor="@color/white"
+                                     android:textSize="17dp"
+                                     android:textStyle="bold" />
                              </LinearLayout>
+
                              <TextView
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
-                                 android:text="On Duty from 12-05-2022 01:34 PM"
-                                 android:textStyle="normal"
-                                 android:textSize="11dp"
                                  android:fontFamily="@font/myfont"
-                                 android:textColor="@color/white"/>
+                                 android:text="On Duty from 12-05-2022 01:34 PM"
+                                 android:textColor="@color/white"
+                                 android:textSize="11dp"
+                                 android:textStyle="normal" />
 
                          </LinearLayout>
 
@@ -166,8 +171,9 @@
                              android:orientation="vertical">
 
                              <ImageView
-                                 android:layout_width="50dp"
-                                 android:layout_height="50dp"
+                                 android:id="@+id/imgAttendance"
+                                 android:layout_width="70dp"
+                                 android:layout_height="70dp"
                                  android:src="@drawable/finger_offline"/>
 
                          </LinearLayout>
