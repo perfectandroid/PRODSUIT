@@ -30,6 +30,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Repository.ActivityListRepository
+import com.perfect.prodsuit.Repository.DocumentListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -70,9 +71,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadHistoryViewModel: LeadHistoryViewModel
     lateinit var leadInfoViewModel: LeadInfoViewModel
     lateinit var infoViewModel: InfoViewModel
-    lateinit var quotationViewModel: QuotationViewModel
-    lateinit var documentViewModel: DocumentViewModel
+    lateinit var quotationlistViewModel: QuotationListViewModel
+    lateinit var documentViewModel: DocumentListViewModel
     lateinit var historyActViewModel: HistoryActViewModel
+    lateinit var notelistViewModel: NoteListViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
@@ -141,10 +143,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
-        documentViewModel = ViewModelProvider(this).get(DocumentViewModel::class.java)
-        quotationViewModel = ViewModelProvider(this).get(QuotationViewModel::class.java)
+        documentViewModel = ViewModelProvider(this).get(DocumentListViewModel::class.java)
+        quotationlistViewModel = ViewModelProvider(this).get(QuotationListViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
         activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
+        notelistViewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
+
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
@@ -177,14 +181,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getActivityDtails()
+                    getActivityDetails()
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-                    val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
-                    llMainDetail!!.addView(inflatedLayout);
+                    getNotelist()
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -822,19 +824,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
         llMainDetail!!.addView(inflatedLayout);
-        var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imDocumentLoading)
-        var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.recySubDocs)
+        var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imgv_docmnt)
+        var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.rv_docmnt)
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
         var docs = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 imDocumentLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
-                infoViewModel.getInfo(this)!!.observe(
+                documentViewModel.getDocumentlist(this)!!.observe(
                     this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                    Observer { documentlistSetterGetter ->
+                        val msg = documentlistSetterGetter.message
+                 /*       if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -862,7 +864,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }
+                        }*/
                     })
             }
             false -> {
@@ -876,19 +878,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater1 = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater1.inflate(R.layout.activity_subquotation, null, false)
         llMainDetail!!.addView(inflatedLayout);
-        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imQuotationLoading)
-        var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.recySubQuotation)
+        var imQuotationLoading = inflatedLayout.findViewById<ImageView>(R.id.imgv_quotatn)
+        var recySubQuotation = inflatedLayout.findViewById<RecyclerView>(R.id.rv_quotatn)
         Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
         var quotation = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 imQuotationLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imQuotationLoading);
-                quotationViewModel.getQuotation(this)!!.observe(
+                quotationlistViewModel.getQuotationlist(this)!!.observe(
                     this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                    Observer { quotationlistSetterGetter ->
+                        val msg = quotationlistSetterGetter.message
+                      /*  if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -915,7 +917,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }
+                        }*/
                     })
             }
             false -> {
@@ -925,7 +927,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    private fun getActivityDtails() {
+    private fun getActivityDetails() {
         var rbActMode = "1"
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
@@ -968,6 +970,59 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 Toast.LENGTH_LONG
                             ).show()
                         }*/
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun getNotelist() {
+        var rbActMode = "1"
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subnote, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+        var rv_note = inflatedLayout.findViewById<RecyclerView>(R.id.rv_note)
+        var imgv_note = inflatedLayout.findViewById<ImageView>(R.id.imgv_nte)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                imgv_note.visibility = View.VISIBLE
+                Glide.with(this).load(R.drawable.loadinggif).into(imgv_note);
+                notelistViewModel.getNotelist(this)!!.observe(
+                    this,
+                    Observer { notelistSetterGetter ->
+                        val msg = notelistSetterGetter.message
+                   /*           if (msg!!.length > 0) {
+                                   val jObject = JSONObject(msg)
+                                   Log.e(TAG,"msg   458   "+msg)
+                                   if (jObject.getString("StatusCode") == "0") {
+                                       imgv_note.visibility = View.GONE
+                                       val jobjt = jObject.getJSONObject("LeadHistoryDetails")
+                                       quotationArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
+                                       if (quotationArrayList.length()>0){
+                                           if (quotation == 0){
+                                               quotation++
+                                               val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                               recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                               recySubQuotation!!.setHasFixedSize(true)
+                                               val adapter = NoteListAdapter(this@AccountDetailsActivity, quotationArrayList)
+                                               recySubQuotation!!.adapter = adapter
+                                           }
+                                       }
+                                   } else {
+                                       imQuotationLoading.visibility = View.GONE
+                                   }
+                               } else {
+                                   imQuotationLoading.visibility = View.GONE
+                                   Toast.makeText(
+                                       applicationContext,
+                                       "Some Technical Issues.",
+                                       Toast.LENGTH_LONG
+                                   ).show()
+                               }*/
                     })
             }
             false -> {

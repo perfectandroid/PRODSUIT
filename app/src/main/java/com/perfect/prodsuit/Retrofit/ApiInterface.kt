@@ -186,7 +186,14 @@ interface ApiInterface {
     @POST("UserValidations/UpdateUserLoginStatus")
     fun addUpdateUserLoginStatus(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/NoteDetails")
+    fun getNotelist(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/DocumentDetails")
+    fun getDocumentlist(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/QuatationDetails")
+    fun getQuotationlist(@Body body: RequestBody): Call<String>
 
 
 }

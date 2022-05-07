@@ -26,7 +26,7 @@
                 android:visibility="gone"/>
 
             <ImageView
-                android:id="@+id/imQuotationLoading"
+                android:id="@+id/imgv_quotatn"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:textStyle="bold"
@@ -34,7 +34,7 @@
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recySubQuotation"
+                android:id="@+id/rv_quotatn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
