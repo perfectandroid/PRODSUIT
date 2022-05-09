@@ -2,6 +2,7 @@ package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -58,11 +59,12 @@ object ActivityListRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(BankKeySP.getString("45", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("45"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
+                Log.i("Activity requestobj",requestObject1.toString())
 
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -102,14 +102,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 var address = jobjt.getString("Address")
                                 var mob = jobjt.getString("MobileNumber")
                                 var email = jobjt.getString("Email")
-                                //   var gender = jobjt.getString("Email")
+                                var dob = jobjt.getString("EmpDOB")
                                 // var dob = jobjt.getString("Email")
 
                                 tv_name!!.text=name
                                 tv_address!!.text=address
                                 tv_mob!!.text=mob
                                 tv_email!!.text=email
-                                //  tv_email!!.text=email
+                                tv_dob!!.text=dob
 
 
                             } else {
