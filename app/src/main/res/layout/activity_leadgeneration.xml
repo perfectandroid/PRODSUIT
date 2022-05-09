@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/greylight"
+    android:background="@color/color_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<!--    android:background="@color/greylight"-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -91,13 +92,14 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/llHeader"
                     android:orientation="vertical">
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -112,12 +114,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -130,9 +132,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
                                             android:drawableRight="@drawable/down_arrows"
-                                            android:paddingTop="5dp"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
+                                            android:padding="5dp"
                                             android:fontFamily="@font/myfont"
                                             android:text="Customer Details"
                                             android:textStyle="bold"
@@ -374,12 +374,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -440,12 +440,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -644,12 +644,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1132,16 +1132,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1202,16 +1203,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1356,16 +1358,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1461,16 +1464,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1564,16 +1568,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1667,16 +1672,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1770,16 +1776,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -2584,34 +2591,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/color_background"
             android:layout_alignParentBottom="true">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="Reset"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="SUBMIT"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
 <!--            android:background="@color/white"-->
 
             <Button
                 android:id="@+id/btnReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/btn_bgcolourshad"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="Reset"
-                android:textAllCaps="false"
-                android:textSize="15dp" />
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="visible"/>
+<!--            android:background="@drawable/btn_bgcolourshad"-->
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
                 android:textSize="15dp"
+                android:textStyle="bold"
                 android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolourshadow1"
+                android:background="@drawable/btn_shape_submit"
                 android:padding="2dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:text="Submit" />
+                android:textAllCaps="true"
+                android:text="Submit"
+                android:visibility="visible"/>
+<!--            android:background="@drawable/btn_bgcolourshadow1"-->
 
 <!--            btn_bgcolourblack-->
         </LinearLayout>
