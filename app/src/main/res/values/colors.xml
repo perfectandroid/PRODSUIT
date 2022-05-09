@@ -94,6 +94,10 @@
     <color name="color_reset1">#CFCFCF</color>
     <color name="color_submit1">#840202</color>
 
+    <color name="color_pending">#DF0303</color>
+    <color name="color_upcoming">#2e8bc0</color>
+    <color name="color_complete">#024C02</color>
+
 <!--    <color name="leadstages_color1">#fcca00</color>-->
 <!--    <color name="leadstages_color2">#fc8d01</color>-->
 <!--    <color name="leadstages_color3">#f85200</color>-->
