@@ -12,6 +12,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.3148148148148148" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolour1.xml" value="0.3148148148148148" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourshad.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourshadow.xml" value="0.3769230769230769" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourshadow1.xml" value="0.3769230769230769" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolourwhite.xml" value="0.25" />
@@ -19,6 +20,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgwhite.xml" value="0.3148148148148148" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_shape.xml" value="0.275" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_shape1.xml" value="0.275" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_shape_reset.xml" value="0.34791666666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_shape_submit.xml" value="0.34791666666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/cbselector.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_deselect.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/check_select.xml" value="0.2851851851851852" />
@@ -26,10 +29,16 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/circle_shape.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/company_color.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/document_svg.xml" value="0.30416666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/down_arrows.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/down_arrowss.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/finger_offline.xml" value="0.3484375" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/finger_online.xml" value="0.3484375" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/headertoolbar.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/homesection_bg.xml" value="0.2851851851851852" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/ic_arrow_down.xml" value="0.265625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/ic_circle.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/ic_edit.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/location_color.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logo_white.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logoname_white.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_regular.xml" value="0.2833333333333333" />
@@ -44,6 +53,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2851851851851852" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_shape.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/search_24.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shadow_white.xml" value="0.35333333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.23703703703703705" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bggrey.xml" value="0.3828125" />
@@ -53,6 +63,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_selected.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_tab1.xml" value="0.27760416666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_upcoming.xml" value="0.28615384615384615" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/test_shape.xml" value="0.34791666666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/under_line_color.xml" value="0.2598958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/under_line_trans.xml" value="0.2598958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/user_color.xml" value="0.3828125" />
@@ -91,6 +102,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subupcoming.xml" value="0.30625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.23229166666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_action_type.xml" value="0.2552083333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_bar_chart.xml" value="0.265625" />

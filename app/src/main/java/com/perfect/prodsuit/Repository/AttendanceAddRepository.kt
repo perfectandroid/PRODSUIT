@@ -25,12 +25,12 @@ object AttendanceAddRepository {
     val attendanceAddSetterGetter = MutableLiveData<AttendanceAddModel>()
     val TAG: String = "CustomerSearchRepository"
 
-    fun getServicesApiCall(context: Context, IsOnline : String, strLatitude : String , strLongitue : String , address  :String): MutableLiveData<AttendanceAddModel> {
-        addAttendance(context,IsOnline,strLatitude,strLongitue,address)
+    fun getServicesApiCall(context: Context, IsOnline : String, strLatitude : String , strLongitue : String , address  :String,SubMode  :String): MutableLiveData<AttendanceAddModel> {
+        addAttendance(context,IsOnline,strLatitude,strLongitue,address,SubMode)
         return attendanceAddSetterGetter
     }
 
-    private fun addAttendance(context: Context ,IsOnline : String, strLatitude : String , strLongitue : String , address  :String) {
+    private fun addAttendance(context: Context ,IsOnline : String, strLatitude : String , strLongitue : String , address  :String,SubMode : String) {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -80,6 +80,7 @@ object AttendanceAddRepository {
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocationName", ProdsuitApplication.encryptStart(address))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
 

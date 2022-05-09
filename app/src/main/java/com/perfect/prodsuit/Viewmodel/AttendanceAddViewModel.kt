@@ -11,8 +11,8 @@ class AttendanceAddViewModel : ViewModel(){
 
     var customerLiveData: MutableLiveData<AttendanceAddModel>? = null
 
-    fun AddAttendance(context: Context , IsOnline : String, strLatitude : String , strLongitue : String , address  :String) : LiveData<AttendanceAddModel>? {
-        customerLiveData = AttendanceAddRepository.getServicesApiCall(context,IsOnline,strLatitude,strLongitue,address)
+    fun AddAttendance(context: Context , IsOnline : String, strLatitude : String , strLongitue : String , address  :String, SubMode : String) : LiveData<AttendanceAddModel>? {
+        customerLiveData = AttendanceAddRepository.getServicesApiCall(context,IsOnline,strLatitude,strLongitue,address,SubMode)
         return customerLiveData
     }
 

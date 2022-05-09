@@ -71,6 +71,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var tv_Name: TextView? = null
+    internal var tv_DateTime: TextView? = null
+    internal var tv_Status: TextView? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -98,6 +101,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var strLongitue : String = ""
     var strLatitude : String = ""
     var IsOnline : String = "1"
+    var SubMode : String = ""
 
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
 
@@ -114,6 +118,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
         getBannerlist()
         getCalendarId(context)
+        SubMode = "2"
+        AddAttendanceApi(strLatitude,strLongitue,address)
 //
     }
 
@@ -156,6 +162,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_dashboard = findViewById(R.id.ll_dashboard)
         ll_agenda = findViewById(R.id.ll_agenda)
         imgAttendance = findViewById(R.id.imgAttendance)
+        tv_Name = findViewById(R.id.tv_Name)
+        tv_DateTime = findViewById(R.id.tv_DateTime)
+        tv_Status = findViewById(R.id.tv_Status)
 
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
@@ -815,6 +824,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             btn_online_Yes.setOnClickListener {
                 dialogCountry.dismiss()
+                SubMode = "1"
                 getLocation(v)
             }
 
@@ -990,7 +1000,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!)!!.observe(
+                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -1001,7 +1011,19 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             Log.e("HOMEACTIVITY","msg   91   "+msg.length)
                             Log.e("HOMEACTIVITY","msg   91   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
+                                val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
+
+                                tv_Name!!.text = jobjt.getString("Name")
+//                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                tv_Status!!.text = jobjt.getString("LoginStauats")
+
+                                if (jobjt.getString("LoginMode").equals("1")){
+                                    imgAttendance!!.setImageResource(R.drawable.finger_online)
+                                    tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                }else{
+                                    imgAttendance!!.setImageResource(R.drawable.finger_offline)
+                                    tv_DateTime!!.text = "Off Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                }
 //                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
 //                                if (leadFromArrayList.length()>0){
 //                                    if (countLeadFrom == 0){
