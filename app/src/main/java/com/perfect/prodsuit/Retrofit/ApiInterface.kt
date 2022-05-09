@@ -195,5 +195,6 @@ interface ApiInterface {
     @POST("UserValidations/QuatationDetails")
     fun getQuotationlist(@Body body: RequestBody): Call<String>
 
-
+    @POST("UserValidations/EmployeeProfileDetails")
+    fun getProfile(@Body body: RequestBody): Call<String>
 }
