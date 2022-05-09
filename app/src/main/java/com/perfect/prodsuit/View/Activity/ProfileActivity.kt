@@ -1,10 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -17,20 +14,22 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.ProfileViewModel
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileActivity : AppCompatActivity() , View.OnClickListener{
-
+class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener {
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -45,9 +44,17 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
     private var mHour:Int = 0
     private var mMinute:Int = 0
     private var imback: ImageView? = null
+    private var tv_dob: TextView? = null
+    private var tv_name: TextView? = null
+    private var tvdescriptn3: TextView? = null
+    private var tv_address: TextView? = null
+    private var tv_gender: TextView? = null
+    private var tv_email: TextView? = null
+    private var tv_mob: TextView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     lateinit var context: Context
-
+    lateinit var profileViewModel: ProfileViewModel
+    private var progressDialog: ProgressDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -55,16 +62,88 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
         context = this@ProfileActivity
         bottombarnav()
         getCalendarId(context)
+        getProfile()
     }
 
     private fun setRegViews() {
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        tv_name= findViewById(R.id.tv_nme)
+        tv_dob = findViewById(R.id.tv_dob)
+        tvdescriptn3 = findViewById(R.id.tvdescriptn3)
+        tv_address = findViewById(R.id.tv_address)
+        tv_gender = findViewById(R.id.tv_gender)
+        tv_email = findViewById(R.id.tv_email)
+        tv_mob = findViewById(R.id.tv_mob)
+    }
+
+    private fun getProfile() {
+
+        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                profileViewModel.getProfiledata(this)!!.observe(
+                    this,
+                    Observer { profileSetterGetter ->
+                        val msg = profileSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                //   var jobj = jObject.getJSONObject("UserLoginDetails")
+                                val jobjt = jObject.getJSONObject("EmployeeProfileDetails")
+                                var name = jobjt.getString("Name")
+                                var address = jobjt.getString("Address")
+                                var mob = jobjt.getString("MobileNumber")
+                                var email = jobjt.getString("Email")
+                                //   var gender = jobjt.getString("Email")
+                                // var dob = jobjt.getString("Email")
+
+                                tv_name!!.text=name
+                                tv_address!!.text=address
+                                tv_mob!!.text=mob
+                                tv_email!!.text=email
+                                //  tv_email!!.text=email
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProfileActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.imback->{
+        when(v.id) {
+            R.id.imback -> {
                 finish()
             }
         }
@@ -155,15 +234,15 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
         mMinute = c.get(Calendar.MINUTE)
         // Launch Time Picker Dialog
         val timePickerDialog = TimePickerDialog(this,
-                TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    val strDate = String.format(
-                            "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
-                            minute, if (hourOfDay < 12) "am" else "pm"
-                    )
-                    ettime!!.setText(strDate)
-                    hr = hourOfDay
-                    min = minute
-                }, mHour, mMinute, false
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val strDate = String.format(
+                    "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
+                    minute, if (hourOfDay < 12) "am" else "pm"
+                )
+                ettime!!.setText(strDate)
+                hr = hourOfDay
+                min = minute
+            }, mHour, mMinute, false
         )
         timePickerDialog.show()
     }
@@ -176,12 +255,12 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
             mMonth = c.get(Calendar.MONTH)
             mDay = c.get(Calendar.DAY_OF_MONTH)
             val datePickerDialog = DatePickerDialog(this,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                        yr = year
-                        month = monthOfYear
-                        day = dayOfMonth
-                        etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                    }, mYear, mMonth, mDay
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    yr = year
+                    month = monthOfYear
+                    day = dayOfMonth
+                    etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
@@ -366,5 +445,9 @@ class ProfileActivity : AppCompatActivity() , View.OnClickListener{
         val alert = builder.create()
         alert.show()
 
+    }
+
+    override fun onClick(position: Int, data: String) {
+        TODO("Not yet implemented")
     }
 }
