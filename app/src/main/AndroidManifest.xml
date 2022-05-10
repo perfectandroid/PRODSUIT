@@ -32,7 +32,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".View.Activity.MapsAgendaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.AddDocumentActivity"
             android:screenOrientation="portrait"
@@ -248,8 +252,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
