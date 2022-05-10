@@ -16,6 +16,7 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +44,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
+    private var crdv_1: CardView? = null
+    private var crdv_2: CardView? = null
+    private var crdv_3: CardView? = null
+    private var crdv_4: CardView? = null
     private var imback: ImageView? = null
     private var tv_dob: TextView? = null
     private var tv_name: TextView? = null
@@ -55,6 +60,13 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     lateinit var context: Context
     lateinit var profileViewModel: ProfileViewModel
     private var progressDialog: ProgressDialog? = null
+    private var ll_address: LinearLayout? = null
+    private var ll_dob: LinearLayout? = null
+    private var ll_email: LinearLayout? = null
+    private var ll_mob: LinearLayout? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -73,9 +85,20 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         tv_dob = findViewById(R.id.tv_dob)
         tvdescriptn3 = findViewById(R.id.tvdescriptn3)
         tv_address = findViewById(R.id.tv_address)
-        tv_gender = findViewById(R.id.tv_gender)
         tv_email = findViewById(R.id.tv_email)
         tv_mob = findViewById(R.id.tv_mob)
+
+        ll_address = findViewById(R.id.ll_address)
+        ll_dob = findViewById(R.id.ll_dob)
+        ll_email = findViewById(R.id.ll_email)
+        ll_mob = findViewById(R.id.ll_mob)
+
+        crdv_1 = findViewById(R.id.crdv_1)
+        crdv_2 = findViewById(R.id.crdv_2)
+        crdv_3 = findViewById(R.id.crdv_3)
+        crdv_4 = findViewById(R.id.crdv_4)
+
+
     }
 
     private fun getProfile() {
@@ -104,12 +127,67 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 var email = jobjt.getString("Email")
                                 var dob = jobjt.getString("EmpDOB")
                                 // var dob = jobjt.getString("Email")
+                                if(name!=null||name!="")
+                                {
+                                    tv_name!!.visibility=View.VISIBLE
+                                    crdv_1!!.visibility=View.VISIBLE
+                                    tv_name!!.text=name
+                                }
+                                else
+                                {
+                                    tv_name!!.visibility=View.GONE
+                                }
 
-                                tv_name!!.text=name
-                                tv_address!!.text=address
-                                tv_mob!!.text=mob
-                                tv_email!!.text=email
-                                tv_dob!!.text=dob
+                                 if(address!=null||address!="")
+                                {
+                                    ll_address!!.visibility=View.VISIBLE
+                                    crdv_1!!.visibility=View.VISIBLE
+                                    tv_address!!.text=address
+
+                                }
+                                 else
+                                 {
+                                     crdv_1!!.visibility=View.GONE
+                                     ll_address!!.visibility=View.GONE
+                                 }
+                                if(mob!=null||mob!="")
+                                {
+                                    ll_mob!!.visibility=View.VISIBLE
+                                    crdv_4!!.visibility=View.VISIBLE
+                                    tv_mob!!.text=mob
+
+                                }
+                                else
+                                {
+                                    crdv_4!!.visibility=View.GONE
+                                    ll_mob!!.visibility=View.GONE
+                                }
+                                if(email!=null&&!email.isEmpty())
+                                {
+                                    crdv_3!!.visibility=View.VISIBLE
+                                    ll_email!!.visibility=View.VISIBLE
+                                    tv_email!!.text=email
+
+                                }
+                                else
+                                {
+                                    crdv_3!!.visibility=View.GONE
+                                    ll_email!!.visibility=View.GONE
+                                }
+                              if(dob!=null||dob!="")
+                                {
+                                    crdv_2!!.visibility=View.VISIBLE
+                                    ll_dob!!.visibility=View.VISIBLE
+                                    tv_dob!!.text=dob
+
+                                }
+                              else
+                              {
+                                  crdv_2!!.visibility=View.GONE
+                                  ll_dob!!.visibility=View.GONE
+                              }
+
+
 
 
                             } else {
