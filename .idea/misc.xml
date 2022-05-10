@@ -3,16 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.36666666666666664" />
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.3149171270718232" />
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.36666666666666664" />
+        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.36666666666666664" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/drawable/circular.xml" value="0.1845" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/drawable/image.xml" value="0.1845" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/drawable/location_color.xml" value="0.1845" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/layout/activity_account_details.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/layout/activity_leadgeneration.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/09-05-2022/app/src/main/res/layout/activity_profile.xml" value="0.2" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.3149171270718232" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.36666666666666664" />
-        <entry key="..\:/ANUSREE/ANDROID/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/back_arrows.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_rounded.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/bottom_shadow.xml" value="0.33" />
@@ -47,6 +47,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/location_color.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logo_white.xml" value="0.3828125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logoname_white.xml" value="0.3828125" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/map_shape.xml" value="0.227" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_regular.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selected.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/radio_selector.xml" value="0.2833333333333333" />
@@ -78,6 +79,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.21041666666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_activities.xml" value="0.30364583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2515625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_note.xml" value="0.34739583333333335" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
@@ -86,8 +88,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.20520833333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_maps_agenda.xml" value="0.31145833333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_messages.xml" value="0.2989583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_product.xml" value="0.22864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.30416666666666664" />

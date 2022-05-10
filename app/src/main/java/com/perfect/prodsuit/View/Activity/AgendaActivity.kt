@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,12 +21,9 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
 import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
-import com.perfect.prodsuit.View.Adapter.LineChartAdapter
-import com.perfect.prodsuit.View.Adapter.MediaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaDetailViewModel
-import com.perfect.prodsuit.Viewmodel.LeadEditDetailViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -428,6 +426,20 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
 
         }
+        if (data.equals("agendaLocation")){
+
+            Log.e(TAG,"agendaLocation   433")
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            Log.e(TAG,"Latitude       4331    "+jsonObject.getString("Latitude"))
+            Log.e(TAG,"Longitude      4332    "+jsonObject.getString("Longitude"))
+            Log.e(TAG,"LocationName   4333    "+jsonObject.getString("LocationName"))
+
+            val i = Intent(this@AgendaActivity, MapsAgendaActivity::class.java)
+            i.putExtra("LocationName", jsonObject.getString("LocationName"))
+            i.putExtra("Longitude",jsonObject.getString("Longitude"))
+            i.putExtra("Latitude",jsonObject.getString("Latitude"))
+            startActivity(i)
+        }
     }
 
     private fun getAgendaDetails(ID_ActionType: String) {
@@ -467,6 +479,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                         recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
                                         recyAgendaDetail!!.adapter = adapter
+                                        adapter.setClickListener(this@AgendaActivity)
                                   // }
 
                                 }

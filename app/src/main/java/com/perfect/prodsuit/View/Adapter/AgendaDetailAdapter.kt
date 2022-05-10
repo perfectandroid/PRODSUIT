@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -125,6 +126,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                         }
 
 
+
+
                     }
 
                     if (jsonObject!!.getString("ID_ActionType").equals("4")){
@@ -190,6 +193,12 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     }
 
 
+                holder.imMeeting_Location.setTag(position)
+                holder.imMeeting_Location.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaLocation")
+                })
+
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -223,39 +232,40 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var ll_Quotation_Icon     : LinearLayout
 
         internal var tvCall_name       : TextView
-        internal var tvCall_TrnsDate       : TextView
-        internal var tvCall_address       : TextView
-        internal var tvCall_phone       : TextView
-        internal var tvCall_Status       : TextView
-        internal var tvCall_product       : TextView
+        internal var tvCall_TrnsDate   : TextView
+        internal var tvCall_address    : TextView
+        internal var tvCall_phone      : TextView
+        internal var tvCall_Status     : TextView
+        internal var tvCall_product    : TextView
 
-        internal var tvMessage_name    : TextView
-        internal var tvMessage_TrnsDate    : TextView
-        internal var tvMessage_address    : TextView
-        internal var tvMessage_phone    : TextView
-        internal var tvMessage_Status       : TextView
-        internal var tvMessage_product       : TextView
+        internal var tvMessage_name      : TextView
+        internal var tvMessage_TrnsDate  : TextView
+        internal var tvMessage_address   : TextView
+        internal var tvMessage_phone     : TextView
+        internal var tvMessage_Status    : TextView
+        internal var tvMessage_product   : TextView
 
-        internal var tvMeeting_name    : TextView
-        internal var tvMeeting_TrnsDate    : TextView
-        internal var tvMeeting_address    : TextView
-        internal var tvMeeting_phone    : TextView
-        internal var tvMeeting_Status       : TextView
-        internal var tvMeeting_product       : TextView
+        internal var tvMeeting_name      : TextView
+        internal var tvMeeting_TrnsDate  : TextView
+        internal var tvMeeting_address   : TextView
+        internal var tvMeeting_phone     : TextView
+        internal var tvMeeting_Status    : TextView
+        internal var tvMeeting_product   : TextView
+        internal var imMeeting_Location  : ImageView
 
-        internal var tvDocument_name   : TextView
-        internal var tvDocument_TrnsDate   : TextView
-        internal var tvDocument_address    : TextView
-        internal var tvDocument_phone    : TextView
-        internal var tvDocument_Status       : TextView
-        internal var tvDocument_product       : TextView
+        internal var tvDocument_name      : TextView
+        internal var tvDocument_TrnsDate  : TextView
+        internal var tvDocument_address   : TextView
+        internal var tvDocument_phone     : TextView
+        internal var tvDocument_Status    : TextView
+        internal var tvDocument_product   : TextView
 
-        internal var tvQuotation_name  : TextView
+        internal var tvQuotation_name      : TextView
         internal var tvQuotation_TrnsDate  : TextView
-        internal var tvQuotation_address    : TextView
-        internal var tvQuotation_phone    : TextView
-        internal var tvQuotation_Status       : TextView
-        internal var tvQuotation_product       : TextView
+        internal var tvQuotation_address   : TextView
+        internal var tvQuotation_phone     : TextView
+        internal var tvQuotation_Status    : TextView
+        internal var tvQuotation_product   : TextView
 
         init {
 
@@ -290,6 +300,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvMeeting_phone        = v.findViewById<View>(R.id.tvMeeting_phone) as TextView
             tvMeeting_Status        = v.findViewById<View>(R.id.tvMeeting_Status) as TextView
             tvMeeting_product        = v.findViewById<View>(R.id.tvMeeting_product) as TextView
+            imMeeting_Location            = v.findViewById<View>(R.id.imMeeting_Location) as ImageView
 
             tvDocument_name    = v.findViewById<View>(R.id.tvDocument_name) as TextView
             tvDocument_TrnsDate    = v.findViewById<View>(R.id.tvDocument_TrnsDate) as TextView
