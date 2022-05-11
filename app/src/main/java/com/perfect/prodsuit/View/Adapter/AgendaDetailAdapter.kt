@@ -36,7 +36,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
-               if (jsonObject!!.getString("ID_ActionType").equals("1")){
+                    if (jsonObject!!.getString("ID_ActionType").equals("1")){
                     holder.ll_Call.visibility = View.VISIBLE
                     holder.tvCall_name.setText(jsonObject!!.getString("CustomerName"))
                     holder.tvCall_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
@@ -67,7 +67,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
                 }
 
-                     if (jsonObject!!.getString("ID_ActionType").equals("2")){
+                if (jsonObject!!.getString("ID_ActionType").equals("2")){
                         holder.ll_Message.visibility = View.VISIBLE
                         holder.tvMessage_name.setText(jsonObject!!.getString("CustomerName"))
                         holder.tvMessage_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
@@ -198,6 +198,12 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     clickListener!!.onClick(position, "agendaLocation")
                 })
 
+                holder.imMessage_Icon.setTag(position)
+                holder.imMessage_Icon.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaMessage")
+                })
+
+
 
             }
         } catch (e: Exception) {
@@ -244,6 +250,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvMessage_phone     : TextView
         internal var tvMessage_Status    : TextView
         internal var tvMessage_product   : TextView
+        internal var imMessage_Icon      : ImageView
 
         internal var tvMeeting_name      : TextView
         internal var tvMeeting_TrnsDate  : TextView
@@ -293,6 +300,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvMessage_phone        = v.findViewById<View>(R.id.tvMessage_phone) as TextView
             tvMessage_Status        = v.findViewById<View>(R.id.tvMessage_Status) as TextView
             tvMessage_product        = v.findViewById<View>(R.id.tvMessage_product) as TextView
+            imMessage_Icon        = v.findViewById<View>(R.id.imMessage_Icon) as ImageView
 
             tvMeeting_name     = v.findViewById<View>(R.id.tvMeeting_name) as TextView
             tvMeeting_TrnsDate     = v.findViewById<View>(R.id.tvMeeting_TrnsDate) as TextView
