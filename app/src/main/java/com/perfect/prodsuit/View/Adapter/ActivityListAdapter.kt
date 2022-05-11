@@ -12,7 +12,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ActivityListAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class ActivityListAdapter(internal var context: Context, internal var jsonobj: JSONObject):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "infoSubAdapter"
@@ -29,13 +29,16 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
+           // jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtProduct.text     = jsonObject!!.getString("Product")
-                holder.txtEnquiry.text     = jsonObject!!.getString("EnquiryAbout")
-                holder.txtStatus.text      = jsonObject!!.getString("Status")
+                holder.txtDate.text     = jsonobj!!.getString("Date")
+                holder.txtActntype.text     = jsonobj!!.getString("ActionType")
+                holder.txtFollowup.text     = jsonobj!!.getString("FollowUpBy")
+                holder.txtv_custmrremrk.text     = jsonobj!!.getString("CustomerRemark")
+                holder.txtv_empremrk.text     = jsonobj!!.getString("EmployeeRemark")
+                holder.txtStatus.text      = jsonobj!!.getString("Status")
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -43,9 +46,9 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
         }
     }
 
-    override fun getItemCount(): Int {
+  /*  override fun getItemCount(): Int {
         return jsonArray.length()
-    }
+    }*/
 
     override fun getItemId(position: Int): Long {
         return super.getItemId(position)
@@ -56,16 +59,27 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProduct      : TextView
-        internal var txtEnquiry      : TextView
+        internal var txtDate      : TextView
+        internal var txtActntype      : TextView
+        internal var txtFollowup       : TextView
+        internal var txtv_custmrremrk       : TextView
+        internal var txtv_empremrk       : TextView
         internal var txtStatus       : TextView
-        internal var llSubQuotation  : LinearLayout
+
         init {
-            txtProduct        = v.findViewById<View>(R.id.txtProduct) as TextView
-            txtEnquiry        = v.findViewById<View>(R.id.txtEnquiry) as TextView
+            txtDate        = v.findViewById<View>(R.id.txtDate) as TextView
+            txtActntype        = v.findViewById<View>(R.id.txtActntype) as TextView
+            txtFollowup         = v.findViewById<View>(R.id.txtFollowup) as TextView
+            txtv_custmrremrk         = v.findViewById<View>(R.id.txtv_custmrremrk) as TextView
+            txtv_empremrk         = v.findViewById<View>(R.id.txtv_empremrk) as TextView
+            txtFollowup         = v.findViewById<View>(R.id.txtFollowup) as TextView
             txtStatus         = v.findViewById<View>(R.id.txtStatus) as TextView
-            llSubQuotation    = v.findViewById<View>(R.id.llSubQuotation) as LinearLayout
+
         }
+    }
+
+    override fun getItemCount(): Int {
+        TODO("Not yet implemented")
     }
 
 }
