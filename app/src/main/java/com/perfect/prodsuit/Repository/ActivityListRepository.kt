@@ -82,6 +82,7 @@ object ActivityListRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.i("Activity response",response.body())
                         val users = ArrayList<ActivityListModel>()
                         users.add(ActivityListModel(response.body()))
                         val msg = users[0].message

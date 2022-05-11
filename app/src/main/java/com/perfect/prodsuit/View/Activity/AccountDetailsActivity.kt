@@ -79,6 +79,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
+    lateinit var activityArrayList : JSONArray
     lateinit var documentArrayList : JSONArray
     lateinit var historyActArrayList : JSONArray
     private var fab_main : FloatingActionButton? = null
@@ -942,34 +943,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { activitylistSetterGetter ->
                         val msg = activitylistSetterGetter.message
-                 /*       if (msg!!.length > 0) {
+                        if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                imQuotationLoading.visibility = View.GONE
-                                val jobjt = jObject.getJSONObject("LeadHistoryDetails")
-                                quotationArrayList = jobjt.getJSONArray("LeadHistoryDetailsList")
-                                if (quotationArrayList.length()>0){
-                                    if (quotation == 0){
-                                        quotation++
-                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
-                                        recySubQuotation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        recySubQuotation!!.setHasFixedSize(true)
-                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, quotationArrayList)
-                                        recySubQuotation!!.adapter = adapter
-                                    }
-                                }
-                            } else {
-                                imQuotationLoading.visibility = View.GONE
-                            }
+
                         } else {
-                            imQuotationLoading.visibility = View.GONE
+
                             Toast.makeText(
                                 applicationContext,
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }*/
+                        }
                     })
             }
             false -> {
