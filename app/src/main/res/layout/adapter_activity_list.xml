@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imcall"
+                        android:id="@+id/im_Call_Icon"
                         android:fontFamily="@font/myfont"
                         android:layout_width="25dp"
                         android:layout_height="25dp"

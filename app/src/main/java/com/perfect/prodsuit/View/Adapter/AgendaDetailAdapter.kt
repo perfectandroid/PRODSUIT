@@ -24,7 +24,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_activity_list, parent, false
+            R.layout.adapter_agenda_detail, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -202,6 +202,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                 holder.imMessage_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaMessage")
                 })
+                holder.im_Call_Icon.setTag(position)
+                holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaCall")
+                })
 
 
 
@@ -243,6 +247,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvCall_phone      : TextView
         internal var tvCall_Status     : TextView
         internal var tvCall_product    : TextView
+        internal var im_Call_Icon      : ImageView
 
         internal var tvMessage_name      : TextView
         internal var tvMessage_TrnsDate  : TextView
@@ -292,7 +297,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvCall_address      = v.findViewById<View>(R.id.tvCall_address) as TextView
             tvCall_phone        = v.findViewById<View>(R.id.tvCall_phone) as TextView
             tvCall_Status       = v.findViewById<View>(R.id.tvCall_Status) as TextView
-            tvCall_product       = v.findViewById<View>(R.id.tvCall_product) as TextView
+            tvCall_product      = v.findViewById<View>(R.id.tvCall_product) as TextView
+            im_Call_Icon        = v.findViewById<View>(R.id.im_Call_Icon) as ImageView
 
             tvMessage_name     = v.findViewById<View>(R.id.tvMessage_name) as TextView
             tvMessage_TrnsDate     = v.findViewById<View>(R.id.tvMessage_TrnsDate) as TextView

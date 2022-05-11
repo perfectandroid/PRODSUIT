@@ -1,24 +1,32 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.CallLog
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Receivers.PhoneStatReceiver
 import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
 import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
@@ -26,12 +34,22 @@ import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaDetailViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Long
+import java.util.*
+import kotlin.Exception
+import kotlin.Int
+import kotlin.String
+import kotlin.arrayOf
+
 
 class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickListener {
 
     val TAG : String = "AgendaActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+
+
+
 
 //    private var tabLayout : TabLayout? = null
 //    var llMainDetail: LinearLayout? = null
@@ -66,9 +84,15 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
 
 
+
     var txtSelectPend: TextView? = null
 
   //  var inflaterPend : LayoutInflater? = null
+  var myReceiver:  PhoneStatReceiver = PhoneStatReceiver()
+
+    companion object{
+        var CUSTOM_INTENT : String?= "com.perfect.prodsuit.View.Activity.AGENDA"
+    }
 
 
 
@@ -82,6 +106,13 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
+
+
+//        val telephony = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager
+//        telephony.listen(myReceiver, PhoneStateListener.LISTEN_CALL_STATE)
+////        val intentFilter = IntentFilter("com.perfect.prodsuit.Receivers.PhoneStatReceiver")
+////        intentFilter.addAction(TelephonyManager.EXTRA_STATE)
+////        registerReceiver(myReceiver, intentFilter)
 
         setRegViews()
       //  addTabItem()
@@ -448,6 +479,100 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             i.putExtra("LgCusEmail","")
             startActivity(i)
         }
+
+        if (data.equals("agendaCall")){
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            Log.e(TAG,"CustomerMobile       454    "+jsonObject.getString("CustomerMobile"))
+            if (jsonObject.getString("CustomerMobile").equals("") || jsonObject.getString("CustomerMobile") == null){
+                val builder = AlertDialog.Builder(this@AgendaActivity, R.style.MyDialogTheme)
+                builder.setMessage("Customer Mobile Not Found")
+                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                }
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+            else{
+                Log.e(TAG,"CALL DETAILS  506 getCallDetails  ")
+
+                val ALL_PERMISSIONS = 101
+
+                val permissions = arrayOf(
+                    Manifest.permission.CALL_PHONE,
+                    Manifest.permission.READ_CALL_LOG,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.READ_PHONE_STATE
+                )
+                if (ContextCompat.checkSelfPermission(
+                        this@AgendaActivity,
+                        Manifest.permission.CALL_PHONE
+                    ) + ContextCompat.checkSelfPermission(
+                        this@AgendaActivity,
+                        Manifest.permission.RECORD_AUDIO
+                    )
+                    + ContextCompat.checkSelfPermission(
+                        this@AgendaActivity,
+                        Manifest.permission.READ_PHONE_STATE
+                    )
+                    + ContextCompat.checkSelfPermission(
+                        this@AgendaActivity,
+                        Manifest.permission.READ_CALL_LOG
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
+                } else {
+                  //  getCallDetails()
+
+                    val i = Intent()
+                    i.action = CUSTOM_INTENT
+                    context.sendBroadcast(i)
+                   // val mobileno = "9744799045"
+                    val mobileno = "7736902085"
+                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                    startActivity(intent)
+                }
+
+            }
+
+        }
+    }
+
+    private fun getCallDetails() {
+
+        try {
+            val sb = StringBuffer()
+            val contacts: Uri = CallLog.Calls.CONTENT_URI
+            val managedCursor: Cursor? = context.contentResolver.query(contacts, null, null, null, null)
+            val number: Int = managedCursor!!.getColumnIndex(CallLog.Calls.NUMBER)
+            val type: Int = managedCursor.getColumnIndex(CallLog.Calls.TYPE)
+            val date: Int = managedCursor.getColumnIndex(CallLog.Calls.DATE)
+            val duration: Int = managedCursor.getColumnIndex(CallLog.Calls.DURATION)
+            sb.append("Call Details :")
+            while (managedCursor.moveToNext()) {
+                val rowDataCall = HashMap<String, String>()
+                val phNumber: String = managedCursor.getString(number)
+                val callType: String = managedCursor.getString(type)
+                val callDate: String = managedCursor.getString(date)
+                val callDayTime: String = Date(Long.valueOf(callDate)).toString()
+                // long timestamp = convertDateToTimestamp(callDayTime);
+                val callDuration: String = managedCursor.getString(duration)
+                var dir: String? = null
+                val dircode = callType.toInt()
+                when (dircode) {
+                    CallLog.Calls.OUTGOING_TYPE -> dir = "OUTGOING"
+                    CallLog.Calls.INCOMING_TYPE -> dir = "INCOMING"
+                    CallLog.Calls.MISSED_TYPE -> dir = "MISSED"
+                }
+                sb.append("\nPhone Number:--- $phNumber \nCall Type:--- $dir \nCall Date:--- $callDayTime \nCall duration in sec :--- $callDuration")
+                sb.append("\n----------------------------------")
+            }
+            managedCursor.close()
+
+            Log.e(TAG,"CALL DETAILS  5061   "+sb)
+        }catch (e : Exception){
+            Log.e(TAG,"CALL DETAILS  5062   "+e.toString())
+        }
+
     }
 
     private fun getAgendaDetails(ID_ActionType: String) {
