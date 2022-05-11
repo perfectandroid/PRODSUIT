@@ -29,8 +29,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Repository.ActivityListRepository
-import com.perfect.prodsuit.Repository.DocumentListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -65,6 +63,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
     var recyAccountDetail: RecyclerView? = null
+    var rv_activity: RecyclerView? = null
     var recyHistory: RecyclerView? = null
     lateinit var jsonArray : JSONArray
     var jsonObj: JSONObject? = null
@@ -182,7 +181,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getActivityDetails()
+                //    getActivityDetails()
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -320,6 +319,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
+
     }
 
     private fun getAccountDetails() {
@@ -946,6 +946,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   458   "+msg)
+
+                           // val jobjt = jObject.getJSONObject("ActivitiesDetails")
+                       /*     val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                            rv_activity!!.layoutManager =
+                                lLayout as RecyclerView.LayoutManager?
+                            rv_activity!!.setHasFixedSize(true)
+                            val adapter = ActivityListAdapter(applicationContext, jobjt)
+                            rv_activity!!.adapter = adapter*/
 
                         } else {
 
