@@ -274,7 +274,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llLocation = findViewById<LinearLayout>(R.id.llLocation)
         llImages = findViewById<LinearLayout>(R.id.llImages)
         recyAccountDetail = findViewById<RecyclerView>(R.id.recyAccountDetail)
-        rv_activity= findViewById<RecyclerView>(R.id.rv_activity)
         recyHistory = findViewById<RecyclerView>(R.id.recyHistory)
         imback!!.setOnClickListener(this)
         fab_main = findViewById(R.id.fab);
@@ -320,7 +319,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
-        rv_activity!!.setOnClickListener(this)
+
     }
 
     private fun getAccountDetails() {
