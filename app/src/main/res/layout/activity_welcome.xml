@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/whitebg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,6 +37,26 @@
                     android:layout_marginRight="20dp"
                     android:text="Welcome"
                     android:src="@drawable/productlogo"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_txt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edt_txt_account_border"
+                        android:enabled="true"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/black"
+                        android:hint="sample"
+                        android:textColorHint="@color/colorPrimaryDark" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

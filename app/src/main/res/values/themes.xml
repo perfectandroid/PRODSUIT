@@ -128,7 +128,16 @@
         <item name="textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextAppearance">@style/TextFloatingLabelApperarance</item>
+    </style>
 
+    <style name="TextFloatingLabelApperarance" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
 
 </resources>
