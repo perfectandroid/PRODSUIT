@@ -9,7 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="greypink">#FDE5E8</color>
     <color name="grey">#D1CFCF</color>
+    <color name="grey1">#E9E8E8</color>
     <color name="greylight">#F1F0F0</color>
+    <color name="greydarks">#8F8D8D</color>
     <color name="greydark">#676666</color>
     <color name="grey_dark">#A3A1A1</color>
     <color name="colorPrimary">#E8465F</color>
@@ -67,6 +69,35 @@
     <color name="leadstages_color9">#2F4F4F</color>
     <color name="leadstages_color10">#17a2b8</color>
     <color name="leadstages_color11">#7bd235</color>
+
+    <color name="cust_color1">#9575cd</color>
+    <color name="cust_color2">#7986cb</color>
+    <color name="cust_color3">#90caf9</color>
+    <color name="cust_color4">#26c6da</color>
+    <color name="cust_color5">#009688</color>
+
+<!--    <color name="cust_1">#b2ebf2</color>-->
+<!--    <color name="cust_2">#b3e5fc</color>-->
+<!--    <color name="cust_3">#f5f5f5</color>-->
+
+    <color name="cust_1">#FBDEE1</color>
+    <color name="cust_2">#ffebee</color>
+    <color name="cust_3">#f5f5f5</color>
+
+    <color name="shape_color">#938fa6</color>
+    <color name="leadbg_color">#F0F0F0</color>
+    <color name="btn_color">#a78fa0</color>
+    <color name="home_top">#F45A71</color>
+    <color name="color_background">#eeeeee</color>
+    <color name="color_background1">#f2f2f2</color>
+    <color name="color_reset">#dd0304</color>
+    <color name="color_submit">#840202</color>
+    <color name="color_reset1">#CFCFCF</color>
+    <color name="color_submit1">#840202</color>
+
+    <color name="color_pending">#DF0303</color>
+    <color name="color_upcoming">#2e8bc0</color>
+    <color name="color_complete">#024C02</color>
 
 <!--    <color name="leadstages_color1">#fcca00</color>-->
 <!--    <color name="leadstages_color2">#fc8d01</color>-->

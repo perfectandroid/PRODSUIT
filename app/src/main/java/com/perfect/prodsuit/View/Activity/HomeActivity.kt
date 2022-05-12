@@ -1,17 +1,25 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.CalendarContract
+import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -23,14 +31,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
-import com.perfect.prodsuit.View.Service.NotifyService
-import com.perfect.prodsuit.Viewmodel.BannerListViewModel
-import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONObject
 import java.text.ParseException
@@ -47,6 +54,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
+    private var imgAttendance: ImageView? = null
     private var llservice: LinearLayout? = null
     private var rlnotification: RelativeLayout? = null
     private var ll_dashboard: LinearLayout? = null
@@ -63,6 +71,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var tv_Name: TextView? = null
+    internal var tv_DateTime: TextView? = null
+    internal var tv_Status: TextView? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -74,16 +85,42 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var mHour:Int = 0
     private var mMinute:Int = 0
     val PERMISSION_REQUEST_WRITE_CALENDAR=2
+    private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
     val callbackId = 42
     val CALENDAR_PROJECTION=3
+    val PERMISSION_ID = 42
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    var addresses: List<Address>? = null
+    var geocoder: Geocoder? = null
+    var address : String = ""
+    var city : String = ""
+    var state : String = ""
+    var country : String = ""
+    var postalCode : String = ""
+    var knownName : String = ""
+    var strLongitue : String = ""
+    var strLatitude : String = ""
+    var IsOnline : String = "1"
+    var SubMode : String = ""
+
+    lateinit var attendanceAddViewModel: AttendanceAddViewModel
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_homemain)
+
+        attendanceAddViewModel = ViewModelProvider(this).get(AttendanceAddViewModel::class.java)
+
         setRegViews()
         bottombarnav()
         getBannerlist()
         getCalendarId(context)
+        SubMode = "2"
+        AddAttendanceApi(strLatitude,strLongitue,address)
+//
     }
 
 
@@ -124,6 +161,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         rlnotification= findViewById(R.id.rlnotification)
         ll_dashboard = findViewById(R.id.ll_dashboard)
         ll_agenda = findViewById(R.id.ll_agenda)
+        imgAttendance = findViewById(R.id.imgAttendance)
+        tv_Name = findViewById(R.id.tv_Name)
+        tv_DateTime = findViewById(R.id.tv_DateTime)
+        tv_Status = findViewById(R.id.tv_Status)
+
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
         llservice!!.setOnClickListener(this)
@@ -138,6 +180,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_report =findViewById(R.id.ll_report)
         ll_report!!.setOnClickListener(this)
         rlnotification!!.setOnClickListener(this)
+        imgAttendance!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -148,6 +191,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 } else {
                     drawer_layout!!.openDrawer(GravityCompat.START)
                 }
+            }
+            R.id.imgAttendance -> {
+                Log.e("HomeActivity","imgAttendance    161  ")
+               if (checkAndRequestPermissions()){
+                   Log.e("HomeActivity","imgAttendance   Granted  161  ")
+                   mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                 //  getLocation()
+
+                   attendancConfirmPopup(v)
+               }
             }
             R.id.llservice -> {
                 val i = Intent(this@HomeActivity, ServiceActivity::class.java)
@@ -190,6 +243,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
         }
     }
+
+
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -751,6 +807,261 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         } catch (e: ParseException) {
             e.printStackTrace()
         }
+    }
+
+    private fun attendancConfirmPopup(v : View ){
+        try {
+
+            val dialogCountry = Dialog(this)
+            dialogCountry!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCountry!! .setContentView(R.layout.attendance_popup)
+            dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+            val btn_online_Yes = dialogCountry .findViewById(R.id.btn_online_Yes) as Button
+            val btn_online_No = dialogCountry .findViewById(R.id.btn_online_No) as Button
+            btn_online_No.setOnClickListener {
+                dialogCountry .dismiss()
+            }
+            btn_online_Yes.setOnClickListener {
+                dialogCountry.dismiss()
+                SubMode = "1"
+                getLocation(v)
+            }
+
+            dialogCountry!!.show()
+            dialogCountry!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogCountry!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun checkAndRequestPermissions(): Boolean {
+        val locationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val coarsePermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val listPermissionsNeeded: MutableList<String> = ArrayList()
+        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(),
+                REQUEST_ID_MULTIPLE_PERMISSIONS
+            )
+            return false
+        }
+        return true
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation(v : View) {
+
+        address      = ""
+        city         = ""
+        state        = ""
+        country      = ""
+        postalCode   = ""
+        knownName    = ""
+        strLongitue  = ""
+        strLatitude  = ""
+
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if (location == null) {
+                      //  requestNewLocationData()
+                    } else {
+//                        txtLongitude!!.text = location.longitude.toString()
+//                        txtLatitude!!.text = location.latitude.toString()
+
+                        Log.e("HOEMACTIVITY","longitude  819    "+location.longitude)
+                        Log.e("HOEMACTIVITY","latitude   819    "+location.latitude)
+
+
+                        geocoder = Geocoder(this, Locale.getDefault())
+                        addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+                        address = addresses!!.get(0).getAddressLine(0)
+                        city = addresses!!.get(0).locality
+                        state = addresses!!.get(0).adminArea
+                        country = addresses!!.get(0).countryName
+                        postalCode = addresses!!.get(0).postalCode
+                        knownName = addresses!!.get(0).featureName
+                        strLongitue = location.longitude.toString()
+                        strLatitude = location.latitude.toString()
+
+                        validLocation(v)
+
+
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun validLocation(v : View) {
+        if (strLatitude.equals("") || strLongitue.equals("")){
+            Config.snackBars(context,v,"Location Not Found")
+        }else{
+
+            AddAttendanceApi(strLatitude,strLongitue,address)
+        }
+    }
+
+
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        var mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 0
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var location: Location = locationResult.lastLocation
+            Log.e("HOEMACTIVITY","longitude  8191    "+location.longitude)
+            Log.e("HOEMACTIVITY","latitude   8191    "+location.latitude)
+
+            geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+            addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+            address = addresses!!.get(0).getAddressLine(0)
+            city = addresses!!.get(0).locality
+            state = addresses!!.get(0).adminArea
+            country = addresses!!.get(0).countryName
+            postalCode = addresses!!.get(0).postalCode
+            knownName = addresses!!.get(0).featureName
+            strLongitue = location.longitude.toString()
+            strLatitude = location.latitude.toString()
+
+        }
+    }
+
+
+    private fun AddAttendanceApi(strLatitude: String, strLongitue: String, address: String) {
+
+        var addAttendan = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e("HOMEACTIVITY","msg   91   "+msg.length)
+                            Log.e("HOMEACTIVITY","msg   91   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
+
+                                tv_Name!!.text = jobjt.getString("Name")
+//                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                tv_Status!!.text = jobjt.getString("LoginStauats")
+
+                                if (jobjt.getString("LoginMode").equals("1")){
+                                    imgAttendance!!.setImageResource(R.drawable.finger_online)
+                                    tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                }else{
+                                    imgAttendance!!.setImageResource(R.drawable.finger_offline)
+                                    tv_DateTime!!.text = "Off Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                }
+//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
+//                                if (leadFromArrayList.length()>0){
+//                                    if (countLeadFrom == 0){
+//                                        countLeadFrom++
+//                                        leadFromPopup(leadFromArrayList)
+//                                    }
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@HomeActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
 }

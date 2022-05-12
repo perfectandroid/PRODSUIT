@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/greylight"
+    android:background="@color/color_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<!--    android:background="@color/greylight"-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,23 +27,47 @@
                     android:background="@color/white"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imback"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_gravity="left"
-                        android:background="@color/color_activity_transparent"
-                        android:padding="10dp"
-                        android:layout_weight="2"
-                        android:tint="@color/black"
-                        android:src="@drawable/icback"
-                        tools:ignore="UseAppTint" />
+                        android:orientation="vertical"
+                        android:gravity="left|center"
+                        android:layout_weight="2">
+
+                          <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:paddingLeft="10dp"
+                            android:tint="@color/black"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imback"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:layout_gravity="left"-->
+<!--                        android:background="@color/color_activity_transparent"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:tint="@color/black"-->
+<!--                        android:src="@drawable/icback"-->
+<!--                        tools:ignore="UseAppTint" />-->
+
+
+<!--                    icback-->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="left"
                         android:text="Lead Generation"
+                        android:textAllCaps="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
@@ -67,13 +92,14 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/llHeader"
                     android:orientation="vertical">
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -88,12 +114,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -105,21 +131,22 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
-                                            android:paddingTop="5dp"
-                                            android:paddingLeft="5dp"
-                                            android:paddingRight="5dp"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:padding="5dp"
                                             android:fontFamily="@font/myfont"
                                             android:text="Customer Details"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/user_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llCustomerDetail"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -161,20 +188,19 @@
                                                         android:background="@android:color/transparent"
                                                         android:fontFamily="@font/myfont"
                                                         android:hint="Search"
-                                                        android:padding="5dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
 
                                                     <ImageView
                                                         android:id="@+id/img_search"
-                                                        android:layout_width="30dp"
-                                                        android:layout_height="30dp"
+                                                        android:layout_width="24dp"
+                                                        android:layout_height="24dp"
                                                         android:layout_alignParentRight="true"
                                                         android:layout_centerInParent="true"
-                                                        android:layout_marginRight="5dp"
-                                                        android:background="@drawable/ic_search"
-                                                        android:backgroundTint="@color/greydark"
+                                                        android:layout_margin="5dp"
+                                                        android:background="@drawable/search_24"
                                                         android:padding="5dp" />
 
 
@@ -191,7 +217,7 @@
                                                     android:textStyle="bold"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/grey"
-                                                    android:layout_margin="20dp"/>
+                                                    android:layout_margin="10dp"/>
 
 
 
@@ -235,7 +261,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:maxLength="10"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
@@ -253,7 +279,7 @@
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="textEmailAddress"
@@ -348,12 +374,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -366,21 +392,22 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Company Name"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/greydark"
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/company_color"
+                                            android:drawablePadding="10dp"
                                             android:textStyle="bold"
-                                            android:textSize="18sp"/>
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llCompanyName"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <EditText
@@ -391,8 +418,11 @@
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:hint="Company Name"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginTop="5dp"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -410,12 +440,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -427,21 +457,24 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:paddingTop="5dp"
                                             android:paddingLeft="5dp"
                                             android:paddingRight="5dp"
                                             android:fontFamily="@font/myfont"
                                             android:text="More Communication Info"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/communication_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llMoreCommInfo"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
                                             <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -467,7 +500,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Pincode"
                                                     android:inputType="number"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -509,7 +542,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
@@ -528,7 +561,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
@@ -548,7 +581,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
@@ -567,7 +600,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:singleLine="true"
@@ -587,7 +620,7 @@
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="10dp"
-                                                    android:padding="5dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
@@ -611,12 +644,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -629,12 +662,14 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:fontFamily="@font/myfont"
                                             android:padding="5dp"
                                             android:text="Product Details"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"
+                                            android:textColor="@color/greydarks"
+                                            android:textSize="16dp"
+                                            android:drawableLeft="@drawable/product_color"
+                                            android:drawablePadding="10dp"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
@@ -642,6 +677,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
 <!--                                            android:background="@drawable/etselect_bggrey"-->
@@ -676,7 +712,7 @@
                                                     android:editable="false"
                                                     android:hint="Category"
                                                     android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -704,7 +740,7 @@
                                                             android:editable="false"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint="Product"
-                                                            android:padding="10dp"
+                                                            android:padding="7dp"
                                                             android:singleLine="true"
                                                             android:text=""
                                                             android:textSize="15dp" />
@@ -727,7 +763,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:inputType="number"
                                                         android:maxLength="3"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -747,7 +783,7 @@
                                                     android:editable="false"
                                                     android:hint="Priority"
                                                     android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -761,7 +797,7 @@
                                                     android:background="@drawable/shape_bg"
                                                     android:hint="Feedback"
                                                     android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -778,7 +814,7 @@
                                                     android:editable="false"
                                                     android:hint="Status"
                                                     android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
+                                                    android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -802,7 +838,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center"
                                                     android:text="Follow Up"
-                                                    android:textColor="@color/black"
+                                                    android:textColor="@color/greydark"
                                                     android:textSize="18dp"
                                                     android:textStyle="bold" />
 
@@ -824,7 +860,7 @@
                                                         android:editable="false"
                                                         android:hint="Action"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -844,7 +880,7 @@
                                                         android:editable="false"
                                                         android:hint="Type"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -869,7 +905,7 @@
                                                         android:editable="false"
                                                         android:hint="Date"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -978,6 +1014,7 @@
                                                             android:gravity="center_vertical"
                                                             android:text="Need to Transfer"
                                                             android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydark"
                                                             android:textSize="15dp" />
 
 
@@ -1014,7 +1051,7 @@
                                                         android:editable="false"
                                                         android:hint="Branch Type"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -1033,7 +1070,7 @@
                                                         android:editable="false"
                                                         android:hint="Branch"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -1058,7 +1095,7 @@
                                                         android:editable="false"
                                                         android:hint="Department"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -1076,7 +1113,7 @@
                                                         android:editable="false"
                                                         android:hint="Employee"
                                                         android:fontFamily="@font/myfont"
-                                                        android:padding="10dp"
+                                                        android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
                                                         android:textSize="15dp" />
@@ -1095,16 +1132,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1117,19 +1155,22 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Location Details"
                                             android:textStyle="bold"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/location_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llLocDetail"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
 
@@ -1138,7 +1179,7 @@
                                                 android:id="@+id/txtLocation"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="10dp"
@@ -1149,7 +1190,7 @@
                                                 android:paddingRight="5dp"
                                                 android:hint="Location"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1162,16 +1203,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1184,37 +1226,40 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Date"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/calendar_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/ll_Todate"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <TextView
                                                 android:id="@+id/txtDate"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
                                                 android:layout_marginBottom="10dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:drawableRight="@drawable/calendar_icon"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:hint="Date"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1313,16 +1358,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1335,38 +1381,41 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Lead From"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/leadfrom_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llLeadFrom"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <TextView
                                                 android:id="@+id/txtleadfrom"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="10dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:drawableRight="@drawable/arrowright"
-                                                android:drawableTint="@color/greydark"
+                                                android:drawableTint="@color/greydarks"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
                                                 android:hint="Lead From"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1415,16 +1464,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1437,28 +1487,31 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Lead Though"
                                             android:fontFamily="@font/myfont"
-                                            android:textColor="@color/greydark"
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/leadthrough_color"
+                                            android:drawablePadding="10dp"
                                             android:textStyle="bold"
-                                            android:textSize="18sp"/>
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llleadthrough"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <TextView
                                                 android:id="@+id/txtleadthrough"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="10dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
@@ -1468,7 +1521,7 @@
                                                 android:paddingRight="5dp"
                                                 android:hint="Lead Through"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1515,16 +1568,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1537,28 +1591,31 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Collected By"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/collected_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llleadby"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <TextView
                                                 android:id="@+id/txtleadby"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="10dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
@@ -1568,7 +1625,7 @@
                                                 android:paddingRight="5dp"
                                                 android:hint="Collected By"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1615,16 +1672,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1637,28 +1695,31 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:fontFamily="@font/myfont"
                                             android:padding="5dp"
                                             android:text="Media Type"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp" />
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/mediatype_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp" />
 
                                         <LinearLayout
                                             android:id="@+id/llmediatype"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="10dp"
-                                            android:layout_marginRight="10dp"
                                             android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
                                             android:visibility="gone">
 
                                             <TextView
                                                 android:id="@+id/txtMediatype"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="10dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
@@ -1668,7 +1729,7 @@
                                                 android:paddingRight="5dp"
                                                 android:hint="Media Type"
                                                 android:fontFamily="@font/myfont"
-                                                android:padding="10dp"
+                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1715,16 +1776,17 @@
 
 
                                 </androidx.cardview.widget.CardView>
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="5dp"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2.5dp"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
 
                                     <LinearLayout
@@ -1737,13 +1799,15 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/ic_arrow_down"
+                                            android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
                                             android:text="Upload Images"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
-                                            android:textColor="@color/greydark"
-                                            android:textSize="18sp"/>
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/upload_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
 
                                         <LinearLayout
                                             android:id="@+id/llUploadImages"
@@ -1751,6 +1815,8 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
+                                            android:padding="10dp"
+                                            android:background="@color/leadbg_color"
                                             android:orientation="horizontal"
                                             android:visibility="gone">
 
@@ -2525,34 +2591,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/color_background"
             android:layout_alignParentBottom="true">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="Reset"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="SUBMIT"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
 <!--            android:background="@color/white"-->
 
             <Button
                 android:id="@+id/btnReset"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/btn_bgcolourshadow"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="Reset"
-                android:textAllCaps="false"
-                android:textSize="15dp" />
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="visible"/>
+<!--            android:background="@drawable/btn_bgcolourshad"-->
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:textSize="15dp"
+                android:textStyle="bold"
                 android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolourshadow1"
+                android:background="@drawable/btn_shape_submit"
                 android:padding="2dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:text="Submit" />
+                android:textAllCaps="true"
+                android:text="Submit"
+                android:visibility="visible"/>
+<!--            android:background="@drawable/btn_bgcolourshadow1"-->
 
 <!--            btn_bgcolourblack-->
         </LinearLayout>

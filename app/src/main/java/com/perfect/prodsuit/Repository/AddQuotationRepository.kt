@@ -68,7 +68,7 @@ object AddQuotationRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("32"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("44"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -96,6 +96,7 @@ object AddQuotationRepository {
 
                Log.e("jsondat ", "BODY $imageFiles")
 
+           // val call = apiService.getquotation(body)
             val call = apiService.getquotation(body,imageFiles)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

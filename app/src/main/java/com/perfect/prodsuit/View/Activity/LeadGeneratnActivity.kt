@@ -749,6 +749,7 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
     }
 
     private fun getCustomerSearch() {
+
         llCustomerSave!!.visibility=View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
