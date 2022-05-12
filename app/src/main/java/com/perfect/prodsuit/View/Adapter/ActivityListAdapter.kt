@@ -15,13 +15,14 @@ import org.json.JSONObject
 class ActivityListAdapter(internal var context: Context, internal var jsonobj: JSONObject):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "infoSubAdapter"
+    internal val TAG : String = "activitylistAdapter"
     internal var jsonObject: JSONObject? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_sub_quotation, parent, false
+            R.layout.adapter_activity_list, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -29,10 +30,11 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-           // jsonObject = jsonArray.getJSONObject(position)
+            jsonObject = jsonobj.getJSONObject(position.toString())
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-                val pos = position+1
+               // val pos = position+1
+                val pos = position
                 holder.txtDate.text     = jsonobj!!.getString("Date")
                 holder.txtActntype.text     = jsonobj!!.getString("ActionType")
                 holder.txtFollowup.text     = jsonobj!!.getString("FollowUpBy")
@@ -55,7 +57,7 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position % 0
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -79,7 +81,7 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return 0
     }
 
 }

@@ -24,7 +24,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_activity_list, parent, false
+            R.layout.adapter_agenda_detail, parent, false
         )
         vh = MainViewHolder(v)
         return vh

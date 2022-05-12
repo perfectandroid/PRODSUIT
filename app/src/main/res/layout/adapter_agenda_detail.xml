@@ -15,14 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:padding="10dp">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/ll_Call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
             <RelativeLayout
@@ -40,7 +40,7 @@
                     android:textColor="@color/green1"
                     android:textSize="10dp"
                     android:textStyle="normal" />
-<!--                android:background="@drawable/rounded_shape"-->
+                <!--                android:background="@drawable/rounded_shape"-->
 
                 <TextView
                     android:id="@+id/tvCall_TrnsDate"
@@ -50,12 +50,12 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="04-05-2022"
+                    android:text=""
                     android:textColor="@color/greydark"
                     android:textSize="10dp"
                     android:textStyle="normal" />
             </RelativeLayout>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                         android:id="@+id/tvCall_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranjith"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
@@ -80,15 +80,44 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvCall_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="987654321"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvCall_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvCall_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/product_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
@@ -98,12 +127,14 @@
 
 
 
+
                     </RelativeLayout>
 
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Call_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -111,7 +142,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imcall"
+                        android:id="@+id/im_Call_Icon"
                         android:fontFamily="@font/myfont"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -122,9 +153,30 @@
 
 
                 </LinearLayout>
-                
-                
+
+
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tvCall_Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+                    android:drawablePadding="5dp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
 
 
         </LinearLayout>
@@ -134,19 +186,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"-->
-<!--                android:layout_height="wrap_content">-->
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"-->
+            <!--                android:layout_height="wrap_content">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="This is Hint"/>-->
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:hint="This is Hint"/>-->
 
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
 
@@ -176,7 +229,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="04-05-2022"
+                    android:text=""
                     android:textColor="@color/greydark"
                     android:textSize="10dp"
                     android:textStyle="normal" />
@@ -199,7 +252,7 @@
                         android:id="@+id/tvMessage_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranjith"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
@@ -208,21 +261,51 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvMessage_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="987654321"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvMessage_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvMessage_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/product_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Message_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -230,7 +313,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imMessage"
+                        android:id="@+id/imMessage_Icon"
                         android:fontFamily="@font/myfont"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -238,7 +321,7 @@
                         android:tint="@color/green"
                         android:gravity="center"
                         tools:ignore="UseAppTint" />
-<!--                    android:src="@drawable/message_icon"-->
+                    <!--                    android:src="@drawable/message_icon"-->
 
 
                 </LinearLayout>
@@ -251,7 +334,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
+                <TextView
+                    android:id="@+id/tvMessage_Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+                    android:drawablePadding="5dp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"/>
 
             </RelativeLayout>
 
@@ -262,6 +357,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -291,7 +387,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="04-05-2022"
+                    android:text=""
                     android:textColor="@color/greydark"
                     android:textSize="10dp"
                     android:textStyle="normal" />
@@ -312,7 +408,7 @@
                         android:id="@+id/tvMeeting_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranjith"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
@@ -321,43 +417,52 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvMeeting_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="987654321"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_call"
+                        android:drawableLeft="@drawable/location_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <TextView
+                        android:id="@+id/tvMeeting_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kozhikode"
+                        android:text=""
                         android:fontFamily="@font/myfont"
-                        android:singleLine="false"
+                        android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/trans_location"
+                        android:drawableLeft="@drawable/call_svg"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/tvMeeting_product"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-
-                    </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/product_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
 
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Meeting_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -366,7 +471,7 @@
                     android:visibility="visible">
 
                     <ImageView
-                        android:id="@+id/immeeting"
+                        android:id="@+id/imMeeting_Location"
                         android:fontFamily="@font/myfont"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -381,6 +486,26 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvMeeting_Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+                    android:drawablePadding="5dp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -388,6 +513,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -416,7 +542,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="04-05-2022"
+                    android:text=""
                     android:textColor="@color/greydark"
                     android:textSize="10dp"
                     android:textStyle="normal" />
@@ -437,7 +563,7 @@
                         android:id="@+id/tvDocument_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranjith"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
@@ -446,28 +572,54 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvDocument_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="987654321"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/tvDocument_phone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvDocument_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/product_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
 
 
-
-                    </RelativeLayout>
 
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Document_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -491,6 +643,26 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDocument_Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+                    android:drawablePadding="5dp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -499,6 +671,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
             android:visibility="gone">
 
 
@@ -527,7 +700,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="04-05-2022"
+                    android:text=""
                     android:textColor="@color/greydark"
                     android:textSize="10dp"
                     android:textStyle="normal" />
@@ -548,7 +721,7 @@
                         android:id="@+id/tvQuotation_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ranjith"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
@@ -557,14 +730,45 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvQuotation_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="987654321"
+                        android:text=""
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
+                        android:drawableLeft="@drawable/location_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvQuotation_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/call_svg"
+                        android:drawablePadding="5dp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvQuotation_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/greydark"
+                        android:textSize="12dp"
+                        android:drawableLeft="@drawable/product_svg"
+                        android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
                     <RelativeLayout
@@ -579,6 +783,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Quotation_Icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -602,6 +807,26 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvQuotation_Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+                    android:drawablePadding="5dp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -610,3 +835,4 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+
