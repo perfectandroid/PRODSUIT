@@ -37,6 +37,7 @@ object Config {
     const val SHARED_PREF13 = "Testingsslcertificate"
     const val SHARED_PREF14 = "Loginmobilenumber"
     const val SHARED_PREF15 = "callRecord"
+    const val SHARED_PREF16 = "BroadCall"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }

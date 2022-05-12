@@ -24,15 +24,12 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-
-
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -46,12 +43,17 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".View.Activity.MapsAgendaActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AddRemarkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AddDocumentActivity"
+            android:name="com.perfect.prodsuit.View.Activity.MapsAgendaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.AddDocumentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -64,222 +66,224 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".View.Activity.ExpenseAddActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ExpenseAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadNewActionActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadNewActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadNextActionActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadNextActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AgendaActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AgendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.MessagesActivity"
+            android:name="com.perfect.prodsuit.View.Activity.MessagesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.CallRemarkActivity"
+            android:name="com.perfect.prodsuit.View.Activity.CallRemarkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.SiteVisitActivity"
+            android:name="com.perfect.prodsuit.View.Activity.SiteVisitActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AccountDetailsActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AccountDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadGeneratnActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadGeneratnActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LocationActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ImageActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.NotificationActivity"
+            android:name="com.perfect.prodsuit.View.Activity.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LocationPickerActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LocationPickerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ProductActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.CustomerSearchActivity"
+            android:name="com.perfect.prodsuit.View.Activity.CustomerSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.DashBoardActivity"
+            android:name="com.perfect.prodsuit.View.Activity.DashBoardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadGenerationActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadGenerationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LeadManagemnetActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LeadManagemnetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ServiceActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AboutUsActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AboutUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ContactUsActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ContactUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ProfileActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.HomeActivity"
+            android:name="com.perfect.prodsuit.View.Activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.LoginActivity"
+            android:name="com.perfect.prodsuit.View.Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.WelcomeActivity"
+            android:name="com.perfect.prodsuit.View.Activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.MpinActivity"
+            android:name="com.perfect.prodsuit.View.Activity.MpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.OTPActivity"
+            android:name="com.perfect.prodsuit.View.Activity.OTPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.WelcomeSliderActivity"
+            android:name="com.perfect.prodsuit.View.Activity.WelcomeSliderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.TodoListActivity"
+            android:name="com.perfect.prodsuit.View.Activity.TodoListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.OverDueActivity"
+            android:name="com.perfect.prodsuit.View.Activity.OverDueActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.UpcomingtaskActivity"
+            android:name="com.perfect.prodsuit.View.Activity.UpcomingtaskActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.SetMpinActivity"
+            android:name="com.perfect.prodsuit.View.Activity.SetMpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ExpenseActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ExpenseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ReportActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.TicketReportActivity"
+            android:name="com.perfect.prodsuit.View.Activity.TicketReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ReportViewActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ReportViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AddNoteActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AddNoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.ReportViewDetailsActivity"
+            android:name="com.perfect.prodsuit.View.Activity.ReportViewDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".View.Activity.AddQuotationActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AddQuotationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <receiver android:name=".Receivers.PhoneStatReceiver"
+        <receiver
+            android:name="com.perfect.prodsuit.Receivers.PhoneStatReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE"></action>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"></action>
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="my.action.string" />
             </intent-filter>
-<!--            <intent-filter>-->
-<!--&lt;!&ndash;                <action android:name="android.intent.action.BOOT_COMPLETED" />&ndash;&gt;-->
-<!--&lt;!&ndash;                <action android:name="android.intent.action.PHONE_STATE"/>&ndash;&gt;-->
-<!--                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- &lt;!&ndash;                <action android:name="android.intent.action.BOOT_COMPLETED" />&ndash;&gt; -->
+            <!-- &lt;!&ndash;                <action android:name="android.intent.action.PHONE_STATE"/>&ndash;&gt; -->
+            <!-- <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
+            <!-- </intent-filter> -->
         </receiver>
 
         <activity
-            android:name=".View.Activity.SplashActivity"
+            android:name="com.perfect.prodsuit.View.Activity.SplashActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -288,8 +292,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

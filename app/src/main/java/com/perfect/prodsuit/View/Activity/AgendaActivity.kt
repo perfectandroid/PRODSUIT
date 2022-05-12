@@ -91,7 +91,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
   var myReceiver:  PhoneStatReceiver = PhoneStatReceiver()
 
     companion object{
-        var CUSTOM_INTENT : String?= "com.perfect.prodsuit.View.Activity.AGENDA"
+        var CUSTOM_INTENT : String?= "PRODSUIT_CALL"
     }
 
 
@@ -522,12 +522,35 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
                 } else {
                   //  getCallDetails()
+                   // val mobileno = "7736902085"
+//                    val i = Intent()
+//                    i.putExtra("number",mobileno)
+//                    context.sendBroadcast(i)
 
-                    val i = Intent()
-                    i.action = CUSTOM_INTENT
-                    context.sendBroadcast(i)
-                   // val mobileno = "9744799045"
-                    val mobileno = "7736902085"
+                    val mobileno = "9744799045"
+
+//                    var intent = Intent(this, PhoneStatReceiver::class.java)
+//                    intent.action = "MyAction"
+//                    sendBroadcast(intent)
+
+                   // sendBroadcast(i)
+
+                    val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
+                    val BroadCallEditer = BroadCallSP.edit()
+                    BroadCallEditer.putString("BroadCall", "Yes")
+                    BroadCallEditer.commit()
+
+//                    val i= Intent(this, PhoneStatReceiver::class.java)
+//                    i.putExtra("txt", "the string value");
+//                    startActivity(i)
+
+//                    val extras = intent.extras
+//                    val i = Intent("my.action.string")
+//                    // Data you need to pass to activity
+//                    // Data you need to pass to activity
+//                    i.putExtra("message", "HELLO")
+//                    context.sendBroadcast(i)
+
                     intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
                     startActivity(intent)
                 }
