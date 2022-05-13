@@ -19,7 +19,7 @@
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/drawable/ic_profile.xml" value="0.2755" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/drawable/product_color.xml" value="0.1845" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/drawable/user_color.xml" value="0.2755" />
-        <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_account_details.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_account_details.xml" value="0.25" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_add_note.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_agenda.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_home.xml" value="0.17604166666666668" />
@@ -27,6 +27,7 @@
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_leadgeneration.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_product.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_profile.xml" value="0.18" />
+        <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_site_visit.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_subactivities.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_ticketreport.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/10-05-2022/app/src/main/res/layout/activity_todolist.xml" value="0.17604166666666668" />

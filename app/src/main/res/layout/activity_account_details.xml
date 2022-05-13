@@ -597,18 +597,18 @@
                             android:visibility="gone"
                             android:textColor="@color/greydark"
                             android:textColorHint="@color/greydark"
-                            android:hint="Type"
+                            android:hint=""
                             android:fontFamily="@font/myfont"
                             android:padding="8dp"
                             android:singleLine="true"
                             android:text=""
                             android:textSize="15dp" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyAgendaDetail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
+                     <androidx.recyclerview.widget.RecyclerView
+                             android:id="@+id/recyAgendaDetail"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/llMainDetail"

@@ -80,6 +80,7 @@ object FollowUpActionRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.i("Followup response",response.body())
                         val leads = ArrayList<FollowUpActionModel>()
                         leads.add(FollowUpActionModel(response.body()))
                         val msg = leads[0].message

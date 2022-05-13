@@ -28,7 +28,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.ActivityListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -59,6 +58,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var llMainDetail: LinearLayout? = null
     lateinit var locationViewModel: LocationViewModel
     lateinit var activitylistViewModel: ActivityListViewModel
+    lateinit var followuptypeViewModel: FollowUpTypeViewModel
     var llMessages: LinearLayout? = null
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
@@ -79,7 +79,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var infoArrayList : JSONArray
     lateinit var agendaActionArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
-    lateinit var activityArrayList : JSONArray
     lateinit var documentArrayList : JSONArray
     lateinit var historyActArrayList : JSONArray
     private var fab_main : FloatingActionButton? = null
@@ -115,8 +114,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtAction : TextView? = null
     private var tabLayout : TabLayout? = null
     var recyActionType: RecyclerView? = null
-    lateinit var agendaDetailArrayList : JSONArray
-    lateinit var activityDetailArrayList : JSONArray
+    lateinit var activityArrayList : JSONArray
+    lateinit var followupDetailArrayList : JSONArray
     var recyAgendaDetail: RecyclerView? = null
     var SubMode : String?= ""
     var llCall : LinearLayout? = null
@@ -131,7 +130,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var isOpen  : Boolean? = true
     lateinit var context: Context
     var latitude=""
-    var dialogAgendaAction : Dialog? = null
+    var followuptypeAction : Dialog? = null
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
     var longitude=""
     lateinit var agendaActionViewModel: AgendaActionViewModel
@@ -162,6 +161,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         notelistViewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
+        followuptypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -199,7 +199,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                     tv_actionType!!.visibility=View.VISIBLE
-                    getActionTypes()
+                  //  getActionTypes()
+                    getFollowupTypes()
 
                 }
                 if (tab.position == 2){
@@ -636,8 +637,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
             R.id.tv_actionType->{
                 agendaTypeClick = "1"
-                getActionTypes()
-
+              //  getActionTypes()
+                getFollowupTypes()
             }
         }
     }
@@ -659,21 +660,21 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         Log.e(TAG,"data  197  "+data)
 
 
-        if (data.equals("agendaactiontype")){
-            dialogAgendaAction!!.dismiss()
-            val jsonObject = agendaActionArrayList.getJSONObject(position)
+        if (data.equals("followuptype")){
+           followuptypeAction!!.dismiss()
+            val jsonObject = followupDetailArrayList.getJSONObject(position)
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+            tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
             getActivityDetails(ID_ActionType!!)
 
 
         }
-        else
+      /*  else
         {
             llHistory!!.visibility = View.VISIBLE
             getHistory("1")
-        }
+        }*/
     }
 
     private fun getHistory(PrductOnly: String) {
@@ -1304,7 +1305,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     }
 
-    private fun getActionTypes() {
+    private fun getFollowupTypes() {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -1318,10 +1319,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaActionViewModel.getAgendaAction(this)!!.observe(
+                followuptypeViewModel.getFollowupType(this)!!.observe(
                     this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
+                    Observer { followuptypeSetterGetter ->
+                        val msg = followuptypeSetterGetter.message
                         progressDialog!!.dismiss()
                         if (msg!!.length > 0) {
 
@@ -1329,12 +1330,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   284   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("ActionType")
-                                agendaActionArrayList = jobjt.getJSONArray("ActionTypeList")
-                                if (agendaActionArrayList.length()>0){
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followupDetailArrayList.length()>0){
                                     if (agendaAction == 0){
                                         agendaAction++
-                                        agendaTypePopup(agendaActionArrayList)
+                                        agendaTypePopup(followupDetailArrayList)
                                     }
 
                                 }
@@ -1369,12 +1370,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
-    private fun agendaTypePopup(agendaActionArrayList: JSONArray) {
+    private fun agendaTypePopup(activityDetailArrayList: JSONArray) {
 
         if (agendaTypeClick.equals("0")){
-            val jsonObject = agendaActionArrayList.getJSONObject(0)
+            val jsonObject = activityDetailArrayList.getJSONObject(0)
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+            tv_actionType!!.visibility=View.VISIBLE
+            tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
+
 
          //   getAgendaDetails(ID_ActionType!!)
             getActivityDetails(ID_ActionType!!)
@@ -1383,21 +1386,21 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             try {
 
-                dialogAgendaAction = Dialog(this)
-                dialogAgendaAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialogAgendaAction!! .setContentView(R.layout.agenda_action_popup)
-                dialogAgendaAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-                recyActionType = dialogAgendaAction!! .findViewById(R.id.recyActionType) as RecyclerView
+                followuptypeAction = Dialog(this)
+                followuptypeAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                followuptypeAction!! .setContentView(R.layout.followup_type_popup)
+                followuptypeAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                recyActionType = followuptypeAction!! .findViewById(R.id.recyFollowupType) as RecyclerView
 
                 val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                 recyActionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-                val adapter = AgendaActionTypeAdapter(this@AccountDetailsActivity, agendaActionArrayList)
+                val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, activityDetailArrayList)
                 recyActionType!!.adapter = adapter
                 adapter.setClickListener(this@AccountDetailsActivity)
 
-                dialogAgendaAction!!.show()
-                dialogAgendaAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                followuptypeAction!!.show()
+                followuptypeAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -1422,7 +1425,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Observer { activitylistSetterGetter ->
                         val msg = activitylistSetterGetter.message
                         progressDialog!!.dismiss()
-                       /* if (msg!!.length > 0) {
+                        if (msg!!.length > 0) {
 
 
                             val jObject = JSONObject(msg)
@@ -1434,10 +1437,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   443   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("ActivitiesDetails")
-                                    agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                    if (agendaDetailArrayList.length()>0){
+                               if (jObject.getString("StatusCode") == "0") {
+                                   val jobjt = jObject.getJSONObject("ActivitiesDetails")
+                                   activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
+                                    if (jobjt.length()>0){
 //                                    if (agendaDetail == 0){
 //                                        agendaDetail++
                                         //  agendaTypePopup(agendaActionArrayList)
@@ -1446,7 +1449,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         recyAgendaDetail!!.visibility=View.VISIBLE
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = AgendaDetailAdapter(this@AccountDetailsActivity, agendaDetailArrayList)
+                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, activityArrayList)
                                         recyAgendaDetail!!.adapter = adapter
                                         adapter.setClickListener(this@AccountDetailsActivity)
                                         // }
@@ -1479,7 +1482,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }*/
+                        }
                     })
                 // progressDialog!!.dismiss()
             }
@@ -1492,7 +1495,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     }
 
-    private fun getAgendaDetails(ID_ActionType: String) {
+    /*private fun getAgendaDetails(ID_ActionType: String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -1518,8 +1521,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             Log.e(TAG,"msg   443   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("AgendaDetails")
-                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                if (agendaDetailArrayList.length()>0){
+                                activityArrayList = jobjt.getJSONArray("AgendaDetailsList")
+                                if (activityArrayList.length()>0){
 //                                    if (agendaDetail == 0){
 //                                        agendaDetail++
                                     //  agendaTypePopup(agendaActionArrayList)
@@ -1594,6 +1597,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
 //        recyAgendaDetail!!.adapter = adapter
 
-    }
+    }*/
 
 }
