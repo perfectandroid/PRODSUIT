@@ -165,9 +165,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private fun addTabItem() {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Info"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Activities"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Note"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
+       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         getInfoetails()
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
