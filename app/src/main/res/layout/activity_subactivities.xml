@@ -66,6 +66,26 @@
 
 
             </LinearLayout>-->
+            <TextView
+                android:id="@+id/tv_actionType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_bg"
+                android:drawableRight="@drawable/arrowright"
+                android:drawableTint="@color/grey"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:visibility="visible"
+                android:textColor="@color/greydark"
+                android:textColorHint="@color/greydark"
+                android:hint=""
+                android:fontFamily="@font/myfont"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="15dp" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_activity"
                 android:layout_width="match_parent"

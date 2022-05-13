@@ -104,7 +104,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtAddNote : TextView? = null
     private var txtName : TextView? = null
     private var txtAddress : TextView? = null
-    private var tv_actionType : TextView? = null
     private var txtPhone : TextView? = null
     private var txtEmail : TextView? = null
     private var txtLeadNo : TextView? = null
@@ -190,7 +189,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    tv_actionType!!.visibility=View.GONE
+                //    tv_actionType!!.visibility=View.GONE
                     recyAgendaDetail!!.visibility=View.GONE
                     getInfoetails()
 
@@ -198,15 +197,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    tv_actionType!!.visibility=View.VISIBLE
+                 //   tv_actionType!!.visibility=View.VISIBLE
                   //  getActionTypes()
-                    getFollowupTypes()
+                      getActivityDetails1()
 
                 }
-                if (tab.position == 2){
+             /*   if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    tv_actionType!!.visibility=View.GONE
+                 //   tv_actionType!!.visibility=View.GONE
                     recyAgendaDetail!!.visibility=View.GONE
                     getNotelist()
 
@@ -214,7 +213,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    tv_actionType!!.visibility=View.GONE
+                 //   tv_actionType!!.visibility=View.GONE
                     recyAgendaDetail!!.visibility=View.GONE
                     getDocumenttails()
 
@@ -222,10 +221,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    tv_actionType!!.visibility=View.GONE
+                 //   tv_actionType!!.visibility=View.GONE
                     recyAgendaDetail!!.visibility=View.GONE
                     getQuotationtails()
-                }
+                }*/
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabUnselected  162  "+tab.position)
@@ -335,7 +334,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtProduct = findViewById(R.id.txtProduct);
         txtTargetDate = findViewById(R.id.txtTargetDate);
         txtAction = findViewById(R.id.txtAction);
-        tv_actionType= findViewById(R.id.tv_actionType);
+
 
         tabLayout = findViewById(R.id.tabLayout);
         fab_main!!.setOnClickListener(this)
@@ -350,7 +349,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
-        tv_actionType!!.setOnClickListener(this)
+     //   tv_actionType!!.setOnClickListener(this)
 
     }
 
@@ -635,11 +634,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 i.putExtra("prodid",ID_LeadGenerateProduct)
                 startActivity(i)
             }
-            R.id.tv_actionType->{
+          /*  R.id.tv_actionType->{
                 agendaTypeClick = "1"
               //  getActionTypes()
                 getFollowupTypes()
-            }
+            }*/
         }
     }
 
@@ -664,9 +663,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
            followuptypeAction!!.dismiss()
             val jsonObject = followupDetailArrayList.getJSONObject(position)
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
+        //    tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
-            getActivityDetails(ID_ActionType!!)
+            getActivityDetails1()
 
 
         }
@@ -1375,8 +1374,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         if (agendaTypeClick.equals("0")){
             val jsonObject = activityDetailArrayList.getJSONObject(0)
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            tv_actionType!!.visibility=View.VISIBLE
-            tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
+         //   tv_actionType!!.visibility=View.VISIBLE
+        //    tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
 
          //   getAgendaDetails(ID_ActionType!!)
@@ -1408,7 +1407,149 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
 
     }
+    private fun getActivityDetails1() {
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
+        var rv_activity = inflatedLayout.findViewById<RecyclerView>(R.id.rv_activity)
+        var tv_actionType= inflatedLayout.findViewById<TextView>(R.id.tv_actionType);
 
+        var Info = 0
+
+        tv_actionType.setOnClickListener(View.OnClickListener {
+            var agendaAction = 0
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+
+                    followuptypeViewModel.getFollowupType(this)!!.observe(
+                        this,
+                        Observer { followuptypeSetterGetter ->
+                            val msg = followuptypeSetterGetter.message
+                            progressDialog!!.dismiss()
+                            if (msg!!.length > 0) {
+
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   284   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                    followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                    if (followupDetailArrayList.length()>0){
+                                        if (agendaAction == 0){
+                                            agendaAction++
+                                            agendaTypePopup(followupDetailArrayList)
+                                        }
+
+                                    }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+            }
+
+        })
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+
+                activitylistViewModel.getActivitylist(this)!!.observe(
+                    this,
+                    Observer { activitylistSetterGetter ->
+                        val msg = activitylistSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   443   "+msg)
+
+
+                            if (msg!!.length > 0) {
+
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   443   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("ActivitiesDetails")
+                                    activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
+                                    if (jobjt.length()>0){
+//                                    if (agendaDetail == 0){
+//                                        agendaDetail++
+                                        //  agendaTypePopup(agendaActionArrayList)
+
+
+                                      //  rv_activity!!.visibility=View.VISIBLE
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        rv_activity!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, activityArrayList)
+                                        rv_activity!!.adapter = adapter
+                                        adapter.setClickListener(this@AccountDetailsActivity)
+                                        // }
+
+                                    }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
     private fun getActivityDetails(idActiontype: String) {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -1495,108 +1636,6 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     }
 
-    /*private fun getAgendaDetails(ID_ActionType: String) {
-//        if (progressDialog != null && progressDialog!!.isShowing()) {
-//            progressDialog!!.dismiss()
-//        }
-        var agendaDetail = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
 
-                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        progressDialog!!.dismiss()
-                        if (msg!!.length > 0) {
-
-
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   443   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AgendaDetails")
-                                activityArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                if (activityArrayList.length()>0){
-//                                    if (agendaDetail == 0){
-//                                        agendaDetail++
-                                    //  agendaTypePopup(agendaActionArrayList)
-
-
-                                    recyAgendaDetail!!.visibility=View.VISIBLE
-                                    val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
-                                    recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = AgendaDetailAdapter(this@AccountDetailsActivity, agendaDetailArrayList)
-                                    recyAgendaDetail!!.adapter = adapter
-                                    adapter.setClickListener(this@AccountDetailsActivity)
-                                    // }
-
-                                }
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                // progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-        }
-
-//        var ss = ""
-//
-//        if (ID_ActionType.equals("1")){
-//            ss = "[{\"ID_ActionType\": 1,\"Fileds\": \"Call1\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call2\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call3\"}]"
-//        }
-//        else if (ID_ActionType.equals("2")){
-//
-//            ss = "[{\"ID_ActionType\": 2,\"Fileds\": \"Message1\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message2\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message3\"}]"
-//        }
-//        else if (ID_ActionType.equals("3")){
-//
-//            ss = "[{\"ID_ActionType\": 3,\"Fileds\": \"Meeting1\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting2\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting3\"}]"
-//        }
-//        else if (ID_ActionType.equals("4")){
-//
-//            ss = "[{\"ID_ActionType\": 4,\"Fileds\": \"Document1\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document2\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document3\"}]"
-//        }
-//        else if (ID_ActionType.equals("5")){
-//
-//            ss = "[{\"ID_ActionType\": 5,\"Fileds\": \"Quotation1\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation2\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation3\"}]"
-//        }
-//
-//        agendaDetailArrayList = JSONArray(ss)
-//
-//        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-//        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-//        recyAgendaDetail!!.adapter = adapter
-
-    }*/
 
 }
