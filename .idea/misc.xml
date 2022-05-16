@@ -109,7 +109,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_activities.xml" value="0.30364583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2515625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_note.xml" value="0.34739583333333335" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_remark.xml" value="0.28072916666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
@@ -119,7 +120,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.20520833333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_maps_agenda.xml" value="0.31145833333333334" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_messages.xml" value="0.5" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_messages.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_product.xml" value="0.22864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.30416666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_quotation.xml" value="0.23125" />
@@ -135,6 +136,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subquotation.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_subupcoming.xml" value="0.30625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_welcome.xml" value="0.24635416666666668" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.23229166666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_action_type.xml" value="0.2552083333333333" />
@@ -177,6 +179,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/agenda_action_popup.xml" value="0.20572916666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/attendance_popup.xml" value="0.25885416666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.3151041666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branchtype_popup.xml" value="0.2671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.22395833333333334" />
@@ -187,7 +190,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
