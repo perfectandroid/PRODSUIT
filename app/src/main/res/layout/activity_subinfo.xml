@@ -46,13 +46,12 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:id="@+id/llInfoDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_greylight"
                     android:orientation="vertical">
 
 <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -77,8 +76,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/ic_student"
@@ -156,8 +155,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/addresics"
@@ -233,8 +232,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/smartphone"
@@ -311,8 +310,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/icemail"
@@ -390,8 +389,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/leadno"
@@ -407,7 +406,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:gravity="center_vertical"
-                                        android:text="Lead No"
+                                        android:text="Lead Number"
                                         android:textColor="@color/black"
                                         android:textSize="12dp"
                                         android:textStyle="bold"
@@ -469,8 +468,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/project_name"
@@ -544,8 +543,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/product_icon"
@@ -622,8 +621,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/category_icon"
@@ -700,8 +699,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/next_action"
@@ -778,8 +777,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/fromdate"
@@ -855,8 +854,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/action_type"
@@ -932,8 +931,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:textStyle="bold"
                                     android:textSize="20dp"
                                     android:src="@drawable/assignedto"

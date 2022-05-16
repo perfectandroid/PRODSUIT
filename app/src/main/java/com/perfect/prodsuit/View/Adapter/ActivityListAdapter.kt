@@ -5,23 +5,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ActivityListAdapter(internal var context: Context, internal var jsonobj: JSONObject):
+class ActivityListAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "infoSubAdapter"
+    internal val TAG : String = "activitylistAdapter"
     internal var jsonObject: JSONObject? = null
+    private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_sub_quotation, parent, false
+            R.layout.adapter_activity_list, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -29,16 +32,32 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-           // jsonObject = jsonArray.getJSONObject(position)
+            jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
-                holder.txtDate.text     = jsonobj!!.getString("Date")
-                holder.txtActntype.text     = jsonobj!!.getString("ActionType")
-                holder.txtFollowup.text     = jsonobj!!.getString("FollowUpBy")
-                holder.txtv_custmrremrk.text     = jsonobj!!.getString("CustomerRemark")
-                holder.txtv_empremrk.text     = jsonobj!!.getString("EmployeeRemark")
-                holder.txtStatus.text      = jsonobj!!.getString("Status")
+                holder.ll_Call.visibility = View.VISIBLE
+                holder.txtDate.text        = jsonObject!!.getString("Date")
+                holder.txtFollowup.text        = jsonObject!!.getString("FollowUpBy")
+                holder.txtv_custmrremrk.text        = "Product Name : "+jsonObject!!.getString("CustomerRemark")
+                holder.txtStatus.text        = jsonObject!!.getString("Status")
+
+             /*   holder.imMeeting_Location.setTag(position)
+                holder.imMeeting_Location.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaLocation")
+                })
+
+                holder.imMessage_Icon.setTag(position)
+                holder.imMessage_Icon.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaMessage")
+                })
+                holder.im_Call_Icon.setTag(position)
+                holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaCall")
+                })
+
+*/
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -46,9 +65,7 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
         }
     }
 
-  /*  override fun getItemCount(): Int {
-        return jsonArray.length()
-    }*/
+
 
     override fun getItemId(position: Int): Long {
         return super.getItemId(position)
@@ -60,26 +77,30 @@ class ActivityListAdapter(internal var context: Context, internal var jsonobj: J
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var txtDate      : TextView
-        internal var txtActntype      : TextView
+        internal var ll_Call      : LinearLayout
         internal var txtFollowup       : TextView
         internal var txtv_custmrremrk       : TextView
         internal var txtv_empremrk       : TextView
         internal var txtStatus       : TextView
+        internal var imgv_Icon       : ImageView
 
         init {
-            txtDate        = v.findViewById<View>(R.id.txtDate) as TextView
-            txtActntype        = v.findViewById<View>(R.id.txtActntype) as TextView
-            txtFollowup         = v.findViewById<View>(R.id.txtFollowup) as TextView
+            txtDate        = v.findViewById<View>(R.id.txtv_Date) as TextView
+            ll_Call        = v.findViewById<View>(R.id.ll_Call) as LinearLayout
+            txtFollowup         = v.findViewById<View>(R.id.txtv_Followup) as TextView
             txtv_custmrremrk         = v.findViewById<View>(R.id.txtv_custmrremrk) as TextView
             txtv_empremrk         = v.findViewById<View>(R.id.txtv_empremrk) as TextView
-            txtFollowup         = v.findViewById<View>(R.id.txtFollowup) as TextView
-            txtStatus         = v.findViewById<View>(R.id.txtStatus) as TextView
-
+            txtStatus         = v.findViewById<View>(R.id.txtv_Status) as TextView
+            imgv_Icon  = v.findViewById<View>(R.id.imgv_Icon) as ImageView
         }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return  jsonArray.length()
+    }
+
+    fun setClickListener(itemClickListener: ItemClickListener?) {
+        clickListener = itemClickListener
     }
 
 }
