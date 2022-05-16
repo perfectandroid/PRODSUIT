@@ -34,7 +34,7 @@
                         android:background="@color/color_activity_transparent"
                         android:padding="10dp"
                         android:tint="@color/greydark"
-                        android:src="@drawable/icback"
+                        android:src="@drawable/back_arro"
                         tools:ignore="UseAppTint" />
 
                 </LinearLayout>
