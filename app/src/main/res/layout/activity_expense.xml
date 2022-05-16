@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -14,22 +15,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
-
-            <ImageView
-                android:id="@+id/imback"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_gravity="left"
-                android:background="@color/color_activity_transparent"
-                android:padding="10dp"
-                android:tint="@color/black"
                 android:layout_weight="2"
-                android:src="@drawable/icback"/>
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imback"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:tint="@color/black"
+                    android:src="@drawable/back_arro"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="Expense"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
@@ -39,6 +50,8 @@
                 android:tint="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
                 android:fontFamily="@font/myfont" />
             <ImageView
                 android:id="@+id/imexpense"
