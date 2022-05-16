@@ -1379,7 +1379,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
          //   getAgendaDetails(ID_ActionType!!)
-            getActivityDetails(ID_ActionType!!)
+            //getActivityDetails1()
 
         }else{
 
@@ -1412,69 +1412,108 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subactivities, null, false)
         var rv_activity = inflatedLayout.findViewById<RecyclerView>(R.id.rv_activity)
         var tv_actionType= inflatedLayout.findViewById<TextView>(R.id.tv_actionType);
+        var agendaTypeClick1 : String?= "0"
+        var agendaAction = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
 
-        var Info = 0
-
-        tv_actionType.setOnClickListener(View.OnClickListener {
-            var agendaAction = 0
-            when (Config.ConnectivityUtils.isConnected(this)) {
-                true -> {
-                    progressDialog = ProgressDialog(context, R.style.Progress)
-                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                    progressDialog!!.setCancelable(false)
-                    progressDialog!!.setIndeterminate(true)
-                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                    progressDialog!!.show()
-
-                    followuptypeViewModel.getFollowupType(this)!!.observe(
-                        this,
-                        Observer { followuptypeSetterGetter ->
-                            val msg = followuptypeSetterGetter.message
-                            progressDialog!!.dismiss()
-                            if (msg!!.length > 0) {
+                followuptypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { followuptypeSetterGetter ->
+                        val msg = followuptypeSetterGetter.message
+                        progressDialog!!.dismiss()
+                        if (msg!!.length > 0) {
 
 
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   284   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-                                    followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-                                    if (followupDetailArrayList.length()>0){
-                                        if (agendaAction == 0){
-                                            agendaAction++
-                                            agendaTypePopup(followupDetailArrayList)
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   284   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followupDetailArrayList.length()>0){
+                                    if (agendaAction == 0){
+                                        agendaAction++
+                                        // agendaTypePopup(followupDetailArrayList)
+                                        if (agendaTypeClick1.equals("0")){
+                                            tv_actionType!!.visibility=View.VISIBLE
+                                            val jsonObject = followupDetailArrayList.getJSONObject(0)
+                                            ID_ActionType = jsonObject.getString("ID_ActionType")
+                                            tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
+                                            //   val jsonObject = followupDetailArrayList.getJSONObject(0)
+                                            //    ID_ActionType = jsonObject.getString("ID_ActionType")
+
+                                            //    tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+                                            //   getAgendaDetails(ID_ActionType!!)
+                                            //getActivityDetails1()
+
+                                        }else{
+
+                                            try {
+
+                                                followuptypeAction = Dialog(this)
+                                                followuptypeAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                followuptypeAction!! .setContentView(R.layout.followup_type_popup)
+                                                followuptypeAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                                recyActionType = followuptypeAction!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+                                                val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                                recyActionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+                                                val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, followupDetailArrayList)
+                                                recyActionType!!.adapter = adapter
+                                                adapter.setClickListener(this@AccountDetailsActivity)
+
+                                                followuptypeAction!!.show()
+                                                followuptypeAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                            }
+
                                         }
-
                                     }
 
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@AccountDetailsActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
-                            } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Some Technical Issues.",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
 
-                }
-                false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
-                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
 
             }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+        tv_actionType.setOnClickListener(View.OnClickListener {
+
+            agendaTypeClick1="1"
+
 
         })
         when (Config.ConnectivityUtils.isConnected(this)) {
