@@ -23,7 +23,7 @@ object AttendanceAddRepository {
 
     private var progressDialog: ProgressDialog? = null
     val attendanceAddSetterGetter = MutableLiveData<AttendanceAddModel>()
-    val TAG: String = "CustomerSearchRepository"
+    val TAG: String = "AttendanceAddRepository"
 
     fun getServicesApiCall(context: Context, IsOnline : String, strLatitude : String , strLongitue : String , address  :String,SubMode  :String): MutableLiveData<AttendanceAddModel> {
         addAttendance(context,IsOnline,strLatitude,strLongitue,address,SubMode)
@@ -76,7 +76,7 @@ object AttendanceAddRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                requestObject1.put("IsOnline", ProdsuitApplication.encryptStart(IsOnline))
+              //  requestObject1.put("IsOnline", ProdsuitApplication.encryptStart(IsOnline))
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocationName", ProdsuitApplication.encryptStart(address))
@@ -106,6 +106,7 @@ object AttendanceAddRepository {
                         val msg = leads[0].message
                         attendanceAddSetterGetter.value = AttendanceAddModel(msg)
                     } catch (e: Exception) {
+                        Log.e(TAG,"  1000    "+e.toString())
                         progressDialog!!.dismiss()
                     }
                 }

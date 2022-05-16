@@ -4,13 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/navhead"
+    android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="horizontal">
+<!--    android:background="@drawable/navhead"-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="50dp"
         android:padding="20dp"
-        android:src="@drawable/logowhitehorizontal"/>
+        android:src="@drawable/logowhitehorizontal"
+        android:visibility="gone"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/applogo"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="@color/white"
+            app:civ_border_color="@color/white" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_navName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_navStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_vertical"
+            android:text=""
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/dot_svg"
+            android:drawableTint="@color/grey"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_navDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
+
+
+
 </LinearLayout>
