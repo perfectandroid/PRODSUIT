@@ -39,6 +39,19 @@ object Config {
     const val SHARED_PREF15 = "callRecord"
     const val SHARED_PREF16 = "BroadCall"
 
+    const val SHARED_PREF17 = "LS_LocLatitude"
+    const val SHARED_PREF18 = "LS_LocLongitude"
+    const val SHARED_PREF19 = "LS_LocationName"
+    const val SHARED_PREF20 = "LS_FK_Employee"
+    const val SHARED_PREF21 = "LS_Name"
+    const val SHARED_PREF22 = "LS_Address"
+    const val SHARED_PREF23 = "LS_LoginDate"
+    const val SHARED_PREF24 = "LS_LoginTime"
+    const val SHARED_PREF25 = "LS_LoginMode"
+    const val SHARED_PREF26 = "LS_LoginStauats"
+    const val SHARED_PREF27 = "LS_DutyStatus"
+
+
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
     }

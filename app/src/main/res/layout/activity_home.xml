@@ -193,7 +193,7 @@
                                                      android:layout_height="30dp"
                                                      android:fontFamily="@font/myfont"
                                                      android:singleLine="true"
-                                                     android:text="Ranjith Kumar N V"
+                                                     android:text=""
                                                      android:textColor="@color/white"
                                                      android:textSize="17dp"
                                                      android:textStyle="bold" />
@@ -205,10 +205,11 @@
                                                  android:layout_height="25dp"
                                                  android:fontFamily="@font/myfont"
                                                  android:singleLine="true"
-                                                 android:text="On Duty from 12-05-2022 01:34 PM"
                                                  android:textColor="@color/white"
                                                  android:textSize="11dp"
                                                  android:textStyle="normal" />
+
+<!--                                             android:text="On Duty from 12-05-2022 01:34 PM"-->
 
                                          </LinearLayout>
 

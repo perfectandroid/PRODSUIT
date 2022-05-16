@@ -71,6 +71,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var tv_navName: TextView? = null
+    internal var tv_navDateTime: TextView? = null
+    internal var tv_navStatus: TextView? = null
     internal var tv_Name: TextView? = null
     internal var tv_DateTime: TextView? = null
     internal var tv_Status: TextView? = null
@@ -100,7 +103,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var knownName : String = ""
     var strLongitue : String = ""
     var strLatitude : String = ""
-    var IsOnline : String = "1"
+    var IsOnline : String = "2"
     var SubMode : String = ""
 
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
@@ -165,6 +168,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_Name = findViewById(R.id.tv_Name)
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
+
+        val headerView: View = nav_view!!.getHeaderView(0)
+        tv_navName = headerView!!.findViewById(R.id.tv_navName)
+        tv_navDateTime = headerView!!.findViewById(R.id.tv_navDateTime)
+        tv_navStatus = headerView!!.findViewById(R.id.tv_navStatus)
 
         btn_menu!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
@@ -1014,15 +1022,22 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
 
                                 tv_Name!!.text = jobjt.getString("Name")
+                                tv_navName!!.text = jobjt.getString("Name")
 //                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
                                 tv_Status!!.text = jobjt.getString("LoginStauats")
 
                                 if (jobjt.getString("LoginMode").equals("1")){
                                     imgAttendance!!.setImageResource(R.drawable.finger_online)
-                                    tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" \n "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
+                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.green))
                                 }else{
                                     imgAttendance!!.setImageResource(R.drawable.finger_offline)
-                                    tv_DateTime!!.text = "Off Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
+                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.greydark))
                                 }
 //                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
 //                                if (leadFromArrayList.length()>0){
@@ -1032,6 +1047,61 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                                    }
 //
 //                                }
+
+                                val LS_LocLatitudeSP = context.getSharedPreferences(Config.SHARED_PREF17, 0)
+                                val LS_LocLatitudeEditer = LS_LocLatitudeSP.edit()
+                                LS_LocLatitudeEditer.putString("LocLatitude", jobjt.getString("LocLatitude"))
+                                LS_LocLatitudeEditer.commit()
+
+                                val LS_LocLongitudeSP = context.getSharedPreferences(Config.SHARED_PREF18, 0)
+                                val LS_LocLongitudeEditer = LS_LocLongitudeSP.edit()
+                                LS_LocLongitudeEditer.putString("LocLongitude", jobjt.getString("LocLongitude"))
+                                LS_LocLongitudeEditer.commit()
+
+                                val LS_LocationNameSP = context.getSharedPreferences(Config.SHARED_PREF19, 0)
+                                val LS_LocationNameEditer = LS_LocationNameSP.edit()
+                                LS_LocationNameEditer.putString("LocationName",jobjt.getString("LocationName"))
+                                LS_LocationNameEditer.commit()
+
+                                val LS_FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF20, 0)
+                                val LS_FK_EmployeeEditer = LS_FK_EmployeeSP.edit()
+                                LS_FK_EmployeeEditer.putString("FK_Employee", jobjt.getString("FK_Employee"))
+                                LS_FK_EmployeeEditer.commit()
+
+                                val LS_NameSP = context.getSharedPreferences(Config.SHARED_PREF21, 0)
+                                val LS_NameEditer = LS_NameSP.edit()
+                                LS_NameEditer.putString("Name", jobjt.getString("Name"))
+                                LS_NameEditer.commit()
+
+                                val LS_AddressSP = context.getSharedPreferences(Config.SHARED_PREF22, 0)
+                                val LS_AddressEditer = LS_AddressSP.edit()
+                                LS_AddressEditer.putString("Address", jobjt.getString("Address"))
+                                LS_AddressEditer.commit()
+
+                                val LS_LoginDateSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
+                                val LS_LoginDateEditer = LS_LoginDateSP.edit()
+                                LS_LoginDateEditer.putString("LoginDate", jobjt.getString("LoginDate"))
+                                LS_LoginDateEditer.commit()
+
+                                val LS_LoginTimeSP = context.getSharedPreferences(Config.SHARED_PREF24, 0)
+                                val LS_LoginTimeEditer = LS_LoginTimeSP.edit()
+                                LS_LoginTimeEditer.putString("LoginTime", jobjt.getString("LoginTime"))
+                                LS_LoginTimeEditer.commit()
+
+                                val LS_LoginModeSP = context.getSharedPreferences(Config.SHARED_PREF25, 0)
+                                val LS_LoginModeEditer = LS_LoginModeSP.edit()
+                                LS_LoginModeEditer.putString("LoginMode", jobjt.getString("LoginMode"))
+                                LS_LoginModeEditer.commit()
+
+                                val LS_LoginStauatsSP = context.getSharedPreferences(Config.SHARED_PREF26, 0)
+                                val LS_LoginStauatsEditer = LS_LoginStauatsSP.edit()
+                                LS_LoginStauatsEditer.putString("LoginStauats", jobjt.getString("LoginStauats"))
+                                LS_LoginStauatsEditer.commit()
+
+                                val LS_DutyStatusSP = context.getSharedPreferences(Config.SHARED_PREF27, 0)
+                                val LS_DutyStatusEditer = LS_DutyStatusSP.edit()
+                                LS_DutyStatusEditer.putString("DutyStatus", jobjt.getString("DutyStatus"))
+                                LS_DutyStatusEditer.commit()
 
                             } else {
                                 val builder = AlertDialog.Builder(
