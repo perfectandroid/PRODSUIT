@@ -10,10 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -51,6 +48,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var imback: ImageView? = null
     private var tv_dob: TextView? = null
     private var tv_name: TextView? = null
+    private var tv_DateTime: TextView? = null
     private var tvdescriptn3: TextView? = null
     private var tv_address: TextView? = null
     private var tv_gender: TextView? = null
@@ -69,6 +67,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_profile)
         setRegViews()
         context = this@ProfileActivity
@@ -82,6 +82,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         imback!!.setOnClickListener(this)
 
         tv_name= findViewById(R.id.tv_nme)
+        tv_DateTime= findViewById(R.id.tv_DateTime)
         tv_dob = findViewById(R.id.tv_dob)
         tvdescriptn3 = findViewById(R.id.tvdescriptn3)
         tv_address = findViewById(R.id.tv_address)
