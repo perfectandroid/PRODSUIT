@@ -522,12 +522,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
                 } else {
                   //  getCallDetails()
-                   // val mobileno = "7736902085"
+                    val mobileno = "7736902085"
 //                    val i = Intent()
 //                    i.putExtra("number",mobileno)
 //                    context.sendBroadcast(i)
 
-                    val mobileno = "9744799045"
+//                    val mobileno = "9744799045"
 
 //                    var intent = Intent(this, PhoneStatReceiver::class.java)
 //                    intent.action = "MyAction"

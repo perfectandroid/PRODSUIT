@@ -81,6 +81,12 @@
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
+
+<!--    <style name="TextInputLayoutStyles" parent="Widget.Material3.TextInputLayout.OutlinedBox">-->
+<!--        <item name="boxStrokeColor">#fff</item>-->
+<!--        <item name="boxStrokeWidth">2dp</item>-->
+<!--    </style>-->
+
     <!--    <style name="datepicker">-->
     <!--        <item name="android:background">@color/white</item>-->
     <!--        <item name="android:textColorPrimaryInverse">@color/red</item>-->
@@ -131,12 +137,24 @@
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/colorPrimary</item>
         <item name="boxStrokeWidth">1dp</item>
-        <item name="hintTextAppearance">@style/TextFloatingLabelApperarance</item>
+<!--        <item name="hintTextAppearance">@style/TextFloatingLabelApperarance</item>-->
     </style>
 
     <style name="TextFloatingLabelApperarance" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorHint">@color/colorPrimary</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/boxStrokeColor</item>
+        <item name="boxStrokeWidth">0.2dp</item>
+        <item name="boxStrokeWidthFocused">0.2dp</item>
+        <item name="fontFamily">@font/myfont</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="hintTextColor">@color/hintTextColor</item>
+        <item name="drawableTint">@color/textColor</item>
+        <item name="android:drawableTint">@color/textColor</item>
+
     </style>
 
 

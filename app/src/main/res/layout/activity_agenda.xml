@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:background="@color/color_background1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -20,6 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -44,10 +45,11 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/myfont"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="Agenda"
                     android:textColor="@color/black"
                     android:textSize="20dp"
+                    android:textAllCaps="true"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -79,6 +81,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/white"
                         app:cardCornerRadius="3dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         app:cardElevation="5dp"

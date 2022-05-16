@@ -43,7 +43,7 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddRemarkActivity"
+            android:name="com.perfect.prodsuit.View.Activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -283,7 +283,7 @@
         </receiver>
 
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.SplashActivity"
+            android:name="com.perfect.prodsuit.View.Activity.AddRemarkActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
