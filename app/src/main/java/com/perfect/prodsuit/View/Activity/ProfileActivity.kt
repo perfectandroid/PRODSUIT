@@ -133,6 +133,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 // var dob = jobjt.getString("Email")
                                 var dateTime = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
                                 val LoginMode = jobjt.getString("LoginMode")
+
                                 if (LoginMode.equals("0")){
                                     tv_Status!!.setText(jobjt.getString("LoginStatus"))
                                     tv_Status!!.setTextColor(resources.getColor(R.color.greydark))

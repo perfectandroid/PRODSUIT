@@ -871,14 +871,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     @SuppressLint("MissingPermission")
     private fun getLocation(v : View) {
 
-        address      = ""
-        city         = ""
-        state        = ""
-        country      = ""
-        postalCode   = ""
-        knownName    = ""
-        strLongitue  = ""
-        strLatitude  = ""
+//        address      = ""
+//        city         = ""
+//        state        = ""
+//        country      = ""
+//        postalCode   = ""
+//        knownName    = ""
+//        strLongitue  = ""
+//        strLatitude  = ""
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
