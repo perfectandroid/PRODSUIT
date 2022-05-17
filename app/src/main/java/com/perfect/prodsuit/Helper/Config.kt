@@ -1,14 +1,18 @@
 package com.perfect.prodsuit.Helper
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
+import com.perfect.prodsuit.R
 import java.io.IOException
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -18,6 +22,7 @@ import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
+
 
 object Config {
 
@@ -127,12 +132,24 @@ object Config {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     fun snackBars(context: Context, view: View, message: String) {
-        val snackbar: Snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_LONG)
-        snackbar.setActionTextColor(Color.WHITE)
-        snackbar.setBackgroundTint(context.resources.getColor(R.color.black))
-        snackbar.show()
+//        val snackbar: Snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_LONG)
+//        snackbar.setActionTextColor(Color.WHITE)
+//        snackbar.setBackgroundTint(context.resources.getColor(R.color.black))
+//        snackbar.show()
 
+
+        val snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_SHORT)
+        val sbView = snackbar.view
+        sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        val typeface = ResourcesCompat.getFont(context, R.font.myfont)
+        textView.setTypeface(typeface)
+        textView.setTextSize(15f)
+        textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        snackbar.show()
 
     }
 
