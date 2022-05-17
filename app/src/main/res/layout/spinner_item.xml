@@ -9,5 +9,7 @@
     android:textColor="@color/black"
     android:drawableRight="@drawable/arrowright"
     android:padding="10dp"
+    android:textSize="15dp"
+    android:drawableTint="@color/greydark"
     android:fontFamily="@font/myfont"
     android:textAlignment="inherit"/>
