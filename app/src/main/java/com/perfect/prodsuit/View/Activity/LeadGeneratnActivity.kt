@@ -759,7 +759,7 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                customersearchViewModel.getCustomer(this)!!.observe(
+                customersearchViewModel.getCustomer(this,strCustomer)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
