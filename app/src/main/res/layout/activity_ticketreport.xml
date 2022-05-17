@@ -13,28 +13,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/loginbgmain"
+            android:layout_marginBottom="0dp"
+            android:background="@color/color_background"
             android:orientation="vertical">
+<!--            android:background="@drawable/loginbgmain"-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
-                <ImageView
-                    android:id="@+id/imback"
-                    android:layout_width="60dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_gravity="left"
-                    android:background="@color/color_activity_transparent"
-                    android:padding="10dp"
-                    android:tint="@color/black"
-                    android:src="@drawable/icback"/>
+                    android:layout_weight="5"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imback"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="10dp"
+                        android:tint="@color/black"
+                        android:src="@drawable/back_arro"
+                        tools:ignore="UseAppTint" />
+
+                </LinearLayout>
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="Customer Ticket Report"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
@@ -43,6 +60,9 @@
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:fontFamily="@font/myfont" />
+
+
+
             </LinearLayout>
             <ScrollView
                 android:layout_width="match_parent"
@@ -548,6 +568,7 @@
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
+
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
             android:layout_width="match_parent"
@@ -555,7 +576,8 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             app:cnb_menuResource="@menu/navbottom_item"
-            app:cnb_textAppearance="@style/CustomTextStyle" />
+            app:cnb_textAppearance="@style/CustomTextStyle"
+            android:visibility="gone"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
