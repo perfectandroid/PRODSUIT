@@ -64,7 +64,7 @@ object ProductDetailRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ProductActivity.ID_Category))
+                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
                 Log.e(TAG,"ID_Category   80   "+ID_Category)
             } catch (e: Exception) {

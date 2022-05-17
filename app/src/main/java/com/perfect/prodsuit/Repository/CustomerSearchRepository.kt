@@ -11,6 +11,7 @@ import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.CustomerSearchModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -26,12 +27,12 @@ object CustomerSearchRepository {
     val customerSetterGetter = MutableLiveData<CustomerSearchModel>()
     val TAG: String = "CustomerSearchRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<CustomerSearchModel> {
-        getCustomer(context)
+    fun getServicesApiCall(context: Context,strCustomer : String): MutableLiveData<CustomerSearchModel> {
+        getCustomer(context, LeadGenerationActivity.strCustomer)
         return customerSetterGetter
     }
 
-    private fun getCustomer(context: Context) {
+    private fun getCustomer(context: Context,strCustomer : String) {
 
         Log.e("TAG","getCustomer  ")
         try {
@@ -64,7 +65,7 @@ object CustomerSearchRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(CustomerSearchActivity.strCustomer))
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 Log.e(TAG,"requestObject1   74   "+requestObject1)

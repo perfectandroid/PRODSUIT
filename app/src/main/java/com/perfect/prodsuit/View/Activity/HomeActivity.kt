@@ -885,7 +885,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     var location: Location? = task.result
                     if (location == null) {
-                      //  requestNewLocationData()
+                        requestNewLocationData()
                     } else {
 //                        txtLongitude!!.text = location.longitude.toString()
 //                        txtLatitude!!.text = location.latitude.toString()
@@ -921,6 +921,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun validLocation(v : View) {
+
         if (strLatitude.equals("") || strLongitue.equals("")){
             Config.snackBars(context,v,"Location Not Found")
         }else{
@@ -977,20 +978,27 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var location: Location = locationResult.lastLocation
-            Log.e("HOEMACTIVITY","longitude  8191    "+location.longitude)
-            Log.e("HOEMACTIVITY","latitude   8191    "+location.latitude)
 
-            geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
-            addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-            address = addresses!!.get(0).getAddressLine(0)
-            city = addresses!!.get(0).locality
-            state = addresses!!.get(0).adminArea
-            country = addresses!!.get(0).countryName
-            postalCode = addresses!!.get(0).postalCode
-            knownName = addresses!!.get(0).featureName
-            strLongitue = location.longitude.toString()
-            strLatitude = location.latitude.toString()
+
+            try {
+                var location: Location = locationResult.lastLocation
+                Log.e("HOEMACTIVITY","longitude  8191    "+location.longitude)
+                Log.e("HOEMACTIVITY","latitude   8191    "+location.latitude)
+                geocoder = Geocoder(this@HomeActivity, Locale.getDefault())
+                addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+                address = addresses!!.get(0).getAddressLine(0)
+                city = addresses!!.get(0).locality
+                state = addresses!!.get(0).adminArea
+                country = addresses!!.get(0).countryName
+                postalCode = addresses!!.get(0).postalCode
+                knownName = addresses!!.get(0).featureName
+                strLongitue = location.longitude.toString()
+                strLatitude = location.latitude.toString()
+            }catch (e : Exception){
+                Log.e("HOEMACTIVITY","Exception  8191    "+e.toString())
+            }
+
+
 
         }
     }
@@ -1016,8 +1024,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
                             val jObject = JSONObject(msg)
-                            Log.e("HOMEACTIVITY","msg   91   "+msg.length)
-                            Log.e("HOMEACTIVITY","msg   91   "+msg)
+                            Log.e("HOMEACTIVITY","msg   1026   "+msg.length)
+                            Log.e("HOMEACTIVITY","msg   1026   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
 
