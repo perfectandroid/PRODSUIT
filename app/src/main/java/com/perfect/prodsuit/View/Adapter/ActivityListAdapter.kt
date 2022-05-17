@@ -23,6 +23,7 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
@@ -34,8 +35,9 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
+                Log.i("array", jsonArray.toString()+"\n"+"Test")
+                jsonObject = jsonArray.getJSONObject(position)
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
                 holder.ll_Call.visibility = View.VISIBLE
@@ -49,9 +51,12 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
                 holder.txtv_actntype.text        = actiontype+" with"
                 holder.ll_Call_Icon.visibility = View.VISIBLE
 
+
+
                 val call = ContextCompat.getDrawable(context!!,R.drawable.call_icon)?.apply {
                     setBounds(0, 0, intrinsicWidth, intrinsicHeight)
                 }
+
                 val sitevisit = ContextCompat.getDrawable(context!!,R.drawable.location_icon)?.apply {
                     setBounds(0, 0, intrinsicWidth, intrinsicHeight)
                 }
@@ -60,7 +65,7 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
                 }
                 if(actiontype.equals("Call"))
                 {
-                   holder.im_Call_Icon.setImageDrawable(call)
+                    holder.im_Call_Icon.setImageDrawable(call)
                 }
                 else if(actiontype.equals("Site Visit"))
                 {
@@ -70,7 +75,15 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
                 {
                     holder.im_Call_Icon.setImageDrawable(email)
                 }
+                else if(actiontype.equals("Courier"))
+                {
+                    holder.im_Call_Icon.setImageDrawable(email)
+                }
+                holder.txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+
             }
+
+
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())

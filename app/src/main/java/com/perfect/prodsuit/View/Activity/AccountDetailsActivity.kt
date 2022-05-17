@@ -1446,7 +1446,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
                                 if (activityArrayList.length()>0){
 //
-
+                                    rv_activity!!.visibility=View.VISIBLE
                                     rv_activity = findViewById(R.id.rv_activity) as RecyclerView
                                     val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                     rv_activity!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1458,6 +1458,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 }
 
                             } else {
+                                rv_activity!!.visibility=View.GONE
                                 val builder = AlertDialog.Builder(
                                     this@AccountDetailsActivity,
                                     R.style.MyDialogTheme
