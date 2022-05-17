@@ -1024,7 +1024,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 tv_Name!!.text = jobjt.getString("Name")
                                 tv_navName!!.text = jobjt.getString("Name")
 //                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                tv_Status!!.text = jobjt.getString("LoginStauats")
+                                tv_Status!!.text = jobjt.getString("LoginStatus")
 
                                 if (jobjt.getString("LoginMode").equals("1")){
                                     imgAttendance!!.setImageResource(R.drawable.finger_online)
@@ -1095,7 +1095,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                                 val LS_LoginStauatsSP = context.getSharedPreferences(Config.SHARED_PREF26, 0)
                                 val LS_LoginStauatsEditer = LS_LoginStauatsSP.edit()
-                                LS_LoginStauatsEditer.putString("LoginStauats", jobjt.getString("LoginStauats"))
+                                LS_LoginStauatsEditer.putString("LoginStatus", jobjt.getString("LoginStatus"))
                                 LS_LoginStauatsEditer.commit()
 
                                 val LS_DutyStatusSP = context.getSharedPreferences(Config.SHARED_PREF27, 0)
