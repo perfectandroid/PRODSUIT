@@ -48,6 +48,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var imback: ImageView? = null
     private var tv_dob: TextView? = null
     private var tv_name: TextView? = null
+    private var tv_Status: TextView? = null
     private var tv_DateTime: TextView? = null
     private var tvdescriptn3: TextView? = null
     private var tv_address: TextView? = null
@@ -82,6 +83,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         imback!!.setOnClickListener(this)
 
         tv_name= findViewById(R.id.tv_nme)
+        tv_Status= findViewById(R.id.tv_Status)
         tv_DateTime= findViewById(R.id.tv_DateTime)
         tv_dob = findViewById(R.id.tv_dob)
         tvdescriptn3 = findViewById(R.id.tvdescriptn3)
@@ -127,7 +129,24 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 var mob = jobjt.getString("MobileNumber")
                                 var email = jobjt.getString("Email")
                                 var dob = jobjt.getString("EmpDOB")
+                               //
                                 // var dob = jobjt.getString("Email")
+                                var dateTime = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+                                val LoginMode = jobjt.getString("LoginMode")
+                                if (LoginMode.equals("0")){
+                                    tv_Status!!.setText(jobjt.getString("LoginStatus"))
+                                    tv_Status!!.setTextColor(resources.getColor(R.color.greydark))
+                                    tv_Status!!.background = resources.getDrawable(R.drawable.rounded_offline)
+                                    tv_Status!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.greydark))
+                                }
+                                else{
+                                    tv_Status!!.setText(jobjt.getString("LoginStatus"))
+                                    tv_Status!!.setTextColor(resources.getColor(R.color.green))
+                                    tv_Status!!.background = resources.getDrawable(R.drawable.rounded_online)
+                                    tv_Status!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.green))
+                                }
+
+                                tv_DateTime!!.setText(dateTime)
                                 if(name!=null||name!="")
                                 {
                                     tv_name!!.visibility=View.VISIBLE
