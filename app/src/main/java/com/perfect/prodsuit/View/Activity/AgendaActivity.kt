@@ -522,7 +522,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
                 } else {
                   //  getCallDetails()
-                    val mobileno = "7736902085"
+                    //val mobileno = "7736902085"
 //                    val i = Intent()
 //                    i.putExtra("number",mobileno)
 //                    context.sendBroadcast(i)
@@ -534,7 +534,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                    sendBroadcast(intent)
 
                    // sendBroadcast(i)
-
+                    val mobileno = jsonObject.getString("CustomerMobile")
                     val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
                     val BroadCallEditer = BroadCallSP.edit()
                     BroadCallEditer.putString("BroadCall", "Yes")

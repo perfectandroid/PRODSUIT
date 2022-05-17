@@ -152,6 +152,7 @@
                                 android:layout_weight="1"
                                 android:checked="true"
                                 android:textAllCaps="true"
+                                android:textSize="16dp"
                                 android:fontFamily="@font/myfont"
                                 android:text="Intimation"
                                 android:textStyle="bold" />
@@ -166,6 +167,7 @@
                                 android:fontFamily="@font/myfont"
                                 android:textAllCaps="true"
                                 android:text="Reminder"
+                                android:textSize="16dp"
                                 android:textStyle="bold" />
 
                             <RadioButton
@@ -176,6 +178,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/myfont"
                                 android:text="Others"
+                                android:textSize="16dp"
                                 android:textAllCaps="true"
                                 android:textStyle="bold" />
 

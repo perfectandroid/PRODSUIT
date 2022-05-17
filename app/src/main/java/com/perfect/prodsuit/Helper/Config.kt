@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -147,7 +148,7 @@ object Config {
         textView.setTextColor(Color.WHITE)
         val typeface = ResourcesCompat.getFont(context, R.font.myfont)
         textView.setTypeface(typeface)
-        textView.setTextSize(15f)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackbar.show()
 

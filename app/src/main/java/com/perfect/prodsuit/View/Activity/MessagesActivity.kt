@@ -125,16 +125,19 @@ class MessagesActivity : AppCompatActivity() , View.OnClickListener{
     private fun validation(v : View) {
         messageStr = etMessage!!.text.toString()
         if(messageStr.trim().length<=0) {
-            val snackbar: Snackbar = Snackbar.make(v, "Please Enter Message to Send.", Snackbar.LENGTH_LONG)
-            snackbar.setActionTextColor(Color.WHITE)
-            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-            snackbar.show()
+//            val snackbar: Snackbar = Snackbar.make(v, "Please Enter Message to Send.", Snackbar.LENGTH_LONG)
+//            snackbar.setActionTextColor(Color.WHITE)
+//            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//            snackbar.show()
+
+            Config.snackBars(context,v,"Please Enter Message to Send.")
         }
         else if (!cbWhats!!.isChecked() && !cbEmail!!.isChecked() && !cbMessages!!.isChecked()){
-            val snackbar: Snackbar = Snackbar.make(v, "Please select sending option", Snackbar.LENGTH_LONG)
-            snackbar.setActionTextColor(Color.WHITE)
-            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-            snackbar.show()
+//            val snackbar: Snackbar = Snackbar.make(v, "Please select sending option", Snackbar.LENGTH_LONG)
+//            snackbar.setActionTextColor(Color.WHITE)
+//            snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//            snackbar.show()
+            Config.snackBars(context,v,"Please select sending option")
             Log.e(TAG, "NOT CHECKED")
         }else{
             val isWhatsappInstalled = whatsappInstalledOrNot("com.whatsapp")
@@ -150,10 +153,11 @@ class MessagesActivity : AppCompatActivity() , View.OnClickListener{
                 )
             } else {
                 if (cbWhats!!.isChecked()){
-                    val snackbar: Snackbar = Snackbar.make(v, "WhatsApp not Installed", Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.WHITE)
-                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-                    snackbar.show()
+//                    val snackbar: Snackbar = Snackbar.make(v, "WhatsApp not Installed", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(context,v,"WhatsApp not Installed")
                 }
                 else{
                     Log.e(
