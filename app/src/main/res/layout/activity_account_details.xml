@@ -319,6 +319,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@color/colorPrimary"
                                     android:padding="10dp"
+                                    android:visibility="gone"
                                     android:orientation="horizontal">
 
                                     <LinearLayout

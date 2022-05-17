@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -36,28 +38,38 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
-               // holder.ll_Call.visibility = View.VISIBLE
+                holder.ll_Call.visibility = View.VISIBLE
                 holder.txtDate.text        = jsonObject!!.getString("Date")
                 holder.txtFollowup.text        = jsonObject!!.getString("FollowUpBy")
                 holder.txtv_custmrremrk.text        = jsonObject!!.getString("CustomerRemark")
+                holder.txtv_empremrk.text        = jsonObject!!.getString("EmployeeRemark")
                 holder.txtStatus.text        = jsonObject!!.getString("Status")
+                holder.txtv_nxtactn.text        = jsonObject!!.getString("NextActionDate")
+                var actiontype= jsonObject!!.getString("ActionType")
+                holder.txtv_actntype.text        = actiontype+" with"
+                holder.ll_Call_Icon.visibility = View.VISIBLE
 
-             /*   holder.imMeeting_Location.setTag(position)
-                holder.imMeeting_Location.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaLocation")
-                })
-
-                holder.imMessage_Icon.setTag(position)
-                holder.imMessage_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaMessage")
-                })
-                holder.im_Call_Icon.setTag(position)
-                holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaCall")
-                })
-
-*/
-
+                val call = ContextCompat.getDrawable(context!!,R.drawable.call_icon)?.apply {
+                    setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+                }
+                val sitevisit = ContextCompat.getDrawable(context!!,R.drawable.location_icon)?.apply {
+                    setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+                }
+                val email = ContextCompat.getDrawable(context!!,R.drawable.message_icon)?.apply {
+                    setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+                }
+                if(actiontype.equals("Call"))
+                {
+                   holder.im_Call_Icon.setImageDrawable(call)
+                }
+                else if(actiontype.equals("Site Visit"))
+                {
+                    holder.im_Call_Icon.setImageDrawable(sitevisit)
+                }
+                else if(actiontype.equals("Email"))
+                {
+                    holder.im_Call_Icon.setImageDrawable(email)
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -82,12 +94,16 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
         internal var txtv_custmrremrk       : TextView
         internal var txtv_empremrk       : TextView
         internal var txtStatus       : TextView
-        lateinit var ll_date       : LinearLayout
-        lateinit var ll_followup       : LinearLayout
+        internal var txtv_actntype       : TextView
+        lateinit var ll_Call       : LinearLayout
+        lateinit var ll_Call_Icon       : LinearLayout
         lateinit var ll_cstmrremrk       : LinearLayout
         lateinit var ll_empremrk       : LinearLayout
         lateinit var ll_status       : LinearLayout
         lateinit var ll_nxtactn       : LinearLayout
+        lateinit var im_Call_Icon       : ImageView
+        lateinit var ll_sitevisit_Icon       : LinearLayout
+        lateinit var ll_email_Icon       : LinearLayout
 
 
         init {
@@ -97,14 +113,19 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
             txtv_custmrremrk         = v.findViewById<View>(R.id.txtv_custmrremrk) as TextView
             txtv_empremrk         = v.findViewById<View>(R.id.txtv_empremrk) as TextView
             txtStatus         = v.findViewById<View>(R.id.txtv_Status) as TextView
-
-
-            ll_date         = v.findViewById<View>(R.id.ll_date) as LinearLayout
+            txtv_actntype         = v.findViewById<View>(R.id.txtv_actntype) as TextView
+            im_Call_Icon         = v.findViewById<View>(R.id.im_Call_Icon) as ImageView
+            ll_Call         = v.findViewById<View>(R.id.ll_Call) as LinearLayout
+            ll_Call_Icon         = v.findViewById<View>(R.id.ll_Call_Icon) as LinearLayout
+          /*  ll_sitevisit_Icon         = v.findViewById<View>(R.id.ll_sitevisit_Icon) as LinearLayout
+            ll_sitevisit_Icon         = v.findViewById<View>(R.id.ll_sitevisit_Icon) as LinearLayout
+            ll_email_Icon = v.findViewById<View>(R.id.ll_email_Icon) as LinearLayout*/
+         /*   ll_date         = v.findViewById<View>(R.id.ll_date) as LinearLayout
             ll_followup         = v.findViewById<View>(R.id.ll_followup) as LinearLayout
             ll_cstmrremrk         = v.findViewById<View>(R.id.ll_cstmrremrk) as LinearLayout
             ll_empremrk         = v.findViewById<View>(R.id.ll_empremrk) as LinearLayout
             ll_status         = v.findViewById<View>(R.id.ll_status) as LinearLayout
-            ll_nxtactn         = v.findViewById<View>(R.id.ll_nxtactn) as LinearLayout
+            ll_nxtactn         = v.findViewById<View>(R.id.ll_nxtactn) as LinearLayout*/
         }
     }
 

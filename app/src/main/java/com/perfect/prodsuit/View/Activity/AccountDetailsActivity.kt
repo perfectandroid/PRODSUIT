@@ -193,8 +193,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                //    tv_actionType!!.visibility=View.GONE
-                  //  recyAgendaDetail!!.visibility=View.GONE
+
                     getInfoetails()
 
                 }
@@ -205,23 +204,20 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                   getActivityDetails1()
 
                 }
-             /*   if (tab.position == 2){
+                if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                 //   tv_actionType!!.visibility=View.GONE
-                    recyAgendaDetail!!.visibility=View.GONE
-                    getNotelist()
+                    getLocationImages()
 
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                 //   tv_actionType!!.visibility=View.GONE
-                    recyAgendaDetail!!.visibility=View.GONE
-                    getDocumenttails()
+
+                   // getDocumenttails()
 
                 }
-                if (tab.position == 4){
+              /*  if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
                  //   tv_actionType!!.visibility=View.GONE
@@ -236,6 +232,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 Log.e(TAG,"onTabReselected  165  "+tab.position)
             }
         })
+    }
+
+    private fun getLocationImages() {
+        TODO("Not yet implemented")
     }
 
     private fun fabOpenClose() {
