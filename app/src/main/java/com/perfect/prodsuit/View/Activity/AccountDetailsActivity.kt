@@ -6,15 +6,22 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Base64
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +29,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -33,11 +49,14 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
+class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
+    OnMapReadyCallback {
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -73,6 +92,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var quotationlistViewModel: QuotationListViewModel
     lateinit var documentViewModel: DocumentListViewModel
     lateinit var historyActViewModel: HistoryActViewModel
+    lateinit var imageViewModel: ImageViewModel
     lateinit var notelistViewModel: NoteListViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
@@ -130,16 +150,28 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var isOpen  : Boolean? = true
     lateinit var context: Context
     var latitude=""
+    var landmark: String?=""
+    var landmark2: String?=""
     var followuptypeAction : Dialog? = null
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
     var longitude=""
-
+    var jobjt:JSONObject?=null
     var agendaTypeClick1 : String?= "0"
     lateinit var agendaActionViewModel: AgendaActionViewModel
     private var Id_leadgenrteprod: String? = null
     var agendaTypeClick : String?= "0"
     var rv_activity:RecyclerView?=null
     var tv_actionType:TextView?=null
+    var imgv_1:ImageView?=null
+    var imgv_2:ImageView?=null
+    var crdv_1:CardView?=null
+    var crdv_2:CardView?=null
+
+    private lateinit var mMap: GoogleMap
+    internal var mCurrLocationMarker: Marker? = null
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val REQUEST_CODE = 101
+    private lateinit var currentLocation: Location
     companion object{
         var ID_LeadGenerateProduct :String = ""
         var LgCusMobile :String = ""
@@ -162,10 +194,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         quotationlistViewModel = ViewModelProvider(this).get(QuotationListViewModel::class.java)
         historyActViewModel = ViewModelProvider(this).get(HistoryActViewModel::class.java)
         activitylistViewModel = ViewModelProvider(this).get(ActivityListViewModel::class.java)
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
         notelistViewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
         followuptypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -208,15 +242,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-                    getLocationImages()
+                    getLocation()
 
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
 
-                   // getDocumenttails()
-
+                    getImages()
                 }
               /*  if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -235,9 +268,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         })
     }
 
-    private fun getLocationImages() {
-        TODO("Not yet implemented")
-    }
+
+
 
     private fun fabOpenClose() {
         if (isOpen!!) {
@@ -625,11 +657,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
             }
-            R.id.ll_msg->{
-                val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
+          /*  R.id.ll_msg->{
+               *//* val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
                 i.putExtra("LgCusMobile",LgCusMobile)
                 i.putExtra("LgCusEmail",LgCusEmail)
-                startActivity(i)
+                startActivity(i)*//*
             }
             R.id.llLocation->{
                 getLocationDetails()
@@ -639,7 +671,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, ImageActivity::class.java)
                 i.putExtra("prodid",ID_LeadGenerateProduct)
                 startActivity(i)
-            }
+            }*/
             R.id.tv_actionType->{
                 agendaTypeClick1 = "1"
               //  getActionTypes()
@@ -1127,66 +1159,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
         }
     }
-    private fun getLocationDetails() {
-        strid = ID_LeadGenerateProduct!!
-        Log.i("Id", strid)
-        context = this@AccountDetailsActivity
-        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                locationViewModel.getLocation(this)!!.observe(
-                    this,
-                    Observer { locationSetterGetter ->
-                        val msg = locationSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                latitude = jobjt!!.getString("LocationLatitude")
-                                longitude = jobjt!!.getString("LocationLongitude")
-                                Log.i("LocationDetails", latitude + "\n" + longitude)
 
-                                val i = Intent(this@AccountDetailsActivity, LocationActivity::class.java)
-                                i.putExtra("prodid",ID_LeadGenerateProduct)
-                                i.putExtra("lat",latitude)
-                                i.putExtra("long",longitude)
-                                startActivity(i)
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
     private fun getCalendarId(context: Context): Long? {
 
         if (ActivityCompat.checkSelfPermission(
@@ -1490,36 +1463,212 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         }
 
-//        var ss = ""
-//
-//        if (ID_ActionType.equals("1")){
-//            ss = "[{\"ID_ActionType\": 1,\"Fileds\": \"Call1\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call2\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call3\"}]"
-//        }
-//        else if (ID_ActionType.equals("2")){
-//
-//            ss = "[{\"ID_ActionType\": 2,\"Fileds\": \"Message1\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message2\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message3\"}]"
-//        }
-//        else if (ID_ActionType.equals("3")){
-//
-//            ss = "[{\"ID_ActionType\": 3,\"Fileds\": \"Meeting1\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting2\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting3\"}]"
-//        }
-//        else if (ID_ActionType.equals("4")){
-//
-//            ss = "[{\"ID_ActionType\": 4,\"Fileds\": \"Document1\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document2\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document3\"}]"
-//        }
-//        else if (ID_ActionType.equals("5")){
-//
-//            ss = "[{\"ID_ActionType\": 5,\"Fileds\": \"Quotation1\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation2\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation3\"}]"
-//        }
-//
-//        agendaDetailArrayList = JSONArray(ss)
-//
-//        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-//        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-//        recyAgendaDetail!!.adapter = adapter
 
+    }
+
+    private fun getLocation() {
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
+        llMainDetail!!.addView(inflatedLayout1);
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationViewModel.getLocation(this)!!.observe(
+                    this,
+                    Observer { locationSetterGetter ->
+                        val msg = locationSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadImageDetails")
+                                latitude = jobjt!!.getString("LocationLatitude")
+                                longitude = jobjt!!.getString("LocationLongitude")
+                                Log.i("LocationDetails", latitude + "\n" + longitude)
+
+                                fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
+                                fetchLocation()
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun fetchLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) !=
+            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE
+            )
+            return
+        }
+        val task = fusedLocationProviderClient.lastLocation
+        task.addOnSuccessListener { location ->
+            if (location != null) {
+                currentLocation = location
+
+                val supportMapFragment =
+                    (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
+                supportMapFragment!!.getMapAsync(this@AccountDetailsActivity)
+            }
+        }
+    }
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        Log.i("locationdet",latitude+"\n"+longitude)
+
+
+        //    val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+
+        val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
+
+        val geocoder: Geocoder
+        var addresses: List<Address?>
+        geocoder = Geocoder(this, Locale.getDefault())
+        addresses = geocoder.getFromLocation(latitude.toDouble(),longitude.toDouble(), 1);
+        val city = addresses.get(0)!!.getAddressLine(0);
+        Log.i("City",city)
+
+
+        val markerOptions = MarkerOptions().position(latLng).title(city)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
+        googleMap.addMarker(markerOptions)
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //  fetchLocation()
+            }
+        }
+    }
+
+    private fun getImages() {
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout1: View = inflater.inflate(R.layout.activity_subimage, null, false)
+        llMainDetail!!.addView(inflatedLayout1);
+        imgv_1 = inflatedLayout1.findViewById<ImageView>(R.id.imgv_1)
+        imgv_2 = inflatedLayout1.findViewById<ImageView>(R.id.imgv_2)
+        crdv_1 = inflatedLayout1.findViewById<CardView>(R.id.crdv_1)
+        crdv_2 = inflatedLayout1.findViewById<CardView>(R.id.crdv_2)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                imageViewModel.getImage(this)!!.observe(this,
+                    { ImageSetterGetter ->
+                        val msg = ImageSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                jobjt = jObject.getJSONObject("LeadImageDetails")
+                                landmark = jobjt!!.getString("LocationLandMark1")
+                                landmark2 = jobjt!!.getString("LocationLandMark2")
+
+                                if(!landmark.equals(""))
+                                {
+                                    crdv_1!!.visibility=View.VISIBLE
+                                    val decodedString = Base64.decode(landmark, Base64.DEFAULT)
+                                    ByteArrayToBitmap(decodedString)
+                                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                    val stream = ByteArrayOutputStream()
+                                    decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                    Glide.with(this) .load(stream.toByteArray()).into(imgv_1!!)
+
+                                }
+                                if(!landmark2.equals(""))
+                                {
+                                    crdv_2!!.visibility=View.VISIBLE
+                                    val decodedString = Base64.decode(landmark2, Base64.DEFAULT)
+                                    ByteArrayToBitmap(decodedString)
+                                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                    val stream = ByteArrayOutputStream()
+                                    decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                    Glide.with(this) .load(stream.toByteArray()).into(imgv_2!!)
+                                }
+
+                            }
+
+                            else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+    fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        val arrayInputStream = ByteArrayInputStream(byteArray)
+        return BitmapFactory.decodeStream(arrayInputStream)
     }
 
 }
