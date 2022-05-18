@@ -201,4 +201,7 @@ interface ApiInterface {
 
     @POST("UserValidations/LeadGenerateReport")
     fun getLeadGenerateReport(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ProductWiseLead")
+    fun getProductWiseLeadReport(@Body body: RequestBody): Call<String>
 }
