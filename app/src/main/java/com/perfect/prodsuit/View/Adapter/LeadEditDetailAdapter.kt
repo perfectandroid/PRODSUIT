@@ -1,6 +1,9 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.graphics.Rect
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,9 +39,60 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtCustName.text        = jsonObject!!.getString("CustomerName")
-                holder.txtCustAddress.text        = jsonObject!!.getString("Address")
+                val name                       = jsonObject!!.getString("CustomerName")
+                val first                      = name[0]
+                holder.txtFirst.text           = first!!.toString()
+                holder.txtCustAddress.text     = jsonObject!!.getString("Address")
                 holder.txtProdName.text        = jsonObject!!.getString("product")
                 holder.txtNextActionDate.text  = jsonObject!!.getString("NextActionDate")
+
+
+                if (position%1 == 0){
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color1)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+                    // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color1))
+                }
+                if (position%2 == 0){
+                    //  holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color2))
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color2)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+                }
+                if (position%3 == 0){
+                    //holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color3))
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color3)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+                }
+                if (position%4 == 0){
+                    //holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color4))
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color4)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+                }
+                if (position%5 == 0){
+                    // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color5))
+
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color5)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+                }
                 holder.llleadEdit!!.setTag(position)
                 holder.llleadEdit!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "leadedit")
@@ -64,11 +118,13 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var txtCustName        : TextView
+        internal var txtFirst        : TextView
         internal var txtCustAddress     : TextView
         internal var txtProdName        : TextView
         internal var txtNextActionDate  : TextView
         internal var llleadEdit         : LinearLayout
         init {
+            txtFirst          = v.findViewById<View>(R.id.txtFirst) as TextView
             txtCustName          = v.findViewById<View>(R.id.txtCustName) as TextView
             txtCustAddress       = v.findViewById<View>(R.id.txtCustAddress) as TextView
             txtProdName          = v.findViewById<View>(R.id.txtProdName) as TextView
