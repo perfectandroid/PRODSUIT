@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,392 +79,523 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:id="@+id/llfromdate"
+
+                    <androidx.cardview.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="25dp"
-                        android:background="@drawable/etselect_bg"
-                        android:orientation="vertical">
+                        app:cardCornerRadius="3dp"
+                        android:backgroundTint="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:cardUseCompatPadding="true">
+
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="left|center"
-                                android:background="@color/color_activity_transparent"
-                                android:scaleType="fitXY"
-                                android:padding="10dp"
-                                android:src="@drawable/fromdate"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="left"
-                                    android:text="From Date"
-                                    android:textColor="@color/colorPrimaryExtraDark"
-                                    android:textSize="12dp"
-                                    android:textStyle="bold"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/myfont" />
-
-                                <TextView
-                                    android:id="@+id/txtfromDate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/myfont"
-                                    android:hint="Select From Date"
-                                    android:textColorHint="@color/grey_dark"
-                                    android:gravity="left"
-                                    android:textColor="@color/black"
-                                    android:textSize="15dp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/ll_Fromdate"
-                            android:layout_marginBottom="30dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/etselect_bggrey"
-                            android:gravity = "center"
-                            android:visibility="gone">
-
-
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/greylight"
-                                    android:gravity="center"
-                                    android:text="Select Date"
-                                    android:layout_marginTop="10dp"
-                                    android:textColor="@color/colorPrimaryExtraDark"
-                                    android:textSize="13dp"
-                                    android:textStyle="bold" />
-
-                                <ImageView
-                                    android:id="@+id/im_close"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@color/color_activity_transparent"
-                                    android:gravity="center"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/ic_cancel_" />
-                            </RelativeLayout>
-
-                            <DatePicker
-                                android:id="@+id/date_Picker"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:datePickerMode = "spinner"
-                                android:background="@color/greylight"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:calendarViewShown="false"/>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:layout_marginBottom="10dp"
-                                android:orientation="horizontal">
-
-
-                                <TextView
-                                    android:id="@+id/txtok"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/white"
-                                    android:fontFamily="@font/myfont"
-                                    android:background="@drawable/btn_bgcolour"
-                                    android:paddingLeft="20dp"
-                                    android:paddingRight="20dp"
-                                    android:paddingBottom="5dp"
-                                    android:paddingTop="5dp"
-                                    android:textAllCaps="false"
-                                    android:text="Submit" />
-
-
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/lltodate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/etselect_bg"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="left|center"
-                                android:background="@color/color_activity_transparent"
-                                android:scaleType="fitXY"
-                                android:padding="10dp"
-                                android:src="@drawable/todate"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="left"
-                                    android:text="To Date"
-                                    android:textColor="@color/colorPrimaryExtraDark"
-                                    android:textSize="12dp"
-                                    android:textStyle="bold"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/myfont" />
-
-                                <TextView
-                                    android:id="@+id/txttoDate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/myfont"
-                                    android:gravity="left"
-                                    android:hint="Select To Date"
-                                    android:textColorHint="@color/grey_dark"
-                                    android:textColor="@color/black"
-                                    android:textSize="15dp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/ll_Todate"
-                            android:layout_marginBottom="30dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/etselect_bggrey"
-                            android:gravity = "center"
-                            android:visibility="gone">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/greylight"
-                                    android:gravity="center"
-                                    android:text="Select Date"
-                                    android:layout_marginTop="10dp"
-                                    android:textColor="@color/colorPrimaryExtraDark"
-                                    android:textSize="13dp"
-                                    android:textStyle="bold" />
-
-                                <ImageView
-                                    android:id="@+id/imclose"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_gravity="center"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@color/color_activity_transparent"
-                                    android:gravity="center"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/ic_cancel_" />
-                            </RelativeLayout>
-
-                            <DatePicker
-                                android:id="@+id/date_Picker1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:datePickerMode = "spinner"
-                                android:background="@color/greylight"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:calendarViewShown="false"/>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:layout_marginBottom="10dp"
-                                android:orientation="horizontal">
-
-
-                                <TextView
-                                    android:id="@+id/txtok1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/white"
-                                    android:fontFamily="@font/myfont"
-                                    android:background="@drawable/btn_bgcolour"
-                                    android:paddingLeft="20dp"
-                                    android:paddingRight="20dp"
-                                    android:paddingBottom="5dp"
-                                    android:paddingTop="5dp"
-                                    android:textAllCaps="false"
-                                    android:text="Submit" />
-
-
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/llDashboardreporttype"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/etselect_bg"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="left|center"
-                            android:background="@color/color_activity_transparent"
-                            android:scaleType="fitXY"
+                            android:layout_height="match_parent"
                             android:padding="10dp"
-                            android:src="@drawable/reprttype"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="left"
-                                android:text="Dashboard Report"
-                                android:textColor="@color/colorPrimaryExtraDark"
-                                android:textSize="12dp"
-                                android:textStyle="bold"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont" />
 
-                            <TextView
-                                android:id="@+id/txtdashboardtype"
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_FromDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="left"
-                                android:hint="Select Dashboard Report"
-                                android:textColorHint="@color/grey_dark"
-                                android:textColor="@color/black"
-                                android:textSize="15dp"
-                                android:textStyle="bold"
                                 android:layout_weight="1"
-                                android:fontFamily="@font/myfont" />
+                                android:hint="From Date"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                style="@style/Widget.App.TextInputLayout">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_FromDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:drawableLeft="@drawable/from_date_svg"
+                                    android:textSize="14dp"
+                                    android:editable="false"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="10dp"
+                                    android:textStyle="normal"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_ToDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="To Date"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                style="@style/Widget.App.TextInputLayout">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_ToDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:drawableLeft="@drawable/to_date_svg"
+                                    android:textSize="14dp"
+                                    android:editable="false"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="10dp"
+                                    android:textStyle="normal"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_DashReport"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Dashboard Report"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                style="@style/Widget.App.TextInputLayout">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_DashReport"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:textSize="14dp"
+                                    android:editable="false"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="10dp"
+                                    android:textStyle="normal"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/llfromdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="25dp"
+                                android:background="@drawable/etselect_bg"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="left|center"
+                                        android:background="@color/color_activity_transparent"
+                                        android:scaleType="fitXY"
+                                        android:padding="10dp"
+                                        android:src="@drawable/fromdate"/>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="left"
+                                            android:text="From Date"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont" />
+
+                                        <TextView
+                                            android:id="@+id/txtfromDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:hint="Select From Date"
+                                            android:textColorHint="@color/grey_dark"
+                                            android:gravity="left"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/ll_Fromdate"
+                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/etselect_bggrey"
+                                    android:gravity = "center"
+                                    android:visibility="gone">
+
+
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/greylight"
+                                            android:gravity="center"
+                                            android:text="Select Date"
+                                            android:layout_marginTop="10dp"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="13dp"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/im_close"
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="center"
+                                            android:layout_marginRight="5dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@color/color_activity_transparent"
+                                            android:gravity="center"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/ic_cancel_" />
+                                    </RelativeLayout>
+
+                                    <DatePicker
+                                        android:id="@+id/date_Picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:datePickerMode = "spinner"
+                                        android:background="@color/greylight"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:calendarViewShown="false"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:layout_marginBottom="10dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:id="@+id/txtok"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:textSize="15dp"
+                                            android:textColor="@color/white"
+                                            android:fontFamily="@font/myfont"
+                                            android:background="@drawable/btn_bgcolour"
+                                            android:paddingLeft="20dp"
+                                            android:paddingRight="20dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingTop="5dp"
+                                            android:textAllCaps="false"
+                                            android:text="Submit" />
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/lltodate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/etselect_bg"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="left|center"
+                                        android:background="@color/color_activity_transparent"
+                                        android:scaleType="fitXY"
+                                        android:padding="10dp"
+                                        android:src="@drawable/todate"/>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="left"
+                                            android:text="To Date"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont" />
+
+                                        <TextView
+                                            android:id="@+id/txttoDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:hint="Select To Date"
+                                            android:textColorHint="@color/grey_dark"
+                                            android:textColor="@color/black"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/ll_Todate"
+                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/etselect_bggrey"
+                                    android:gravity = "center"
+                                    android:visibility="gone">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/greylight"
+                                            android:gravity="center"
+                                            android:text="Select Date"
+                                            android:layout_marginTop="10dp"
+                                            android:textColor="@color/colorPrimaryExtraDark"
+                                            android:textSize="13dp"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/imclose"
+                                            android:layout_width="25dp"
+                                            android:layout_height="25dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_gravity="center"
+                                            android:layout_marginRight="5dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@color/color_activity_transparent"
+                                            android:gravity="center"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/ic_cancel_" />
+                                    </RelativeLayout>
+
+                                    <DatePicker
+                                        android:id="@+id/date_Picker1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:datePickerMode = "spinner"
+                                        android:background="@color/greylight"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:calendarViewShown="false"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:layout_marginBottom="10dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:id="@+id/txtok1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:textSize="15dp"
+                                            android:textColor="@color/white"
+                                            android:fontFamily="@font/myfont"
+                                            android:background="@drawable/btn_bgcolour"
+                                            android:paddingLeft="20dp"
+                                            android:paddingRight="20dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingTop="5dp"
+                                            android:textAllCaps="false"
+                                            android:text="Submit" />
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/llDashboardreporttype"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/etselect_bg"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="left|center"
+                                    android:background="@color/color_activity_transparent"
+                                    android:scaleType="fitXY"
+                                    android:padding="10dp"
+                                    android:src="@drawable/reprttype"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:text="Dashboard Report"
+                                        android:textColor="@color/colorPrimaryExtraDark"
+                                        android:textSize="12dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+
+                                    <TextView
+                                        android:id="@+id/txtdashboardtype"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:hint="Select Dashboard Report"
+                                        android:textColorHint="@color/grey_dark"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/myfont" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="25dp"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center">
+
+                                <Button
+                                    android:id="@+id/btnReset"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/btn_resetbg"
+                                    android:fontFamily="@font/myfont"
+                                    android:padding="2dp"
+                                    android:text="Reset"
+                                    android:textAllCaps="false"
+                                    android:textSize="15dp" />
+                                <Button
+                                    android:id="@+id/btnSubmit"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/myfont"
+                                    android:background="@drawable/btn_bgcolour"
+                                    android:padding="2dp"
+                                    android:layout_weight="2"
+                                    android:textAllCaps="false"
+                                    android:text="Submit" />
+                            </LinearLayout>
+
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center">
 
-                        <Button
-                            android:id="@+id/btnYes"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/btn_bgcolorprimary"
-                            android:fontFamily="@font/myfont"
-                            android:padding="2dp"
-                            android:text="Reset"
-                            android:textAllCaps="false"
-                            android:textSize="15dp" />
-                        <Button
-                            android:id="@+id/btnSubmit"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
-                            android:textSize="15dp"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/myfont"
-                            android:background="@drawable/btn_bgcolour"
-                            android:padding="2dp"
-                            android:layout_weight="2"
-                            android:textAllCaps="false"
-                            android:text="Submit" />
-                    </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
             </ScrollView>
                     </LinearLayout>

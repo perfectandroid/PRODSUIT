@@ -61,8 +61,8 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         setContentView(R.layout.activity_reportviewdetails)
         setRegViews()
         context = this@ReportViewDetailsActivity
-        bottombarnav()
-        getCalendarId(context)
+       // bottombarnav()
+       // getCalendarId(context)
 
         if (getIntent().hasExtra("Fromdate")) {
             strFromdate = intent.getStringExtra("Fromdate")
@@ -76,7 +76,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         if (getIntent().hasExtra("DashboardTypeName")) {
             strDashboardTypeName = intent.getStringExtra("DashboardTypeName")
         }
-        getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
+      //  getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
     }
 
     private fun setRegViews() {
