@@ -28,6 +28,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DashReporttypeListAdapter
 import com.perfect.prodsuit.Viewmodel.DashboardreportListViewModel
 import org.json.JSONObject
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -261,12 +262,25 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
             Config.snackBars(context,v,"Select Dashboard Report")
         }
         else{
+
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+            val strFromDate = outputFormat.format(dateFrom)
+            val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+            val strToDate = outputFormat.format(dateTo)
+
+            Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
+
             intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
             intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
             intent.putExtra("Todate", tie_ToDate!!.text.toString())
             intent.putExtra("DashboardTypeId", strDashboardTypeId)
             intent.putExtra("DashboardTypeName", strDashboardType)
             startActivity(intent)
+
+
         }
 
 
