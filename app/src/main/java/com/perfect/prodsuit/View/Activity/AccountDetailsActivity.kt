@@ -118,6 +118,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyAgendaDetail: RecyclerView? = null
     var SubMode : String?= ""
     var llCall : LinearLayout? = null
+    var ll_msg : LinearLayout? = null
     var llMessage : LinearLayout? = null
     var llMeeting : LinearLayout? = null
     var imActCall : ImageView? = null
@@ -201,7 +202,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
 
-                  getActivityDetails1()
+                    getActivityDetails1()
 
                 }
                 if (tab.position == 2){
@@ -299,6 +300,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
+        ll_msg = findViewById<LinearLayout>(R.id.ll_msg)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
         llMessages = findViewById<LinearLayout>(R.id.llMessages)
         llLocation = findViewById<LinearLayout>(R.id.llLocation)
@@ -352,6 +354,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
+        ll_msg!!.setOnClickListener(this)
      //   tv_actionType!!.setOnClickListener(this)
 
     }
@@ -622,7 +625,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
             }
-            R.id.llMessages->{
+            R.id.ll_msg->{
                 val i = Intent(this@AccountDetailsActivity, MessagesActivity::class.java)
                 i.putExtra("LgCusMobile",LgCusMobile)
                 i.putExtra("LgCusEmail",LgCusEmail)
@@ -1317,7 +1320,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         getFollowup(agendaTypeClick1)
 
-
+      //  getActivitylist(ID_ActionType!!)
 
 
     }
