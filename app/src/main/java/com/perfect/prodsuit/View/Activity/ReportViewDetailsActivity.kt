@@ -25,6 +25,7 @@ import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Viewmodel.LeadGenerateReportViewModel
+import com.perfect.prodsuit.Viewmodel.PriorityWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ProductWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ReportviewViewModel
 import java.text.ParseException
@@ -59,6 +60,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var reportviewViewModel: ReportviewViewModel
     lateinit var leadGenerateReportViewModel: LeadGenerateReportViewModel
     lateinit var productWiseReportViewModel: ProductWiseReportViewModel
+    lateinit var priorityWiseReportViewModel: PriorityWiseReportViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         context = this@ReportViewDetailsActivity
         leadGenerateReportViewModel = ViewModelProvider(this).get(LeadGenerateReportViewModel::class.java)
         productWiseReportViewModel = ViewModelProvider(this).get(ProductWiseReportViewModel::class.java)
+        priorityWiseReportViewModel = ViewModelProvider(this).get(PriorityWiseReportViewModel::class.java)
        // bottombarnav()
        // getCalendarId(context)
 
@@ -100,6 +103,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         }
         if (strDashboardTypeId.equals("19")){
 //            Priority Wise Lead
+            getPriorityWiseReportview(strFromdate,strTodate,strDashboardTypeId)
         }
     }
 
@@ -563,6 +567,70 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   564   "+msg.length)
                             Log.e(TAG,"msg   564   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
+//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
+//                                if (leadFromArrayList.length()>0){
+//                                    if (countLeadFrom == 0){
+//                                        countLeadFrom++
+//                                        leadFromPopup(leadFromArrayList)
+//                                    }
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ReportViewDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+
+    private fun getPriorityWiseReportview(strFromdate: String?, strTodate: String?, strDashboardTypeId: String?) {
+
+        var priorityWise = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                priorityWiseReportViewModel.getPriorityWiseReport(this,strFromdate!!,strTodate!!,strDashboardTypeId!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   632   "+msg.length)
+                            Log.e(TAG,"msg   632   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 //                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
 //                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
