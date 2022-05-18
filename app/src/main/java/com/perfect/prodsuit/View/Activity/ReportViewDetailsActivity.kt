@@ -21,10 +21,14 @@ import org.json.JSONObject
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
 import com.perfect.prodsuit.Viewmodel.LeadGenerateReportViewModel
 import com.perfect.prodsuit.Viewmodel.PriorityWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ProductWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ReportviewViewModel
+import org.json.JSONArray
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
@@ -58,6 +62,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var leadGenerateReportViewModel: LeadGenerateReportViewModel
     lateinit var productWiseReportViewModel: ProductWiseReportViewModel
     lateinit var priorityWiseReportViewModel: PriorityWiseReportViewModel
+
+    lateinit var leadGenReportArrayList : JSONArray
+    var recyLeadGenReport  : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +117,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
 
     private fun setRegViews() {
+
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        recyLeadGenReport = findViewById(R.id.recyLeadGenReport)
     }
 
     override fun onClick(v: View) {
@@ -501,18 +511,40 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   497   "+msg.length)
-                            Log.e(TAG,"msg   497   "+msg)
+                            Log.e(TAG,"msg   4971   "+msg.length)
+                            Log.e(TAG,"msg   4972   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
+                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+                                leadGenReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+                                if (leadGenReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   4973   "+leadGenReportArrayList)
+
+                                    try {
+                                        val lLayout = GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyLeadGenReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = LeadGenerateReportAdapter(applicationContext, leadGenReportArrayList)
+                                        recyLeadGenReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   4974   "+e.toString())
+                                    }
+
+
+
+
+//                                    recyLeadGenReport!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+//                                    val adapter = LeadGenerateReportAdapter(this@ReportViewDetailsActivity, leadGenReportArrayList)
+//                                    recyLeadGenReport!!.adapter = adapter
+//                                        adapter.setClickListener(this@ReportViewDetailsActivity)
+//                                    if (laedGen == 0){
+//                                        laedGen++
+////                                        recyLeadGenReport!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false))
+////                                        val adapter = LeadGenerateReportAdapter(this@ReportViewDetailsActivity, leadGenReportArrayList)
+////                                        recyLeadGenReport!!.adapter = adapter
+//////                                        adapter.setClickListener(this@ReportViewDetailsActivity)
 //                                    }
-//
-//                                }
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(

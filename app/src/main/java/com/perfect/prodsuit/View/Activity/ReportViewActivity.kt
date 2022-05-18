@@ -273,9 +273,16 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
 
             Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
 
+//            intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
+//            intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
+//            intent.putExtra("Todate", tie_ToDate!!.text.toString())
+//            intent.putExtra("DashboardTypeId", strDashboardTypeId)
+//            intent.putExtra("DashboardTypeName", strDashboardType)
+//            startActivity(intent)
+
             intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
-            intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
-            intent.putExtra("Todate", tie_ToDate!!.text.toString())
+            intent.putExtra("Fromdate", strFromDate)
+            intent.putExtra("Todate", strToDate)
             intent.putExtra("DashboardTypeId", strDashboardTypeId)
             intent.putExtra("DashboardTypeName", strDashboardType)
             startActivity(intent)
