@@ -35,19 +35,19 @@ class GroupingAdapter (internal var context: Context, internal var jsonArray: JS
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-//                val pos = position+1
-//                holder.txtsino.text        = pos.toString()
-//                holder.txtGrouping.text        = jsonObject!!.getString("BranchName")
-////                if (position % 2 == 0){
-////                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
-////                }
-////                else{
-////                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
-////                }
-//                holder.llGrouping!!.setTag(position)
-//                holder.llGrouping!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "grouping")
-//                })
+                val pos = position+1
+                holder.txtsino.text        = pos.toString()
+                holder.txtGrouping.text        = jsonObject!!.getString("GroupName")
+//                if (position % 2 == 0){
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
+                holder.llGrouping!!.setTag(position)
+                holder.llGrouping!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "grouping")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()

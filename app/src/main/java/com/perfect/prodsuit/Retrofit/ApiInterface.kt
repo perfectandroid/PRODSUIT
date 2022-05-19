@@ -208,5 +208,11 @@ interface ApiInterface {
     @POST("UserValidations/PriorityWiseLeadReport")
     fun getPriorityWiseReport(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ReportNameDetails")
+    fun getReportNameDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/GroupingDetails")
+    fun getGroupingDetails(@Body body: RequestBody): Call<String>
+
 
 }

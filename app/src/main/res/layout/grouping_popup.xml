@@ -15,7 +15,7 @@
         android:fontFamily="@font/myfont"
         android:background="@color/white"
         android:padding="10dp"
-        android:text="Branch"/>
+        android:text="Grouping"/>
 
     <View
         android:layout_width="match_parent"

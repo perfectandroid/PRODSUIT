@@ -118,12 +118,15 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
 
     private var fromToDate:Int = 0
+    private var ReportMode:String = ""
     private var ID_Branch:String = ""
     private var ID_Product:String = ""
     private var ID_NextAction:String = ""
     private var ID_ActionType:String = ""
     private var ID_Priority:String = ""
     private var ID_Status:String = ""
+    private var GroupId:String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,6 +142,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
+        groupingViewModel = ViewModelProvider(this).get(GroupingViewModel::class.java)
 
         setRegViews()
         bottombarnav()
@@ -258,7 +262,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
             R.id.tie_ReportName->{
 
-               // getReportName()
+                getReportName()
             }
 
             R.id.tie_Branch->{
@@ -298,7 +302,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             }
             R.id.tie_Grouping->{
 
-              //  getGrouping()
+                getGrouping()
             }
 
 
@@ -624,8 +628,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                             Log.e(TAG,"msg   1062   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("BranchDetails")
-                                reportNameArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                val jobjt = jObject.getJSONObject("ReportNameDetails")
+                                reportNameArrayList = jobjt.getJSONArray("ReportNameDetailsList")
                                 if (reportNameArrayList.length()>0){
                                     if (reportName == 0){
                                         reportName++
@@ -667,21 +671,21 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     private fun reportNamePopup(reportNameArrayList: JSONArray) {
         try {
 
-//            dialogReportName = Dialog(this)
-//            dialogReportName!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialogReportName!! .setContentView(R.layout.report_name_popup)
-//            dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-//            recyReportName = dialogReportName!! .findViewById(R.id.recyReportName) as RecyclerView
-//
-//            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
-//            recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-////            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNameArrayList)
-//            recyReportName!!.adapter = adapter
-//            adapter.setClickListener(this@TicketReportActivity)
-//
-//            dialogReportName!!.show()
-//            dialogReportName!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogReportName = Dialog(this)
+            dialogReportName!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogReportName!! .setContentView(R.layout.report_name_popup)
+            dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyReportName = dialogReportName!! .findViewById(R.id.recyReportName) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNameArrayList)
+            recyReportName!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogReportName!!.show()
+            dialogReportName!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception  1132   "+e.toString())
@@ -1254,8 +1258,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                             Log.e(TAG,"msg   333   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("StatusDetailsList")
-                                groupingArrayList = jobjt.getJSONArray("StatusList")
+                                val jobjt = jObject.getJSONObject("GroupingDetails")
+                                groupingArrayList = jobjt.getJSONArray("GroupingDetailsList")
                                 if (groupingArrayList.length()>0){
                                     if (grouping == 0){
                                         grouping++
@@ -1298,7 +1302,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
             dialogGrouping = Dialog(this)
             dialogGrouping!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogGrouping!! .setContentView(R.layout.branch_popup)
+            dialogGrouping!! .setContentView(R.layout.grouping_popup)
             dialogGrouping!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyGrouping = dialogGrouping!! .findViewById(R.id.recyGrouping) as RecyclerView
 
@@ -1379,20 +1383,20 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         }
 
         if (data.equals("reportname")){
-//            dialogReportName!!.dismiss()
-//            val jsonObject = reportNameArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-//            ID_Status = jsonObject.getString("ID_Status")
-//            tie_ReportName!!.setText(jsonObject.getString("StatusName"))
+            dialogReportName!!.dismiss()
+            val jsonObject = reportNameArrayList.getJSONObject(position)
+            Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
+            ReportMode = jsonObject.getString("ReportMode")
+            tie_ReportName!!.setText(jsonObject.getString("ReportName"))
 
         }
 
         if (data.equals("grouping")){
-//            dialogReportName!!.dismiss()
-//            val jsonObject = reportNameArrayList.getJSONObject(position)
-//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
-//            ID_Status = jsonObject.getString("ID_Status")
-//            tie_ReportName!!.setText(jsonObject.getString("StatusName"))
+            dialogGrouping!!.dismiss()
+            val jsonObject = groupingArrayList.getJSONObject(position)
+            Log.e(TAG,"GroupId   "+jsonObject.getString("GroupId"))
+            GroupId = jsonObject.getString("GroupId")
+            tie_Grouping!!.setText(jsonObject.getString("GroupName"))
 
         }
 

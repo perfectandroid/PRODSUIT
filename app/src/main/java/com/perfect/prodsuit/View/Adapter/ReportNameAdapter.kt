@@ -35,18 +35,18 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-//                holder.txtsino.text        = pos.toString()
-//                holder.txtReportName.text        = jsonObject!!.getString("BranchName")
-////                if (position % 2 == 0){
-////                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
-////                }
-////                else{
-////                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
-////                }
-//                holder.llReportName!!.setTag(position)
-//                holder.llReportName!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "reportname")
-//                })
+                holder.txtsino.text        = pos.toString()
+                holder.txtReportName.text        = jsonObject!!.getString("ReportName")
+//                if (position % 2 == 0){
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
+                holder.llReportName!!.setTag(position)
+                holder.llReportName!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "reportname")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
