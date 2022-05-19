@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
+import com.perfect.prodsuit.View.Adapter.PriorityWiseReportAdapter
 import com.perfect.prodsuit.View.Adapter.ProductWiseReportAdapter
 import com.perfect.prodsuit.Viewmodel.LeadGenerateReportViewModel
 import com.perfect.prodsuit.Viewmodel.PriorityWiseReportViewModel
@@ -41,6 +42,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     internal var etdis: EditText? = null
     internal var ll_leadGenerate: LinearLayout? = null
     internal var ll_productwise: LinearLayout? = null
+    internal var ll_prioritywise: LinearLayout? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -71,6 +73,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var prodWiseReportArrayList : JSONArray
     var recyProdWiseReport  : RecyclerView? = null
+
+    lateinit var priorityWiseReportArrayList : JSONArray
+    var recyPriorityWise  : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +112,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
         ll_leadGenerate!!.visibility = View.GONE
         ll_productwise!!.visibility = View.GONE
+        ll_prioritywise!!.visibility = View.GONE
 
         if (strDashboardTypeId.equals("15")){
 //            Lead Generate Report
@@ -135,6 +141,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
         ll_productwise = findViewById(R.id.ll_productwise)
         recyProdWiseReport = findViewById(R.id.recyProdWiseReport)
+
+        ll_prioritywise = findViewById(R.id.ll_prioritywise)
+        recyPriorityWise = findViewById(R.id.recyPriorityWise)
 
 
     }
@@ -687,15 +696,28 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                             Log.e(TAG,"msg   632   "+msg.length)
                             Log.e(TAG,"msg   632   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
-//                                    }
-//
-//                                }
+
+                                val jobjt = jObject.getJSONObject("PriorityWiseLeadReport")
+                                priorityWiseReportArrayList = jobjt.getJSONArray("PriorityWiseLeadReportList")
+                                if (priorityWiseReportArrayList.length()>0) {
+                                    Log.e(TAG, "msg   4973   " + priorityWiseReportArrayList)
+                                    ll_prioritywise!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout =
+                                            GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyPriorityWise!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = PriorityWiseReportAdapter(
+                                            applicationContext,
+                                            priorityWiseReportArrayList
+                                        )
+                                        recyPriorityWise!!.adapter = adapter
+                                    } catch (e: Exception) {
+                                        Log.e(TAG, "msg   4974   " + e.toString())
+                                    }
+                                }
+
 
                             } else {
                                 val builder = AlertDialog.Builder(

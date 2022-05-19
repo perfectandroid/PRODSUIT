@@ -85,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="2dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_ProjectName"
@@ -94,7 +95,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text=""
+                android:text="Customer"
                 android:textColor="@color/greydark"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
@@ -108,7 +109,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text=""
+                android:text="Customer"
                 android:textColor="@color/greydark"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -120,7 +121,8 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/grey"/>
+            android:background="@color/grey"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,11 +152,12 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text=""
+                android:text="Customer"
                 android:textColor="@color/greydark"
                 android:textSize="11dp"
                 android:textStyle="normal"
-                android:fontFamily="@font/myfont" />
+                android:fontFamily="@font/myfont"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
@@ -178,15 +181,30 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text=""
+                android:text="Customer"
                 android:textColor="@color/greydark"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
-                android:fontFamily="@font/myfont" />
+                android:fontFamily="@font/myfont"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_ActionModuleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="Customer"
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_PriorityType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
