@@ -26,6 +26,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2796296296296296" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.18541666666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_grouping.xml" value="0.1671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_leadgenerate_report.xml" value="0.2765625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_prioritywise_report.xml" value="0.26197916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_productwise_report.xml" value="0.26197916666666665" />
@@ -34,6 +35,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/attendance_popup.xml" value="0.1953125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2796296296296296" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/grouping_popup.xml" value="0.1671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/report_name_popup.xml" value="0.2942708333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttype_popup.xml" value="0.33958333333333335" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttypelist.xml" value="0.33958333333333335" />
