@@ -233,7 +233,8 @@
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                style="@style/Widget.App.TextInputLayout">
+                                style="@style/Widget.App.TextInputLayout"
+                                android:visibility="gone">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_EmployeeName"
