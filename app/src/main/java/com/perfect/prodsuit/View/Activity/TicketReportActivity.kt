@@ -28,6 +28,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -127,6 +128,9 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     private var ID_Status:String = ""
     private var GroupId:String = ""
 
+    var btnSubmit: Button? = null
+    var btnReset: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -182,6 +186,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         tie_Grouping        = findViewById(R.id.tie_Grouping)
 
 
+        btnSubmit = findViewById(R.id.btnSubmit)
+        btnReset = findViewById(R.id.btnReset)
 
 
         txtok1!!.setOnClickListener(this)
@@ -203,6 +209,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         tie_Priority!!.setOnClickListener(this)
         tie_Status!!.setOnClickListener(this)
         tie_Grouping!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
 
     }
 
@@ -305,6 +313,15 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 getGrouping()
             }
 
+            R.id.btnSubmit->{
+                validateData(v)
+            }
+            R.id.btnReset->{
+
+                resetData()
+
+            }
+
 
 
 
@@ -312,7 +329,6 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         }
     }
-
 
 
 
@@ -1324,6 +1340,14 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     override fun onClick(position: Int, data: String) {
 
+        if (data.equals("reportname")){
+            dialogReportName!!.dismiss()
+            val jsonObject = reportNameArrayList.getJSONObject(position)
+            Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
+            ReportMode = jsonObject.getString("ReportMode")
+            tie_ReportName!!.setText(jsonObject.getString("ReportName"))
+
+        }
 
         if (data.equals("branch")){
             dialogBranch!!.dismiss()
@@ -1382,14 +1406,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         }
 
-        if (data.equals("reportname")){
-            dialogReportName!!.dismiss()
-            val jsonObject = reportNameArrayList.getJSONObject(position)
-            Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
-            ReportMode = jsonObject.getString("ReportMode")
-            tie_ReportName!!.setText(jsonObject.getString("ReportName"))
 
-        }
 
         if (data.equals("grouping")){
             dialogGrouping!!.dismiss()
@@ -1404,6 +1421,88 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
 
     }
+
+    private fun resetData() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
+
+        tie_ReportName!!.setText("")
+        tie_Branch!!.setText("")
+        tie_Product!!.setText("")
+        tie_FollowUpAction!!.setText("")
+        tie_FollowUpType!!.setText("")
+        tie_Priority!!.setText("")
+        tie_Status!!.setText("")
+        tie_Grouping!!.setText("")
+
+        ReportMode = ""
+        ID_Branch = ""
+        ID_Product = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
+        ID_Priority = ""
+        ID_Status = ""
+        GroupId = ""
+
+    }
+
+    private fun validateData(v: View) {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val fromDa = sdf.parse(tie_FromDate!!.text.toString());
+        val toDa = sdf.parse(tie_ToDate!!.text.toString());
+
+        if (ReportMode.equals("")){
+            Config.snackBars(context,v,"Select Report Name")
+        }
+        else if (ID_Branch.equals("")){
+            Config.snackBars(context,v,"Select Branch")
+        }
+        else if (tie_FromDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select From Date")
+        }
+        else if (tie_ToDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select To Date")
+        }
+        else if (fromDa.after(toDa)){
+            Config.snackBars(context,v,"Check Selected Date Range")
+        }
+        else if (ID_Product.equals("")){
+            Config.snackBars(context,v,"Select Product")
+        }
+        else if (ID_NextAction.equals("")){
+            Config.snackBars(context,v,"Select Followup Action ")
+        }
+        else if (ID_ActionType.equals("")){
+            Config.snackBars(context,v,"Select Followup Type")
+        }
+        else if (ID_Priority.equals("")){
+            Config.snackBars(context,v,"Select Priority")
+        }
+        else if (ID_Status.equals("")){
+            Config.snackBars(context,v,"Select Status")
+        }
+        else if (GroupId.equals("")){
+            Config.snackBars(context,v,"Select Grouping")
+        }
+        else{
+
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+            val strFromDate = outputFormat.format(dateFrom)
+            val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+            val strToDate = outputFormat.format(dateTo)
+
+            Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
+
+        }
+
+    }
+
 
 
 }
