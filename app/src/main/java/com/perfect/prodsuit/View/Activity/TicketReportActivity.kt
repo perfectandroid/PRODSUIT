@@ -76,6 +76,11 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     var tie_Status: TextInputEditText? = null
     var tie_Grouping: TextInputEditText? = null
 
+    lateinit var reportNameViewModel: ReportNameViewModel
+    lateinit var reportNameArrayList : JSONArray
+    private var dialogReportName : Dialog? = null
+    var recyReportName: RecyclerView? = null
+
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
     private var dialogBranch : Dialog? = null
@@ -122,6 +127,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         setContentView(R.layout.activity_ticketreport)
 
         context = this@TicketReportActivity
+        reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
@@ -247,6 +253,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
             R.id.tie_ReportName->{
 
+               // getReportName()
             }
 
             R.id.tie_Branch->{
@@ -590,6 +597,87 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         val alert = builder.create()
         alert.show()
 
+    }
+
+    private fun getReportName() {
+        var reportName = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                reportNameViewModel.getReportName(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("BranchDetails")
+                                reportNameArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                if (reportNameArrayList.length()>0){
+                                    if (reportName == 0){
+                                        reportName++
+                                        reportNamePopup(reportNameArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun reportNamePopup(reportNameArrayList: JSONArray) {
+        try {
+
+//            dialogReportName = Dialog(this)
+//            dialogReportName!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogReportName!! .setContentView(R.layout.branch_popup)
+//            dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+//            recyReportName = dialogReportName!! .findViewById(R.id.recyReportName) as RecyclerView
+//
+//            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+//            recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNameArrayList)
+//            recyReportName!!.adapter = adapter
+//            adapter.setClickListener(this@TicketReportActivity)
+//
+//            dialogReportName!!.show()
+//            dialogReportName!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
     }
 
     private fun getBranch() {
@@ -1195,6 +1283,17 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             tie_Status!!.setText(jsonObject.getString("StatusName"))
 
         }
+
+        if (data.equals("reportname")){
+//            dialogReportName!!.dismiss()
+//            val jsonObject = reportNameArrayList.getJSONObject(position)
+//            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+//            ID_Status = jsonObject.getString("ID_Status")
+//            tie_ReportName!!.setText(jsonObject.getString("StatusName"))
+
+        }
+
+
 
 
     }
