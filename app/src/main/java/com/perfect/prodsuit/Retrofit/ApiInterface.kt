@@ -202,10 +202,10 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerateReport")
     fun getLeadGenerateReport(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/ProductWiseLead")
+    @POST("UserValidations/ProductWiseLeadReport")
     fun getProductWiseLeadReport(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/PriorityWiseLead")
+    @POST("UserValidations/PriorityWiseLeadReport")
     fun getPriorityWiseReport(@Body body: RequestBody): Call<String>
 
 

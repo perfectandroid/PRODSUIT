@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
+import com.perfect.prodsuit.View.Adapter.ProductWiseReportAdapter
 import com.perfect.prodsuit.Viewmodel.LeadGenerateReportViewModel
 import com.perfect.prodsuit.Viewmodel.PriorityWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ProductWiseReportViewModel
@@ -38,6 +39,8 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var ll_leadGenerate: LinearLayout? = null
+    internal var ll_productwise: LinearLayout? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -66,6 +69,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var leadGenReportArrayList : JSONArray
     var recyLeadGenReport  : RecyclerView? = null
 
+    lateinit var prodWiseReportArrayList : JSONArray
+    var recyProdWiseReport  : RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -92,12 +98,15 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
             strDashboardTypeName = intent.getStringExtra("DashboardTypeName")
         }
 
-        Log.e(TAG,"81   "
-                +"\n"+"strFromdate           "+strFromdate
-                +"\n"+"strTodate             "+strTodate
-                +"\n"+"strDashboardTypeId    "+strDashboardTypeId
-                +"\n"+"strDashboardTypeName  "+strDashboardTypeName)
-      //  getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
+//        Log.e(TAG,"81   "
+//                +"\n"+"strFromdate           "+strFromdate
+//                +"\n"+"strTodate             "+strTodate
+//                +"\n"+"strDashboardTypeId    "+strDashboardTypeId
+//                +"\n"+"strDashboardTypeName  "+strDashboardTypeName)
+//      //  getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
+
+        ll_leadGenerate!!.visibility = View.GONE
+        ll_productwise!!.visibility = View.GONE
 
         if (strDashboardTypeId.equals("15")){
 //            Lead Generate Report
@@ -121,7 +130,13 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        ll_leadGenerate = findViewById(R.id.ll_leadGenerate)
         recyLeadGenReport = findViewById(R.id.recyLeadGenReport)
+
+        ll_productwise = findViewById(R.id.ll_productwise)
+        recyProdWiseReport = findViewById(R.id.recyProdWiseReport)
+
+
     }
 
     override fun onClick(v: View) {
@@ -518,7 +533,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                                 leadGenReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
                                 if (leadGenReportArrayList.length()>0){
                                     Log.e(TAG,"msg   4973   "+leadGenReportArrayList)
-
+                                    ll_leadGenerate!!.visibility = View.VISIBLE
                                     try {
                                         val lLayout = GridLayoutManager(this@ReportViewDetailsActivity, 1)
                                         recyLeadGenReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -599,15 +614,24 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                             Log.e(TAG,"msg   564   "+msg.length)
                             Log.e(TAG,"msg   564   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadFromDetailsList")
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
-//                                    }
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("ProductWiseLeadReport")
+                                prodWiseReportArrayList = jobjt.getJSONArray("ProductWiseLeadReportList")
+
+                                if (prodWiseReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   621   "+prodWiseReportArrayList)
+                                    ll_productwise!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyProdWiseReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = ProductWiseReportAdapter(applicationContext, prodWiseReportArrayList)
+                                        recyProdWiseReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   4974   "+e.toString())
+                                    }
+
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
