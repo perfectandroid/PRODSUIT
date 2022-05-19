@@ -1,10 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -15,17 +12,30 @@ import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.BranchAdapter
+import com.perfect.prodsuit.Viewmodel.BranchViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
+class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
+    val TAG : String = "TicketReportActivity"
+    private var progressDialog: ProgressDialog? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -53,18 +63,44 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
     var imclose: ImageView? = null
     var im_close: ImageView? = null
     lateinit var context: Context
+
+    var tie_ReportName: TextInputEditText? = null
+    var tie_Branch: TextInputEditText? = null
+    var tie_FromDate: TextInputEditText? = null
+    var tie_ToDate: TextInputEditText? = null
+    var tie_EmployeeName: TextInputEditText? = null
+    var tie_Product: TextInputEditText? = null
+    var tie_FollowUpAction: TextInputEditText? = null
+    var tie_FollowUpType: TextInputEditText? = null
+    var tie_Priority: TextInputEditText? = null
+    var tie_Status: TextInputEditText? = null
+    var tie_Grouping: TextInputEditText? = null
+
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var branchArrayList : JSONArray
+    private var dialogBranch : Dialog? = null
+    var recyBranch: RecyclerView? = null
+
+    private var fromToDate:Int = 0
+    private var ID_Branch:String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_ticketreport)
-        setRegViews()
+
         context = this@TicketReportActivity
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+
+        setRegViews()
         bottombarnav()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtfromDate!!.text = currentDate
         txttoDate!!.text = currentDate
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
     }
 
     private fun setRegViews() {
@@ -81,6 +117,22 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         ll_Todate = findViewById(R.id.ll_Todate)
         date_Picker1 = findViewById(R.id.date_Picker1)
         txtok1 = findViewById(R.id.txtok1)
+
+        tie_ReportName      = findViewById(R.id.tie_ReportName)
+        tie_Branch          = findViewById(R.id.tie_Branch)
+        tie_FromDate        = findViewById(R.id.tie_FromDate)
+        tie_ToDate          = findViewById(R.id.tie_ToDate)
+        tie_EmployeeName    = findViewById(R.id.tie_EmployeeName)
+        tie_Product         = findViewById(R.id.tie_Product)
+        tie_FollowUpAction  = findViewById(R.id.tie_FollowUpAction)
+        tie_FollowUpType    = findViewById(R.id.tie_FollowUpType)
+        tie_Priority        = findViewById(R.id.tie_Priority)
+        tie_Status          = findViewById(R.id.tie_Status)
+        tie_Grouping        = findViewById(R.id.tie_Grouping)
+
+
+
+
         txtok1!!.setOnClickListener(this)
         llfromdate!!.setOnClickListener(this)
         lltodate!!.setOnClickListener(this)
@@ -88,6 +140,19 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         txtok!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         im_close!!.setOnClickListener(this)
+
+        tie_ReportName!!.setOnClickListener(this)
+        tie_Branch!!.setOnClickListener(this)
+        tie_FromDate!!.setOnClickListener(this)
+        tie_ToDate!!.setOnClickListener(this)
+        tie_EmployeeName!!.setOnClickListener(this)
+        tie_Product!!.setOnClickListener(this)
+        tie_FollowUpAction!!.setOnClickListener(this)
+        tie_FollowUpType!!.setOnClickListener(this)
+        tie_Priority!!.setOnClickListener(this)
+        tie_Status!!.setOnClickListener(this)
+        tie_Grouping!!.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View) {
@@ -143,6 +208,55 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
                 txtfromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                 ll_Fromdate!!.visibility=View.GONE
             }
+
+            R.id.tie_ReportName->{
+
+            }
+
+            R.id.tie_Branch->{
+                getBranch()
+            }
+
+            R.id.tie_FromDate->{
+                fromToDate = 0
+                openBottomSheet()
+            }
+
+            R.id.tie_ToDate->{
+
+                fromToDate = 1
+                openBottomSheet()
+            }
+
+            R.id.tie_EmployeeName->{
+
+            }
+            R.id.tie_Product->{
+
+            }
+
+            R.id.tie_FollowUpAction->{
+
+            }
+
+            R.id.tie_FollowUpType->{
+
+            }
+            R.id.tie_Priority->{
+
+            }
+            R.id.tie_Status->{
+
+            }
+            R.id.tie_Grouping->{
+
+            }
+
+
+
+
+
+
         }
     }
 
@@ -438,4 +552,152 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+    private fun getBranch() {
+        var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this,"0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("BranchDetails")
+                                branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                if (branchArrayList.length()>0){
+                                    if (branch == 0){
+                                        branch++
+                                        branchPopup(branchArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!! .setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                if (fromToDate == 0){
+                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (fromToDate == 1){
+                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    override fun onClick(position: Int, data: String) {
+
+
+        if (data.equals("branch")){
+            dialogBranch!!.dismiss()
+            val jsonObject = branchArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+
+        }
+    }
+
+
 }

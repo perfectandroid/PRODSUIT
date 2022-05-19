@@ -10,7 +10,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.EmployeeModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.ProductActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject

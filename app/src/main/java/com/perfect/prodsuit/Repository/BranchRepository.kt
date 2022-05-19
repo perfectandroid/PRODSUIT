@@ -26,12 +26,12 @@ object BranchRepository {
     val branchSetterGetter = MutableLiveData<BranchModel>()
     val TAG: String = "BranchRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<BranchModel> {
-        getBranch(context)
+    fun getServicesApiCall(context: Context,ID_BranchType : String): MutableLiveData<BranchModel> {
+        getBranch(context,ID_BranchType)
         return branchSetterGetter
     }
 
-    private fun getBranch(context: Context) {
+    private fun getBranch(context: Context,ID_BranchType : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -64,7 +64,7 @@ object BranchRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_BranchType))
+                requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(ID_BranchType))
                 Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
