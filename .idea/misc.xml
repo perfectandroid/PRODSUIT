@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/address_svg.xml" value="0.167" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolorprimary.xml" value="0.174" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolouryellow.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_resetbg.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_shape_reset.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/call_svg.xml" value="0.2405" />
@@ -16,12 +18,16 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.298974358974359" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.346875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.3625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.2765625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.2784615384615385" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.20833333333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.18541666666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2796296296296296" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch_type.xml" value="0.18541666666666667" />
@@ -31,6 +37,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_prioritywise_report.xml" value="0.26197916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_productwise_report.xml" value="0.26197916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_report_name.xml" value="0.2942708333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.5" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.31979166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/attendance_popup.xml" value="0.1953125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2796296296296296" />

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,11 +31,17 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var upcomingtaskslistViewModel: UpcomingtasksListViewModel
     private var rv_upcmngtasklist: RecyclerView?=null
     lateinit var upcmngtaskArrayList : JSONArray
+    private var SubMode:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_upcomingtask)
         setRegViews()
+        if (getIntent().hasExtra("SubMode")) {
+            SubMode = intent.getStringExtra("SubMode")
+        }
         getUpcomingtasksList()
     }
 
@@ -67,7 +75,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                     rv_upcmngtasklist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_upcmngtasklist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList,SubMode!!)
                                     rv_upcmngtasklist!!.adapter = adapter
                                     adapter.setClickListener(this@UpcomingtaskActivity)
 

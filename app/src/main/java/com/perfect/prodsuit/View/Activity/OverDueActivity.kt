@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +32,18 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     lateinit var overduelistViewModel: OverDueListViewModel
     private var rv_overduelist: RecyclerView?=null
     lateinit var overdueArrayList : JSONArray
+    private var SubMode:String?=""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_overdue)
         setRegViews()
+        if (getIntent().hasExtra("SubMode")) {
+            SubMode = intent.getStringExtra("SubMode")
+        }
         getOverdueList()
     }
 
@@ -69,7 +79,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     rv_overduelist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_overduelist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList,SubMode!!)
                                     rv_overduelist!!.adapter = adapter
                                     adapter.setClickListener(this@OverDueActivity)
                                 } else {

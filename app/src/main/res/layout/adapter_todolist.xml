@@ -17,6 +17,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_leadNo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -110,10 +111,27 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:textSize="12dp"
-                    android:drawableLeft="@drawable/addressicon"
+                    android:drawableLeft="@drawable/address_svglist"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/greydark"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"/>
+
+<!--                android:drawableLeft="@drawable/addressicon"-->
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textSize="12dp"
+                    android:drawableLeft="@drawable/mobile_svglist"
+                    android:drawableTint="@color/greydark"
                     android:drawablePadding="10dp"
                     android:textAllCaps="true"
                     android:textColor="@color/black"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -126,12 +144,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:drawableLeft="@drawable/trolley"
+                    android:drawableLeft="@drawable/product_svglist"
+                    android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/myfont"
                     android:gravity="left|center"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
+
+<!--                android:drawableLeft="@drawable/trolley"-->
 
                 <TextView
                     android:id="@+id/tv_nextdate"
@@ -141,9 +162,12 @@
                     android:layout_gravity="left"
                     android:gravity="left|center"
                     android:textSize="10dp"
-                    android:drawableLeft="@drawable/deadline"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/calendar_svglist"
+                    android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
                     android:textColor="@color/black"/>
+<!--                android:drawableLeft="@drawable/deadline"-->
 
                 <View
                     android:layout_width="match_parent"
@@ -168,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2.2"
-                android:background="@color/grey"
+                android:background="@color/right_Color"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">
