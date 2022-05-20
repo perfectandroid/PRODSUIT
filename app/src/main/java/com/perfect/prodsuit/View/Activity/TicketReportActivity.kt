@@ -1499,6 +1499,20 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
             Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
 
+
+            intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
+            intent.putExtra("ReportMode", ReportMode)
+            intent.putExtra("ID_Branch", ID_Branch)
+            intent.putExtra("Fromdate", strFromDate)
+            intent.putExtra("Todate", strToDate)
+            intent.putExtra("ID_Product", ID_Product)
+            intent.putExtra("ID_NextAction", ID_NextAction)
+            intent.putExtra("ID_ActionType", ID_ActionType)
+            intent.putExtra("ID_Priority", ID_Priority)
+            intent.putExtra("ID_Status", ID_Status)
+            intent.putExtra("GroupId", GroupId)
+            startActivity(intent)
+
         }
 
     }

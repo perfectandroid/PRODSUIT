@@ -62,6 +62,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.txtv_date.text        = date
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
+                holder.tv_address.text        = jsonObject!!.getString("CusAddress")
                 holder.tv_mobile.text        = jsonObject!!.getString("LgCusMobile")
                 holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
                 holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
