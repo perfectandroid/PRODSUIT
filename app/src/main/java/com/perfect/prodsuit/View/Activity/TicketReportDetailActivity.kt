@@ -1,21 +1,32 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.lifecycle.Observer
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
+import org.json.JSONObject
 
 class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     val TAG : String = "TicketReportDetailActivity"
+    private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     private var imback: ImageView? = null
 
@@ -29,6 +40,11 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var ID_Priority:String?=""
     private var ID_Status:String?=""
     private var GroupId:String?=""
+
+    internal var ll_ActionList: LinearLayout? = null
+    internal var ll_FollowUpTicket: LinearLayout? = null
+    internal var ll_NewListTicket: LinearLayout? = null
+    internal var ll_StatusListTicket: LinearLayout? = null
 
     lateinit var actionListReportViewModel: ActionListTicketReportViewModel
     lateinit var actionListReportArrayList : JSONArray
@@ -92,12 +108,35 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
 
 
+        ll_ActionList!!.visibility = View.GONE
+        ll_FollowUpTicket!!.visibility = View.GONE
+        ll_NewListTicket!!.visibility = View.GONE
+        ll_StatusListTicket!!.visibility = View.GONE
+
+        Log.e(TAG,"ReportMode   107   "+ReportMode)
+
+       // getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+
+      //  getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+
 
     }
+
+
 
     private fun setRegViews() {
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        ll_ActionList = findViewById(R.id.ll_ActionList)
+        ll_FollowUpTicket = findViewById(R.id.ll_FollowUpTicket)
+        ll_NewListTicket = findViewById(R.id.ll_NewListTicket)
+        ll_StatusListTicket = findViewById(R.id.ll_StatusListTicket)
+
+        recyActionListReport = findViewById(R.id.recyActionListReport)
+        recyFollowUpTicketReport = findViewById(R.id.recyFollowUpTicketReport)
+        recyNewListTicketReport = findViewById(R.id.recyNewListTicketReport)
+        recyStatusListTicketReport = findViewById(R.id.recyStatusListTicketReport)
     }
 
     override fun onClick(v: View) {
@@ -106,5 +145,79 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                 finish()
             }
         }
+    }
+
+
+    private fun getActionListTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                          ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
+
+        var laedGen = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                actionListReportViewModel.getActionListTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1701   "+msg.length)
+                            Log.e(TAG,"msg   1702   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+//                                actionListReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+//                                if (actionListReportArrayList.length()>0){
+//                                    Log.e(TAG,"msg   1703   "+actionListReportArrayList)
+//                                    ll_ActionList!!.visibility = View.VISIBLE
+//                                    try {
+//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+//                                        recyActionListReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        // recyLeadGenReport!!.setHasFixedSize(true)
+//                                        val adapter = LeadGenerateReportAdapter(applicationContext, actionListReportArrayList)
+//                                        recyActionListReport!!.adapter = adapter
+//                                    }catch (e: Exception){
+//                                        Log.e(TAG,"msg   1704   "+e.toString())
+//                                    }
+//
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportDetailActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 }

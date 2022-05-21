@@ -77,6 +77,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_ActionList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -110,6 +111,37 @@
                                 android:textColor="@color/white"
                                 android:textSize="11dp"
                                 android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Lead Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
 
                         </LinearLayout>
 
@@ -181,6 +213,89 @@
                             android:layout_height="match_parent"
                             android:background="@color/grey"/>
 
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Action Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyActionListReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_FollowUpTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text="SI No"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="11dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -224,6 +339,71 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:text="Customer Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Product Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="Action Details"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
@@ -242,13 +422,368 @@
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recy"
+                        android:id="@+id/recyFollowUpTicketReport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="visible" />
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_NewListTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text="SI No"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="11dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Lead Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Customer Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Product Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Action Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyNewListTicketReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_StatusListTicket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text="SI No"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="11dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Lead Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Customer Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Product Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Action Details"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textSize="11dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyStatusListTicketReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
 
 
 
