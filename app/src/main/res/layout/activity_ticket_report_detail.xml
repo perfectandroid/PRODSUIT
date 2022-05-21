@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -99,9 +99,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="2dp"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="2dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/myfont"
@@ -109,7 +109,7 @@
                                 android:text="SI No"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -136,9 +136,9 @@
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -162,14 +162,14 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Customer Details"
+                                android:text="Customer"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -194,14 +194,14 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Product Details"
+                                android:text="Product"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -232,9 +232,42 @@
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Due Days/Assignee"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 

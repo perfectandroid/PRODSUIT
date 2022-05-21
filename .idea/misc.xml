@@ -26,10 +26,11 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.2765625" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.346875" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.2784615384615385" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.20833333333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_actionticket_report.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.18541666666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.2359375" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2796296296296296" />

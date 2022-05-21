@@ -214,5 +214,8 @@ interface ApiInterface {
     @POST("UserValidations/GroupingDetails")
     fun getGroupingDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ActionListDetailsReport")
+    fun getActionListDetailsReport(@Body body: RequestBody): Call<String>
+
 
 }
