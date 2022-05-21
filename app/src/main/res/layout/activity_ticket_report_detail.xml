@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -309,9 +309,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/myfont"
@@ -319,7 +319,7 @@
                                 android:text="SI No"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -346,9 +346,9 @@
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -372,14 +372,14 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Customer Details"
+                                android:text="Customer/Product"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -404,14 +404,14 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Product Details"
+                                android:text="COmmitd/compl. Date"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -437,14 +437,14 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Action Details"
+                                android:text="due days/Assignee"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textSize="11dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 

@@ -26,7 +26,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.26944444444444443" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.2765625" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.25" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.2784615384615385" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.20833333333333334" />
@@ -38,6 +38,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_grouping.xml" value="0.1671875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_leadgenerate_report.xml" value="0.2765625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_newticket_report.xml" value="0.2890625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_prioritywise_report.xml" value="0.26197916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_productwise_report.xml" value="0.26197916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_report_name.xml" value="0.2942708333333333" />

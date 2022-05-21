@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">.
+
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_SiNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:layout_marginTop="10dp"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_LeadNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:layout_marginTop="10dp"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_LeadDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_Action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_ActionType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_Customer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:layout_marginTop="10dp"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_Product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont"
+                android:visibility="visible"/>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_CommitedDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:layout_marginTop="10dp"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont"
+                android:visibility="visible"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_CompleteDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_DueDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:layout_marginTop="10dp"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_Assignee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_Remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="Customer"
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont"
+                android:visibility="gone"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
+
+
+</LinearLayout>

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
+import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -115,13 +116,32 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         Log.e(TAG,"ReportMode   107   "+ReportMode)
 
-        getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        if (ReportMode.equals("1")){
+//            ActionListT
+            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        }
+        if (ReportMode.equals("1")){
+//            FollowUpTicket
+//            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        }
 
-      //  getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        if (ReportMode.equals("1")){
+//            NewListTicket
+            //   getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        }
 
-     //   getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        if (ReportMode.equals("1")){
+//            StatusList
+            //  getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
 
-      //  getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        }
+
+
+
+      //
+
+
+
 
 
     }
@@ -259,7 +279,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 //                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
 //                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                        // recyLeadGenReport!!.setHasFixedSize(true)
-//                                        val adapter = LeadGenerateReportAdapter(applicationContext, followUpTicketReportArrayList)
+//                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
 //                                        recyFollowUpTicketReport!!.adapter = adapter
 //                                    }catch (e: Exception){
 //                                        Log.e(TAG,"msg   2464   "+e.toString())
