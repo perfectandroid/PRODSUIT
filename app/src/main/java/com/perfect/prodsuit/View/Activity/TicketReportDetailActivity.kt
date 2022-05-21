@@ -117,7 +117,11 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
        // getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
 
-      //  getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+      //  getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+
+     //   getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+
+      //  getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
 
 
     }
@@ -220,4 +224,226 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
 
     }
+
+
+    private fun getFollowUpTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                          ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
+
+        var laedGen = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                followUpTicketReportViewModel.getFollowUpTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2461   "+msg.length)
+                            Log.e(TAG,"msg   2462   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+//                                followUpTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+//                                if (followUpTicketReportArrayList.length()>0){
+//                                    Log.e(TAG,"msg   2463   "+followUpTicketReportArrayList)
+//                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
+//                                    try {
+//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+//                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        // recyLeadGenReport!!.setHasFixedSize(true)
+//                                        val adapter = LeadGenerateReportAdapter(applicationContext, followUpTicketReportArrayList)
+//                                        recyFollowUpTicketReport!!.adapter = adapter
+//                                    }catch (e: Exception){
+//                                        Log.e(TAG,"msg   2464   "+e.toString())
+//                                    }
+//
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportDetailActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
+
+    private fun getNewListTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                        ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
+
+        var laedGen = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                newListTicketReportViewModel.getNewListTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   2461   "+msg.length)
+                            Log.e(TAG,"msg   2462   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+//                                newListTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+//                                if (newListTicketReportArrayList.length()>0){
+//                                    Log.e(TAG,"msg   2463   "+newListTicketReportArrayList)
+//                                    ll_NewListTicket!!.visibility = View.VISIBLE
+//                                    try {
+//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+//                                        recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        // recyLeadGenReport!!.setHasFixedSize(true)
+//                                        val adapter = LeadGenerateReportAdapter(applicationContext, newListTicketReportArrayList)
+//                                        recyNewListTicketReport!!.adapter = adapter
+//                                    }catch (e: Exception){
+//                                        Log.e(TAG,"msg   2464   "+e.toString())
+//                                    }
+//
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportDetailActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
+
+    private fun getStatusListReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                       ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
+
+        var laedGen = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                statusListTicketReportViewModel.getStatusListReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   3961   "+msg.length)
+                            Log.e(TAG,"msg   3962   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+//                                statusListTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+//                                if (statusListTicketReportArrayList.length()>0){
+//                                    Log.e(TAG,"msg   3963   "+statusListTicketReportArrayList)
+//                                    ll_StatusListTicket!!.visibility = View.VISIBLE
+//                                    try {
+//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+//                                        recyStatusListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        // recyLeadGenReport!!.setHasFixedSize(true)
+//                                        val adapter = LeadGenerateReportAdapter(applicationContext, statusListTicketReportArrayList)
+//                                        recyStatusListTicketReport!!.adapter = adapter
+//                                    }catch (e: Exception){
+//                                        Log.e(TAG,"msg   3964   "+e.toString())
+//                                    }
+//
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportDetailActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
+
+
 }

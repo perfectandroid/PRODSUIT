@@ -25,12 +25,14 @@ object NewListTicketReportRepository {
     val newListTicketReportSetterGetter = MutableLiveData<NewListTicketReportModel>()
     val TAG: String = "NewListTicketReportRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<NewListTicketReportModel> {
-        getNewListTicketReport(context)
+    fun getServicesApiCall(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                           ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?): MutableLiveData<NewListTicketReportModel> {
+        getNewListTicketReport(context,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         return newListTicketReportSetterGetter
     }
 
-    private fun getNewListTicketReport(context: Context) {
+    private fun getNewListTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                       ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)

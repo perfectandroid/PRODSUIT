@@ -25,12 +25,14 @@ object FollowUpTicketReportRepository {
     val followUpTicketReportSetterGetter = MutableLiveData<FollowUpTicketReportModel>()
     val TAG: String = "FollowUpTicketReportRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<FollowUpTicketReportModel> {
-        getFollowUpTicketReport(context)
+    fun getServicesApiCall(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                           ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?): MutableLiveData<FollowUpTicketReportModel> {
+        getFollowUpTicketReport(context,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         return followUpTicketReportSetterGetter
     }
 
-    private fun getFollowUpTicketReport(context: Context) {
+    private fun getFollowUpTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+                                        ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
