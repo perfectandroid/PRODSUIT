@@ -82,7 +82,8 @@ object AttendanceAddRepository {
                 requestObject1.put("LocationName", ProdsuitApplication.encryptStart(address))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
-                Log.e(TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"requestObject1   85   "+SubMode)
+                Log.e(TAG,"requestObject1   85   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

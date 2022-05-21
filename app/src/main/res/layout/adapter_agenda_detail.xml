@@ -528,7 +528,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Document With"
+                    android:text="Document"
                     android:textColor="@color/green1"
                     android:textSize="10dp"
                     android:textStyle="normal" />
@@ -686,7 +686,7 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Quotation With"
+                    android:text="Quotation"
                     android:textColor="@color/green1"
                     android:textSize="10dp"
                     android:textStyle="normal" />
