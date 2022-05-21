@@ -38,6 +38,10 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var followUpTicketReportArrayList : JSONArray
     var recyFollowUpTicketReport  : RecyclerView? = null
 
+    lateinit var newListTicketReportViewModel: NewListTicketReportViewModel
+    lateinit var newListTicketReporArrayList : JSONArray
+    var recyNewListTicketRepor  : RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -47,6 +51,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         actionListReportViewModel = ViewModelProvider(this).get(ActionListTicketReportViewModel::class.java)
         followUpTicketReportViewModel = ViewModelProvider(this).get(FollowUpTicketReportViewModel::class.java)
+        newListTicketReportViewModel = ViewModelProvider(this).get(NewListTicketReportViewModel::class.java)
 
         setRegViews()
 
