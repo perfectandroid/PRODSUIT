@@ -20,6 +20,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
+import com.perfect.prodsuit.View.Adapter.StatusListTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -120,19 +121,19 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 //            ActionListT
             getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
-        if (ReportMode.equals("1")){
+        if (ReportMode.equals("2")){
 //            FollowUpTicket
 //            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
-        if (ReportMode.equals("1")){
+        if (ReportMode.equals("5")){
 //            NewListTicket
             //   getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
-        if (ReportMode.equals("1")){
+        if (ReportMode.equals("4")){
 //            StatusList
-            //  getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+              getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
 
         }
 
@@ -416,23 +417,23 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                             Log.e(TAG,"msg   3961   "+msg.length)
                             Log.e(TAG,"msg   3962   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
-//                                statusListTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
-//                                if (statusListTicketReportArrayList.length()>0){
-//                                    Log.e(TAG,"msg   3963   "+statusListTicketReportArrayList)
-//                                    ll_StatusListTicket!!.visibility = View.VISIBLE
-//                                    try {
-//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-//                                        recyStatusListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        // recyLeadGenReport!!.setHasFixedSize(true)
-//                                        val adapter = LeadGenerateReportAdapter(applicationContext, statusListTicketReportArrayList)
-//                                        recyStatusListTicketReport!!.adapter = adapter
-//                                    }catch (e: Exception){
-//                                        Log.e(TAG,"msg   3964   "+e.toString())
-//                                    }
-//
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("StatusListDetailsReport")
+                                statusListTicketReportArrayList = jobjt.getJSONArray("StatusListDetails")
+                                if (statusListTicketReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   3963   "+statusListTicketReportArrayList)
+                                    ll_StatusListTicket!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                        recyStatusListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = StatusListTicketReportAdapter(applicationContext, statusListTicketReportArrayList)
+                                        recyStatusListTicketReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   3964   "+e.toString())
+                                    }
+
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(

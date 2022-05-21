@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -76,6 +77,9 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     var tie_Priority: TextInputEditText? = null
     var tie_Status: TextInputEditText? = null
     var tie_Grouping: TextInputEditText? = null
+
+    var til_FollowUpAction: TextInputLayout? = null
+    var til_FollowUpType: TextInputLayout? = null
 
     lateinit var reportNameViewModel: ReportNameViewModel
     lateinit var reportNameArrayList : JSONArray
@@ -184,6 +188,9 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         tie_Priority        = findViewById(R.id.tie_Priority)
         tie_Status          = findViewById(R.id.tie_Status)
         tie_Grouping        = findViewById(R.id.tie_Grouping)
+
+        til_FollowUpAction        = findViewById(R.id.til_FollowUpAction)
+        til_FollowUpType        = findViewById(R.id.til_FollowUpType)
 
 
         btnSubmit = findViewById(R.id.btnSubmit)
@@ -1341,11 +1348,33 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     override fun onClick(position: Int, data: String) {
 
         if (data.equals("reportname")){
+            resetData()
             dialogReportName!!.dismiss()
             val jsonObject = reportNameArrayList.getJSONObject(position)
             Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
             ReportMode = jsonObject.getString("ReportMode")
             tie_ReportName!!.setText(jsonObject.getString("ReportName"))
+
+            if (ReportMode.equals("1")){
+//                ActionListT
+                til_FollowUpAction!!.visibility = View.VISIBLE
+                til_FollowUpType!!.visibility = View.VISIBLE
+            }
+            if (ReportMode.equals("2")){
+//                FollowUpTicket
+                til_FollowUpAction!!.visibility = View.VISIBLE
+                til_FollowUpType!!.visibility = View.VISIBLE
+            }
+            if (ReportMode.equals("4")){
+//                StatusList
+                til_FollowUpAction!!.visibility = View.GONE
+                til_FollowUpType!!.visibility = View.GONE
+            }
+            if (ReportMode.equals("5")){
+//                NewListTicket
+                til_FollowUpAction!!.visibility = View.GONE
+                til_FollowUpType!!.visibility = View.GONE
+            }
 
         }
 
@@ -1472,51 +1501,70 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         else if (ID_Product.equals("")){
             Config.snackBars(context,v,"Select Product")
         }
-        else if (ID_NextAction.equals("")){
-            Config.snackBars(context,v,"Select Followup Action ")
-        }
-        else if (ID_ActionType.equals("")){
-            Config.snackBars(context,v,"Select Followup Type")
-        }
-        else if (ID_Priority.equals("")){
-            Config.snackBars(context,v,"Select Priority")
-        }
-        else if (ID_Status.equals("")){
-            Config.snackBars(context,v,"Select Status")
-        }
-        else if (GroupId.equals("")){
-            Config.snackBars(context,v,"Select Grouping")
+        else if (ReportMode.equals("4") || ReportMode.equals("5")){
+            if (ID_Priority.equals("")){
+                Config.snackBars(context,v,"Select Priority")
+            }
+            else if (ID_Status.equals("")){
+                Config.snackBars(context,v,"Select Status")
+            }
+            else if (GroupId.equals("")){
+                Config.snackBars(context,v,"Select Grouping")
+            }
+            else{
+                PassData()
+            }
         }
         else{
-
-            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-            val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
-            val strFromDate = outputFormat.format(dateFrom)
-            val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
-            val strToDate = outputFormat.format(dateTo)
-
-            Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
-
-
-            intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
-            intent.putExtra("ReportMode", ReportMode)
-            intent.putExtra("ID_Branch", ID_Branch)
-            intent.putExtra("Fromdate", strFromDate)
-            intent.putExtra("Todate", strToDate)
-            intent.putExtra("ID_Product", ID_Product)
-            intent.putExtra("ID_NextAction", ID_NextAction)
-            intent.putExtra("ID_ActionType", ID_ActionType)
-            intent.putExtra("ID_Priority", ID_Priority)
-            intent.putExtra("ID_Status", ID_Status)
-            intent.putExtra("GroupId", GroupId)
-            startActivity(intent)
-
+            if (ID_NextAction.equals("")){
+                Config.snackBars(context,v,"Select Followup Action ")
+            }
+            else if (ID_ActionType.equals("")){
+                Config.snackBars(context,v,"Select Followup Type")
+            }
+            else if (ID_Priority.equals("")){
+                Config.snackBars(context,v,"Select Priority")
+            }
+            else if (ID_Status.equals("")){
+                Config.snackBars(context,v,"Select Status")
+            }
+            else if (GroupId.equals("")){
+                Config.snackBars(context,v,"Select Grouping")
+            }
+            else {
+                PassData()
+            }
         }
+
 
     }
 
+    private fun PassData() {
+
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+        val strFromDate = outputFormat.format(dateFrom)
+        val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+        val strToDate = outputFormat.format(dateTo)
+
+        Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
+
+
+        intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
+        intent.putExtra("ReportMode", ReportMode)
+        intent.putExtra("ID_Branch", ID_Branch)
+        intent.putExtra("Fromdate", strFromDate)
+        intent.putExtra("Todate", strToDate)
+        intent.putExtra("ID_Product", ID_Product)
+        intent.putExtra("ID_NextAction", ID_NextAction)
+        intent.putExtra("ID_ActionType", ID_ActionType)
+        intent.putExtra("ID_Priority", ID_Priority)
+        intent.putExtra("ID_Status", ID_Status)
+        intent.putExtra("GroupId", GroupId)
+        startActivity(intent)
+    }
 
 
 }
