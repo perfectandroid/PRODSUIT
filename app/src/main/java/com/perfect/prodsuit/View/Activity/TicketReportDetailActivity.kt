@@ -39,8 +39,12 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     var recyFollowUpTicketReport  : RecyclerView? = null
 
     lateinit var newListTicketReportViewModel: NewListTicketReportViewModel
-    lateinit var newListTicketReporArrayList : JSONArray
-    var recyNewListTicketRepor  : RecyclerView? = null
+    lateinit var newListTicketReportArrayList : JSONArray
+    var recyNewListTicketReport  : RecyclerView? = null
+
+    lateinit var statusListTicketReportViewModel: StatusListTicketReportViewModel
+    lateinit var statusListTicketReportArrayList : JSONArray
+    var recyStatusListTicketReport  : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         actionListReportViewModel = ViewModelProvider(this).get(ActionListTicketReportViewModel::class.java)
         followUpTicketReportViewModel = ViewModelProvider(this).get(FollowUpTicketReportViewModel::class.java)
         newListTicketReportViewModel = ViewModelProvider(this).get(NewListTicketReportViewModel::class.java)
+        statusListTicketReportViewModel = ViewModelProvider(this).get(StatusListTicketReportViewModel::class.java)
 
         setRegViews()
 
