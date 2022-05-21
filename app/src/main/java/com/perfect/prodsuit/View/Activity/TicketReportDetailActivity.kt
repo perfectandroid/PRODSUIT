@@ -7,7 +7,11 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.*
+import org.json.JSONArray
 
 class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -26,12 +30,19 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var ID_Status:String?=""
     private var GroupId:String?=""
 
+    lateinit var actionListReportViewModel: ActionListTicketReportViewModel
+    lateinit var actionListReportArrayList : JSONArray
+    var recyActionListReport  : RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_ticket_report_detail)
         context = this@TicketReportDetailActivity
+
+        actionListReportViewModel = ViewModelProvider(this).get(ActionListTicketReportViewModel::class.java)
+
         setRegViews()
 
         if (getIntent().hasExtra("ReportMode")) {
