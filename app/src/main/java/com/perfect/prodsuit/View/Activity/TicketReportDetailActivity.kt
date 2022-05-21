@@ -20,6 +20,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
+import com.perfect.prodsuit.View.Adapter.NewListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.StatusListTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -353,7 +354,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 //                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
 //                                        recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                        // recyLeadGenReport!!.setHasFixedSize(true)
-//                                        val adapter = LeadGenerateReportAdapter(applicationContext, newListTicketReportArrayList)
+//                                        val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
 //                                        recyNewListTicketReport!!.adapter = adapter
 //                                    }catch (e: Exception){
 //                                        Log.e(TAG,"msg   2464   "+e.toString())
