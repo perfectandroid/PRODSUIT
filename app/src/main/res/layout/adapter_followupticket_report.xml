@@ -130,6 +130,20 @@
                 android:fontFamily="@font/myfont" />
 
             <TextView
+                android:id="@+id/tv_Branch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont"
+                android:visibility="visible"/>
+
+            <TextView
                 android:id="@+id/tv_Product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +173,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_CommitedDate"
+                android:id="@+id/tv_FollowUpMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -177,6 +191,20 @@
 
             <TextView
                 android:id="@+id/tv_CompleteDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+
+            <TextView
+                android:id="@+id/tv_AssignedTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -221,7 +249,7 @@
                 android:fontFamily="@font/myfont" />
 
             <TextView
-                android:id="@+id/tv_Assignee"
+                android:id="@+id/tv_Status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -234,18 +262,18 @@
                 android:fontFamily="@font/myfont" />
 
             <TextView
-                android:id="@+id/tv_Remarks"
+                android:id="@+id/tv_Priority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="Customer"
+                android:text=""
                 android:textColor="@color/greydark"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
 
         </LinearLayout>

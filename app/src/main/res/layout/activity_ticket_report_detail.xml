@@ -372,7 +372,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Customer/Product"
+                                android:text="Customer/Branch/Product"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
@@ -404,7 +404,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="COmmitd/compl. Date"
+                                android:text="Foll :Methd/compl.Date/Assigned to"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
@@ -437,7 +437,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="due days/Assignee"
+                                android:text="due days/Status/Priority"
                                 android:textColor="@color/white"
                                 android:textAllCaps="true"
                                 android:layout_marginTop="10dp"
@@ -468,7 +468,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -496,7 +496,7 @@
                                 android:text="SI No"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -525,7 +525,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="2dp"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -556,7 +556,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="2dp"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -588,7 +588,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="2dp"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 
@@ -621,7 +621,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="2dp"
-                                android:textSize="11dp"
+                                android:textSize="10dp"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/myfont" />
 

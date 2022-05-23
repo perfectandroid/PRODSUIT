@@ -34,15 +34,22 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.tv_SiNo.text         = pos.toString()
-                holder.tv_LeadNo.text       = jsonObject!!.getString("LeadNo")
-                holder.tv_LeadDate.text     = jsonObject!!.getString("LeadDate")
-                holder.tv_Action.text       = jsonObject!!.getString("Action")
-                holder.tv_ActionType.text   = jsonObject!!.getString("ActionType")
-                holder.tv_Customer.text     = jsonObject!!.getString("Customer")
-                holder.tv_Product.text      = jsonObject!!.getString("ProductORProject")
+                holder.tv_SiNo.text            = pos.toString()
+                holder.tv_LeadNo.text          = jsonObject!!.getString("LeadNo")
+                holder.tv_LeadDate.text        = jsonObject!!.getString("LeadDate")
+                holder.tv_Action.text          = jsonObject!!.getString("NextAction")
+                holder.tv_ActionType.text      = jsonObject!!.getString("NextActionDate")
+                holder.tv_Customer.text        = jsonObject!!.getString("Customer")
+                holder.tv_Branch.text          = jsonObject!!.getString("BRANCH")
+                holder.tv_Product.text         = jsonObject!!.getString("Product")
+
+                holder.tv_FollowUpMethod.text  = jsonObject!!.getString("FollowUpMethod")
+                holder.tv_CompleteDate.text    = jsonObject!!.getString("CompletedDate")
+                holder.tv_AssignedTo.text      = jsonObject!!.getString("AssignedTo")
+
                 holder.tv_DueDays.text      = jsonObject!!.getString("DueDays")
-                holder.tv_Assignee.text     = jsonObject!!.getString("Assignee")
+                holder.tv_Status.text     = jsonObject!!.getString("Status")
+                holder.tv_Priority.text     = jsonObject!!.getString("Priority")
 //                holder.tv_Remarks.text      = jsonObject!!.getString("Remarks")
 
 //                holder.llDistrict!!.setTag(position)
@@ -71,30 +78,36 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var tv_SiNo            : TextView
-        internal var tv_LeadNo          : TextView
-        internal var tv_LeadDate        : TextView
-        internal var tv_Action          : TextView
-        internal var tv_ActionType      : TextView
-        internal var tv_Customer        : TextView
-        internal var tv_Product         : TextView
-//        internal var tv_FollowupDt      : TextView
-        internal var tv_DueDays         : TextView
-        internal var tv_Assignee        : TextView
-        internal var tv_Remarks         : TextView
+        internal var tv_SiNo             : TextView
+        internal var tv_LeadNo           : TextView
+        internal var tv_LeadDate         : TextView
+        internal var tv_Action           : TextView
+        internal var tv_ActionType       : TextView
+        internal var tv_Customer         : TextView
+        internal var tv_Branch           : TextView
+        internal var tv_Product          : TextView
+        internal var tv_FollowUpMethod   : TextView
+        internal var tv_CompleteDate     : TextView
+        internal var tv_AssignedTo       : TextView
+        internal var tv_DueDays          : TextView
+        internal var tv_Status           : TextView
+        internal var tv_Priority         : TextView
         //        internal var llDistrict      : LinearLayout
         init {
-            tv_SiNo        = v.findViewById<View>(R.id.tv_SiNo) as TextView
-            tv_LeadNo        = v.findViewById<View>(R.id.tv_LeadNo) as TextView
-            tv_LeadDate      = v.findViewById<View>(R.id.tv_LeadDate) as TextView
-            tv_Customer      = v.findViewById<View>(R.id.tv_Customer) as TextView
-            tv_Product       = v.findViewById<View>(R.id.tv_Product) as TextView
-            tv_Action        = v.findViewById<View>(R.id.tv_Action) as TextView
-            tv_ActionType    = v.findViewById<View>(R.id.tv_ActionType) as TextView
-//            tv_FollowupDt    = v.findViewById<View>(R.id.tv_FollowupDt) as TextView
-            tv_DueDays       = v.findViewById<View>(R.id.tv_DueDays) as TextView
-            tv_Assignee      = v.findViewById<View>(R.id.tv_Assignee) as TextView
-            tv_Remarks       = v.findViewById<View>(R.id.tv_Remarks) as TextView
+            tv_SiNo            = v.findViewById<View>(R.id.tv_SiNo) as TextView
+            tv_LeadNo          = v.findViewById<View>(R.id.tv_LeadNo) as TextView
+            tv_LeadDate        = v.findViewById<View>(R.id.tv_LeadDate) as TextView
+            tv_Customer        = v.findViewById<View>(R.id.tv_Customer) as TextView
+            tv_Branch          = v.findViewById<View>(R.id.tv_Branch) as TextView
+            tv_Product         = v.findViewById<View>(R.id.tv_Product) as TextView
+            tv_Action          = v.findViewById<View>(R.id.tv_Action) as TextView
+            tv_ActionType      = v.findViewById<View>(R.id.tv_ActionType) as TextView
+            tv_FollowUpMethod  = v.findViewById<View>(R.id.tv_FollowUpMethod) as TextView
+            tv_CompleteDate    = v.findViewById<View>(R.id.tv_CompleteDate) as TextView
+            tv_AssignedTo      = v.findViewById<View>(R.id.tv_AssignedTo) as TextView
+            tv_DueDays         = v.findViewById<View>(R.id.tv_DueDays) as TextView
+            tv_Status          = v.findViewById<View>(R.id.tv_Status) as TextView
+            tv_Priority        = v.findViewById<View>(R.id.tv_Priority) as TextView
 //            llDistrict  = v.findViewById<View>(R.id.llDistrict) as LinearLayout
         }
     }

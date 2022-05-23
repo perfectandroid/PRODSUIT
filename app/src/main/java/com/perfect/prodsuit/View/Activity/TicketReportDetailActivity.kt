@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
+import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.NewListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.StatusListTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
@@ -126,7 +127,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
         if (ReportMode.equals("2")){
 //            FollowUpTicket
-//            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
         if (ReportMode.equals("5")){
@@ -268,26 +269,26 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2461   "+msg.length)
-                            Log.e(TAG,"msg   2462   "+msg)
+                            Log.e(TAG,"msg   2701   "+msg.length)
+                            Log.e(TAG,"msg   2702   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
-//                                followUpTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
-//                                if (followUpTicketReportArrayList.length()>0){
-//                                    Log.e(TAG,"msg   2463   "+followUpTicketReportArrayList)
-//                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
-//                                    try {
-//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-//                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        // recyLeadGenReport!!.setHasFixedSize(true)
-//                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
-//                                        recyFollowUpTicketReport!!.adapter = adapter
-//                                    }catch (e: Exception){
-//                                        Log.e(TAG,"msg   2464   "+e.toString())
-//                                    }
-//
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("FollowUpListDetailsReport")
+                                followUpTicketReportArrayList = jobjt.getJSONArray("FollowUpListDetails")
+                                if (followUpTicketReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
+                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
+                                        recyFollowUpTicketReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   2704   "+e.toString())
+                                    }
+
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(
