@@ -69,10 +69,15 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.txtv_preference.text        = jsonObject!!.getString("Preference")
                 if(jsonObject!!.getString("Preference").equals("Hot")){
                     holder.impreference.setImageResource(R.drawable.preference2)
+                    holder.impreference.setColorFilter(context.getColor(R.color.ColorHot))
                 }else if (jsonObject!!.getString("Preference").equals("Warm")){
                     holder.impreference.setImageResource(R.drawable.preference3)
+                    holder.impreference.setColorFilter(context.getColor(R.color.ColorWarm))
+
                 }else if (jsonObject!!.getString("Preference").equals("Cold")){
                     holder.impreference.setImageResource(R.drawable.preference1)
+                    holder.impreference.setColorFilter(context.getColor(R.color.ColorCold))
+
                 }
                 holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")

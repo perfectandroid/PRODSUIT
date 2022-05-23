@@ -105,6 +105,12 @@
     <color name="textColor">#979797</color>
     <color name="hintTextColor">#979797</color>
 
+    <color name="ColorCold">#1ca4fc</color>
+    <color name="ColorWarm">#f5a732</color>
+    <color name="ColorHot">#f96922</color>
+
+
+
 <!--    <color name="todolist_Color">#31a3ff</color>-->
 <!--    <color name="overdue_Color">#e94560</color>-->
 <!--    <color name="upcomung_Color">#00c572</color>   -->
