@@ -30,6 +30,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     lateinit var todolistViewModel: TodoListViewModel
     private var rv_todolist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
+    private var SubMode:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,9 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_todolist)
         setRegViews()
+        if (getIntent().hasExtra("SubMode")) {
+            SubMode = intent.getStringExtra("SubMode")
+        }
         getTodoList()
     }
 
@@ -70,7 +74,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                     rv_todolist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                     rv_todolist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, todoArrayList)
+                                    val adapter = TodoListAdapter(applicationContext, todoArrayList,SubMode!!)
                                     rv_todolist!!.adapter = adapter
                                     adapter.setClickListener(this@TodoListActivity)
                                 } else {

@@ -10,10 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -24,16 +21,28 @@ import org.json.JSONObject
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.perfect.prodsuit.Viewmodel.DashboardreportListViewModel
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
+import com.perfect.prodsuit.View.Adapter.PriorityWiseReportAdapter
+import com.perfect.prodsuit.View.Adapter.ProductWiseReportAdapter
+import com.perfect.prodsuit.Viewmodel.LeadGenerateReportViewModel
+import com.perfect.prodsuit.Viewmodel.PriorityWiseReportViewModel
+import com.perfect.prodsuit.Viewmodel.ProductWiseReportViewModel
 import com.perfect.prodsuit.Viewmodel.ReportviewViewModel
+import org.json.JSONArray
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
 class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
+    val TAG : String = "ReportViewDetailsActivity"
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var ll_leadGenerate: LinearLayout? = null
+    internal var ll_productwise: LinearLayout? = null
+    internal var ll_prioritywise: LinearLayout? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -55,14 +64,31 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var context: Context
     lateinit var reportviewViewModel: ReportviewViewModel
+    lateinit var leadGenerateReportViewModel: LeadGenerateReportViewModel
+    lateinit var productWiseReportViewModel: ProductWiseReportViewModel
+    lateinit var priorityWiseReportViewModel: PriorityWiseReportViewModel
+
+    lateinit var leadGenReportArrayList : JSONArray
+    var recyLeadGenReport  : RecyclerView? = null
+
+    lateinit var prodWiseReportArrayList : JSONArray
+    var recyProdWiseReport  : RecyclerView? = null
+
+    lateinit var priorityWiseReportArrayList : JSONArray
+    var recyPriorityWise  : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_reportviewdetails)
         setRegViews()
         context = this@ReportViewDetailsActivity
-        bottombarnav()
-        getCalendarId(context)
+        leadGenerateReportViewModel = ViewModelProvider(this).get(LeadGenerateReportViewModel::class.java)
+        productWiseReportViewModel = ViewModelProvider(this).get(ProductWiseReportViewModel::class.java)
+        priorityWiseReportViewModel = ViewModelProvider(this).get(PriorityWiseReportViewModel::class.java)
+       // bottombarnav()
+       // getCalendarId(context)
 
         if (getIntent().hasExtra("Fromdate")) {
             strFromdate = intent.getStringExtra("Fromdate")
@@ -76,12 +102,50 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         if (getIntent().hasExtra("DashboardTypeName")) {
             strDashboardTypeName = intent.getStringExtra("DashboardTypeName")
         }
-        getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
+
+//        Log.e(TAG,"81   "
+//                +"\n"+"strFromdate           "+strFromdate
+//                +"\n"+"strTodate             "+strTodate
+//                +"\n"+"strDashboardTypeId    "+strDashboardTypeId
+//                +"\n"+"strDashboardTypeName  "+strDashboardTypeName)
+//      //  getReportview(strFromdate!!,strTodate!!,strDashboardTypeId!!)
+
+        ll_leadGenerate!!.visibility = View.GONE
+        ll_productwise!!.visibility = View.GONE
+        ll_prioritywise!!.visibility = View.GONE
+
+        if (strDashboardTypeId.equals("15")){
+//            Lead Generate Report
+            getLeadGenerateReportview(strFromdate,strTodate,strDashboardTypeId)
+        }
+        if (strDashboardTypeId.equals("18")){
+//            Product Wise Lead
+            getProductWiseReportview(strFromdate,strTodate,strDashboardTypeId)
+        }
+        if (strDashboardTypeId.equals("19")){
+//            Priority Wise Lead
+            getPriorityWiseReportview(strFromdate,strTodate,strDashboardTypeId)
+        }
     }
 
+
+
+
     private fun setRegViews() {
+
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        ll_leadGenerate = findViewById(R.id.ll_leadGenerate)
+        recyLeadGenReport = findViewById(R.id.recyLeadGenReport)
+
+        ll_productwise = findViewById(R.id.ll_productwise)
+        recyProdWiseReport = findViewById(R.id.recyProdWiseReport)
+
+        ll_prioritywise = findViewById(R.id.ll_prioritywise)
+        recyPriorityWise = findViewById(R.id.recyPriorityWise)
+
+
     }
 
     override fun onClick(v: View) {
@@ -450,4 +514,239 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+    private fun getLeadGenerateReportview(strFromdate: String?, strTodate: String?, strDashboardTypeId: String?) {
+
+        var laedGen = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadGenerateReportViewModel.getLeadGenerateReport(this,strFromdate!!,strTodate!!,strDashboardTypeId!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   4971   "+msg.length)
+                            Log.e(TAG,"msg   4972   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
+                                leadGenReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
+                                if (leadGenReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   4973   "+leadGenReportArrayList)
+                                    ll_leadGenerate!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyLeadGenReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = LeadGenerateReportAdapter(applicationContext, leadGenReportArrayList)
+                                        recyLeadGenReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   4974   "+e.toString())
+                                    }
+
+
+
+
+//                                    recyLeadGenReport!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+//                                    val adapter = LeadGenerateReportAdapter(this@ReportViewDetailsActivity, leadGenReportArrayList)
+//                                    recyLeadGenReport!!.adapter = adapter
+//                                        adapter.setClickListener(this@ReportViewDetailsActivity)
+//                                    if (laedGen == 0){
+//                                        laedGen++
+////                                        recyLeadGenReport!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false))
+////                                        val adapter = LeadGenerateReportAdapter(this@ReportViewDetailsActivity, leadGenReportArrayList)
+////                                        recyLeadGenReport!!.adapter = adapter
+//////                                        adapter.setClickListener(this@ReportViewDetailsActivity)
+//                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ReportViewDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+    private fun getProductWiseReportview(strFromdate: String?, strTodate: String?, strDashboardTypeId: String?) {
+
+        var prodWise = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                productWiseReportViewModel.getProductWiseReport(this,strFromdate!!,strTodate!!,strDashboardTypeId!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   564   "+msg.length)
+                            Log.e(TAG,"msg   564   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("ProductWiseLeadReport")
+                                prodWiseReportArrayList = jobjt.getJSONArray("ProductWiseLeadReportList")
+
+                                if (prodWiseReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   621   "+prodWiseReportArrayList)
+                                    ll_productwise!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyProdWiseReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = ProductWiseReportAdapter(applicationContext, prodWiseReportArrayList)
+                                        recyProdWiseReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   4974   "+e.toString())
+                                    }
+
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ReportViewDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+
+    private fun getPriorityWiseReportview(strFromdate: String?, strTodate: String?, strDashboardTypeId: String?) {
+
+        var priorityWise = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                priorityWiseReportViewModel.getPriorityWiseReport(this,strFromdate!!,strTodate!!,strDashboardTypeId!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   632   "+msg.length)
+                            Log.e(TAG,"msg   632   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("PriorityWiseLeadReport")
+                                priorityWiseReportArrayList = jobjt.getJSONArray("PriorityWiseLeadReportList")
+                                if (priorityWiseReportArrayList.length()>0) {
+                                    Log.e(TAG, "msg   4973   " + priorityWiseReportArrayList)
+                                    ll_prioritywise!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout =
+                                            GridLayoutManager(this@ReportViewDetailsActivity, 1)
+                                        recyPriorityWise!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = PriorityWiseReportAdapter(
+                                            applicationContext,
+                                            priorityWiseReportArrayList
+                                        )
+                                        recyPriorityWise!!.adapter = adapter
+                                    } catch (e: Exception) {
+                                        Log.e(TAG, "msg   4974   " + e.toString())
+                                    }
+                                }
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ReportViewDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
 }

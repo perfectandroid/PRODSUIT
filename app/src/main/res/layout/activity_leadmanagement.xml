@@ -121,7 +121,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:background="@drawable/todolistbg"
+                            android:background="@drawable/todolistbg_svg"
                             android:orientation="horizontal">
 
 
@@ -149,8 +149,9 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:background="@drawable/overduelistbg"
+                            android:background="@drawable/overduelistbg_svg"
                             android:orientation="horizontal">
+<!--                            overduelistbg-->
 
 
                             <TextView
@@ -177,7 +178,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:background="@drawable/upcomingtaskbg"
+                            android:background="@drawable/upcomingtaskbg_svg"
                             android:orientation="horizontal">
 
 

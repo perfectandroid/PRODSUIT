@@ -198,4 +198,27 @@ interface ApiInterface {
 
     @POST("UserValidations/EmployeeProfileDetails")
     fun getProfile(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/LeadGenerateReport")
+    fun getLeadGenerateReport(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ProductWiseLeadReport")
+    fun getProductWiseLeadReport(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/PriorityWiseLeadReport")
+    fun getPriorityWiseReport(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ReportNameDetails")
+    fun getReportNameDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/GroupingDetails")
+    fun getGroupingDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ActionListDetailsReport")
+    fun getActionListDetailsReport(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/StatusListDetailsReport")
+    fun getStatusListDetailsReport(@Body body: RequestBody): Call<String>
+
+
 }

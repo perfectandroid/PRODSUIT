@@ -11,8 +11,8 @@ class BranchViewModel: ViewModel() {
 
     var branchData: MutableLiveData<BranchModel>? = null
 
-    fun getBranch(context: Context) : LiveData<BranchModel>? {
-        branchData = BranchRepository.getServicesApiCall(context)
+    fun getBranch(context: Context ,ID_BranchType : String ) : LiveData<BranchModel>? {
+        branchData = BranchRepository.getServicesApiCall(context,ID_BranchType)
         return branchData
     }
 

@@ -78,14 +78,17 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
             }
             R.id.lltodolist->{
                 val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
+                i.putExtra("SubMode","1")
                 startActivity(i)
             }
             R.id.lloverdue->{
                 val i = Intent(this@LeadManagemnetActivity, OverDueActivity::class.java)
+                i.putExtra("SubMode","2")
                 startActivity(i)
             }
             R.id.lloverUpcoming->{
                 val i = Intent(this@LeadManagemnetActivity, UpcomingtaskActivity::class.java)
+                i.putExtra("SubMode","3")
                 startActivity(i)
             }
         }

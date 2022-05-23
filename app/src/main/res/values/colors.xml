@@ -105,6 +105,26 @@
     <color name="textColor">#979797</color>
     <color name="hintTextColor">#979797</color>
 
+<!--    <color name="todolist_Color">#31a3ff</color>-->
+<!--    <color name="overdue_Color">#e94560</color>-->
+<!--    <color name="upcomung_Color">#00c572</color>   -->
+
+<!--    <color name="todolist_Color">#a8d6fc</color>-->
+<!--    <color name="overdue_Color">#ff9cad</color>-->
+<!--    <color name="upcomung_Color">#aafeda</color>-->
+
+<!--    <color name="todolist_Color">#84B6DF</color>-->
+<!--    <color name="overdue_Color">#f76982</color>-->
+<!--    <color name="upcomung_Color">#55E4A7</color>-->
+<!--    <color name="right_Color">#E6E5E5</color>-->
+
+    <color name="todolist_Color">#48a9f8</color>
+    <color name="todolist_light_Color">#8FC8F7</color>
+    <color name="overdue_Color">#e94560</color>
+    <color name="overdue_light_Color">#F47D91</color>
+    <color name="upcomung_Color">#1bd084</color>
+    <color name="upcomung_light_Color">#74F4BF</color>
+    <color name="right_Color">#E6E5E5</color>
 
 <!--    <color name="leadstages_color1">#fcca00</color>-->
 <!--    <color name="leadstages_color2">#fc8d01</color>-->

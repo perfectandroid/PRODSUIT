@@ -3458,7 +3458,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  progressDialog!!.setIndeterminate(true)
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                  progressDialog!!.show()
-                 branchViewModel.getBranch(this)!!.observe(
+                 branchViewModel.getBranch(this,ID_BranchType)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
                          val msg = serviceSetterGetter.message

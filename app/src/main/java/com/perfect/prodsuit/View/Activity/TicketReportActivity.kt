@@ -1,10 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -15,17 +12,32 @@ import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
+import org.json.JSONArray
+import org.json.JSONObject
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
+class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
+    val TAG : String = "TicketReportActivity"
+    private var progressDialog: ProgressDialog? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -53,18 +65,101 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
     var imclose: ImageView? = null
     var im_close: ImageView? = null
     lateinit var context: Context
+
+    var tie_ReportName: TextInputEditText? = null
+    var tie_Branch: TextInputEditText? = null
+    var tie_FromDate: TextInputEditText? = null
+    var tie_ToDate: TextInputEditText? = null
+    var tie_EmployeeName: TextInputEditText? = null
+    var tie_Product: TextInputEditText? = null
+    var tie_FollowUpAction: TextInputEditText? = null
+    var tie_FollowUpType: TextInputEditText? = null
+    var tie_Priority: TextInputEditText? = null
+    var tie_Status: TextInputEditText? = null
+    var tie_Grouping: TextInputEditText? = null
+
+    var til_FollowUpAction: TextInputLayout? = null
+    var til_FollowUpType: TextInputLayout? = null
+
+    lateinit var reportNameViewModel: ReportNameViewModel
+    lateinit var reportNameArrayList : JSONArray
+    private var dialogReportName : Dialog? = null
+    var recyReportName: RecyclerView? = null
+
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var branchArrayList : JSONArray
+    private var dialogBranch : Dialog? = null
+    var recyBranch: RecyclerView? = null
+
+    lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var prodDetailArrayList : JSONArray
+    private var dialogProdDet : Dialog? = null
+    var recyProdDetail: RecyclerView? = null
+
+    lateinit var followUpActionViewModel: FollowUpActionViewModel
+    lateinit var followUpActionArrayList : JSONArray
+    private var dialogFollowupAction : Dialog? = null
+    var recyFollowupAction: RecyclerView? = null
+
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    lateinit var followUpTypeArrayList : JSONArray
+    private var dialogFollowupType : Dialog? = null
+    var recyFollowupType: RecyclerView? = null
+
+    lateinit var productPriorityViewModel: ProductPriorityViewModel
+    lateinit var prodPriorityArrayList : JSONArray
+    private var dialogProdPriority : Dialog? = null
+    var recyProdPriority: RecyclerView? = null
+
+    lateinit var productStatusViewModel: ProductStatusViewModel
+    lateinit var prodStatusArrayList : JSONArray
+    private var dialogProdStatus : Dialog? = null
+    var recyProdStatus: RecyclerView? = null
+
+    lateinit var groupingViewModel: GroupingViewModel
+    lateinit var groupingArrayList : JSONArray
+    private var dialogGrouping : Dialog? = null
+    var recyGrouping: RecyclerView? = null
+
+
+    private var fromToDate:Int = 0
+    private var ReportMode:String = ""
+    private var ID_Branch:String = ""
+    private var ID_Product:String = ""
+    private var ID_NextAction:String = ""
+    private var ID_ActionType:String = ""
+    private var ID_Priority:String = ""
+    private var ID_Status:String = ""
+    private var GroupId:String = ""
+
+    var btnSubmit: Button? = null
+    var btnReset: Button? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_ticketreport)
-        setRegViews()
+
         context = this@TicketReportActivity
+        reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
+        productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
+        groupingViewModel = ViewModelProvider(this).get(GroupingViewModel::class.java)
+
+        setRegViews()
         bottombarnav()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtfromDate!!.text = currentDate
         txttoDate!!.text = currentDate
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
     }
 
     private fun setRegViews() {
@@ -81,6 +176,27 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         ll_Todate = findViewById(R.id.ll_Todate)
         date_Picker1 = findViewById(R.id.date_Picker1)
         txtok1 = findViewById(R.id.txtok1)
+
+        tie_ReportName      = findViewById(R.id.tie_ReportName)
+        tie_Branch          = findViewById(R.id.tie_Branch)
+        tie_FromDate        = findViewById(R.id.tie_FromDate)
+        tie_ToDate          = findViewById(R.id.tie_ToDate)
+        tie_EmployeeName    = findViewById(R.id.tie_EmployeeName)
+        tie_Product         = findViewById(R.id.tie_Product)
+        tie_FollowUpAction  = findViewById(R.id.tie_FollowUpAction)
+        tie_FollowUpType    = findViewById(R.id.tie_FollowUpType)
+        tie_Priority        = findViewById(R.id.tie_Priority)
+        tie_Status          = findViewById(R.id.tie_Status)
+        tie_Grouping        = findViewById(R.id.tie_Grouping)
+
+        til_FollowUpAction        = findViewById(R.id.til_FollowUpAction)
+        til_FollowUpType        = findViewById(R.id.til_FollowUpType)
+
+
+        btnSubmit = findViewById(R.id.btnSubmit)
+        btnReset = findViewById(R.id.btnReset)
+
+
         txtok1!!.setOnClickListener(this)
         llfromdate!!.setOnClickListener(this)
         lltodate!!.setOnClickListener(this)
@@ -88,6 +204,21 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         txtok!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         im_close!!.setOnClickListener(this)
+
+        tie_ReportName!!.setOnClickListener(this)
+        tie_Branch!!.setOnClickListener(this)
+        tie_FromDate!!.setOnClickListener(this)
+        tie_ToDate!!.setOnClickListener(this)
+        tie_EmployeeName!!.setOnClickListener(this)
+        tie_Product!!.setOnClickListener(this)
+        tie_FollowUpAction!!.setOnClickListener(this)
+        tie_FollowUpType!!.setOnClickListener(this)
+        tie_Priority!!.setOnClickListener(this)
+        tie_Status!!.setOnClickListener(this)
+        tie_Grouping!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View) {
@@ -143,8 +274,70 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
                 txtfromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                 ll_Fromdate!!.visibility=View.GONE
             }
+
+            R.id.tie_ReportName->{
+
+                getReportName()
+            }
+
+            R.id.tie_Branch->{
+                getBranch()
+            }
+
+            R.id.tie_FromDate->{
+                fromToDate = 0
+                openBottomSheet()
+            }
+
+            R.id.tie_ToDate->{
+
+                fromToDate = 1
+                openBottomSheet()
+            }
+
+            R.id.tie_EmployeeName->{
+
+            }
+            R.id.tie_Product->{
+                getProductDetail()
+            }
+
+            R.id.tie_FollowUpAction->{
+                getFollowupAction()
+            }
+
+            R.id.tie_FollowUpType->{
+                getFollowupType()
+            }
+            R.id.tie_Priority->{
+                getProductPriority()
+            }
+            R.id.tie_Status->{
+                getProductStatus()
+            }
+            R.id.tie_Grouping->{
+
+                getGrouping()
+            }
+
+            R.id.btnSubmit->{
+                validateData(v)
+            }
+            R.id.btnReset->{
+
+                resetData()
+
+            }
+
+
+
+
+
+
         }
     }
+
+
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -438,4 +631,940 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+    private fun getReportName() {
+        var reportName = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                reportNameViewModel.getReportName(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ReportNameDetails")
+                                reportNameArrayList = jobjt.getJSONArray("ReportNameDetailsList")
+                                if (reportNameArrayList.length()>0){
+                                    if (reportName == 0){
+                                        reportName++
+                                        reportNamePopup(reportNameArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+
+    private fun reportNamePopup(reportNameArrayList: JSONArray) {
+        try {
+
+            dialogReportName = Dialog(this)
+            dialogReportName!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogReportName!! .setContentView(R.layout.report_name_popup)
+            dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyReportName = dialogReportName!! .findViewById(R.id.recyReportName) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNameArrayList)
+            recyReportName!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogReportName!!.show()
+            dialogReportName!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+
+
+
+
+    private fun getBranch() {
+        var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this,"0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1062   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("BranchDetails")
+                                branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                if (branchArrayList.length()>0){
+                                    if (branch == 0){
+                                        branch++
+                                        branchPopup(branchArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!! .setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                if (fromToDate == 0){
+                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (fromToDate == 1){
+                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+
+    private fun getProductDetail() {
+        var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   227   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                if (prodDetailArrayList.length()>0){
+                                    if (proddetail == 0){
+                                        proddetail++
+                                        productDetailPopup(prodDetailArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!! .setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailArrayList)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getFollowupAction() {
+        var followUpAction = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpActionViewModel.getFollowupAction(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                if (followUpActionArrayList.length()>0){
+                                    if (followUpAction == 0){
+                                        followUpAction++
+                                        followUpActionPopup(followUpActionArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupAction = Dialog(this)
+            dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupAction!! .setContentView(R.layout.followup_action)
+            dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupActionAdapter(this@TicketReportActivity, followUpActionArrayList)
+            recyFollowupAction!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogFollowupAction!!.show()
+            dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getFollowupType() {
+        var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   82   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                if (followUpTypeArrayList.length()>0){
+                                    if (followUpType == 0){
+                                        followUpType++
+                                        followupTypePopup(followUpTypeArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeArrayList)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getProductPriority() {
+        var prodpriority = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productPriorityViewModel.getProductPriority(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   353   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("PriorityDetailsList")
+                                prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
+                                if (prodPriorityArrayList.length()>0){
+                                    if (prodpriority == 0){
+                                        prodpriority++
+                                        productPriorityPopup(prodPriorityArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productPriorityPopup(prodPriorityArrayList: JSONArray) {
+
+        try {
+
+            dialogProdPriority = Dialog(this)
+            dialogProdPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
+            dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPriorityArrayList)
+            recyProdPriority!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogProdPriority!!.show()
+            dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getProductStatus() {
+        var prodstatus = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productStatusViewModel.getProductStatus(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   333   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                if (prodStatusArrayList.length()>0){
+                                    if (prodstatus == 0){
+                                        prodstatus++
+                                        productStatusPopup(prodStatusArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productStatusPopup(prodStatusArrayList: JSONArray) {
+
+        try {
+
+            dialogProdStatus = Dialog(this)
+            dialogProdStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdStatus!! .setContentView(R.layout.product_status_popup)
+            dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusArrayList)
+            recyProdStatus!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogProdStatus!!.show()
+            dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getGrouping() {
+        var grouping = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                groupingViewModel.getGrouping(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   333   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("GroupingDetails")
+                                groupingArrayList = jobjt.getJSONArray("GroupingDetailsList")
+                                if (groupingArrayList.length()>0){
+                                    if (grouping == 0){
+                                        grouping++
+                                        groupingPopup(groupingArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@TicketReportActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun groupingPopup(groupingArrayList: JSONArray) {
+        try {
+
+            dialogGrouping = Dialog(this)
+            dialogGrouping!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogGrouping!! .setContentView(R.layout.grouping_popup)
+            dialogGrouping!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyGrouping = dialogGrouping!! .findViewById(R.id.recyGrouping) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyGrouping!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = GroupingAdapter(this@TicketReportActivity, groupingArrayList)
+            recyGrouping!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            dialogGrouping!!.show()
+            dialogGrouping!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+
+    override fun onClick(position: Int, data: String) {
+
+        if (data.equals("reportname")){
+            resetData()
+            dialogReportName!!.dismiss()
+            val jsonObject = reportNameArrayList.getJSONObject(position)
+            Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
+            ReportMode = jsonObject.getString("ReportMode")
+            tie_ReportName!!.setText(jsonObject.getString("ReportName"))
+
+            if (ReportMode.equals("1")){
+//                ActionListT
+                til_FollowUpAction!!.visibility = View.VISIBLE
+                til_FollowUpType!!.visibility = View.VISIBLE
+            }
+            if (ReportMode.equals("2")){
+//                FollowUpTicket
+                til_FollowUpAction!!.visibility = View.VISIBLE
+                til_FollowUpType!!.visibility = View.VISIBLE
+            }
+            if (ReportMode.equals("4")){
+//                StatusList
+                til_FollowUpAction!!.visibility = View.GONE
+                til_FollowUpType!!.visibility = View.GONE
+            }
+            if (ReportMode.equals("5")){
+//                NewListTicket
+                til_FollowUpAction!!.visibility = View.GONE
+                til_FollowUpType!!.visibility = View.GONE
+            }
+
+        }
+
+        if (data.equals("branch")){
+            dialogBranch!!.dismiss()
+            val jsonObject = branchArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+
+        }
+
+        if (data.equals("proddetails")){
+            dialogProdDet!!.dismiss()
+            val jsonObject = prodDetailArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
+            ID_Product = jsonObject.getString("ID_Product")
+            tie_Product!!.setText(jsonObject.getString("ProductName"))
+        }
+
+        if (data.equals("followupaction")){
+            dialogFollowupAction!!.dismiss()
+            val jsonObject = followUpActionArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
+            ID_NextAction = jsonObject.getString("ID_NextAction")
+            tie_FollowUpAction!!.setText(jsonObject.getString("NxtActnName"))
+
+
+        }
+
+        if (data.equals("followuptype")){
+            dialogFollowupType!!.dismiss()
+            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            tie_FollowUpType!!.setText(jsonObject.getString("ActnTypeName"))
+
+
+        }
+
+        if (data.equals("prodpriority")){
+            dialogProdPriority!!.dismiss()
+            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
+            ID_Priority = jsonObject.getString("ID_Priority")
+            tie_Priority!!.setText(jsonObject.getString("PriorityName"))
+
+
+        }
+
+        if (data.equals("prodstatus")){
+            dialogProdStatus!!.dismiss()
+            val jsonObject = prodStatusArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
+            ID_Status = jsonObject.getString("ID_Status")
+            tie_Status!!.setText(jsonObject.getString("StatusName"))
+
+        }
+
+
+
+        if (data.equals("grouping")){
+            dialogGrouping!!.dismiss()
+            val jsonObject = groupingArrayList.getJSONObject(position)
+            Log.e(TAG,"GroupId   "+jsonObject.getString("GroupId"))
+            GroupId = jsonObject.getString("GroupId")
+            tie_Grouping!!.setText(jsonObject.getString("GroupName"))
+
+        }
+
+
+
+
+    }
+
+    private fun resetData() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
+
+        tie_ReportName!!.setText("")
+        tie_Branch!!.setText("")
+        tie_Product!!.setText("")
+        tie_FollowUpAction!!.setText("")
+        tie_FollowUpType!!.setText("")
+        tie_Priority!!.setText("")
+        tie_Status!!.setText("")
+        tie_Grouping!!.setText("")
+
+        ReportMode = ""
+        ID_Branch = ""
+        ID_Product = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
+        ID_Priority = ""
+        ID_Status = ""
+        GroupId = ""
+
+    }
+
+    private fun validateData(v: View) {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val fromDa = sdf.parse(tie_FromDate!!.text.toString());
+        val toDa = sdf.parse(tie_ToDate!!.text.toString());
+
+        if (ReportMode.equals("")){
+            Config.snackBars(context,v,"Select Report Name")
+        }
+        else if (ID_Branch.equals("")){
+            Config.snackBars(context,v,"Select Branch")
+        }
+        else if (tie_FromDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select From Date")
+        }
+        else if (tie_ToDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select To Date")
+        }
+        else if (fromDa.after(toDa)){
+            Config.snackBars(context,v,"Check Selected Date Range")
+        }
+        else if (ID_Product.equals("")){
+            Config.snackBars(context,v,"Select Product")
+        }
+        else if (ReportMode.equals("4") || ReportMode.equals("5")){
+            if (ID_Priority.equals("")){
+                Config.snackBars(context,v,"Select Priority")
+            }
+            else if (ID_Status.equals("")){
+                Config.snackBars(context,v,"Select Status")
+            }
+            else if (GroupId.equals("")){
+                Config.snackBars(context,v,"Select Grouping")
+            }
+            else{
+                PassData()
+            }
+        }
+        else{
+            if (ID_NextAction.equals("")){
+                Config.snackBars(context,v,"Select Followup Action ")
+            }
+            else if (ID_ActionType.equals("")){
+                Config.snackBars(context,v,"Select Followup Type")
+            }
+            else if (ID_Priority.equals("")){
+                Config.snackBars(context,v,"Select Priority")
+            }
+            else if (ID_Status.equals("")){
+                Config.snackBars(context,v,"Select Status")
+            }
+            else if (GroupId.equals("")){
+                Config.snackBars(context,v,"Select Grouping")
+            }
+            else {
+                PassData()
+            }
+        }
+
+
+    }
+
+    private fun PassData() {
+
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+        val strFromDate = outputFormat.format(dateFrom)
+        val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+        val strToDate = outputFormat.format(dateTo)
+
+        Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
+
+
+        intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
+        intent.putExtra("ReportMode", ReportMode)
+        intent.putExtra("ID_Branch", ID_Branch)
+        intent.putExtra("Fromdate", strFromDate)
+        intent.putExtra("Todate", strToDate)
+        intent.putExtra("ID_Product", ID_Product)
+        intent.putExtra("ID_NextAction", ID_NextAction)
+        intent.putExtra("ID_ActionType", ID_ActionType)
+        intent.putExtra("ID_Priority", ID_Priority)
+        intent.putExtra("ID_Status", ID_Status)
+        intent.putExtra("GroupId", GroupId)
+        startActivity(intent)
+    }
+
+
 }

@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.DashrrporttypeModel
@@ -26,12 +28,14 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DashReporttypeListAdapter
 import com.perfect.prodsuit.Viewmodel.DashboardreportListViewModel
 import org.json.JSONObject
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
 
+    val TAG : String = "ReportViewActivity"
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -62,6 +66,12 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
     var imclose: ImageView? = null
     var im_close: ImageView? = null
     var btnSubmit: Button? = null
+    var btnReset: Button? = null
+
+    var tie_FromDate: TextInputEditText? = null
+    var tie_ToDate: TextInputEditText? = null
+    var tie_DashReport: TextInputEditText? = null
+    private var fromToDate:Int = 0
 
     private var textlength = 0
     private var etxtsearch: EditText? =null
@@ -87,6 +97,8 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtfromDate!!.text = currentDate
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
         txttoDate!!.text = currentDate
         getCalendarId(context)
     }
@@ -96,6 +108,7 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         imclose = findViewById(R.id.imclose)
         im_close = findViewById(R.id.im_close)
         btnSubmit = findViewById(R.id.btnSubmit)
+        btnReset = findViewById(R.id.btnReset)
         llfromdate = findViewById(R.id.llfromdate)
         ll_Fromdate = findViewById(R.id.ll_Fromdate)
         txtfromDate = findViewById(R.id.txtfromDate)
@@ -108,6 +121,13 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         llDashboardreporttype = findViewById(R.id.llDashboardreporttype)
         txtok1 = findViewById(R.id.txtok1)
         txtdashboardtype = findViewById(R.id.txtdashboardtype)
+        tie_FromDate = findViewById(R.id.tie_FromDate)
+        tie_ToDate = findViewById(R.id.tie_ToDate)
+        tie_DashReport = findViewById(R.id.tie_DashReport)
+
+        tie_FromDate!!.setOnClickListener(this)
+        tie_ToDate!!.setOnClickListener(this)
+        tie_DashReport!!.setOnClickListener(this)
         txtok1!!.setOnClickListener(this)
         llfromdate!!.setOnClickListener(this)
         lltodate!!.setOnClickListener(this)
@@ -117,6 +137,9 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         im_close!!.setOnClickListener(this)
         llDashboardreporttype!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
+
+
     }
 
     override fun onClick(v: View) {
@@ -140,12 +163,29 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
                getDashboardReportType()
             }
             R.id.btnSubmit->{
-                intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
-                intent.putExtra("Fromdate", txtfromDate!!.text.toString())
-                intent.putExtra("Todate", txttoDate!!.text.toString())
-                intent.putExtra("DashboardTypeId", strDashboardTypeId)
-                intent.putExtra("DashboardTypeName", strDashboardType)
-                startActivity(intent)
+//                intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
+//                intent.putExtra("Fromdate", txtfromDate!!.text.toString())
+//                intent.putExtra("Todate", txttoDate!!.text.toString())
+//                intent.putExtra("DashboardTypeId", strDashboardTypeId)
+//                intent.putExtra("DashboardTypeName", strDashboardType)
+
+                validateData(v)
+
+//                intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
+//                intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
+//                intent.putExtra("Todate", tie_ToDate!!.text.toString())
+//                intent.putExtra("DashboardTypeId", strDashboardTypeId)
+//                intent.putExtra("DashboardTypeName", strDashboardType)
+//                startActivity(intent)
+            }
+            R.id.btnReset->{
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                tie_FromDate!!.setText(currentDate)
+                tie_ToDate!!.setText(currentDate)
+                tie_DashReport!!.setText("")
+                strDashboardTypeId = ""
+                strDashboardType = ""
             }
             R.id.txtok1->{
                 date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
@@ -183,7 +223,75 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
                 txtfromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                 ll_Fromdate!!.visibility=View.GONE
             }
+
+            R.id.tie_FromDate->{
+                fromToDate = 0
+                openBottomSheet()
+            }
+            R.id.tie_ToDate->{
+                fromToDate = 1
+                openBottomSheet()
+            }
+            R.id.tie_DashReport->{
+               getDashboardReportType()
+            }
         }
+    }
+
+    private fun validateData(v : View) {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val fromDa = sdf.parse(tie_FromDate!!.text.toString());
+        val toDa = sdf.parse(tie_ToDate!!.text.toString());
+        if ( fromDa.after(toDa)) {
+            Config.snackBars(context,v,"Check date")
+        }
+        else{
+            Config.snackBars(context,v,"Success")
+        }
+
+        if (tie_FromDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select From Date")
+        }
+        else if (tie_ToDate!!.text.toString().equals("")){
+            Config.snackBars(context,v,"Select To Date")
+        }
+        else if (fromDa.after(toDa)){
+            Config.snackBars(context,v,"Check Selected Date Range")
+        }
+        else if (strDashboardTypeId.equals("")){
+            Config.snackBars(context,v,"Select Dashboard Report")
+        }
+        else{
+
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+            val strFromDate = outputFormat.format(dateFrom)
+            val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+            val strToDate = outputFormat.format(dateTo)
+
+            Log.e(TAG,"strFromDate   "+strFromDate+"    "+strToDate)
+
+//            intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
+//            intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
+//            intent.putExtra("Todate", tie_ToDate!!.text.toString())
+//            intent.putExtra("DashboardTypeId", strDashboardTypeId)
+//            intent.putExtra("DashboardTypeName", strDashboardType)
+//            startActivity(intent)
+
+            intent = Intent(applicationContext, ReportViewDetailsActivity::class.java)
+            intent.putExtra("Fromdate", strFromDate)
+            intent.putExtra("Todate", strToDate)
+            intent.putExtra("DashboardTypeId", strDashboardTypeId)
+            intent.putExtra("DashboardTypeName", strDashboardType)
+            startActivity(intent)
+
+
+        }
+
+
+
     }
 
     private fun bottombarnav() {
@@ -434,6 +542,7 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
                                                 Config.Utils.hideSoftKeyBoard(this@ReportViewActivity,view)
                                                 array_sort.get(position).SettingsName
                                                 txtdashboardtype!!.text = array_sort[position].SettingsName
+                                                tie_DashReport!!.setText(array_sort[position].SettingsName)
                                                 strDashboardType=array_sort[position].SettingsName
                                                 strDashboardTypeId=array_sort[position].ID_ReportSettings
                                                 dialog.dismiss()
@@ -615,4 +724,57 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                if (fromToDate == 0){
+                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (fromToDate == 1){
+                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+
+
 }
