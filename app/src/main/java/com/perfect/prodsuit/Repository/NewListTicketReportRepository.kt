@@ -61,22 +61,41 @@ object NewListTicketReportRepository {
             try {
 
 
-//                "ReqMode":"42",
+//                "ReqMode":"53",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
-//                "Token":sfdsgdgdg
+//                "Token":sfdsgdgdg,
+//
+//                "ReportMode":5",
+//                "ID_Branch":1,
+//                "Todate":"2022-04-06 "
+//                "FromDate":"2022-04-06 ",
+//                "ID_Product:"1",
+//                "FK_Priority":"1",
+//                "ActStatus":"1",
+//                "GroupId:"1"
+//
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("42"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("53"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                Log.e(TAG,"requestObject1   77   "+requestObject1)
+                requestObject1.put("ReportMode", ProdsuitApplication.encryptStart(ReportMode))
+                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(strTodate))
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(strFromdate))
+                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
+                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
+                requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
+
+                Log.e(TAG,"requestObject1   98   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -85,7 +104,7 @@ object NewListTicketReportRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getPendingCountDetails(body)
+            val call = apiService.getNewListDetailsReport(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

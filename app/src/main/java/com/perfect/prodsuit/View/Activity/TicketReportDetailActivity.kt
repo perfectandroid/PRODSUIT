@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
+import com.perfect.prodsuit.View.Adapter.NewListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.StatusListTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -130,7 +131,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         if (ReportMode.equals("5")){
 //            NewListTicket
-            //   getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+               getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
         if (ReportMode.equals("4")){
@@ -340,26 +341,26 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2461   "+msg.length)
-                            Log.e(TAG,"msg   2462   "+msg)
+                            Log.e(TAG,"msg   344 1  "+msg.length)
+                            Log.e(TAG,"msg   3442   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("LeadGenerateReport")
-//                                newListTicketReportArrayList = jobjt.getJSONArray("LeadGenerateReportList")
-//                                if (newListTicketReportArrayList.length()>0){
-//                                    Log.e(TAG,"msg   2463   "+newListTicketReportArrayList)
-//                                    ll_NewListTicket!!.visibility = View.VISIBLE
-//                                    try {
-//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-//                                        recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        // recyLeadGenReport!!.setHasFixedSize(true)
-//                                        val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
-//                                        recyNewListTicketReport!!.adapter = adapter
-//                                    }catch (e: Exception){
-//                                        Log.e(TAG,"msg   2464   "+e.toString())
-//                                    }
-//
-//
-//                                }
+                                val jobjt = jObject.getJSONObject("NewListDetailsReport")
+                                newListTicketReportArrayList = jobjt.getJSONArray("NewListDetails")
+                                if (newListTicketReportArrayList.length()>0){
+                                    Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
+                                    ll_NewListTicket!!.visibility = View.VISIBLE
+                                    try {
+                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                        recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        // recyLeadGenReport!!.setHasFixedSize(true)
+                                        val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
+                                        recyNewListTicketReport!!.adapter = adapter
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"msg   3444   "+e.toString())
+                                    }
+
+
+                                }
 
                             } else {
                                 val builder = AlertDialog.Builder(

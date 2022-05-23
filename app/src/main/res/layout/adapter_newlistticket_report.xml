@@ -133,7 +133,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_Assignee"
+                android:id="@+id/tv_Branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -148,7 +148,7 @@
                 android:visibility="visible"/>
 
             <TextView
-                android:id="@+id/tv_CompleteDate"
+                android:id="@+id/tv_CollectedBy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -162,18 +162,7 @@
                 android:visibility="visible"/>
 
 
-            <TextView
-                android:id="@+id/tv_Status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text=""
-                android:textColor="@color/greydark"
-                android:textSize="11dp"
-                android:textStyle="normal"
-                android:fontFamily="@font/myfont" />
+
 
 
         </LinearLayout>
@@ -193,7 +182,21 @@
             android:visibility="visible">
 
             <TextView
-                android:id="@+id/tv_Remark"
+                android:id="@+id/tv_Priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:textColor="@color/greydark"
+                android:textSize="11dp"
+                android:textStyle="normal"
+                android:fontFamily="@font/myfont" />
+
+            <TextView
+                android:id="@+id/tv_Status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -201,10 +204,11 @@
                 android:gravity="left"
                 android:text=""
                 android:textColor="@color/greydark"
-                android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
+
+
 
 
 

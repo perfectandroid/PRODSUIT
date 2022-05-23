@@ -220,5 +220,8 @@ interface ApiInterface {
     @POST("UserValidations/StatusListDetailsReport")
     fun getStatusListDetailsReport(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/NewListDetailsReport")
+    fun getNewListDetailsReport(@Body body: RequestBody): Call<String>
+
 
 }

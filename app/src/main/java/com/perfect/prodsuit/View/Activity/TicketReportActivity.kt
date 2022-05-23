@@ -1498,43 +1498,47 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         else if (fromDa.after(toDa)){
             Config.snackBars(context,v,"Check Selected Date Range")
         }
-        else if (ID_Product.equals("")){
-            Config.snackBars(context,v,"Select Product")
-        }
-        else if (ReportMode.equals("4") || ReportMode.equals("5")){
-            if (ID_Priority.equals("")){
-                Config.snackBars(context,v,"Select Priority")
-            }
-            else if (ID_Status.equals("")){
-                Config.snackBars(context,v,"Select Status")
-            }
-            else if (GroupId.equals("")){
-                Config.snackBars(context,v,"Select Grouping")
-            }
-            else{
-                PassData()
-            }
-        }
         else{
-            if (ID_NextAction.equals("")){
-                Config.snackBars(context,v,"Select Followup Action ")
-            }
-            else if (ID_ActionType.equals("")){
-                Config.snackBars(context,v,"Select Followup Type")
-            }
-            else if (ID_Priority.equals("")){
-                Config.snackBars(context,v,"Select Priority")
-            }
-            else if (ID_Status.equals("")){
-                Config.snackBars(context,v,"Select Status")
-            }
-            else if (GroupId.equals("")){
-                Config.snackBars(context,v,"Select Grouping")
-            }
-            else {
-                PassData()
-            }
+            PassData()
         }
+
+//        else if (ID_Product.equals("")){
+//            Config.snackBars(context,v,"Select Product")
+//        }
+//        else if (ReportMode.equals("4") || ReportMode.equals("5")){
+//            if (ID_Priority.equals("")){
+//                Config.snackBars(context,v,"Select Priority")
+//            }
+//            else if (ID_Status.equals("")){
+//                Config.snackBars(context,v,"Select Status")
+//            }
+//            else if (GroupId.equals("")){
+//                Config.snackBars(context,v,"Select Grouping")
+//            }
+//            else{
+//                PassData()
+//            }
+//        }
+//        else{
+//            if (ID_NextAction.equals("")){
+//                Config.snackBars(context,v,"Select Followup Action ")
+//            }
+//            else if (ID_ActionType.equals("")){
+//                Config.snackBars(context,v,"Select Followup Type")
+//            }
+//            else if (ID_Priority.equals("")){
+//                Config.snackBars(context,v,"Select Priority")
+//            }
+//            else if (ID_Status.equals("")){
+//                Config.snackBars(context,v,"Select Status")
+//            }
+//            else if (GroupId.equals("")){
+//                Config.snackBars(context,v,"Select Grouping")
+//            }
+//            else {
+//                PassData()
+//            }
+//        }
 
 
     }
