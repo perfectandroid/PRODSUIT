@@ -11,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -35,6 +36,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     private var imback: ImageView? = null
+    private var tv_ReportName: TextView? = null
 
     private var ReportMode:String?=""
     private var ID_Branch:String?=""
@@ -82,6 +84,9 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         setRegViews()
 
+        if (getIntent().hasExtra("ReportName")) {
+            tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
+        }
         if (getIntent().hasExtra("ReportMode")) {
             ReportMode = intent.getStringExtra("ReportMode")
         }
@@ -154,6 +159,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        tv_ReportName = findViewById(R.id.tv_ReportName)
         ll_ActionList = findViewById(R.id.ll_ActionList)
         ll_FollowUpTicket = findViewById(R.id.ll_FollowUpTicket)
         ll_NewListTicket = findViewById(R.id.ll_NewListTicket)

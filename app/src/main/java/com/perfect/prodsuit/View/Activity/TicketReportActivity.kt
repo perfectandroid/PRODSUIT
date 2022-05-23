@@ -1557,6 +1557,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
 
         intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
+        intent.putExtra("ReportName", tie_ReportName!!.text.toString())
         intent.putExtra("ReportMode", ReportMode)
         intent.putExtra("ID_Branch", ID_Branch)
         intent.putExtra("Fromdate", strFromDate)
