@@ -3,7 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,20 +11,21 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.lifecycle.Observer
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
-import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
-import com.perfect.prodsuit.View.Adapter.NewListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.StatusListTicketReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.net.MalformedURLException
+import java.net.URL
 
 class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -144,10 +145,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
 
 
-
-
     }
-
 
 
     private fun setRegViews() {
