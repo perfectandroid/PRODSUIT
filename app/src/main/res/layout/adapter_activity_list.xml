@@ -90,7 +90,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/location_svg"
+                        android:drawableLeft="@drawable/actv_custremk"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
@@ -104,7 +104,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/call_svg"
+                        android:drawableLeft="@drawable/actv_empremk"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
@@ -118,7 +118,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/greydark"
                         android:textSize="12dp"
-                        android:drawableLeft="@drawable/product_svg"
+                        android:drawableLeft="@drawable/actv_nxtactn"
                         android:drawablePadding="5dp"
                         android:textStyle="normal" />
 
