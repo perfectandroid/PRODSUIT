@@ -242,7 +242,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.ll_report -> {
-                val i = Intent(this@HomeActivity, ReportActivity::class.java)
+//                val i = Intent(this@HomeActivity, ReportActivity::class.java)
+//                startActivity(i)
+                val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
                 startActivity(i)
             }
             R.id.rlnotification -> {
