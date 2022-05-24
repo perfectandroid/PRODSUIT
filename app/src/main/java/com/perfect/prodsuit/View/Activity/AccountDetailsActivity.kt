@@ -216,7 +216,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun addTabItem() {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Info"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Activities"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("History"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
        // tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
