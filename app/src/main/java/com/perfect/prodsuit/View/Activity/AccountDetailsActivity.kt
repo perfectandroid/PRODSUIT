@@ -662,9 +662,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                // getHistory("1")
 
-                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
-                i.putExtra("ID_LeadGenerateProduct", AccountDetailsActivity.ID_LeadGenerateProduct)
-                startActivity(i)
+//                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct", AccountDetailsActivity.ID_LeadGenerateProduct)
+//                startActivity(i)
             }
             R.id.fabCloseLead->{
                 isOpen = true
