@@ -110,6 +110,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -121,6 +122,162 @@
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_DateClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:padding="5dp"
+                                            android:text="Date"
+                                            android:fontFamily="@font/myfont"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/calendar_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/ll_Todate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/calendar_icon"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:hint="Date"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imDateclose"
+                                                        android:layout_width="25dp"
+                                                        android:layout_height="25dp"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_gravity="center"
+                                                        android:layout_marginTop="5dp"
+                                                        android:layout_marginRight="5dp"
+                                                        android:background="@color/color_activity_transparent"
+                                                        android:gravity="center"
+                                                        android:scaleType="fitXY"
+                                                        android:src="@drawable/ic_cancel_"
+                                                        android:visibility="gone"/>
+                                                </RelativeLayout>
+
+                                                <DatePicker
+                                                    android:id="@+id/date_Picker1"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:datePickerMode = "spinner"
+                                                    android:background="@color/greylight"
+                                                    android:layout_marginLeft="20dp"
+                                                    android:layout_marginRight="20dp"
+                                                    android:calendarViewShown="false"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:layout_marginBottom="10dp"
+                                                    android:orientation="horizontal">
+
+
+                                                    <TextView
+                                                        android:id="@+id/txtok1"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:gravity="center"
+                                                        android:textSize="15dp"
+                                                        android:textColor="@color/white"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:paddingLeft="20dp"
+                                                        android:paddingRight="20dp"
+                                                        android:paddingBottom="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:textAllCaps="false"
+                                                        android:text="Submit" />
+
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="visible">
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -208,6 +365,8 @@
                                                 </RelativeLayout>
 
 
+
+
                                                 <TextView
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
@@ -217,7 +376,7 @@
                                                     android:textStyle="bold"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/grey"
-                                                    android:layout_margin="10dp"/>
+                                                    android:layout_margin="5dp"/>
 
 
 
@@ -312,6 +471,175 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
+                                                    android:orientation="vertical"
+                                                    android:background="@color/leadbg_color"
+                                                    android:visibility="visible">
+<!--                                                    android:id="@+id/llMoreCommInfo"-->
+                                                    <!--                                            android:background="@drawable/etselect_bggrey"-->
+
+
+
+
+                                                    <RelativeLayout
+                                                        android:id="@+id/rltvPinCode"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:layout_marginLeft="10dp"
+                                                        android:layout_marginRight="10dp"
+                                                        android:layout_marginTop="10dp">
+
+
+                                                        <EditText
+                                                            android:id="@+id/edtPincode"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_toLeftOf="@+id/imgPinSearch"
+                                                            android:background="@android:color/transparent"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:hint="Pincode"
+                                                            android:inputType="number"
+                                                            android:padding="7dp"
+                                                            android:singleLine="true"
+                                                            android:text=""
+                                                            android:textSize="15dp" />
+
+                                                        <ImageView
+                                                            android:id="@+id/imgPinSearch"
+                                                            android:layout_width="30dp"
+                                                            android:layout_height="30dp"
+                                                            android:layout_alignParentRight="true"
+                                                            android:layout_centerInParent="true"
+                                                            android:layout_marginRight="5dp"
+                                                            android:background="@drawable/ic_search"
+                                                            android:backgroundTint="@color/greydark"
+                                                            android:padding="5dp" />
+
+
+
+                                                    </RelativeLayout>
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10sp"
+                                                        android:orientation="vertical">
+
+
+
+                                                        <EditText
+                                                            android:id="@+id/edtCountry"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:hint="Country"
+                                                            android:drawableRight="@drawable/arrowright"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:textSize="15dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:padding="7dp"
+                                                            android:singleLine="true"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:text="" />
+
+
+
+                                                        <EditText
+                                                            android:id="@+id/edtState"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:hint="State"
+                                                            android:drawableRight="@drawable/arrowright"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:padding="7dp"
+                                                            android:textSize="15dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:singleLine="true"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:text="" />
+
+
+                                                        <EditText
+                                                            android:id="@+id/edtDistrict"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:hint="District"
+                                                            android:drawableRight="@drawable/arrowright"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:padding="7dp"
+                                                            android:textSize="15dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:singleLine="true"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:text="" />
+
+                                                        <EditText
+                                                            android:id="@+id/edtPost"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:hint="Post"
+                                                            android:drawableRight="@drawable/arrowright"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:padding="7dp"
+                                                            android:textSize="15dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:singleLine="true"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:text="" />
+
+
+
+                                                        <EditText
+                                                            android:id="@+id/edtLandLine"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:hint="LandLine"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginBottom="10dp"
+                                                            android:padding="7dp"
+                                                            android:textSize="15dp"
+                                                            android:singleLine="true"
+                                                            android:inputType="phone"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:text="" />
+
+
+                                                    </LinearLayout>
+
+
+
+
+
+
+                                                </LinearLayout>
+
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
                                                     android:orientation="horizontal"
                                                     android:layout_marginTop="20dp"
                                                     android:layout_marginLeft="5dp"
@@ -380,7 +708,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -411,7 +740,7 @@
                                             android:visibility="gone">
 
                                             <EditText
-                                                android:id="@+id/edtCompanyName"
+                                                android:id="@+id/edtCompanyName1"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginBottom="10dp"
@@ -446,7 +775,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="visible">
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -469,173 +799,68 @@
                                             android:drawablePadding="10dp"
                                             android:textSize="16dp"/>
 
-                                        <LinearLayout
-                                            android:id="@+id/llMoreCommInfo"
+                                    <LinearLayout
+                                        android:id="@+id/llMoreCommInfo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_margin="10dp"
+                                        android:background="@color/leadbg_color"
+                                        android:visibility="gone">
+
+                                        <EditText
+                                            android:id="@+id/edtCompanyName"
                                             android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:orientation="vertical"
-                                            android:background="@color/leadbg_color"
-                                            android:visibility="gone">
-                                            <!--                                            android:background="@drawable/etselect_bggrey"-->
+                                            android:layout_height="wrap_content"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:hint="Company Name"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_marginTop="10dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:padding="7dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <EditText
+                                            android:id="@+id/edtContactPerson"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:hint="Contact Person"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:padding="7dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <EditText
+                                            android:id="@+id/edtContactNumber"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginBottom="10dp"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:hint="Contact Number"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:padding="7dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
 
 
+                                    </LinearLayout>
 
 
-                                            <RelativeLayout
-                                                android:id="@+id/rltvPinCode"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:background="@drawable/shape_bg"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginTop="10dp">
-
-
-                                                <EditText
-                                                    android:id="@+id/edtPincode"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_toLeftOf="@+id/imgPinSearch"
-                                                    android:background="@android:color/transparent"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:hint="Pincode"
-                                                    android:inputType="number"
-                                                    android:padding="7dp"
-                                                    android:singleLine="true"
-                                                    android:text=""
-                                                    android:textSize="15dp" />
-
-                                                <ImageView
-                                                    android:id="@+id/imgPinSearch"
-                                                    android:layout_width="30dp"
-                                                    android:layout_height="30dp"
-                                                    android:layout_alignParentRight="true"
-                                                    android:layout_centerInParent="true"
-                                                    android:layout_marginRight="5dp"
-                                                    android:background="@drawable/ic_search"
-                                                    android:backgroundTint="@color/greydark"
-                                                    android:padding="5dp" />
-
-
-
-                                            </RelativeLayout>
-
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10sp"
-                                                android:orientation="vertical">
-
-
-
-                                                <EditText
-                                                    android:id="@+id/edtCountry"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="Country"
-                                                    android:drawableRight="@drawable/arrowright"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:editable="false"
-                                                    android:textSize="15dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:padding="7dp"
-                                                    android:singleLine="true"
-                                                    android:background="@drawable/shape_bg"
-                                                    android:text="" />
-
-
-
-                                                <EditText
-                                                    android:id="@+id/edtState"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="State"
-                                                    android:drawableRight="@drawable/arrowright"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:editable="false"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:padding="7dp"
-                                                    android:textSize="15dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:singleLine="true"
-                                                    android:background="@drawable/shape_bg"
-                                                    android:text="" />
-
-
-                                                <EditText
-                                                    android:id="@+id/edtDistrict"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="District"
-                                                    android:drawableRight="@drawable/arrowright"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:editable="false"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:padding="7dp"
-                                                    android:textSize="15dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:singleLine="true"
-                                                    android:background="@drawable/shape_bg"
-                                                    android:text="" />
-
-                                                <EditText
-                                                    android:id="@+id/edtPost"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="Post"
-                                                    android:drawableRight="@drawable/arrowright"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:editable="false"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:padding="7dp"
-                                                    android:textSize="15dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:singleLine="true"
-                                                    android:background="@drawable/shape_bg"
-                                                    android:text="" />
-
-
-
-                                                <EditText
-                                                    android:id="@+id/edtLandLine"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="LandLine"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginBottom="10dp"
-                                                    android:padding="7dp"
-                                                    android:textSize="15dp"
-                                                    android:singleLine="true"
-                                                    android:inputType="phone"
-                                                    android:background="@drawable/shape_bg"
-                                                    android:text="" />
-
-
-                                            </LinearLayout>
-
-
-
-
-
-
-                                        </LinearLayout>
 
                                     </LinearLayout>
                                 </androidx.cardview.widget.CardView>
@@ -1204,160 +1429,7 @@
 
                                 </androidx.cardview.widget.CardView>
 
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="0dp"
-                                    app:cardElevation="2dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginTop="1dp"
-                                    android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tv_DateClick"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/down_arrows"
-                                            android:padding="5dp"
-                                            android:text="Date"
-                                            android:fontFamily="@font/myfont"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/greydarks"
-                                            android:drawableLeft="@drawable/calendar_color"
-                                            android:drawablePadding="10dp"
-                                            android:textSize="16dp"/>
-
-                                        <LinearLayout
-                                            android:id="@+id/ll_Todate"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:background="@color/leadbg_color"
-                                            android:visibility="gone">
-
-                                            <TextView
-                                                android:id="@+id/txtDate"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_marginBottom="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/calendar_icon"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:hint="Date"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-
-                                            <LinearLayout
-                                                android:orientation="vertical"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginBottom="30dp"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_gravity="center"
-                                                android:background="@drawable/etselect_bggrey"
-                                                android:gravity = "center"
-                                                android:visibility="gone">
-
-                                                <RelativeLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:gravity="center">
-
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
-                                                        android:background="@color/greylight"
-                                                        android:gravity="center"
-                                                        android:text="Select Date"
-                                                        android:textColor="@color/colorPrimaryExtraDark"
-                                                        android:textSize="13dp"
-                                                        android:textStyle="bold" />
-
-                                                    <ImageView
-                                                        android:id="@+id/imDateclose"
-                                                        android:layout_width="25dp"
-                                                        android:layout_height="25dp"
-                                                        android:layout_alignParentRight="true"
-                                                        android:layout_gravity="center"
-                                                        android:layout_marginTop="5dp"
-                                                        android:layout_marginRight="5dp"
-                                                        android:background="@color/color_activity_transparent"
-                                                        android:gravity="center"
-                                                        android:scaleType="fitXY"
-                                                        android:src="@drawable/ic_cancel_"
-                                                        android:visibility="gone"/>
-                                                </RelativeLayout>
-
-                                                <DatePicker
-                                                    android:id="@+id/date_Picker1"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:datePickerMode = "spinner"
-                                                    android:background="@color/greylight"
-                                                    android:layout_marginLeft="20dp"
-                                                    android:layout_marginRight="20dp"
-                                                    android:calendarViewShown="false"/>
-
-                                                <LinearLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:gravity="center"
-                                                    android:layout_marginBottom="10dp"
-                                                    android:orientation="horizontal">
-
-
-                                                    <TextView
-                                                        android:id="@+id/txtok1"
-                                                        android:layout_width="wrap_content"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_gravity="center"
-                                                        android:gravity="center"
-                                                        android:textSize="15dp"
-                                                        android:textColor="@color/white"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:background="@drawable/btn_bgcolour"
-                                                        android:paddingLeft="20dp"
-                                                        android:paddingRight="20dp"
-                                                        android:paddingBottom="5dp"
-                                                        android:paddingTop="5dp"
-                                                        android:textAllCaps="false"
-                                                        android:text="Submit" />
-
-
-                                                </LinearLayout>
-
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-
-
-
-                                </androidx.cardview.widget.CardView>
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -1383,7 +1455,7 @@
                                             android:layout_margin="5dp"
                                             android:drawableRight="@drawable/down_arrows"
                                             android:padding="5dp"
-                                            android:text="Lead From"
+                                            android:text="Lead Details"
                                             android:fontFamily="@font/myfont"
                                             android:textStyle="bold"
                                             android:textColor="@color/greydarks"
@@ -1406,7 +1478,7 @@
                                                 android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
-                                                android:layout_marginBottom="10dp"
+                                                android:layout_marginBottom="0dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:drawableRight="@drawable/arrowright"
@@ -1414,6 +1486,48 @@
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
                                                 android:hint="Lead From"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                            <TextView
+                                                android:id="@+id/txtleadthrough"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="0dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrowright"
+                                                android:drawableTint="@color/greydark"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead Through"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                            <TextView
+                                                android:id="@+id/txtleadby"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrowright"
+                                                android:drawableTint="@color/greydark"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Collected By"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="7dp"
                                                 android:singleLine="true"
@@ -1475,7 +1589,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1506,7 +1621,7 @@
                                             android:visibility="gone">
 
                                             <TextView
-                                                android:id="@+id/txtleadthrough"
+                                                android:id="@+id/txtleadthrough1"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -1579,7 +1694,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1610,7 +1726,7 @@
                                             android:visibility="gone">
 
                                             <TextView
-                                                android:id="@+id/txtleadby"
+                                                android:id="@+id/txtleadby12"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"

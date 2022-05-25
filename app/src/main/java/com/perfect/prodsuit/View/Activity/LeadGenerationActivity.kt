@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
@@ -35,6 +36,7 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -252,6 +254,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var btnSubmit: Button? = null
 
     var saveUpdateMode : String?= ""
+    var dateSelectMode : Int= 0
 
 
     companion object {
@@ -461,7 +464,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtLocation!!.setText("")
 
         txtDate!!.setText(currentDate)
-        strDate =currentDate
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val currentDateFormate = inputFormat.parse(currentDate)
+        strDate = outputFormat.format(currentDateFormate)
+      //  strDate =currentDate
 
         ID_LeadFrom  = ""
         ID_LeadThrough = ""
@@ -931,6 +938,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }else{
                     ll_Todate!!.visibility = View.VISIBLE
                    // dateMode = "0"
+//                    dateSelectMode = 0
+//                    openBottomSheet()
 
                     custDetailMode = "1"
                     companyNameMode="1"
@@ -947,7 +956,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
             }
             R.id.txtDate->{
-                datePickerPopup()
+               // datePickerPopup()
+                dateSelectMode = 0
+                openBottomSheet()
             }
 
              R.id.tv_LeadFromClick->{
@@ -1240,13 +1251,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 getFollowupType()
             }
             R.id.edtFollowdate->{
-                if (dateFollowMode.equals("0")){
-                    llFollowdate!!.visibility = View.GONE
-                    dateFollowMode = "1"
-                }else{
-                    llFollowdate!!.visibility = View.VISIBLE
-                    dateFollowMode = "0"
-                }
+//                if (dateFollowMode.equals("0")){
+//                    llFollowdate!!.visibility = View.GONE
+//                    dateFollowMode = "1"
+//                }else{
+//                    llFollowdate!!.visibility = View.VISIBLE
+//                    dateFollowMode = "0"
+//
+//
+//                }
+
+                dateSelectMode = 1
+                openBottomSheet()
             }
 
             R.id.edtbarnchtype->{
@@ -3368,6 +3384,67 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
      }
 
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+              //  dateSelectMode = 0
+
+                if (dateSelectMode == 0){
+                    txtDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strDate = strYear+"-"+strMonth+"-"+strDay
+                }
+                if (dateSelectMode == 1){
+                    edtFollowdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strFollowupdate = strYear+"-"+strMonth+"-"+strDay
+                }
+
+//                if (DateType == 0){
+//                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+//                if (DateType == 1){
+//                    tie_NextFollowupDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
      private fun getBranchType() {
          var branchType = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
@@ -3982,23 +4059,24 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             else if (Customer_Address.equals("")){
                 Config.snackBars(context,v,"Enter Customer Address")
             }
-            else if (strComapnyName.equals("")){
-                Config.snackBars(context,v,"Enter Company Name")
-            }
+//            else if (strComapnyName.equals("")){
+//                Config.snackBars(context,v,"Enter Company Name")
+//            }
             else{
                 MoreValidations(v)
             }
         }
         else{
             Customer_Mode = "1"
-            if (strComapnyName.equals("")){
-                Config.snackBars(context,v,"Enter Company Name")
-            }
-            else{
-                MoreValidations(v)
-            }
+//            if (strComapnyName.equals("")){
+//                Config.snackBars(context,v,"Enter Company Name")
+//            }
+//            else{
+//                MoreValidations(v)
+//            }
 
 
+            MoreValidations(v)
         }
 
     }
