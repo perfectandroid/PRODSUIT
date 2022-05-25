@@ -601,15 +601,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
 
-                val i = Intent(this@AccountDetailsActivity, AddNoteActivity::class.java)
+//                val i = Intent(this@AccountDetailsActivity, AddNoteActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                startActivity(i)
+
+                val i = Intent(this@AccountDetailsActivity, AddDocumentActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 startActivity(i)
+
             }
             R.id.fabAddActivities->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
-                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+//                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                startActivity(i)
+
+                val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 startActivity(i)
             }
@@ -632,9 +641,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
-                val i = Intent(this@AccountDetailsActivity, AddDocumentActivity::class.java)
-                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
-                startActivity(i)
+//                val i = Intent(this@AccountDetailsActivity, AddDocumentActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                startActivity(i)
             }
             R.id.fabAddQuotation->{
                 isOpen = true
