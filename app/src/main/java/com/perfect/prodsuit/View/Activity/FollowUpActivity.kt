@@ -52,10 +52,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var dialogFollowupType : Dialog? = null
     var recyFollowupType: RecyclerView? = null
 
-    lateinit var employeeViewModel: EmployeeViewModel
-    lateinit var employeeArrayList : JSONArray
-    private var dialogEmployee : Dialog? = null
-    var recyEmployee: RecyclerView? = null
+    lateinit var employeeAllViewModel: EmployeeAllViewModel
+    lateinit var employeeAllArrayList : JSONArray
+    private var dialogEmployeeAll : Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
 
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
@@ -76,6 +76,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     lateinit var departmentArrayList : JSONArray
     private var dialogDepartment : Dialog? = null
     var recyDeaprtment: RecyclerView? = null
+
+    lateinit var employeeViewModel: EmployeeViewModel
+    lateinit var employeeArrayList : JSONArray
+    private var dialogEmployee : Dialog? = null
+    var recyEmployee: RecyclerView? = null
 
 
 
@@ -105,8 +110,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         context = this@FollowUpActivity
 
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
-
-
+        employeeAllViewModel = ViewModelProvider(this).get(EmployeeAllViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
 
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
@@ -170,7 +174,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 getFollowupType()
             }
             R.id.tie_FollowupBy->{
-
+                getAllEmployee()
             }
             R.id.tie_Status->{
                 getStatus()
@@ -215,6 +219,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         }
     }
+
+
 
 
     private fun getFollowupType() {
@@ -298,8 +304,90 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     }
 
+    private fun getAllEmployee() {
 
-//    private fun getDepartment() {
+        var employee = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                employeeAllViewModel.getEmployeeAll(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1224   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                if (employeeAllArrayList.length()>0){
+                                    if (employee == 0){
+                                        employee++
+                                        employeeAllPopup(employeeAllArrayList)
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@FollowUpActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
+            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+            recyEmployeeAll!!.adapter = adapter
+            adapter.setClickListener(this@FollowUpActivity)
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    //    private fun getDepartment() {
 //        var department = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {
 //            true -> {
@@ -851,7 +939,15 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
         }
+        if (data.equals("employeeAll")){
+            dialogEmployeeAll!!.dismiss()
+            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            tie_FollowupBy!!.setText(jsonObject.getString("EmpName"))
 
+
+        }
 
 
         if (data.equals("prodstatus")){
