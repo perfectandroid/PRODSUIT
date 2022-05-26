@@ -3805,7 +3805,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             txtcustomer!!.text = jsonObject!!.getString("Name")
             edt_customer!!.setText(jsonObject!!.getString("Name"))
 
-            custDetailMode = "1"
+           // custDetailMode = "1"
             Customer_Mode     = "1"  // SEARCH
             ID_Customer       = jsonObject.getString("ID_Customer")
             Customer_Name     = jsonObject.getString("Name")
@@ -3813,11 +3813,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Customer_Email    = jsonObject.getString("Email")
             Customer_Address  = jsonObject.getString("Address")
 
-            llCustomerDetail!!.visibility = View.GONE
-            edtCustname!!.setText("")
-            edtCustphone!!.setText("")
-            edtCustemail!!.setText("")
-            edtCustaddress!!.setText("")
+           // llCustomerDetail!!.visibility = View.GONE
+            edtCustname!!.setText(jsonObject.getString("Name"))
+            edtCustphone!!.setText(jsonObject.getString("MobileNumber"))
+            edtCustemail!!.setText(jsonObject.getString("Email"))
+            edtCustaddress!!.setText(jsonObject.getString("Address"))
+
+
+            FK_Country = jsonObject.getString("FK_Country")
+            FK_States = jsonObject.getString("FK_States")
+            FK_District = jsonObject.getString("FK_District")
+            FK_Post = jsonObject.getString("FK_Post")
+
+            edtPincode!!.setText(jsonObject.getString("Pincode"))
+            edtCountry!!.setText(jsonObject.getString("Country"))
+            edtState!!.setText(jsonObject.getString("States"))
+            edtDistrict!!.setText(jsonObject.getString("District"))
+            edtPost!!.setText(jsonObject.getString("Post"))
+
+
         }
 
          if (data.equals("prodcategory")){
