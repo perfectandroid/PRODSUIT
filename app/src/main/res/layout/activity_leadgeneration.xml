@@ -842,13 +842,34 @@
                                             android:id="@+id/edtContactNumber"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginBottom="10dp"
+                                            android:layout_marginBottom="0dp"
                                             android:layout_toLeftOf="@+id/img_search"
                                             android:background="@drawable/shape_bg"
                                             android:hint="Contact Number"
                                             android:layout_marginLeft="10dp"
                                             android:layout_marginRight="10dp"
                                             android:layout_marginTop="5dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:padding="7dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textSize="15dp" />
+
+                                        <TextView
+                                            android:id="@+id/txtMediatype"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:layout_toLeftOf="@+id/img_search"
+                                            android:background="@drawable/shape_bg"
+                                            android:drawableRight="@drawable/arrowright"
+                                            android:drawableTint="@color/greydark"
+                                            android:paddingLeft="5dp"
+                                            android:paddingRight="5dp"
+                                            android:hint="Media Type"
                                             android:fontFamily="@font/myfont"
                                             android:padding="7dp"
                                             android:singleLine="true"
@@ -1797,7 +1818,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1828,7 +1850,7 @@
                                             android:visibility="gone">
 
                                             <TextView
-                                                android:id="@+id/txtMediatype"
+                                                android:id="@+id/txtMediatype12"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
