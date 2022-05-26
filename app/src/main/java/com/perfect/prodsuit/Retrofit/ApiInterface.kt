@@ -226,5 +226,8 @@ interface ApiInterface {
     @POST("UserValidations/FollowUpListDetailsReport")
     fun getFollowUpListDetailsReport(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/LeadGenerationDefaultvalueSettings")
+    fun getLeadGenerationDefaultvalueSettings(@Body body: RequestBody): Call<String>
+
 
 }

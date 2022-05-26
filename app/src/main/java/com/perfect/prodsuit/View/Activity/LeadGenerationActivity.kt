@@ -205,6 +205,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var branchViewModel: BranchViewModel
      lateinit var departmentViewModel: DepartmentViewModel
      lateinit var employeeViewModel: EmployeeViewModel
+     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
+
      lateinit var prodCategoryArrayList : JSONArray
      lateinit var prodDetailArrayList : JSONArray
      lateinit var prodStatusArrayList : JSONArray
@@ -215,6 +217,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var branchArrayList : JSONArray
      lateinit var departmentArrayList : JSONArray
      lateinit var employeeArrayList : JSONArray
+
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
      private var dialogProdStatus : Dialog? = null
@@ -226,6 +229,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      private var dialogDepartment : Dialog? = null
      private var dialogEmployee : Dialog? = null
      private var dialogLeadEdit : Dialog? = null
+
      var recyProdCategory: RecyclerView? = null
      var recyProdDetail: RecyclerView? = null
      var recyProdStatus: RecyclerView? = null
@@ -357,6 +361,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+
+
         setRegViews()
        // getCalendarId(context)
 
@@ -364,21 +371,29 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
-                edtbarnchtype!!.setText("")
-                edtbranch!!.setText("")
-                edtdepartment!!.setText("")
-                edtEmployee!!.setText("")
+//                edtbarnchtype!!.setText("")
+//                edtbranch!!.setText("")
+//                edtdepartment!!.setText("")
+//                edtEmployee!!.setText("")
                 strNeedCheck = "1"
+
             } else {
                 llNeedTransfer!!.visibility = View.GONE
-                edtbarnchtype!!.setText("")
-                edtbranch!!.setText("")
-                edtdepartment!!.setText("")
-                edtEmployee!!.setText("")
+//                edtbarnchtype!!.setText("")
+//                edtbranch!!.setText("")
+//                edtdepartment!!.setText("")
+//                edtEmployee!!.setText("")
                 strNeedCheck = "0"
+
             }
+
+            getDefaultValueSettings()
         }
+
+       // getDefaultValueSettings()
     }
+
+
 
     private fun clearData() {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -513,6 +528,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         ID_LeadGenerate = ""
         ID_LeadGenerateProduct = ""
+
+        getDefaultValueSettings()
 
         hideViews()
 
@@ -1442,6 +1459,72 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             // dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+
+    private fun getDefaultValueSettings() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadGenerateDefaultvalueViewModel.getLeadGenerationDefaultvalue(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   14781   "+msg.length)
+                            Log.e(TAG,"msg   14782   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
+                                Log.e(TAG,"msg   14783   "+jobjt.getString("EmpFName"))
+
+                                ID_BranchType = jobjt.getString("ID_BranchType")
+                                edtbarnchtype!!.setText(jobjt.getString("BranchType"))
+                                ID_Branch = jobjt.getString("ID_Branch")
+                                edtbranch!!.setText(jobjt.getString("Branch"))
+                                ID_Department = jobjt.getString("FK_Department")
+                                edtdepartment!!.setText(jobjt.getString("Department"))
+                                ID_Employee = jobjt.getString("ID_Employee")
+                                edtEmployee!!.setText(jobjt.getString("EmpFName"))
+
+
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@LeadGenerationActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
         }
     }
 
