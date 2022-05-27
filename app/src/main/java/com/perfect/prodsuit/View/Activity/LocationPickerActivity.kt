@@ -2,12 +2,18 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -38,6 +44,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     GoogleApiClient.OnConnectionFailedListener {
 
     val TAG  :String="LocationPickerActivity"
+    lateinit var context: Context
     private lateinit var googleMap : GoogleMap
     private var mLocationPermissionGranted = false
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
@@ -63,13 +70,38 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     var strLongitue : String = ""
     var strLatitude : String = ""
 
+    var lm: LocationManager? = null
+    var gps_enabled = false
+    var network_enabled = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_location_picker)
-        getLocationPermission()
+        context = this@LocationPickerActivity
+        //getLocationPermission()
+        lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (checkLocationEnabled()){
+            buildAlertMessageNoGps();
+        }
         checkAndRequestPermissions()
+
+
+//        if (!gps_enabled && !network_enabled) {
+//            // notify user
+//            buildAlertMessageNoGps();
+//        }
+
+//        if (checkAndRequestPermissions()){
+//            Log.e(TAG,"75   Permission Granted")
+//        }
+//        else{
+//            Log.e(TAG,"75   Permission Denied")
+//          //  buildAlertMessageNoGps();
+//        }
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -120,6 +152,26 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         }
     }
 
+    private fun checkLocationEnabled(): Boolean {
+
+        var result = false
+
+
+        try {
+            gps_enabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            network_enabled = lm!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            if (!gps_enabled && !network_enabled) {
+                result = true
+            }
+
+        } catch (ex: Exception) {
+            result = false
+        }
+
+        return result
+
+    }
+
     private fun getLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 this.applicationContext,
@@ -136,11 +188,34 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         }
     }
 
+    private fun buildAlertMessageNoGps() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, id: Int) {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+            .setNegativeButton("No"
+            ) { dialog, id -> dialog.cancel()
+                finish()
+            }
+        val alert: AlertDialog = builder.create()
+        alert.show()
+    }
+
     private fun checkAndRequestPermissions(): Boolean {
+
+        var result = false
         val locationPermission =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val coarsePermision =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+//        val backgroundPermision =
+//            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
         val listPermissionsNeeded: MutableList<String> = ArrayList()
         if (locationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -148,15 +223,21 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
+
+
+//        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//        }
+
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(
                 this,
                 listPermissionsNeeded.toTypedArray(),
                 REQUEST_ID_MULTIPLE_PERMISSIONS
             )
-            return false
+            result  = true
         }
-        return true
+        return result
     }
 
     @SuppressLint("MissingPermission")
