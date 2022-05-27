@@ -38,12 +38,12 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
             if (holder is MainViewHolder) {
                 Log.e(TAG, "onBindViewHolder   1051   "+SubMode)
                 Log.i("Todo Date", jsonObject!!.getString("LgLeadDate"))
-                var date = jsonObject!!.getString("LgLeadDate")
-                var spf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-                val newDate = spf.parse(date)
-                spf = SimpleDateFormat("dd-MM-yyyy")
-                date = spf.format(newDate)
-                println(date)
+//                var date = jsonObject!!.getString("LgLeadDate")
+//                var spf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+//                val newDate = spf.parse(date)
+//                spf = SimpleDateFormat("dd-MM-yyyy")
+//                date = spf.format(newDate)
+              //  println(date)
 
                 if (SubMode.equals("1")){
                     holder.ll_leadNo!!.setBackgroundColor(context.getColor(R.color.todolist_Color));
@@ -60,7 +60,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
              //   internal var impreference    : ImageView
 
-                holder.txtv_date.text        = date
+              //  holder.txtv_date.text        = date
+                holder.txtv_date.text        = jsonObject!!.getString("LgLeadDate")
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.tv_address.text        = jsonObject!!.getString("CusAddress")
                 holder.tv_mobile.text        = jsonObject!!.getString("LgCusMobile")

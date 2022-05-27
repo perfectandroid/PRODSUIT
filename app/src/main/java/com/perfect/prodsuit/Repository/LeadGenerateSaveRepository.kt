@@ -130,10 +130,13 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocationAddress", ProdsuitApplication.encryptStart(locAddress))
-                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
-                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
+//                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
+//                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
+                requestObject1.put("LocationLandMark1", encode1)
+                requestObject1.put("LocationLandMark2", encode2)
 
-                Log.e(TAG,"requestObject1   136   "+requestObject1)
+                Log.e(TAG,"requestObject1   1361   "+encode1)
+                Log.e(TAG,"requestObject1   1362   "+requestObject1)
 
 
             } catch (e: Exception) {

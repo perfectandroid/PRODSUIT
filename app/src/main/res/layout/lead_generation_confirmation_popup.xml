@@ -15,7 +15,7 @@
         android:background="@color/white"
         android:padding="10dp"
         android:fontFamily="@font/myfont"
-        android:text="lead generation confirmation"/>
+        android:text="lead confirmation"/>
 
     <View
         android:layout_width="match_parent"
@@ -38,52 +38,289 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_LeadDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
-                        android:textColor="@color/greydark"
-                        android:textSize="13dp"
-                        android:textStyle="normal"
-                        android:textAllCaps="false"
-                        android:background="@color/white"
-                        android:padding="5dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Date"/>
-
-                    <TextView
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:textColor="@color/greydark"
-                        android:textSize="13dp"
+                        android:textSize="15dp"
                         android:textStyle="bold"
-                        android:background="@color/white"
+                        android:textAllCaps="true"
+                        android:background="@color/color_background1"
                         android:padding="5dp"
                         android:fontFamily="@font/myfont"
-                        android:text=":"/>
+                        android:text="Lead Details"/>
 
-
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/ll_lead_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:textColor="@color/greydark"
-                        android:textSize="13dp"
-                        android:textStyle="normal"
-                        android:textAllCaps="false"
-                        android:background="@color/white"
-                        android:padding="5dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="26.05.200"/>
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Date"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="bold"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_lead_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_lead_from"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Lead From"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="bold"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_lead_from"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_lead_through"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Lead Through"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_lead_through"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_collected_by"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:layout_marginBottom="10dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Collected By"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_collected_by"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -91,6 +328,7 @@
                     android:id="@+id/ll_CustomerDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="vertical"
                     android:visibility="visible">
 
@@ -110,554 +348,670 @@
                         android:text="Customer Details"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Name"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Name"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Address"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Address"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Email"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Email"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Phone"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Phone"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Country"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Country"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_coutry"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="State"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="State"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_district"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="District"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="District"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_district"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_post"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Post"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Post"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_post"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_pincode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Pincode"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Pincode"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_pincode"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_cust_landline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="LandLine"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="LandLine"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="normal"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_cust_landline"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/color_background1"/>
+
+
+
 
 
                 </LinearLayout>
@@ -667,7 +1021,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible">
 
 
                     <TextView
@@ -676,212 +1033,271 @@
                         android:layout_weight="2"
                         android:gravity="center"
                         android:textColor="@color/greydark"
-                        android:textSize="13dp"
+                        android:textSize="15dp"
                         android:textStyle="bold"
-                        android:textAllCaps="false"
-                        android:background="@color/white"
+                        android:textAllCaps="true"
+                        android:background="@color/color_background1"
                         android:padding="5dp"
                         android:fontFamily="@font/myfont"
                         android:text="More Communication Info"/>
 
-
                     <LinearLayout
+                        android:id="@+id/ll_company_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Company Name"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Company Name"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_company_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_contact_person"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Contact Person"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Contact Person"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_contact_person"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_contact_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Contact Number"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Contact Number"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_contact_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_media_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Media Type"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:orientation="horizontal">
 
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Media Type"/>
 
-                        <TextView
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_media_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/color_background1"/>
+
 
                     </LinearLayout>
 
@@ -891,741 +1307,9 @@
                     android:id="@+id/ll_ProductDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:textColor="@color/greydark"
-                        android:textSize="13dp"
-                        android:textStyle="bold"
-                        android:textAllCaps="false"
-                        android:background="@color/white"
-                        android:padding="5dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Product Details"/>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Category"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Product"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Quantity"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Priority"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Feedback"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Status"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Followup Action"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Followup Type"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Followup Date"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Branch Type"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Branch"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Department"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Employee"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_LocationDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Location"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_LeadDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:paddingBottom="10dp"
                     android:orientation="vertical"
                     android:visibility="visible">
 
@@ -1641,8 +1325,860 @@
                         android:background="@color/color_background1"
                         android:padding="5dp"
                         android:fontFamily="@font/myfont"
-                        android:text="Lead Details"/>
+                        android:text="Product Details"/>
 
+                    <LinearLayout
+                        android:id="@+id/ll_prod_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Category"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_prod_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Product"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_product"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_prod_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Quantity"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_quantity"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_prod_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Priority"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_priority"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_prod_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Feedback"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_feedback"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_prod_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Status"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_followup_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Followup Action"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_followup_action"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_followup_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Followup Type"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_followup_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_followup_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Followup Date"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_followup_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_branchtype"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Branch Type"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_branch_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_branch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Branch"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_branch"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_department"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Department"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_department"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_employee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Employee"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_employee"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_LocationDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1652,9 +2188,9 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="left"
+                            android:gravity="center_vertical"
                             android:textColor="@color/greydark"
                             android:textSize="13dp"
                             android:textStyle="normal"
@@ -1662,7 +2198,7 @@
                             android:background="@color/white"
                             android:padding="5dp"
                             android:fontFamily="@font/myfont"
-                            android:text="Lead From"/>
+                            android:text="Location"/>
 
                         <TextView
                             android:layout_width="20dp"
@@ -1670,7 +2206,7 @@
                             android:gravity="center"
                             android:textColor="@color/greydark"
                             android:textSize="13dp"
-                            android:textStyle="bold"
+                            android:textStyle="normal"
                             android:background="@color/white"
                             android:padding="5dp"
                             android:fontFamily="@font/myfont"
@@ -1679,10 +2215,11 @@
 
 
                         <TextView
+                            android:id="@+id/tvp_location"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="left"
+                            android:gravity="center_vertical"
                             android:textColor="@color/greydark"
                             android:textSize="13dp"
                             android:textStyle="normal"
@@ -1690,7 +2227,7 @@
                             android:background="@color/white"
                             android:padding="5dp"
                             android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
+                            android:text=""/>
 
                     </LinearLayout>
 
@@ -1700,111 +2237,42 @@
                         android:orientation="horizontal">
 
 
-                        <TextView
+
+                        <Button
+                            android:id="@+id/btnCancel"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="5dp"
                             android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
+                            android:background="@drawable/btn_resetbg"
                             android:fontFamily="@font/myfont"
-                            android:text="Lead Through"/>
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
+                            android:padding="2dp"
+                            android:text="cancel"
+                            android:textAllCaps="true"
+                            android:textSize="15dp" />
 
 
 
-                        <TextView
+                        <Button
+                            android:id="@+id/btnOk"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_bgcolour"
+                            android:padding="2dp"
                             android:layout_weight="2"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Collected By"/>
+                            android:textAllCaps="true"
+                            android:text="ok" />
 
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=":"/>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left"
-                            android:textColor="@color/greydark"
-                            android:textSize="13dp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"
-                            android:background="@color/white"
-                            android:padding="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="26.05.200"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
-
-
-
-
-
-
-
-
-
-
 
 
             </LinearLayout>
