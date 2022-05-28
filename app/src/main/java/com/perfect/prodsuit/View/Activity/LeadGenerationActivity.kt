@@ -2173,12 +2173,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         if (requestCode == SELECT_LOCATION){
             if (data!=null){
             //    txtcustomer!!.text = data!!.getStringExtra("Name")
-                if (data.getStringExtra("address").equals("")){
-                    txtLocation!!.setText(data.getStringExtra("address"))
-                }else{
-                    txtLocation!!.setText(data.getStringExtra("city"))
-                }
 
+
+//                if (data.getStringExtra("address").equals("")){
+//                    txtLocation!!.setText(data.getStringExtra("address"))
+//                }else{
+//                    txtLocation!!.setText(data.getStringExtra("city"))
+//                }
+
+            try {
                 locAddress      = data.getStringExtra("address")
                 locCity         = data.getStringExtra("city")
                 locState        = data.getStringExtra("state")
@@ -2187,6 +2190,29 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 locKnownName    = data.getStringExtra("knownName")
                 strLatitude     = data.getStringExtra("strLatitude")
                 strLongitue     = data.getStringExtra("strLongitue")
+
+                var locAddres = ""
+                if (!locAddress.equals("")){
+                    locAddres = locAddress!!
+                }
+                if (!locCity.equals("")){
+                    locAddres = locAddres+","+locCity!!
+                }
+                if (!locState.equals("")){
+                    locAddres = locAddres+","+locState!!
+                }
+                if (!locCountry.equals("")){
+                    locAddres = locAddres+","+locCountry!!
+                }
+                if (!locpostalCode.equals("")){
+                    locAddres = locAddres+","+locpostalCode!!
+                }
+                txtLocation!!.setText(locAddres)
+            }
+            catch (e : Exception){
+
+            }
+
             }
 
         }
