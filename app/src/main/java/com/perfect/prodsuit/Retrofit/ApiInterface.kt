@@ -229,5 +229,6 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerationDefaultvalueSettings")
     fun getLeadGenerationDefaultvalueSettings(@Body body: RequestBody): Call<String>
 
-
+    @POST("UserValidations/UpdateNotificationStatus")
+    fun getNotifreadstatus(@Body body: RequestBody): Call<String>
 }

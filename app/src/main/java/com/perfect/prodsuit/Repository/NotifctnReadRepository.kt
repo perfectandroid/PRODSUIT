@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -7,8 +8,13 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BannerModel
-import com.perfect.prodsuit.Model.NotificationModel
+import com.perfect.prodsuit.Model.ActivityListModel
+import com.perfect.prodsuit.Model.AddExpenseModel
+import com.perfect.prodsuit.Model.NotifReadModel
+import com.perfect.prodsuit.Model.ProfileModel
+import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
+import com.perfect.prodsuit.View.Activity.ExpenseAddActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -16,20 +22,26 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.*
 
-object NotificationRepository {
+object NotifctnReadRepository {
 
-    val notificationSetterGetter = MutableLiveData<NotificationModel>()
+    private var progressDialog: ProgressDialog? = null
+    val notifreadSetterGetter = MutableLiveData<NotifReadModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<NotificationModel> {
-        getNotification(context)
-        return notificationSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<NotifReadModel> {
+        getnotifictnread(context)
+        return notifreadSetterGetter
     }
 
-    private fun getNotification(context: Context) {
+    private fun getnotifictnread(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -46,14 +58,16 @@ object NotificationRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("30"))
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("55"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.i("request",requestObject1.toString())
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+
+                Log.i("Request",requestObject1.toString())
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -61,29 +75,33 @@ object NotificationRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getNotification(body)
+            val call = apiService.getNotifreadstatus(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("Notification Response",response.body())
-                        val users = ArrayList<NotificationModel>()
-                        users.add(NotificationModel(response.body()))
+                        Log.i("Response",response.body())
+                        val users = ArrayList<NotifReadModel>()
+                        users.add(NotifReadModel(response.body()))
                         val msg = users[0].message
-                        notificationSetterGetter.value = NotificationModel(msg)
+                        notifreadSetterGetter.value = NotifReadModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    progressDialog!!.dismiss()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
+            progressDialog!!.dismiss()
         }
     }
 
