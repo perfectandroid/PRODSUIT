@@ -30,6 +30,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
@@ -37,6 +39,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
+import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONObject
@@ -76,6 +79,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     internal var tv_navStatus: TextView? = null
     internal var tv_Name: TextView? = null
     internal var tv_DateTime: TextView? = null
+    internal var txtv_notfcount: TextView? = null
     internal var tv_Status: TextView? = null
     internal var yr: Int =0
     internal var month:Int = 0
@@ -92,6 +96,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     val callbackId = 42
     val CALENDAR_PROJECTION=3
     val PERMISSION_ID = 42
+    lateinit var notificationViewModel: NotificationViewModel
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     var addresses: List<Address>? = null
     var geocoder: Geocoder? = null
@@ -120,13 +125,69 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setRegViews()
         bottombarnav()
         getBannerlist()
+        getNotfCount()
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
 //
     }
 
+    private fun getNotfCount() {
 
+        context = this@HomeActivity
+        notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                notificationViewModel.getNotificaationlist(this)!!.observe(
+                    this,
+                    Observer { notificationSetterGetter ->
+                        val msg = notificationSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("NotificationDetails")
+                                var count =jobjt.getString("count")
+                                Log.i("Array size", count)
+                                txtv_notfcount!!.text=count
+
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@HomeActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+
+        }
+    }
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
@@ -168,6 +229,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_Name = findViewById(R.id.tv_Name)
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
+        txtv_notfcount= findViewById(R.id.txtv_notfcount)
 
         val headerView: View = nav_view!!.getHeaderView(0)
         tv_navName = headerView!!.findViewById(R.id.tv_navName)
@@ -189,6 +251,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_report!!.setOnClickListener(this)
         rlnotification!!.setOnClickListener(this)
         imgAttendance!!.setOnClickListener(this)
+      //  txtv_notfcount!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
