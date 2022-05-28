@@ -121,7 +121,8 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
+                                    app:cardMaxElevation="1dp"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -152,7 +153,7 @@
                                             android:visibility="gone">
 
                                             <TextView
-                                                android:id="@+id/txtDate"
+                                                android:id="@+id/txtDate12"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -259,6 +260,174 @@
                                             </LinearLayout>
 
                                         </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginBottom="0dp"
+                                    app:cardMaxElevation="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_LeadFromClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:padding="7dp"
+                                            android:text="Lead Details"
+                                            android:fontFamily="@font/myfont"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/greydarks"
+                                            android:drawableLeft="@drawable/leadfrom_color"
+                                            android:drawablePadding="10dp"
+                                            android:textSize="16dp"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/llLeadFrom"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/txtDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginBottom="0dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/calendar_icon"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:hint="Date"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                            <TextView
+                                                android:id="@+id/txtleadfrom"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="0dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrowright"
+                                                android:drawableTint="@color/greydarks"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead From"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                            <TextView
+                                                android:id="@+id/txtleadthrough"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="0dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrowright"
+                                                android:drawableTint="@color/greydark"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead Through"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+                                            <TextView
+                                                android:id="@+id/txtleadby"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableRight="@drawable/arrowright"
+                                                android:drawableTint="@color/greydark"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Collected By"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp" />
+
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="30dp"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_gravity="center"
+                                                android:background="@drawable/etselect_bggrey"
+                                                android:gravity = "center"
+                                                android:visibility="gone">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center">
+
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:background="@color/greylight"
+                                                        android:gravity="center"
+                                                        android:text="Select Date"
+                                                        android:textColor="@color/colorPrimaryExtraDark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="bold" />
+
+
+                                                </RelativeLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
 
                                     </LinearLayout>
 
@@ -1450,153 +1619,7 @@
 
 
 
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="0dp"
-                                    app:cardElevation="2dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginTop="1dp"
-                                    android:layout_marginBottom="0dp"
-                                    app:cardMaxElevation="1dp">
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tv_LeadFromClick"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_margin="5dp"
-                                            android:drawableRight="@drawable/down_arrows"
-                                            android:padding="7dp"
-                                            android:text="Lead Details"
-                                            android:fontFamily="@font/myfont"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/greydarks"
-                                            android:drawableLeft="@drawable/leadfrom_color"
-                                            android:drawablePadding="10dp"
-                                            android:textSize="16dp"/>
-
-                                        <LinearLayout
-                                            android:id="@+id/llLeadFrom"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:background="@color/leadbg_color"
-                                            android:visibility="gone">
-
-                                            <TextView
-                                                android:id="@+id/txtleadfrom"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginBottom="0dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrowright"
-                                                android:drawableTint="@color/greydarks"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:hint="Lead From"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-                                            <TextView
-                                                android:id="@+id/txtleadthrough"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginBottom="0dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrowright"
-                                                android:drawableTint="@color/greydark"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:hint="Lead Through"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-                                            <TextView
-                                                android:id="@+id/txtleadby"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginBottom="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableRight="@drawable/arrowright"
-                                                android:drawableTint="@color/greydark"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:hint="Collected By"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
-
-
-                                            <LinearLayout
-                                                android:orientation="vertical"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginBottom="30dp"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_gravity="center"
-                                                android:background="@drawable/etselect_bggrey"
-                                                android:gravity = "center"
-                                                android:visibility="gone">
-
-                                                <RelativeLayout
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:gravity="center">
-
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
-                                                        android:background="@color/greylight"
-                                                        android:gravity="center"
-                                                        android:text="Select Date"
-                                                        android:textColor="@color/colorPrimaryExtraDark"
-                                                        android:textSize="13dp"
-                                                        android:textStyle="bold" />
-
-
-                                                </RelativeLayout>
-
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-
-
-                                    </LinearLayout>
-
-
-
-                                </androidx.cardview.widget.CardView>
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
