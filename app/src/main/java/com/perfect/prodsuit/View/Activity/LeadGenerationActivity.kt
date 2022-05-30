@@ -31,6 +31,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Repository.LeadGenerateSaveRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -446,7 +447,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Status = ""
         ID_NextAction = ""
         ID_ActionType = ""
-        strFollowupdate = currentDate
+
         strNeedCheck = "0"
         ID_BranchType = ""
         ID_Branch = ""
@@ -491,6 +492,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDateFormate = inputFormat.parse(currentDate)
         strDate = outputFormat.format(currentDateFormate)
+        strFollowupdate = outputFormat.format(currentDateFormate)
       //  strDate =currentDate
 
         ID_LeadFrom  = ""
@@ -1237,7 +1239,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         strMonth ="0"+strMonth
                     }
                     edtFollowdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                    strFollowupdate = strDay+"-"+strMonth+"-"+strYear
+                    strFollowupdate = strYear+"-"+strMonth+"-"+strDay
                     llFollowdate!!.visibility=View.GONE
                     dateFollowMode = "1"
                 }
@@ -4031,10 +4033,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              if (jsonObject.getString("ID_Status").equals("1")){
                  llfollowup!!.visibility  =View.VISIBLE
+
+
                  val sdf = SimpleDateFormat("dd-MM-yyyy")
                  val currentDate = sdf.format(Date())
                  edtFollowdate!!.setText(currentDate)
-                 strFollowupdate = currentDate
+
+                 val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                 val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                 val currentDateFormate = inputFormat.parse(currentDate)
+                 strFollowupdate = outputFormat.format(currentDateFormate)
                  switchTransfer!!.isChecked = false
 
              }else{
@@ -4739,6 +4747,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private fun saveLeadGeneration() {
         var saveLeadGenDet = 0
         try {
+
+//            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+//            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//
+//            val LeadDate = inputFormat.parse(strDate)
+//            val strLeadDate = outputFormat.format(LeadDate)
+//            val Followupdate = inputFormat.parse(strFollowupdate)
+//            val strLeadFollowupdate = outputFormat.format(Followupdate)
+//
+            Log.e(TAG,"strDate   4759   "+strDate+"   "+strFollowupdate)
+
+
             when (Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
                     progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4754,7 +4774,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
                         strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
                         ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
-                        encode1, encode2,saveUpdateMode!!)!!.observe(
+                        encode1, encode2,saveUpdateMode!!,strContactPerson!!, strContactNumber!!)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message

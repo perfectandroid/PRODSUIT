@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_homemain.xml" value="0.18" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_district_list.xml" value="0.13802083333333334" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_notification.xml" value="0.16" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/address_svg.xml" value="0.167" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolorprimary.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolouryellow.xml" value="0.174" />
@@ -19,23 +24,20 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2598958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_remark.xml" value="0.2796296296296296" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.2794871794871795" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_homemain.xml" value="0.18" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_district_list.xml" value="0.13802083333333334" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_notification.xml" value="0.16" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.3164102564102564" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.30833333333333335" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
