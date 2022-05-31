@@ -37,8 +37,8 @@
     </integer-array>
 
     <string-array name="array_spinner">
-        <item>Mobile</item>
         <item>Name</item>
+        <item>Mobile</item>
     </string-array>
 
 </resources>

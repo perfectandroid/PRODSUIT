@@ -207,7 +207,7 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                customersearchViewModel.getCustomer(this,strName)!!.observe(
+                customersearchViewModel.getCustomer(this,strName,"1")!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

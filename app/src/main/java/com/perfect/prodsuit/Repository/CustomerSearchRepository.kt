@@ -27,12 +27,12 @@ object CustomerSearchRepository {
     val customerSetterGetter = MutableLiveData<CustomerSearchModel>()
     val TAG: String = "CustomerSearchRepository"
 
-    fun getServicesApiCall(context: Context,strCustomer : String): MutableLiveData<CustomerSearchModel> {
-        getCustomer(context, LeadGenerationActivity.strCustomer)
+    fun getServicesApiCall(context: Context,strCustomer : String,SubModeSearch : String): MutableLiveData<CustomerSearchModel> {
+        getCustomer(context, strCustomer,SubModeSearch)
         return customerSetterGetter
     }
 
-    private fun getCustomer(context: Context,strCustomer : String) {
+    private fun getCustomer(context: Context,strCustomer : String,SubModeSearch : String) {
 
         Log.e("TAG","getCustomer  ")
         try {
@@ -68,6 +68,8 @@ object CustomerSearchRepository {
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubModeSearch))
+
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
