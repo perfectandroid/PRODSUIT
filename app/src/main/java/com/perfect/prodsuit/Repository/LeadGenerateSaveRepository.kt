@@ -32,12 +32,12 @@ object LeadGenerateSaveRepository {
                            FK_District :String, FK_Post :String, ID_Category :String, ID_Product :String,strProdName :String, strQty :String, ID_Priority :String,
                            strFeedback :String, ID_Status :String, ID_NextAction :String, ID_ActionType :String, strFollowupdate :String, ID_Branch :String,
                            ID_BranchType :String, ID_Department :String, ID_Employee :String, strLatitude :String, strLongitue :String, locAddress :String,
-                           encode1 :String, encode2 :String , saveUpdateMode : String): MutableLiveData<LeadGenerateSaveModel> {
+                           encode1 :String, encode2 :String , saveUpdateMode : String, strContactPerson :String, strContactNumber : String): MutableLiveData<LeadGenerateSaveModel> {
         saveLeadGenerate(context, strDate, ID_LeadFrom!!,
             ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address!!, Customer_Mobile!!, Customer_Email!!,CompanyNme,CusPhone,
             ID_MediaMaster!!, FK_Country, FK_States, FK_District, FK_Post, ID_Category!!, ID_Product!!, strProdName, strQty, ID_Priority!!,
             strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch, ID_BranchType, ID_Department,
-            ID_Employee, strLatitude!!,strLongitue!!, locAddress!!, encode1, encode2 , saveUpdateMode)
+            ID_Employee, strLatitude!!,strLongitue!!, locAddress!!, encode1, encode2 , saveUpdateMode,strContactPerson,strContactNumber)
         Log.e("LeadGenerateSaveRepository"," 226666    ")
         return leadGenSaveSetterGetter
     }
@@ -48,7 +48,7 @@ object LeadGenerateSaveRepository {
                                  FK_District :String, FK_Post :String, ID_Category :String, ID_Product :String,strProdName :String, strQty :String, ID_Priority :String,
                                  strFeedback :String, ID_Status :String, ID_NextAction :String, ID_ActionType :String, strFollowupdate :String, ID_Branch :String,
                                  ID_BranchType :String, ID_Department :String, ID_Employee :String, strLatitude :String, strLongitue :String, locAddress :String,
-                                 encode1 :String, encode2 :String ,saveUpdateMode : String) {
+                                 encode1 :String, encode2 :String ,saveUpdateMode : String, strContactPerson :String, strContactNumber : String) {
 
         Log.e("TAG","saveLeadGenerate  ")
         try {
@@ -102,7 +102,8 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LgCusMobile", ProdsuitApplication.encryptStart(Customer_Mobile))
                 requestObject1.put("LgCusEmail", ProdsuitApplication.encryptStart(Customer_Email))
                 requestObject1.put("CusCompany", ProdsuitApplication.encryptStart(CompanyNme))
-                requestObject1.put("CusPhone", ProdsuitApplication.encryptStart(CusPhone))
+               // requestObject1.put("CusPerson", ProdsuitApplication.encryptStart(strContactPerson))
+                requestObject1.put("CusPhone", ProdsuitApplication.encryptStart(strContactNumber))
                 requestObject1.put("FK_MediaMaster", ProdsuitApplication.encryptStart(ID_MediaMaster))
 
                 requestObject1.put("FK_Country", ProdsuitApplication.encryptStart(FK_Country))
@@ -135,6 +136,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LocationLandMark1", encode1)
                 requestObject1.put("LocationLandMark2", encode2)
 
+                Log.e(TAG,"requestObject1   1360   "+strDate+"   "+strFollowupdate)
                 Log.e(TAG,"requestObject1   1361   "+encode1)
                 Log.e(TAG,"requestObject1   1362   "+requestObject1)
 

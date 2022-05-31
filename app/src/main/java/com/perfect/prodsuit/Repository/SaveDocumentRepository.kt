@@ -94,7 +94,8 @@ object SaveDocumentRepository {
                 requestObject1.put("Doc_Date", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("Doc_Subject", ProdsuitApplication.encryptStart(strSubject))
                 requestObject1.put("Doc_Description", ProdsuitApplication.encryptStart(strDescription))
-                requestObject1.put("DocumentImage", ProdsuitApplication.encryptStart(encodeDoc))
+//                requestObject1.put("DocumentImage", ProdsuitApplication.encryptStart(encodeDoc))
+                requestObject1.put("DocumentImage", encodeDoc)
 
 
                 Log.e(TAG,"saveDocuments   102   "+requestObject1)

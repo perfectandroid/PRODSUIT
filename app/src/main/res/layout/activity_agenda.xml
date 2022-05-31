@@ -328,7 +328,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
                                     <TextView
                                         android:id="@+id/tv_tab_pending"
@@ -358,7 +359,7 @@
                                         android:fontFamily="@font/myfont"
                                         android:textColor="@color/black"
                                         android:background="@drawable/under_line_trans"
-                                        android:textStyle="bold"/>
+                                        android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/tv_tab_completed"
