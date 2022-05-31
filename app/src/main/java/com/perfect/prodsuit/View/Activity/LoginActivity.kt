@@ -1,13 +1,18 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.Auth
@@ -32,6 +37,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     var etxt_mob: EditText? = null
     private var googleApiClient: GoogleApiClient? = null
     private val RC_SIGN_IN = 1
+    private val MY_PERMISSIONS_REQUEST_LOCATION = 1
     var strName: String? = null
     var strEmail: String? = null
     companion object {
@@ -47,6 +53,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         var btlogin = findViewById<Button>(R.id.btlogin)
         etxt_mob = findViewById<EditText>(R.id.etxt_mob)
         progress = findViewById(R.id.progress)
+        checkLocationPermission()
+
         btlogin.setOnClickListener {
             validation()
         }
@@ -189,5 +197,53 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
+    private fun checkLocationPermission():Boolean  {
 
+
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) !== PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+
+
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Allow application to access location services")
+                    //  .setMessage("This app wants to change your app permissions.")
+                    .setPositiveButton("Location") { paramDialogInterface, paramInt ->
+                        //  val myIntent = Intent(Settings.Intent.ACTION_CALL)
+                        // val callIntent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        //startActivity(callIntent)
+                        startActivity( Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.perfect.scoreconnect")));
+                    }
+                    .setNegativeButton("Deny") { paramDialogInterface, paramInt ->
+
+                        //  val intent = Intent(applicationContext, HomeActivity::class.java)
+                        //   startActivity(intent)
+                    }
+                dialog.show()
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                    MY_PERMISSIONS_REQUEST_LOCATION
+                )
+            }
+            return false
+        } else {
+            return true
+        }
+
+
+    }
 }

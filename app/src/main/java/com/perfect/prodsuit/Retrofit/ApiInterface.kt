@@ -231,4 +231,9 @@ interface ApiInterface {
 
     @POST("UserValidations/UpdateNotificationStatus")
     fun getNotifreadstatus(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/DeleteLeadGenerate")
+    fun getDeleteLead(@Body body: RequestBody): Call<String>
+
+
 }
