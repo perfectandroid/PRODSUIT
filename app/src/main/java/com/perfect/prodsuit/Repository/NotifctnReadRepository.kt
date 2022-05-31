@@ -15,6 +15,7 @@ import com.perfect.prodsuit.Model.ProfileModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.ExpenseAddActivity
+import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -61,11 +62,13 @@ object NotifctnReadRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val NotifidSP = context.getSharedPreferences(Config.SHARED_PREF28, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("55"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-
+                requestObject1.put("ID_NotificationDetails", NotificationAdapter.id)
                 Log.i("Request",requestObject1.toString())
 
             } catch (e: Exception) {
@@ -84,7 +87,7 @@ object NotifctnReadRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("Response",response.body())
+                        Log.i("NotifreadResponse",response.body())
                         val users = ArrayList<NotifReadModel>()
                         users.add(NotifReadModel(response.body()))
                         val msg = users[0].message

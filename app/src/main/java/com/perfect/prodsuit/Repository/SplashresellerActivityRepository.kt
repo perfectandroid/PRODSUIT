@@ -64,6 +64,7 @@ object SplashresellerActivityRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
+                        Log.i("Splashresposne",response.body())
                         val users = ArrayList<ResellerModel>()
                         users.add(ResellerModel(response.body()))
                         val msg = users[0].message
