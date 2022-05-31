@@ -1,7 +1,9 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.*
+import android.app.AlertDialog
+import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -31,7 +33,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.LeadGenerateSaveRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -40,6 +41,7 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , ItemClickListener {
 
@@ -176,6 +178,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var dialogPost : Dialog? = null
     var recyPost: RecyclerView? = null
 
+    private var sp_namemob: Spinner? = null
     private var edtPincode: EditText? = null
     private var edtCountry: EditText? = null
     private var edtState: EditText? = null
@@ -262,6 +265,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     var saveUpdateMode : String?= ""
     var dateSelectMode : Int= 0
+
+    var searchType = arrayOf<String>()
 
 
     companion object {
@@ -370,6 +375,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
         setRegViews()
+        searchType = resources.getStringArray(R.array.array_spinner)
        // getCalendarId(context)
 
         clearData()
@@ -542,6 +548,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         getDefaultValueSettings()
 
         hideViews()
+        detailsShowing()
 
     }
 
@@ -605,6 +612,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCompanyName= findViewById<EditText>(R.id.edtCompanyName)
         edtContactPerson= findViewById<EditText>(R.id.edtContactPerson)
         edtContactNumber= findViewById<EditText>(R.id.edtContactNumber)
+
+        sp_namemob= findViewById<Spinner>(R.id.sp_namemob)
 
         edtPincode= findViewById<EditText>(R.id.edtPincode)
         edtCountry= findViewById<EditText>(R.id.edtCountry)
@@ -692,6 +701,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtPost!!.setOnClickListener(this)
         imgPinSearch!!.setOnClickListener(this)
 
+
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
 
@@ -745,6 +755,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                     hideViews()
                 }
+            }
+            R.id.sp_namemob->{
+//                detailsShowing()
+
+                Log.e(TAG,"758   sp_namemob")
             }
 
             R.id.tv_CompanyNameClick->{
@@ -1383,6 +1398,57 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
         }
+    }
+
+    private fun detailsShowing() {
+        val aa: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, searchType)
+            aa.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            sp_namemob!!.adapter = aa
+            sp_namemob!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, v: View, position: Int, arg3: Long) {
+
+                Log.e(TAG,"position  1410   "+position)
+
+
+//                strCusMobileNo = ""
+//                strCustomerName = ""
+//                strBcLnNumber = ""
+//                strCusAdharNo = ""
+//                if (position == 0) {
+//                    search.setText("")
+//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(10)))
+//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+//                    search.setTransformationMethod(null)
+//                    intPosition = position
+//                }
+//                if (position == 1) {
+//                    search.setText("")
+//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(20)))
+//                    search.setInputType(InputType.TYPE_CLASS_TEXT)
+//                    intPosition = position
+//                }
+//                if (position == 2) {
+//                    search.setText("")
+//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(15)))
+//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+//                    search.setTransformationMethod(null)
+//                    intPosition = position
+//                }
+//                if (position == 3) {
+//                    search.setText("")
+//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(12)))
+//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+//                    search.setTransformationMethod(null)
+//                    intPosition = position
+//                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>?) {
+                // TODO Auto-generated method stub
+            }
+        })
+
     }
 
     private fun LeadValids() {

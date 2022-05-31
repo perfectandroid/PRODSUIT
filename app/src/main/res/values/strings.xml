@@ -36,4 +36,9 @@
         <item>@color/green</item>
     </integer-array>
 
+    <string-array name="array_spinner">
+        <item>Mobile</item>
+        <item>Name</item>
+    </string-array>
+
 </resources>
