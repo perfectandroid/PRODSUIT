@@ -837,7 +837,7 @@
                         android:layout_width="180dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddQuotation"
-                        android:layout_toLeftOf="@+id/fabEditLead"
+                        android:layout_toLeftOf="@+id/fabdlteLead"
                         android:background="@color/tabbgColor"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
@@ -847,7 +847,7 @@
                         android:textStyle="bold" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fabEditLead"
+                        android:id="@+id/fabdlteLead"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddQuotation"

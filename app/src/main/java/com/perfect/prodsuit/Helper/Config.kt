@@ -56,7 +56,7 @@ object Config {
     const val SHARED_PREF25 = "LS_LoginMode"
     const val SHARED_PREF26 = "LS_LoginStauats"
     const val SHARED_PREF27 = "LS_DutyStatus"
-
+    const val SHARED_PREF28 = "Notifctn_Id"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }

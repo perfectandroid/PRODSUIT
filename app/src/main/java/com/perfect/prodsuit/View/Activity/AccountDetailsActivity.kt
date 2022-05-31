@@ -94,6 +94,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var historyActViewModel: HistoryActViewModel
     lateinit var imageViewModel: ImageViewModel
     lateinit var notelistViewModel: NoteListViewModel
+    lateinit var deleteLeadViewModel:DeleteLeadViewModel
     lateinit var leadHistoryArrayList : JSONArray
     lateinit var leadInfoArrayList : JSONArray
     lateinit var infoArrayList : JSONArray
@@ -108,7 +109,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var fabAddNewAction : FloatingActionButton? = null
     private var fabAddDocument : FloatingActionButton? = null
     private var fabAddQuotation : FloatingActionButton? = null
-    private var fabEditLead : FloatingActionButton? = null
+    private var fabdlteLead : FloatingActionButton? = null
     private var fabCloseLead : FloatingActionButton? = null
     private var fab_open : Animation? = null
     private var fab_close : Animation? = null
@@ -174,6 +175,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private lateinit var currentLocation: Location
     companion object{
         var ID_LeadGenerateProduct :String = ""
+        var ID_LeadGenerate :String = ""
         var LgCusMobile :String = ""
         var LgCusEmail  :String = ""
         var strid= ""
@@ -200,11 +202,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
         followuptypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
+        deleteLeadViewModel= ViewModelProvider(this).get(DeleteLeadViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj   "+jsonObj)
+
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
+        ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
+
         setRegViews()
         bottombarnav()
         fabOpenClose()
@@ -279,7 +285,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabAddNewAction!!.startAnimation(fab_close);
             fabAddDocument!!.startAnimation(fab_close);
             fabAddQuotation!!.startAnimation(fab_close);
-            fabEditLead!!.startAnimation(fab_close);
+            fabdlteLead!!.startAnimation(fab_close);
             fabCloseLead!!.startAnimation(fab_close);
             txtEditLead!!.startAnimation(fab_close)
             txtCloseLead!!.startAnimation(fab_close)
@@ -296,7 +302,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabAddNewAction!!.setClickable(false);
             fabAddDocument!!.setClickable(false);
             fabAddQuotation!!.setClickable(false);
-            fabEditLead!!.setClickable(false);
+            fabdlteLead!!.setClickable(false);
             fabCloseLead!!.setClickable(false);
             isOpen = false;
         } else {
@@ -306,7 +312,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabAddNewAction!!.startAnimation(fab_open);
             fabAddDocument!!.startAnimation(fab_open);
             fabAddQuotation!!.startAnimation(fab_open);
-            fabEditLead!!.startAnimation(fab_open);
+            fabdlteLead!!.startAnimation(fab_open);
             fabCloseLead!!.startAnimation(fab_open);
             txtCloseLead!!.startAnimation(fab_open)
             txtEditLead!!.startAnimation(fab_open)
@@ -323,7 +329,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabAddNewAction!!.setClickable(true);
             fabAddDocument!!.setClickable(true);
             fabAddQuotation!!.setClickable(true);
-            fabEditLead!!.setClickable(true);
+            fabdlteLead!!.setClickable(true);
             fabCloseLead!!.setClickable(true);
             isOpen = true;
         }
@@ -348,7 +354,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddNewAction = findViewById(R.id.fabAddNewAction);
         fabAddDocument = findViewById(R.id.fabAddDocument);
         fabAddQuotation = findViewById(R.id.fabAddQuotation);
-        fabEditLead = findViewById(R.id.fabEditLead);
+        fabdlteLead = findViewById(R.id.fabdlteLead);
         fabCloseLead = findViewById(R.id.fabCloseLead);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -381,7 +387,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddNewAction!!.setOnClickListener(this)
         fabAddDocument!!.setOnClickListener(this)
         fabAddQuotation!!.setOnClickListener(this)
-        fabEditLead!!.setOnClickListener(this)
+        fabdlteLead!!.setOnClickListener(this)
         fabCloseLead!!.setOnClickListener(this)
         llMessages!!.setOnClickListener(this)
         llLocation!!.setOnClickListener(this)
@@ -656,15 +662,29 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                 //messagePopup()
             }
-            R.id.fabEditLead->{
+            R.id.fabdlteLead->{
                 isOpen = true
                 fabOpenClose()
+                try {
+                    val dialog1 = Dialog(this)
+                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    dialog1 .setCancelable(false)
+                    dialog1 .setContentView(R.layout.dlte_lead)
+                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
+                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
+                    btn_No.setOnClickListener {
+                        dialog1 .dismiss()
+                    }
+                    btn_Yes.setOnClickListener {
+                        dialog1.dismiss()
+                        getDeletelead()
+                    }
+                    dialog1.show()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
-               // getHistory("1")
-
-//                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
-//                i.putExtra("ID_LeadGenerateProduct", AccountDetailsActivity.ID_LeadGenerateProduct)
-//                startActivity(i)
             }
             R.id.fabCloseLead->{
                 isOpen = true
@@ -689,6 +709,73 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 agendaTypeClick1 = "1"
               //  getActionTypes()
                 getFollowup(agendaTypeClick1)
+            }
+        }
+    }
+
+    private fun getDeletelead() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                deleteLeadViewModel.getDeletelead(this)!!.observe(
+                    this,
+                    Observer { deleteleadSetterGetter ->
+                        val msg = deleteleadSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                            //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("DeleteLeadGenerate")
+                                var responsemessage = jobjt.getString("ResponseMessage")
+
+
+                                Log.i("Result",responsemessage)
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(responsemessage)
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    //  val i = Intent(this@AddNoteActivity, AccountDetailsActivity::class.java)
+                                    // startActivity(i)
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AccountDetailsActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

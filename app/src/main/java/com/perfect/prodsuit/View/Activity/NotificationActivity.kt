@@ -16,9 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
+import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -29,6 +31,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
     lateinit var notificationViewModel: NotificationViewModel
     private var rv_notificationlist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
+    lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -79,6 +82,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
 
 
 
+
+
+
+
+
                                 } else {
                                     val builder = AlertDialog.Builder(
                                             this@NotificationActivity,
@@ -108,6 +116,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
+
 
     override fun onClick(v: View) {
         when(v.id) {
