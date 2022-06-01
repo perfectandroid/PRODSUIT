@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -32,7 +34,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     lateinit var context: Context
 
 
-
+    var til_Date: TextInputLayout? = null
+    var til_NextFollowupDate: TextInputLayout? = null
 
     var tie_ActionType: TextInputEditText? = null
     var tie_FollowupBy: TextInputEditText? = null
@@ -84,8 +87,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var recyEmployee: RecyclerView? = null
 
     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
+    lateinit var updateLeadManagementViewModel: UpdateLeadManagementViewModel
 
 
+    var ID_LeadGenerateProduct : String?= ""
+    var ID_LeadGenerate : String?= ""
 
     var ID_ActionType : String?= ""
     var ID_Employee : String?= ""
@@ -122,7 +128,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+        updateLeadManagementViewModel = ViewModelProvider(this).get(UpdateLeadManagementViewModel::class.java)
 
+        ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")
+        ID_LeadGenerate = intent.getStringExtra("ID_LeadGenerate")
 
         setRegViews()
 
@@ -130,16 +139,26 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val currentDate = sdf.format(Date())
         tie_Date!!.setText(currentDate)
         tie_NextFollowupDate!!.setText(currentDate)
-
-
+        setDefaultFollowupBy()
         getDefaultValueSettings()
 
 
     }
 
+    private fun setDefaultFollowupBy() {
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        Log.e(TAG," UserName  143     "+UserNameSP.getString("UserName", null))
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null)
+        tie_FollowupBy!!.setText(UserNameSP.getString("UserName", null))
+    }
+
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        til_Date       = findViewById(R.id.til_Date) as TextInputLayout
+        til_NextFollowupDate   = findViewById(R.id.til_NextFollowupDate) as TextInputLayout
 
         tie_ActionType       = findViewById(R.id.tie_ActionType) as TextInputEditText
         tie_FollowupBy       = findViewById(R.id.tie_FollowupBy) as TextInputEditText
@@ -173,7 +192,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
 
-
+        til_Date!!.hint = "Date"
 
     }
 
@@ -271,7 +290,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
                                 ID_Department = jobjt.getString("FK_Department")
                                 tie_Department!!.setText(jobjt.getString("Department"))
-                                ID_Employee = jobjt.getString("ID_Employee")
+                                ID_NextEmployee = jobjt.getString("ID_Employee")
                                 tie_NextEmployee!!.setText(jobjt.getString("EmpFName"))
 
 
@@ -958,6 +977,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
+            til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
         }
 
         if (data.equals("followupaction")){
@@ -1032,6 +1052,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_Date!!.setText(currentDate)
         tie_NextFollowupDate!!.setText(currentDate)
 
+        til_Date!!.hint = "Date"
+        setDefaultFollowupBy()
         getDefaultValueSettings()
     }
 
@@ -1044,6 +1066,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val strFollowUpDate = outputFormat.format(dateFollowUp)
         val dateNextFollowUp = inputFormat.parse(tie_NextFollowupDate!!.text.toString())
         val strNextFollowUpDate = outputFormat.format(dateNextFollowUp)
+
 
         val strCustomerRemark = tie_CustomerRemark!!.text.toString()
         val strEmployeeRemark = tie_EmployeeRemarks!!.text.toString()
@@ -1059,25 +1082,117 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         else if (ID_Status.equals("")){
             Config.snackBars(context,v,"Select Status")
         }
+
         else{
 
             Log.e(TAG,"FOLLOWUP  9941 "
-                    +"\n ID_ActionType       :  "+ID_ActionType
-                    +"\n ID_Employee         :  "+ID_Employee
-                    +"\n ID_Status           :  "+ID_Status
-                    +"\n ID_Priority     :  "+ID_Priority
-                    +"\n strCustomerRemark   :  "+strCustomerRemark
-                    +"\n strEmployeeRemark   :  "+strEmployeeRemark)
+                    +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
+                    +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
+                    +"\n ID_ActionType          :  "+ID_ActionType
+                    +"\n ID_Employee            :  "+ID_Employee
+                    +"\n ID_Status              :  "+ID_Status
+                    +"\n strFollowUpDate        :  "+strFollowUpDate
+                    +"\n strCustomerRemark      :  "+strCustomerRemark
+                    +"\n strEmployeeRemark      :  "+strEmployeeRemark)
 
 
             Log.e(TAG,"NEXTACTION  9942 "
                     +"\n ID_NextAction         :  "+ID_NextAction
                     +"\n ID_NextActionType     :  "+ID_NextActionType
                     +"\n strNextFollowUpDate   :  "+strNextFollowUpDate
-                    +"\n strFollowUpDate       :  "+strFollowUpDate
+                    +"\n ID_Priority           :  "+ID_Priority
                     +"\n ID_Department         :  "+ID_Department
                     +"\n ID_NextEmployee       :  "+ID_NextEmployee)
+
+            saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+                strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee)
         }
+    }
+
+    private fun saveUpdateLeadManagement(ID_LeadGenerateProduct: String?, ID_LeadGenerate: String?, ID_ActionType: String?, ID_Employee: String?,
+        ID_Status: String?, strFollowUpDate: String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
+        strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?) {
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                updateLeadManagementViewModel.getUpdateLeadManagement(this,ID_LeadGenerateProduct!!,ID_LeadGenerate!!,ID_ActionType!!,ID_Employee!!,ID_Status!!,strFollowUpDate,
+                    strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!)!!.observe(
+                    this,
+                    Observer { deleteleadSetterGetter ->
+                        val msg = deleteleadSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                                Log.e(TAG,"msg  1126     "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("UpdateLeadManagement")
+                                    try {
+
+                                        val suceessDialog = Dialog(this)
+                                        suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                        suceessDialog!!.setCancelable(false)
+                                        suceessDialog!! .setContentView(R.layout.success_popup)
+                                        suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+                                        val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                        val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+                                        val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                        val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                        //LeadNumber
+                                        tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                        tv_label!!.setText("LeadGenerate Action")
+                                        tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
+
+                                        tv_succesok!!.setOnClickListener {
+                                            suceessDialog!!.dismiss()
+                                            onBackPressed()
+
+                                        }
+
+                                        suceessDialog!!.show()
+                                        suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@FollowUpActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
     }
 
 }

@@ -238,5 +238,7 @@ interface ApiInterface {
     @POST("UserValidations/AgendaType")
     fun getAgendaType(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UpdateLeadManagement")
+    fun getUpdateLeadManagement(@Body body: RequestBody): Call<String>
 
 }
