@@ -71,7 +71,8 @@
             android:drawableTint="@color/grey"
             android:textStyle="normal"
             android:textColor="@color/white"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_navDateTime"

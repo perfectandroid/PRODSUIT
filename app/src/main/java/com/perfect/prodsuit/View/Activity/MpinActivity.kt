@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -19,6 +20,8 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.net.ssl.*
 
 class MpinActivity : AppCompatActivity(), View.OnClickListener {
@@ -494,6 +497,16 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
+
+                                val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss a")
+                                val currentDate = sdf.format(Date())
+                                Log.e("currentDate","503   "+currentDate)
+
+                                val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
+                                val LOGIN_DATETIMEEditer = LOGIN_DATETIMESP.edit()
+                                LOGIN_DATETIMEEditer.putString("LOGIN_DATETIME", currentDate)
+                                LOGIN_DATETIMEEditer.commit()
+
                                 var jobj = jObject.getJSONObject("UserLoginDetails")
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)
                                 startActivity(i)

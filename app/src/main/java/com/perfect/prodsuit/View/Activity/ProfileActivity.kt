@@ -76,6 +76,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         bottombarnav()
         getCalendarId(context)
         getProfile()
+
+        val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
+        tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
     }
 
     private fun setRegViews() {
