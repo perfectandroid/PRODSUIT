@@ -83,6 +83,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var dialogEmployee : Dialog? = null
     var recyEmployee: RecyclerView? = null
 
+    lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
+
 
 
     var ID_ActionType : String?= ""
@@ -119,6 +121,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
 
 
         setRegViews()
@@ -127,6 +130,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val currentDate = sdf.format(Date())
         tie_Date!!.setText(currentDate)
         tie_NextFollowupDate!!.setText(currentDate)
+
+
+        getDefaultValueSettings()
 
 
     }
@@ -238,7 +244,66 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
 
+    private fun getDefaultValueSettings() {
 
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadGenerateDefaultvalueViewModel.getLeadGenerationDefaultvalue(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   14781   "+msg.length)
+                            Log.e(TAG,"msg   14782   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
+                                Log.e(TAG,"msg   14783   "+jobjt.getString("EmpFName"))
+
+                                ID_Department = jobjt.getString("FK_Department")
+                                tie_Department!!.setText(jobjt.getString("Department"))
+                                ID_Employee = jobjt.getString("ID_Employee")
+                                tie_NextEmployee!!.setText(jobjt.getString("EmpFName"))
+
+
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@LeadGenerationActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
 
     private fun getFollowupType() {
         var followUpType = 0
@@ -966,6 +1031,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val currentDate = sdf.format(Date())
         tie_Date!!.setText(currentDate)
         tie_NextFollowupDate!!.setText(currentDate)
+
+        getDefaultValueSettings()
     }
 
     private fun ValidateData(v: View) {
