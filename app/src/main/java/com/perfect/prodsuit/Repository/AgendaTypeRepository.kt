@@ -8,10 +8,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CustomerSearchModel
+import com.perfect.prodsuit.Model.AgendaTypeModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -21,20 +19,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object CustomerSearchRepository {
+object AgendaTypeRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val customerSetterGetter = MutableLiveData<CustomerSearchModel>()
-    val TAG: String = "CustomerSearchRepository"
+    val agendaTypeSetterGetter = MutableLiveData<AgendaTypeModel>()
+    val TAG: String = "AgendaTypeRepository"
 
-    fun getServicesApiCall(context: Context,strCustomer : String,SubModeSearch : String): MutableLiveData<CustomerSearchModel> {
-        getCustomer(context, strCustomer,SubModeSearch)
-        return customerSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<AgendaTypeModel> {
+        getAgendaType(context)
+        return agendaTypeSetterGetter
     }
 
-    private fun getCustomer(context: Context,strCustomer : String,SubModeSearch : String) {
-
-        Log.e("TAG","getCustomer  ")
+    private fun getAgendaType(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -60,17 +56,25 @@ object CustomerSearchRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+
+//                "ReqMode":"56",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("56"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubModeSearch))
 
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                Log.e(TAG,"requestObject1   77   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -78,19 +82,20 @@ object CustomerSearchRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCustomerDetails(body)
+            val call = apiService.getAgendaType(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"requestObject1   93   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val customer = ArrayList<CustomerSearchModel>()
-                        customer.add(CustomerSearchModel(response.body()))
-                        val msg = customer[0].message
-                        customerSetterGetter.value = CustomerSearchModel(msg)
+                        val leads = ArrayList<AgendaTypeModel>()
+                        leads.add(AgendaTypeModel(response.body()))
+                        val msg = leads[0].message
+                        agendaTypeSetterGetter.value = AgendaTypeModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -105,5 +110,4 @@ object CustomerSearchRepository {
             progressDialog!!.dismiss()
         }
     }
-
 }

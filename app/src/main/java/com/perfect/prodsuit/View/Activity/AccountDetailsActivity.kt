@@ -626,7 +626,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
                 startActivity(i)
+
             }
             R.id.fabAddNextAction->{
                 isOpen = true

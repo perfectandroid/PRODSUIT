@@ -1071,139 +1071,146 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun AddAttendanceApi(strLatitude: String, strLongitue: String, address: String) {
 
-        var addAttendan = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
+        tv_Name!!.text = UserNameSP.getString("UserName", "")
+        tv_navName!!.text = UserNameSP.getString("UserName", "")
+        tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+        tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
-                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-
-
-                            val jObject = JSONObject(msg)
-                            Log.e("HOMEACTIVITY","msg   1026   "+msg.length)
-                            Log.e("HOMEACTIVITY","msg   1026   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
-
-                                tv_Name!!.text = jobjt.getString("Name")
-                                tv_navName!!.text = jobjt.getString("Name")
-//                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                tv_Status!!.text = jobjt.getString("LoginStatus")
-
-                                if (jobjt.getString("LoginMode").equals("1")){
-                                    imgAttendance!!.setImageResource(R.drawable.finger_online)
-                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" \n "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
-                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.green))
-                                }else{
-                                    imgAttendance!!.setImageResource(R.drawable.finger_offline)
-                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
-                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
-                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.greydark))
-                                }
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
-//                                    }
+//        var addAttendan = 0
+//        when (Config.ConnectivityUtils.isConnected(this)) {
+//            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
 //
+//                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
+//                    this,
+//                    Observer { serviceSetterGetter ->
+//                        val msg = serviceSetterGetter.message
+//                        if (msg!!.length > 0) {
+//
+//
+//                            val jObject = JSONObject(msg)
+//                            Log.e("HOMEACTIVITY","msg   1026   "+msg.length)
+//                            Log.e("HOMEACTIVITY","msg   1026   "+msg)
+//                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("UpdateUserLoginStatus")
+//
+//                                tv_Name!!.text = jobjt.getString("Name")
+//                                tv_navName!!.text = jobjt.getString("Name")
+////                                tv_DateTime!!.text = "On Duty from "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+//                                tv_Status!!.text = jobjt.getString("LoginStatus")
+//
+//                                if (jobjt.getString("LoginMode").equals("1")){
+//                                    imgAttendance!!.setImageResource(R.drawable.finger_online)
+//                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" \n "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+//                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
+//                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+//                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.green))
+//                                }else{
+//                                    imgAttendance!!.setImageResource(R.drawable.finger_offline)
+//                                    tv_DateTime!!.text = jobjt.getString("DutyStatus")+" "+jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+//                                    tv_navStatus!!.text = jobjt.getString("DutyStatus")
+//                                    tv_navDateTime!!.text = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
+//                                    tv_navStatus!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.greydark))
 //                                }
-
-                                val LS_LocLatitudeSP = context.getSharedPreferences(Config.SHARED_PREF17, 0)
-                                val LS_LocLatitudeEditer = LS_LocLatitudeSP.edit()
-                                LS_LocLatitudeEditer.putString("LocLatitude", jobjt.getString("LocLatitude"))
-                                LS_LocLatitudeEditer.commit()
-
-                                val LS_LocLongitudeSP = context.getSharedPreferences(Config.SHARED_PREF18, 0)
-                                val LS_LocLongitudeEditer = LS_LocLongitudeSP.edit()
-                                LS_LocLongitudeEditer.putString("LocLongitude", jobjt.getString("LocLongitude"))
-                                LS_LocLongitudeEditer.commit()
-
-                                val LS_LocationNameSP = context.getSharedPreferences(Config.SHARED_PREF19, 0)
-                                val LS_LocationNameEditer = LS_LocationNameSP.edit()
-                                LS_LocationNameEditer.putString("LocationName",jobjt.getString("LocationName"))
-                                LS_LocationNameEditer.commit()
-
-                                val LS_FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF20, 0)
-                                val LS_FK_EmployeeEditer = LS_FK_EmployeeSP.edit()
-                                LS_FK_EmployeeEditer.putString("FK_Employee", jobjt.getString("FK_Employee"))
-                                LS_FK_EmployeeEditer.commit()
-
-                                val LS_NameSP = context.getSharedPreferences(Config.SHARED_PREF21, 0)
-                                val LS_NameEditer = LS_NameSP.edit()
-                                LS_NameEditer.putString("Name", jobjt.getString("Name"))
-                                LS_NameEditer.commit()
-
-                                val LS_AddressSP = context.getSharedPreferences(Config.SHARED_PREF22, 0)
-                                val LS_AddressEditer = LS_AddressSP.edit()
-                                LS_AddressEditer.putString("Address", jobjt.getString("Address"))
-                                LS_AddressEditer.commit()
-
-                                val LS_LoginDateSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
-                                val LS_LoginDateEditer = LS_LoginDateSP.edit()
-                                LS_LoginDateEditer.putString("LoginDate", jobjt.getString("LoginDate"))
-                                LS_LoginDateEditer.commit()
-
-                                val LS_LoginTimeSP = context.getSharedPreferences(Config.SHARED_PREF24, 0)
-                                val LS_LoginTimeEditer = LS_LoginTimeSP.edit()
-                                LS_LoginTimeEditer.putString("LoginTime", jobjt.getString("LoginTime"))
-                                LS_LoginTimeEditer.commit()
-
-                                val LS_LoginModeSP = context.getSharedPreferences(Config.SHARED_PREF25, 0)
-                                val LS_LoginModeEditer = LS_LoginModeSP.edit()
-                                LS_LoginModeEditer.putString("LoginMode", jobjt.getString("LoginMode"))
-                                LS_LoginModeEditer.commit()
-
-                                val LS_LoginStauatsSP = context.getSharedPreferences(Config.SHARED_PREF26, 0)
-                                val LS_LoginStauatsEditer = LS_LoginStauatsSP.edit()
-                                LS_LoginStauatsEditer.putString("LoginStatus", jobjt.getString("LoginStatus"))
-                                LS_LoginStauatsEditer.commit()
-
-                                val LS_DutyStatusSP = context.getSharedPreferences(Config.SHARED_PREF27, 0)
-                                val LS_DutyStatusEditer = LS_DutyStatusSP.edit()
-                                LS_DutyStatusEditer.putString("DutyStatus", jobjt.getString("DutyStatus"))
-                                LS_DutyStatusEditer.commit()
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@HomeActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-        }
+////                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
+////                                if (leadFromArrayList.length()>0){
+////                                    if (countLeadFrom == 0){
+////                                        countLeadFrom++
+////                                        leadFromPopup(leadFromArrayList)
+////                                    }
+////
+////                                }
+//
+//                                val LS_LocLatitudeSP = context.getSharedPreferences(Config.SHARED_PREF17, 0)
+//                                val LS_LocLatitudeEditer = LS_LocLatitudeSP.edit()
+//                                LS_LocLatitudeEditer.putString("LocLatitude", jobjt.getString("LocLatitude"))
+//                                LS_LocLatitudeEditer.commit()
+//
+//                                val LS_LocLongitudeSP = context.getSharedPreferences(Config.SHARED_PREF18, 0)
+//                                val LS_LocLongitudeEditer = LS_LocLongitudeSP.edit()
+//                                LS_LocLongitudeEditer.putString("LocLongitude", jobjt.getString("LocLongitude"))
+//                                LS_LocLongitudeEditer.commit()
+//
+//                                val LS_LocationNameSP = context.getSharedPreferences(Config.SHARED_PREF19, 0)
+//                                val LS_LocationNameEditer = LS_LocationNameSP.edit()
+//                                LS_LocationNameEditer.putString("LocationName",jobjt.getString("LocationName"))
+//                                LS_LocationNameEditer.commit()
+//
+//                                val LS_FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF20, 0)
+//                                val LS_FK_EmployeeEditer = LS_FK_EmployeeSP.edit()
+//                                LS_FK_EmployeeEditer.putString("FK_Employee", jobjt.getString("FK_Employee"))
+//                                LS_FK_EmployeeEditer.commit()
+//
+//                                val LS_NameSP = context.getSharedPreferences(Config.SHARED_PREF21, 0)
+//                                val LS_NameEditer = LS_NameSP.edit()
+//                                LS_NameEditer.putString("Name", jobjt.getString("Name"))
+//                                LS_NameEditer.commit()
+//
+//                                val LS_AddressSP = context.getSharedPreferences(Config.SHARED_PREF22, 0)
+//                                val LS_AddressEditer = LS_AddressSP.edit()
+//                                LS_AddressEditer.putString("Address", jobjt.getString("Address"))
+//                                LS_AddressEditer.commit()
+//
+//                                val LS_LoginDateSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
+//                                val LS_LoginDateEditer = LS_LoginDateSP.edit()
+//                                LS_LoginDateEditer.putString("LoginDate", jobjt.getString("LoginDate"))
+//                                LS_LoginDateEditer.commit()
+//
+//                                val LS_LoginTimeSP = context.getSharedPreferences(Config.SHARED_PREF24, 0)
+//                                val LS_LoginTimeEditer = LS_LoginTimeSP.edit()
+//                                LS_LoginTimeEditer.putString("LoginTime", jobjt.getString("LoginTime"))
+//                                LS_LoginTimeEditer.commit()
+//
+//                                val LS_LoginModeSP = context.getSharedPreferences(Config.SHARED_PREF25, 0)
+//                                val LS_LoginModeEditer = LS_LoginModeSP.edit()
+//                                LS_LoginModeEditer.putString("LoginMode", jobjt.getString("LoginMode"))
+//                                LS_LoginModeEditer.commit()
+//
+//                                val LS_LoginStauatsSP = context.getSharedPreferences(Config.SHARED_PREF26, 0)
+//                                val LS_LoginStauatsEditer = LS_LoginStauatsSP.edit()
+//                                LS_LoginStauatsEditer.putString("LoginStatus", jobjt.getString("LoginStatus"))
+//                                LS_LoginStauatsEditer.commit()
+//
+//                                val LS_DutyStatusSP = context.getSharedPreferences(Config.SHARED_PREF27, 0)
+//                                val LS_DutyStatusEditer = LS_DutyStatusSP.edit()
+//                                LS_DutyStatusEditer.putString("DutyStatus", jobjt.getString("DutyStatus"))
+//                                LS_DutyStatusEditer.commit()
+//
+//                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@HomeActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+//                            }
+//                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }
+//                    })
+//                progressDialog!!.dismiss()
+//            }
+//            false -> {
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
+//            }
+//
+//        }
 
     }
 

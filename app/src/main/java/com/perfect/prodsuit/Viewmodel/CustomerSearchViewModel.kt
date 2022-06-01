@@ -11,8 +11,8 @@ class CustomerSearchViewModel  : ViewModel(){
 
     var customerLiveData: MutableLiveData<CustomerSearchModel>? = null
 
-    fun getCustomer(context: Context,strCustomer : String) : LiveData<CustomerSearchModel>? {
-        customerLiveData = CustomerSearchRepository.getServicesApiCall(context,strCustomer)
+    fun getCustomer(context: Context,strCustomer : String,SubModeSearch : String) : LiveData<CustomerSearchModel>? {
+        customerLiveData = CustomerSearchRepository.getServicesApiCall(context,strCustomer,SubModeSearch)
         return customerLiveData
     }
 

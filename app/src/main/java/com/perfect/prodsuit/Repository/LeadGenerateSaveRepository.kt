@@ -102,7 +102,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LgCusMobile", ProdsuitApplication.encryptStart(Customer_Mobile))
                 requestObject1.put("LgCusEmail", ProdsuitApplication.encryptStart(Customer_Email))
                 requestObject1.put("CusCompany", ProdsuitApplication.encryptStart(CompanyNme))
-               // requestObject1.put("CusPerson", ProdsuitApplication.encryptStart(strContactPerson))
+                requestObject1.put("CusPerson", ProdsuitApplication.encryptStart(strContactPerson))
                 requestObject1.put("CusPhone", ProdsuitApplication.encryptStart(strContactNumber))
                 requestObject1.put("FK_MediaMaster", ProdsuitApplication.encryptStart(ID_MediaMaster))
 

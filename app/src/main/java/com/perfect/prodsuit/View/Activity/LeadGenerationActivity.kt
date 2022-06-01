@@ -16,6 +16,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -48,6 +49,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      internal var etdate: EditText? = null
      internal var ettime: EditText? = null
      internal var etdis: EditText? = null
+     internal var actv_nammob: AutoCompleteTextView? = null
      internal var yr: Int =0
      internal var month:Int = 0
      internal var day:Int = 0
@@ -267,7 +269,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var dateSelectMode : Int= 0
 
     var searchType = arrayOf<String>()
-
+    var SubModeSearch : String?= ""
 
     companion object {
         var ID_LeadFrom : String?= ""
@@ -555,6 +557,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
+        actv_nammob = findViewById<AutoCompleteTextView>(R.id.actv_nammob)
         img_search = findViewById<ImageView>(R.id.img_search)
         imCustclose = findViewById<ImageView>(R.id.imCustclose)
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
@@ -1401,53 +1404,77 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun detailsShowing() {
-        val aa: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, searchType)
-            aa.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-            sp_namemob!!.adapter = aa
-            sp_namemob!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, v: View, position: Int, arg3: Long) {
-
-                Log.e(TAG,"position  1410   "+position)
-
-
-//                strCusMobileNo = ""
-//                strCustomerName = ""
-//                strBcLnNumber = ""
-//                strCusAdharNo = ""
-//                if (position == 0) {
-//                    search.setText("")
-//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(10)))
-//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                    search.setTransformationMethod(null)
-//                    intPosition = position
-//                }
-//                if (position == 1) {
-//                    search.setText("")
-//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(20)))
-//                    search.setInputType(InputType.TYPE_CLASS_TEXT)
-//                    intPosition = position
-//                }
-//                if (position == 2) {
-//                    search.setText("")
-//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(15)))
-//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                    search.setTransformationMethod(null)
-//                    intPosition = position
-//                }
-//                if (position == 3) {
-//                    search.setText("")
-//                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(12)))
-//                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-//                    search.setTransformationMethod(null)
-//                    intPosition = position
-//                }
+        //actv_nammob
+        SubModeSearch = "1"
+        val adapter = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchType)
+        actv_nammob!!.setAdapter(adapter)
+        actv_nammob!!.setText(searchType.get(0),false)
+        actv_nammob!!.setOnClickListener {
+            actv_nammob!!.showDropDown()
+        }
+        actv_nammob!!.setOnItemClickListener { parent, view, position, id ->
+            Log.e(TAG, "info: $position $id"+"   "+searchType.get(position))
+            if (position == 0){
+                SubModeSearch = "1"
+                edt_customer!!.setInputType(InputType.TYPE_CLASS_TEXT)
+                edt_customer!!.setText("")
+            }
+            if (position == 1){
+                SubModeSearch = "2"
+                edt_customer!!.setInputType(InputType.TYPE_CLASS_NUMBER)
+                edt_customer!!.setText("")
             }
 
-            override fun onNothingSelected(arg0: AdapterView<*>?) {
-                // TODO Auto-generated method stub
-            }
-        })
+        }
+
+
+//        val aa: ArrayAdapter<*> =
+//            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, searchType)
+//            aa.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+//            sp_namemob!!.adapter = aa
+//            sp_namemob!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parent: AdapterView<*>?, v: View, position: Int, arg3: Long) {
+//
+//                Log.e(TAG,"position  1410   "+position)
+//
+//
+////                strCusMobileNo = ""
+////                strCustomerName = ""
+////                strBcLnNumber = ""
+////                strCusAdharNo = ""
+////                if (position == 0) {
+////                    search.setText("")
+////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(10)))
+////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+////                    search.setTransformationMethod(null)
+////                    intPosition = position
+////                }
+////                if (position == 1) {
+////                    search.setText("")
+////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(20)))
+////                    search.setInputType(InputType.TYPE_CLASS_TEXT)
+////                    intPosition = position
+////                }
+////                if (position == 2) {
+////                    search.setText("")
+////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(15)))
+////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+////                    search.setTransformationMethod(null)
+////                    intPosition = position
+////                }
+////                if (position == 3) {
+////                    search.setText("")
+////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(12)))
+////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+////                    search.setTransformationMethod(null)
+////                    intPosition = position
+////                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>?) {
+//                // TODO Auto-generated method stub
+//            }
+//        })
 
     }
 
@@ -2315,101 +2342,134 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         } else if (requestCode == CAMERA) {
 
-            if (data != null){
-                   try {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                    ) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                        )
-                    }
-                }
-                else {
-
-                    val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                    val bytes = ByteArrayOutputStream()
-                    thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-                    destination = File(
-                        (Environment.getExternalStorageDirectory()).toString() + "/" +
-                                getString(R.string.app_name),
-                        "IMG_" + System.currentTimeMillis() + ".jpg"
-                    )
-                    val fo: FileOutputStream
-
+            try {
+                if (data != null){
                     try {
-                        if (!destination!!.getParentFile().exists()) {
-                            destination!!.getParentFile().mkdirs()
+                        if (ContextCompat.checkSelfPermission(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                    this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                )
+                            ) {
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
+
+                            } else {
+                                // No explanation needed; request the permission
+                                ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                                )
+                            }
                         }
-                        if (!destination!!.exists()) {
-                            destination!!.createNewFile()
+                        else {
+
+                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                            val bytes = ByteArrayOutputStream()
+                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                    destination = File(
+//                        (Environment.getExternalStorageDirectory()).toString() + "/" +
+//                                getString(R.string.app_name),
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+//                               "",
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    val fo: FileOutputStream
+
+                            try {
+//                        if (!destination!!.getParentFile().exists()) {
+//                            destination!!.getParentFile().mkdirs()
+//                        }
+//                        if (!destination!!.exists()) {
+//                            destination!!.createNewFile()
+//                        }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                                {
+                                    destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,"")
+                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                                }
+                                else
+                                {
+                                    destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,"")
+                                }
+
+                                if (!destination!!.exists()) {
+                                    destination!!.createNewFile()
+                                }
+
+                                destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                        "",
+                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                )
+                                val fo: FileOutputStream
+
+
+                                fo = FileOutputStream(destination)
+                                fo.write(bytes.toByteArray())
+                                fo.close()
+                            } catch (e: FileNotFoundException) {
+                                e.printStackTrace()
+                                Log.e(TAG,"FileNotFoundException   23671    "+e.toString())
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                Log.e(TAG,"FileNotFoundException   23672    "+e.toString())
+                            }
+
+                            if (strImage.equals("1")) {
+                                image1 = destination!!.getAbsolutePath()
+                                Log.e(TAG,"image1  20522    "+image1)
+                                destination = File(image1)
+
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                                if (imgvupload1 != null) {
+                                    imgvupload1!!.setImageBitmap(myBitmap)
+                                }
+                                imgvupload1!!.setImageBitmap(myBitmap)
+
+                                if (image1 != null) {
+
+                                }
+                            }
+                            if (strImage.equals("2")) {
+                                image2 = destination!!.getAbsolutePath()
+                                Log.e(TAG,"image2  20522    "+image2)
+                                destination = File(image2)
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                                if (imgvupload2 != null) {
+                                    imgvupload2!!.setImageBitmap(myBitmap)
+                                }
+                                imgvupload2!!.setImageBitmap(myBitmap)
+
+                                if (image2 != null) {
+
+                                }
+                            }
+
                         }
-                        fo = FileOutputStream(destination)
-                        fo.write(bytes.toByteArray())
-                        fo.close()
-                    } catch (e: FileNotFoundException) {
+                    }
+                    catch (e: IOException) {
                         e.printStackTrace()
-
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+                        Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
                     }
-
-                    if (strImage.equals("1")) {
-                        image1 = destination!!.getAbsolutePath()
-                        Log.e(TAG,"image1  20522    "+image1)
-                        destination = File(image1)
-
-
-                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                        //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-                        if (imgvupload1 != null) {
-                            imgvupload1!!.setImageBitmap(myBitmap)
-                        }
-                        imgvupload1!!.setImageBitmap(myBitmap)
-
-                        if (image1 != null) {
-
-                        }
-                    }
-                    if (strImage.equals("2")) {
-                        image2 = destination!!.getAbsolutePath()
-                        Log.e(TAG,"image2  20522    "+image2)
-                        destination = File(image2)
-
-                        val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                        //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
-                        if (imgvupload2 != null) {
-                            imgvupload2!!.setImageBitmap(myBitmap)
-                        }
-                        imgvupload2!!.setImageBitmap(myBitmap)
-
-                        if (image2 != null) {
-
-                        }
-                    }
-
                 }
+            }catch (e:Exception){
+
             }
-            catch (e: IOException) {
-                e.printStackTrace()
-                Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT).show()
-            }
-            }
+
+
 
         }
     }
@@ -2515,7 +2575,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                  progressDialog!!.show()
                  Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                 customersearchViewModel.getCustomer(this,strCustomer)!!.observe(
+                 customersearchViewModel.getCustomer(this,strCustomer,SubModeSearch!!)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
                          val msg = serviceSetterGetter.message
@@ -4854,21 +4914,54 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                     Log.e(TAG,"msg   4120   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
-                                        val builder = AlertDialog.Builder(
-                                            this@LeadGenerationActivity,
-                                            R.style.MyDialogTheme
-                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setMessage(jobjt.getString("ResponseMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        try {
 
-                                            val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
-                                            startActivity(i)
-                                            finish()
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                            tv_leadid!!.setText(jobjt.getString("LeadNumber"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+                                                startActivity(i)
+                                                finish()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
+
+
+//                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
+//                                        val builder = AlertDialog.Builder(
+//                                            this@LeadGenerationActivity,
+//                                            R.style.MyDialogTheme
+//                                        )
+////                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setMessage(jobjt.getString("ResponseMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//
+//                                            val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+//                                            startActivity(i)
+//                                            finish()
+
+//
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
 
 
                                     } else {

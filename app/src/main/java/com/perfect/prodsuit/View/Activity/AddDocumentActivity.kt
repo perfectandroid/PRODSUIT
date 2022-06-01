@@ -32,6 +32,10 @@ import java.io.*
 import java.lang.Exception
 import java.util.*
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -73,6 +77,10 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     var fromDateMode : String?= "1"  // GONE
     var encodeDoc : String = ""
 
+    var tie_Date: TextInputEditText? = null
+    var tie_Subject: TextInputEditText? = null
+    var tie_Description: TextInputEditText? = null
+    var tie_Attachment: TextInputEditText? = null
 
     var ID_LeadGenerateProduct :String = ""
     var strDate : String = ""
@@ -117,6 +125,12 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
         datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
 
+
+        tie_Date       = findViewById(R.id.tie_Date) as TextInputEditText
+        tie_Subject       = findViewById(R.id.tie_Subject) as TextInputEditText
+        tie_Description       = findViewById(R.id.tie_Description) as TextInputEditText
+        tie_Attachment       = findViewById(R.id.tie_Attachment) as TextInputEditText
+
         btnReset = findViewById(R.id.btnReset) as Button
         btnSubmit = findViewById(R.id.btnSubmit) as Button
 
@@ -125,8 +139,14 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         llFromdate!!.setOnClickListener(this)
         imFromDate!!.setOnClickListener(this)
         txtFromSubmit!!.setOnClickListener(this)
+        tie_Date!!.setOnClickListener(this)
+        tie_Attachment!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_Date!!.setText(currentDate)
     }
 
     override fun onClick(v: View) {
@@ -176,6 +196,14 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     Log.e(TAG,"Exception   428   "+e.toString())
                 }
             }
+
+            R.id.tie_Date->{
+                openBottomSheet()
+            }
+            R.id.tie_Attachment->{
+                selectImage()
+            }
+
             R.id.btnReset->{
                 removeData()
             }
@@ -188,14 +216,66 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
 
     private fun removeData() {
         txtFromDate!!.setText("")
         edtSubject!!.setText("")
         edtDescription!!.setText("")
+        tie_Subject!!.setText("")
+        tie_Description!!.setText("")
         txtAttachmentPath!!.setText("")
+        tie_Attachment!!.setText("")
         documentPath = ""
         encodeDoc = ""
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_Date!!.setText(currentDate)
     }
 
     private fun selectImage() {
@@ -333,6 +413,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     destination = File(imgPath)
                     documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
+                    tie_Attachment!!.setText(imgPath)
                 } else {
                     Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
                 }
@@ -348,6 +429,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     destination = File(imgPath.toString())
                     documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
+                    tie_Attachment!!.setText(imgPath)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -361,6 +443,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                 destination = File(selectedFilePath.toString())
                 documentPath = selectedFilePath!!
                 txtAttachmentPath!!.setText(selectedFilePath)
+                tie_Attachment!!.setText(selectedFilePath)
             } else {
                 Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
             }
@@ -377,9 +460,17 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun Validations(v: View) {
-        strDate = txtFromDate!!.text.toString()
-        strSubject = edtSubject!!.text.toString()
-        strDescription = edtDescription!!.text.toString()
+
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateFollowUp = inputFormat.parse(tie_Date!!.text.toString())
+        strDate = outputFormat.format(dateFollowUp)
+        strSubject = tie_Subject!!.text.toString()
+        strDescription = tie_Description!!.text.toString()
+
+//        strDate = txtFromDate!!.text.toString()
+//        strSubject = edtSubject!!.text.toString()
+//        strDescription = edtDescription!!.text.toString()
 
         if(strDate.equals("")){
             Config.snackBars(context,v,"Select Date")

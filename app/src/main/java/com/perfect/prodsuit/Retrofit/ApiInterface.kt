@@ -235,5 +235,10 @@ interface ApiInterface {
     @POST("UserValidations/DeleteLeadGenerate")
     fun getDeleteLead(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AgendaType")
+    fun getAgendaType(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/UpdateLeadManagement")
+    fun getUpdateLeadManagement(@Body body: RequestBody): Call<String>
 
 }

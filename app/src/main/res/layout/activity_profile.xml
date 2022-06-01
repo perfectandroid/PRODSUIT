@@ -176,7 +176,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:gravity="center"
                             android:text="On Duty"
                             android:textColor="@color/green"
@@ -184,7 +184,7 @@
                             android:drawablePadding="5dp"
                             android:textSize="14dp"
                             app:fontFamily="@font/myfont"
-                            android:background="@drawable/rounded_online"/>
+                            android:background="@drawable/rounded_online" />
 
 
 

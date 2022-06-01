@@ -14,6 +14,7 @@ import android.provider.CallLog
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -29,9 +31,11 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.PhoneStatReceiver
 import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
 import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
+import com.perfect.prodsuit.View.Adapter.AgendaTypeAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaDetailViewModel
+import com.perfect.prodsuit.Viewmodel.AgendaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Long
@@ -57,6 +61,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //    var llUpComing: LinearLayout? = null
 //    var llComplete: LinearLayout? = null
 
+    var llMainLeads: LinearLayout? = null
+    var llMainService: LinearLayout? = null
+
     var tv_today_comp: TextView? = null
     var tv_today_count: TextView? = null
 
@@ -72,6 +79,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var ID_ActionType : String?= ""
     var SubMode : String?= ""
 
+    lateinit var agendaTypeViewModel: AgendaTypeViewModel
+    lateinit var agendaTypeArrayList : JSONArray
+
     lateinit var agendaCountViewModel: AgendaCountViewModel
     lateinit var agendaActionViewModel: AgendaActionViewModel
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
@@ -80,6 +90,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var dialogAgendaAction : Dialog? = null
     var recyActionType: RecyclerView? = null
     var recyAgendaDetail: RecyclerView? = null
+    var recyAgendaType: RecyclerView? = null
 
 
 
@@ -103,6 +114,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         setContentView(R.layout.activity_agenda)
 
         context = this@AgendaActivity
+        agendaTypeViewModel = ViewModelProvider(this).get(AgendaTypeViewModel::class.java)
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
@@ -117,8 +129,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         setRegViews()
       //  addTabItem()
         SubMode ="1"
-        getAgendaCounts()
-        getActionTypes()
+       // getAgendaCounts()
+        getAgendatypes()
+//        getActionTypes()
 
     }
 
@@ -135,6 +148,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        llUpComing = findViewById(R.id.llUpComing);
 //        llComplete = findViewById(R.id.llComplete);
 
+        llMainLeads = findViewById(R.id.llMainLeads);
+        llMainService = findViewById(R.id.llMainService);
+
         tv_today_comp = findViewById(R.id.tv_today_comp);
         tv_today_count = findViewById(R.id.tv_today_count);
 
@@ -148,6 +164,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         tv_actionType = findViewById(R.id.tv_actionType);
 
         recyAgendaDetail = findViewById(R.id.recyAgendaDetail)
+        recyAgendaType = findViewById(R.id.recyAgendaType)
 
         tv_tab_pending!!.setOnClickListener(this)
         tv_tab_upcoming!!.setOnClickListener(this)
@@ -273,6 +290,93 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
             }
         }
+    }
+
+    private fun getAgendatypes() {
+        var typeAgenda = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                agendaTypeViewModel.getAgendaType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   302   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("AgendaType")
+                                agendaTypeArrayList = jobjt.getJSONArray("AgendaTypeList")
+                                if (agendaTypeArrayList.length()>0){
+
+
+                                    recyAgendaType = findViewById(R.id.recyAgendaType) as RecyclerView
+                                   // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                    recyAgendaType!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                                   // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
+                                    recyAgendaType!!.adapter = adapter
+                                    adapter.setClickListener(this@AgendaActivity)
+
+//                                    val jsonObject = agendaTypeArrayList.getJSONObject(0)
+//                                    if (jsonObject.getString("Id_Agenda").equals("1")){
+////                                        Lead
+//                                        llMainLeads!!.visibility = View.VISIBLE
+//                                        llMainService!!.visibility = View.GONE
+//
+//                                        rrrrrrrrrrrrr
+//                                    }
+//                                    if (jsonObject.getString("Id_Agenda").equals("2")){
+////                                        Service
+//                                        llMainLeads!!.visibility = View.GONE
+//                                        llMainService!!.visibility = View.VISIBLE
+//                                    }
+
+
+                                    getActionTypes()
+
+                                }
+
+
+
+                            } else {
+
+                                val builder = AlertDialog.Builder(
+                                    this@AgendaActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
     private fun getAgendaCounts() {
@@ -557,6 +661,18 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
             }
 
+        }
+
+        if (data.equals("agendaType")){
+//            val jsonObject = agendaTypeArrayList.getJSONObject(position)
+//            if (jsonObject.getString("Id_Agenda").equals("1")){
+////                Lead
+//            }
+//            if (jsonObject.getString("Id_Agenda").equals("2")){
+////                Service
+//            }
+            agendaTypeClick = "0"
+            getActionTypes()
         }
     }
 
