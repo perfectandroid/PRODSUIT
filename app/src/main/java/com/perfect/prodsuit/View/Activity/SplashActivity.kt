@@ -18,6 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
     val CERT_NAME = "static-vm.pem"
     val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
     val BANK_KEY = "-500"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
     lateinit var maintanceMessageViewModel: MaintanceMessageViewModel
@@ -55,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
             val BASE_URLEditer = BASE_URLSP.edit()
             BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
             BASE_URLEditer.commit()
+
             val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
             val CERT_NAMEEditer = CERT_NAMESP.edit()
             CERT_NAMEEditer.putString(
@@ -78,6 +80,13 @@ class SplashActivity : AppCompatActivity() {
             val BASE_URLEditer = BASE_URLSP.edit()
             BASE_URLEditer.putString("BASE_URL", BASE_URL)
             BASE_URLEditer.commit()
+
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val IMAGE_URLEditer = IMAGE_URLSP.edit()
+            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
+            IMAGE_URLEditer.commit()
+
+
             val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
             val CERT_NAMEEditer = CERT_NAMESP.edit()
             CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
@@ -234,6 +243,12 @@ class SplashActivity : AppCompatActivity() {
                                         Config.SHARED_PREF8,
                                         0
                                     )
+
+                                    val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+                                    val IMAGE_URLEditer = IMAGE_URLSP.edit()
+                                    IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
+                                    IMAGE_URLEditer.commit()
+
                                     val CERT_NAMEEditer = CERT_NAMESP.edit()
                                     CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
                                     CERT_NAMEEditer.commit()

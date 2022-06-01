@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -37,8 +39,17 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
 
-                holder.tv_AgendaName.setText(jsonObject!!.getString("AgendaName"))
 
+//                val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+//                val IMAGE_URLEditer = IMAGE_URLSP.edit()
+//                IMAGE_URLEditer.putString("IMAGE_UR", IMAGE_URL)
+//                IMAGE_URLEditer.commit()
+
+                val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
+                Log.e(TAG,"IMAGE_URL 43   "+IMAGE_URLSP.getString("IMAGE_URL", null))
+                val imgPath = IMAGE_URLSP.getString("IMAGE_URL", null)+jsonObject!!.getString("ImageCode")
+                holder.tv_AgendaName.setText(jsonObject!!.getString("AgendaName"))
+                PicassoTrustAll.getInstance(context)!!.load(imgPath).into(holder.img_Type)
                 holder.ll_type.setTag(position)
                 holder.ll_type.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaType")
