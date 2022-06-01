@@ -32,6 +32,7 @@ import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaActionViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
 import com.perfect.prodsuit.Viewmodel.AgendaDetailViewModel
+import com.perfect.prodsuit.Viewmodel.AgendaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Long
@@ -72,6 +73,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var ID_ActionType : String?= ""
     var SubMode : String?= ""
 
+    lateinit var agendaTypeViewModel: AgendaTypeViewModel
+
     lateinit var agendaCountViewModel: AgendaCountViewModel
     lateinit var agendaActionViewModel: AgendaActionViewModel
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
@@ -103,6 +106,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         setContentView(R.layout.activity_agenda)
 
         context = this@AgendaActivity
+        agendaTypeViewModel = ViewModelProvider(this).get(AgendaTypeViewModel::class.java)
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
@@ -117,7 +121,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         setRegViews()
       //  addTabItem()
         SubMode ="1"
-        getAgendaCounts()
+       // getAgendaCounts()
+        getAgendatypes()
         getActionTypes()
 
     }
@@ -273,6 +278,63 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
             }
         }
+    }
+
+    private fun getAgendatypes() {
+        var typeAgenda = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                agendaTypeViewModel.getAgendaType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   302   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                               // val jobjt = jObject.getJSONObject("PendingCountDetails")
+
+
+
+                            } else {
+
+                                val builder = AlertDialog.Builder(
+                                    this@AgendaActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
     private fun getAgendaCounts() {
