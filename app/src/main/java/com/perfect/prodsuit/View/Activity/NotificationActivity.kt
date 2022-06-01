@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,22 +17,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
-import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NotificationActivity : AppCompatActivity(), View.OnClickListener{
+class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var notificationViewModel: NotificationViewModel
+    lateinit var notificationReadStatusViewModel: NotificationReadStatusViewModel
     private var rv_notificationlist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
-    lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
+    lateinit var notifreadArrayList : JSONArray
+    var notifAdapter: NotificationAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -39,14 +41,21 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(R.layout.activity_notification)
         setRegViews()
         getNotificationList()
+
+
+
+
     }
     companion object {
         var count= ""
+        var id= ""
+        lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
     }
     private fun setRegViews() {
         rv_notificationlist = findViewById(R.id.rv_notificationlist)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        notificationReadStatusViewModel = ViewModelProvider(this).get(NotificationReadStatusViewModel::class.java)
     }
 
     private fun getNotificationList() {
@@ -79,8 +88,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
                                     rv_notificationlist!!.setHasFixedSize(true)
                                     val adapter = NotificationAdapter(applicationContext, todoArrayList)
                                     rv_notificationlist!!.adapter = adapter
-
-
+                                    adapter.setClickListener(this@NotificationActivity)
 
 
 
@@ -123,6 +131,71 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener{
         when(v.id) {
             R.id.imback -> {
                 finish()
+            }
+        }
+    }
+
+
+
+
+    override fun onClick(position: Int, data: String) {
+        Log.i("Data",data+"\n"+position)
+        if (data.equals("readstatus")){
+            val jsonObject = todoArrayList.getJSONObject(position)
+            Log.e("TAG","ID_Category   "+jsonObject.getString("ID_NotificationDetails"))
+            id = jsonObject.getString("ID_NotificationDetails")
+            Log.i("IDd",id)
+            getReadstatus()
+        }
+    }
+
+    private fun getReadstatus() {
+        var notifstatus = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                notificationReadStatusViewModel.getNotifreadstatus(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e("TAG","msg   227   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("NotificationDetails")
+                                notifreadArrayList = jobjt.getJSONArray("NotificationInfo")
+                               
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@NotificationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

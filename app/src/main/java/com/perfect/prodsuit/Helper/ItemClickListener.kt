@@ -1,5 +1,5 @@
 package com.perfect.prodsuit.Helper
 
-interface ItemClickListener {
+public interface ItemClickListener {
     fun onClick(position: Int,data: String)
 }
