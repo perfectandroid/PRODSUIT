@@ -98,6 +98,7 @@ object SaveDocumentRepository {
                 requestObject1.put("DocumentImage", encodeDoc)
 
 
+                Log.e(TAG,"saveDocuments   102   "+encodeDoc)
                 Log.e(TAG,"saveDocuments   102   "+requestObject1)
 
             } catch (e: Exception) {
