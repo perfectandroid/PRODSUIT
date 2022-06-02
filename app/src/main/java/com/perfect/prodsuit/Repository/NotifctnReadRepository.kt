@@ -15,6 +15,7 @@ import com.perfect.prodsuit.Model.ProfileModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.ExpenseAddActivity
+import com.perfect.prodsuit.View.Activity.NotificationActivity
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -68,8 +69,8 @@ object NotifctnReadRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("ID_NotificationDetails", NotificationAdapter.id)
-                Log.i("Request",requestObject1.toString())
+                requestObject1.put("ID_NotificationDetails", ProdsuitApplication.encryptStart(NotificationActivity.id))
+                Log.i("Request Readstatus",requestObject1.toString())
 
             } catch (e: Exception) {
                 e.printStackTrace()
