@@ -23,12 +23,12 @@ object AddExpenseActivityRepository {
     private var progressDialog: ProgressDialog? = null
     val addexpenseSetterGetter = MutableLiveData<AddExpenseModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<AddExpenseModel> {
-        addExpense(context)
+    fun getServicesApiCall(context: Context,strDate : String,strExtypeid : String,strExamount : String): MutableLiveData<AddExpenseModel> {
+        addExpense(context,strDate, strExtypeid, strExamount)
         return addexpenseSetterGetter
     }
 
-    private fun addExpense(context: Context) {
+    private fun addExpense(context: Context,strDate : String,strExtypeid : String,strExamount : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -53,15 +53,25 @@ object AddExpenseActivityRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                "ReqMode":"37",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+//                "ID_Expense":"1",
+//                "Amount":"500"
+//
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("37"))
-                requestObject1.put("ID_Expense", ProdsuitApplication.encryptStart(ExpenseAddActivity.strExtypeid))
-                requestObject1.put("Amount", ProdsuitApplication.encryptStart(ExpenseAddActivity.strExamount))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_Expense", ProdsuitApplication.encryptStart(strExtypeid))
+                requestObject1.put("Amount", ProdsuitApplication.encryptStart(strExamount))
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
