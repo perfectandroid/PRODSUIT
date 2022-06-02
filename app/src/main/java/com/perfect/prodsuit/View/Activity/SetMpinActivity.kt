@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -18,6 +19,8 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -524,6 +527,16 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                             val LoginmobilenumberEditer = LoginmobilenumberSP.edit()
                                             LoginmobilenumberEditer.putString("Loginmobilenumber",Mobilepref.getString("MobileNumber", null))
                                             LoginmobilenumberEditer.commit()
+
+                                            val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss a")
+                                            val currentDate = sdf.format(Date())
+                                            Log.e("currentDate","503   "+currentDate)
+
+                                            val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
+                                            val LOGIN_DATETIMEEditer = LOGIN_DATETIMESP.edit()
+                                            LOGIN_DATETIMEEditer.putString("LOGIN_DATETIME", currentDate)
+                                            LOGIN_DATETIMEEditer.commit()
+
                                             val i = Intent(this@SetMpinActivity, HomeActivity::class.java)
                                             startActivity(i)
                                             finish()
