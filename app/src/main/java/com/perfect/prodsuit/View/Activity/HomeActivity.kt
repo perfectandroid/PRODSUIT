@@ -196,8 +196,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             override fun onItemSelected(i: Int) {
                 when (i) {
                     R.id.home -> {
-                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
-                        startActivity(i)
+//                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
+//                        startActivity(i)
+                        chipNavigationBar!!.setItemSelected(R.id.home, true)
                     }
                     R.id.reminder -> {
                         setReminder()
@@ -369,6 +370,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
             btn_No.setOnClickListener {
                 dialog1 .dismiss()
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
             }
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
@@ -403,6 +405,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val btn_No = dialog1 .findViewById(R.id.btn_No) as Button
             btn_No.setOnClickListener {
                 dialog1 .dismiss()
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
             }
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
@@ -706,6 +709,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             etdate!!.setOnClickListener(View.OnClickListener { dateSelector() })
             btncancel.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
                 alertDialog.dismiss() }
             btnsubmit.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
