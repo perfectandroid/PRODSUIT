@@ -20,6 +20,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/call_svg_profile.xml" value="0.1845" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/circle_white.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/email_svg.xml" value="0.232" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_departments.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_phone.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.2405" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.26" />
@@ -40,7 +42,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_follow_up.xml" value="0.27239583333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.27395833333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.3072916666666667" />

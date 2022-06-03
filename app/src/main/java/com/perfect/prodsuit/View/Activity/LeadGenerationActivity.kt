@@ -521,8 +521,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         encode1 = ""
         encode2 = ""
 
-        imgvupload1!!.setImageResource(R.drawable.uploadimg)
-        imgvupload2!!.setImageResource(R.drawable.uploadimg)
+        imgvupload1!!.setImageResource(R.drawable.lead_uploads)
+        imgvupload2!!.setImageResource(R.drawable.lead_uploads)
 
         llfollowup!!.visibility = View.GONE
         llNeedTransfer!!.visibility = View.GONE
@@ -5274,7 +5274,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                             val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
                                             val stream = ByteArrayOutputStream()
                                             decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
-                                            Glide.with(this@LeadGenerationActivity) .load(stream.toByteArray()) .placeholder(R.drawable.uploadimg).error(R.drawable.uploadimg).into(imgvupload1!!)
+                                            Glide.with(this@LeadGenerationActivity) .load(stream.toByteArray()) .placeholder(R.drawable.lead_uploads).error(R.drawable.lead_uploads).into(imgvupload1!!)
                                         }
                                         val LandMark2=jobjt.getString("LocationLandMark2")
                                       //  Log.e(TAG,"LandMark21  4506   "+LandMark2)
@@ -5287,7 +5287,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                             val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
                                             val stream = ByteArrayOutputStream()
                                             decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
-                                            Glide.with(this@LeadGenerationActivity) .load(stream.toByteArray()) .placeholder(R.drawable.uploadimg).error(R.drawable.uploadimg).into(imgvupload2!!)
+                                            Glide.with(this@LeadGenerationActivity) .load(stream.toByteArray()) .placeholder(R.drawable.lead_uploads).error(R.drawable.lead_uploads).into(imgvupload2!!)
                                         }
 
 
