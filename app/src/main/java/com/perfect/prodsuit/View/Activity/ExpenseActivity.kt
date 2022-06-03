@@ -118,7 +118,7 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                     if (tie_FromDate!!.text.toString().equals("")){
                         Config.snackBars(context,it,"Select From Date")
                     }
-                    else if (tie_FromDate!!.text.toString().equals("")){
+                    else if (tie_ToDate!!.text.toString().equals("")){
                         Config.snackBars(context,it,"Select To Date")
                     }
                     else{
