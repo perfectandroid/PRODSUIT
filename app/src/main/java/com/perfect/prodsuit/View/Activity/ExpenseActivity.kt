@@ -300,6 +300,7 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                           //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                            Log.e("TAG","msg  303   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
                              val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
