@@ -75,14 +75,15 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var expenseTypeViewModel: ExpenseTypeViewModel
     lateinit var expenseAddViewModel: ExpenseAddViewModel
 
-    private var strExpenseType           : String?                   = ""
-    private var strExpenseTypeId        : String?                   = ""
+    private var strExpenseType : String? = ""
+    private var strExpenseTypeId : String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_addexpense)
+        context = this@ExpenseAddActivity
         setRegViews()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
@@ -408,25 +409,37 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun validateDateExpense(v : View) {
 
-        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        try {
 
-        val date = inputFormat.parse(tie_Date!!.text.toString())
-        val strDate = outputFormat.format(date)
-        strExtypeid= strExpenseTypeId!!
-        strExamount= tie_ExpenseAmount!!.text.toString()
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        if (strDate.equals("")){
-            Config.snackBars(context,v,"Select Date")
+            val date = inputFormat.parse(tie_Date!!.text.toString())
+            val strDate = outputFormat.format(date)
+            strExtypeid= strExpenseTypeId!!
+            strExamount= tie_ExpenseAmount!!.text.toString()
+            Log.e(TAG,"strDate   4311   ")
+
+
+            if (strDate.equals("")){
+                  Config.snackBars(context,v,"Select Date")
+            }
+            else if (strExtypeid.equals("")){
+                Log.e(TAG,"strDate   4313   ")
+                Config.snackBars(context,v,"Select Expense Type")
+            }
+            else if (strExamount.equals("")){
+                Log.e(TAG,"strDate   4314   ")
+                  Config.snackBars(context,v,"Enter Expense Amount")
+            }
+            else{
+                Log.e(TAG,"strDate   4315   "+strDate)
+                   addExpense(strDate)
+            }
+
         }
-        else if (strExtypeid.equals("")){
-            Config.snackBars(context,v,"Select Expense Type")
-        }
-        else if (strExamount.equals("")){
-            Config.snackBars(context,v,"Enter Expense Amount")
-        }
-        else{
-            addExpense(strDate)
+        catch (e: Exception){
+            Log.e(TAG,"Exception   4316   "+e.toString())
         }
 
 
