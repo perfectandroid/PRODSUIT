@@ -1075,6 +1075,7 @@
                                             android:drawableLeft="@drawable/lead_phones"
                                             android:drawableTint="@color/greydark"
                                             android:hint="Contact Number"
+                                            android:inputType="number"
                                             android:layout_marginLeft="10dp"
                                             android:layout_marginRight="10dp"
                                             android:layout_marginTop="5dp"

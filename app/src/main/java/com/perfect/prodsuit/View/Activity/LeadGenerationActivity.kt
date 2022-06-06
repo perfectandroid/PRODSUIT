@@ -4349,6 +4349,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         strComapnyName = edtCompanyName!!.text.toString()
         strContactPerson = edtContactPerson!!.text.toString()
         strContactNumber = edtContactNumber!!.text.toString()
+        val MobilePattern = "[0-9]{10}"
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
         if (strDate.equals("")){
             Config.snackBars(context,v,"Select Date")
@@ -4412,6 +4414,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 +"\n"+"Customer_Mobile   : "+ Customer_Mobile
                 +"\n"+"Customer_Email    : "+ Customer_Email
                 +"\n"+"Customer_Address  : "+ Customer_Address)
+
+
 
         strMoreLandPhone = edtLandLine!!.text.toString()
 
