@@ -130,7 +130,7 @@
                     android:layout_weight="2"
                     android:textAllCaps="false"
                     android:fontFamily="@font/myfont"
-                    android:background="@drawable/btn_bggrey"
+                    android:background="@drawable/btn_resetbg"
                     android:text="Reset" />
             <Button
                     android:id="@+id/btnSubmit"
