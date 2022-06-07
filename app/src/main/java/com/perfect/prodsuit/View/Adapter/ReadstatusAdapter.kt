@@ -18,7 +18,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class NotificationAdapter (internal var context: Context, internal var jsonArray: JSONArray ):
+class ReadstatusAdapter (internal var context: Context, internal var jsonArray: JSONArray ):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mContext: Context? = null
     internal val TAG : String = "NotificationAdapter"
@@ -27,7 +27,7 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
     internal var id= ""
 
     private var clickListener: ItemClickListener? = null
-    lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
+    lateinit var notificationReadStatusViewModel: NotificationReadStatusViewModel
 
 
 
@@ -72,7 +72,6 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
                 {
                     holder.imgv_nw.visibility=View.GONE
                 }
-
                 holder.llnotf!!.setTag(position)
                 holder.llnotf.setOnClickListener(View.OnClickListener
                 {
@@ -121,6 +120,7 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
         internal var tv_msg    : TextView
         internal var llnotf   : LinearLayout
         internal var imgv_nw   : ImageView
+
 
         init {
             txtv_date1          = v.findViewById<View>(R.id.txtv_dte1) as TextView

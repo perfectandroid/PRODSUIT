@@ -20,6 +20,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
+import com.perfect.prodsuit.View.Adapter.ReadstatusAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import org.json.JSONArray
@@ -145,7 +146,9 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             Log.e("TAG","ID_Category   "+jsonObject.getString("ID_NotificationDetails"))
             id = jsonObject.getString("ID_NotificationDetails")
             Log.i("IDd",id)
+
             getReadstatus()
+
         }
     }
 
@@ -167,10 +170,17 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                             val jObject = JSONObject(msg)
                             Log.e("TAG","msg   227   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-
-                                val jobjt = jObject.getJSONObject("NotificationDetails")
+                                startActivity(getIntent());
+                              /*  val jobjt = jObject.getJSONObject("NotificationDetails")
                                 notifreadArrayList = jobjt.getJSONArray("NotificationInfo")
-                               
+
+                                val lLayout = GridLayoutManager(this@NotificationActivity, 1)
+                                rv_notificationlist!!.layoutManager =
+                                    lLayout as RecyclerView.LayoutManager?
+                                rv_notificationlist!!.setHasFixedSize(true)
+                                val adapter1 = ReadstatusAdapter(applicationContext, notifreadArrayList)
+                                rv_notificationlist!!.adapter = adapter1
+*/
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@NotificationActivity,
