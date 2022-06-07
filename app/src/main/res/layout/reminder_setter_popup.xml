@@ -234,7 +234,7 @@
                     android:textSize="15dp"
                     android:textAllCaps="false"
                     android:fontFamily="@font/myfont"
-                    android:background="@drawable/btn_bggrey"
+                    android:background="@drawable/btn_resetbg"
                     android:text="Cancel" />
             </LinearLayout>
             <LinearLayout

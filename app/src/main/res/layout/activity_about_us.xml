@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
             android:background="@drawable/loginbgmain"
             android:orientation="vertical">
             <LinearLayout
@@ -115,6 +114,7 @@
                     android:src="@drawable/companylogo"/>
             </LinearLayout>
         </LinearLayout>
+
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
             android:layout_width="match_parent"
@@ -122,7 +122,8 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             app:cnb_menuResource="@menu/navbottom_item"
-            app:cnb_textAppearance="@style/CustomTextStyle" />
+            app:cnb_textAppearance="@style/CustomTextStyle"
+            android:visibility="gone"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

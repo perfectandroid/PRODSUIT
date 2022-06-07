@@ -66,7 +66,7 @@
                 android:layout_weight="2"
                 android:textAllCaps="false"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bggrey"
+                android:background="@drawable/btn_resetbg"
                 android:text="Yes"/>
             <Button
                     android:id="@+id/btnNo"
@@ -81,7 +81,7 @@
                     android:padding="2dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"
-                    android:text="No, cancel please." />
+                    android:text="No, cancel" />
         </LinearLayout>
 
     <!--    <LinearLayout

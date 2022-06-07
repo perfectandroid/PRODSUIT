@@ -11,8 +11,8 @@ class ExpenseAddViewModel : ViewModel() {
 
     var expenseaddLiveData: MutableLiveData<AddExpenseModel>? = null
 
-    fun addExpenselist(context: Context) : LiveData<AddExpenseModel>? {
-        expenseaddLiveData = AddExpenseActivityRepository.getServicesApiCall(context)
+    fun addExpenselist(context: Context,strDate : String,strExtypeid : String,strExamount : String) : LiveData<AddExpenseModel>? {
+        expenseaddLiveData = AddExpenseActivityRepository.getServicesApiCall(context,strDate,strExtypeid,strExamount)
         return expenseaddLiveData
     }
 

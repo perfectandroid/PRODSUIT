@@ -8,6 +8,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
@@ -16,6 +17,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.ExpensetypelistModel
 import com.perfect.prodsuit.R
@@ -23,12 +26,14 @@ import com.perfect.prodsuit.View.Adapter.ExpensetypeListAdapter
 import com.perfect.prodsuit.Viewmodel.ExpenseAddViewModel
 import com.perfect.prodsuit.Viewmodel.ExpenseTypeViewModel
 import org.json.JSONObject
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
 
+    val TAG : String = "ExpenseAddActivity"
     private var progressDialog: ProgressDialog? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -55,6 +60,10 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
     var btnSubmit: Button? = null
     var btnReset: Button? = null
 
+    var tie_Date: TextInputEditText? = null
+    var tie_ExpenseType: TextInputEditText? = null
+    var tie_ExpenseAmount: TextInputEditText? = null
+
     private var textlength = 0
     private var etxtsearch: EditText? =null
     private var list_view: ListView?=null
@@ -66,18 +75,20 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var expenseTypeViewModel: ExpenseTypeViewModel
     lateinit var expenseAddViewModel: ExpenseAddViewModel
 
-    private var strExpenseType           : String?                   = ""
-    private var strExpenseTypeId        : String?                   = ""
+    private var strExpenseType : String? = ""
+    private var strExpenseTypeId : String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_addexpense)
+        context = this@ExpenseAddActivity
         setRegViews()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         txtfromDate!!.text = currentDate
+        tie_Date!!.setText(currentDate)
     }
 
     private fun setRegViews() {
@@ -92,6 +103,16 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
         txtfromDate = findViewById(R.id.txtfromDate)
         date_Picker = findViewById(R.id.date_Picker)
         txtok = findViewById(R.id.txtok)
+
+        tie_Date = findViewById(R.id.tie_Date)
+        tie_ExpenseType = findViewById(R.id.tie_ExpenseType)
+        tie_ExpenseAmount = findViewById(R.id.tie_ExpenseAmount)
+
+
+        tie_Date!!.setOnClickListener(this)
+        tie_ExpenseType!!.setOnClickListener(this)
+        tie_ExpenseAmount!!.setOnClickListener(this)
+
         llfromdate!!.setOnClickListener(this)
         btnReset = findViewById(R.id.btnReset)
         btnReset!!.setOnClickListener(this)
@@ -120,10 +141,20 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
             }
 
             R.id.btnSubmit->{
-                addExpense()
+               // addExpense()
+                validateDateExpense(v)
             }
             R.id.llexpensetype->{
                 getExpenseType()
+            }
+            R.id.tie_Date->{
+                openBottomSheet()
+            }
+            R.id.tie_ExpenseType->{
+                getExpenseType()
+            }
+            R.id.tie_ExpenseAmount->{
+
             }
             R.id.txtok->{
                 date_Picker!!.minDate = Calendar.getInstance().timeInMillis
@@ -147,6 +178,53 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
     }
 
 
+
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
 
     fun timeSelector() {
         val c = Calendar.getInstance()
@@ -259,6 +337,7 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                                             Config.Utils.hideSoftKeyBoard(this@ExpenseAddActivity,view)
                                             array_sort.get(position).ExpenseName
                                             txtexpensetype!!.text = array_sort[position].ExpenseName
+                                            tie_ExpenseType!!.setText(array_sort[position].ExpenseName)
                                             strExpenseType=array_sort[position].ExpenseName
                                             strExpenseTypeId=array_sort[position].ID_Expense
                                             dialog.dismiss()
@@ -328,11 +407,50 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
         var strExamount= ""
     }
 
-    private fun addExpense() {
+    private fun validateDateExpense(v : View) {
+
         try {
 
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            val date = inputFormat.parse(tie_Date!!.text.toString())
+            val strDate = outputFormat.format(date)
             strExtypeid= strExpenseTypeId!!
-            strExamount= etamount!!.text.toString()
+            strExamount= tie_ExpenseAmount!!.text.toString()
+            Log.e(TAG,"strDate   4311   ")
+
+
+            if (strDate.equals("")){
+                  Config.snackBars(context,v,"Select Date")
+            }
+            else if (strExtypeid.equals("")){
+                Log.e(TAG,"strDate   4313   ")
+                Config.snackBars(context,v,"Select Expense Type")
+            }
+            else if (strExamount.equals("")){
+                Log.e(TAG,"strDate   4314   ")
+                  Config.snackBars(context,v,"Enter Expense Amount")
+            }
+            else{
+                Log.e(TAG,"strDate   4315   "+strDate)
+                   addExpense(strDate)
+            }
+
+        }
+        catch (e: Exception){
+            Log.e(TAG,"Exception   4316   "+e.toString())
+        }
+
+
+
+    }
+
+    private fun addExpense(strDate : String) {
+        try {
+
+//            strExtypeid= strExpenseTypeId!!
+//            strExamount= etamount!!.text.toString()
 
             context = this@ExpenseAddActivity
             expenseAddViewModel = ViewModelProvider(this).get(ExpenseAddViewModel::class.java)
@@ -344,7 +462,7 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                     progressDialog!!.setIndeterminate(true)
                     progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
-                    expenseAddViewModel.addExpenselist(this)!!.observe(
+                    expenseAddViewModel.addExpenselist(this,strDate,strExtypeid,strExamount)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -358,7 +476,8 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
                                     )
                                     builder.setMessage(jobj.getString("ResponseMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        reset()
+//                                        reset()
+                                        onBackPressed()
                                     }
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
@@ -405,6 +524,12 @@ class ExpenseAddActivity : AppCompatActivity() , View.OnClickListener {
         etamount!!.text = ""
         strExpenseType=""
         strExpenseTypeId=""
+
+        tie_Date!!.setText(currentDate)
+        tie_ExpenseType!!.setText("")
+        tie_ExpenseAmount!!.setText("")
+
+
     }
 
 }

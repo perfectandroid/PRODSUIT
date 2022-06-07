@@ -7,10 +7,10 @@
 
     <solid android:color="@color/white" />
 
-    <size android:width="100dp"
-        android:height="100dp"/>
+    <size android:width="70dp"
+        android:height="70dp"/>
 
-    <stroke android:width="8dp"
+    <stroke android:width="5dp"
         android:color="#fbdadf"/>
 
 </shape>

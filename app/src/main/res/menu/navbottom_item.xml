@@ -2,39 +2,77 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:title="Home"
-        app:cnb_backgroundColor="@color/colorPrimary"
-        app:iconTint="@color/colorPrimaryExtraDark"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff" />
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/white"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />
 
     <item
         android:id="@+id/reminder"
         android:icon="@drawable/ic_remindr"
         android:title="Reminder"
-        app:cnb_backgroundColor="@color/colorPrimary"
-        app:iconTint="@color/colorPrimaryExtraDark"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff" />
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/white"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />
 
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="Logout"
-        app:cnb_backgroundColor="@color/colorPrimary"
-        app:iconTint="@color/colorPrimaryExtraDark"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff"/>
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/white"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />
 
     <item
         android:id="@+id/quit"
         android:icon="@drawable/ic_quit"
         android:title="Quit"
-        app:cnb_backgroundColor="@color/colorPrimary"
-        app:iconTint="@color/colorPrimaryExtraDark"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff" />
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/white"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark"  />
+
+<!--    <item-->
+<!--        android:id="@+id/home"-->
+<!--        android:icon="@drawable/ic_home"-->
+<!--        android:title="Home"-->
+<!--        app:cnb_backgroundColor="@color/colorPrimary"-->
+<!--        app:iconTint="@color/colorPrimaryExtraDark"-->
+<!--        app:cnb_iconColor="#ffffff"-->
+<!--        app:cnb_textColor="#ffffff" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/reminder"-->
+<!--        android:icon="@drawable/ic_remindr"-->
+<!--        android:title="Reminder"-->
+<!--        app:cnb_backgroundColor="@color/colorPrimary"-->
+<!--        app:iconTint="@color/colorPrimaryExtraDark"-->
+<!--        app:cnb_iconColor="#ffffff"-->
+<!--        app:cnb_textColor="#ffffff" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/logout"-->
+<!--        android:icon="@drawable/ic_logout"-->
+<!--        android:title="Logout"-->
+<!--        app:cnb_backgroundColor="@color/colorPrimary"-->
+<!--        app:iconTint="@color/colorPrimaryExtraDark"-->
+<!--        app:cnb_iconColor="#ffffff"-->
+<!--        app:cnb_textColor="#ffffff"/>-->
+
+<!--    <item-->
+<!--        android:id="@+id/quit"-->
+<!--        android:icon="@drawable/ic_quit"-->
+<!--        android:title="Quit"-->
+<!--        app:cnb_backgroundColor="@color/colorPrimary"-->
+<!--        app:iconTint="@color/colorPrimaryExtraDark"-->
+<!--        app:cnb_iconColor="#ffffff"-->
+<!--        app:cnb_textColor="#ffffff" />-->
 </menu>

@@ -492,16 +492,23 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     +"\n"+"documentPath     : "+ documentPath
             )
 
-            val bitmap = BitmapFactory.decodeFile(documentPath)
-            val stream =  ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
-            } else {
-                encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+            try {
+                val bitmap = BitmapFactory.decodeFile(documentPath)
+                val stream =  ByteArrayOutputStream()
+              //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
+                } else {
+                    encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                }
+
+                saveDocuments(strDate,strSubject,strDescription,encodeDoc)
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   508   "+e.toString())
             }
 
-            saveDocuments(strDate,strSubject,strDescription,encodeDoc)
+
         }
 
 
@@ -534,9 +541,12 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                                 builder.setMessage(jobjt.getString("ResponseMessage"))
                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    val i = Intent(this@AddDocumentActivity, AccountDetailsActivity::class.java)
-                                    startActivity(i)
-                                    finish()
+//                                    val i = Intent(this@AddDocumentActivity, AccountDetailsActivity::class.java)
+//                                    startActivity(i)
+//                                    finish()
+
+                                    onBackPressed()
+
                                 }
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
