@@ -109,6 +109,20 @@
     <color name="ColorWarm">#f5a732</color>
     <color name="ColorHot">#f96922</color>
 
+    <color name="report_head1">#001E6C</color>
+    <color name="report_head2">#035397</color>
+    <color name="report_head3">#21A194</color>
+    <color name="report_head4">#0b8d45</color>
+    <color name="report_head5">#d69929</color>
+    <color name="report_head6">#e65239</color>
+
+    <color name="report_list1">#99A2BD</color>
+    <color name="report_list2">#A4C3DF</color>
+    <color name="report_list3">#B3DCD8</color>
+    <color name="report_list4">#A6DDBF</color>
+    <color name="report_list5">#EDD7AF</color>
+    <color name="report_list6">#EFC5BE</color>
+
 
 
 <!--    <color name="todolist_Color">#31a3ff</color>-->
