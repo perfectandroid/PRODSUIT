@@ -25,6 +25,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_shapees.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.2405" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_shape_profle.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/searchbg.xml" value="0.2395" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_gradients.xml" value="0.26" />
@@ -77,6 +78,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/nav_header_main.xml" value="0.27395833333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/quit_popup.xml" value="0.28958333333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.35104166666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttype_popup.xml" value="0.35104166666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttypelist.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/searchexpense_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/simple_spinner_dropdown_item.xml" value="0.346875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/success_popup.xml" value="0.31354166666666666" />

@@ -22,6 +22,7 @@ class ExpensetypeListAdapter(internal var mContext: Context, private val arrayli
 
     inner class ViewHolder {
         internal var tvAreaName: TextView? = null
+        internal var tvSi: TextView? = null
     }
 
     override fun getCount(): Int {
@@ -43,10 +44,13 @@ class ExpensetypeListAdapter(internal var mContext: Context, private val arrayli
             holder = ViewHolder()
             view = inflater.inflate(R.layout.reporttypelist, null)
             holder.tvAreaName = view!!.findViewById<View>(R.id.tvAreaName) as TextView
+            holder.tvSi = view!!.findViewById<View>(R.id.tvSi) as TextView
             view.tag = holder
         } else {
             holder = view.tag as ViewHolder
         }
+        val pos = position+1
+        holder.tvSi!!.text = pos.toString()
         holder.tvAreaName!!.text = arraylist[position].ExpenseName
         return view
     }
