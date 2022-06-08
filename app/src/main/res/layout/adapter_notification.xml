@@ -55,6 +55,15 @@
                     android:textSize="15dp"
                     android:textColor="@color/black"
                     />
+
+                <ImageView
+                    android:id="@+id/imgv_nw"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/notfnw"
+                    android:visibility="gone"
+                    android:layout_gravity="right"
+                    android:layout_centerInParent="true"/>
                 <TextView
                     android:id="@+id/txtv_dte1"
                     android:layout_width="match_parent"
