@@ -295,6 +295,11 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     clickListener!!.onClick(position, "agendaCall")
                 })
 
+                holder.im_Document_Icon.setTag(position)
+                holder.im_Document_Icon.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaDocument")
+                })
+
 
 
             }
@@ -379,6 +384,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvDocument_Status    : TextView
         internal var tvDocument_preference    : TextView
         internal var tvDocument_product   : TextView
+        internal var im_Document_Icon  : ImageView
         internal var imDocument_preference  : ImageView
 
         internal var tvQuotation_leadno      : TextView
@@ -451,6 +457,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvDocument_Status        = v.findViewById<View>(R.id.tvDocument_Status) as TextView
             tvDocument_product        = v.findViewById<View>(R.id.tvDocument_product) as TextView
             tvDocument_preference       = v.findViewById<View>(R.id.tvDocument_preference) as TextView
+            im_Document_Icon        = v.findViewById<View>(R.id.im_Document_Icon) as ImageView
             imDocument_preference       = v.findViewById<View>(R.id.imDocument_preference) as ImageView
 
             tvQuotation_leadno   = v.findViewById<View>(R.id.tvQuotation_leadno) as TextView

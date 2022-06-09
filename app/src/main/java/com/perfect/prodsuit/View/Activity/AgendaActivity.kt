@@ -674,6 +674,13 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             agendaTypeClick = "0"
             getActionTypes()
         }
+        if (data.equals("agendaDocument")){
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+//            val i = Intent(this@AgendaActivity, MessagesActivity::class.java)
+//            i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
+//            i.putExtra("LgCusEmail","")
+//            startActivity(i)
+        }
     }
 
     private fun getCallDetails() {
