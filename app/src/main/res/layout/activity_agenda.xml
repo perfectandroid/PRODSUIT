@@ -139,7 +139,7 @@
                             android:paddingBottom="10dp"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:background="@color/pophead">
+                            android:background="@drawable/shape_gradients">
 <!--                            android:background="@color/pophead-->
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -319,8 +319,9 @@
                         app:cardCornerRadius="3dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        app:cardElevation="5dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardElevation="0dp">
+<!--                        app:cardElevation="5dp"-->
+<!--                        app:cardUseCompatPadding="true"-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -343,9 +344,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:orientation="vertical">
+
+<!--                                android:layout_marginLeft="10dp"-->
+<!--                                android:layout_marginRight="10dp"-->
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -419,6 +421,8 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="2dp"
                                             android:layout_marginBottom="10dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
                                             android:background="@drawable/shape_bg1"
                                             android:drawableRight="@drawable/arrowright"
                                             android:drawableTint="@color/grey"

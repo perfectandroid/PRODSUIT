@@ -281,18 +281,23 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     }
 
 
-                holder.imMeeting_Location.setTag(position)
-                holder.imMeeting_Location.setOnClickListener(View.OnClickListener {
+                holder.im_Meeting_Icon.setTag(position)
+                holder.im_Meeting_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaLocation")
                 })
 
-                holder.imMessage_Icon.setTag(position)
-                holder.imMessage_Icon.setOnClickListener(View.OnClickListener {
+                holder.im_Message_Icon.setTag(position)
+                holder.im_Message_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaMessage")
                 })
                 holder.im_Call_Icon.setTag(position)
                 holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaCall")
+                })
+
+                holder.im_Call_Alarm.setTag(position)
+                holder.im_Call_Alarm.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "CallReminder")
                 })
 
                 holder.im_Document_Icon.setTag(position)
@@ -352,6 +357,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvCall_preference    : TextView
 
         internal var im_Call_Icon      : ImageView
+        internal var im_Call_Alarm      : ImageView
         internal var im_Call_Preference     : ImageView
 
         internal var tvMessage_leadno    : TextView
@@ -362,7 +368,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvMessage_Status    : TextView
         internal var tvMessage_product   : TextView
         internal var tvMessage_preference   : TextView
-        internal var imMessage_Icon      : ImageView
+        internal var im_Message_Icon      : ImageView
+        internal var im_Message_Alarm      : ImageView
         internal var imMessage_preference      : ImageView
 
         internal var tvMeeting_leadno      : TextView
@@ -373,7 +380,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvMeeting_Status    : TextView
         internal var tvMeeting_product   : TextView
         internal var tvMeeting_preference   : TextView
-        internal var imMeeting_Location  : ImageView
+        internal var im_Meeting_Icon  : ImageView
+        internal var im_Meeting_Alarm  : ImageView
         internal var imMeeting_preference  : ImageView
 
         internal var tvDocument_leadno    : TextView
@@ -425,6 +433,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvCall_product      = v.findViewById<View>(R.id.tvCall_product) as TextView
             tvCall_preference      = v.findViewById<View>(R.id.tvCall_preference) as TextView
             im_Call_Icon        = v.findViewById<View>(R.id.im_Call_Icon) as ImageView
+            im_Call_Alarm        = v.findViewById<View>(R.id.im_Call_Alarm) as ImageView
             im_Call_Preference        = v.findViewById<View>(R.id.im_Call_Preference) as ImageView
 
             tvMessage_leadno     = v.findViewById<View>(R.id.tvMessage_leadno) as TextView
@@ -435,7 +444,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvMessage_Status        = v.findViewById<View>(R.id.tvMessage_Status) as TextView
             tvMessage_product        = v.findViewById<View>(R.id.tvMessage_product) as TextView
             tvMessage_preference        = v.findViewById<View>(R.id.tvMessage_preference) as TextView
-            imMessage_Icon        = v.findViewById<View>(R.id.imMessage_Icon) as ImageView
+            im_Message_Icon        = v.findViewById<View>(R.id.im_Message_Icon) as ImageView
+            im_Message_Alarm        = v.findViewById<View>(R.id.im_Message_Alarm) as ImageView
             imMessage_preference        = v.findViewById<View>(R.id.imMessage_preference) as ImageView
 
             tvMeeting_leadno     = v.findViewById<View>(R.id.tvMeeting_leadno) as TextView
@@ -446,7 +456,8 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvMeeting_Status        = v.findViewById<View>(R.id.tvMeeting_Status) as TextView
             tvMeeting_product        = v.findViewById<View>(R.id.tvMeeting_product) as TextView
             tvMeeting_preference        = v.findViewById<View>(R.id.tvMeeting_preference) as TextView
-            imMeeting_Location            = v.findViewById<View>(R.id.imMeeting_Location) as ImageView
+            im_Meeting_Icon            = v.findViewById<View>(R.id.im_Meeting_Icon) as ImageView
+            im_Meeting_Alarm            = v.findViewById<View>(R.id.im_Meeting_Alarm) as ImageView
             imMeeting_preference            = v.findViewById<View>(R.id.imMeeting_preference) as ImageView
 
             tvDocument_leadno    = v.findViewById<View>(R.id.tvDocument_leadno) as TextView

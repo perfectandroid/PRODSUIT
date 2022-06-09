@@ -97,6 +97,14 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 val btnSubmit = layout .findViewById(R.id.btnSubmit) as Button
                 val btnCancel = layout .findViewById(R.id.btnCancel) as Button
 
+
+                val c = Calendar.getInstance().time
+                val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val formattedDate = simpleDateFormat.format(c)
+
+                tie_FromDate!!.setText(formattedDate)
+                tie_ToDate!!.setText(formattedDate)
+
                 builder.setCancelable(false)
                 builder.setView(layout)
                 val alertDialog = builder.create()
