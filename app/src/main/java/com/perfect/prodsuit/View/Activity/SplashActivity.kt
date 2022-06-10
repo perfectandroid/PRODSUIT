@@ -155,6 +155,11 @@ class SplashActivity : AppCompatActivity() {
                                 )
                                 TestingsslcertificateEditer.commit()
 
+                                val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
+                                val ABOUTUSEditer = ABOUTUSSP.edit()
+                                ABOUTUSEditer.putString("ABOUTUS", jobj.getString("AboutUs"))
+                                ABOUTUSEditer.commit()
+
 
                                 val TestingURLpref = applicationContext.getSharedPreferences(
                                     Config.SHARED_PREF10,
@@ -252,13 +257,15 @@ class SplashActivity : AppCompatActivity() {
                                     val CERT_NAMEEditer = CERT_NAMESP.edit()
                                     CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
                                     CERT_NAMEEditer.commit()
-                                    val BANK_KEYESP = applicationContext.getSharedPreferences(
-                                        Config.SHARED_PREF9,
-                                        0
-                                    )
+
+                                    val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
                                     val BANK_KEYEditer = BANK_KEYESP.edit()
                                     BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
                                     BANK_KEYEditer.commit()
+
+
+
+
                                 }
                                 doSplash()
                             } else {

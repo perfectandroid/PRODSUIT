@@ -55,10 +55,14 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
     }
 
     private fun setRegViews() {
+        val tvAboutus = findViewById<TextView>(R.id.tvAboutus)
         val tvVersionid = findViewById<TextView>(R.id.tvVersionid)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
         tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
+        val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
+        tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
+
     }
 
     override fun onClick(v: View) {
