@@ -1,19 +1,23 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.ArrayList
 
 class AgendaDetailAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -21,18 +25,27 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     internal val TAG : String = "AgendaDetailAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
+    var sharedPreferences: SharedPreferences? =null
+    var lstChk = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
             R.layout.adapter_agenda_detail, parent, false
         )
+        sharedPreferences =context.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
         vh = MainViewHolder(v)
         return vh
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
+
+//            val editor = sharedPreferences!!.edit()
+//            editor.clear()
+//            editor.commit()
+
+
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   36   ")
@@ -286,10 +299,113 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     clickListener!!.onClick(position, "agendaLocation")
                 })
 
+                holder.cb_Meeting.setTag(position)
+                holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.add(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3413  " + desc)
+
+                    }
+                    else
+                    {
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.remove(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3414  " + desc)
+                    }
+
+                    /*if(lstChk.size!=0) {
+                            holder.tvReminder.visibility = View.VISIBLE
+                    }*/
+                }
+
+                ////////////////////////////////////
+
                 holder.im_Message_Icon.setTag(position)
                 holder.im_Message_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaMessage")
                 })
+
+                holder.cb_Message.setTag(position)
+                holder.cb_Message.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.add(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3413  " + desc)
+
+                    }
+                    else
+                    {
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.remove(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3414  " + desc)
+                    }
+
+                    /*if(lstChk.size!=0) {
+                            holder.tvReminder.visibility = View.VISIBLE
+                    }*/
+                }
+
+                ////////////////////////
+
+
+
                 holder.im_Call_Icon.setTag(position)
                 holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaCall")
@@ -299,6 +415,55 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                 holder.im_Call_Alarm.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "CallReminder")
                 })
+                holder.cb_Call.setTag(position)
+                holder.cb_Call.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+                     //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.add(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3413  " + desc)
+
+                    }
+                    else
+                    {
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+                        val Status1 = jsonObject1!!.getString("Status")
+                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        lstChk.remove(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3414  " + desc)
+                    }
+
+                    /*if(lstChk.size!=0) {
+                            holder.tvReminder.visibility = View.VISIBLE
+                    }*/
+                }
+
+                ////////////////////////////////////////
 
                 holder.im_Document_Icon.setTag(position)
                 holder.im_Document_Icon.setOnClickListener(View.OnClickListener {
@@ -323,8 +488,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
+
+
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
@@ -359,6 +526,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var im_Call_Icon      : ImageView
         internal var im_Call_Alarm      : ImageView
         internal var im_Call_Preference     : ImageView
+        internal var cb_Call     : CheckBox
 
         internal var tvMessage_leadno    : TextView
         internal var tvMessage_name      : TextView
@@ -371,6 +539,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var im_Message_Icon      : ImageView
         internal var im_Message_Alarm      : ImageView
         internal var imMessage_preference      : ImageView
+        internal var cb_Message      : CheckBox
 
         internal var tvMeeting_leadno      : TextView
         internal var tvMeeting_name      : TextView
@@ -383,6 +552,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var im_Meeting_Icon  : ImageView
         internal var im_Meeting_Alarm  : ImageView
         internal var imMeeting_preference  : ImageView
+        internal var cb_Meeting  : CheckBox
 
         internal var tvDocument_leadno    : TextView
         internal var tvDocument_name      : TextView
@@ -435,6 +605,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             im_Call_Icon        = v.findViewById<View>(R.id.im_Call_Icon) as ImageView
             im_Call_Alarm        = v.findViewById<View>(R.id.im_Call_Alarm) as ImageView
             im_Call_Preference        = v.findViewById<View>(R.id.im_Call_Preference) as ImageView
+            cb_Call        = v.findViewById<View>(R.id.cb_Call) as CheckBox
 
             tvMessage_leadno     = v.findViewById<View>(R.id.tvMessage_leadno) as TextView
             tvMessage_name     = v.findViewById<View>(R.id.tvMessage_name) as TextView
@@ -447,6 +618,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             im_Message_Icon        = v.findViewById<View>(R.id.im_Message_Icon) as ImageView
             im_Message_Alarm        = v.findViewById<View>(R.id.im_Message_Alarm) as ImageView
             imMessage_preference        = v.findViewById<View>(R.id.imMessage_preference) as ImageView
+            cb_Message        = v.findViewById<View>(R.id.cb_Message) as CheckBox
 
             tvMeeting_leadno     = v.findViewById<View>(R.id.tvMeeting_leadno) as TextView
             tvMeeting_name     = v.findViewById<View>(R.id.tvMeeting_name) as TextView
@@ -459,6 +631,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             im_Meeting_Icon            = v.findViewById<View>(R.id.im_Meeting_Icon) as ImageView
             im_Meeting_Alarm            = v.findViewById<View>(R.id.im_Meeting_Alarm) as ImageView
             imMeeting_preference            = v.findViewById<View>(R.id.imMeeting_preference) as ImageView
+            cb_Meeting            = v.findViewById<View>(R.id.cb_Meeting) as CheckBox
 
             tvDocument_leadno    = v.findViewById<View>(R.id.tvDocument_leadno) as TextView
             tvDocument_name    = v.findViewById<View>(R.id.tvDocument_name) as TextView

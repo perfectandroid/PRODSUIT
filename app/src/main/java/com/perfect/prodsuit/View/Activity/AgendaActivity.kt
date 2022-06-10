@@ -5,6 +5,7 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -22,6 +23,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -36,6 +41,7 @@ import com.perfect.prodsuit.Viewmodel.AgendaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Long
+import java.lang.reflect.Type
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,6 +56,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     val TAG : String = "AgendaActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+    var sharedPreferences: SharedPreferences? =null
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -74,6 +81,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     var llMainLeads: LinearLayout? = null
     var llMainService: LinearLayout? = null
+
+    var fab_Reminder: FloatingActionButton? = null
 
     var tv_today_comp: TextView? = null
     var tv_today_count: TextView? = null
@@ -130,6 +139,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
 
+        sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
+
 
 //        val telephony = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager
 //        telephony.listen(myReceiver, PhoneStateListener.LISTEN_CALL_STATE)
@@ -162,6 +173,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         llMainLeads = findViewById(R.id.llMainLeads);
         llMainService = findViewById(R.id.llMainService);
 
+        fab_Reminder = findViewById(R.id.fab_Reminder);
+
         tv_today_comp = findViewById(R.id.tv_today_comp);
         tv_today_count = findViewById(R.id.tv_today_count);
 
@@ -176,6 +189,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
         recyAgendaDetail = findViewById(R.id.recyAgendaDetail)
         recyAgendaType = findViewById(R.id.recyAgendaType)
+
+        fab_Reminder!!.setOnClickListener(this)
 
         tv_tab_pending!!.setOnClickListener(this)
         tv_tab_upcoming!!.setOnClickListener(this)
@@ -299,6 +314,38 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 agendaTypeClick = "1"
                 getActionTypes()
 
+            }
+            R.id.fab_Reminder->{
+                var strReminder: String=""
+                var ii: Int=0
+                val gson = Gson()
+                val json = sharedPreferences!!.getString("Set", "")
+                var lstChkArray = ArrayList<String>()
+                if (json!!.isNotEmpty()){
+                    val collectionType: Type = object : TypeToken<List<String?>?>() {}.getType()
+                    val arrPackageData: List<String> = gson.fromJson(json, collectionType)
+                    for (reminderText in arrPackageData) {
+                        Log.e("lstChk_size   ","lstChk_size   "+reminderText)
+                        if (ii==0){
+                            ii++
+                            strReminder = ii.toString()+" . "+reminderText
+                        }else{
+                            ii++
+                            strReminder = strReminder+"\n"+"\n"+ii.toString()+" . "+reminderText
+                        }
+                        lstChkArray.add(reminderText)
+                    }
+                }
+
+                if (!lstChkArray.isEmpty()){
+                    //setReminder("You have set reminder for following defaulters accounts "+lstChkArray.toString())
+                    Log.e(TAG,"strReminder   3411    "+strReminder)
+
+                    setReminder("","",strReminder)
+                }else{
+                    Log.e(TAG,"strReminder   3412    Select")
+                 //   Toast.makeText(context,"Select Account",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -679,7 +726,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val ActionTypeName1 = jsonObject.getString("ActionTypeName")
             val EnquiryAbout1 = jsonObject.getString("EnquiryAbout")
             val Status1 = jsonObject.getString("Status")
-            setReminder(ActionTypeName1,EnquiryAbout1,Status1)
+           // setReminder(ActionTypeName1,EnquiryAbout1,Status1)
         }
 
         if (data.equals("agendaType")){
@@ -702,12 +749,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
     }
 
-    private fun setReminder(ActionTypeName1 : String,EnquiryAbout1: String,Status1: String) {
+    private fun setReminder(ActionTypeName1 : String,EnquiryAbout1: String,descriptn: String) {
         try
         {
             val builder = android.app.AlertDialog.Builder(this)
             val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
+            val layout = inflater1.inflate(R.layout.reminder_agenda_popup, null)
             val btncancel = layout.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
 
@@ -716,9 +763,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             ettime = layout.findViewById(R.id.ettime) as EditText
             etdis = layout.findViewById(R.id.etdis) as EditText
 
-            val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
-            tv_header!!.setText(ActionTypeName1+" Reminder".toUpperCase())
-            etdis!!.setText(desc)
+//            val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+            tv_header!!.setText("Reminder".toUpperCase())
+            etdis!!.setText(descriptn)
 
             etdate!!.setKeyListener(null)
             ettime!!.setKeyListener(null)
@@ -739,8 +786,14 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val strmin = split[1]
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
-            ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
-            etdate!!.setOnClickListener(View.OnClickListener { dateSelector() })
+            ettime!!.setOnClickListener(View.OnClickListener {
+//                timeSelector()
+                openBottomSheetTime()
+            })
+            etdate!!.setOnClickListener(View.OnClickListener {
+//                dateSelector()
+                openBottomSheet()
+            })
             btncancel.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
                 alertDialog.dismiss() }
@@ -756,6 +809,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
 
     }
+
+
 
     fun timeSelector() {
         val c = Calendar.getInstance()
@@ -797,6 +852,108 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         } catch (e: ParseException) {
             e.printStackTrace()
         }
+    }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1!!.minDate = System.currentTimeMillis() - 1000
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day1: Int = date_Picker1!!.getDayOfMonth()
+                val mon1: Int = date_Picker1!!.getMonth()
+                val month1: Int = mon1+1
+                val year1: Int = date_Picker1!!.getYear()
+                var strDay = day1.toString()
+                var strMonth = month1.toString()
+                var strYear = year1.toString()
+
+                yr = year1
+                month =  month1
+                day= day1
+
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                etdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+//                if (dateSelectMode == 0){
+//                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+//                if (dateSelectMode == 1){
+//                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun openBottomSheetTime() {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_timer, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+     //   time_Picker1!!.currentMinute = System.currentTimeMillis() - 1000
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+
+//                val hour: Int = time_Picker1!!.hour
+//                val min: Int = time_Picker1!!.minute
+
+                hr = time_Picker1!!.hour
+                min = time_Picker1!!.minute
+
+                val strTime = String.format(
+                    "%02d:%02d %s", if (hr == 0) 12 else hr,
+                    min, if (hr < 12) "AM" else "PM"
+                )
+
+                ettime!!.setText(strTime)
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
@@ -989,6 +1146,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                                        agendaDetail++
                                       //  agendaTypePopup(agendaActionArrayList)
 
+                                    val editor = sharedPreferences!!.edit()
+                                    editor.clear()
+                                    editor.commit()
+
+
+
                                         recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
                                         val lLayout = GridLayoutManager(this@AgendaActivity, 1)
                                         recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1059,5 +1222,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        recyAgendaDetail!!.adapter = adapter
 
     }
+
+
 
 }

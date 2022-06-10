@@ -26,9 +26,12 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.2405" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_shape_profle.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/searchbg.xml" value="0.2395" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/selector_reminder.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_gradients.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_bell_add.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_bell_remove.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_mail.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_quotation.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_tog_cus.xml" value="0.195" />
@@ -39,7 +42,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2598958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_remark.xml" value="0.2796296296296296" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_addexpense.xml" value="0.3072916666666667" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.5" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_expense.xml" value="0.20052083333333334" />
@@ -71,12 +74,14 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_pie_chart.xml" value="0.3302083333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_statusticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.25052083333333336" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/changepin_popup.xml" value="0.29322916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.31354166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/logout_popup.xml" value="0.24479166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/nav_header_main.xml" value="0.27395833333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/quit_popup.xml" value="0.28958333333333336" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_agenda_popup.xml" value="0.23541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttype_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttypelist.xml" value="0.35104166666666664" />
