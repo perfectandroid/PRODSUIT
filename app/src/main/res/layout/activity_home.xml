@@ -544,9 +544,9 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/top_rounded_chip"
         app:cnb_iconColor="@color/white"
-        app:cnb_unselectedColor="@color/white"
         app:cnb_menuResource="@menu/navbottom_item"
-        app:cnb_textAppearance="@style/CustomTextStyle" />
+        app:cnb_textAppearance="@style/CustomTextStyle"
+        app:cnb_unselectedColor="@color/white" />
 
 
 </RelativeLayout>

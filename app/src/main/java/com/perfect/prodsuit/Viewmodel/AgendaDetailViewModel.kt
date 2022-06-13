@@ -9,8 +9,8 @@ import com.perfect.prodsuit.Repository.AgendaDetailRepository
 class AgendaDetailViewModel : ViewModel() {
 
     var agendaDetailData: MutableLiveData<AgendaDetailModel>? = null
-    fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String) : MutableLiveData<AgendaDetailModel>? {
-        agendaDetailData = AgendaDetailRepository.getServicesApiCall(context,ID_ActionType,SubMode)
+    fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String) : MutableLiveData<AgendaDetailModel>? {
+        agendaDetailData = AgendaDetailRepository.getServicesApiCall(context,ID_ActionType,SubMode,Id_Agenda)
         return agendaDetailData
     }
 }

@@ -70,62 +70,62 @@
                 android:text="Set your convenient date &amp; time."
                 android:textColor="@color/black"/>
 
-        <!--    <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginBottom="10dp"
-                style="@style/TextInputLayoutStyle"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etdate"
+            <!--    <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginBottom="10dp"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:hint="Select Date"
-                    android:fontFamily="@font/myfont"
-                    android:drawableRight="@drawable/ic_date"
-                    android:background="@drawable/custom_edt_txt_account_border"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginBottom="10dp"
-                style="@style/TextInputLayoutStyle"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ettime"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:hint="Select Date"
+                        android:fontFamily="@font/myfont"
+                        android:drawableRight="@drawable/ic_date"
+                        android:background="@drawable/custom_edt_txt_account_border"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginBottom="10dp"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:fontFamily="@font/myfont"
-                    android:drawableRight="@drawable/ic_time"
-                    android:hint="Select Time"
-                    android:background="@drawable/custom_edt_txt_account_border"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginBottom="10dp"
-                style="@style/TextInputLayoutStyle"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etdis"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ettime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:fontFamily="@font/myfont"
+                        android:drawableRight="@drawable/ic_time"
+                        android:hint="Select Time"
+                        android:background="@drawable/custom_edt_txt_account_border"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginBottom="10dp"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:maxLines="2"
-                    android:lines="4"
-                    android:fontFamily="@font/myfont"
-                    android:hint="Description"
-                    android:background="@drawable/custom_edt_txt_account_border"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
--->
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etdis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:maxLines="2"
+                        android:lines="4"
+                        android:fontFamily="@font/myfont"
+                        android:hint="Description"
+                        android:background="@drawable/custom_edt_txt_account_border"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+    -->
 
             <EditText
                 android:id="@+id/etdate"
@@ -218,47 +218,47 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center">
-            <LinearLayout
-                android:id="@+id/ll_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/btncancel"
+                <LinearLayout
+                    android:id="@+id/ll_cancel"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:layout_margin="5dp"
-                    android:textSize="15dp"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/myfont"
-                    android:background="@drawable/btn_resetbg"
-                    android:text="Cancel" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_ok"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:layout_weight="0.5"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/btnsubmit"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:textSize="15dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolour"
-                android:textAllCaps="false"
-                android:text="Submit" />
-            </LinearLayout>
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btncancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:textSize="15dp"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_resetbg"
+                        android:text="Cancel" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btnsubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_bgcolour"
+                        android:textAllCaps="false"
+                        android:text="Submit" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

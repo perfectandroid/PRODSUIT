@@ -14,6 +14,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@color/report_list1"
             android:orientation="vertical">
 
             <TextView
@@ -24,7 +25,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -41,6 +42,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/report_list2"
             android:layout_weight="1"
             android:paddingLeft="2dp"
             android:orientation="vertical">
@@ -53,7 +55,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -67,7 +69,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -80,7 +82,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -93,7 +95,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -110,7 +112,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/report_list3"
             android:layout_weight="1"
             android:paddingLeft="2dp"
             android:orientation="vertical">
@@ -123,7 +126,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -137,7 +140,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont"
@@ -151,7 +154,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont"
@@ -167,7 +170,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/report_list4"
             android:layout_weight="1"
             android:paddingLeft="2dp"
             android:orientation="vertical">
@@ -180,7 +184,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -197,7 +201,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -211,7 +215,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -228,7 +232,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/report_list5"
             android:layout_weight="1"
             android:paddingLeft="2dp"
             android:orientation="vertical"
@@ -242,7 +247,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:textSize="11dp"
                 android:textStyle="normal"
@@ -256,7 +261,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont" />
@@ -269,7 +274,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/greydark"
+                android:textColor="@color/black"
                 android:textSize="11dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/myfont"

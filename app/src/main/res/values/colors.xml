@@ -58,12 +58,51 @@
     <color name="leadstatus_color4">#40868b</color>
     <color name="leadstatus_color5">#987b73</color>
 
-    <color name="leadstages_color1">#F68484</color>
-    <color name="leadstages_color2">#50CFFD</color>
-    <color name="leadstages_color3">#FFEB3B</color>
-    <color name="leadstages_color4">#0BAADC</color>
-    <color name="leadstages_color5">#BC8F8F</color>
-    <color name="leadstages_color6">#FF9700</color>
+    // work
+
+<!--    <color name="leadstages_color1">#F68484</color>-->
+<!--    <color name="leadstages_color2">#50CFFD</color>-->
+<!--    <color name="leadstages_color3">#FFEB3B</color>-->
+<!--    <color name="leadstages_color4">#0BAADC</color>-->
+<!--    <color name="leadstages_color5">#BC8F8F</color>-->
+<!--    <color name="leadstages_color6">#FF9700</color>-->
+<!--    <color name="leadstages_color7">#B22222</color>-->
+<!--    <color name="leadstages_color8">#FF1493</color>-->
+<!--    <color name="leadstages_color9">#2F4F4F</color>-->
+<!--    <color name="leadstages_color10">#17a2b8</color>-->
+<!--    <color name="leadstages_color11">#7bd235</color>-->
+
+<!--    <color name="leadstages_color1">#f60</color>-->
+<!--    <color name="leadstages_color2">#f90</color>-->
+<!--    <color name="leadstages_color3">#fc0</color>-->
+<!--    <color name="leadstages_color4">#9cf</color>-->
+<!--    <color name="leadstages_color5">#BC8F8F</color>-->
+<!--    <color name="leadstages_color6">#FF9700</color>-->
+<!--    <color name="leadstages_color7">#B22222</color>-->
+<!--    <color name="leadstages_color8">#FF1493</color>-->
+<!--    <color name="leadstages_color9">#2F4F4F</color>-->
+<!--    <color name="leadstages_color10">#17a2b8</color>-->
+<!--    <color name="leadstages_color11">#7bd235</color>-->
+
+<!--    <color name="leadstages_color1">#00a9ff</color>-->
+<!--    <color name="leadstages_color2">#ffb840</color>-->
+<!--    <color name="leadstages_color3">#ff5a46</color>-->
+<!--    <color name="leadstages_color4">#00bb9e</color>-->
+<!--    <color name="leadstages_color5">#785ffe</color>-->
+<!--    <color name="leadstages_color6">#f28b8c</color>-->
+<!--    <color name="leadstages_color7">#B22222</color>-->
+<!--    <color name="leadstages_color8">#FF1493</color>-->
+<!--    <color name="leadstages_color9">#2F4F4F</color>-->
+<!--    <color name="leadstages_color10">#17a2b8</color>-->
+<!--    <color name="leadstages_color11">#7bd235</color>-->
+
+
+    <color name="leadstages_color1">#6FB6DA</color>
+    <color name="leadstages_color2">#DAAE63</color>
+    <color name="leadstages_color3">#D67D72</color>
+    <color name="leadstages_color4">#56CFBC</color>
+    <color name="leadstages_color5">#A99BF3</color>
+    <color name="leadstages_color6">#CD9C9D</color>
     <color name="leadstages_color7">#B22222</color>
     <color name="leadstages_color8">#FF1493</color>
     <color name="leadstages_color9">#2F4F4F</color>
@@ -108,6 +147,20 @@
     <color name="ColorCold">#1ca4fc</color>
     <color name="ColorWarm">#f5a732</color>
     <color name="ColorHot">#f96922</color>
+
+    <color name="report_head1">#001E6C</color>
+    <color name="report_head2">#035397</color>
+    <color name="report_head3">#21A194</color>
+    <color name="report_head4">#0b8d45</color>
+    <color name="report_head5">#d69929</color>
+    <color name="report_head6">#e65239</color>
+
+    <color name="report_list1">#99A2BD</color>
+    <color name="report_list2">#A4C3DF</color>
+    <color name="report_list3">#B3DCD8</color>
+    <color name="report_list4">#A6DDBF</color>
+    <color name="report_list5">#EDD7AF</color>
+    <color name="report_list6">#EFC5BE</color>
 
 
 

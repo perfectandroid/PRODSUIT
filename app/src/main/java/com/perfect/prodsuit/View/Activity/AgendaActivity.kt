@@ -1,22 +1,20 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.Dialog
-import android.app.ProgressDialog
+import android.app.*
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.provider.CallLog
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,6 +23,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -39,6 +41,9 @@ import com.perfect.prodsuit.Viewmodel.AgendaTypeViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Long
+import java.lang.reflect.Type
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Exception
 import kotlin.Int
@@ -51,8 +56,22 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     val TAG : String = "AgendaActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+    var sharedPreferences: SharedPreferences? =null
 
-
+    internal var etdate: EditText? = null
+    internal var ettime: EditText? = null
+    internal var etdis: EditText? = null
+    internal var yr: Int =0
+    internal var month:Int = 0
+    internal var day:Int = 0
+    internal var hr:Int = 0
+    internal var min:Int = 0
+    private var mYear: Int =0
+    private var mMonth:Int = 0
+    private var mDay:Int = 0
+    private var mHour:Int = 0
+    private var mMinute:Int = 0
+    private var Id_Agenda :String = ""
 
 
 //    private var tabLayout : TabLayout? = null
@@ -63,6 +82,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     var llMainLeads: LinearLayout? = null
     var llMainService: LinearLayout? = null
+
+    var fab_Reminder: FloatingActionButton? = null
 
     var tv_today_comp: TextView? = null
     var tv_today_count: TextView? = null
@@ -77,7 +98,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var tv_actionType: TextView? = null
     var agendaTypeClick : String?= "0"
     var ID_ActionType : String?= ""
-    var SubMode : String?= ""
+    var SubMode : String?= "1"
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
     lateinit var agendaTypeArrayList : JSONArray
@@ -119,6 +140,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
 
+        sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
+
 
 //        val telephony = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager
 //        telephony.listen(myReceiver, PhoneStateListener.LISTEN_CALL_STATE)
@@ -151,6 +174,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         llMainLeads = findViewById(R.id.llMainLeads);
         llMainService = findViewById(R.id.llMainService);
 
+        fab_Reminder = findViewById(R.id.fab_Reminder);
+
         tv_today_comp = findViewById(R.id.tv_today_comp);
         tv_today_count = findViewById(R.id.tv_today_count);
 
@@ -165,6 +190,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
         recyAgendaDetail = findViewById(R.id.recyAgendaDetail)
         recyAgendaType = findViewById(R.id.recyAgendaType)
+
+        fab_Reminder!!.setOnClickListener(this)
 
         tv_tab_pending!!.setOnClickListener(this)
         tv_tab_upcoming!!.setOnClickListener(this)
@@ -263,7 +290,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="1"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_upcoming->{
                 Log.e(TAG,"tv_tab_upcoming  232   ")
@@ -272,7 +299,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="2"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_completed->{
                 Log.e(TAG,"tv_tab_completed  232   ")
@@ -281,13 +308,45 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_color);
                 agendaTypeClick = "0"
                 SubMode ="3"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_actionType->{
                 Log.e(TAG,"tv_actionType  232   ")
                 agendaTypeClick = "1"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
 
+            }
+            R.id.fab_Reminder->{
+                var strReminder: String=""
+                var ii: Int=0
+                val gson = Gson()
+                val json = sharedPreferences!!.getString("Set", "")
+                var lstChkArray = ArrayList<String>()
+                if (json!!.isNotEmpty()){
+                    val collectionType: Type = object : TypeToken<List<String?>?>() {}.getType()
+                    val arrPackageData: List<String> = gson.fromJson(json, collectionType)
+                    for (reminderText in arrPackageData) {
+                        Log.e("lstChk_size   ","lstChk_size   "+reminderText)
+                        if (ii==0){
+                            ii++
+                            strReminder = ii.toString()+" . "+reminderText
+                        }else{
+                            ii++
+                            strReminder = strReminder+"\n"+"\n"+ii.toString()+" . "+reminderText
+                        }
+                        lstChkArray.add(reminderText)
+                    }
+                }
+
+                if (!lstChkArray.isEmpty()){
+                    //setReminder("You have set reminder for following defaulters accounts "+lstChkArray.toString())
+                    Log.e(TAG,"strReminder   3411    "+strReminder)
+
+                    setReminder("","",strReminder)
+                }else{
+                    Log.e(TAG,"strReminder   3412    Select")
+                 //   Toast.makeText(context,"Select Account",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -326,22 +385,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                     recyAgendaType!!.adapter = adapter
                                     adapter.setClickListener(this@AgendaActivity)
 
-//                                    val jsonObject = agendaTypeArrayList.getJSONObject(0)
-//                                    if (jsonObject.getString("Id_Agenda").equals("1")){
-////                                        Lead
-//                                        llMainLeads!!.visibility = View.VISIBLE
-//                                        llMainService!!.visibility = View.GONE
-//
-//                                        rrrrrrrrrrrrr
-//                                    }
-//                                    if (jsonObject.getString("Id_Agenda").equals("2")){
-////                                        Service
-//                                        llMainLeads!!.visibility = View.GONE
-//                                        llMainService!!.visibility = View.VISIBLE
-//                                    }
+                                    Id_Agenda = agendaTypeArrayList.getJSONObject(0).getString("Id_Agenda")
 
-
-                                    getActionTypes()
+                                    getActionTypes(Id_Agenda)
 
                                 }
 
@@ -448,7 +494,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
     }
 
-    private fun getActionTypes() {
+    private fun getActionTypes(Id_Agenda : String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -462,7 +508,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaActionViewModel.getAgendaAction(this)!!.observe(
+                agendaActionViewModel.getAgendaAction(this,Id_Agenda)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -520,7 +566,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
 
-            getAgendaDetails(ID_ActionType!!)
+            getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
         }else{
 
@@ -557,7 +603,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
 
-            getAgendaDetails(ID_ActionType!!)
+            getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
 
         }
@@ -663,17 +709,360 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
         }
 
+        if (data.equals("CallReminder")){
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            val ActionTypeName1 = jsonObject.getString("ActionTypeName")
+            val EnquiryAbout1 = jsonObject.getString("EnquiryAbout")
+            val Status1 = jsonObject.getString("Status")
+           // setReminder(ActionTypeName1,EnquiryAbout1,Status1)
+        }
+
         if (data.equals("agendaType")){
-//            val jsonObject = agendaTypeArrayList.getJSONObject(position)
+            val jsonObject = agendaTypeArrayList.getJSONObject(position)
 //            if (jsonObject.getString("Id_Agenda").equals("1")){
 ////                Lead
 //            }
 //            if (jsonObject.getString("Id_Agenda").equals("2")){
 ////                Service
 //            }
+            Id_Agenda = jsonObject.getString("Id_Agenda")
             agendaTypeClick = "0"
-            getActionTypes()
+            getActionTypes(Id_Agenda)
         }
+        if (data.equals("agendaDocument")){
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+//            val i = Intent(this@AgendaActivity, MessagesActivity::class.java)
+//            i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
+//            i.putExtra("LgCusEmail","")
+//            startActivity(i)
+        }
+    }
+
+    private fun setReminder(ActionTypeName1 : String,EnquiryAbout1: String,descriptn: String) {
+        try
+        {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.reminder_agenda_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+
+            val tv_header = layout.findViewById(R.id.tv_header) as TextView
+            etdate = layout.findViewById(R.id.etdate) as EditText
+            ettime = layout.findViewById(R.id.ettime) as EditText
+            etdis = layout.findViewById(R.id.etdis) as EditText
+
+//            val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+            tv_header!!.setText("Reminder".toUpperCase())
+            etdis!!.setText(descriptn)
+
+            etdate!!.setKeyListener(null)
+            ettime!!.setKeyListener(null)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val sdf1 = SimpleDateFormat("hh:mm a")
+            val sdf2 = SimpleDateFormat("hh:mm")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            etdate!!.setText(sdf.format(c.time))
+            ettime!!.setText(sdf1.format(c.time))
+            val s = sdf2.format(c.time)
+            val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val strhr = split[0]
+            val strmin = split[1]
+            hr = Integer.parseInt(strhr)
+            min = Integer.parseInt(strmin)
+            ettime!!.setOnClickListener(View.OnClickListener {
+//                timeSelector()
+                openBottomSheetTime()
+            })
+            etdate!!.setOnClickListener(View.OnClickListener {
+//                dateSelector()
+                openBottomSheet()
+            })
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
+                alertDialog.dismiss()
+            }
+            alertDialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
+
+    fun timeSelector() {
+        val c = Calendar.getInstance()
+        mHour = c.get(Calendar.HOUR_OF_DAY)
+        mMinute = c.get(Calendar.MINUTE)
+        // Launch Time Picker Dialog
+        val timePickerDialog = TimePickerDialog(this,
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val strDate = String.format(
+                    "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
+                    minute, if (hourOfDay < 12) "am" else "pm"
+                )
+                ettime!!.setText(strDate)
+                hr = hourOfDay
+                min = minute
+            }, mHour, mMinute, false
+        )
+        timePickerDialog.show()
+    }
+
+    fun dateSelector() {
+        try {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val c = Calendar.getInstance()
+            mYear = c.get(Calendar.YEAR)
+            mMonth = c.get(Calendar.MONTH)
+            mDay = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    yr = year
+                    month = monthOfYear
+                    day = dayOfMonth
+                    etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            datePickerDialog.show()
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1!!.minDate = System.currentTimeMillis() - 1000
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day1: Int = date_Picker1!!.getDayOfMonth()
+                val mon1: Int = date_Picker1!!.getMonth()
+                val month1: Int = mon1+1
+                val year1: Int = date_Picker1!!.getYear()
+                var strDay = day1.toString()
+                var strMonth = month1.toString()
+                var strYear = year1.toString()
+
+                yr = year1
+                month =  month1
+                day= day1
+
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                etdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+//                if (dateSelectMode == 0){
+//                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+//                if (dateSelectMode == 1){
+//                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+//                }
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun openBottomSheetTime() {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_timer, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+     //   time_Picker1!!.currentMinute = System.currentTimeMillis() - 1000
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+
+//                val hour: Int = time_Picker1!!.hour
+//                val min: Int = time_Picker1!!.minute
+
+                hr = time_Picker1!!.hour
+                min = time_Picker1!!.minute
+
+                val strTime = String.format(
+                    "%02d:%02d %s", if (hr == 0) 12 else hr,
+                    min, if (hr < 12) "AM" else "PM"
+                )
+
+                ettime!!.setText(strTime)
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.WRITE_CALENDAR
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_CALENDAR),
+                1
+            )
+        }
+        val cr = contentResolver
+        val beginTime = Calendar.getInstance()
+        beginTime.set(2022, 11 - 1, 28, 9, 30)
+        val endTime = Calendar.getInstance()
+        endTime.set(iyr, imnth, iday, ihour, imin)
+        val values = ContentValues()
+        values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
+        values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
+        values.put(CalendarContract.Events.TITLE, Title)
+        values.put(CalendarContract.Events.DESCRIPTION, descriptn)
+
+
+        val calendarId = getCalendarId(context)
+        Log.i("Calender", calendarId.toString())
+        if(calendarId != null) {
+            values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
+        }
+
+
+        val tz = TimeZone.getDefault()
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
+        values.put(CalendarContract.Events.EVENT_LOCATION, "India")
+
+
+
+
+
+        try {
+            val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
+            val reminders = ContentValues()
+            reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
+            reminders.put(
+                CalendarContract.Reminders.METHOD,
+                CalendarContract.Reminders.METHOD_ALERT
+            )
+            reminders.put(CalendarContract.Reminders.MINUTES, 10)
+            cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Reminder set successfully.")
+            .setCancelable(false)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, id -> dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+
+    }
+
+    private fun getCalendarId(context: Context): kotlin.Long? {
+
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_CALENDAR
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_CALENDAR),
+                1
+            )
+        }
+
+        val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
+
+        var calCursor = context.contentResolver.query(
+            CalendarContract.Calendars.CONTENT_URI,
+            projection,
+            CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
+            null,
+            CalendarContract.Calendars._ID + " ASC"
+        )
+        if (calCursor != null && calCursor.count <= 0) {
+            calCursor = context.contentResolver.query(
+                CalendarContract.Calendars.CONTENT_URI,
+                projection,
+                CalendarContract.Calendars.VISIBLE + " = 1",
+                null,
+                CalendarContract.Calendars._ID + " ASC"
+            )
+        }
+        if (calCursor != null) {
+            if (calCursor.moveToFirst()) {
+                val calName: String
+                val calID: String
+                val nameCol = calCursor.getColumnIndex(projection[1])
+                val idCol = calCursor.getColumnIndex(projection[0])
+
+                calName = calCursor.getString(nameCol)
+                calID = calCursor.getString(idCol)
+
+                //    Log.d("Calendar name = $calName Calendar ID = $calID")
+
+                calCursor.close()
+                return calID.toLong()
+            }
+        }
+        return null
+
+
+
+
     }
 
     private fun getCallDetails() {
@@ -714,7 +1103,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     }
 
-    private fun getAgendaDetails(ID_ActionType: String) {
+    private fun getAgendaDetails(ID_ActionType: String , Id_Agenda : String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -728,7 +1117,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!)!!.observe(
+                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!,Id_Agenda)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -745,6 +1134,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                                    if (agendaDetail == 0){
 //                                        agendaDetail++
                                       //  agendaTypePopup(agendaActionArrayList)
+
+                                    val editor = sharedPreferences!!.edit()
+                                    editor.clear()
+                                    editor.commit()
+
+
 
                                         recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
                                         val lLayout = GridLayoutManager(this@AgendaActivity, 1)
@@ -816,5 +1211,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        recyAgendaDetail!!.adapter = adapter
 
     }
+
+
 
 }

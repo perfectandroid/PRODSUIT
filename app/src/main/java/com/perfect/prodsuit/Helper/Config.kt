@@ -59,6 +59,7 @@ object Config {
     const val SHARED_PREF28 = "Notifctn_Id"
     const val SHARED_PREF29 = "IMAGE_URL"
     const val SHARED_PREF30 = "LOGIN_DATETIME"
+    const val SHARED_PREF31 = "ABOUTUS"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }

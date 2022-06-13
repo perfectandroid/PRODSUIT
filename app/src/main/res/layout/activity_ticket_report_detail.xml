@@ -93,7 +93,8 @@
 
                         <LinearLayout
                             android:layout_width="40dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="#163d5c"
                             android:orientation="vertical">
 
 
@@ -123,7 +124,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="#1f6096"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -154,8 +156,9 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:background="#21A194"
                             android:orientation="vertical">
 
                             <TextView
@@ -186,8 +189,9 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:background="#0b8d45"
                             android:orientation="vertical">
 
                             <TextView
@@ -216,29 +220,29 @@
                             android:background="@color/grey"/>
 
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="#d69929"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
                                 android:gravity="center"
                                 android:text="Action Details"
-                                android:textColor="@color/white"
                                 android:textAllCaps="true"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="2dp"
-                                android:layout_marginRight="2dp"
+                                android:textColor="@color/white"
                                 android:textSize="10dp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/myfont" />
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
@@ -252,8 +256,9 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:background="#e65239"
                             android:orientation="vertical">
 
                             <TextView
@@ -298,12 +303,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="40dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head1"
                             android:orientation="vertical">
 
 
@@ -333,7 +338,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head2"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -365,6 +371,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/report_head3"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -397,6 +404,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/report_head4"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -429,7 +437,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head5"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -475,12 +484,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="40dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head1"
                             android:orientation="vertical">
 
 
@@ -510,7 +519,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head2"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -542,6 +552,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/report_head3"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -573,7 +584,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head4"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -606,7 +618,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head5"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -652,12 +665,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="40dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head1"
                             android:orientation="vertical">
 
 
@@ -687,7 +700,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head2"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -718,7 +732,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head3"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -751,6 +766,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/report_head4"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -783,7 +799,8 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/report_head5"
                             android:layout_weight="1"
                             android:orientation="vertical">
 

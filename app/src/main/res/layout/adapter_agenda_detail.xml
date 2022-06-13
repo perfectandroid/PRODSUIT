@@ -244,15 +244,27 @@
                         android:gravity="center"/>
 
                     <ImageView
-                        android:id="@+id/immessage"
+                        android:id="@+id/im_Call_Alarm"
                         android:fontFamily="@font/myfont"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="15dp"
-                        android:src="@drawable/messageicon"
+                        android:src="@drawable/svg_alarm"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:visibility="gone"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_Call"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:button="@drawable/selector_reminder"
+                        android:visibility="visible"/>
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -654,6 +666,26 @@
                         android:layout_marginBottom="15dp"
                         android:src="@drawable/svg_mail"
                         android:gravity="center"/>
+
+                    <ImageView
+                        android:id="@+id/im_Message_Alarm"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/svg_alarm"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_Message"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:button="@drawable/selector_reminder"
+                        android:visibility="visible"/>
 
 
                 </LinearLayout>
@@ -1063,6 +1095,28 @@
                         android:layout_marginBottom="15dp"
                         android:src="@drawable/svg_meeting"
                         android:gravity="center"/>
+
+                    <ImageView
+                        android:id="@+id/im_Meeting_Alarm"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/svg_alarm"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_Meeting"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:button="@drawable/selector_reminder"
+                        android:visibility="visible"/>
+
+
 
 
                 </LinearLayout>

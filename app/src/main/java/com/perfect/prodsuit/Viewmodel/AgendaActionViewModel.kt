@@ -9,8 +9,8 @@ import com.perfect.prodsuit.Repository.AgendaActionRepository
 class AgendaActionViewModel : ViewModel() {
 
     var agendaActionData: MutableLiveData<AgendaActionModel>? = null
-    fun getAgendaAction(context: Context) : MutableLiveData<AgendaActionModel>? {
-        agendaActionData = AgendaActionRepository.getServicesApiCall(context)
+    fun getAgendaAction(context: Context ,Id_Agenda :String) : MutableLiveData<AgendaActionModel>? {
+        agendaActionData = AgendaActionRepository.getServicesApiCall(context,Id_Agenda)
         return agendaActionData
     }
 }
