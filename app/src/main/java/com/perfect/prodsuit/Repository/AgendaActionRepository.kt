@@ -27,12 +27,12 @@ object AgendaActionRepository {
     val agendaActionSetterGetter = MutableLiveData<AgendaActionModel>()
     val TAG: String = "AgendaActionRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<AgendaActionModel> {
-        getAgendaAction(context)
+    fun getServicesApiCall(context: Context,Id_Agenda :String): MutableLiveData<AgendaActionModel> {
+        getAgendaAction(context,Id_Agenda)
         return agendaActionSetterGetter
     }
 
-    private fun getAgendaAction(context: Context) {
+    private fun getAgendaAction(context: Context,Id_Agenda : String) {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -65,6 +65,8 @@ object AgendaActionRepository {
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg
+//                "Id_Agenda",1
+
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
@@ -75,7 +77,9 @@ object AgendaActionRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(TokenSP.getString("Id_Agenda", null)))
 
+                Log.e(TAG,"Id_Agenda        79   "+Id_Agenda)
                 Log.e(TAG,"requestObject1   79   "+requestObject1)
 
             } catch (e: Exception) {

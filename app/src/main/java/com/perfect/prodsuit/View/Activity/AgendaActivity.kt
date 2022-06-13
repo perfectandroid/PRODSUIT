@@ -71,6 +71,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
+    private var Id_Agenda :String = ""
 
 
 //    private var tabLayout : TabLayout? = null
@@ -97,7 +98,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var tv_actionType: TextView? = null
     var agendaTypeClick : String?= "0"
     var ID_ActionType : String?= ""
-    var SubMode : String?= ""
+    var SubMode : String?= "1"
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
     lateinit var agendaTypeArrayList : JSONArray
@@ -289,7 +290,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="1"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_upcoming->{
                 Log.e(TAG,"tv_tab_upcoming  232   ")
@@ -298,7 +299,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="2"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_completed->{
                 Log.e(TAG,"tv_tab_completed  232   ")
@@ -307,12 +308,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_color);
                 agendaTypeClick = "0"
                 SubMode ="3"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
             }
             R.id.tv_actionType->{
                 Log.e(TAG,"tv_actionType  232   ")
                 agendaTypeClick = "1"
-                getActionTypes()
+                getActionTypes(Id_Agenda)
 
             }
             R.id.fab_Reminder->{
@@ -384,22 +385,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                     recyAgendaType!!.adapter = adapter
                                     adapter.setClickListener(this@AgendaActivity)
 
-//                                    val jsonObject = agendaTypeArrayList.getJSONObject(0)
-//                                    if (jsonObject.getString("Id_Agenda").equals("1")){
-////                                        Lead
-//                                        llMainLeads!!.visibility = View.VISIBLE
-//                                        llMainService!!.visibility = View.GONE
-//
-//                                        rrrrrrrrrrrrr
-//                                    }
-//                                    if (jsonObject.getString("Id_Agenda").equals("2")){
-////                                        Service
-//                                        llMainLeads!!.visibility = View.GONE
-//                                        llMainService!!.visibility = View.VISIBLE
-//                                    }
+                                    Id_Agenda = agendaTypeArrayList.getJSONObject(0).getString("Id_Agenda")
 
-
-                                    getActionTypes()
+                                    getActionTypes(Id_Agenda)
 
                                 }
 
@@ -506,7 +494,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
     }
 
-    private fun getActionTypes() {
+    private fun getActionTypes(Id_Agenda : String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -520,7 +508,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaActionViewModel.getAgendaAction(this)!!.observe(
+                agendaActionViewModel.getAgendaAction(this,Id_Agenda)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -578,7 +566,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
 
-            getAgendaDetails(ID_ActionType!!)
+            getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
         }else{
 
@@ -615,7 +603,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
 
-            getAgendaDetails(ID_ActionType!!)
+            getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
 
         }
@@ -730,15 +718,16 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
 
         if (data.equals("agendaType")){
-//            val jsonObject = agendaTypeArrayList.getJSONObject(position)
+            val jsonObject = agendaTypeArrayList.getJSONObject(position)
 //            if (jsonObject.getString("Id_Agenda").equals("1")){
 ////                Lead
 //            }
 //            if (jsonObject.getString("Id_Agenda").equals("2")){
 ////                Service
 //            }
+            Id_Agenda = jsonObject.getString("Id_Agenda")
             agendaTypeClick = "0"
-            getActionTypes()
+            getActionTypes(Id_Agenda)
         }
         if (data.equals("agendaDocument")){
             val jsonObject = agendaDetailArrayList.getJSONObject(position)
@@ -1114,7 +1103,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     }
 
-    private fun getAgendaDetails(ID_ActionType: String) {
+    private fun getAgendaDetails(ID_ActionType: String , Id_Agenda : String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
@@ -1128,7 +1117,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!)!!.observe(
+                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!,Id_Agenda)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

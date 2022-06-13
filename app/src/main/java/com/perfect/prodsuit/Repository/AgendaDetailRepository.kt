@@ -26,12 +26,12 @@ object AgendaDetailRepository {
     val agendaDetailSetterGetter = MutableLiveData<AgendaDetailModel>()
     val TAG: String = "AgendaDetailRepository"
 
-    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String): MutableLiveData<AgendaDetailModel> {
-        getAgendaDetail(context,ID_ActionType,SubMode)
+    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String): MutableLiveData<AgendaDetailModel> {
+        getAgendaDetail(context,ID_ActionType,SubMode,Id_Agenda)
         return agendaDetailSetterGetter
     }
 
-    private fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String) {
+    private fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String) {
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -77,7 +77,9 @@ object AgendaDetailRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(Id_Agenda))
 
+                Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode)
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
                 Log.e(TAG,"requestObject1   78   "+SubMode+"   "+ID_ActionType)
 
