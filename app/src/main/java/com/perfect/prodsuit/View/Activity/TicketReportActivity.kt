@@ -9,12 +9,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,6 +85,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var reportNameViewModel: ReportNameViewModel
     lateinit var reportNameArrayList : JSONArray
+    lateinit var reportNamesort : JSONArray
     private var dialogReportName : Dialog? = null
     var recyReportName: RecyclerView? = null
 
@@ -699,13 +702,55 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogReportName!! .setContentView(R.layout.report_name_popup)
             dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyReportName = dialogReportName!! .findViewById(R.id.recyReportName) as RecyclerView
+            val etsearch = dialogReportName!! .findViewById(R.id.etsearch) as EditText
+
+            reportNamesort = JSONArray()
+            for (k in 0 until reportNameArrayList.length()) {
+                val jsonObject = reportNameArrayList.getJSONObject(k)
+               // reportNamesort.put(k,jsonObject)
+                reportNamesort.put(jsonObject)
+            }
+
+            Log.e(TAG,"reportNamesort               7101    "+reportNamesort)
+            Log.e(TAG,"reportNameArrayList      7102    "+reportNameArrayList)
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNameArrayList)
+            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNamesort)
             recyReportName!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                  //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    reportNamesort = JSONArray()
+
+                    for (k in 0 until reportNameArrayList.length()) {
+                        val jsonObject = reportNameArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ReportName").length) {
+                            if (jsonObject.getString("ReportName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                reportNamesort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"reportNamesort               7103    "+reportNamesort)
+                    val adapter = ReportNameAdapter(this@TicketReportActivity, reportNamesort)
+                    recyReportName!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogReportName!!.show()
             dialogReportName!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1350,7 +1395,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         if (data.equals("reportname")){
             resetData()
             dialogReportName!!.dismiss()
-            val jsonObject = reportNameArrayList.getJSONObject(position)
+          //  val jsonObject = reportNameArrayList.getJSONObject(position)
+            val jsonObject = reportNamesort.getJSONObject(position)
             Log.e(TAG,"ReportMode   "+jsonObject.getString("ReportMode"))
             ReportMode = jsonObject.getString("ReportMode")
             tie_ReportName!!.setText(jsonObject.getString("ReportName"))
