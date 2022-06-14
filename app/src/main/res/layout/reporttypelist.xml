@@ -36,10 +36,11 @@
             android:maxLines="2"
             android:text=""
             android:layout_weight="1"
-            android:drawableRight="@drawable/arrowright"
+            android:drawableRight="@drawable/svg_right_arrow"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:id="@+id/tvAreaName" />
+<!--        android:drawableRight="@drawable/arrowright"-->
 
     </LinearLayout>
 
