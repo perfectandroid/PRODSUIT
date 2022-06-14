@@ -185,6 +185,14 @@
     <color name="upcomung_light_Color">#74F4BF</color>
     <color name="right_Color">#E6E5E5</color>
 
+    <color name="pop_gradient1">#972839</color>
+    <color name="pop_gradient2">#B33F51</color>
+    <color name="pop_gradient3">#ED5970</color>
+
+    <color name="list_si">#F695A3</color>
+    <color name="list_data">#F8B1BC</color>
+
+
 <!--    <color name="leadstages_color1">#fcca00</color>-->
 <!--    <color name="leadstages_color2">#fc8d01</color>-->
 <!--    <color name="leadstages_color3">#f85200</color>-->
