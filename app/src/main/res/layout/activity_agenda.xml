@@ -558,7 +558,7 @@
             android:tint="@color/white"
             app:fabCustomSize="50dp"
             app:rippleColor="@color/white"
-            app:srcCompat="@drawable/ic_adding"
+            app:srcCompat="@drawable/svg_add_alarm"
             tools:ignore="MissingConstraints" />
 
 

@@ -345,6 +345,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     setReminder("","",strReminder)
                 }else{
                     Log.e(TAG,"strReminder   3412    Select")
+                    Config.snackBars(context,v,"Select Atlest One Reminder")
                  //   Toast.makeText(context,"Select Account",Toast.LENGTH_SHORT).show()
                 }
             }
