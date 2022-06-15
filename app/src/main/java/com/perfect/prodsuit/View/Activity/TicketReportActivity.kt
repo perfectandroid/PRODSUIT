@@ -127,6 +127,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var groupingViewModel: GroupingViewModel
     lateinit var groupingArrayList : JSONArray
+    lateinit var groupingSort : JSONArray
     private var dialogGrouping : Dialog? = null
     var recyGrouping: RecyclerView? = null
 
@@ -1614,13 +1615,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogGrouping!! .setContentView(R.layout.grouping_popup)
             dialogGrouping!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyGrouping = dialogGrouping!! .findViewById(R.id.recyGrouping) as RecyclerView
+            val etsearch = dialogGrouping!! .findViewById(R.id.etsearch) as EditText
+
+            groupingSort = JSONArray()
+            for (k in 0 until groupingArrayList.length()) {
+                val jsonObject = groupingArrayList.getJSONObject(k)
+                groupingSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyGrouping!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = GroupingAdapter(this@TicketReportActivity, groupingArrayList)
+//            val adapter = GroupingAdapter(this@TicketReportActivity, groupingArrayList)
+            val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
             recyGrouping!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    groupingSort = JSONArray()
+
+                    for (k in 0 until groupingArrayList.length()) {
+                        val jsonObject = groupingArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("GroupName").length) {
+                            if (jsonObject.getString("GroupName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                groupingSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"groupingSort               7103    "+groupingSort)
+                    val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
+                    recyGrouping!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogGrouping!!.show()
             dialogGrouping!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1732,7 +1772,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("grouping")){
             dialogGrouping!!.dismiss()
-            val jsonObject = groupingArrayList.getJSONObject(position)
+//            val jsonObject = groupingArrayList.getJSONObject(position)
+            val jsonObject = groupingSort.getJSONObject(position)
             Log.e(TAG,"GroupId   "+jsonObject.getString("GroupId"))
             GroupId = jsonObject.getString("GroupId")
             tie_Grouping!!.setText(jsonObject.getString("GroupName"))
