@@ -115,6 +115,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var prodPriorityArrayList : JSONArray
+    lateinit var prodPrioritySort : JSONArray
     private var dialogProdPriority : Dialog? = null
     var recyProdPriority: RecyclerView? = null
 
@@ -1370,13 +1371,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
             dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+            recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+            val etsearch = dialogProdPriority!! .findViewById(R.id.etsearch) as EditText
+
+            prodPrioritySort = JSONArray()
+            for (k in 0 until prodPriorityArrayList.length()) {
+                val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                prodPrioritySort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPriorityArrayList)
+//            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPriorityArrayList)
+            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPrioritySort)
             recyProdPriority!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodPrioritySort = JSONArray()
+
+                    for (k in 0 until prodPriorityArrayList.length()) {
+                        val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("PriorityName").length) {
+                            if (jsonObject.getString("PriorityName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                prodPrioritySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"prodPrioritySort               7103    "+prodPrioritySort)
+                    val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPrioritySort)
+                    recyProdPriority!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogProdPriority!!.show()
             dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1629,7 +1669,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("prodpriority")){
             dialogProdPriority!!.dismiss()
-            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = prodPrioritySort.getJSONObject(position)
             Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
             ID_Priority = jsonObject.getString("ID_Priority")
             tie_Priority!!.setText(jsonObject.getString("PriorityName"))
