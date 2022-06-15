@@ -109,6 +109,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var followUpTypeArrayList : JSONArray
+    lateinit var followUpTypeSort : JSONArray
     private var dialogFollowupType : Dialog? = null
     var recyFollowupType: RecyclerView? = null
 
@@ -1247,13 +1248,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+            val etsearch = dialogFollowupType!! .findViewById(R.id.etsearch) as EditText
+
+            followUpTypeSort = JSONArray()
+            for (k in 0 until followUpTypeArrayList.length()) {
+                val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                followUpTypeSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeArrayList)
+//            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeArrayList)
+            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeSort)
             recyFollowupType!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpTypeSort = JSONArray()
+
+                    for (k in 0 until followUpTypeArrayList.length()) {
+                        val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                            if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                followUpTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"followUpTypeSort               7103    "+followUpTypeSort)
+                    val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeSort)
+                    recyFollowupType!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogFollowupType!!.show()
             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1578,7 +1618,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("followuptype")){
             dialogFollowupType!!.dismiss()
-            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+//            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            val jsonObject = followUpTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tie_FollowUpType!!.setText(jsonObject.getString("ActnTypeName"))
