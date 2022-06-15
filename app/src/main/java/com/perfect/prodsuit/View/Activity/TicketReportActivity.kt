@@ -91,6 +91,7 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
+    lateinit var branchsort : JSONArray
     private var dialogBranch : Dialog? = null
     var recyBranch: RecyclerView? = null
 
@@ -829,13 +830,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogBranch!! .setContentView(R.layout.branch_popup)
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+            val etsearch = dialogBranch!! .findViewById(R.id.etsearch) as EditText
+
+            branchsort = JSONArray()
+            for (k in 0 until branchArrayList.length()) {
+                val jsonObject = branchArrayList.getJSONObject(k)
+                branchsort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+          //  val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
             recyBranch!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    branchsort = JSONArray()
+
+                    for (k in 0 until branchArrayList.length()) {
+                        val jsonObject = branchArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BranchName").length) {
+                            if (jsonObject.getString("BranchName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                branchsort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"branchsort               7103    "+branchsort)
+                    val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
+                    recyBranch!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogBranch!!.show()
             dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1426,7 +1466,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("branch")){
             dialogBranch!!.dismiss()
-            val jsonObject = branchArrayList.getJSONObject(position)
+         //   val jsonObject = branchArrayList.getJSONObject(position)
+            val jsonObject = branchsort.getJSONObject(position)
             Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
             ID_Branch = jsonObject.getString("ID_Branch")
             tie_Branch!!.setText(jsonObject.getString("BranchName"))
