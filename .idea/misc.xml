@@ -3,31 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/drawable/selector_asc_desc.xml" value="0.2565" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/drawable/selector_sorting.xml" value="0.2565" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_about_us.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_account_details.xml" value="0.17604166666666668" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_add_remark.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_homemain.xml" value="0.18" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_leadgeneration.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_location.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_overdue.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_upcomingtask.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_district_list.xml" value="0.13802083333333334" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_notification.xml" value="0.16" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_todolist.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/callstatus_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/changepin_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/logout_dlte_lead.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/logout_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/pincodedetail_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/post_list_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/reminder_setter_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/reporttypelist.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/sort_popup.xml" value="0.3546875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/address_svg.xml" value="0.167" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolorprimary.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolouryellow.xml" value="0.174" />
@@ -39,8 +22,11 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/email_svg.xml" value="0.232" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_departments.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_phone.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_shapees.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.2405" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_shape_profle.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/searchbg.xml" value="0.2395" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/selector_reminder.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/shape_gradient_pop.xml" value="0.26" />
@@ -68,13 +54,16 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.3072916666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_reportview.xml" value="0.3072916666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_services.xml" value="0.24479166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_splash.xml" value="0.29322916666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.3125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_welcome.xml" value="0.29322916666666665" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_actionticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_action_type.xml" value="0.321875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.321875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_agenda_type.xml" value="0.325" />
@@ -82,8 +71,12 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2390625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_expense.xml" value="0.25677083333333334" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followupticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_line_chart.xml" value="0.3302083333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_newlistticket_report.xml" value="0.35104166666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_notification.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_pie_chart.xml" value="0.3302083333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.2864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_report_name.xml" value="0.23177083333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_statusticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.25052083333333336" />
@@ -94,7 +87,9 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.31354166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/logout_popup.xml" value="0.24479166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/nav_header_main.xml" value="0.27395833333333336" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_detail_popup.xml" value="0.2234375" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/quit_popup.xml" value="0.28958333333333336" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_agenda_popup.xml" value="0.23541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/report_name_popup.xml" value="0.26614583333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reporttype_popup.xml" value="0.35104166666666664" />
@@ -107,7 +102,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

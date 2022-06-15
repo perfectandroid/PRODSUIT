@@ -4,22 +4,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="3dp"
+    app:cardCornerRadius="0dp"
     android:backgroundTint="@color/white"
-    android:layout_marginTop="2dp"
-    app:cardElevation="0.7dp">
+    android:layout_marginTop="0dp"
+    app:cardElevation="0dp">
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
         android:id="@+id/llprodproduct"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:maxLines="2"
+            android:background="@color/list_si"
+            android:text="14"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:id="@+id/txtsino" />
+
+        <TextView
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/list_data"
+            android:textSize="15dp"
+            android:maxLines="2"
+            android:text=""
+            android:layout_weight="1"
+            android:drawableRight="@drawable/svg_right_arrow"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:id="@+id/txtProduct" />
+        <!--        android:drawableRight="@drawable/arrowright"-->
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_background"/>
+
+    <LinearLayout
+        android:id="@+id/llprodproduct1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/txtsino"
+            android:id="@+id/txtsino1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="2"
@@ -32,7 +76,7 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/txtProduct"
+            android:id="@+id/txtProduct1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sree"
