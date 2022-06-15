@@ -1,82 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="1dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="5dp"
     android:id="@+id/rl_main"
+    app:cardMaxElevation="5dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_popuptitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="#e97a7a"
-            android:text="Select "
-            android:paddingTop="12dp"
-            android:paddingBottom="8dp"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:textSize="18dp" />
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/activity_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/llsearch"
+            <TextView
+                android:id="@+id/tv_popuptitle"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="#e97a7a"
-                android:paddingBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/shape_gradient_pop"
+                android:text="Select "
+                android:paddingTop="12dp"
+                android:paddingBottom="8dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
+            <!--        android:background="#e97a7a"-->
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/llsearch"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/searchbg"
-                    android:layout_weight="0.2">
-                    <EditText
-                        android:id="@+id/etsearch"
+                    android:layout_height="55dp"
+                    android:background="@drawable/shape_gradient_pop"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal">
+                    <!--                android:background="#e97a7a"-->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:hint="Search..."
-                        android:lines="1"
-                        android:scrollHorizontally="true"
-                        android:ellipsize="end"
-                        android:inputType="text"
-                        android:textColorHint="@color/grey"
-                        android:paddingLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
                         android:background="@drawable/searchbg"
-                        android:drawableLeft="@drawable/ic_search"
-                        android:drawableTint="@color/grey"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:paddingRight="10dp"/>
+                        android:layout_weight="0.2">
+                        <EditText
+                            android:id="@+id/etsearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:hint="Search..."
+                            android:lines="1"
+                            android:scrollHorizontally="true"
+                            android:ellipsize="end"
+                            android:inputType="text"
+                            android:textColorHint="@color/grey"
+                            android:paddingLeft="10dp"
+                            android:background="@drawable/searchbg"
+                            android:drawableLeft="@drawable/ic_search"
+                            android:fontFamily="@font/myfont"
+                            android:drawableTint="@color/grey"
+                            android:layout_weight="1"
+                            android:drawablePadding="10dp"
+                            android:paddingRight="10dp"/>
+                    </LinearLayout>
                 </LinearLayout>
+                <ListView
+                    android:id="@+id/list_view"
+                    android:divider="#ffffff"
+                    android:layout_below="@+id/lv_storeList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <ListView
-                android:id="@+id/list_view"
-                android:divider="#ffffff"
-                android:layout_below="@+id/lv_storeList"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
 
