@@ -21,14 +21,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/pophead"
+            android:fontFamily="@font/myfont"
             android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Details"
             android:textColor="@color/black"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/myfont"
-            android:background="@color/pophead"
-            android:padding="10dp"
-            android:text="Details"/>
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Sp"
