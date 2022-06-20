@@ -70,6 +70,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_bar_chart.xml" value="0.3302083333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2390625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.33229166666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_expense.xml" value="0.25677083333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followup_action.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.36666666666666664" />
@@ -89,6 +90,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.23177083333333334" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/changepin_popup.xml" value="0.29322916666666665" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/employeeall_popup.xml" value="0.2734375" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_action.xml" value="0.2864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_type_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/grouping_popup.xml" value="0.36666666666666664" />
