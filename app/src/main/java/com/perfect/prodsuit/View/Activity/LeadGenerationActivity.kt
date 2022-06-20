@@ -161,6 +161,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     lateinit var leadEditListViewModel: LeadEditListViewModel
     lateinit var leadEditArrayList : JSONArray
+    lateinit var leadEditSort : JSONArray
 
     lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
     lateinit var leadEditDetArrayList : JSONArray
@@ -5067,7 +5068,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //             saveUpdateMode = "1"  //Update
 //             rltvPinCode!!.visibility = View.VISIBLE
 
-             val jsonObject = leadEditArrayList.getJSONObject(position)
+//             val jsonObject = leadEditArrayList.getJSONObject(position)
+             val jsonObject = leadEditSort.getJSONObject(position)
              Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
 
              ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
@@ -5849,13 +5851,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadEdit!! .setContentView(R.layout.lead_editdetail_popup)
             dialogLeadEdit!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadDetail = dialogLeadEdit!! .findViewById(R.id.recyLeadDetail) as RecyclerView
+            val etsearch = dialogLeadEdit!! .findViewById(R.id.etsearch) as EditText
+
+            leadEditSort = JSONArray()
+            for (k in 0 until leadEditArrayList.length()) {
+                val jsonObject = leadEditArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadEditSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+//            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditSort)
             recyLeadDetail!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadEditSort = JSONArray()
+
+                    for (k in 0 until leadEditArrayList.length()) {
+                        val jsonObject = leadEditArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CustomerName").length) {
+                            if (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadEditSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadEditSort               7103    "+leadEditSort)
+                    val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditSort)
+                    recyLeadDetail!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadEdit!!.show()
             dialogLeadEdit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
