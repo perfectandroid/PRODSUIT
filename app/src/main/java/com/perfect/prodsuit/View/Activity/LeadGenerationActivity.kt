@@ -230,6 +230,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var prodDetailArrayList : JSONArray
      lateinit var prodDetailSort : JSONArray
      lateinit var prodStatusArrayList : JSONArray
+     lateinit var prodStatusSort : JSONArray
      lateinit var prodPriorityArrayList : JSONArray
      lateinit var prodPrioritySort : JSONArray
      lateinit var followUpActionArrayList : JSONArray
@@ -3939,13 +3940,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdStatus!! .setContentView(R.layout.product_status_popup)
              dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+             val etsearch = dialogProdStatus!! .findViewById(R.id.etsearch) as EditText
+
+             prodStatusSort = JSONArray()
+             for (k in 0 until prodStatusArrayList.length()) {
+                 val jsonObject = prodStatusArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 prodStatusSort.put(jsonObject)
+             }
+
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusArrayList)
+//             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusArrayList)
+             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusSort)
              recyProdStatus!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     prodStatusSort = JSONArray()
+
+                     for (k in 0 until prodStatusArrayList.length()) {
+                         val jsonObject = prodStatusArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("StatusName").length) {
+                             if (jsonObject.getString("StatusName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 prodStatusSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"prodStatusSort               7103    "+prodStatusSort)
+                     val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusSort)
+                     recyProdStatus!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogProdStatus!!.show()
              dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4600,7 +4641,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("prodstatus")){
              dialogProdStatus!!.dismiss()
-             val jsonObject = prodStatusArrayList.getJSONObject(position)
+//             val jsonObject = prodStatusArrayList.getJSONObject(position)
+             val jsonObject = prodStatusSort.getJSONObject(position)
              Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
              ID_Status = jsonObject.getString("ID_Status")
              edtProdstatus!!.setText(jsonObject.getString("StatusName"))
