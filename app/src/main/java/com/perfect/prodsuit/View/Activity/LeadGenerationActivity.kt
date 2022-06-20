@@ -135,6 +135,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadFromArrayList : JSONArray
     lateinit var leadFromSort : JSONArray
     lateinit var leadThroughArrayList : JSONArray
+    lateinit var leadThroughSort : JSONArray
     lateinit var leadByArrayList : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
     var dialogLeadFrom : Dialog? = null
@@ -1960,13 +1961,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadThrough!! .setContentView(R.layout.lead_through_popup)
             dialogLeadThrough!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadThrough = dialogLeadThrough!! .findViewById(R.id.recyLeadThrough) as RecyclerView
+            val etsearch = dialogLeadThrough!! .findViewById(R.id.etsearch) as EditText
+
+            leadThroughSort = JSONArray()
+            for (k in 0 until leadThroughArrayList.length()) {
+                val jsonObject = leadThroughArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadThroughSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadThrough!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughArrayList)
+//            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughArrayList)
+            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughSort)
             recyLeadThrough!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadThroughSort = JSONArray()
+
+                    for (k in 0 until leadThroughArrayList.length()) {
+                        val jsonObject = leadThroughArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadThroughName").length) {
+                            if (jsonObject.getString("LeadThroughName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadThroughSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadThroughSort               7103    "+leadThroughSort)
+                    val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughSort)
+                    recyLeadThrough!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadThrough!!.show()
             dialogLeadThrough!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4107,7 +4147,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         if (data.equals("leadthrough")){
             dialogLeadThrough!!.dismiss()
-            val jsonObject = leadThroughArrayList.getJSONObject(position)
+//            val jsonObject = leadThroughArrayList.getJSONObject(position)
+            val jsonObject = leadThroughSort.getJSONObject(position)
             Log.e(TAG,"ID_LeadThrough   "+jsonObject.getString("ID_LeadThrough"))
             ID_LeadThrough = jsonObject.getString("ID_LeadThrough")
             txtleadthrough!!.text = jsonObject.getString("LeadThroughName")

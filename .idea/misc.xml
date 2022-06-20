@@ -78,6 +78,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_followupticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_grouping.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_from.xml" value="0.3223958333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.3223958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_line_chart.xml" value="0.3302083333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_newlistticket_report.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_notification.xml" value="0.25" />
@@ -100,6 +101,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/grouping_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.31354166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_from_popup.xml" value="0.3223958333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_through_popup.xml" value="0.3223958333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/logout_popup.xml" value="0.24479166666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/nav_header_main.xml" value="0.27395833333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/product_detail_popup.xml" value="0.2234375" />
