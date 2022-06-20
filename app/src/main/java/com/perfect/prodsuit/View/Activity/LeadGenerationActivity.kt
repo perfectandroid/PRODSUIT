@@ -238,9 +238,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var followUpTypeArrayList : JSONArray
      lateinit var followUpTypeSort : JSONArray
      lateinit var branchTypeArrayList : JSONArray
+     lateinit var branchTypeSort : JSONArray
      lateinit var branchArrayList : JSONArray
+     lateinit var branchSort : JSONArray
      lateinit var departmentArrayList : JSONArray
+     lateinit var departmentSort : JSONArray
      lateinit var employeeArrayList : JSONArray
+     lateinit var employeeSort : JSONArray
 
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
@@ -4364,13 +4368,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogBranchType!! .setContentView(R.layout.branchtype_popup)
              dialogBranchType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyBranchType = dialogBranchType!! .findViewById(R.id.recyBranchType) as RecyclerView
+             val etsearch = dialogBranchType!! .findViewById(R.id.etsearch) as EditText
+
+             branchTypeSort = JSONArray()
+             for (k in 0 until branchTypeArrayList.length()) {
+                 val jsonObject = branchTypeArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 branchTypeSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyBranchType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeArrayList)
+//             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeArrayList)
+             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeSort)
              recyBranchType!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     branchTypeSort = JSONArray()
+
+                     for (k in 0 until branchTypeArrayList.length()) {
+                         val jsonObject = branchTypeArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("BranchTypeName").length) {
+                             if (jsonObject.getString("BranchTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 branchTypeSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"branchTypeSort               7103    "+branchTypeSort)
+                     val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeSort)
+                     recyBranchType!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogBranchType!!.show()
              dialogBranchType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4444,13 +4488,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogBranch!! .setContentView(R.layout.branch_popup)
              dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+             val etsearch = dialogBranch!! .findViewById(R.id.etsearch) as EditText
+
+             branchSort = JSONArray()
+             for (k in 0 until branchArrayList.length()) {
+                 val jsonObject = branchArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 branchSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = BranchAdapter(this@LeadGenerationActivity, branchArrayList)
+//             val adapter = BranchAdapter(this@LeadGenerationActivity, branchArrayList)
+             val adapter = BranchAdapter(this@LeadGenerationActivity, branchSort)
              recyBranch!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     branchSort = JSONArray()
+
+                     for (k in 0 until branchArrayList.length()) {
+                         val jsonObject = branchArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("BranchName").length) {
+                             if (jsonObject.getString("BranchName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 branchSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"branchSort               7103    "+branchSort)
+                     val adapter = BranchAdapter(this@LeadGenerationActivity, branchSort)
+                     recyBranch!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogBranch!!.show()
              dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4524,13 +4607,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogDepartment!! .setContentView(R.layout.department_popup)
              dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
+             val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+
+             departmentSort = JSONArray()
+             for (k in 0 until departmentArrayList.length()) {
+                 val jsonObject = departmentArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 departmentSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentArrayList)
+//             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentArrayList)
+             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentSort)
              recyDeaprtment!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     departmentSort = JSONArray()
+
+                     for (k in 0 until departmentArrayList.length()) {
+                         val jsonObject = departmentArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("DeptName").length) {
+                             if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 departmentSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"departmentSort               7103    "+departmentSort)
+                     val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentSort)
+                     recyDeaprtment!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogDepartment!!.show()
              dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4603,13 +4725,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogEmployee!! .setContentView(R.layout.employee_popup)
              dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
+             val etsearch = dialogEmployee!! .findViewById(R.id.etsearch) as EditText
+
+             employeeSort = JSONArray()
+             for (k in 0 until employeeArrayList.length()) {
+                 val jsonObject = employeeArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 employeeSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeSort)
              recyEmployee!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     employeeSort = JSONArray()
+
+                     for (k in 0 until employeeArrayList.length()) {
+                         val jsonObject = employeeArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("EmpName").length) {
+                             if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 employeeSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"employeeSort               7103    "+employeeSort)
+                     val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeSort)
+                     recyEmployee!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogEmployee!!.show()
              dialogEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4775,7 +4936,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("branchtype")){
              dialogBranchType!!.dismiss()
-             val jsonObject = branchTypeArrayList.getJSONObject(position)
+//             val jsonObject = branchTypeArrayList.getJSONObject(position)
+             val jsonObject = branchTypeSort.getJSONObject(position)
              Log.e(TAG,"ID_BranchType   "+jsonObject.getString("ID_BranchType"))
              ID_BranchType = jsonObject.getString("ID_BranchType")
              edtbarnchtype!!.setText(jsonObject.getString("BranchTypeName"))
@@ -4785,7 +4947,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("branch")){
              dialogBranch!!.dismiss()
-             val jsonObject = branchArrayList.getJSONObject(position)
+//             val jsonObject = branchArrayList.getJSONObject(position)
+             val jsonObject = branchSort.getJSONObject(position)
              Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
              ID_Branch = jsonObject.getString("ID_Branch")
              edtbranch!!.setText(jsonObject.getString("BranchName"))
@@ -4795,7 +4958,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("department")){
              dialogDepartment!!.dismiss()
-             val jsonObject = departmentArrayList.getJSONObject(position)
+//             val jsonObject = departmentArrayList.getJSONObject(position)
+             val jsonObject = departmentSort.getJSONObject(position)
              Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
              ID_Department = jsonObject.getString("ID_Department")
              edtdepartment!!.setText(jsonObject.getString("DeptName"))
@@ -4805,7 +4969,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("employee")){
              dialogEmployee!!.dismiss()
-             val jsonObject = employeeArrayList.getJSONObject(position)
+//             val jsonObject = employeeArrayList.getJSONObject(position)
+             val jsonObject = employeeSort.getJSONObject(position)
              Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
              ID_Employee = jsonObject.getString("ID_Employee")
              edtEmployee!!.setText(jsonObject.getString("EmpName"))
