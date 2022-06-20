@@ -21,17 +21,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="17dp"
             android:textStyle="bold"
             android:fontFamily="@font/myfont"
-            android:background="@drawable/shadow_white"
+            android:background="@drawable/shape_gradient_pop"
             android:padding="10dp"
             android:textAllCaps="true"
             android:text="Country"/>
+
+        <LinearLayout
+            android:id="@+id/llsearch"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/shape_gradient_pop"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <!--                android:background="#e97a7a"-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/searchbg"
+                android:layout_weight="0.2">
+                <EditText
+                    android:id="@+id/etsearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:hint="Search..."
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/searchbg"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:fontFamily="@font/myfont"
+                    android:drawableTint="@color/grey"
+                    android:layout_weight="1"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/grey"/>
 <!--        android:background="@color/pophead"-->
 
@@ -39,9 +78,7 @@
             android:id="@+id/recycCountry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:visibility="visible"
-            android:layout_marginLeft="10dp"/>
+            android:visibility="visible" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

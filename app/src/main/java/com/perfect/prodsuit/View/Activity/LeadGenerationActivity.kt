@@ -167,11 +167,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList : JSONArray
+    lateinit var countrySort : JSONArray
     private var dialogCountry : Dialog? = null
     var recyCountry: RecyclerView? = null
 
     lateinit var stateViewModel: StateViewModel
     lateinit var stateArrayList : JSONArray
+    lateinit var stateSort : JSONArray
     private var dialogState : Dialog? = null
     var recyState: RecyclerView? = null
 
@@ -2973,13 +2975,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogCountry!! .setContentView(R.layout.country_list_popup)
             dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycCountry = dialogCountry!! .findViewById(R.id.recycCountry) as RecyclerView
+            val etsearch = dialogCountry!! .findViewById(R.id.etsearch) as EditText
+
+            countrySort = JSONArray()
+            for (k in 0 until countryArrayList.length()) {
+                val jsonObject = countryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                countrySort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countrySort)
             recycCountry!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    countrySort = JSONArray()
+
+                    for (k in 0 until countryArrayList.length()) {
+                        val jsonObject = countryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Country").length) {
+                            if (jsonObject.getString("Country")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                countrySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"countrySort               7103    "+countrySort)
+                    val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countrySort)
+                    recycCountry!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogCountry!!.show()
             dialogCountry!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3060,13 +3101,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogState!! .setContentView(R.layout.state_list_popup)
             dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycState = dialogState!! .findViewById(R.id.recycState) as RecyclerView
+            val etsearch = dialogState!! .findViewById(R.id.etsearch) as EditText
+
+            stateSort = JSONArray()
+            for (k in 0 until stateArrayList.length()) {
+                val jsonObject = stateArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                stateSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+//            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateSort)
             recycState!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    stateSort = JSONArray()
+
+                    for (k in 0 until stateArrayList.length()) {
+                        val jsonObject = stateArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("States").length) {
+                            if (jsonObject.getString("States")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                stateSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"stateSort               7103    "+stateSort)
+                    val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateSort)
+                    recycState!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogState!!.show()
             dialogState!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4364,7 +4445,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("countrydetail")){
              dialogCountry!!.dismiss()
-             val jsonObject = countryArrayList.getJSONObject(position)
+//             val jsonObject = countryArrayList.getJSONObject(position)
+             val jsonObject = countrySort.getJSONObject(position)
              Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
              FK_Country = jsonObject.getString("FK_Country")
              edtCountry!!.setText(jsonObject.getString("Country"))
@@ -4387,7 +4469,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("statedetail")){
              dialogState!!.dismiss()
-             val jsonObject = stateArrayList.getJSONObject(position)
+//             val jsonObject = stateArrayList.getJSONObject(position)
+             val jsonObject = stateSort.getJSONObject(position)
              Log.e(TAG,"FK_States   "+jsonObject.getString("FK_States"))
              FK_States = jsonObject.getString("FK_States")
              edtState!!.setText(jsonObject.getString("States"))
