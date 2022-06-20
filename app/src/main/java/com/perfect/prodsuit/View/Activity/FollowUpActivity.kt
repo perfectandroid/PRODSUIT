@@ -85,6 +85,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var departmentArrayList : JSONArray
+    lateinit var departmentSort : JSONArray
     private var dialogDepartment : Dialog? = null
     var recyDeaprtment: RecyclerView? = null
 
@@ -1131,13 +1132,52 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             dialogDepartment!! .setContentView(R.layout.department_popup)
             dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
+            val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+
+            departmentSort = JSONArray()
+            for (k in 0 until departmentArrayList.length()) {
+                val jsonObject = departmentArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                departmentSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
             recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = DepartmentAdapter(this@FollowUpActivity, departmentArrayList)
+//            val adapter = DepartmentAdapter(this@FollowUpActivity, departmentArrayList)
+            val adapter = DepartmentAdapter(this@FollowUpActivity, departmentSort)
             recyDeaprtment!!.adapter = adapter
             adapter.setClickListener(this@FollowUpActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    departmentSort = JSONArray()
+
+                    for (k in 0 until departmentArrayList.length()) {
+                        val jsonObject = departmentArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("DeptName").length) {
+                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                departmentSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"departmentSort               7103    "+departmentSort)
+                    val adapter = DepartmentAdapter(this@FollowUpActivity, departmentSort)
+                    recyDeaprtment!!.adapter = adapter
+                    adapter.setClickListener(this@FollowUpActivity)
+                }
+            })
 
             dialogDepartment!!.show()
             dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1217,7 +1257,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         if (data.equals("department")){
             dialogDepartment!!.dismiss()
-            val jsonObject = departmentArrayList.getJSONObject(position)
+//            val jsonObject = departmentArrayList.getJSONObject(position)
+            val jsonObject = departmentSort.getJSONObject(position)
             Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
             ID_Department = jsonObject.getString("ID_Department")
             tie_Department!!.setText(jsonObject.getString("DeptName"))
