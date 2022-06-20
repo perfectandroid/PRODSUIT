@@ -1153,7 +1153,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
