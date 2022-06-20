@@ -16,7 +16,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -131,6 +133,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var image2 = ""
     private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     lateinit var leadFromArrayList : JSONArray
+    lateinit var leadFromSort : JSONArray
     lateinit var leadThroughArrayList : JSONArray
     lateinit var leadByArrayList : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
@@ -1833,13 +1836,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadFrom!! .setContentView(R.layout.lead_from_popup)
             dialogLeadFrom!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadFrom = dialogLeadFrom!! .findViewById(R.id.recyLeadFrom) as RecyclerView
+            val etsearch = dialogLeadFrom!! .findViewById(R.id.etsearch) as EditText
+
+            leadFromSort = JSONArray()
+            for (k in 0 until leadFromArrayList.length()) {
+                val jsonObject = leadFromArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadFromSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadFrom!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromArrayList)
+//            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromArrayList)
+            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromSort)
             recyLeadFrom!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadFromSort = JSONArray()
+
+                    for (k in 0 until leadFromArrayList.length()) {
+                        val jsonObject = leadFromArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadFromName").length) {
+                            if (jsonObject.getString("LeadFromName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadFromSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"reportNamesort               7103    "+leadFromSort)
+                    val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromSort)
+                    recyLeadFrom!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadFrom!!.show()
             dialogLeadFrom!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4056,7 +4099,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         if (data.equals("leadfrom")){
             dialogLeadFrom!!.dismiss()
-            val jsonObject = leadFromArrayList.getJSONObject(position)
+//            val jsonObject = leadFromArrayList.getJSONObject(position)
+            val jsonObject = leadFromSort.getJSONObject(position)
             Log.e(TAG,"ID_LeadFrom   "+jsonObject.getString("ID_LeadFrom"))
             ID_LeadFrom = jsonObject.getString("ID_LeadFrom")
             txtleadfrom!!.text = jsonObject.getString("LeadFromName")
