@@ -139,6 +139,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadByArrayList : JSONArray
     lateinit var leadBySort : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
+    lateinit var mediaTypeSort : JSONArray
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
@@ -2128,13 +2129,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogMediaType!! .setContentView(R.layout.mediatype_popup)
             dialogMediaType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyMediaType = dialogMediaType!! .findViewById(R.id.recyMediaType) as RecyclerView
+            val etsearch = dialogMediaType!! .findViewById(R.id.etsearch) as EditText
+
+            mediaTypeSort = JSONArray()
+            for (k in 0 until mediaTypeArrayList.length()) {
+                val jsonObject = mediaTypeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                mediaTypeSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyMediaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeArrayList)
+//            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeArrayList)
+            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeSort)
             recyMediaType!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    mediaTypeSort = JSONArray()
+
+                    for (k in 0 until mediaTypeArrayList.length()) {
+                        val jsonObject = mediaTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("MdaName").length) {
+                            if (jsonObject.getString("MdaName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                mediaTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"mediaTypeSort               7103    "+mediaTypeSort)
+                    val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeSort)
+                    recyMediaType!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogMediaType!!.show()
             dialogMediaType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4368,7 +4408,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         if (data.equals("mediatype")){
             dialogMediaType!!.dismiss()
-            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+//            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+            val jsonObject = mediaTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_MediaMaster   "+jsonObject.getString("ID_MediaMaster"))
             ID_MediaMaster = jsonObject.getString("ID_MediaMaster")
             txtMediatype!!.text = jsonObject.getString("MdaName")
