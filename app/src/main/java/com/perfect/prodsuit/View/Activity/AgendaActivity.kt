@@ -12,6 +12,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.provider.CallLog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -107,6 +109,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     lateinit var agendaActionViewModel: AgendaActionViewModel
     lateinit var agendaDetailViewModel: AgendaDetailViewModel
     lateinit var agendaActionArrayList : JSONArray
+    lateinit var agendaActionSort : JSONArray
     lateinit var agendaDetailArrayList : JSONArray
     var dialogAgendaAction : Dialog? = null
     var recyActionType: RecyclerView? = null
@@ -563,6 +566,14 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     private fun agendaTypePopup(agendaActionArrayList: JSONArray) {
 
         if (agendaTypeClick.equals("0")){
+
+            agendaActionSort = JSONArray()
+            for (k in 0 until agendaActionArrayList.length()) {
+                val jsonObject = agendaActionArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                agendaActionSort.put(jsonObject)
+            }
+
             val jsonObject = agendaActionArrayList.getJSONObject(0)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
@@ -578,13 +589,52 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 dialogAgendaAction!! .setContentView(R.layout.agenda_action_popup)
                 dialogAgendaAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
                 recyActionType = dialogAgendaAction!! .findViewById(R.id.recyActionType) as RecyclerView
+                val etsearch = dialogAgendaAction!! .findViewById(R.id.etsearch) as EditText
+
+                agendaActionSort = JSONArray()
+                for (k in 0 until agendaActionArrayList.length()) {
+                    val jsonObject = agendaActionArrayList.getJSONObject(k)
+                    // reportNamesort.put(k,jsonObject)
+                    agendaActionSort.put(jsonObject)
+                }
 
                 val lLayout = GridLayoutManager(this@AgendaActivity, 1)
                 recyActionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-                val adapter = AgendaActionTypeAdapter(this@AgendaActivity, agendaActionArrayList)
+//                val adapter = AgendaActionTypeAdapter(this@AgendaActivity, agendaActionArrayList)
+                val adapter = AgendaActionTypeAdapter(this@AgendaActivity, agendaActionSort)
                 recyActionType!!.adapter = adapter
                 adapter.setClickListener(this@AgendaActivity)
+
+                etsearch!!.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                        //  list_view!!.setVisibility(View.VISIBLE)
+                        val textlength = etsearch!!.text.length
+                        agendaActionSort = JSONArray()
+
+                        for (k in 0 until agendaActionArrayList.length()) {
+                            val jsonObject = agendaActionArrayList.getJSONObject(k)
+                            if (textlength <= jsonObject.getString("ActionTypeName").length) {
+                                if (jsonObject.getString("ActionTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                    agendaActionSort.put(jsonObject)
+                                }
+
+                            }
+                        }
+
+                        Log.e(TAG,"agendaActionSort               7103    "+agendaActionSort)
+                        val adapter = AgendaActionTypeAdapter(this@AgendaActivity, agendaActionSort)
+                        recyActionType!!.adapter = adapter
+                        adapter.setClickListener(this@AgendaActivity)
+                    }
+                })
 
                 dialogAgendaAction!!.show()
                 dialogAgendaAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -600,9 +650,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
         if (data.equals("agendaactiontype")){
             dialogAgendaAction!!.dismiss()
-            val jsonObject = agendaActionArrayList.getJSONObject(position)
+//            val jsonObject = agendaActionArrayList.getJSONObject(position)
+            val jsonObject = agendaActionSort.getJSONObject(position)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+
+            Log.e(TAG,"ID_ActionType   607   "+ID_ActionType)
 
             getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
