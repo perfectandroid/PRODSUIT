@@ -22,11 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="17dp"
             android:textStyle="bold"
             android:fontFamily="@font/myfont"
-            android:background="@color/cust_3"
+            android:background="@drawable/shape_gradient_pop"
             android:padding="15dp"
             android:textAllCaps="true"
             android:text="Customer"/>
@@ -40,9 +40,7 @@
             android:id="@+id/recyCustomer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:visibility="visible"
-            android:layout_marginLeft="10dp"/>
+            android:visibility="visible" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

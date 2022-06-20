@@ -135,7 +135,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {

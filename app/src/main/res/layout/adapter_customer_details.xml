@@ -6,10 +6,12 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
     android:backgroundTint="@color/white"
-    android:layout_marginTop="3dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginRight="1dp"
+    android:layout_marginLeft="1dp"
     app:cardElevation="1dp"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    app:cardPreventCornerOverlap="true">
+<!--    app:cardUseCompatPadding="true"-->
 
 <!--    app:cardUseCompatPadding="true"-->
 
@@ -21,7 +23,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/list_si">
+<!--        android:background="@color/white"-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,8 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/greylight">
-                <!--                android:background="@color/grey1"-->
+                android:background="@color/list_si">
+                <!--                android:background="@color/greylight""-->
 
 
                 <TextView
@@ -172,8 +175,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/greylight"
-            android:visibility="gone"/>
+            android:background="@color/list_line"
+            android:visibility="visible"/>
 
     </LinearLayout>
 
