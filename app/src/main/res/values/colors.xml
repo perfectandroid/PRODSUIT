@@ -189,8 +189,11 @@
     <color name="pop_gradient2">#B33F51</color>
     <color name="pop_gradient3">#ED5970</color>
 
-    <color name="list_si">#F695A3</color>
-    <color name="list_data">#F8B1BC</color>
+<!--    <color name="list_si">#F695A3</color>-->
+<!--    <color name="list_data">#F8B1BC</color>-->
+    <color name="list_si">#F8E7E8</color>
+    <color name="list_data">#F8EFF0</color>
+    <color name="list_line">#CECECE</color>
 
 
 <!--    <color name="leadstages_color1">#fcca00</color>-->

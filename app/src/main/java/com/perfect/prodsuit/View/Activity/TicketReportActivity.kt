@@ -91,36 +91,43 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
+    lateinit var branchsort : JSONArray
     private var dialogBranch : Dialog? = null
     var recyBranch: RecyclerView? = null
 
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var prodDetailArrayList : JSONArray
+    lateinit var prodDetailSort : JSONArray
     private var dialogProdDet : Dialog? = null
     var recyProdDetail: RecyclerView? = null
 
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpActionArrayList : JSONArray
+    lateinit var followUpActionSort : JSONArray
     private var dialogFollowupAction : Dialog? = null
     var recyFollowupAction: RecyclerView? = null
 
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var followUpTypeArrayList : JSONArray
+    lateinit var followUpTypeSort : JSONArray
     private var dialogFollowupType : Dialog? = null
     var recyFollowupType: RecyclerView? = null
 
     lateinit var productPriorityViewModel: ProductPriorityViewModel
     lateinit var prodPriorityArrayList : JSONArray
+    lateinit var prodPrioritySort : JSONArray
     private var dialogProdPriority : Dialog? = null
     var recyProdPriority: RecyclerView? = null
 
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
+    lateinit var prodStatusSort : JSONArray
     private var dialogProdStatus : Dialog? = null
     var recyProdStatus: RecyclerView? = null
 
     lateinit var groupingViewModel: GroupingViewModel
     lateinit var groupingArrayList : JSONArray
+    lateinit var groupingSort : JSONArray
     private var dialogGrouping : Dialog? = null
     var recyGrouping: RecyclerView? = null
 
@@ -829,13 +836,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogBranch!! .setContentView(R.layout.branch_popup)
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+            val etsearch = dialogBranch!! .findViewById(R.id.etsearch) as EditText
+
+            branchsort = JSONArray()
+            for (k in 0 until branchArrayList.length()) {
+                val jsonObject = branchArrayList.getJSONObject(k)
+                branchsort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+          //  val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
             recyBranch!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    branchsort = JSONArray()
+
+                    for (k in 0 until branchArrayList.length()) {
+                        val jsonObject = branchArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BranchName").length) {
+                            if (jsonObject.getString("BranchName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                branchsort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"branchsort               7103    "+branchsort)
+                    val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
+                    recyBranch!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogBranch!!.show()
             dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -964,13 +1010,53 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogProdDet!! .setContentView(R.layout.product_detail_popup)
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
+            val etsearch = dialogProdDet!! .findViewById(R.id.etsearch) as EditText
+
+            prodDetailSort = JSONArray()
+            for (k in 0 until prodDetailArrayList.length()) {
+                val jsonObject = prodDetailArrayList.getJSONObject(k)
+                prodDetailSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailArrayList)
+//            val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailArrayList)
+            val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailSort)
             recyProdDetail!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodDetailSort = JSONArray()
+
+                    for (k in 0 until prodDetailArrayList.length()) {
+                        val jsonObject = prodDetailArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ProductName").length) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                prodDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"prodDetailSort               7103    "+prodDetailSort)
+                    val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailSort)
+                    recyProdDetail!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogProdDet!!.show()
             dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1045,13 +1131,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogFollowupAction!! .setContentView(R.layout.followup_action)
             dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+            val etsearch = dialogFollowupAction!! .findViewById(R.id.etsearch) as EditText
+
+            followUpActionSort = JSONArray()
+            for (k in 0 until followUpActionArrayList.length()) {
+                val jsonObject = followUpActionArrayList.getJSONObject(k)
+                followUpActionSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = FollowupActionAdapter(this@TicketReportActivity, followUpActionArrayList)
+//            val adapter = FollowupActionAdapter(this@TicketReportActivity, followUpActionArrayList)
+            val adapter = FollowupActionAdapter(this@TicketReportActivity, followUpActionSort)
             recyFollowupAction!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpActionSort = JSONArray()
+
+                    for (k in 0 until followUpActionArrayList.length()) {
+                        val jsonObject = followUpActionArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("NxtActnName").length) {
+                            if (jsonObject.getString("NxtActnName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                followUpActionSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"followUpActionSort               7103    "+followUpActionSort)
+                    val adapter = FollowupActionAdapter(this@TicketReportActivity, followUpActionSort)
+                    recyFollowupAction!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+
+                }
+            })
 
             dialogFollowupAction!!.show()
             dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1126,13 +1251,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+            val etsearch = dialogFollowupType!! .findViewById(R.id.etsearch) as EditText
+
+            followUpTypeSort = JSONArray()
+            for (k in 0 until followUpTypeArrayList.length()) {
+                val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                followUpTypeSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeArrayList)
+//            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeArrayList)
+            val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeSort)
             recyFollowupType!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpTypeSort = JSONArray()
+
+                    for (k in 0 until followUpTypeArrayList.length()) {
+                        val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                            if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                followUpTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"followUpTypeSort               7103    "+followUpTypeSort)
+                    val adapter = FollowupTypeAdapter(this@TicketReportActivity, followUpTypeSort)
+                    recyFollowupType!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogFollowupType!!.show()
             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1209,13 +1373,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
             dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+            recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+            val etsearch = dialogProdPriority!! .findViewById(R.id.etsearch) as EditText
+
+            prodPrioritySort = JSONArray()
+            for (k in 0 until prodPriorityArrayList.length()) {
+                val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                prodPrioritySort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPriorityArrayList)
+//            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPriorityArrayList)
+            val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPrioritySort)
             recyProdPriority!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodPrioritySort = JSONArray()
+
+                    for (k in 0 until prodPriorityArrayList.length()) {
+                        val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("PriorityName").length) {
+                            if (jsonObject.getString("PriorityName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                prodPrioritySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"prodPrioritySort               7103    "+prodPrioritySort)
+                    val adapter = ProductPriorityAdapter(this@TicketReportActivity, prodPrioritySort)
+                    recyProdPriority!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogProdPriority!!.show()
             dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1292,13 +1495,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogProdStatus!! .setContentView(R.layout.product_status_popup)
             dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+            val etsearch = dialogProdStatus!! .findViewById(R.id.etsearch) as EditText
+
+            prodStatusSort = JSONArray()
+            for (k in 0 until prodStatusArrayList.length()) {
+                val jsonObject = prodStatusArrayList.getJSONObject(k)
+                prodStatusSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusArrayList)
+//            val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusArrayList)
+            val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusSort)
             recyProdStatus!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodStatusSort = JSONArray()
+
+                    for (k in 0 until prodStatusArrayList.length()) {
+                        val jsonObject = prodStatusArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("StatusName").length) {
+                            if (jsonObject.getString("StatusName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                prodStatusSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"prodStatusSort               7103    "+prodStatusSort)
+                    val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusSort)
+                    recyProdStatus!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogProdStatus!!.show()
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1373,13 +1615,52 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
             dialogGrouping!! .setContentView(R.layout.grouping_popup)
             dialogGrouping!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyGrouping = dialogGrouping!! .findViewById(R.id.recyGrouping) as RecyclerView
+            val etsearch = dialogGrouping!! .findViewById(R.id.etsearch) as EditText
+
+            groupingSort = JSONArray()
+            for (k in 0 until groupingArrayList.length()) {
+                val jsonObject = groupingArrayList.getJSONObject(k)
+                groupingSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyGrouping!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = GroupingAdapter(this@TicketReportActivity, groupingArrayList)
+//            val adapter = GroupingAdapter(this@TicketReportActivity, groupingArrayList)
+            val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
             recyGrouping!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    groupingSort = JSONArray()
+
+                    for (k in 0 until groupingArrayList.length()) {
+                        val jsonObject = groupingArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("GroupName").length) {
+                            if (jsonObject.getString("GroupName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                groupingSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"groupingSort               7103    "+groupingSort)
+                    val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
+                    recyGrouping!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
 
             dialogGrouping!!.show()
             dialogGrouping!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1426,7 +1707,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("branch")){
             dialogBranch!!.dismiss()
-            val jsonObject = branchArrayList.getJSONObject(position)
+         //   val jsonObject = branchArrayList.getJSONObject(position)
+            val jsonObject = branchsort.getJSONObject(position)
             Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
             ID_Branch = jsonObject.getString("ID_Branch")
             tie_Branch!!.setText(jsonObject.getString("BranchName"))
@@ -1436,7 +1718,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("proddetails")){
             dialogProdDet!!.dismiss()
-            val jsonObject = prodDetailArrayList.getJSONObject(position)
+//            val jsonObject = prodDetailArrayList.getJSONObject(position)
+            val jsonObject = prodDetailSort.getJSONObject(position)
             Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
             ID_Product = jsonObject.getString("ID_Product")
             tie_Product!!.setText(jsonObject.getString("ProductName"))
@@ -1444,7 +1727,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
-            val jsonObject = followUpActionArrayList.getJSONObject(position)
+           // val jsonObject = followUpActionArrayList.getJSONObject(position)
+            val jsonObject = followUpActionSort.getJSONObject(position)
             Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
             ID_NextAction = jsonObject.getString("ID_NextAction")
             tie_FollowUpAction!!.setText(jsonObject.getString("NxtActnName"))
@@ -1454,7 +1738,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("followuptype")){
             dialogFollowupType!!.dismiss()
-            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+//            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            val jsonObject = followUpTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tie_FollowUpType!!.setText(jsonObject.getString("ActnTypeName"))
@@ -1464,7 +1749,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("prodpriority")){
             dialogProdPriority!!.dismiss()
-            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = prodPrioritySort.getJSONObject(position)
             Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
             ID_Priority = jsonObject.getString("ID_Priority")
             tie_Priority!!.setText(jsonObject.getString("PriorityName"))
@@ -1474,7 +1760,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("prodstatus")){
             dialogProdStatus!!.dismiss()
-            val jsonObject = prodStatusArrayList.getJSONObject(position)
+          //  val jsonObject = prodStatusArrayList.getJSONObject(position)
+            val jsonObject = prodStatusSort.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
@@ -1485,7 +1772,8 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         if (data.equals("grouping")){
             dialogGrouping!!.dismiss()
-            val jsonObject = groupingArrayList.getJSONObject(position)
+//            val jsonObject = groupingArrayList.getJSONObject(position)
+            val jsonObject = groupingSort.getJSONObject(position)
             Log.e(TAG,"GroupId   "+jsonObject.getString("GroupId"))
             GroupId = jsonObject.getString("GroupId")
             tie_Grouping!!.setText(jsonObject.getString("GroupName"))

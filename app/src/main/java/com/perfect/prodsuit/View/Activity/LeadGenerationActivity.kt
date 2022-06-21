@@ -16,7 +16,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -131,9 +133,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var image2 = ""
     private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     lateinit var leadFromArrayList : JSONArray
+    lateinit var leadFromSort : JSONArray
     lateinit var leadThroughArrayList : JSONArray
+    lateinit var leadThroughSort : JSONArray
     lateinit var leadByArrayList : JSONArray
+    lateinit var leadBySort : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
+    lateinit var mediaTypeSort : JSONArray
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
     var dialogLeadBy : Dialog? = null
@@ -155,6 +161,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     lateinit var leadEditListViewModel: LeadEditListViewModel
     lateinit var leadEditArrayList : JSONArray
+    lateinit var leadEditSort : JSONArray
 
     lateinit var leadEditDetailViewModel: LeadEditDetailViewModel
     lateinit var leadEditDetArrayList : JSONArray
@@ -162,21 +169,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList : JSONArray
+    lateinit var countrySort : JSONArray
     private var dialogCountry : Dialog? = null
     var recyCountry: RecyclerView? = null
 
     lateinit var stateViewModel: StateViewModel
     lateinit var stateArrayList : JSONArray
+    lateinit var stateSort : JSONArray
     private var dialogState : Dialog? = null
     var recyState: RecyclerView? = null
 
     lateinit var districtViewModel: DistrictViewModel
     lateinit var districtArrayList : JSONArray
+    lateinit var districtSort : JSONArray
     private var dialogDistrict : Dialog? = null
     var recyDistrict: RecyclerView? = null
 
     lateinit var postViewModel: PostViewModel
     lateinit var postArrayList : JSONArray
+    lateinit var postSort : JSONArray
     private var dialogPost : Dialog? = null
     var recyPost: RecyclerView? = null
 
@@ -216,15 +227,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
 
      lateinit var prodCategoryArrayList : JSONArray
+     lateinit var prodCategorySort : JSONArray
      lateinit var prodDetailArrayList : JSONArray
+     lateinit var prodDetailSort : JSONArray
      lateinit var prodStatusArrayList : JSONArray
+     lateinit var prodStatusSort : JSONArray
      lateinit var prodPriorityArrayList : JSONArray
+     lateinit var prodPrioritySort : JSONArray
      lateinit var followUpActionArrayList : JSONArray
+     lateinit var followUpActionSort : JSONArray
      lateinit var followUpTypeArrayList : JSONArray
+     lateinit var followUpTypeSort : JSONArray
      lateinit var branchTypeArrayList : JSONArray
+     lateinit var branchTypeSort : JSONArray
      lateinit var branchArrayList : JSONArray
+     lateinit var branchSort : JSONArray
      lateinit var departmentArrayList : JSONArray
+     lateinit var departmentSort : JSONArray
      lateinit var employeeArrayList : JSONArray
+     lateinit var employeeSort : JSONArray
 
      private var dialogProdCat : Dialog? = null
      private var dialogProdDet : Dialog? = null
@@ -1747,13 +1768,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadBy!! .setContentView(R.layout.lead_by_popup)
             dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadby = dialogLeadBy!! .findViewById(R.id.recyLeadby) as RecyclerView
+            val etsearch = dialogLeadBy!! .findViewById(R.id.etsearch) as EditText
+
+            leadBySort = JSONArray()
+            for (k in 0 until leadByArrayList.length()) {
+                val jsonObject = leadByArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadBySort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadby!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+//            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadBySort)
             recyLeadby!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadBySort = JSONArray()
+
+                    for (k in 0 until leadByArrayList.length()) {
+                        val jsonObject = leadByArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadBySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadBySort               7103    "+leadBySort)
+                    val adapter = LeadByAdapter(this@LeadGenerationActivity, leadBySort)
+                    recyLeadby!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadBy!!.show()
             dialogLeadBy!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1833,13 +1893,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadFrom!! .setContentView(R.layout.lead_from_popup)
             dialogLeadFrom!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadFrom = dialogLeadFrom!! .findViewById(R.id.recyLeadFrom) as RecyclerView
+            val etsearch = dialogLeadFrom!! .findViewById(R.id.etsearch) as EditText
+
+            leadFromSort = JSONArray()
+            for (k in 0 until leadFromArrayList.length()) {
+                val jsonObject = leadFromArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadFromSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadFrom!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromArrayList)
+//            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromArrayList)
+            val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromSort)
             recyLeadFrom!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadFromSort = JSONArray()
+
+                    for (k in 0 until leadFromArrayList.length()) {
+                        val jsonObject = leadFromArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadFromName").length) {
+                            if (jsonObject.getString("LeadFromName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadFromSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"reportNamesort               7103    "+leadFromSort)
+                    val adapter = LeadFromAdapter(this@LeadGenerationActivity, leadFromSort)
+                    recyLeadFrom!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadFrom!!.show()
             dialogLeadFrom!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1917,13 +2017,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadThrough!! .setContentView(R.layout.lead_through_popup)
             dialogLeadThrough!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadThrough = dialogLeadThrough!! .findViewById(R.id.recyLeadThrough) as RecyclerView
+            val etsearch = dialogLeadThrough!! .findViewById(R.id.etsearch) as EditText
+
+            leadThroughSort = JSONArray()
+            for (k in 0 until leadThroughArrayList.length()) {
+                val jsonObject = leadThroughArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadThroughSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadThrough!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughArrayList)
+//            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughArrayList)
+            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughSort)
             recyLeadThrough!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadThroughSort = JSONArray()
+
+                    for (k in 0 until leadThroughArrayList.length()) {
+                        val jsonObject = leadThroughArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadThroughName").length) {
+                            if (jsonObject.getString("LeadThroughName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadThroughSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadThroughSort               7103    "+leadThroughSort)
+                    val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadThroughSort)
+                    recyLeadThrough!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadThrough!!.show()
             dialogLeadThrough!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -2001,13 +2140,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogMediaType!! .setContentView(R.layout.mediatype_popup)
             dialogMediaType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyMediaType = dialogMediaType!! .findViewById(R.id.recyMediaType) as RecyclerView
+            val etsearch = dialogMediaType!! .findViewById(R.id.etsearch) as EditText
+
+            mediaTypeSort = JSONArray()
+            for (k in 0 until mediaTypeArrayList.length()) {
+                val jsonObject = mediaTypeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                mediaTypeSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyMediaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeArrayList)
+//            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeArrayList)
+            val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeSort)
             recyMediaType!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    mediaTypeSort = JSONArray()
+
+                    for (k in 0 until mediaTypeArrayList.length()) {
+                        val jsonObject = mediaTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("MdaName").length) {
+                            if (jsonObject.getString("MdaName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                mediaTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"mediaTypeSort               7103    "+mediaTypeSort)
+                    val adapter = MediaTypeAdapter(this@LeadGenerationActivity, mediaTypeSort)
+                    recyMediaType!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogMediaType!!.show()
             dialogMediaType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -2850,13 +3028,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogCountry!! .setContentView(R.layout.country_list_popup)
             dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycCountry = dialogCountry!! .findViewById(R.id.recycCountry) as RecyclerView
+            val etsearch = dialogCountry!! .findViewById(R.id.etsearch) as EditText
+
+            countrySort = JSONArray()
+            for (k in 0 until countryArrayList.length()) {
+                val jsonObject = countryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                countrySort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countrySort)
             recycCountry!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    countrySort = JSONArray()
+
+                    for (k in 0 until countryArrayList.length()) {
+                        val jsonObject = countryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Country").length) {
+                            if (jsonObject.getString("Country")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                countrySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"countrySort               7103    "+countrySort)
+                    val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countrySort)
+                    recycCountry!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogCountry!!.show()
             dialogCountry!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -2937,13 +3154,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogState!! .setContentView(R.layout.state_list_popup)
             dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycState = dialogState!! .findViewById(R.id.recycState) as RecyclerView
+            val etsearch = dialogState!! .findViewById(R.id.etsearch) as EditText
+
+            stateSort = JSONArray()
+            for (k in 0 until stateArrayList.length()) {
+                val jsonObject = stateArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                stateSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+//            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateSort)
             recycState!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    stateSort = JSONArray()
+
+                    for (k in 0 until stateArrayList.length()) {
+                        val jsonObject = stateArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("States").length) {
+                            if (jsonObject.getString("States")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                stateSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"stateSort               7103    "+stateSort)
+                    val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateSort)
+                    recycState!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogState!!.show()
             dialogState!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3024,13 +3281,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogDistrict!! .setContentView(R.layout.district_list_popup)
             dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycDistrict = dialogDistrict!! .findViewById(R.id.recycDistrict) as RecyclerView
+            val etsearch = dialogDistrict!! .findViewById(R.id.etsearch) as EditText
+
+            districtSort = JSONArray()
+            for (k in 0 until districtArrayList.length()) {
+                val jsonObject = districtArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                districtSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+//            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtSort)
             recycDistrict!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    districtSort = JSONArray()
+
+                    for (k in 0 until districtArrayList.length()) {
+                        val jsonObject = districtArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("District").length) {
+                            if (jsonObject.getString("District")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                districtSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"districtSort               7103    "+districtSort)
+                    val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtSort)
+                    recycDistrict!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogDistrict!!.show()
             dialogDistrict!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3111,13 +3408,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogPost!! .setContentView(R.layout.post_list_popup)
             dialogPost!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycPost = dialogPost!! .findViewById(R.id.recycPost) as RecyclerView
+            val etsearch = dialogPost!! .findViewById(R.id.etsearch) as EditText
+
+            postSort = JSONArray()
+            for (k in 0 until postArrayList.length()) {
+                val jsonObject = postArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                postSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycPost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postSort)
             recycPost!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    postSort = JSONArray()
+
+                    for (k in 0 until postArrayList.length()) {
+                        val jsonObject = postArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("PostName").length) {
+                            if (jsonObject.getString("PostName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                postSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"postSort               7103    "+postSort)
+                    val adapter = PostDetailAdapter(this@LeadGenerationActivity, postSort)
+                    recycPost!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogPost!!.show()
             dialogPost!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3244,13 +3580,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdCat!! .setContentView(R.layout.product_category_popup)
              dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyProdCategory = dialogProdCat!! .findViewById(R.id.recyProdCategory) as RecyclerView
+             val etsearch = dialogProdCat!! .findViewById(R.id.etsearch) as EditText
+
+             prodCategorySort = JSONArray()
+             for (k in 0 until prodCategoryArrayList.length()) {
+                 val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 prodCategorySort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategoryArrayList)
+//             val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategoryArrayList)
+             val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategorySort)
              recyProdCategory!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     prodCategorySort = JSONArray()
+
+                     for (k in 0 until prodCategoryArrayList.length()) {
+                         val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("CategoryName").length) {
+                             if (jsonObject.getString("CategoryName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 prodCategorySort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"prodCategorySort               7103    "+prodCategorySort)
+                     val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategorySort)
+                     recyProdCategory!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogProdCat!!.show()
              dialogProdCat!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3327,13 +3702,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdDet!! .setContentView(R.layout.product_detail_popup)
              dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyProdDetail = dialogProdDet!! .findViewById(R.id.recyProdDetail) as RecyclerView
+             val etsearch = dialogProdDet!! .findViewById(R.id.etsearch) as EditText
+
+             prodDetailSort = JSONArray()
+             for (k in 0 until prodDetailArrayList.length()) {
+                 val jsonObject = prodDetailArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 prodDetailSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailArrayList)
+//             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailArrayList)
+             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailSort)
              recyProdDetail!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     prodDetailSort = JSONArray()
+
+                     for (k in 0 until prodDetailArrayList.length()) {
+                         val jsonObject = prodDetailArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("ProductName").length) {
+                             if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 prodDetailSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"prodDetailSort               7103    "+prodDetailSort)
+                     val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailSort)
+                     recyProdDetail!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogProdDet!!.show()
              dialogProdDet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3410,13 +3824,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
              dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+             val etsearch = dialogProdPriority!! .findViewById(R.id.etsearch) as EditText
+
+             prodPrioritySort = JSONArray()
+             for (k in 0 until prodPriorityArrayList.length()) {
+                 val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 prodPrioritySort.put(jsonObject)
+             }
+
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = ProductPriorityAdapter(this@LeadGenerationActivity, prodPriorityArrayList)
+//             val adapter = ProductPriorityAdapter(this@LeadGenerationActivity, prodPriorityArrayList)
+             val adapter = ProductPriorityAdapter(this@LeadGenerationActivity, prodPrioritySort)
              recyProdPriority!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     prodPrioritySort = JSONArray()
+
+                     for (k in 0 until prodPriorityArrayList.length()) {
+                         val jsonObject = prodPriorityArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("PriorityName").length) {
+                             if (jsonObject.getString("PriorityName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 prodPrioritySort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"reportNamesort               7103    "+prodPrioritySort)
+                     val adapter = ProductPriorityAdapter(this@LeadGenerationActivity, prodPrioritySort)
+                     recyProdPriority!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogProdPriority!!.show()
              dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3493,13 +3947,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogProdStatus!! .setContentView(R.layout.product_status_popup)
              dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+             val etsearch = dialogProdStatus!! .findViewById(R.id.etsearch) as EditText
+
+             prodStatusSort = JSONArray()
+             for (k in 0 until prodStatusArrayList.length()) {
+                 val jsonObject = prodStatusArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 prodStatusSort.put(jsonObject)
+             }
+
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusArrayList)
+//             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusArrayList)
+             val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusSort)
              recyProdStatus!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     prodStatusSort = JSONArray()
+
+                     for (k in 0 until prodStatusArrayList.length()) {
+                         val jsonObject = prodStatusArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("StatusName").length) {
+                             if (jsonObject.getString("StatusName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 prodStatusSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"prodStatusSort               7103    "+prodStatusSort)
+                     val adapter = ProductStatusAdapter(this@LeadGenerationActivity, prodStatusSort)
+                     recyProdStatus!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogProdStatus!!.show()
              dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3573,13 +4067,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogFollowupAction!! .setContentView(R.layout.followup_action)
              dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+             val etsearch = dialogFollowupAction!! .findViewById(R.id.etsearch) as EditText
+
+             followUpActionSort = JSONArray()
+             for (k in 0 until followUpActionArrayList.length()) {
+                 val jsonObject = followUpActionArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 followUpActionSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = FollowupActionAdapter(this@LeadGenerationActivity, followUpActionArrayList)
+//             val adapter = FollowupActionAdapter(this@LeadGenerationActivity, followUpActionArrayList)
+             val adapter = FollowupActionAdapter(this@LeadGenerationActivity, followUpActionSort)
              recyFollowupAction!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     followUpActionSort = JSONArray()
+
+                     for (k in 0 until followUpActionArrayList.length()) {
+                         val jsonObject = followUpActionArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("NxtActnName").length) {
+                             if (jsonObject.getString("NxtActnName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 followUpActionSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"followUpActionSort               7103    "+followUpActionSort)
+                     val adapter = FollowupActionAdapter(this@LeadGenerationActivity, followUpActionSort)
+                     recyFollowupAction!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogFollowupAction!!.show()
              dialogFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3655,13 +4188,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
              dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+             val etsearch = dialogFollowupType!! .findViewById(R.id.etsearch) as EditText
+
+             followUpTypeSort = JSONArray()
+             for (k in 0 until followUpTypeArrayList.length()) {
+                 val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 followUpTypeSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = FollowupTypeAdapter(this@LeadGenerationActivity, followUpTypeArrayList)
+//             val adapter = FollowupTypeAdapter(this@LeadGenerationActivity, followUpTypeArrayList)
+             val adapter = FollowupTypeAdapter(this@LeadGenerationActivity, followUpTypeSort)
              recyFollowupType!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     followUpTypeSort = JSONArray()
+
+                     for (k in 0 until followUpTypeArrayList.length()) {
+                         val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                             if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 followUpTypeSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"followUpTypeSort               7103    "+followUpTypeSort)
+                     val adapter = FollowupTypeAdapter(this@LeadGenerationActivity, followUpTypeSort)
+                     recyFollowupType!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogFollowupType!!.show()
              dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3797,13 +4369,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogBranchType!! .setContentView(R.layout.branchtype_popup)
              dialogBranchType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyBranchType = dialogBranchType!! .findViewById(R.id.recyBranchType) as RecyclerView
+             val etsearch = dialogBranchType!! .findViewById(R.id.etsearch) as EditText
+
+             branchTypeSort = JSONArray()
+             for (k in 0 until branchTypeArrayList.length()) {
+                 val jsonObject = branchTypeArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 branchTypeSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyBranchType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeArrayList)
+//             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeArrayList)
+             val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeSort)
              recyBranchType!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     branchTypeSort = JSONArray()
+
+                     for (k in 0 until branchTypeArrayList.length()) {
+                         val jsonObject = branchTypeArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("BranchTypeName").length) {
+                             if (jsonObject.getString("BranchTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 branchTypeSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"branchTypeSort               7103    "+branchTypeSort)
+                     val adapter = BranchTypeAdapter(this@LeadGenerationActivity, branchTypeSort)
+                     recyBranchType!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogBranchType!!.show()
              dialogBranchType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3877,13 +4489,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogBranch!! .setContentView(R.layout.branch_popup)
              dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+             val etsearch = dialogBranch!! .findViewById(R.id.etsearch) as EditText
+
+             branchSort = JSONArray()
+             for (k in 0 until branchArrayList.length()) {
+                 val jsonObject = branchArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 branchSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = BranchAdapter(this@LeadGenerationActivity, branchArrayList)
+//             val adapter = BranchAdapter(this@LeadGenerationActivity, branchArrayList)
+             val adapter = BranchAdapter(this@LeadGenerationActivity, branchSort)
              recyBranch!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     branchSort = JSONArray()
+
+                     for (k in 0 until branchArrayList.length()) {
+                         val jsonObject = branchArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("BranchName").length) {
+                             if (jsonObject.getString("BranchName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 branchSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"branchSort               7103    "+branchSort)
+                     val adapter = BranchAdapter(this@LeadGenerationActivity, branchSort)
+                     recyBranch!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogBranch!!.show()
              dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3957,13 +4608,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogDepartment!! .setContentView(R.layout.department_popup)
              dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
+             val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+
+             departmentSort = JSONArray()
+             for (k in 0 until departmentArrayList.length()) {
+                 val jsonObject = departmentArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 departmentSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentArrayList)
+//             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentArrayList)
+             val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentSort)
              recyDeaprtment!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     departmentSort = JSONArray()
+
+                     for (k in 0 until departmentArrayList.length()) {
+                         val jsonObject = departmentArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("DeptName").length) {
+                             if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 departmentSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"departmentSort               7103    "+departmentSort)
+                     val adapter = DepartmentAdapter(this@LeadGenerationActivity, departmentSort)
+                     recyDeaprtment!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogDepartment!!.show()
              dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4036,13 +4726,52 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              dialogEmployee!! .setContentView(R.layout.employee_popup)
              dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
              recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
+             val etsearch = dialogEmployee!! .findViewById(R.id.etsearch) as EditText
+
+             employeeSort = JSONArray()
+             for (k in 0 until employeeArrayList.length()) {
+                 val jsonObject = employeeArrayList.getJSONObject(k)
+                 // reportNamesort.put(k,jsonObject)
+                 employeeSort.put(jsonObject)
+             }
 
              val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
              recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeSort)
              recyEmployee!!.adapter = adapter
              adapter.setClickListener(this@LeadGenerationActivity)
+
+             etsearch!!.addTextChangedListener(object : TextWatcher {
+                 override fun afterTextChanged(p0: Editable?) {
+                 }
+
+                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                 }
+
+                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                     //  list_view!!.setVisibility(View.VISIBLE)
+                     val textlength = etsearch!!.text.length
+                     employeeSort = JSONArray()
+
+                     for (k in 0 until employeeArrayList.length()) {
+                         val jsonObject = employeeArrayList.getJSONObject(k)
+                         if (textlength <= jsonObject.getString("EmpName").length) {
+                             if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                 employeeSort.put(jsonObject)
+                             }
+
+                         }
+                     }
+
+                     Log.e(TAG,"employeeSort               7103    "+employeeSort)
+                     val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeSort)
+                     recyEmployee!!.adapter = adapter
+                     adapter.setClickListener(this@LeadGenerationActivity)
+                 }
+             })
 
              dialogEmployee!!.show()
              dialogEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -4056,14 +4785,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         if (data.equals("leadfrom")){
             dialogLeadFrom!!.dismiss()
-            val jsonObject = leadFromArrayList.getJSONObject(position)
+//            val jsonObject = leadFromArrayList.getJSONObject(position)
+            val jsonObject = leadFromSort.getJSONObject(position)
             Log.e(TAG,"ID_LeadFrom   "+jsonObject.getString("ID_LeadFrom"))
             ID_LeadFrom = jsonObject.getString("ID_LeadFrom")
             txtleadfrom!!.text = jsonObject.getString("LeadFromName")
         }
         if (data.equals("leadthrough")){
             dialogLeadThrough!!.dismiss()
-            val jsonObject = leadThroughArrayList.getJSONObject(position)
+//            val jsonObject = leadThroughArrayList.getJSONObject(position)
+            val jsonObject = leadThroughSort.getJSONObject(position)
             Log.e(TAG,"ID_LeadThrough   "+jsonObject.getString("ID_LeadThrough"))
             ID_LeadThrough = jsonObject.getString("ID_LeadThrough")
             txtleadthrough!!.text = jsonObject.getString("LeadThroughName")
@@ -4072,7 +4803,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         if (data.equals("leadby")){
             dialogLeadBy!!.dismiss()
-            val jsonObject = leadByArrayList.getJSONObject(position)
+//            val jsonObject = leadByArrayList.getJSONObject(position)
+            val jsonObject = leadBySort.getJSONObject(position)
             Log.e(TAG,"ID_CollectedBy   "+jsonObject.getString("ID_CollectedBy"))
             ID_CollectedBy = jsonObject.getString("ID_CollectedBy")
             txtleadby!!.text = jsonObject.getString("Name")
@@ -4080,7 +4812,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         if (data.equals("mediatype")){
             dialogMediaType!!.dismiss()
-            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+//            val jsonObject = mediaTypeArrayList.getJSONObject(position)
+            val jsonObject = mediaTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_MediaMaster   "+jsonObject.getString("ID_MediaMaster"))
             ID_MediaMaster = jsonObject.getString("ID_MediaMaster")
             txtMediatype!!.text = jsonObject.getString("MdaName")
@@ -4123,21 +4856,24 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("prodcategory")){
              dialogProdCat!!.dismiss()
-             val jsonObject = prodCategoryArrayList.getJSONObject(position)
+//             val jsonObject = prodCategoryArrayList.getJSONObject(position)
+             val jsonObject = prodCategorySort.getJSONObject(position)
              Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
              ID_Category = jsonObject.getString("ID_Category")
              edtProdcategory!!.setText(jsonObject.getString("CategoryName"))
          }
          if (data.equals("proddetails")){
              dialogProdDet!!.dismiss()
-             val jsonObject = prodDetailArrayList.getJSONObject(position)
+//             val jsonObject = prodDetailArrayList.getJSONObject(position)
+             val jsonObject = prodDetailSort.getJSONObject(position)
              Log.e(TAG,"ID_Product   "+jsonObject.getString("ID_Product"))
              ID_Product = jsonObject.getString("ID_Product")
              edtProdproduct!!.setText(jsonObject.getString("ProductName"))
          }
          if (data.equals("prodpriority")){
              dialogProdPriority!!.dismiss()
-             val jsonObject = prodPriorityArrayList.getJSONObject(position)
+//             val jsonObject = prodPriorityArrayList.getJSONObject(position)
+             val jsonObject = prodPrioritySort.getJSONObject(position)
              Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
              ID_Priority = jsonObject.getString("ID_Priority")
              edtProdpriority!!.setText(jsonObject.getString("PriorityName"))
@@ -4147,7 +4883,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("prodstatus")){
              dialogProdStatus!!.dismiss()
-             val jsonObject = prodStatusArrayList.getJSONObject(position)
+//             val jsonObject = prodStatusArrayList.getJSONObject(position)
+             val jsonObject = prodStatusSort.getJSONObject(position)
              Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
              ID_Status = jsonObject.getString("ID_Status")
              edtProdstatus!!.setText(jsonObject.getString("StatusName"))
@@ -4178,7 +4915,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          }
          if (data.equals("followupaction")){
              dialogFollowupAction!!.dismiss()
-             val jsonObject = followUpActionArrayList.getJSONObject(position)
+//             val jsonObject = followUpActionArrayList.getJSONObject(position)
+             val jsonObject = followUpActionSort.getJSONObject(position)
              Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
              ID_NextAction = jsonObject.getString("ID_NextAction")
              edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
@@ -4188,7 +4926,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("followuptype")){
              dialogFollowupType!!.dismiss()
-             val jsonObject = followUpTypeArrayList.getJSONObject(position)
+//             val jsonObject = followUpTypeArrayList.getJSONObject(position)
+             val jsonObject = followUpTypeSort.getJSONObject(position)
              Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
              ID_ActionType = jsonObject.getString("ID_ActionType")
              edtFollowtype!!.setText(jsonObject.getString("ActnTypeName"))
@@ -4198,7 +4937,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("branchtype")){
              dialogBranchType!!.dismiss()
-             val jsonObject = branchTypeArrayList.getJSONObject(position)
+//             val jsonObject = branchTypeArrayList.getJSONObject(position)
+             val jsonObject = branchTypeSort.getJSONObject(position)
              Log.e(TAG,"ID_BranchType   "+jsonObject.getString("ID_BranchType"))
              ID_BranchType = jsonObject.getString("ID_BranchType")
              edtbarnchtype!!.setText(jsonObject.getString("BranchTypeName"))
@@ -4208,7 +4948,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("branch")){
              dialogBranch!!.dismiss()
-             val jsonObject = branchArrayList.getJSONObject(position)
+//             val jsonObject = branchArrayList.getJSONObject(position)
+             val jsonObject = branchSort.getJSONObject(position)
              Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
              ID_Branch = jsonObject.getString("ID_Branch")
              edtbranch!!.setText(jsonObject.getString("BranchName"))
@@ -4218,7 +4959,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("department")){
              dialogDepartment!!.dismiss()
-             val jsonObject = departmentArrayList.getJSONObject(position)
+//             val jsonObject = departmentArrayList.getJSONObject(position)
+             val jsonObject = departmentSort.getJSONObject(position)
              Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
              ID_Department = jsonObject.getString("ID_Department")
              edtdepartment!!.setText(jsonObject.getString("DeptName"))
@@ -4228,7 +4970,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("employee")){
              dialogEmployee!!.dismiss()
-             val jsonObject = employeeArrayList.getJSONObject(position)
+//             val jsonObject = employeeArrayList.getJSONObject(position)
+             val jsonObject = employeeSort.getJSONObject(position)
              Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
              ID_Employee = jsonObject.getString("ID_Employee")
              edtEmployee!!.setText(jsonObject.getString("EmpName"))
@@ -4238,7 +4981,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("countrydetail")){
              dialogCountry!!.dismiss()
-             val jsonObject = countryArrayList.getJSONObject(position)
+//             val jsonObject = countryArrayList.getJSONObject(position)
+             val jsonObject = countrySort.getJSONObject(position)
              Log.e(TAG,"FK_Country   "+jsonObject.getString("FK_Country"))
              FK_Country = jsonObject.getString("FK_Country")
              edtCountry!!.setText(jsonObject.getString("Country"))
@@ -4261,7 +5005,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("statedetail")){
              dialogState!!.dismiss()
-             val jsonObject = stateArrayList.getJSONObject(position)
+//             val jsonObject = stateArrayList.getJSONObject(position)
+             val jsonObject = stateSort.getJSONObject(position)
              Log.e(TAG,"FK_States   "+jsonObject.getString("FK_States"))
              FK_States = jsonObject.getString("FK_States")
              edtState!!.setText(jsonObject.getString("States"))
@@ -4281,7 +5026,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("districtdetail")){
              dialogDistrict!!.dismiss()
-             val jsonObject = districtArrayList.getJSONObject(position)
+//             val jsonObject = districtArrayList.getJSONObject(position)
+             val jsonObject = districtSort.getJSONObject(position)
              Log.e(TAG,"FK_District   "+jsonObject.getString("FK_District"))
              FK_District = jsonObject.getString("FK_District")
              edtDistrict!!.setText(jsonObject.getString("District"))
@@ -4299,7 +5045,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
          if (data.equals("postdetail")){
              dialogPost!!.dismiss()
-             val jsonObject = postArrayList.getJSONObject(position)
+//             val jsonObject = postArrayList.getJSONObject(position)
+             val jsonObject = postSort.getJSONObject(position)
              Log.e(TAG,"FK_Post  3672    "+jsonObject.getString("FK_Post"))
              Log.e(TAG,"PinCode  3672    "+jsonObject.getString("PinCode"))
              FK_Post = jsonObject.getString("FK_Post")
@@ -4321,7 +5068,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //             saveUpdateMode = "1"  //Update
 //             rltvPinCode!!.visibility = View.VISIBLE
 
-             val jsonObject = leadEditArrayList.getJSONObject(position)
+//             val jsonObject = leadEditArrayList.getJSONObject(position)
+             val jsonObject = leadEditSort.getJSONObject(position)
              Log.e(TAG,"ID_LeadGenerate   "+jsonObject.getString("ID_LeadGenerate"))
 
              ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
@@ -5103,13 +5851,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogLeadEdit!! .setContentView(R.layout.lead_editdetail_popup)
             dialogLeadEdit!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadDetail = dialogLeadEdit!! .findViewById(R.id.recyLeadDetail) as RecyclerView
+            val etsearch = dialogLeadEdit!! .findViewById(R.id.etsearch) as EditText
+
+            leadEditSort = JSONArray()
+            for (k in 0 until leadEditArrayList.length()) {
+                val jsonObject = leadEditArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadEditSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+//            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditArrayList)
+            val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditSort)
             recyLeadDetail!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadEditSort = JSONArray()
+
+                    for (k in 0 until leadEditArrayList.length()) {
+                        val jsonObject = leadEditArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CustomerName").length) {
+                            if (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadEditSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadEditSort               7103    "+leadEditSort)
+                    val adapter = LeadEditDetailAdapter(this@LeadGenerationActivity, leadEditSort)
+                    recyLeadDetail!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogLeadEdit!!.show()
             dialogLeadEdit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

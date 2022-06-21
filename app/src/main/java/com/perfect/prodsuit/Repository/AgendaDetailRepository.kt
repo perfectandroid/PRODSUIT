@@ -81,7 +81,7 @@ object AgendaDetailRepository {
 
                 Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode)
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
-                Log.e(TAG,"requestObject1   78   "+SubMode+"   "+ID_ActionType)
+                Log.e(TAG,"requestObject1   78   "+ID_ActionType+"   "+ID_ActionType)
 
             } catch (e: Exception) {
                 e.printStackTrace()

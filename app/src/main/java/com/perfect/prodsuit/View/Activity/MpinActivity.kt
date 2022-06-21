@@ -8,16 +8,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.ForgotMpinViewModel
 import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -39,6 +38,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var nine: TextView? = null
     private var zero: TextView? = null
     private var tvLogout: TextView? = null
+    private var tvForgotMpin: TextView? = null
     private var et_1: EditText? = null
     private var et_2: EditText? = null
     private var et_3: EditText? = null
@@ -50,6 +50,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var clear: LinearLayout? = null
     lateinit var context: Context
     lateinit var mpinActivityViewModel: MpinActivityViewModel
+    lateinit var forgotMpinViewModel: ForgotMpinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +60,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         setRegViews()
         context = this@MpinActivity
         mpinActivityViewModel = ViewModelProvider(this).get(MpinActivityViewModel::class.java)
+        forgotMpinViewModel = ViewModelProvider(this).get(ForgotMpinViewModel::class.java)
     }
 
     private fun setRegViews() {
         var tvdata = findViewById<TextView>(R.id.tvdata)
         tvLogout = findViewById<TextView>(R.id.tvLogout)
+        tvForgotMpin = findViewById<TextView>(R.id.tvForgotMpin)
         one = findViewById<TextView>(R.id.one)
         two = findViewById<TextView>(R.id.two)
         three = findViewById<TextView>(R.id.three)
@@ -84,6 +87,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         clear = findViewById<LinearLayout>(R.id.clear)
         imgShowPin = findViewById<ImageView>(R.id.imgShowPin)
         tvLogout!!.setOnClickListener(this)
+        tvForgotMpin!!.setOnClickListener(this)
         one!!.setOnClickListener(this)
         two!!.setOnClickListener(this)
         three!!.setOnClickListener(this)
@@ -109,6 +113,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tvLogout->{
                 try {
                     doLogout()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            R.id.tvForgotMpin->{
+                try {
+                   forgotMpinDialog()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -476,6 +487,41 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun forgotMpinDialog() {
+       try {
+               val builder = android.app.AlertDialog.Builder(this)
+               val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+               val layout = inflater1.inflate(R.layout.forgot_mpin, null)
+               val btnVerify = layout.findViewById(R.id.btnVerify) as Button
+               val tie_Mobile = layout.findViewById(R.id.tie_Mobile) as TextInputEditText
+
+
+               builder.setView(layout)
+               val alertDialog = builder.create()
+
+               btnVerify.setOnClickListener {
+
+                   if (tie_Mobile.text.toString().length == 10){
+                       Config.Utils.hideSoftKeyBoard(this@MpinActivity,it)
+                       alertDialog.dismiss()
+                       forgotMpin(tie_Mobile.text.toString())
+                   }
+                   else{
+                       Config.snackBars(context,it,"Enter Valid Mobile Number")
+                   }
+
+               }
+               alertDialog.show()
+           }
+           catch (e: Exception){
+
+           }
+
+
+    }
+
+
+
     companion object {
         var strMPIN= ""
     }
@@ -582,6 +628,64 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         et_4!!.text.clear()
         et_5!!.text.clear()
         et_6!!.text.clear()
+    }
+
+
+    private fun forgotMpin(mobileNumber : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                forgotMpinViewModel.forgotMpin(this,mobileNumber)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e("TAG","jObject   648   "+jObject)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val builder = AlertDialog.Builder(this@MpinActivity, R.style.MyDialogTheme)
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                                clearAll()
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@MpinActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                                clearAll()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 }

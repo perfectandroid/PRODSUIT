@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="0dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/llDocumentDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="12/02/2022"
+            android:gravity="end"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
+
+
+        <TextView
+            android:id="@+id/txtSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sree"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableTint="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sree"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/greydark"
+            android:textSize="13dp"
+            android:drawableTint="@color/black"
+            android:textStyle="normal" />
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

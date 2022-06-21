@@ -14,6 +14,8 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
 import android.view.*
@@ -136,6 +138,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var recyActionType: RecyclerView? = null
     lateinit var activityArrayList : JSONArray
     lateinit var followupDetailArrayList : JSONArray
+    lateinit var followupDetailSort : JSONArray
     var recyAgendaDetail: RecyclerView? = null
     var SubMode : String?= ""
     var llCall : LinearLayout? = null
@@ -802,7 +805,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         if (data.equals("followuptype")){
            followuptypeAction!!.dismiss()
-            val jsonObject = followupDetailArrayList.getJSONObject(position)
+//            val jsonObject = followupDetailArrayList.getJSONObject(position)
+            val jsonObject = followupDetailSort.getJSONObject(position)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
@@ -1483,13 +1487,52 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 followuptypeAction !! .setContentView(R.layout.followup_type_popup)
                 followuptypeAction !!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
                 recyActionType = followuptypeAction !! .findViewById(R.id.recyFollowupType) as RecyclerView
+                val etsearch = followuptypeAction!! .findViewById(R.id.etsearch) as EditText
+
+                followupDetailSort = JSONArray()
+                for (k in 0 until followupDetailArrayList.length()) {
+                    val jsonObject = followupDetailArrayList.getJSONObject(k)
+                    // reportNamesort.put(k,jsonObject)
+                    followupDetailSort.put(jsonObject)
+                }
 
                 val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                 recyActionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-                val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, followupDetailArrayList)
+//                val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, followupDetailArrayList)
+                val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, followupDetailSort)
                 recyActionType!!.adapter = adapter
                 adapter.setClickListener(this@AccountDetailsActivity)
+
+                etsearch!!.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                        //  list_view!!.setVisibility(View.VISIBLE)
+                        val textlength = etsearch!!.text.length
+                        followupDetailSort = JSONArray()
+
+                        for (k in 0 until followupDetailArrayList.length()) {
+                            val jsonObject = followupDetailArrayList.getJSONObject(k)
+                            if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                                if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                    followupDetailSort.put(jsonObject)
+                                }
+
+                            }
+                        }
+
+                        Log.e(TAG,"followupDetailSort               7103    "+followupDetailSort)
+                        val adapter = FollowupTypeAdapter(this@AccountDetailsActivity, followupDetailSort)
+                        recyActionType!!.adapter = adapter
+                        adapter.setClickListener(this@AccountDetailsActivity)
+                    }
+                })
 
                 followuptypeAction!!.show()
                 followuptypeAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
