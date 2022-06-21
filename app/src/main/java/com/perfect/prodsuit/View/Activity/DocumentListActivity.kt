@@ -13,13 +13,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.DocumentDetailAdapter
 import com.perfect.prodsuit.Viewmodel.DocumentDetailViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
+class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
     val TAG : String = "DocumentListActivity"
     private var progressDialog: ProgressDialog? = null
@@ -27,6 +31,8 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var documentDetailViewModel: DocumentDetailViewModel
     lateinit var documentDetailArrayList : JSONArray
+
+    var recyDocumentDetail: RecyclerView? = null
 
     var ID_LeadGenerate : String = ""
     var ID_LeadGenerateProduct : String = ""
@@ -60,6 +66,8 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+//        recyDocumentDetail = findViewById(R.id.recyDocumentDetail)
     }
 
     override fun onClick(v: View) {
@@ -100,24 +108,19 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
                                 if (documentDetailArrayList.length()>0){
 
                                     Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
+
+
+
+                                    recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
+                                    // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                    recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                                    // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = DocumentDetailAdapter(this@DocumentListActivity, documentDetailArrayList)
+                                    recyDocumentDetail!!.adapter = adapter
+                                    adapter.setClickListener(this@DocumentListActivity)
+
+
                                 }
-//
-//
-//                                    recyAgendaType = findViewById(R.id.recyAgendaType) as RecyclerView
-//                                    // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//                                    recyAgendaType!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-//                                    // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                    val adapter = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
-//                                    recyAgendaType!!.adapter = adapter
-//                                    adapter.setClickListener(this@AgendaActivity)
-//
-//                                    Id_Agenda = agendaTypeArrayList.getJSONObject(0).getString("Id_Agenda")
-//
-//                                    getActionTypes(Id_Agenda)
-//
-//                                }
-
-
 
                             } else {
 
@@ -148,6 +151,10 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
             }
 
         }
+
+    }
+
+    override fun onClick(position: Int, data: String) {
 
     }
 
