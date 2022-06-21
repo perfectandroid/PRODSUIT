@@ -785,8 +785,23 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
         if (data.equals("agendaDocument")){
             val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            val ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
+            val ID_LeadGenerateProduct = jsonObject.getString("ID_LeadGenerateProduct")
             val i = Intent(this@AgendaActivity, DocumentListActivity::class.java)
-            i.putExtra("jsonObject", jsonObject.toString())
+            i.putExtra("ID_LeadGenerate", ID_LeadGenerate)
+            i.putExtra("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+          //  i.putExtra("jsonObject", jsonObject.toString())
+            startActivity(i)
+        }
+
+        if (data.equals("DocumentList")){
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            val ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
+            val ID_LeadGenerateProduct = jsonObject.getString("ID_LeadGenerateProduct")
+            val i = Intent(this@AgendaActivity, DocumentListActivity::class.java)
+            i.putExtra("ID_LeadGenerate", ID_LeadGenerate)
+            i.putExtra("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+           // i.putExtra("jsonObject", jsonObject.toString())
             startActivity(i)
         }
     }

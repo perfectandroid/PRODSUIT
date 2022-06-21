@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,6 +17,9 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
 
+    var ID_LeadGenerate : String = ""
+    var ID_LeadGenerateProduct : String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -24,6 +28,16 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener {
         context = this@DocumentListActivity
 
         setRegViews()
+
+        if (getIntent().hasExtra("ID_LeadGenerate")) {
+            ID_LeadGenerate = getIntent().getStringExtra("ID_LeadGenerate")!!
+        }
+        if (getIntent().hasExtra("ID_LeadGenerateProduct")) {
+            ID_LeadGenerateProduct = getIntent().getStringExtra("ID_LeadGenerateProduct")!!
+        }
+
+        Log.e(TAG,"ID_LeadGenerate         391   "+ID_LeadGenerate)
+        Log.e(TAG,"ID_LeadGenerateProduct  392   "+ID_LeadGenerateProduct)
     }
 
     private fun setRegViews() {
