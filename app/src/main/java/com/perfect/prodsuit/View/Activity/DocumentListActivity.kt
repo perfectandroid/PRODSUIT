@@ -3,6 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -36,6 +37,7 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     var ID_LeadGenerate : String = ""
     var ID_LeadGenerateProduct : String = ""
+    var ID_LeadDocumentDetails : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,6 +157,19 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     }
 
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("Documents")) {
+
+            Log.e(TAG, "Documents   162")
+            val jsonObject = documentDetailArrayList.getJSONObject(position)
+            ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
+            val i = Intent(this@DocumentListActivity, DocumentViewActivity::class.java)
+            i.putExtra("ID_LeadGenerate", ID_LeadGenerate)
+            i.putExtra("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+            i.putExtra("ID_LeadDocumentDetails", ID_LeadDocumentDetails)
+            startActivity(i)
+
+        }
 
     }
 

@@ -39,10 +39,10 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
                 holder.txtSubject.text        = jsonObject!!.getString("DocumentSubject")
                 holder.txtDescription.text    = jsonObject!!.getString("DocumentDescription")
 
-//                holder.llDocumentDetails!!.setTag(position)
-//                holder.llDocumentDetails!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, jsonObject!!.getString("Documents"))
-//                })
+                holder.llDocumentDetails!!.setTag(position)
+                holder.llDocumentDetails!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "Documents")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -66,6 +66,16 @@ object DocumentDetailRepository {
 //                "ID_LeadGenerateProduct":1
 
 
+//                IAMGEDETAILS
+//                "ReqMode":"47",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+//                "ID_LeadGenerateProduct":1
+//                "ID_LeadGenerate:"1"
+//                "ID_LeadDocumentDetails:"1"
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -76,6 +86,15 @@ object DocumentDetailRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+
+
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("47"))
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
+//                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+//                requestObject1.put("ID_LeadDocumentDetails", ProdsuitApplication.encryptStart("7"))
 
                 Log.e(TAG,"Id_Agenda   78   "+ID_LeadGenerate+"  ::::  "+ID_LeadGenerateProduct)
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
