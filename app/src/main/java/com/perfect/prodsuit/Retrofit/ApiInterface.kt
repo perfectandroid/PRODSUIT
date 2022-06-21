@@ -241,4 +241,7 @@ interface ApiInterface {
     @POST("UserValidations/UpdateLeadManagement")
     fun getUpdateLeadManagement(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ForgotMPIN")
+    fun getForgotMPIN(@Body body: RequestBody): Call<String>
+
 }
