@@ -21,8 +21,10 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.LeadManagFilterRepository
+import com.perfect.prodsuit.Repository.SortLeadMangeListRepository
 import com.perfect.prodsuit.View.Adapter.OverdueListAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
+import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
 import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.OverDueListViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
@@ -37,6 +39,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     lateinit var context: Context
     lateinit var overduelistViewModel: OverDueListViewModel
     lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
+    lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
     private var rv_overduelist: RecyclerView?=null
     lateinit var overdueArrayList : JSONArray
     private var SubMode:String?=""
@@ -49,9 +52,12 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var mMonth:Int = 0
     private var mDay:Int = 0
     private var mHour:Int = 0
+    private var strCriteria:String?="1"
     private var mMinute:Int = 0
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
+    internal var etxt_date1: EditText? = null
+    internal var etxt_name1: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -68,13 +74,20 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         var name = ""
         var nxtactndate = ""
         var submode = ""
+        var name1 = ""
+        var date = ""
+        var criteria = ""
     }
         private fun setRegViews() {
         rv_overduelist = findViewById(R.id.rv_overduelist)
-        val imback = findViewById<ImageView>(R.id.imback)
-        val imSort= findViewById<ImageView>(R.id.imSort)
-        imback!!.setOnClickListener(this)
-        imSort!!.setOnClickListener(this)
+           val imback = findViewById<ImageView>(R.id.imback)
+           val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)
+            val imgv_sort= findViewById<ImageView>(R.id.imgv_sort)
+
+           imback!!.setOnClickListener(this)
+            imgv_filter!!.setOnClickListener(this)
+            imgv_sort!!.setOnClickListener(this)
+
     }
 
     private fun getOverdueList() {
@@ -140,11 +153,128 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             R.id.imback -> {
                 finish()
             }
-            R.id.imSort -> {
+            R.id.imgv_filter -> {
+                filterData()
+            }
+            R.id.imgv_sort -> {
                 sortData()
             }
         }
     }
+    private fun sortData() {
+
+        try {
+            val builder1 = AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+
+            val btncancel = layout1.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
+
+            val checkbox_asc = layout1.findViewById<CheckBox>(R.id.checkbox_asc) as CheckBox
+            val checkbox_dsc = layout1.findViewById<CheckBox>(R.id.checkbox_dsc)  as CheckBox
+
+            val checkbox_date = layout1.findViewById<CheckBox>(R.id.checkbox_Date)  as CheckBox
+            val checkbox_nme = layout1.findViewById<CheckBox>(R.id.checkbox_name)  as CheckBox
+
+             etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
+             etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
+
+
+            etxt_date1!!.setKeyListener(null)
+
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            // etxt_date!!.setText(sdf.format(c.time))
+
+            etxt_date1!!.setOnClickListener(View.OnClickListener { dateSelector1() })
+
+            if (checkbox_asc.isChecked)
+            {
+                criteria="1"
+                checkbox_asc.isChecked=true
+                checkbox_dsc.isChecked=false
+            }
+            if (checkbox_dsc.isChecked){
+                criteria="2"
+                checkbox_asc.isChecked=false
+                checkbox_dsc.isChecked=true
+            }
+            if (checkbox_date.isChecked)
+            {
+                date=etxt_date1!!.text.toString()
+
+            }
+            else
+            {
+                date=""
+            }
+            if (checkbox_nme.isChecked)
+            {
+                date=etxt_name1!!.text.toString()
+
+            }
+            else
+            {
+                name=""
+            }
+            if(!checkbox_asc.isChecked()&& !checkbox_dsc.isChecked)
+            {
+                Toast.makeText(applicationContext,"Please select a value",Toast.LENGTH_LONG).show()
+            }
+            checkbox_asc.setOnClickListener(View.OnClickListener {
+                checkbox_asc.isChecked=true
+                checkbox_dsc.isChecked=false
+
+                criteria="1"
+            })
+            checkbox_dsc.setOnClickListener(View.OnClickListener {
+                checkbox_dsc.isChecked=true
+                checkbox_asc.isChecked=false
+                criteria="2"
+            })
+
+
+
+
+
+
+
+            builder1.setView(layout1)
+            val alertDialogSort = builder1.create()
+
+            btncancel.setOnClickListener {
+
+                alertDialogSort.dismiss() }
+            btnsubmit.setOnClickListener {
+
+                if(etxt_date1!!.text.toString().equals("") && etxt_name1!!.text.toString().equals(""))
+                {
+                    Toast.makeText(applicationContext,"Please enter a value",Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    getSortList()
+                    alertDialogSort.dismiss()
+                }
+
+
+
+            }
+
+            alertDialogSort.show()
+
+        }catch (e: Exception){
+
+        }
+
+
+    }
+
+
 
     override fun onClick(position: Int, data: String) {
         if (data.equals("todolist")){
@@ -154,12 +284,12 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             startActivity(i)
         }
     }
-    private fun sortData() {
+    private fun filterData() {
 
         try {
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+            val layout1 = inflater1.inflate(R.layout.filter_popup, null)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
@@ -201,7 +331,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     }
     fun dateSelector() {
         try {
-            val sdf = SimpleDateFormat("dd-MM-yyyy")
+           val sdf = SimpleDateFormat("dd-MM-yyyy")
             val c = Calendar.getInstance()
             mYear = c.get(Calendar.YEAR)
             mMonth = c.get(Calendar.MONTH)
@@ -211,7 +341,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                     yr = year
                     month = monthOfYear
                     day = dayOfMonth
-                    etxt_date!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                    etxt_date!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = c.timeInMillis
@@ -280,6 +410,92 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun getSortList() {
+
+            submode="2"
+            context = this@OverDueActivity
+
+        activitySortLeadMngmntViewModel = ViewModelProvider(this).get(ActivitySortLeadMngmntViewModel::class.java)
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(this, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    activitySortLeadMngmntViewModel.getSortlist(this)!!.observe(
+                        this,
+                        Observer { sortleadmngeSetterGetter ->
+                            val msg = sortleadmngeSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    //   var jobj = jObject.getJSONObject("UserLoginDetails")
+                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
+                                    overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                    Log.e("Filter1","overdueArrayList 69  "+overdueArrayList)
+                                    val lLayout = GridLayoutManager(this@OverDueActivity, 1)
+                                    rv_overduelist!!.layoutManager =
+                                        lLayout as RecyclerView.LayoutManager?
+                                    rv_overduelist!!.setHasFixedSize(true)
+                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList,SubMode!!)
+                                    rv_overduelist!!.adapter = adapter
+                                    adapter.setClickListener(this@OverDueActivity)
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@OverDueActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Some Technical Issues.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+
+    fun dateSelector1() {
+        try {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val c = Calendar.getInstance()
+            mYear = c.get(Calendar.YEAR)
+            mMonth = c.get(Calendar.MONTH)
+            mDay = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    yr = year
+                    month = monthOfYear
+                    day = dayOfMonth
+                    etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            datePickerDialog.show()
+
+
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
         }
     }
 }

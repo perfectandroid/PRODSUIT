@@ -10,24 +10,29 @@
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_add_remark.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_homemain.xml" value="0.18" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_image.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_leadgeneration.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_leadmanagement.xml" value="0.17604166666666668" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_leads.xml" value="0.22" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_location.xml" value="0.17604166666666668" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_overdue.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_overdue.xml" value="0.2" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_upcomingtask.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/activity_upcomingtask.xml" value="0.25" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_district_list.xml" value="0.13802083333333334" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_notification.xml" value="0.16" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/adapter_todolist.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/callstatus_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/changepin_popup.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/filter_popup.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/followup_action.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/logout_dlte_lead.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/logout_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/pincodedetail_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/post_list_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/reminder_setter_popup.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/reporttypelist.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/sort_popup.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/28-05-2022/app/src/main/res/layout/sort_popup.xml" value="0.2" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/address_svg.xml" value="0.167" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolorprimary.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/btn_bgcolouryellow.xml" value="0.174" />
