@@ -1,10 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -14,21 +11,24 @@ import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
 
+    val TAG : String = "LeadManagemnetActivity"
+    private var progressDialog: ProgressDialog? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -46,7 +46,15 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
     private var lltodolist: LinearLayout? = null
     private var lloverdue: LinearLayout? = null
     private var lloverUpcoming: LinearLayout? = null
+
+    private var tv_todo_count: TextView? = null
+    private var tv_overdue_count: TextView? = null
+    private var tv_upcoming_count: TextView? = null
+
     lateinit var context: Context
+
+    lateinit var agendaCountViewModel: AgendaCountViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -54,8 +62,10 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         setContentView(R.layout.activity_leadmanagement)
         setRegViews()
         context = this@LeadManagemnetActivity
+        agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         bottombarnav()
         getCalendarId(context)
+        getCounts()
     }
 
     private fun setRegViews() {
@@ -65,6 +75,10 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         lltodolist = findViewById(R.id.lltodolist)
         lloverdue = findViewById(R.id.lloverdue)
         lloverUpcoming = findViewById(R.id.lloverUpcoming)
+
+        tv_todo_count = findViewById(R.id.tv_todo_count)
+        tv_overdue_count = findViewById(R.id.tv_overdue_count)
+        tv_upcoming_count = findViewById(R.id.tv_upcoming_count)
 
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
@@ -389,4 +403,50 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+
+    private fun getCounts() {
+        var countAgenda = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                agendaCountViewModel.getAgendaCount(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            progressDialog!!.dismiss()
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   167   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("PendingCountDetails")
+                                tv_todo_count!!.setText(jobjt.getString("Todolist"))
+                                tv_overdue_count!!.setText(jobjt.getString("OverDue"))
+                                tv_upcoming_count!!.setText(jobjt.getString("UpComingWorks"))
+
+                            } else {
+
+                            }
+                        } else {
+                            progressDialog!!.dismiss()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+
 }
