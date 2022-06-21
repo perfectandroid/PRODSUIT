@@ -1288,7 +1288,7 @@
             android:backgroundTint="@color/white"
             app:cardCornerRadius="10dp"
             app:cardUseCompatPadding="true"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/ll_Document"
