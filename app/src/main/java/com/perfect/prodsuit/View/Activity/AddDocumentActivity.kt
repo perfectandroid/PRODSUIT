@@ -8,7 +8,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -493,16 +492,33 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             )
 
             try {
-                val extension: String = documentPath.substring(documentPath.lastIndexOf("."))
-                val bitmap = BitmapFactory.decodeFile(documentPath)
-                val stream =  ByteArrayOutputStream()
-              //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
-                } else {
-                    encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+
+//                val bitmap = BitmapFactory.decodeFile(documentPath)
+//                val stream =  ByteArrayOutputStream()
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+//                val fileOuputStream = FileOutputStream("C:\\testing2.txt")
+
+                val inputStream: InputStream = FileInputStream(documentPath)
+                val bos = ByteArrayOutputStream()
+                val b = ByteArray(1024 * 8)
+                var bytesRead = 0
+
+                while (inputStream.read(b).also { bytesRead = it } != -1) {
+                    bos.write(b, 0, bytesRead)
                 }
 
+             //   byteArray = bos.toByteArray()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
+                    encodeDoc = Base64.getEncoder().encodeToString(bos.toByteArray());
+                } else {
+                  //  encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                    encodeDoc = android.util.Base64.encodeToString(bos.toByteArray(), android.util.Base64.DEFAULT)
+                }
+                val extension: String = documentPath.substring(documentPath.lastIndexOf("."))
+                Log.e(TAG,"encodeDoc   508   "+encodeDoc)
                 saveDocuments(strDate,strSubject,strDescription,encodeDoc,extension)
             }
             catch (e: Exception){
