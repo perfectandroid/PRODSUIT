@@ -244,4 +244,7 @@ interface ApiInterface {
     @POST("UserValidations/ForgotMPIN")
     fun getForgotMPIN(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/DocumentDetails")
+    fun getDocumentDetails(@Body body: RequestBody): Call<String>
+
 }
