@@ -11,8 +11,8 @@ class SaveDocumentViewModel: ViewModel() {
     var saveDocsData: MutableLiveData<SaveDocumentModel>? = null
 
     fun saveDocuments(context: Context, ID_LeadGenerateProduct : String, strDate : String, strSubject : String, strDescription : String,
-                      encodeDoc : String) : LiveData<SaveDocumentModel>? {
-        saveDocsData = SaveDocumentRepository.getServicesApiCall(context, ID_LeadGenerateProduct, strDate,strSubject, strDescription, encodeDoc)
+                      encodeDoc : String,extension: String) : LiveData<SaveDocumentModel>? {
+        saveDocsData = SaveDocumentRepository.getServicesApiCall(context, ID_LeadGenerateProduct, strDate,strSubject, strDescription, encodeDoc,extension)
         return saveDocsData
     }
 }

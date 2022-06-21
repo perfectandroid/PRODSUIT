@@ -28,12 +28,12 @@ object SaveDocumentRepository {
     val TAG: String = "SaveDocumentRepository"
 
     fun getServicesApiCall(context: Context, ID_LeadGenerateProduct : String, strDate : String, strSubject : String, strDescription : String,
-                           encodeDoc : String): MutableLiveData<SaveDocumentModel> {
-        saveDocuments(context, ID_LeadGenerateProduct, strDate,strSubject, strDescription, encodeDoc)
+                           encodeDoc : String,extension: String): MutableLiveData<SaveDocumentModel> {
+        saveDocuments(context, ID_LeadGenerateProduct, strDate,strSubject, strDescription, encodeDoc,extension)
         return saveDocssetterGetter
     }
 
-    private fun saveDocuments(context: Context, ID_LeadGenerateProduct: String, strDate: String, strSubject: String, strDescription: String, encodeDoc: String) {
+    private fun saveDocuments(context: Context, ID_LeadGenerateProduct: String, strDate: String, strSubject: String, strDescription: String, encodeDoc: String,extension: String) {
 
 
         Log.e(TAG,"Validations  382"
@@ -41,7 +41,8 @@ object SaveDocumentRepository {
                 +"\n"+"strDate                   : "+ strDate
                 +"\n"+"strSubject                : "+ strSubject
                 +"\n"+"strDescription            : "+ strDescription
-                +"\n"+"encodeDoc                 : "+ encodeDoc)
+                +"\n"+"encodeDoc                 : "+ encodeDoc
+                +"\n"+"extension                 : "+ extension)
 
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -96,6 +97,7 @@ object SaveDocumentRepository {
                 requestObject1.put("Doc_Description", ProdsuitApplication.encryptStart(strDescription))
 //                requestObject1.put("DocumentImage", ProdsuitApplication.encryptStart(encodeDoc))
                 requestObject1.put("DocumentImage", encodeDoc)
+                requestObject1.put("DocImageFormat", ProdsuitApplication.encryptStart(extension))
 
 
                 Log.e(TAG,"saveDocuments   102   "+encodeDoc)

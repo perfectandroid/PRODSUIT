@@ -11,7 +11,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -20,22 +19,22 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.SaveDocumentViewModel
 import org.json.JSONObject
 import java.io.*
-import java.lang.Exception
-import java.util.*
-import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.textfield.TextInputEditText
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.*
 
 class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -485,6 +484,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             Config.snackBars(context,v,"Pick Documents")
         }
         else{
+
             Log.e(TAG,"Validations  382"
                     +"\n"+"strDate          : "+ strDate
                     +"\n"+"strSubject       : "+ strSubject
@@ -493,6 +493,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             )
 
             try {
+                val extension: String = documentPath.substring(documentPath.lastIndexOf("."))
                 val bitmap = BitmapFactory.decodeFile(documentPath)
                 val stream =  ByteArrayOutputStream()
               //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -502,7 +503,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
                 }
 
-                saveDocuments(strDate,strSubject,strDescription,encodeDoc)
+                saveDocuments(strDate,strSubject,strDescription,encodeDoc,extension)
             }
             catch (e: Exception){
                 Log.e(TAG,"Exception   508   "+e.toString())
@@ -514,7 +515,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun saveDocuments(strDate: String, strSubject: String, strDescription: String, encodeDoc: String?) {
+    private fun saveDocuments(strDate: String, strSubject: String, strDescription: String, encodeDoc: String?,extension : String) {
 
         var saveDoc = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -525,7 +526,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                saveDocumentViewModel.saveDocuments(this,ID_LeadGenerateProduct,strDate,strSubject,strDescription,encodeDoc!!)!!.observe(
+                saveDocumentViewModel.saveDocuments(this,ID_LeadGenerateProduct,strDate,strSubject,strDescription,encodeDoc!!,extension)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
