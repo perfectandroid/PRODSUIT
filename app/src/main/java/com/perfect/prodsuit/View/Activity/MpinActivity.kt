@@ -8,14 +8,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
@@ -39,6 +37,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var nine: TextView? = null
     private var zero: TextView? = null
     private var tvLogout: TextView? = null
+    private var tvForgotMpin: TextView? = null
     private var et_1: EditText? = null
     private var et_2: EditText? = null
     private var et_3: EditText? = null
@@ -64,6 +63,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private fun setRegViews() {
         var tvdata = findViewById<TextView>(R.id.tvdata)
         tvLogout = findViewById<TextView>(R.id.tvLogout)
+        tvForgotMpin = findViewById<TextView>(R.id.tvForgotMpin)
         one = findViewById<TextView>(R.id.one)
         two = findViewById<TextView>(R.id.two)
         three = findViewById<TextView>(R.id.three)
@@ -84,6 +84,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         clear = findViewById<LinearLayout>(R.id.clear)
         imgShowPin = findViewById<ImageView>(R.id.imgShowPin)
         tvLogout!!.setOnClickListener(this)
+        tvForgotMpin!!.setOnClickListener(this)
         one!!.setOnClickListener(this)
         two!!.setOnClickListener(this)
         three!!.setOnClickListener(this)
@@ -109,6 +110,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tvLogout->{
                 try {
                     doLogout()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            R.id.tvForgotMpin->{
+                try {
+                   forgotMpin()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -474,6 +482,31 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun forgotMpin() {
+       try {
+               val builder = android.app.AlertDialog.Builder(this)
+               val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+               val layout = inflater1.inflate(R.layout.forgot_mpin, null)
+               val btnVerify = layout.findViewById(R.id.btnVerify) as Button
+               val tie_Mobile = layout.findViewById(R.id.tie_Mobile) as TextInputEditText
+
+
+               builder.setView(layout)
+               val alertDialog = builder.create()
+
+               btnVerify.setOnClickListener {
+
+                   alertDialog.dismiss()
+               }
+               alertDialog.show()
+           }
+           catch (e: Exception){
+
+           }
+
+
     }
 
     companion object {

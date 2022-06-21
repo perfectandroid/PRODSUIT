@@ -23,8 +23,10 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/circle_upcoming.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/circle_white.xml" value="0.174" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/email_svg.xml" value="0.232" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/forgot_mpin_icon.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_departments.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/lead_phone.xml" value="0.26" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/logout_xml_icon.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/overduelistbg_svg.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rectangle_shapees.xml" value="0.33" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.2405" />
@@ -40,7 +42,9 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_bell_remove.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_call.xml" value="0.2555" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_mail.xml" value="0.195" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_mobile.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_quotation.xml" value="0.195" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_sms_mobile.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_tog_cus.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/todolistbg_svg.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/toggle_cusmobile.xml" value="0.195" />
@@ -61,6 +65,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.22760416666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_mpin.xml" value="0.33541666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.3072916666666667" />
@@ -121,6 +126,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/employeeall_popup.xml" value="0.2734375" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_action.xml" value="0.2864583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/followup_type_popup.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/forgot_mpin.xml" value="0.2953125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/grouping_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.31354166666666666" />
