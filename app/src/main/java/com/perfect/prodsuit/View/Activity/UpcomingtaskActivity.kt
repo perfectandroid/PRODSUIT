@@ -67,6 +67,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
     companion object {
         var submode = ""
+        var name = ""
+        var nxtactndate = ""
+        var name1 = ""
+        var date = ""
+        var criteria = ""
     }
     private fun setRegViews() {
         rv_upcmngtasklist = findViewById(R.id.rv_upcmngtasklist)

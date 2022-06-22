@@ -66,6 +66,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         getTodoList()
     }
     companion object {
+        var name = ""
         var submode = ""
         var nxtactndate = ""
         var name1 = ""
@@ -289,8 +290,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
-                OverDueActivity.name = etxt_Name!!.text.toString()
-                OverDueActivity.nxtactndate = etxt_date!!.text.toString()
+                name = etxt_Name!!.text.toString()
+                nxtactndate = etxt_date!!.text.toString()
                 getTodoList1()
                 alertDialogSort.dismiss()
             }
