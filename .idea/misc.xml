@@ -41,6 +41,8 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_bell_add.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_bell_remove.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_call.xml" value="0.2555" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_down_docs.xml" value="0.211" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_downarrow.xml" value="0.211" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_mail.xml" value="0.195" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_mobile.xml" value="0.26" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/drawable/svg_quotation.xml" value="0.195" />
@@ -117,6 +119,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.2833333333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.2635416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/agenda_action_popup.xml" value="0.2635416666666667" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_description.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.25052083333333336" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.23177083333333334" />
