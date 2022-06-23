@@ -8,10 +8,10 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BranchModel
-import com.perfect.prodsuit.Model.LeadManagmntFilterModel
+import com.perfect.prodsuit.Model.ActivityListModel
+import com.perfect.prodsuit.Model.AddSortLeadmngmntModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.OverDueActivity
 import com.perfect.prodsuit.View.Activity.TodoListActivity
 import com.perfect.prodsuit.View.Activity.UpcomingtaskActivity
@@ -22,25 +22,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.ArrayList
+import java.io.File
+import java.util.*
 
-object LeadManagFilterRepository {
+object SortLeadMangeListRepository {
 
+    val sortleadmngeSetterGetter = MutableLiveData<AddSortLeadmngmntModel>()
     private var progressDialog: ProgressDialog? = null
-    val leadmangfilterSetterGetter = MutableLiveData<LeadManagmntFilterModel>()
-    val TAG: String = "LeadMangfilter"
-    var submode1=TodoListActivity.submode
-    var submode2=OverDueActivity.submode
+    var submode1= TodoListActivity.submode
+    var submode2= OverDueActivity.submode
     var submode3=UpcomingtaskActivity.submode
-
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadManagmntFilterModel> {
-        getLeadFilter(context)
-        return leadmangfilterSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<AddSortLeadmngmntModel> {
+        getSortLeadMangmnt(context)
+        return sortleadmngeSetterGetter
     }
 
-    private fun getLeadFilter(context: Context) {
+
+    private fun getSortLeadMangmnt(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -66,10 +64,9 @@ object LeadManagFilterRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))
                 if (!submode1.equals(""))
                 {
@@ -84,27 +81,16 @@ object LeadManagFilterRepository {
                     requestObject1.put("SubMode", ProdsuitApplication.encryptStart("3"))
                 }
 
+
+
+
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name))
-
-                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-
-
-               val dateFrom = inputFormat.parse(OverDueActivity.nxtactndate)
-               // val dateFrom = inputFormat.parse("08-04-2022")
-                val strNxtactDate = outputFormat.format(dateFrom)
-
-
-
-
-                requestObject1.put("Todate", ProdsuitApplication.encryptStart(strNxtactDate))
-                Log.i("request filter",requestObject1.toString()+ submode2+"\n"+strNxtactDate)
-
-
-
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name1))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(OverDueActivity.date))
+                requestObject1.put("criteria", ProdsuitApplication.encryptStart("1"))
+                Log.i("requestobject",requestObject1.toString()+"\n"+AccountDetailsActivity.ID_ActionType+"\n"+AccountDetailsActivity.ID_LeadGenerateProduct)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -121,23 +107,26 @@ object LeadManagFilterRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<BranchModel>()
-                        leads.add(BranchModel(response.body()))
-                        val msg = leads[0].message
-                        leadmangfilterSetterGetter.value =
-                         LeadManagmntFilterModel(msg)
+                        Log.i("SortLeadMng", response.body())
+                        val users = ArrayList<AddSortLeadmngmntModel>()
+                        users.add(AddSortLeadmngmntModel(response.body()))
+                        val msg = users[0].message
+                        sortleadmngeSetterGetter.value = AddSortLeadmngmntModel(msg)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         progressDialog!!.dismiss()
                     }
                 }
+
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
                 }
             })
-        }catch (e : Exception){
+        }
+        catch (e: Exception) {
             e.printStackTrace()
-            progressDialog!!.dismiss()
         }
     }
 
 }
+

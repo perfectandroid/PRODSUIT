@@ -16,6 +16,7 @@ import org.json.JSONObject
 
 class SplashActivity : AppCompatActivity() {
 
+
     val CERT_NAME = "static-vm.pem"
     val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
