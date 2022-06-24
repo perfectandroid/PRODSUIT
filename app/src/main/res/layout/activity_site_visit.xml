@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/navbg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,858 +78,359 @@
                     android:visibility="invisible"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/llHeader"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/llHeader">
 
-                <ScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_background1"
+                    android:orientation="vertical"
+                    android:layout_above="@+id/llBtn">
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="1dp"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:cardMaxElevation="1dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
+                            android:orientation="vertical">
 
-                            <LinearLayout
+
+                            <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="5dp">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/myfont"
-                                    android:gravity="left"
-                                    android:text="Perfect Software"
-                                    android:textColor="@color/black"
-                                    android:textSize="20dp"
-                                    android:textStyle="bold" />
-
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/white"
+                                app:cardCornerRadius="2dp"
+                                android:layout_margin="10dp"
+                                app:cardElevation="1dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
+                                    android:padding="10dp"
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="5">
+                                        android:orientation="horizontal">
 
-                                        <ImageView
-                                            android:id="@+id/img"
-                                            android:layout_width="70dp"
-                                            android:layout_height="70dp"
-                                            android:layout_gravity="center"
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Date"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:hint="Date"
                                             android:layout_margin="5dp"
-                                            android:contentDescription="@string/app_name"
-                                            android:src="@drawable/applogo" />
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Date"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="8dp"
+                                                android:paddingBottom="8dp"
+                                                android:drawableRight="@drawable/ic_calendar_svg"
+                                                android:textSize="14dp"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Time"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:hint="Time"
+                                            android:layout_margin="5dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Time"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="8dp"
+                                                android:paddingBottom="8dp"
+                                                android:drawableRight="@drawable/clock_svg"
+                                                android:textSize="14dp"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
                                     </LinearLayout>
 
-                                    <LinearLayout
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_RiskType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="2"
-                                        android:orientation="vertical">
+                                        android:hint="Risk Type"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
 
-
-                                        <TextView
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_RiskType"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="1"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:textSize="14dp"
+                                            android:editable="false"
+                                            android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
-                                            android:gravity="left"
-                                            android:padding="1dp"
-                                            android:text="19/1194, Dialysis Center"
-                                            android:textColor="@color/black"
-                                            android:textSize="15dp"
-                                            android:textStyle="bold" />
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
 
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="1"
-                                            android:fontFamily="@font/myfont"
-                                            android:gravity="left"
-                                            android:padding="1dp"
-                                            android:text="Chalappuram,Kozhikode"
-                                            android:textColor="@color/black"
-                                            android:textSize="15dp"
-                                            android:textStyle="bold" />
+                                    </com.google.android.material.textfield.TextInputLayout>
 
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_weight="1"
-                                            android:fontFamily="@font/myfont"
-                                            android:gravity="left"
-                                            android:padding="1dp"
-                                            android:text="Kerala 673002"
-                                            android:textColor="@color/black"
-                                            android:textSize="15dp"
-                                            android:textStyle="bold" />
-
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="1dp"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            app:cardMaxElevation="1dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-
-                                    <LinearLayout
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_AgentNote"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="2dp"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_weight="1"
-                                        android:background="@drawable/etselect_bg"
-                                        android:orientation="vertical">
+                                        android:hint="Agent Note"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
 
-                                        <LinearLayout
-                                            android:id="@+id/llFromdate"
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_AgentNote"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:orientation="horizontal">
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:textSize="14dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
 
-                                            <ImageView
-                                                android:layout_width="40dp"
-                                                android:layout_height="40dp"
-                                                android:padding="10dp"
-                                                android:layout_gravity="left|center"
-                                                android:background="@color/color_activity_transparent"
-                                                android:scaleType="fitXY"
-                                                android:src="@drawable/fromdate" />
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="5dp"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
-
-                                                <TextView
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:text="Date"
-                                                    android:textColor="@color/colorPrimaryExtraDark"
-                                                    android:textSize="12dp"
-                                                    android:textStyle="bold" />
-
-                                                <TextView
-                                                    android:id="@+id/txtFromDate"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:hint="Date"
-                                                    android:padding="2dp"
-                                                    android:singleLine="true"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="15dp"
-                                                    android:textStyle="bold" />
-                                            </LinearLayout>
-                                        </LinearLayout>
+                                    </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_CustomerNote"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:layout_marginRight="5dp"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_weight="1"
-                                        android:background="@drawable/etselect_bg"
-                                        android:orientation="vertical">
+                                        android:hint="Customer Note"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
 
-                                        <LinearLayout
-                                            android:id="@+id/llToDate"
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_CustomerNote"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:orientation="horizontal">
-
-                                            <ImageView
-                                                android:layout_width="40dp"
-                                                android:layout_height="50dp"
-                                                android:layout_gravity="left|center"
-                                                android:background="@color/color_activity_transparent"
-                                                android:scaleType="fitXY"
-                                                android:src="@drawable/date" />
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="5dp"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
-
-                                                <TextView
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:text="Time"
-                                                    android:textColor="@color/colorPrimaryExtraDark"
-                                                    android:textSize="12dp"
-                                                    android:textStyle="bold" />
-
-                                                <TextView
-                                                    android:id="@+id/txtToDate"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:hint="Time"
-                                                    android:padding="2dp"
-                                                    android:singleLine="true"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="15dp"
-                                                    android:textStyle="bold" />
-                                            </LinearLayout>
-                                        </LinearLayout>
-
-
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llFromDatePick"
-                                    android:orientation="vertical"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="30dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/etselect_bggrey"
-                                    android:gravity = "center"
-                                    android:visibility="gone">
-
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:background="@color/greylight"
-                                            android:gravity="center"
-                                            android:text="Select Date"
-                                            android:textColor="@color/colorPrimaryExtraDark"
-                                            android:textSize="13dp"
-                                            android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/imFromDate"
-                                            android:layout_width="25dp"
-                                            android:layout_height="25dp"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_marginRight="5dp"
-                                            android:background="@color/color_activity_transparent"
-                                            android:gravity="center"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/ic_cancel_" />
-                                    </RelativeLayout>
-
-                                    <DatePicker
-                                        android:id="@+id/datePickerFrom"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:datePickerMode = "spinner"
-                                        android:background="@color/greylight"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:calendarViewShown="false"/>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_marginBottom="10dp"
-                                        android:orientation="horizontal">
-
-
-                                        <TextView
-                                            android:id="@+id/txtFromSubmit"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:textSize="15dp"
-                                            android:textColor="@color/white"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:textSize="14dp"
+                                            android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
-                                            android:background="@drawable/btn_bgcolour"
-                                            android:paddingLeft="20dp"
-                                            android:paddingRight="20dp"
-                                            android:paddingBottom="5dp"
-                                            android:paddingTop="5dp"
-                                            android:textAllCaps="false"
-                                            android:text="Submit" />
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
 
+                                    </com.google.android.material.textfield.TextInputLayout>
 
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/llToDatePick"
-                                    android:orientation="vertical"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="30dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/etselect_bggrey"
-                                    android:gravity = "center"
-                                    android:visibility="gone">
-
-                                    <RelativeLayout
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_FollowType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center">
+                                        android:hint="Follow up Type"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
 
-                                        <TextView
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_FollowType"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:background="@color/greylight"
-                                            android:gravity="center"
-                                            android:text="Select Time"
-                                            android:textColor="@color/colorPrimaryExtraDark"
-                                            android:textSize="13dp"
-                                            android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/imToDate"
-                                            android:layout_width="25dp"
-                                            android:layout_height="25dp"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_marginRight="5dp"
-                                            android:background="@color/color_activity_transparent"
-                                            android:gravity="center"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/ic_cancel_" />
-                                    </RelativeLayout>
-
-                                    <TimePicker
-                                        android:id="@+id/datePickerTo"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:timePickerMode = "spinner"
-                                        android:background="@color/greylight"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_marginRight="20dp"
-                                        android:calendarViewShown="false"/>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_marginBottom="10dp"
-                                        android:orientation="horizontal">
-
-
-                                        <TextView
-                                            android:id="@+id/txtToSubmit"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:textSize="15dp"
-                                            android:textColor="@color/white"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:textSize="14dp"
+                                            android:editable="false"
+                                            android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
-                                            android:background="@drawable/btn_bgcolour"
-                                            android:paddingLeft="20dp"
-                                            android:paddingRight="20dp"
-                                            android:paddingBottom="5dp"
-                                            android:paddingTop="5dp"
-                                            android:textAllCaps="false"
-                                            android:text="Submit" />
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
+
+                                    </com.google.android.material.textfield.TextInputLayout>
 
 
-                                    </LinearLayout>
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_Status"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Status"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
 
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_Status"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:drawableRight="@drawable/arrow_down"
+                                            android:textSize="14dp"
+                                            android:editable="false"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
 
-                                </LinearLayout>
+                                    </com.google.android.material.textfield.TextInputLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_CustomerMentionDate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:hint="Customer Mention Date"
+                                        android:layout_margin="5dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        style="@style/Widget.App.TextInputLayout">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_CustomerMentionDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="8dp"
+                                            android:paddingBottom="8dp"
+                                            android:textSize="14dp"
+                                            android:editable="false"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="10dp"
+                                            android:textStyle="normal"/>
+
+                                    </com.google.android.material.textfield.TextInputLayout>
+
 
                                     <LinearLayout
-                                        android:id="@+id/llRiskType"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:orientation="horizontal">
 
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="50dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/date" />
-
-                                        <LinearLayout
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Latitude"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:hint="Latitude"
                                             android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            style="@style/Widget.App.TextInputLayout">
 
-                                            <TextView
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Latitude"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="8dp"
+                                                android:paddingBottom="8dp"
+                                                android:textSize="14dp"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Risk Type"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
 
-                                            <TextView
-                                                android:id="@+id/txtRiskType"
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Longitude"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:hint="Longitude"
+                                            android:layout_margin="5dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Longitude"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="8dp"
+                                                android:paddingBottom="8dp"
+                                                android:textSize="14dp"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Risk Type"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
                                     </LinearLayout>
 
 
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:id="@+id/llAgentNote"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="50dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/date" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Agent Note"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
-
-                                            <EditText
-                                                android:id="@+id/edtAgentNote"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:background="@android:color/transparent"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Agent Note"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:id="@+id/llCustNote"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="50dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/date" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Customer Note"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
-
-                                            <EditText
-                                                android:id="@+id/edtCustNote"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:background="@android:color/transparent"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Customer Note"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:id="@+id/llFollowType"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="50dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/date" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Follow up Type"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
-
-                                            <TextView
-                                                android:id="@+id/txtFollowType"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Follow up Type"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:id="@+id/llStatus"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="40dp"
-                                            android:padding="10dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/reprttype" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Status"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
-
-                                            <TextView
-                                                android:id="@+id/txtStatus"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Status"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginRight="2dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:id="@+id/llMentionDate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="40dp"
-                                            android:layout_height="40dp"
-                                            android:padding="10dp"
-                                            android:layout_gravity="left|center"
-                                            android:background="@color/color_activity_transparent"
-                                            android:scaleType="fitXY"
-                                            android:src="@drawable/todate" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="5dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:text="Customer Mention Date"
-                                                android:textColor="@color/colorPrimaryExtraDark"
-                                                android:textSize="12dp"
-                                                android:textStyle="bold" />
-
-                                            <TextView
-                                                android:id="@+id/txtMentionDate"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_weight="1"
-                                                android:background="@android:color/transparent"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="left"
-                                                android:hint="Customer Mention Date"
-                                                android:padding="2dp"
-                                                android:singleLine="true"
-                                                android:textColor="@color/black"
-                                                android:textSize="15dp"
-                                                android:textStyle="bold" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:id="@+id/llMentionDatePick"
+                                        android:id="@+id/llFromDatePick"
                                         android:orientation="vertical"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -953,13 +455,13 @@
                                                 android:layout_marginTop="10dp"
                                                 android:background="@color/greylight"
                                                 android:gravity="center"
-                                                android:text="Select Mention Date"
+                                                android:text="Select Date"
                                                 android:textColor="@color/colorPrimaryExtraDark"
                                                 android:textSize="13dp"
                                                 android:textStyle="bold" />
 
                                             <ImageView
-                                                android:id="@+id/imMentionDate"
+                                                android:id="@+id/imFromDate"
                                                 android:layout_width="25dp"
                                                 android:layout_height="25dp"
                                                 android:layout_alignParentRight="true"
@@ -973,7 +475,7 @@
                                         </RelativeLayout>
 
                                         <DatePicker
-                                            android:id="@+id/datePickerMention"
+                                            android:id="@+id/datePickerFrom"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:datePickerMode = "spinner"
@@ -992,7 +494,94 @@
 
 
                                             <TextView
-                                                android:id="@+id/txtMentionSubmit"
+                                                android:id="@+id/txtFromSubmit"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:textSize="15dp"
+                                                android:textColor="@color/white"
+                                                android:fontFamily="@font/myfont"
+                                                android:background="@drawable/btn_bgcolour"
+                                                android:paddingLeft="20dp"
+                                                android:paddingRight="20dp"
+                                                android:paddingBottom="5dp"
+                                                android:paddingTop="5dp"
+                                                android:textAllCaps="false"
+                                                android:text="Submit" />
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llToDatePick"
+                                        android:orientation="vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="30dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/etselect_bggrey"
+                                        android:gravity = "center"
+                                        android:visibility="gone">
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10dp"
+                                                android:background="@color/greylight"
+                                                android:gravity="center"
+                                                android:text="Select Time"
+                                                android:textColor="@color/colorPrimaryExtraDark"
+                                                android:textSize="13dp"
+                                                android:textStyle="bold" />
+
+                                            <ImageView
+                                                android:id="@+id/imToDate"
+                                                android:layout_width="25dp"
+                                                android:layout_height="25dp"
+                                                android:layout_alignParentRight="true"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:background="@color/color_activity_transparent"
+                                                android:gravity="center"
+                                                android:scaleType="fitXY"
+                                                android:src="@drawable/ic_cancel_" />
+                                        </RelativeLayout>
+
+                                        <TimePicker
+                                            android:id="@+id/datePickerTo"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:timePickerMode = "spinner"
+                                            android:background="@color/greylight"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="20dp"
+                                            android:calendarViewShown="false"/>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:layout_marginBottom="10dp"
+                                            android:orientation="horizontal">
+
+
+                                            <TextView
+                                                android:id="@+id/txtToSubmit"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -1015,266 +604,142 @@
                                     </LinearLayout>
 
 
-                                </LinearLayout>
-
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:orientation="horizontal">
-
-
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="2dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/etselect_bg"
-                                        android:orientation="vertical">
-
-                                        <LinearLayout
-                                            android:id="@+id/llLatitude"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="horizontal">
-
-                                            <ImageView
-                                                android:layout_width="40dp"
-                                                android:layout_height="50dp"
-                                                android:layout_gravity="left|center"
-                                                android:background="@color/color_activity_transparent"
-                                                android:scaleType="fitXY"
-                                                android:src="@drawable/date" />
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="5dp"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
-
-                                                <TextView
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:text="Latitude"
-                                                    android:textColor="@color/colorPrimaryExtraDark"
-                                                    android:textSize="12dp"
-                                                    android:textStyle="bold" />
-
-                                                <TextView
-                                                    android:id="@+id/txtLatitude"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:hint="Latitude"
-                                                    android:padding="2dp"
-                                                    android:singleLine="true"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="15dp"
-                                                    android:textStyle="bold" />
-                                            </LinearLayout>
-                                        </LinearLayout>
-
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
                                         android:layout_marginRight="5dp"
                                         android:layout_marginBottom="5dp"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/etselect_bg"
-                                        android:orientation="vertical">
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/rectangle_greys"
+                                        android:orientation="horizontal">
 
+                                        <ImageView
+                                            android:layout_width="50dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="left"
+                                            android:background="@color/color_activity_transparent"
+                                            android:scaleType="fitXY"
+                                            android:src="@drawable/uploads"/>
                                         <LinearLayout
-                                            android:id="@+id/llLongitude"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:orientation="horizontal">
+                                            android:gravity="center"
+                                            android:orientation="vertical">
 
-                                            <ImageView
-                                                android:layout_width="40dp"
-                                                android:layout_height="50dp"
-                                                android:layout_gravity="left|center"
-                                                android:background="@color/color_activity_transparent"
-                                                android:scaleType="fitXY"
-                                                android:src="@drawable/date" />
-
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="left"
+                                                android:text="Upload Images"
+                                                android:textColor="@color/black"
+                                                android:textSize="15dp"
+                                                android:layout_marginTop="10dp"
+                                                android:textStyle="bold"
+                                                android:layout_weight="1"
+                                                android:fontFamily="@font/myfont" />
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
-                                                android:layout_margin="5dp"
                                                 android:gravity="center"
-                                                android:orientation="vertical">
+                                                android:orientation="horizontal">
 
-                                                <TextView
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:text="Longitude"
-                                                    android:textColor="@color/colorPrimaryExtraDark"
-                                                    android:textSize="12dp"
-                                                    android:textStyle="bold" />
+                                                <ImageView
+                                                    android:id="@+id/imgv_upload1"
+                                                    android:layout_width="80dp"
+                                                    android:layout_height="80dp"
+                                                    android:layout_gravity="left"
+                                                    android:layout_marginTop="5dp"
+                                                    android:layout_marginBottom="5dp"
+                                                    android:layout_marginRight="5dp"
+                                                    android:scaleType="fitXY"
+                                                    android:background="@color/color_activity_transparent"
+                                                    android:src="@drawable/lead_uploads"/>
 
-                                                <TextView
-                                                    android:id="@+id/txtLongitude"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center"
-                                                    android:layout_weight="1"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="left"
-                                                    android:hint="Longitude"
-                                                    android:padding="2dp"
-                                                    android:singleLine="true"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="15dp"
-                                                    android:textStyle="bold" />
+                                                <ImageView
+                                                    android:id="@+id/imgv_upload2"
+                                                    android:layout_width="80dp"
+                                                    android:layout_height="80dp"
+                                                    android:layout_gravity="left"
+                                                    android:layout_marginTop="5dp"
+                                                    android:layout_marginBottom="5dp"
+                                                    android:layout_marginRight="5dp"
+                                                    android:scaleType="fitXY"
+                                                    android:background="@color/color_activity_transparent"
+                                                    android:src="@drawable/lead_uploads"/>
+
                                             </LinearLayout>
                                         </LinearLayout>
-
-
                                     </LinearLayout>
+
+
+
+
                                 </LinearLayout>
 
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/etselect_bg"
-                                    android:orientation="horizontal">
+                            </androidx.cardview.widget.CardView>
 
-                                    <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
-                                        android:layout_gravity="left"
-                                        android:background="@color/color_activity_transparent"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/uploads"/>
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="left"
-                                            android:text="Upload Images"
-                                            android:textColor="@color/black"
-                                            android:textSize="15dp"
-                                            android:layout_marginTop="10dp"
-                                            android:textStyle="bold"
-                                            android:layout_weight="1"
-                                            android:fontFamily="@font/myfont" />
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:orientation="horizontal">
-
-                                            <ImageView
-                                                android:id="@+id/imgv_upload1"
-                                                android:layout_width="80dp"
-                                                android:layout_height="80dp"
-                                                android:layout_gravity="left"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginBottom="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:scaleType="fitXY"
-                                                android:background="@color/color_activity_transparent"
-                                                android:src="@drawable/uploadimg"/>
-
-                                            <ImageView
-                                                android:id="@+id/imgv_upload2"
-                                                android:layout_width="80dp"
-                                                android:layout_height="80dp"
-                                                android:layout_gravity="left"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginBottom="5dp"
-                                                android:layout_marginRight="5dp"
-                                                android:scaleType="fitXY"
-                                                android:background="@color/color_activity_transparent"
-                                                android:src="@drawable/uploadimg"/>
-
-                                        </LinearLayout>
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:layout_margin="5dp"
-                                    android:gravity="center">
-
-                                    <Button
-                                        android:id="@+id/btnReset"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="2"
-                                        android:background="@drawable/btn_bgcolorprimary"
-                                        android:fontFamily="@font/myfont"
-                                        android:padding="2dp"
-                                        android:text="Reset"
-                                        android:textAllCaps="false"
-                                        android:textSize="15dp" />
-                                    <Button
-                                        android:id="@+id/btnSubmit"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center"
-                                        android:layout_margin="5dp"
-                                        android:textSize="15dp"
-                                        android:textColor="@color/white"
-                                        android:fontFamily="@font/myfont"
-                                        android:background="@drawable/btn_bgcolour"
-                                        android:padding="2dp"
-                                        android:layout_weight="2"
-                                        android:textAllCaps="false"
-                                        android:text="Submit" />
-                                </LinearLayout>
+                        </LinearLayout>
 
 
-                            </LinearLayout>
+                    </ScrollView>
 
 
-                        </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+
+                        <Button
+                            android:id="@+id/btnReset"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:background="@drawable/btn_shape_reset"
+                            android:fontFamily="@font/myfont"
+                            android:padding="2dp"
+                            android:text="Reset"
+                            android:textStyle="bold"
+                            android:textColor="@color/greydark"
+                            android:textAllCaps="true"
+                            android:textSize="15dp"
+                            android:visibility="visible" />
+
+                        <Button
+                            android:id="@+id/btnSubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/myfont"
+                            android:background="@drawable/btn_shape_submit"
+                            android:padding="2dp"
+                            android:layout_weight="1"
+                            android:textAllCaps="true"
+                            android:text="Submit"
+                            android:visibility="visible"/>
+
 
                     </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
 
 
-                </ScrollView>
-
-
-            </LinearLayout>
 
 
         </RelativeLayout>
