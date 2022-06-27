@@ -197,6 +197,7 @@
                 android:layout_marginLeft="15dp"
                 android:drawableTint="@color/textColor"
                 android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
                 android:hint="From Date">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -230,6 +231,7 @@
                 android:layout_marginRight="15dp"
                 android:drawableTint="@color/textColor"
                 android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
                 android:hint="To Date">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -269,6 +271,7 @@
                 android:layout_marginLeft="15dp"
                 android:drawableTint="@color/textColor"
                 android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
                 android:hint="From Time">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -302,6 +305,7 @@
                 android:layout_marginRight="15dp"
                 android:drawableTint="@color/textColor"
                 android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
                 android:hint="To Time">
 
                 <com.google.android.material.textfield.TextInputEditText

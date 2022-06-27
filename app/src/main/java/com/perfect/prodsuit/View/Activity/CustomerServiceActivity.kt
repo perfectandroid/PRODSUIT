@@ -81,20 +81,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
 
-//                    getActivityDetails1()
+                    getWarranty()
 
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
-//                    getLocation()
+                    getProduct()
 
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
 
-//                    getImages()
+                    getSales()
                 }
                 /*  if (tab.position == 4){
                       Log.e(TAG,"onTabSelected  1131  "+tab.position)
@@ -117,6 +117,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
 
         val inflater = LayoutInflater.from(this@CustomerServiceActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_complaints, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+    }
+
+    private fun getWarranty() {
+
+        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+    }
+
+    private fun getProduct() {
+
+        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_product, null, false)
+        llMainDetail!!.addView(inflatedLayout);
+
+    }
+
+    private fun getSales() {
+
+        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_sales, null, false)
         llMainDetail!!.addView(inflatedLayout);
 
     }

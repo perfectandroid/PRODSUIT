@@ -65,6 +65,9 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_service.xml" value="0.3078125" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_service_complaints.xml" value="0.3625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_service_product.xml" value="0.3625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_service_sales.xml" value="0.3625" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_service_warranty.xml" value="0.3625" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_document_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_document_view.xml" value="0.21510416666666668" />
