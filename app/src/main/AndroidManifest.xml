@@ -53,6 +53,11 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceAssignActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.CustomerServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

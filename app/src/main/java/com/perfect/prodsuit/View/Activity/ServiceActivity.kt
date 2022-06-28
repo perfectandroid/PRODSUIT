@@ -46,6 +46,7 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var context: Context
 
     private var llCustomerService: LinearLayout? = null
+    private var llServiceAssign: LinearLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,9 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
         imback!!.setOnClickListener(this)
 
         llCustomerService = findViewById<LinearLayout>(R.id.llCustomerService)
+        llServiceAssign = findViewById<LinearLayout>(R.id.llServiceAssign)
         llCustomerService!!.setOnClickListener(this)
+        llServiceAssign!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -74,6 +77,10 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
             }
             R.id.llCustomerService->{
                 val i = Intent(this@ServiceActivity, CustomerServiceActivity::class.java)
+                startActivity(i)
+            }
+            R.id.llServiceAssign->{
+                val i = Intent(this@ServiceActivity, ServiceAssignActivity::class.java)
                 startActivity(i)
             }
         }
