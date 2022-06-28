@@ -10,20 +10,74 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="warranty"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:padding="10dp"
-            android:fontFamily="@font/myfont"/>
+            android:background="@color/service_header"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:fontFamily="@font/myfont"
+                android:text="Invoice No"
+                android:textColor="@color/greydark"
+                android:layout_centerVertical="true" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:fontFamily="@font/myfont"
+                android:text="Invoice Date"
+                android:textColor="@color/greydark"
+                android:layout_centerVertical="true" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15dp"
+                android:padding="3dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:fontFamily="@font/myfont"
+                android:text="Dealer"
+                android:textColor="@color/greydark"
+                android:layout_centerVertical="true" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyServiceWarranty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
 
 
     </LinearLayout>

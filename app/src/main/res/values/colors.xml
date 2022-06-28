@@ -164,6 +164,7 @@
 
     <color name="tab_background_selected">#EFC5BE</color>
     <color name="tab_background_unselected">#EFC5BE</color>
+    <color name="service_header">#EBEBEB</color>
 
 
 
