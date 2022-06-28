@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ServiceProductAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceSalesAdapter
@@ -181,7 +182,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
         llMainDetail!!.addView(inflatedLayout);
 
-        var recyServiceWarranty = inflatedLayout.findViewById<RecyclerView>(R.id.recyServiceWarranty)
+        var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
 
         var warranty = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -249,7 +250,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         llMainDetail!!.addView(inflatedLayout);
 
 
-        var recyServiceProduct = inflatedLayout.findViewById<RecyclerView>(R.id.recyServiceProduct)
+        var recyServiceProduct = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceProduct)
 
         var product = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -316,7 +317,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_sales, null, false)
         llMainDetail!!.addView(inflatedLayout);
 
-        var recyServiceSales = inflatedLayout.findViewById<RecyclerView>(R.id.recyServiceSales)
+        var recyServiceSales = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceSales)
 
         var sales = 0
         when (Config.ConnectivityUtils.isConnected(this)) {

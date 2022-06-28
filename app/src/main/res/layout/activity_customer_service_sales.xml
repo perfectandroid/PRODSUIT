@@ -74,10 +74,17 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyServiceSales1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <com.perfect.prodsuit.Helper.FullLenghRecyclertview
             android:id="@+id/recyServiceSales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible" />
+
 
 
     </LinearLayout>
