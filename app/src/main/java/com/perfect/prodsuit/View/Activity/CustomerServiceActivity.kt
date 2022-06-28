@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ServiceProductAdapter
+import com.perfect.prodsuit.View.Adapter.ServiceSalesAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceWarrantyAdapter
 import com.perfect.prodsuit.Viewmodel.ServiceProductViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceSalesViewModel
@@ -336,16 +337,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("SalesHistoryDetails")
                                 serviceSalesArrayList = jobjt.getJSONArray("SalesHistoryDetailsList")
-//                                if (serviceSalesArrayList.length()>0){
-//                                    if (sales == 0){
-//                                        sales++
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceProduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceProductAdapter(this@CustomerServiceActivity, serviceSalesArrayList)
-//                                        recyServiceProduct!!.adapter = adapter
-//                                    }
-//
-//                                }
+                                if (serviceSalesArrayList.length()>0){
+                                    if (sales == 0){
+                                        sales++
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceSales!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceSalesAdapter(this@CustomerServiceActivity, serviceSalesArrayList)
+                                        recyServiceSales!!.adapter = adapter
+                                    }
+
+                                }
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@CustomerServiceActivity,
