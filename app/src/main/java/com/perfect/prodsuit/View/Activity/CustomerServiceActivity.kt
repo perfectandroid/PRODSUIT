@@ -21,7 +21,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ServiceProductAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceWarrantyAdapter
+import com.perfect.prodsuit.Viewmodel.ServiceProductViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceWarrantyViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -55,6 +57,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
     lateinit var serviceWarrantyViewModel: ServiceWarrantyViewModel
     lateinit var serviceWarrantyArrayList : JSONArray
 
+    lateinit var serviceProductViewModel: ServiceProductViewModel
+    lateinit var serviceProductArrayList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -63,6 +68,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         context = this@CustomerServiceActivity
 
         serviceWarrantyViewModel = ViewModelProvider(this).get(ServiceWarrantyViewModel::class.java)
+        serviceProductViewModel = ViewModelProvider(this).get(ServiceProductViewModel::class.java)
 
         setRegViews()
         addTabItem()
@@ -235,6 +241,66 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         val inflater = LayoutInflater.from(this@CustomerServiceActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_product, null, false)
         llMainDetail!!.addView(inflatedLayout);
+
+
+        var recyServiceProduct = inflatedLayout.findViewById<RecyclerView>(R.id.recyServiceProduct)
+
+        var product = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceProductViewModel.getServiceProduct(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   262   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("ProductHistoryDetails")
+                                serviceProductArrayList = jobjt.getJSONArray("ProductHistoryDetailsList")
+                                if (serviceProductArrayList.length()>0){
+                                    if (product == 0){
+                                        product++
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceProduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceProductAdapter(this@CustomerServiceActivity, serviceProductArrayList)
+                                        recyServiceProduct!!.adapter = adapter
+                                    }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@CustomerServiceActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
     }
 

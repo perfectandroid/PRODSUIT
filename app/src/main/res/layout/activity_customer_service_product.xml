@@ -13,17 +13,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyServiceProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:padding="10dp"
-            android:fontFamily="@font/myfont"/>
+            android:visibility="visible" />
 
 
     </LinearLayout>
