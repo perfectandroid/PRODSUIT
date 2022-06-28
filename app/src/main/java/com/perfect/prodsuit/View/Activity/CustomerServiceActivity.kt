@@ -183,6 +183,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         llMainDetail!!.addView(inflatedLayout);
 
         var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
+        recyServiceWarranty.adapter = null
 
         var warranty = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -251,7 +252,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
 
 
         var recyServiceProduct = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceProduct)
-
+        recyServiceProduct.adapter = null
         var product = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -318,7 +319,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener {
         llMainDetail!!.addView(inflatedLayout);
 
         var recyServiceSales = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceSales)
-
+        recyServiceSales.adapter = null
         var sales = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
