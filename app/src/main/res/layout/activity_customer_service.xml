@@ -364,11 +364,12 @@
                                             android:id="@+id/tabLayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/cust_4"
+                                            android:background="@color/colorPrimary"
                                             android:scrollbars="horizontal"
-                                            app:tabIndicatorColor="@color/colorPrimary"
-                                            app:tabTextAppearance="@style/customfontstyle"
-                                            app:tabBackground="@drawable/tab_color_selector"/>
+                                            app:tabTextColor="@color/white"
+                                            app:tabIndicatorColor="@color/white"
+                                            app:tabTextAppearance="@style/customfontstyle1"
+                                            app:tabBackground="@color/colorPrimary"/>
 
                                         <LinearLayout
                                             android:id="@+id/llMainDetail"
