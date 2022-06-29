@@ -137,6 +137,7 @@
                                         app:cardElevation="5dp">
 
                                         <LinearLayout
+                                            android:id="@+id/llNew"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
@@ -213,6 +214,7 @@
                                         app:cardElevation="5dp">
 
                                         <LinearLayout
+                                            android:id="@+id/llOnGoing"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="5dp"
