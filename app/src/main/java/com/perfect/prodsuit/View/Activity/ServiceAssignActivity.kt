@@ -14,8 +14,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ServiceAssignAdapter
 import com.perfect.prodsuit.Viewmodel.ServiceAssignViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -28,6 +31,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
 
     internal var llNew: LinearLayout? = null
     internal var llOnGoing: LinearLayout? = null
+
+    internal var recyServiceAssign: RecyclerView? = null
 
     lateinit var serviceAssignViewModel: ServiceAssignViewModel
     lateinit var serviceAssignArrayList : JSONArray
@@ -52,6 +57,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
 
         llNew = findViewById<LinearLayout>(R.id.llNew)
         llOnGoing = findViewById<LinearLayout>(R.id.llOnGoing)
+
+        recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
 
         llNew!!.setOnClickListener(this)
         llOnGoing!!.setOnClickListener(this)
@@ -96,10 +103,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
                                 if (serviceAssignArrayList.length()>0){
                                     if (assign == 0){
                                         assign++
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
-//                                        recyServiceWarranty!!.adapter = adapter
+                                        val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
+                                        recyServiceAssign!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceAssignAdapter(this@ServiceAssignActivity, serviceAssignArrayList)
+                                        recyServiceAssign!!.adapter = adapter
                                     }
 
                                 }
