@@ -146,7 +146,7 @@
 
     <style name="customfontstyle1" parent="@android:style/TextAppearance.Small">
         <item name="android:fontFamily">@font/myfont</item>
-        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/tab_background_selected</item>
         <item name="tabTextColor">@color/white</item>
         <item name="textAllCaps">true</item>
         <item name="android:textSize">15dp</item>

@@ -121,7 +121,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical"
-                                        android:background="#FBEEF0">
+                                        android:background="#FFFFFF">
+<!--                                        android:background="#FBEEF0"-->
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -364,12 +365,12 @@
                                             android:id="@+id/tabLayout"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/colorPrimary"
+                                            android:background="@drawable/tab_color_selector"
                                             android:scrollbars="horizontal"
                                             app:tabTextColor="@color/white"
-                                            app:tabIndicatorColor="@color/white"
+                                            app:tabIndicatorColor="@color/tab_background_selected"
                                             app:tabTextAppearance="@style/customfontstyle1"
-                                            app:tabBackground="@color/colorPrimary"/>
+                                            app:tabBackground="@drawable/tab_color_selector"/>
 
                                         <LinearLayout
                                             android:id="@+id/llMainDetail"

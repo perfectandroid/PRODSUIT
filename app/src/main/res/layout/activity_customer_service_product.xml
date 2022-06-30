@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/service_header"
             android:orientation="horizontal">
 
@@ -29,7 +29,7 @@
                 android:maxLines="2"
                 android:fontFamily="@font/myfont"
                 android:text="Tkt No/Reg On"
-                android:textColor="@color/greydark"
+                android:textColor="@color/tab_background_selected"
                 android:layout_centerVertical="true" />
 
             <View
@@ -39,7 +39,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1.3"
                 android:textSize="14dp"
                 android:padding="3dp"
@@ -48,7 +48,7 @@
                 android:maxLines="2"
                 android:fontFamily="@font/myfont"
                 android:text="Complaint / Status"
-                android:textColor="@color/greydark"
+                android:textColor="@color/tab_background_selected"
                 android:layout_centerVertical="true" />
 
             <View
@@ -68,7 +68,7 @@
                 android:maxLines="2"
                 android:fontFamily="@font/myfont"
                 android:text="Attend By / Notes"
-                android:textColor="@color/greydark"
+                android:textColor="@color/tab_background_selected"
                 android:layout_centerVertical="true" />
 
         </LinearLayout>

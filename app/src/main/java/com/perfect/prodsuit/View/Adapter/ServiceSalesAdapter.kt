@@ -39,6 +39,10 @@ class ServiceSalesAdapter(internal var context: Context, internal var jsonArray:
                 holder.tv_Sale_dealer.text       = jsonObject!!.getString("Dealer")
                 holder.tv_Sale_ProdQty.text        = jsonObject!!.getString("Product")+"\n"+" / "+jsonObject!!.getString("Quatity")
 
+                if (position%2 != 0){
+                    holder.llSales.setBackgroundColor(context.getColor(R.color.alternate_color))
+                }
+
 //                holder.llfollowuptype!!.setTag(position)
 //                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
 //                    clickListener!!.onClick(position, "followuptype")

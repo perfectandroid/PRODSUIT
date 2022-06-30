@@ -41,6 +41,10 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
                 holder.tv_prod_AttendBy.text      = jsonObject!!.getString("AttendedBy")
                 holder.tv_prod_EmpNote.text       = jsonObject!!.getString("Employee")
 
+                if (position%2 != 0){
+                    holder.llProduct.setBackgroundColor(context.getColor(R.color.alternate_color))
+                }
+
 //                holder.llfollowuptype!!.setTag(position)
 //                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
 //                    clickListener!!.onClick(position, "followuptype")

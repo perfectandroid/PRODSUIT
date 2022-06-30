@@ -162,9 +162,15 @@
     <color name="report_list5">#EDD7AF</color>
     <color name="report_list6">#EFC5BE</color>
 
-    <color name="tab_background_selected">#EFC5BE</color>
-    <color name="tab_background_unselected">#EFC5BE</color>
-    <color name="service_header">#EBEBEB</color>
+    <color name="tab_background_selected">#EF667B</color>
+    <color name="tab_background_unselected">#E8465F</color>
+    <color name="service_header">#E4E3E3</color>
+<!--    <color name="service_header">#0f3460</color>-->
+
+
+
+    <color name="alternate_color">#FCF6F7</color>
+<!--    <color name="alternate_color">#f4f4f6</color>-->
 
 
 
