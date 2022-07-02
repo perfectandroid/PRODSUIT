@@ -2377,7 +2377,7 @@
                                                                                 android:singleLine="true"
                                                                                 android:inputType="phone"
                                                                                 android:background="@drawable/shape_bg"
-                                                                                android:text="" />
+                                                                                android:="" />
 
                                                                             <EditText
                                                                                 android:id="@+id/edtCustemail"
@@ -2398,7 +2398,7 @@
                                                                             <EditText
                                                                                 android:id="@+id/edtCustaddress"
                                                                                 android:layout_width="match_parent"
-                                                                                android:layout_height="100dp"
+                                           text                                     android:layout_height="100dp"
                                                                                 android:layout_toLeftOf="@+id/img_search"
                                                                                 android:hint="Address"
                                                                                 android:fontFamily="@font/myfont"

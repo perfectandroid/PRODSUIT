@@ -334,30 +334,6 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
-    private fun dateSelector() {
-        try {
-            val sdf = SimpleDateFormat("dd-MM-yyyy")
-            val c = Calendar.getInstance()
-            mYear = c.get(Calendar.YEAR)
-            mMonth = c.get(Calendar.MONTH)
-            mDay = c.get(Calendar.DAY_OF_MONTH)
-            val datePickerDialog = DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    yr = year
-                    month = monthOfYear
-                    day = dayOfMonth
-                    etxt_date!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                }, mYear, mMonth, mDay
-            )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
-            datePickerDialog.show()
-
-
-
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-    }
 
     private fun filterData() {
 
@@ -392,8 +368,16 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                 OverDueActivity.name = etxt_Name!!.text.toString()
                 OverDueActivity.nxtactndate = etxt_date!!.text.toString()
-                getUpcomingtasksList1()
-                alertDialogSort.dismiss()
+
+                if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
+                    Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+                else {
+
+                    getUpcomingtasksList1()
+                    alertDialogSort.dismiss()
+                }
             }
 
             alertDialogSort.show()
@@ -465,6 +449,34 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
         }
     }
+    fun dateSelector() {
+        try {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val c = Calendar.getInstance()
+            mYear = c.get(Calendar.YEAR)
+            mMonth = c.get(Calendar.MONTH)
+            mDay = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    yr = year
+                    month = (monthOfYear+1)
+                    day = dayOfMonth
+                    val days = (if (day < 10) "0$day" else day)
+                    val mnth = (if (month < 10) "0$month" else month)
+
+                    etxt_date!!.setText(days.toString() + "-" + (mnth) + "-" + year)
+                }, mYear, mMonth, mDay
+            )
+            // datePickerDialog.datePicker.minDate = c.timeInMillis
+            datePickerDialog.show()
+
+
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
 
     fun dateSelector1() {
         try {
@@ -476,12 +488,18 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val datePickerDialog = DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     yr = year
-                    month = monthOfYear
+                    month = (monthOfYear+1)
                     day = dayOfMonth
-                    etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+                    //  etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+
+                    val days = (if (day < 10) "0$day" else day)
+                    val mnth = (if (month < 10) "0$month" else month)
+
+                    etxt_date1!!.setText(days.toString() + "-" + (mnth) + "-" + year)
+
                 }, mYear, mMonth, mDay
             )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
+            //    datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
 
 
@@ -490,4 +508,5 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             e.printStackTrace()
         }
     }
+
 }

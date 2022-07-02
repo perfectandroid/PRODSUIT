@@ -36,11 +36,13 @@ import com.perfect.prodsuit.Receivers.PhoneStatReceiver
 import com.perfect.prodsuit.View.Adapter.AgendaActionTypeAdapter
 import com.perfect.prodsuit.View.Adapter.AgendaDetailAdapter
 import com.perfect.prodsuit.View.Adapter.AgendaTypeAdapter
+import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Long
 import java.lang.reflect.Type
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -103,6 +105,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var SubMode : String?= "1"
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
+    lateinit var sortAgendaViewModel: SortAgendaViewModel
     lateinit var filterAgendaDetailListViewModel: FilterAgendaDetailListViewModel
     lateinit var agendaTypeArrayList : JSONArray
 
@@ -149,6 +152,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
         filterAgendaDetailListViewModel= ViewModelProvider(this).get(FilterAgendaDetailListViewModel::class.java)
+        sortAgendaViewModel= ViewModelProvider(this).get(SortAgendaViewModel::class.java)
 
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
 
@@ -911,12 +915,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     fun dateSelector() {
         try {
 
-            val sdf = SimpleDateFormat("dd-MM-yyyy")
+
             val c = Calendar.getInstance()
             mYear = c.get(Calendar.YEAR)
             mMonth = c.get(Calendar.MONTH)
             mDay = c.get(Calendar.DAY_OF_MONTH)
-            val date = sdf.format(c.getTime())
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
 
 
 
@@ -930,12 +934,24 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     // mention the format you need
 
                     //  textview_date!!.text = sdf.format(cal.getTime())
-                    etxt_date!!.setText(date)
-                    //  etxt_date!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+
+
+
+                    var date =dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                  /*  var d =inputFormat.parse(date)
+                    var d1=outputFormat.parse(d.toString())*/
+
+                  Log.i("DATE",sdf.format(date))
+                    etxt_date!!.setText(sdf.format(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year))
+                 //  Date d = dateFormat!!.parse(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year))
+
                 }, mYear, mMonth, mDay
             )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
+         //   datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
+
+
+
 
 
 
@@ -1332,7 +1348,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             yr = c.get(Calendar.YEAR)
             month = c.get(Calendar.MONTH)
             day = c.get(Calendar.DAY_OF_MONTH)
-            // etxt_date!!.setText(sdf.format(c.time))
+           //  etxt_date!!.setText(sdf.format(c.time))
 
             etxt_date!!.setOnClickListener(View.OnClickListener { dateSelector() })
 
@@ -1346,8 +1362,16 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
                name = etxt_Name!!.text.toString()
                nxtactndate = etxt_date!!.text.toString()
-                getAgendaDetails1(ID_ActionType!!,Id_Agenda)
-                alertDialogSort.dismiss()
+
+                if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
+                    Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+                else {
+
+                    getAgendaDetails1(ID_ActionType!!, Id_Agenda)
+                    alertDialogSort.dismiss()
+                }
             }
 
             alertDialogSort.show()
@@ -1454,7 +1478,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 }
                 else
                 {
-                  //  getSortList()
+                    getSortList()
                     alertDialogSort.dismiss()
                 }
 
@@ -1482,10 +1506,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     yr = year
                     month = monthOfYear
                     day = dayOfMonth
-                    etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+                    etxt_date!!.setText(sdf.format(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year))
                 }, mYear, mMonth, mDay
             )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
+          //  datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
 
 
@@ -1601,5 +1625,77 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
 //        recyAgendaDetail!!.adapter = adapter
 
+    }
+    private fun getSortList() {
+
+        TodoListActivity.submode ="1"
+        context = this@AgendaActivity
+
+        sortAgendaViewModel = ViewModelProvider(this).get(
+            SortAgendaViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                sortAgendaViewModel.getSortAgendalist(this,ID_ActionType!!,SubMode!!,Id_Agenda)!!.observe(
+                    this,
+                    Observer { sortagendalistSetterGetter ->
+                        val msg = sortagendalistSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("AgendaDetails")
+                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
+                                if (agendaDetailArrayList.length()>0){
+//                                    if (agendaDetail == 0){
+//                                        agendaDetail++
+                                    //  agendaTypePopup(agendaActionArrayList)
+
+                                    val editor = sharedPreferences!!.edit()
+                                    editor.clear()
+                                    editor.commit()
+
+
+
+                                    recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
+                                    val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                    recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
+                                    recyAgendaDetail!!.adapter = adapter
+                                    adapter.setClickListener(this@AgendaActivity)
+                                    // }
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@AgendaActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 }

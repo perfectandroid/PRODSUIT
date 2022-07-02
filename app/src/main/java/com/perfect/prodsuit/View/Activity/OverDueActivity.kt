@@ -20,14 +20,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.LeadManagFilterRepository
-import com.perfect.prodsuit.Repository.SortLeadMangeListRepository
-import com.perfect.prodsuit.View.Adapter.OverdueListAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
 import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.OverDueListViewModel
-import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.ParseException
@@ -221,10 +217,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             {
                 name=""
             }
-            if(!checkbox_asc.isChecked()&& !checkbox_dsc.isChecked)
-            {
-                Toast.makeText(applicationContext,"Please select a value",Toast.LENGTH_LONG).show()
-            }
+
             checkbox_asc.setOnClickListener(View.OnClickListener {
                 checkbox_asc.isChecked=true
                 checkbox_dsc.isChecked=false
@@ -251,14 +244,29 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
-                if(etxt_date1!!.text.toString().equals("") && etxt_name1!!.text.toString().equals(""))
+                if(etxt_date1!!.text.toString().equals("") && etxt_name1!!.text.toString().equals("")) {
+
+
+                    Toast.makeText(applicationContext, "Please enter a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+                if(!etxt_date1!!.text.toString().equals("") &&!checkbox_date.isChecked())
                 {
-                    Toast.makeText(applicationContext,"Please enter a value",Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Please enter a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+                if(!etxt_name1!!.text.toString().equals("") &&!checkbox_nme.isChecked())
+                {
+                    Toast.makeText(applicationContext, "Please enter a value", Toast.LENGTH_LONG)
+                        .show()
                 }
                 else
                 {
-                    getSortList()
-                    alertDialogSort.dismiss()
+
+                        getSortList()
+                        alertDialogSort.dismiss()
+
+
                 }
 
 
@@ -315,10 +323,19 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
               alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
+
+
                 name = etxt_Name!!.text.toString()
                 nxtactndate = etxt_date!!.text.toString()
-                getOverdueList1()
-                alertDialogSort.dismiss()
+
+                if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
+                    Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+                else {
+                    getOverdueList1()
+                    alertDialogSort.dismiss()
+                }
           }
 
             alertDialogSort.show()
@@ -339,12 +356,15 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val datePickerDialog = DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     yr = year
-                    month = monthOfYear
+                    month = (monthOfYear+1)
                     day = dayOfMonth
-                    etxt_date!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+                    val days = (if (day < 10) "0$day" else day)
+                    val mnth = (if (month < 10) "0$month" else month)
+
+                    etxt_date!!.setText(days.toString() + "-" + (mnth) + "-" + year)
                 }, mYear, mMonth, mDay
             )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
+           // datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
 
 
@@ -484,12 +504,18 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val datePickerDialog = DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     yr = year
-                    month = monthOfYear
+                    month = (monthOfYear+1)
                     day = dayOfMonth
-                    etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+                  //  etxt_date1!!.setText(dayOfMonth.toString() + "-" + (monthOfYear) + "-" + year)
+
+                    val days = (if (day < 10) "0$day" else day)
+                    val mnth = (if (month < 10) "0$month" else month)
+
+                    etxt_date1!!.setText(days.toString() + "-" + (mnth) + "-" + year)
+
                 }, mYear, mMonth, mDay
             )
-            datePickerDialog.datePicker.minDate = c.timeInMillis
+        //    datePickerDialog.datePicker.minDate = c.timeInMillis
             datePickerDialog.show()
 
 

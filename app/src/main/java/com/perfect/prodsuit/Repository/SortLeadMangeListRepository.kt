@@ -71,14 +71,18 @@ object SortLeadMangeListRepository {
                 if (!submode1.equals(""))
                 {
                     requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                    requestObject1.put("criteria", ProdsuitApplication.encryptStart(TodoListActivity.criteria))
                 }
                 if (!submode2.equals(""))
                 {
                     requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
+                    requestObject1.put("criteria", ProdsuitApplication.encryptStart(OverDueActivity.criteria))
+                    Log.i("Criteria",OverDueActivity.criteria)
                 }
                 if (!submode3.equals(""))
                 {
                     requestObject1.put("SubMode", ProdsuitApplication.encryptStart("3"))
+                    requestObject1.put("criteria", ProdsuitApplication.encryptStart(UpcomingtaskActivity.criteria))
                 }
 
 
@@ -89,8 +93,8 @@ object SortLeadMangeListRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name1))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(OverDueActivity.date))
-                requestObject1.put("criteria", ProdsuitApplication.encryptStart("1"))
-                Log.i("requestobject",requestObject1.toString()+"\n"+AccountDetailsActivity.ID_ActionType+"\n"+AccountDetailsActivity.ID_LeadGenerateProduct)
+
+                Log.i("requestobject",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }

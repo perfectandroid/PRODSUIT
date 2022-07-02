@@ -138,7 +138,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="2.5dp"
                 android:background="@drawable/et_bggreybottom"
-                android:drawableLeft="@drawable/ic_date"
+                android:drawableLeft="@drawable/ic_calsort"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/myfont"
@@ -153,22 +153,22 @@
                 android:id="@+id/etxt_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Product Name"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="13dp"
-                android:padding="5dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2.5dp"
                 android:background="@drawable/et_bggreybottom"
+                android:drawableLeft="@drawable/ic_personsort"
                 android:drawablePadding="10dp"
-                android:gravity="left"
-                android:drawableLeft="@drawable/ic_time"
                 android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/myfont"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="2.5dp"/>
+                android:gravity="left"
+                android:hint="Product Name"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etdis"
@@ -229,17 +229,19 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:gravity="center">
+
                     <Button
                         android:id="@+id/btncancel"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="29dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:textSize="15dp"
-                        android:textAllCaps="false"
-                        android:fontFamily="@font/myfont"
                         android:background="@drawable/btn_resetbg"
-                        android:text="Cancel" />
+                        android:fontFamily="@font/myfont"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_ok"
@@ -257,8 +259,8 @@
                         android:layout_margin="5dp"
                         android:textSize="15dp"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/myfont"
                         android:background="@drawable/btn_bgcolour"
+                        android:fontFamily="@font/myfont"
                         android:textAllCaps="false"
                         android:text="Submit" />
                 </LinearLayout>

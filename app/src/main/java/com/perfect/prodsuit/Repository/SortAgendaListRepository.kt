@@ -9,12 +9,11 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ActivityListModel
-import com.perfect.prodsuit.Model.AgendaDetailModel
 import com.perfect.prodsuit.Model.FilterAgendaDettailListModel
+import com.perfect.prodsuit.Model.SortAgendaListModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.AgendaActivity
-import com.perfect.prodsuit.View.Activity.OverDueActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -27,17 +26,17 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-object FilterAgendaListRepository {
+object SortAgendaListRepository {
 
-    val filteragendalistSetterGetter = MutableLiveData<FilterAgendaDettailListModel>()
+    val sortagendalistSetterGetter = MutableLiveData<SortAgendaListModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String): MutableLiveData<FilterAgendaDettailListModel> {
-        getFilterAgendalist(context,ID_ActionType,SubMode,Id_Agenda)
-        return filteragendalistSetterGetter
+
+    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String): MutableLiveData<SortAgendaListModel> {
+        getSortAgendalist(context, ID_ActionType, SubMode, Id_Agenda)
+        return sortagendalistSetterGetter
     }
 
-
-    private fun getFilterAgendalist(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String) {
+    private fun getSortAgendalist(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -85,6 +84,7 @@ object FilterAgendaListRepository {
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(strNxtactDate))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(""))
                 Log.i("requestobject",requestObject1.toString()+"\n"+strNxtactDate)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -101,11 +101,11 @@ object FilterAgendaListRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("AgendaFilter", response.body())
-                        val users = ArrayList<FilterAgendaDettailListModel>()
-                        users.add(FilterAgendaDettailListModel(response.body()))
+                        Log.i("SortAgenda", response.body())
+                        val users = ArrayList<SortAgendaListModel>()
+                        users.add(SortAgendaListModel(response.body()))
                         val msg = users[0].message
-                        filteragendalistSetterGetter.value = FilterAgendaDettailListModel(msg)
+                        sortagendalistSetterGetter.value = SortAgendaListModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
