@@ -17,6 +17,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -43,6 +44,11 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
     private var mMinute:Int = 0
     private var chipNavigationBar: ChipNavigationBar? = null
     lateinit var context: Context
+
+    private var llCustomerService: LinearLayout? = null
+    private var llServiceAssign: LinearLayout? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -57,12 +63,25 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        llCustomerService = findViewById<LinearLayout>(R.id.llCustomerService)
+        llServiceAssign = findViewById<LinearLayout>(R.id.llServiceAssign)
+        llCustomerService!!.setOnClickListener(this)
+        llServiceAssign!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.llCustomerService->{
+                val i = Intent(this@ServiceActivity, CustomerServiceActivity::class.java)
+                startActivity(i)
+            }
+            R.id.llServiceAssign->{
+                val i = Intent(this@ServiceActivity, ServiceAssignActivity::class.java)
+                startActivity(i)
             }
         }
     }

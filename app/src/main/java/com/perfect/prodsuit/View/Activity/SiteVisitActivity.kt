@@ -20,6 +20,8 @@ import android.os.Environment
 import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -36,6 +38,8 @@ import org.json.JSONObject
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
@@ -50,34 +54,19 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     lateinit var context: Context
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-    var llFromdate: LinearLayout? = null
-    var llFromDatePick: LinearLayout? = null
-    var llToDate: LinearLayout? = null
-    var llToDatePick: LinearLayout? = null
-    var llMentionDate: LinearLayout? = null
-    var llMentionDatePick: LinearLayout? = null
-    var llRiskType: LinearLayout? = null
-    var llFollowType: LinearLayout? = null
-    var llStatus: LinearLayout? = null
-    var txtFromDate: TextView? = null
-    var txtFromSubmit: TextView? = null
-    var txtToDate: TextView? = null
-    var txtToSubmit: TextView? = null
-    var txtMentionDate: TextView? = null
-    var txtMentionSubmit: TextView? = null
-    var txtLatitude: TextView? = null
-    var txtLongitude: TextView? = null
-    var txtRiskType: TextView? = null
-    var txtFollowType: TextView? = null
-    var txtStatus: TextView? = null
-    var edtAgentNote: EditText? = null
-    var edtCustNote: EditText? = null
-    var imFromDate: ImageView? = null
-    var imToDate: ImageView? = null
-    var imMentionDate: ImageView? = null
-    var datePickerFrom: DatePicker? = null
-    var datePickerTo: TimePicker? = null
-    var datePickerMention: DatePicker? = null
+
+    var tie_Date: TextInputEditText? = null
+    var tie_Time: TextInputEditText? = null
+    var tie_RiskType: TextInputEditText? = null
+    var tie_AgentNote: TextInputEditText? = null
+    var tie_CustomerNote: TextInputEditText? = null
+    var tie_FollowType: TextInputEditText? = null
+    var tie_Status: TextInputEditText? = null
+    var tie_CustomerMentionDate: TextInputEditText? = null
+    var tie_Longitude: TextInputEditText? = null
+    var tie_Latitude: TextInputEditText? = null
+
+
     var btnReset: Button? = null
     var btnSubmit: Button? = null
     var imgv_upload1: ImageView? = null
@@ -95,14 +84,30 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     var MentionDateMode : String?= "1"  // GONE
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var followUpTypeArrayList : JSONArray
+    lateinit var followUpTypeSort : JSONArray
     private var dialogFollowupType : Dialog? = null
     var recyFollowupType: RecyclerView? = null
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
+    lateinit var prodStatusSort : JSONArray
     private var dialogProdStatus : Dialog? = null
     var recyProdStatus: RecyclerView? = null
     lateinit var saveSiteVisitViewModel: SaveSiteVisitViewModel
     lateinit var saveSiteVisitArrayList : JSONArray
+
+
+    internal var yr: Int =0
+    internal var month:Int = 0
+    internal var day:Int = 0
+    internal var hr:Int = 0
+    internal var min:Int = 0
+    private var mYear: Int =0
+    private var mMonth:Int = 0
+    private var mDay:Int = 0
+    private var mHour:Int = 0
+    private var mMinute:Int = 0
+
+    private var DateType:Int = 0
 
     companion object {
         var ID_LeadGenerateProduct :String = ""
@@ -140,57 +145,40 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-        txtFromDate = findViewById(R.id.txtFromDate) as TextView
-        txtFromSubmit = findViewById(R.id.txtFromSubmit) as TextView
-        txtToDate = findViewById(R.id.txtToDate) as TextView
-        txtToSubmit = findViewById(R.id.txtToSubmit) as TextView
-        txtMentionDate = findViewById(R.id.txtMentionDate) as TextView
-        txtMentionSubmit = findViewById(R.id.txtMentionSubmit) as TextView
-        txtLatitude = findViewById(R.id.txtLatitude) as TextView
-        txtLongitude = findViewById(R.id.txtLongitude) as TextView
-        txtRiskType = findViewById(R.id.txtRiskType) as TextView
-        txtFollowType = findViewById(R.id.txtFollowType) as TextView
-        txtStatus = findViewById(R.id.txtStatus) as TextView
-        edtAgentNote = findViewById(R.id.edtAgentNote) as EditText
-        edtCustNote = findViewById(R.id.edtCustNote) as EditText
+
+        tie_Date = findViewById<TextInputEditText>(R.id.tie_Date)
+        tie_Time = findViewById<TextInputEditText>(R.id.tie_Time)
+        tie_RiskType = findViewById<TextInputEditText>(R.id.tie_RiskType)
+        tie_AgentNote = findViewById<TextInputEditText>(R.id.tie_AgentNote)
+        tie_CustomerNote = findViewById<TextInputEditText>(R.id.tie_CustomerNote)
+        tie_FollowType = findViewById<TextInputEditText>(R.id.tie_FollowType)
+        tie_Status = findViewById<TextInputEditText>(R.id.tie_Status)
+        tie_CustomerMentionDate = findViewById<TextInputEditText>(R.id.tie_CustomerMentionDate)
+        tie_Latitude = findViewById<TextInputEditText>(R.id.tie_Latitude)
+        tie_Longitude = findViewById<TextInputEditText>(R.id.tie_Longitude)
+
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
-        imFromDate = findViewById(R.id.imFromDate) as ImageView
-        imToDate = findViewById(R.id.imToDate) as ImageView
-        imMentionDate = findViewById(R.id.imMentionDate) as ImageView
-        llFromdate = findViewById(R.id.llFromdate) as LinearLayout
-        llFromDatePick = findViewById(R.id.llFromDatePick) as LinearLayout
-        llToDate = findViewById(R.id.llToDate) as LinearLayout
-        llToDatePick = findViewById(R.id.llToDatePick) as LinearLayout
-        llMentionDate = findViewById(R.id.llMentionDate) as LinearLayout
-        llMentionDatePick = findViewById(R.id.llMentionDatePick) as LinearLayout
-        llRiskType = findViewById(R.id.llRiskType) as LinearLayout
-        llFollowType = findViewById(R.id.llFollowType) as LinearLayout
-        llStatus = findViewById(R.id.llStatus) as LinearLayout
-        datePickerFrom = findViewById(R.id.datePickerFrom) as DatePicker
-        datePickerTo = findViewById(R.id.datePickerTo) as TimePicker
-        datePickerMention = findViewById(R.id.datePickerMention) as DatePicker
+
+
         btnReset = findViewById(R.id.btnReset) as Button
         btnSubmit = findViewById(R.id.btnSubmit) as Button
-        llFromdate!!.setOnClickListener(this)
-        llToDate!!.setOnClickListener(this)
-        llMentionDate!!.setOnClickListener(this)
-        llRiskType!!.setOnClickListener(this)
-        llFollowType!!.setOnClickListener(this)
-        llStatus!!.setOnClickListener(this)
-        txtLatitude!!.setOnClickListener(this)
-        txtLongitude!!.setOnClickListener(this)
-        txtFromSubmit!!.setOnClickListener(this)
-        txtToSubmit!!.setOnClickListener(this)
-        txtMentionSubmit!!.setOnClickListener(this)
+
+        tie_Longitude!!.setOnClickListener(this)
+        tie_Latitude!!.setOnClickListener(this)
         imgv_upload1!!.setOnClickListener(this)
         imgv_upload2!!.setOnClickListener(this)
-        imFromDate!!.setOnClickListener(this)
-        imToDate!!.setOnClickListener(this)
-        imMentionDate!!.setOnClickListener(this)
+
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
-        datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
+
+
+        tie_Date!!.setOnClickListener(this)
+        tie_Time!!.setOnClickListener(this)
+        tie_RiskType!!.setOnClickListener(this)
+        tie_FollowType!!.setOnClickListener(this)
+        tie_Status!!.setOnClickListener(this)
+        tie_CustomerMentionDate!!.setOnClickListener(this)
     }
 
     @SuppressLint("MissingPermission")
@@ -202,8 +190,9 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        txtLongitude!!.text = location.longitude.toString()
-                        txtLatitude!!.text = location.latitude.toString()
+
+                        tie_Longitude!!.setText(location.longitude.toString())
+                        tie_Latitude!!.setText(location.latitude.toString())
                     }
                 }
             } else {
@@ -233,8 +222,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
-            txtLongitude!!.text = mLastLocation.longitude.toString()
-            txtLatitude!!.text = mLastLocation.latitude.toString()
+            tie_Longitude!!.setText(mLastLocation.longitude.toString())
+            tie_Latitude!!.setText(mLastLocation.latitude.toString())
         }
     }
 
@@ -283,12 +272,35 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
            R.id.imback->{
                finish()
            }
-           R.id.txtLatitude->{
+           R.id.tie_Date->{
+               DateType = 0
+               openBottomSheet()
+           }
+           R.id.tie_Time->{
+               openBottomSheetTime()
+           }
+           R.id.tie_RiskType->{
+               getRiskType()
+           }
+           R.id.tie_FollowType->{
+               getFollowupType()
+           }
+           R.id.tie_Status->{
+               getProductStatus()
+           }
+
+           R.id.tie_CustomerMentionDate->{
+               DateType = 1
+               openBottomSheet()
+           }
+
+           R.id.tie_Latitude->{
                getLastLocation()
            }
-           R.id.txtLongitude->{
+           R.id.tie_Longitude->{
                getLastLocation()
            }
+
            R.id.imgv_upload1->{
                try
                {
@@ -317,140 +329,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                }
            }
 
-           R.id.llFromdate->{
-               if (fromDateMode.equals("0")){
-                   llFromDatePick!!.visibility = View.GONE
-                   fromDateMode = "1"
-               }else{
-                   llFromDatePick!!.visibility = View.VISIBLE
-                   fromDateMode = "0"
-               }
-               llToDatePick!!.visibility = View.GONE
-               toDateMode = "1"
-           }
-           R.id.llToDate->{
-               if (toDateMode.equals("0")){
-                   llToDatePick!!.visibility = View.GONE
-                   toDateMode = "1"
-               }else{
-                   llToDatePick!!.visibility = View.VISIBLE
-                   toDateMode = "0"
-               }
-               llFromDatePick!!.visibility = View.GONE
-               fromDateMode = "1"
-           }
-           R.id.llMentionDate->{
-               if (MentionDateMode.equals("0")){
-                   llMentionDatePick!!.visibility = View.GONE
-                   MentionDateMode = "1"
-               }else{
-                   llMentionDatePick!!.visibility = View.VISIBLE
-                   MentionDateMode = "0"
-               }
-           }
-           R.id.imFromDate->{
-               llFromDatePick!!.visibility = View.GONE
-               fromDateMode = "1"
-           }
-           R.id.imToDate->{
-               llToDatePick!!.visibility = View.GONE
-               toDateMode = "1"
-           }
-           R.id.imMentionDate->{
-               llMentionDatePick!!.visibility = View.GONE
-               MentionDateMode = "1"
-           }
-           R.id.txtFromSubmit->{
-               try {
-                   datePickerFrom!!.minDate = Calendar.getInstance().timeInMillis
-                   val day: Int = datePickerFrom!!.getDayOfMonth()
-                   val mon: Int = datePickerFrom!!.getMonth()
-                   val month: Int = mon+1
-                   val year: Int = datePickerFrom!!.getYear()
-                   var strDay = day.toString()
-                   var strMonth = month.toString()
-                   var strYear = year.toString()
-                   if (strDay.length == 1){
-                       strDay ="0"+day
-                   }
-                   if (strMonth.length == 1){
-                       strMonth ="0"+strMonth
-                   }
-                   txtFromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                   llFromDatePick!!.visibility=View.GONE
-                   fromDateMode = "1"
-                   strDate = strDay+"-"+strMonth+"-"+strYear
-               }
-               catch (e: Exception){
-                   Log.e(TAG,"Exception   428   "+e.toString())
-               }
-           }
-           R.id.txtToSubmit->{
-               try {
-                   var am_pm = ""
-                   var hour: Int = datePickerTo!!.hour
-                   var min: Int = datePickerTo!!.minute
-                   when {hour == 0 -> { hour += 12
-                       am_pm = "AM"
-                   }
-                       hour == 12 -> am_pm = "PM"
-                       hour > 12 -> { hour -= 12
-                           am_pm = "PM"
-                       }
-                       else -> am_pm = "AM"
-                   }
-                   var hours : String = ""+hour
-                   var minutes : String = ""+min
-                   if (hour<10){
-                       hours = "0"+hour
-                   }
-                   if (min<10){
-                       minutes = "0"+min
-                   }
-                   txtToDate!!.setText(""+hours+":"+minutes+":"+"00")
-                   llToDatePick!!.visibility=View.GONE
-                   toDateMode = "1"
-                   strTime = hours+":"+minutes+":"+"00"
-               }
-               catch (e: Exception){
-                   Log.e(TAG,"Exception   428   "+e.toString())
-               }
-           }
-           R.id.txtMentionSubmit->{
-               try {
-                   datePickerMention!!.minDate = Calendar.getInstance().timeInMillis
-                   val day: Int = datePickerMention!!.getDayOfMonth()
-                   val mon: Int = datePickerMention!!.getMonth()
-                   val month: Int = mon+1
-                   val year: Int = datePickerMention!!.getYear()
-                   var strDay = day.toString()
-                   var strMonth = month.toString()
-                   var strYear = year.toString()
-                   if (strDay.length == 1){
-                       strDay ="0"+day
-                   }
-                   if (strMonth.length == 1){
-                       strMonth ="0"+strMonth
-                   }
-                   txtMentionDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                   llMentionDatePick!!.visibility=View.GONE
-                   MentionDateMode = "1"
 
-                   strMentionDate = strDay+"-"+strMonth+"-"+strYear
-               }
-               catch (e: Exception){
-                   Log.e(TAG,"Exception   428   "+e.toString())
-               }
-           }
-           R.id.llRiskType->{
-               getRiskType()
-           }
-           R.id.llFollowType->{
-               getFollowupType()
-           }
-           R.id.llStatus->{
-               getProductStatus()
-           }
            R.id.btnReset->{
                removeData()
            }
@@ -462,38 +341,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
        }
     }
 
-    private fun getRiskType() {
-        try {
-            val builder = android.app.AlertDialog.Builder(this)
-            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout = inflater1.inflate(R.layout.riskstatus_popup, null)
-            val lvRiskType  = layout.findViewById<ListView>(R.id.lvRiskType)
-            builder.setView(layout)
-            val alertDialog = builder.create()
-            val listItem = resources.getStringArray(R.array.risk_type)
-            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
-            )
-            lvRiskType.setAdapter(adapter)
-            lvRiskType.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
-                // TODO Auto-generated method stub
-                val value = adapter.getItem(position)
-                txtRiskType!!.setText(value)
-                if (position == 0) {
-                    strRiskType = "1"
-                }
-                if (position == 1) {
-                    strRiskType = "2"
-                }
-                if (position == 2) {
-                    strRiskType = "3"
-                }
-                alertDialog.dismiss()
-            })
-            alertDialog.show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+
 
     private fun getFollowupType() {
         var followUpType = 0
@@ -558,11 +406,52 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
             dialogFollowupType!! .setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType = dialogFollowupType!! .findViewById(R.id.recyFollowupType) as RecyclerView
+            val etsearch = dialogFollowupType!! .findViewById(R.id.etsearch) as EditText
+
+            followUpTypeSort = JSONArray()
+            for (k in 0 until followUpTypeArrayList.length()) {
+                val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                followUpTypeSort.put(jsonObject)
+            }
+
             val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeArrayList)
+//            val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeArrayList)
+            val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeSort)
             recyFollowupType!!.adapter = adapter
             adapter.setClickListener(this@SiteVisitActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpTypeSort = JSONArray()
+
+                    for (k in 0 until followUpTypeArrayList.length()) {
+                        val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                            if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                followUpTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"followUpTypeSort               7103    "+followUpTypeSort)
+                    val adapter = FollowupTypeAdapter(this@SiteVisitActivity, followUpTypeSort)
+                    recyFollowupType!!.adapter = adapter
+                    adapter.setClickListener(this@SiteVisitActivity)
+                }
+            })
+
             dialogFollowupType!!.show()
             dialogFollowupType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -632,11 +521,54 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
             dialogProdStatus!! .setContentView(R.layout.product_status_popup)
             dialogProdStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdStatus = dialogProdStatus!! .findViewById(R.id.recyProdStatus) as RecyclerView
+            val etsearch = dialogProdStatus!! .findViewById(R.id.etsearch) as EditText
+
+            prodStatusSort = JSONArray()
+            for (k in 0 until prodStatusArrayList.length()) {
+                val jsonObject = prodStatusArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodStatusSort.put(jsonObject)
+            }
+
+
             val lLayout = GridLayoutManager(this@SiteVisitActivity, 1)
             recyProdStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusArrayList)
+//            val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusArrayList)
+            val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusSort)
             recyProdStatus!!.adapter = adapter
             adapter.setClickListener(this@SiteVisitActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodStatusSort = JSONArray()
+
+                    for (k in 0 until prodStatusArrayList.length()) {
+                        val jsonObject = prodStatusArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("StatusName").length) {
+                            if (jsonObject.getString("StatusName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                prodStatusSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"prodStatusSort               7103    "+prodStatusSort)
+                    val adapter = ProductStatusAdapter(this@SiteVisitActivity, prodStatusSort)
+                    recyProdStatus!!.adapter = adapter
+                    adapter.setClickListener(this@SiteVisitActivity)
+                }
+            })
+
+
             dialogProdStatus!!.show()
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
@@ -805,25 +737,27 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     override fun onClick(position: Int, data: String) {
         if (data.equals("followuptype")){
             dialogFollowupType!!.dismiss()
-            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+//            val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            val jsonObject = followUpTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            txtFollowType!!.setText(jsonObject.getString("ActnTypeName"))
+            tie_FollowType!!.setText(jsonObject.getString("ActnTypeName"))
         }
         if (data.equals("prodstatus")){
             dialogProdStatus!!.dismiss()
-            val jsonObject = prodStatusArrayList.getJSONObject(position)
+//            val jsonObject = prodStatusArrayList.getJSONObject(position)
+            val jsonObject = prodStatusSort.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
-            txtStatus!!.setText(jsonObject.getString("StatusName"))
+            tie_Status!!.setText(jsonObject.getString("StatusName"))
         }
     }
 
     private fun Validations(v : View) {
-        strAgentNote = edtAgentNote!!.text.toString()
-        strCustomerNote = edtCustNote!!.text.toString()
-        strLatitude = txtLatitude!!.text.toString()
-        strLongitude = txtLongitude!!.text.toString()
+        strAgentNote = tie_AgentNote!!.text.toString()
+        strCustomerNote = tie_CustomerNote!!.text.toString()
+        strLatitude = tie_Latitude!!.text.toString()
+        strLongitude = tie_Longitude!!.text.toString()
         if (strDate.equals("")){
             Config.snackBars(context,v,"Select Date")
         }
@@ -991,20 +925,165 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         strLongitude = ""
         encode1 = ""
         encode2 = ""
-        txtFromDate!!.setText("")
-        txtToDate!!.setText("")
-        txtRiskType!!.setText("")
-        edtAgentNote!!.setText("")
-        edtCustNote!!.setText("")
-        txtFollowType!!.setText("")
-        txtStatus!!.setText("")
-        txtMentionDate!!.setText("")
-        txtLatitude!!.setText("")
-        txtLongitude!!.setText("")
+
+        tie_Date!!.setText("")
+        tie_Time!!.setText("")
+        tie_RiskType!!.setText("")
+        tie_AgentNote!!.setText("")
+        tie_CustomerNote!!.setText("")
+        tie_FollowType!!.setText("")
+        tie_Status!!.setText("")
+        tie_CustomerMentionDate!!.setText("")
+        tie_Latitude!!.setText("")
+        tie_Longitude!!.setText("")
+
+
         image1 = ""
         image2 = ""
-        imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
-        imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.uploadimg))
+        imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+        imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+    }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1!!.minDate = System.currentTimeMillis() - 1000
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day1: Int = date_Picker1!!.getDayOfMonth()
+                val mon1: Int = date_Picker1!!.getMonth()
+                val month1: Int = mon1+1
+                val year1: Int = date_Picker1!!.getYear()
+                var strDay = day1.toString()
+                var strMonth = month1.toString()
+                var strYear = year1.toString()
+
+                yr = year1
+                month =  month1
+                day= day1
+
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                if (DateType == 0){
+                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strDate = strYear+"-"+strMonth+"-"+strDay
+                }
+                if (DateType == 1){
+                    tie_CustomerMentionDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    strMentionDate = strYear+"-"+strMonth+"-"+strDay
+                }
+
+
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun openBottomSheetTime() {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_timer, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+        //   time_Picker1!!.currentMinute = System.currentTimeMillis() - 1000
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+
+//                val hour: Int = time_Picker1!!.hour
+//                val min: Int = time_Picker1!!.minute
+
+                hr = time_Picker1!!.hour
+                min = time_Picker1!!.minute
+
+                strTime = String.format(
+                    "%02d:%02d %s", if (hr == 0) 12 else hr,
+                    min, if (hr < 12) "AM" else "PM"
+                )
+
+                tie_Time!!.setText(strTime)
+
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun getRiskType() {
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.riskstatus_popup, null)
+            val lvRiskType  = layout.findViewById<ListView>(R.id.lvRiskType)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.risk_type)
+
+
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvRiskType.setAdapter(adapter)
+            lvRiskType.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                tie_RiskType!!.setText(value)
+                if (position == 0) {
+                    strRiskType = "1"
+                }
+                if (position == 1) {
+                    strRiskType = "2"
+                }
+                if (position == 2) {
+                    strRiskType = "3"
+                }
+                alertDialog.dismiss()
+            })
+
+
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

@@ -27,6 +27,7 @@ object PincodeSearchRepository {
 
     fun getServicesApiCall(context: Context,strPincode : String): MutableLiveData<PincodeSearchModel> {
         getPinCode(context,strPincode)
+        Log.e(TAG,"pincodeSetterGetter   3000    "+pincodeSetterGetter.value)
         return pincodeSetterGetter
     }
 

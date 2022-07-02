@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="@color/textColor"
+            android:fontFamily="@font/myfont"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/arrow_down"
+            style="@style/Widget.App.TextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_Comp_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/svg_report"
+                android:backgroundTint="@color/greydark"
+                android:textSize="14dp"
+                android:editable="false"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/greydarks"
+                android:drawablePadding="10dp"
+                android:textStyle="normal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Product"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="@color/textColor"
+            android:fontFamily="@font/myfont"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/arrow_down"
+            style="@style/Widget.App.TextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_Comp_Product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/svg_report"
+                android:backgroundTint="@color/greydark"
+                android:textSize="14dp"
+                android:editable="false"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/greydarks"
+                android:drawablePadding="10dp"
+                android:textStyle="normal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:layout_marginTop="5dp"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="@color/textColor"
+            android:fontFamily="@font/myfont"
+            app:endIconMode="custom"
+            style="@style/Widget.App.TextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_Comp_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/svg_report"
+                android:backgroundTint="@color/greydark"
+                android:textSize="14dp"
+                android:editable="true"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/greydarks"
+                android:drawablePadding="10dp"
+                android:textStyle="normal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_ContactNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact No."
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="@color/textColor"
+            android:fontFamily="@font/myfont"
+            app:endIconMode="custom"
+            style="@style/Widget.App.TextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_Comp_ContactNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/svg_report"
+                android:backgroundTint="@color/greydark"
+                android:textSize="14dp"
+                android:editable="true"
+                android:inputType="phone"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/greydarks"
+                android:drawablePadding="10dp"
+                android:textStyle="normal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_Landmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Land mark"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="@color/textColor"
+            android:fontFamily="@font/myfont"
+            app:endIconMode="custom"
+            style="@style/Widget.App.TextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_Comp_Landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:drawableLeft="@drawable/svg_report"
+                android:backgroundTint="@color/greydark"
+                android:textSize="14dp"
+                android:editable="true"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/greydarks"
+                android:drawablePadding="10dp"
+                android:textStyle="normal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_FromDate"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
+                android:hint="From Date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_Comp_FromDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="@color/textColor"
+                    android:editable="false"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/greydarks"
+                    android:textSize="14dp"
+                    android:textStyle="normal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_ToDate"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
+                android:hint="To Date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_Comp_ToDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="@color/textColor"
+                    android:editable="false"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="1dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/greydarks"
+                    android:textSize="14dp"
+                    android:textStyle="normal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_FromTime"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
+                android:hint="From Time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_Comp_FromTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/textColor"
+                    android:editable="false"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/greydarks"
+                    android:textSize="14dp"
+                    android:textStyle="normal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_ToTime"
+                style="@style/Widget.App.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:drawableTint="@color/textColor"
+                android:fontFamily="@font/myfont"
+                app:endIconMode="custom"
+                android:hint="To Time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_Comp_ToTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/textColor"
+                    android:editable="false"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/greydarks"
+                    android:textSize="14dp"
+                    android:textStyle="normal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

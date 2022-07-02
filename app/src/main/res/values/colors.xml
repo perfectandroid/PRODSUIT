@@ -162,6 +162,16 @@
     <color name="report_list5">#EDD7AF</color>
     <color name="report_list6">#EFC5BE</color>
 
+    <color name="tab_background_selected">#EF667B</color>
+    <color name="tab_background_unselected">#E8465F</color>
+    <color name="service_header">#E4E3E3</color>
+<!--    <color name="service_header">#0f3460</color>-->
+
+
+
+    <color name="alternate_color">#FCF6F7</color>
+<!--    <color name="alternate_color">#f4f4f6</color>-->
+
 
 
 <!--    <color name="todolist_Color">#31a3ff</color>-->
@@ -194,6 +204,15 @@
     <color name="list_si">#F8E7E8</color>
     <color name="list_data">#F8EFF0</color>
     <color name="list_line">#CECECE</color>
+
+
+    <color name="service_adp1">#FA9483</color>
+    <color name="service_adp2">#FDFAF7</color>
+    <color name="service_adp3">#F37D69</color>
+
+    <color name="service1">#286db9</color>
+    <color name="service2">#553b8c</color>
+    <color name="service3">#f26514</color>
 
 
 <!--    <color name="leadstages_color1">#fcca00</color>-->

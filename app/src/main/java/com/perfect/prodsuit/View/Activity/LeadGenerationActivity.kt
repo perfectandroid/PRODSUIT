@@ -1836,6 +1836,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 leadFromViewModel.getLeadFrom(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
+                        Log.e(TAG,"message   :   1839   "+serviceSetterGetter.message)
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
 
@@ -1867,11 +1868,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()

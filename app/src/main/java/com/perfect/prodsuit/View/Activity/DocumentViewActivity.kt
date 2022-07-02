@@ -3,18 +3,25 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Base64
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ViewDocumentViewModel
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 class DocumentViewActivity : AppCompatActivity() {
 
@@ -25,8 +32,12 @@ class DocumentViewActivity : AppCompatActivity() {
     var ID_LeadGenerate : String = ""
     var ID_LeadGenerateProduct : String = ""
     var ID_LeadDocumentDetails : String = ""
+    var DocumentImageFormat : String = ""
 
     lateinit var viewDocumentViewModel: ViewDocumentViewModel
+    lateinit var documentArrayList : JSONArray
+
+    private var destination: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +59,13 @@ class DocumentViewActivity : AppCompatActivity() {
         if (getIntent().hasExtra("ID_LeadDocumentDetails")) {
             ID_LeadDocumentDetails = getIntent().getStringExtra("ID_LeadDocumentDetails")!!
         }
+        if (getIntent().hasExtra("DocumentImageFormat")) {
+            DocumentImageFormat = getIntent().getStringExtra("DocumentImageFormat")!!
+        }
         Log.e(TAG,"ID_LeadGenerate         391   "+ID_LeadGenerate)
         Log.e(TAG,"ID_LeadGenerateProduct  392   "+ID_LeadGenerateProduct)
-        Log.e(TAG,"ID_LeadDocumentDetails  392   "+ID_LeadDocumentDetails)
+        Log.e(TAG,"ID_LeadDocumentDetails  393   "+ID_LeadDocumentDetails)
+        Log.e(TAG,"DocumentImageFormat     394   "+DocumentImageFormat)
 
         getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
 
@@ -79,26 +94,37 @@ class DocumentViewActivity : AppCompatActivity() {
                             Log.e(TAG,"msg   302   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
 
+//                                AccountDetailsActivity
+//                                getImages
+//                                https://stackoverflow.com/questions/31129644/how-to-download-an-image-from-server-side-to-android-using-bytearray
 
+                                    try {
+                                        val jobjt = jObject.getJSONObject("DocumentImageDetails")
+                                        val DocumentImage = jobjt.getString("DocumentImage")
+                                        val decodedString = Base64.decode(DocumentImage, Base64.DEFAULT)
+                                      //  val mediaData: ByteArray = Base64.decode(decodedString, 0)
+                                      //  val bytes = decodedString.toByteArray()
 
-//                                val jobjt = jObject.getJSONObject("DocumentDetails")
-//                                documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
-//                                if (documentDetailArrayList.length()>0){
-//
-//                                    Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
-//
-//
-//
-//                                    recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
-//                                    // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//                                    recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//                                    // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                    val adapter = DocumentDetailAdapter(this@DocumentListActivity, documentDetailArrayList)
-//                                    recyDocumentDetail!!.adapter = adapter
-//                                    adapter.setClickListener(this@DocumentListActivity)
-//
-//
-//                                }
+                                        destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                        val fo: FileOutputStream
+                                        try {
+                                            if (!destination!!.getParentFile().exists()) {
+                                                destination!!.getParentFile().mkdirs()
+                                            }
+                                            if (!destination!!.exists()) {
+                                                destination!!.createNewFile()
+                                            }
+                                            fo = FileOutputStream(destination)
+                                            fo.write(decodedString)
+                                            fo.close()
+                                            Log.e(TAG,"Success   1230    ")
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            Log.e(TAG,"Exception   1231    "+e.toString())
+                                        }
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"Exception   1232    "+e.toString())
+                                    }
 
                             } else {
 

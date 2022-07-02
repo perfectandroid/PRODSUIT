@@ -7,9 +7,9 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:textColor="@color/black"
-    android:drawableRight="@drawable/arrowright"
+    android:drawableRight="@drawable/svg_right_arrow"
+    android:background="@color/list_data"
     android:padding="10dp"
     android:textSize="15dp"
-    android:drawableTint="@color/greydark"
     android:fontFamily="@font/myfont"
     android:textAlignment="inherit"/>

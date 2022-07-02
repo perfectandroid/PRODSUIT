@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -39,9 +40,14 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
                 holder.txtSubject.text        = jsonObject!!.getString("DocumentSubject")
                 holder.txtDescription.text    = jsonObject!!.getString("DocumentDescription")
 
-                holder.llDocumentDetails!!.setTag(position)
-                holder.llDocumentDetails!!.setOnClickListener(View.OnClickListener {
+                holder.imgDownload!!.setTag(position)
+                holder.imgDownload!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "Documents")
+                })
+
+                holder.llViewDesc!!.setTag(position)
+                holder.llViewDesc!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "ViewDescription")
                 })
             }
         } catch (e: Exception) {
@@ -67,12 +73,16 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
         internal var txtDate             : TextView
         internal var txtSubject          : TextView
         internal var txtDescription      : TextView
+        internal var imgDownload         : ImageView
         internal var llDocumentDetails   : LinearLayout
+        internal var llViewDesc          : LinearLayout
         init {
             txtDate               = v.findViewById<View>(R.id.txtDate) as TextView
             txtSubject            = v.findViewById<View>(R.id.txtSubject) as TextView
             txtDescription        = v.findViewById<View>(R.id.txtDescription) as TextView
+            imgDownload           = v.findViewById<View>(R.id.imgDownload) as ImageView
             llDocumentDetails     = v.findViewById<View>(R.id.llDocumentDetails) as LinearLayout
+            llViewDesc            = v.findViewById<View>(R.id.llViewDesc) as LinearLayout
         }
     }
 

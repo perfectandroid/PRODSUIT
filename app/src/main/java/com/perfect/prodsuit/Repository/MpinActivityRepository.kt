@@ -2,12 +2,15 @@ package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.MpinModel
+import com.perfect.prodsuit.Model.ObservableVisibleModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.MpinActivity
 import okhttp3.OkHttpClient
@@ -21,6 +24,7 @@ import java.util.*
 
 object MpinActivityRepository {
 
+    val TAG: String = "MpinActivityRepository"
     private var progressDialog: ProgressDialog? = null
     val mpinSetterGetter = MutableLiveData<MpinModel>()
 
@@ -31,6 +35,7 @@ object MpinActivityRepository {
 
     private fun setMpinVerification(context: Context) {
         try {
+            mpinSetterGetter.value = MpinModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -77,6 +82,7 @@ object MpinActivityRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
+                        Log.e("TAG","response   :   1839   "+response.body())
                         val jObject = JSONObject(response.body())
                         val users = ArrayList<MpinModel>()
                         users.add(MpinModel(response.body()))
@@ -85,16 +91,19 @@ object MpinActivityRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(context, ""+e.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context, "Some Technical Issues.", Toast.LENGTH_LONG).show()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context, "Some Technical Issues.", Toast.LENGTH_LONG).show()
         }
     }
 

@@ -11,10 +11,12 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Model.MpinModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ForgotMpinViewModel
 import com.perfect.prodsuit.Viewmodel.MpinActivityViewModel
@@ -527,6 +529,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun MpinVerification(Mpin:String) {
+        var cMpin = 0
         strMPIN = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -539,7 +542,9 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 mpinActivityViewModel.veryfyMpin(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
+                        Log.e("TAG","message   :   183910   "+serviceSetterGetter.message)
+                       val msg = serviceSetterGetter.message
+
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -571,11 +576,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 clearAll()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()

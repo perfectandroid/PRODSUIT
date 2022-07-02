@@ -2,6 +2,7 @@ package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -31,6 +32,7 @@ object LoginActivityRepository {
 
     private fun doLogin(context: Context) {
         try {
+            loginSetterGetter.value = LoginModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val CERT_NAMESP = context.getSharedPreferences(Config.SHARED_PREF8, 0)
             val BANK_KEYSP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -116,16 +118,31 @@ object LoginActivityRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(
+                            context,
+                            ""+e.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(
+                        context,
+                        "Some Technical Issues.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(
+                context,
+                "Some Technical Issues.",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
