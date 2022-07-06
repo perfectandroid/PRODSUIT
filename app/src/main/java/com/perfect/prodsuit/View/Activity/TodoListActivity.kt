@@ -393,14 +393,20 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
-                if(etxt_date1!!.text.toString().equals("") && etxt_name1!!.text.toString().equals(""))
-                {
-                    Toast.makeText(applicationContext,"Please enter a value",Toast.LENGTH_LONG).show()
-                }
-                else
+                if(!(etxt_date1!!.text.toString().equals("")) && !(etxt_name1!!.text.toString().equals("")))
                 {
                     getSortList()
                     alertDialogSort.dismiss()
+
+                }
+                else if(!(etxt_date1!!.text.toString().equals(""))|| !(etxt_name1!!.text.toString().equals("")))
+                {
+                    getSortList()
+                    alertDialogSort.dismiss()
+                }
+                else
+                {
+                    Toast.makeText(applicationContext,"Please enter a value",Toast.LENGTH_LONG).show()
                 }
 
 
