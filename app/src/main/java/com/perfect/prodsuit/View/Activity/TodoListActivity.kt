@@ -278,7 +278,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
 
     }
-    private fun sortData() {
+    /*private fun sortData() {
 
         try {
             val builder1 = AlertDialog.Builder(this)
@@ -407,6 +407,207 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 else
                 {
                     Toast.makeText(applicationContext,"Please enter a value",Toast.LENGTH_LONG).show()
+                }
+
+
+
+            }
+
+            alertDialogSort.show()
+
+        }catch (e: Exception){
+
+        }
+
+
+    }*/
+
+    private fun sortData() {
+
+        try {
+            val builder1 = AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+
+            val btncancel = layout1.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
+
+            val checkbox_asc = layout1.findViewById<CheckBox>(R.id.checkbox_asc) as CheckBox
+            val checkbox_dsc = layout1.findViewById<CheckBox>(R.id.checkbox_dsc)  as CheckBox
+
+            val checkbox_date = layout1.findViewById<CheckBox>(R.id.checkbox_Date)  as CheckBox
+            val checkbox_nme = layout1.findViewById<CheckBox>(R.id.checkbox_name)  as CheckBox
+
+            etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
+            etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
+
+
+            //  etxt_date1!!.setKeyListener(null)
+
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            // etxt_date!!.setText(sdf.format(c.time))
+
+            etxt_date1!!.setOnClickListener(View.OnClickListener { dateSelector1() })
+
+            if (checkbox_asc.isChecked)
+            {
+                OverDueActivity.criteria ="1"
+                checkbox_asc.isChecked=true
+                checkbox_dsc.isChecked=false
+                val image = resources.getDrawable(R.drawable.ic_chkboxascdsc)
+                checkbox_asc.setButtonDrawable(image)
+                val image1 = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
+                checkbox_dsc.setButtonDrawable(image1)
+
+
+            }
+            if (checkbox_dsc.isChecked){
+                OverDueActivity.criteria ="2"
+                checkbox_asc.isChecked=false
+                checkbox_dsc.isChecked=true
+
+                val image = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
+                checkbox_asc.setButtonDrawable(image)
+                val image1 = resources.getDrawable(R.drawable.ic_chkboxascdsc)
+                checkbox_dsc.setButtonDrawable(image1)
+            }
+
+
+            checkbox_date.setOnClickListener(View.OnClickListener { v ->
+                val checked = (v as CheckBox).isChecked
+                // Check which checkbox was clicked
+                if (checked) {
+                    val image2 = resources.getDrawable(R.drawable.ic_ticked)
+                    checkbox_date.setButtonDrawable(image2)
+                    OverDueActivity.date =etxt_date1!!.text.toString()
+                } else {
+                    val image5 = resources.getDrawable(R.drawable.ic_unticked)
+                    checkbox_date.setButtonDrawable(image5)
+                    OverDueActivity.date =""
+                }
+            })
+
+            checkbox_nme.setOnClickListener(View.OnClickListener { v ->
+                val checked = (v as CheckBox).isChecked
+                // Check which checkbox was clicked
+                if (checked) {
+                    val image4 = resources.getDrawable(R.drawable.ic_ticked)
+                    checkbox_nme.setButtonDrawable(image4)
+                    OverDueActivity.name1 =etxt_name1!!.text.toString()
+                } else {
+                    val image5 = resources.getDrawable(R.drawable.ic_unticked)
+                    checkbox_nme.setButtonDrawable(image5)
+                    OverDueActivity.name1 =""
+                }
+            })
+
+
+
+            checkbox_asc.setOnClickListener(View.OnClickListener {
+                checkbox_asc.isChecked=true
+                checkbox_dsc.isChecked=false
+
+                val image = resources.getDrawable(R.drawable.ic_chkboxascdsc)
+                checkbox_asc.setButtonDrawable(image)
+                val image1 = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
+                checkbox_dsc.setButtonDrawable(image1)
+
+                OverDueActivity.criteria ="1"
+            })
+            checkbox_dsc.setOnClickListener(View.OnClickListener {
+                checkbox_dsc.isChecked=true
+                checkbox_asc.isChecked=false
+                OverDueActivity.criteria ="2"
+
+                val image = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
+                checkbox_asc.setButtonDrawable(image)
+                val image1 = resources.getDrawable(R.drawable.ic_chkboxascdsc)
+                checkbox_dsc.setButtonDrawable(image1)
+            })
+
+
+
+
+
+
+
+            builder1.setView(layout1)
+            val alertDialogSort = builder1.create()
+
+            btncancel.setOnClickListener {
+
+                alertDialogSort.dismiss() }
+            btnsubmit.setOnClickListener {
+
+                var date =etxt_date1!!.text.toString()
+                var name =etxt_name1!!.text.toString()
+                Log.i("Detail",date+"\n"+name)
+
+                if(date.equals("")&& name.equals("") )
+                {
+                    Toast.makeText(applicationContext, "Please enter a value", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                else
+                {
+                    if(!(date.equals("")))
+                    {
+                        if (!(checkbox_date.isChecked)){
+                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        else
+                        {
+                            getSortList()
+                            alertDialogSort.dismiss()
+                        }
+
+                    }
+                    else if(!(name.equals("")))
+                    {
+                        if (!(checkbox_nme.isChecked)){
+                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        else
+                        {
+                            getSortList()
+                            alertDialogSort.dismiss()
+                        }
+
+                    }
+                    else if(!(date.equals(""))&& !(name.equals(""))){
+
+
+                        if (!(checkbox_date.isChecked)&&!(checkbox_nme.isChecked)){
+
+
+
+                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        if (!(checkbox_nme.isChecked)){
+                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        else if (!(checkbox_date.isChecked)&&(checkbox_nme.isChecked)){
+                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+                                .show()
+                        }
+
+                        else
+                        {
+                            getSortList()
+                            alertDialogSort.dismiss()
+                        }
+
+                    }
+
                 }
 
 
