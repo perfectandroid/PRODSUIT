@@ -1,21 +1,34 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.CallLog
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ExpenseAdapter
+import com.perfect.prodsuit.Viewmodel.*
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.lang.Long
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -29,13 +42,23 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
     var shortTimeStr:String?=""
     var strCallStatus:String?=""
     var strRiskType:String?=""
-
+    var btnSubmit: Button? = null
     var tie_Date: TextInputEditText? = null
+    var tie_AgentNote: TextInputEditText? = null
+    var tie_CustomerNote: TextInputEditText? = null
     var tie_Time: TextInputEditText? = null
     var tie_CallStatus: TextInputEditText? = null
     var tie_CallDuration: TextInputEditText? = null
     var tie_RiskType: TextInputEditText? = null
     var tie_CustomerMentionDate: TextInputEditText? = null
+    lateinit var addRemarkViewModel: AddremarkViewModel
+    companion object{
+
+        var agentnote = ""
+        var customernote = ""
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +77,12 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
         imback!!.setOnClickListener(this)
 
         tie_Date = findViewById<TextInputEditText>(R.id.tie_Date)
+
+        btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        btnSubmit!!.setOnClickListener(this)
+
+        tie_AgentNote = findViewById<TextInputEditText>(R.id.tie_AgentNote)
+        tie_CustomerNote = findViewById<TextInputEditText>(R.id.tie_CustomerNote)
         tie_Time = findViewById<TextInputEditText>(R.id.tie_Time)
         tie_CallStatus = findViewById<TextInputEditText>(R.id.tie_CallStatus)
         tie_CallDuration = findViewById<TextInputEditText>(R.id.tie_CallDuration)
@@ -145,7 +174,82 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
             R.id.tie_CustomerMentionDate->{
                 openBottomSheet()
             }
+            R.id.btnSubmit->{
+                agentnote = tie_AgentNote!!.text.toString()
+                customernote = tie_CustomerNote!!.text.toString()
+
+                getAddremark(agentnote, customernote)
+            }
         }
+    }
+
+    private fun getAddremark(agentnote: String, customernote: String) {
+        addRemarkViewModel = ViewModelProvider(this).get(AddremarkViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                addRemarkViewModel.getAddremark(this)!!.observe(this,
+                    { addRemarkSetterGetter ->
+                        val msg = addRemarkSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+
+                                var jobj = jObject.getJSONObject("AddRemark")
+                                var msg =jobj.getString("ResponseMessage")
+                                Log.i("Message",msg)
+                                val builder = AlertDialog.Builder(
+                                    this@AddRemarkActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(msg)
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+
+
+                            }
+
+                            else {
+                                val builder = AlertDialog.Builder(
+                                    this@AddRemarkActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Some Technical Issues.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
     }
 
 

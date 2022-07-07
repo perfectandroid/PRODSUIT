@@ -136,6 +136,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         var name1 = ""
         var date = ""
         var criteria = ""
+        var ID_LeadGenerate = ""
     }
 
 
@@ -762,6 +763,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                    sendBroadcast(intent)
 
                    // sendBroadcast(i)
+                    ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
                     val mobileno = jsonObject.getString("CustomerMobile")
                     val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
                     val BroadCallEditer = BroadCallSP.edit()
@@ -779,8 +781,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                    i.putExtra("message", "HELLO")
 //                    context.sendBroadcast(i)
 
-                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
                     startActivity(intent)
+
+
                 }
 
             }

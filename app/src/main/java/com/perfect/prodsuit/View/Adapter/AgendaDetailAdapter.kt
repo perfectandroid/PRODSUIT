@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AddRemarkActivity
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.ArrayList
 
 class AgendaDetailAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -416,10 +417,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
 
 
-                holder.im_Call_Icon.setTag(position)
+             /*   holder.im_Call_Icon.setTag(position)
                 holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaCall")
-                })
+                })*/
 
                 holder.im_Call_Alarm.setTag(position)
                 holder.im_Call_Alarm.setOnClickListener(View.OnClickListener {
@@ -485,7 +486,14 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     clickListener!!.onClick(position, "agendaDocument")
                 })
 
+                holder.ll_Call_Icon!!.setTag(position)
+                holder.ll_Call_Icon!!.setOnClickListener(View.OnClickListener {
 
+                   /* val intent = Intent(context, AddRemarkActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)*/
+                    clickListener!!.onClick(position, "agendaCall")
+                })
 
             }
         } catch (e: Exception) {

@@ -250,4 +250,6 @@ interface ApiInterface {
     @POST("UserValidations/DocumentImageDetails")
     fun getDocumentImageDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AddRemark")
+    fun getAddremark(@Body body: RequestBody): Call<String>
 }
