@@ -99,27 +99,637 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_actionType"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_ActionType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="Action Type"
                             android:layout_margin="10dp"
-                            android:background="@drawable/shape_bg1"
-                            android:drawableRight="@drawable/arrowright"
-                            android:drawableTint="@color/grey"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/greydark"
-                            android:hint="Type"
+                            android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
-                            android:padding="8dp"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="15dp" />
+                            style="@style/Widget.App.TextInputLayout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tie_ActionType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:textSize="14dp"
+                                android:editable="false"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                android:textColor="@color/greydarks"
+                                android:drawablePadding="10dp"
+                                android:textStyle="normal"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/rltv_addremark"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_above="@+id/llBtn"
+                                    android:orientation="vertical">
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:padding="10dp"
+                                                android:orientation="vertical">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <com.google.android.material.textfield.TextInputLayout
+                                                        android:id="@+id/til_Date"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:hint="Date"
+                                                        android:layout_margin="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        style="@style/Widget.App.TextInputLayout">
+
+                                                        <com.google.android.material.textfield.TextInputEditText
+                                                            android:id="@+id/tie_Date"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center_vertical"
+                                                            android:paddingLeft="10dp"
+                                                            android:paddingTop="8dp"
+                                                            android:paddingBottom="8dp"
+                                                            android:drawableRight="@drawable/ic_calendar_svg"
+                                                            android:textSize="14dp"
+                                                            android:editable="false"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydarks"
+                                                            android:drawablePadding="10dp"
+                                                            android:textStyle="normal"/>
+
+                                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                                    <com.google.android.material.textfield.TextInputLayout
+                                                        android:id="@+id/til_Time"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:hint="Time"
+                                                        android:layout_margin="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        style="@style/Widget.App.TextInputLayout">
+
+                                                        <com.google.android.material.textfield.TextInputEditText
+                                                            android:id="@+id/tie_Time"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center_vertical"
+                                                            android:paddingLeft="10dp"
+                                                            android:paddingTop="8dp"
+                                                            android:paddingBottom="8dp"
+                                                            android:drawableRight="@drawable/clock_svg"
+                                                            android:textSize="14dp"
+                                                            android:editable="false"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydarks"
+                                                            android:drawablePadding="10dp"
+                                                            android:textStyle="normal"/>
+
+                                                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                                                </LinearLayout>
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_CallStatus"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:hint="Call Status"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_CallStatus"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:textSize="14dp"
+                                                        android:editable="false"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_CallDuration"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:hint="Call Duration [seconds]"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_CallDuration"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:textSize="14dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_RiskType"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:hint="Risk Type"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_RiskType"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:textSize="14dp"
+                                                        android:editable="false"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_AgentNote"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:hint="Agent Note"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_AgentNote"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:textSize="14dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_CustomerNote"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:hint="Customer Note"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_CustomerNote"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:textSize="14dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_FollowType"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:hint="Follow up Type"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_FollowType"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:textSize="14dp"
+                                                        android:editable="false"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_Status"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:hint="Status"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_Status"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:textSize="14dp"
+                                                        android:editable="false"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_CustomerMentionDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:hint="Customer Mention Date"
+                                                    android:layout_margin="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_CustomerMentionDate"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:paddingBottom="8dp"
+                                                        android:textSize="14dp"
+                                                        android:editable="false"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydarks"
+                                                        android:drawablePadding="10dp"
+                                                        android:textStyle="normal"/>
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_location"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <com.google.android.material.textfield.TextInputLayout
+                                                        android:id="@+id/til_Latitude"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:hint="Latitude"
+                                                        android:layout_margin="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        style="@style/Widget.App.TextInputLayout">
+
+                                                        <com.google.android.material.textfield.TextInputEditText
+                                                            android:id="@+id/tie_Latitude"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center_vertical"
+                                                            android:paddingLeft="10dp"
+                                                            android:paddingTop="8dp"
+                                                            android:paddingBottom="8dp"
+                                                            android:textSize="14dp"
+                                                            android:editable="false"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydarks"
+                                                            android:drawablePadding="10dp"
+                                                            android:textStyle="normal"/>
+
+                                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                                    <com.google.android.material.textfield.TextInputLayout
+                                                        android:id="@+id/til_Longitude"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:hint="Longitude"
+                                                        android:layout_margin="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        style="@style/Widget.App.TextInputLayout">
+
+                                                        <com.google.android.material.textfield.TextInputEditText
+                                                            android:id="@+id/tie_Longitude"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center_vertical"
+                                                            android:paddingLeft="10dp"
+                                                            android:paddingTop="8dp"
+                                                            android:paddingBottom="8dp"
+                                                            android:textSize="14dp"
+                                                            android:editable="false"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydarks"
+                                                            android:drawablePadding="10dp"
+                                                            android:textStyle="normal"/>
+
+                                                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_images"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginLeft="5dp"
+                                                    android:layout_marginRight="5dp"
+                                                    android:layout_marginBottom="5dp"
+                                                    android:layout_marginTop="5dp"
+                                                    android:background="@drawable/rectangle_greys"
+                                                    android:orientation="horizontal">
+
+                                                    <ImageView
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:layout_gravity="left"
+                                                        android:background="@color/color_activity_transparent"
+                                                        android:scaleType="fitXY"
+                                                        android:src="@drawable/uploads"/>
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:gravity="center"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="left"
+                                                            android:text="Upload Images"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="15dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:textStyle="bold"
+                                                            android:layout_weight="1"
+                                                            android:fontFamily="@font/myfont" />
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:id="@+id/imgv_upload1"
+                                                                android:layout_width="80dp"
+                                                                android:layout_height="80dp"
+                                                                android:layout_gravity="left"
+                                                                android:layout_marginTop="5dp"
+                                                                android:layout_marginBottom="5dp"
+                                                                android:layout_marginRight="5dp"
+                                                                android:scaleType="fitXY"
+                                                                android:background="@color/color_activity_transparent"
+                                                                android:src="@drawable/lead_uploads"/>
+
+                                                            <ImageView
+                                                                android:id="@+id/imgv_upload2"
+                                                                android:layout_width="80dp"
+                                                                android:layout_height="80dp"
+                                                                android:layout_gravity="left"
+                                                                android:layout_marginTop="5dp"
+                                                                android:layout_marginBottom="5dp"
+                                                                android:layout_marginRight="5dp"
+                                                                android:scaleType="fitXY"
+                                                                android:background="@color/color_activity_transparent"
+                                                                android:src="@drawable/lead_uploads"/>
+
+                                                        </LinearLayout>
+                                                    </LinearLayout>
+                                                </LinearLayout>
+
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_acknowledge"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:orientation="horizontal">
+
+                                                    <CheckBox
+                                                        android:id="@+id/cbAcknowledgement"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="40dp"
+                                                        android:layout_weight="1"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:text="Send Acknowledgement"
+                                                        android:textAllCaps="false"
+                                                        android:layout_margin="5dp"
+                                                        android:textStyle="normal"
+                                                        android:button="@drawable/checkbox_selector"
+                                                        android:textColor="@color/greydark"
+                                                        android:paddingLeft="10dp"
+                                                        android:textSize="14dp" />
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_need"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <CheckBox
+                                                        android:id="@+id/cbSiteVisit"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="40dp"
+                                                        android:layout_weight="1"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:text="Need Site Visit"
+                                                        android:textAllCaps="false"
+                                                        android:layout_marginLeft="5dp"
+                                                        android:textStyle="normal"
+                                                        android:button="@drawable/checkbox_selector"
+                                                        android:textColor="@color/greydark"
+                                                        android:paddingLeft="10dp"
+                                                        android:textSize="14dp" />
+
+
+                                                    <CheckBox
+                                                        android:id="@+id/cbNotice"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="40dp"
+                                                        android:layout_weight="1"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:text="Need Notice"
+                                                        android:textAllCaps="false"
+                                                        android:textStyle="normal"
+                                                        android:button="@drawable/checkbox_selector"
+                                                        android:textColor="@color/greydark"
+                                                        android:paddingLeft="10dp"
+                                                        android:textSize="14dp" />
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+                                    </ScrollView>
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:id="@+id/llBtn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_alignParentBottom="true">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="horizontal"
+                                        android:gravity="center">
+
+
+                                        <Button
+                                            android:id="@+id/btReset"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1.5"
+                                            android:background="@drawable/btn_shape_reset"
+                                            android:fontFamily="@font/myfont"
+                                            android:padding="2dp"
+                                            android:text="Reset"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/greydark"
+                                            android:textAllCaps="true"
+                                            android:textSize="15dp"
+                                            android:visibility="visible" />
+
+                                        <Button
+                                            android:id="@+id/btnSubmit"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="15dp"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/white"
+                                            android:fontFamily="@font/myfont"
+                                            android:background="@drawable/btn_shape_submit"
+                                            android:padding="2dp"
+                                            android:layout_weight="1"
+                                            android:textAllCaps="true"
+                                            android:text="Submit"
+                                            android:visibility="visible"/>
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
 
 
                     </LinearLayout>

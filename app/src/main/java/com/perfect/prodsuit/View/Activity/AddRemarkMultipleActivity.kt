@@ -8,12 +8,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -30,10 +30,38 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
     lateinit var context: Context
 
     var tv_actionType: TextView? = null
+
+    var tie_ActionType: TextInputEditText? = null
+    var til_Date: TextInputEditText? = null
+    var tie_Time: TextInputEditText? = null
+    var tie_CallStatus: TextInputEditText? = null
+    var tie_CallDuration: TextInputEditText? = null
+    var tie_RiskType: TextInputEditText? = null
+    var tie_AgentNote: TextInputEditText? = null
+    var tie_CustomerNote: TextInputEditText? = null
+    var tie_FollowType: TextInputEditText? = null
+    var tie_Status: TextInputEditText? = null
+    var tie_CustomerMentionDate: TextInputEditText? = null
+    var tie_Latitude: TextInputEditText? = null
+    var tie_Longitude: TextInputEditText? = null
+
+    var til_CallStatus: TextInputLayout? = null
+    var til_CallDuration: TextInputLayout? = null
+    var til_FollowType: TextInputLayout? = null
+    var til_Status: TextInputLayout? = null
+
+    var ll_location: LinearLayout? = null
+    var ll_images: LinearLayout? = null
+    var ll_acknowledge: LinearLayout? = null
+    var ll_need: LinearLayout? = null
+
     var dialogRemarkAction : Dialog? = null
     var recyActionType: RecyclerView? = null
     lateinit var remarkActionArrayList : JSONArray
     private var ActionType = ""
+    var action_id:String?=""
+
+    var rltv_addremark: RelativeLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +84,21 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        tv_actionType = findViewById(R.id.tv_actionType);
+        tie_ActionType = findViewById(R.id.tie_ActionType);
 
-        tv_actionType!!.setOnClickListener(this)
+        til_CallStatus = findViewById(R.id.til_CallStatus);
+        til_CallDuration = findViewById(R.id.til_CallDuration);
+        til_FollowType = findViewById(R.id.til_FollowType);
+        til_Status = findViewById(R.id.til_Status);
+
+        ll_location = findViewById(R.id.ll_location);
+        ll_images = findViewById(R.id.ll_images);
+        ll_acknowledge = findViewById(R.id.ll_acknowledge);
+        ll_need = findViewById(R.id.ll_need);
+
+        rltv_addremark = findViewById(R.id.rltv_addremark);
+
+        tie_ActionType!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -67,7 +107,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
                 finish()
             }
 
-            R.id.tv_actionType->{
+            R.id.tie_ActionType->{
                 getActiontype()
             }
         }
@@ -117,9 +157,44 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
     override fun onClick(position: Int, data: String) {
         if (data.equals("remarkactiontype")){
             dialogRemarkAction!!.dismiss()
-            val jsonObject = remarkActionArrayList.getJSONObject(position)
+            rltv_addremark!!.visibility = View.GONE
 
-            tv_actionType!!.setText(jsonObject.getString("action"))
+            val jsonObject = remarkActionArrayList.getJSONObject(position)
+            action_id = jsonObject.getString("action_id")
+            tie_ActionType!!.setText(jsonObject.getString("action"))
+            if (action_id.equals("1") || action_id.equals("2")){
+                rltv_addremark!!.visibility = View.VISIBLE
+            }
+            usingActionId(action_id!!)
+
+        }
+    }
+
+    private fun usingActionId(actionId: String) {
+        if (action_id.equals("1")){
+            // ADD REMARK
+            til_CallStatus!!.visibility = View.VISIBLE
+            til_CallDuration!!.visibility = View.VISIBLE
+            ll_acknowledge!!.visibility = View.VISIBLE
+            ll_need!!.visibility = View.VISIBLE
+
+            til_FollowType!!.visibility = View.GONE
+            til_Status!!.visibility = View.GONE
+            ll_location!!.visibility = View.GONE
+            ll_images!!.visibility = View.GONE
+
+        }
+        else if (action_id.equals("2")){
+            // SITE VISIT
+            til_CallStatus!!.visibility = View.GONE
+            til_CallDuration!!.visibility = View.GONE
+            ll_acknowledge!!.visibility = View.GONE
+            ll_need!!.visibility = View.GONE
+
+            til_FollowType!!.visibility = View.VISIBLE
+            til_Status!!.visibility = View.VISIBLE
+            ll_location!!.visibility = View.VISIBLE
+            ll_images!!.visibility = View.VISIBLE
 
         }
     }
