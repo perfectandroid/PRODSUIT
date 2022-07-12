@@ -702,11 +702,18 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
 
         if (data.equals("agendaMessage")){
+//            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+//            val i = Intent(this@AgendaActivity, MessagesActivity::class.java)
+//            i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
+//            i.putExtra("LgCusEmail","")
+//            startActivity(i)
+
             val jsonObject = agendaDetailArrayList.getJSONObject(position)
-            val i = Intent(this@AgendaActivity, MessagesActivity::class.java)
+            val i = Intent(this@AgendaActivity, AddRemarkMultipleActivity::class.java)
             i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
             i.putExtra("LgCusEmail","")
             startActivity(i)
+
         }
 
         if (data.equals("agendaCall")){

@@ -14,6 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.R
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
 import java.security.KeyManagementException
 import java.security.KeyStore
@@ -156,5 +159,50 @@ object Config {
         snackbar.show()
 
     }
+
+    fun getActionTypes(): String {
+
+        var result =""
+        try {
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+
+            var obj = JSONObject()
+            obj.put("action_id", "1")
+            obj.put("action", "Add Remark")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("action_id", "2")
+            obj.put("action", "Site Visit")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("action_id", "3")
+            obj.put("action", "Message")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("action_id", "4")
+            obj.put("action", "Quotation")
+            array.put(obj)
+
+            jsonObject.put("actionTypeDetails", array)
+            jsonObject1.put("actionType", jsonObject)
+            Log.e("JsonObject", jsonObject.toString())
+            result = jsonObject1.toString()
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+            result= ""
+        }
+
+        return result
+
+    }
+
 
 }
