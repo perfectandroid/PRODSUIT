@@ -59,6 +59,10 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
     var tie_Latitude: TextInputEditText? = null
     var tie_Longitude: TextInputEditText? = null
 
+    var cbAcknowledgement: CheckBox? = null
+    var cbSiteVisit: CheckBox? = null
+    var cbNeedNotice: CheckBox? = null
+
     var til_CallStatus: TextInputLayout? = null
     var til_CallDuration: TextInputLayout? = null
     var til_FollowType: TextInputLayout? = null
@@ -79,6 +83,9 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
     var strRiskType:String?=""
     var ID_ActionType : String?= ""
     var ID_Status : String?= ""
+    var strAknowledgement : String?= "0"  // 1
+    var strSiteVisit : String?= "0"       // 1
+    var strNeedNotice : String?= "0"          // 1
 
     private var DateType:Int = 0
     var strDate : String?= ""
@@ -149,6 +156,10 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
 
         rltv_addremark = findViewById(R.id.rltv_addremark);
 
+        cbAcknowledgement = findViewById(R.id.cbAcknowledgement);
+        cbSiteVisit = findViewById(R.id.cbSiteVisit);
+        cbNeedNotice = findViewById(R.id.cbNeedNotice);
+
         tie_ActionType!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
         tie_Time!!.setOnClickListener(this)
@@ -157,6 +168,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
         tie_FollowType!!.setOnClickListener(this)
         tie_Status!!.setOnClickListener(this)
         tie_CustomerMentionDate!!.setOnClickListener(this)
+        cbAcknowledgement!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -176,7 +188,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
                 openBottomSheetTime()
             }
             R.id.tie_CallStatus->{
-              //  getCallStatus()
+                getCallStatus()
             }
             R.id.tie_RiskType->{
                 getRiskType()
@@ -190,6 +202,41 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
             }
             R.id.tie_Status->{
                 getStatus()
+            }
+            R.id.cbAcknowledgement->{
+
+                Log.e(TAG,"cbAcknowledgement  205  ")
+                if (cbAcknowledgement!!.isChecked){
+                    Log.e(TAG,"cbAcknowledgement  205  Checked")
+                    strAknowledgement = "1"
+                }else{
+                    Log.e(TAG,"cbAcknowledgement  205  UnChecked")
+                    strAknowledgement = "0"
+                }
+            }
+
+            R.id.cbSiteVisit->{
+
+                Log.e(TAG,"cbSiteVisit  205  ")
+                if (cbSiteVisit!!.isChecked){
+                    Log.e(TAG,"cbSiteVisit  205  Checked")
+                    strSiteVisit = "1"
+                }else{
+                    Log.e(TAG,"cbSiteVisit  205  UnChecked")
+                    strSiteVisit = "0"
+                }
+            }
+
+            R.id.cbNeedNotice->{
+
+                Log.e(TAG,"cbAcknowledgement  205  ")
+                if (cbNeedNotice!!.isChecked){
+                    Log.e(TAG,"cbNeedNotice  205  Checked")
+                    strNeedNotice = "1"
+                }else{
+                    Log.e(TAG,"cbNeedNotice  205  UnChecked")
+                    strNeedNotice = "0"
+                }
             }
         }
     }
@@ -698,6 +745,39 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
 
             dialogProdStatus!!.show()
             dialogProdStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCallStatus() {
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.callstatus)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvCallStatus.setAdapter(adapter)
+            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                tie_CallStatus!!.setText(value)
+                if (position == 0) {
+                    strCallStatus = "1"
+                }
+                if (position == 1) {
+                    strCallStatus = "2"
+                }
+                if (position == 2) {
+                    strCallStatus = "3"
+                }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
