@@ -32,6 +32,7 @@ object ProductStatusRepository {
 
     private fun getProductStatus(context: Context) {
         try {
+            productstatusSetterGetter.value = ProductStatusModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

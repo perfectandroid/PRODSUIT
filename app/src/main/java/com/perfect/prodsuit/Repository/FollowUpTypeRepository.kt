@@ -31,6 +31,7 @@ object FollowUpTypeRepository {
     }
 
     private fun getFollowUpType(context: Context) {
+        followuptypeSetterGetter.value = FollowUpTypeModel("")
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
