@@ -2786,41 +2786,47 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  customersearchViewModel.getCustomer(this,strCustomer,SubModeSearch!!)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   105   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
-                                 val jobjt = jObject.getJSONObject("CustomerDetailsList")
-                                 customerArrayList = jobjt.getJSONArray("CustomerDetails")
 
-                                 if (customerArrayList.length()>0){
-                                     Log.e(TAG,"msg   1052   "+msg)
-                                     if (custDet == 0){
-                                         custDet++
-                                         customerSearchPopup(customerArrayList)
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
+                                 val jObject = JSONObject(msg)
+                                 Log.e(TAG,"msg   105   "+msg)
+                                 if (jObject.getString("StatusCode") == "0") {
+                                     val jobjt = jObject.getJSONObject("CustomerDetailsList")
+                                     customerArrayList = jobjt.getJSONArray("CustomerDetails")
+
+                                     if (customerArrayList.length()>0){
+                                         Log.e(TAG,"msg   1052   "+msg)
+                                         if (custDet == 0){
+                                             custDet++
+                                             customerSearchPopup(customerArrayList)
+                                         }
+
                                      }
-
+                                 } else {
+                                     val builder = AlertDialog.Builder(
+                                         this@LeadGenerationActivity,
+                                         R.style.MyDialogTheme
+                                     )
+                                     builder.setMessage(jObject.getString("EXMessage"))
+                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                     }
+                                     val alertDialog: AlertDialog = builder.create()
+                                     alertDialog.setCancelable(false)
+                                     alertDialog.show()
                                  }
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
-                             Toast.makeText(
-                                 applicationContext,
-                                 "Some Technical Issues.",
-                                 Toast.LENGTH_LONG
-                             ).show()
+                         }catch (e : Exception){
+
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
@@ -2870,66 +2876,59 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 pinCodeSearchViewModel.getPincode(this,strPincode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-
-
-
-
 
                         try {
+                            val msg = serviceSetterGetter.message
 //                            if (pinCodeDet == 0){
 //                                pinCodeDet++
+                               Log.e(TAG,"msg   210811   "+msg)
                                  if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   21081   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                     if (pinCodeDet == 0){
+                                         pinCodeDet++
+                                         val jObject = JSONObject(msg)
+                                         Log.e(TAG,"msg   210812   "+msg)
+                                         if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("PincodeDetails")
+                                             val jobjt = jObject.getJSONObject("PincodeDetails")
 
-                                    FK_Country  = jobjt.getString("FK_Country")
-                                    FK_States   = jobjt.getString("FK_States")
-                                    FK_District = jobjt.getString("FK_District")
-                                    FK_Area     = jobjt.getString("FK_Area")
-                                    FK_Place    = jobjt.getString("FK_Place")
-                                    FK_Post     = jobjt.getString("FK_Post")
+                                             FK_Country  = jobjt.getString("FK_Country")
+                                             FK_States   = jobjt.getString("FK_States")
+                                             FK_District = jobjt.getString("FK_District")
+                                             FK_Area     = jobjt.getString("FK_Area")
+                                             FK_Place    = jobjt.getString("FK_Place")
+                                             FK_Post     = jobjt.getString("FK_Post")
 
-                                    edtCountry!!.setText(jobjt.getString("Country"))
-                                    edtState!!.setText(jobjt.getString("States"))
-                                    edtDistrict!!.setText(jobjt.getString("District"))
-                                    edtPost!!.setText(jobjt.getString("Post"))
+                                             edtCountry!!.setText(jobjt.getString("Country"))
+                                             edtState!!.setText(jobjt.getString("States"))
+                                             edtDistrict!!.setText(jobjt.getString("District"))
+                                             edtPost!!.setText(jobjt.getString("Post"))
 
-                                    Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
-//                                if (pinCodeArrayList.length()>0){
-//                                    if (pinCodeDet == 0){
-//                                        pinCodeDet++
-//                                        pincodeDetailPopup(pinCodeArrayList)
-//                                    }
-//
-//                                }
+                                             Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
+
+                                         } else {
+
+                                             clearCommunicationInfo()
+
+                                             val builder = AlertDialog.Builder(
+                                                 this@LeadGenerationActivity,
+                                                 R.style.MyDialogTheme
+                                             )
+                                             builder.setMessage(jObject.getString("EXMessage"))
+                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                             }
+                                             val alertDialog: AlertDialog = builder.create()
+                                             alertDialog.setCancelable(false)
+                                             alertDialog.show()
+                                         }
+                                     }
 
 
-                                } else {
-
-                                    clearCommunicationInfo()
-
-                                    clearCommunicationInfo()
-                                    val builder = AlertDialog.Builder(
-                                        this@LeadGenerationActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                }
                             } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Some Technical Issues.",
-                                    Toast.LENGTH_LONG
-                                ).show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                                 clearCommunicationInfo()
                             }
                           //  }

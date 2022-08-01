@@ -64,6 +64,9 @@ object Config {
     const val SHARED_PREF30 = "LOGIN_DATETIME"
     const val SHARED_PREF31 = "ABOUTUS"
 
+
+    const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
+
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
     }
