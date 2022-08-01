@@ -6031,40 +6031,42 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                            if (pinCodeDet == 0){
 //                                pinCodeDet++
                                 if (msg!!.length > 0) {
-                                    val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   4233   "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("LeadGenerationDetails")
-                                        leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
-                                        if (leadEditArrayList.length()>0){
-                                            if (editLeadGenDet == 0){
-                                                editLeadGenDet++
-                                                LeadEditDetailPopup(leadEditArrayList)
+
+                                    if (editLeadGenDet == 0){
+                                        editLeadGenDet++
+                                        val jObject = JSONObject(msg)
+                                        Log.e(TAG,"msg   4233   "+msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            val jobjt = jObject.getJSONObject("LeadGenerationDetails")
+                                            leadEditArrayList = jobjt.getJSONArray("LeadGenerationDetailsList")
+                                            if (leadEditArrayList.length()>0){
+
+                                                    LeadEditDetailPopup(leadEditArrayList)
+
+
                                             }
 
+
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@LeadGenerationActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-
-
-
-
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@LeadGenerationActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
+
                                 } else {
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Some Technical Issues.",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
                                 }
                                 //  }
 
@@ -6072,6 +6074,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                             }catch (e: Exception){
 
                                 Log.e(TAG,"Exception  4133    "+e.toString())
+                                Toast.makeText(
+                                    applicationContext,
+                                    ""+Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
+                                ).show()
 
                             }
 
