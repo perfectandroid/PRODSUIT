@@ -27,6 +27,7 @@ object BannersRepository {
 
     private fun getBanners(context: Context) {
         try {
+            bannerSetterGetter.value = BannerModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
