@@ -743,7 +743,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 finish()
             }
             R.id.imLeadedit->{
-
+                Config.disableClick(v)
                 getLeadEditList(v)
              // Config.snackBars(context,v,"Lead Edit")
 
@@ -844,6 +844,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         snackbar.show()
 
                     }else{
+                        Config.disableClick(v)
                         getPinCodeSearch(strPincode)
                     }
                 }catch (e  :Exception){
@@ -853,17 +854,21 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.edtCountry->{
                 Log.e(TAG,"edtCountry  549  ")
+                Config.disableClick(v)
                 getCountry(v)
             }
 
             R.id.edtState->{
+                Config.disableClick(v)
                 getState(v)
             }
 
             R.id.edtDistrict->{
+                Config.disableClick(v)
                 getDistrict(v)
             }
             R.id.edtPost->{
+                Config.disableClick(v)
                 getPost(v)
             }
 
@@ -874,10 +879,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                     snackbar.show()
                 }else{
+                    Config.disableClick(v)
                     getLeadThrough(v)
                 }
             }
             R.id.llLeadFrom->{
+                Config.disableClick(v)
                 getLeadFrom(v)
             }
 
@@ -910,8 +917,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.llleadby->{
-
-
+                Config.disableClick(v)
                 getLeadBy(v)
 
             }
@@ -986,6 +992,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.llmediatype->{
+                Config.disableClick(v)
                 getMediaType()
             }
 //            R.id.lldate->{
@@ -1055,6 +1062,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
             R.id.txtleadfrom->{
+                Config.disableClick(v)
                 getLeadFrom(v)
             }
 
@@ -1082,6 +1090,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.txtleadthrough->{
+                Config.disableClick(v)
                 getLeadThrough(v)
             }
 
@@ -1109,6 +1118,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.txtleadby->{
+                Config.disableClick(v)
                 getLeadBy(v)
             }
 
@@ -1136,6 +1146,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.txtMediatype->{
+                Config.disableClick(v)
                 getMediaType()
             }
 
@@ -1187,6 +1198,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         snackbar.show()
 
                     }else{
+                        Config.disableClick(v)
                         getCustomerSearch()
                     }
                 }catch (e  :Exception){
@@ -1289,6 +1301,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.edtProdcategory->{
+                Config.disableClick(v)
                 getCategory()
             }
             R.id.edtProdproduct->{
@@ -1302,20 +1315,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 }
                 else{
+                   Config.disableClick(v)
                     getProductDetail(ID_Category!!)
                 }
             }
 
             R.id.edtProdpriority->{
+                Config.disableClick(v)
                 getProductPriority()
             }
             R.id.edtProdstatus->{
+                Config.disableClick(v)
                 getProductStatus()
             }
             R.id.edtFollowaction->{
+                Config.disableClick(v)
                 getFollowupAction()
             }
             R.id.edtFollowtype->{
+                Config.disableClick(v)
                 getFollowupType()
             }
             R.id.edtFollowdate->{
@@ -1334,6 +1352,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.edtbarnchtype->{
+                Config.disableClick(v)
                 getBranchType()
             }
             R.id.edtbranch->{
@@ -1345,11 +1364,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     snackbar.show()
 
                 }else{
+                    Config.disableClick(v)
                     getBranch()
                 }
 
             }
             R.id.edtdepartment->{
+                Config.disableClick(v)
                 getDepartment()
             }
             R.id.edtEmployee->{
@@ -1362,6 +1383,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     snackbar.show()
 
                 }else{
+                    Config.disableClick(v)
                     getEmployee()
                 }
             }
@@ -1377,6 +1399,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnSubmit->{
+                Config.disableClick(v)
                 LeadValidations(v)
 
 
@@ -1964,40 +1987,46 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 leadThroughViewModel.getLeadThrough(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   267   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadThroughDetailsList")
-                                leadThroughArrayList = jobjt.getJSONArray("LeadThroughDetails")
-                                if (leadThroughArrayList.length()>0){
-                                    if (countLeadThrough == 0){
-                                        countLeadThrough++
-                                        leadThroghPopup(leadThroughArrayList)
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   267   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("LeadThroughDetailsList")
+                                    leadThroughArrayList = jobjt.getJSONArray("LeadThroughDetails")
+                                    if (leadThroughArrayList.length()>0){
+                                        if (countLeadThrough == 0){
+                                            countLeadThrough++
+                                            leadThroghPopup(leadThroughArrayList)
+                                        }
+
+
                                     }
-
-
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@LeadGenerationActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : Exception){
+
                         }
+
                     })
                 progressDialog!!.dismiss()
             }

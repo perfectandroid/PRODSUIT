@@ -91,7 +91,7 @@ object LeadFromRepository {
                         progressDialog!!.dismiss()
                         Toast.makeText(
                             context,
-                            ""+e.toString(),
+                            "Some Technical Issues.",
                             Toast.LENGTH_LONG
                         ).show()
                     }

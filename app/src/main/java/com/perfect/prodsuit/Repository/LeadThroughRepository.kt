@@ -33,6 +33,7 @@ object LeadThroughRepository {
 
     private fun getLeadThrough(context: Context) {
         try {
+            leadThroghSetterGetter.value = LeadThroughModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

@@ -204,5 +204,12 @@ object Config {
 
     }
 
+    fun disableClick(v : View) {
+        v.isEnabled = false
+        v.postDelayed({
+            v.isEnabled = true
+        },2000)
+    }
+
 
 }
