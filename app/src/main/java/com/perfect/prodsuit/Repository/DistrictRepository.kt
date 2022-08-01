@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -35,6 +36,7 @@ object DistrictRepository {
     private fun getDistrict(context: Context,FK_States : String) {
         Log.e("TAG","getDistrict  ")
         try {
+            districtSetterGetter.value= DistrictModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -79,6 +81,7 @@ object DistrictRepository {
                 requestObject1.put("FK_States", ProdsuitApplication.encryptStart(FK_States))
 
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
+                Log.e(TAG,"FK_States   74   "+FK_States)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -102,15 +105,30 @@ object DistrictRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(
+                            context,
+                            ""+Config.SOME_TECHNICAL_ISSUES,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(
+                        context,
+                        ""+Config.SOME_TECHNICAL_ISSUES,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(
+                context,
+                ""+Config.SOME_TECHNICAL_ISSUES,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
