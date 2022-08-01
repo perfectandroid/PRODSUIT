@@ -27,6 +27,7 @@ object MaintanaceMessageRepository {
 
     private fun maintananceMessage(context: Context) {
         try {
+            maintanaceSetterGetter.value = MaintananceMessageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))

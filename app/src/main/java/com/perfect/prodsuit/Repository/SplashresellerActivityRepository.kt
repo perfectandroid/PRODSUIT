@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Model.MpinModel
 import com.perfect.prodsuit.Model.ResellerModel
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -28,6 +29,7 @@ object SplashresellerActivityRepository {
 
     private fun doReseller(context: Context) {
         try {
+            resellerSetterGetter.value = ResellerModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
