@@ -1391,10 +1391,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             R.id.edtbranch->{
                 if (ID_BranchType.equals("")){
 
-                    val snackbar: Snackbar = Snackbar.make(v, "Select Branch type", Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.WHITE)
-                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-                    snackbar.show()
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Branch type", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+
+                    Config.snackBars(context,v,"Select Branch type")
 
                 }else{
                     Config.disableClick(v)
@@ -1410,10 +1412,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 if (ID_Department.equals("")){
 
-                    val snackbar: Snackbar = Snackbar.make(v, "Select Department", Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.WHITE)
-                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-                    snackbar.show()
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Department", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(context,v,"Select Department")
 
                 }else{
                     Config.disableClick(v)
@@ -4510,39 +4513,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  branchTypeViewModel.getBranchType(this)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   979   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
-                                 val jobjt = jObject.getJSONObject("BranchTypeDetails")
-                                 branchTypeArrayList = jobjt.getJSONArray("BranchTypeDetailsList")
-                                 if (branchTypeArrayList.length()>0){
-                                     if (branchType == 0){
-                                         branchType++
-                                         branchTypePopup(branchTypeArrayList)
-                                     }
 
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
+
+                                 if (branchType == 0){
+                                     branchType++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   979   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+                                         val jobjt = jObject.getJSONObject("BranchTypeDetails")
+                                         branchTypeArrayList = jobjt.getJSONArray("BranchTypeDetailsList")
+                                         if (branchTypeArrayList.length()>0){
+
+                                                 branchTypePopup(branchTypeArrayList)
+
+
+                                         }
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
+                                     }
                                  }
+
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e:Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
@@ -4630,39 +4647,53 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  branchViewModel.getBranch(this,ID_BranchType)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   1062   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
-                                 val jobjt = jObject.getJSONObject("BranchDetails")
-                                 branchArrayList = jobjt.getJSONArray("BranchDetailsList")
-                                 if (branchArrayList.length()>0){
-                                     if (branch == 0){
-                                         branch++
-                                         branchPopup(branchArrayList)
-                                     }
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
 
+                                 if (branch == 0){
+                                     branch++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   1062   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+                                         val jobjt = jObject.getJSONObject("BranchDetails")
+                                         branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                         if (branchArrayList.length()>0){
+
+
+                                                 branchPopup(branchArrayList)
+
+
+                                         }
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
+                                     }
                                  }
+
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e :Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
@@ -4750,39 +4781,51 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  departmentViewModel.getDepartment(this)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   1142   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
-                                 val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                 departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
-                                 if (departmentArrayList.length()>0){
-                                     if (department == 0){
-                                         department++
-                                         departmentPopup(departmentArrayList)
-                                     }
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
 
+                                 if (department == 0){
+                                     department++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   1142   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+                                         val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                         departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                         if (departmentArrayList.length()>0){
+
+                                             departmentPopup(departmentArrayList)
+
+                                         }
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
+                                     }
                                  }
+
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e : Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
@@ -4868,39 +4911,51 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  employeeViewModel.getEmployee(this, ID_Department)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   1224   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
-                                 val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                 employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                 if (employeeArrayList.length()>0){
-                                     if (employee == 0){
-                                         employee++
-                                         employeePopup(employeeArrayList)
-                                     }
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
+                                 if (employee == 0){
+                                     employee++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   1224   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+                                         val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                         employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                         if (employeeArrayList.length()>0){
 
+                                             employeePopup(employeeArrayList)
+
+
+                                         }
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
+                                     }
                                  }
+
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e : Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }

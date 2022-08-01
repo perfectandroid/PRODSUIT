@@ -1153,7 +1153,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -1311,7 +1311,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
                                                 android:orientation="vertical"
-                                                android:visibility="visible">
+                                                android:visibility="gone">
 
                                                 <TextView
                                                     android:layout_width="match_parent"
