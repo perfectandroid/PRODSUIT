@@ -1332,16 +1332,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.edtProdcategory->{
                 Config.disableClick(v)
+                ID_Product = ""
+                edtProdproduct!!.setText("")
                 getCategory()
             }
             R.id.edtProdproduct->{
                 strProdName = edtProdproduct!!.text.toString()
 
                if (ID_Category.equals("")){
-                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.WHITE)
-                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-                    snackbar.show()
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                   Config.snackBars(applicationContext,v,"Select Category")
 
                 }
                 else{
@@ -3776,41 +3779,55 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   227   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
 
-                                 val jobjt = jObject.getJSONObject("ProductDetailsList")
-                                 prodDetailArrayList = jobjt.getJSONArray("ProductList")
-                                 if (prodDetailArrayList.length()>0){
-                                     if (proddetail == 0){
-                                         proddetail++
-                                         productDetailPopup(prodDetailArrayList)
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
+                                 if (proddetail == 0){
+                                     proddetail++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   227   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+
+                                         val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                         prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                         if (prodDetailArrayList.length()>0){
+//                                             if (proddetail == 0){
+//                                                 proddetail++
+                                                 productDetailPopup(prodDetailArrayList)
+//                                             }
+
+                                         }
+
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
                                      }
-
                                  }
 
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e:Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
