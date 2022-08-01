@@ -4039,41 +4039,56 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                  productStatusViewModel.getProductStatus(this)!!.observe(
                      this,
                      Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         if (msg!!.length > 0) {
-                             val jObject = JSONObject(msg)
-                             Log.e(TAG,"msg   333   "+msg)
-                             if (jObject.getString("StatusCode") == "0") {
 
-                                 val jobjt = jObject.getJSONObject("StatusDetailsList")
-                                 prodStatusArrayList = jobjt.getJSONArray("StatusList")
-                                 if (prodStatusArrayList.length()>0){
-                                     if (prodstatus == 0){
-                                         prodstatus++
-                                         productStatusPopup(prodStatusArrayList)
+                         try {
+                             val msg = serviceSetterGetter.message
+                             if (msg!!.length > 0) {
+
+                                 if (prodstatus == 0){
+                                     prodstatus++
+                                     val jObject = JSONObject(msg)
+                                     Log.e(TAG,"msg   333   "+msg)
+                                     if (jObject.getString("StatusCode") == "0") {
+
+                                         val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                         prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                         if (prodStatusArrayList.length()>0){
+//                                             if (prodstatus == 0){
+//                                                 prodstatus++
+                                                 productStatusPopup(prodStatusArrayList)
+//                                             }
+
+                                         }
+
+                                     } else {
+                                         val builder = AlertDialog.Builder(
+                                             this@LeadGenerationActivity,
+                                             R.style.MyDialogTheme
+                                         )
+                                         builder.setMessage(jObject.getString("EXMessage"))
+                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                         }
+                                         val alertDialog: AlertDialog = builder.create()
+                                         alertDialog.setCancelable(false)
+                                         alertDialog.show()
                                      }
-
                                  }
 
                              } else {
-                                 val builder = AlertDialog.Builder(
-                                     this@LeadGenerationActivity,
-                                     R.style.MyDialogTheme
-                                 )
-                                 builder.setMessage(jObject.getString("EXMessage"))
-                                 builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                 }
-                                 val alertDialog: AlertDialog = builder.create()
-                                 alertDialog.setCancelable(false)
-                                 alertDialog.show()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
                              }
-                         } else {
+                         }catch (e : Exception){
                              Toast.makeText(
                                  applicationContext,
-                                 "Some Technical Issues.",
+                                 ""+Config.SOME_TECHNICAL_ISSUES,
                                  Toast.LENGTH_LONG
                              ).show()
                          }
+
                      })
                  progressDialog!!.dismiss()
              }
