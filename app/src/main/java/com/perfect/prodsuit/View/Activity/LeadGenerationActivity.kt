@@ -2146,40 +2146,50 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 mediaTypeViewModel.getMediaType(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   510   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("MediaTypeDetails")
-                                mediaTypeArrayList = jobjt.getJSONArray("MediaTypeDetailsList")
-                                if (mediaTypeArrayList.length()>0){
-                                    if (countMediatype == 0){
-                                        countMediatype++
-                                        mediaTypePopup(mediaTypeArrayList)
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (countMediatype == 0){
+                                    countMediatype++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   510   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("MediaTypeDetails")
+                                        mediaTypeArrayList = jobjt.getJSONArray("MediaTypeDetailsList")
+                                        if (mediaTypeArrayList.length()>0){
+//                                            if (countMediatype == 0){
+//                                                countMediatype++
+                                                mediaTypePopup(mediaTypeArrayList)
+//                                            }
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-
-
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@LeadGenerationActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e:Exception){
+
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
