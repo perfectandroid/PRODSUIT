@@ -208,7 +208,7 @@ object Config {
         v.isEnabled = false
         v.postDelayed({
             v.isEnabled = true
-        },2000)
+        },3000)
     }
 
 
