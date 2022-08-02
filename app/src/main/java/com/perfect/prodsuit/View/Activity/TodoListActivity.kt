@@ -544,7 +544,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 } else {
                     val image5 = resources.getDrawable(R.drawable.ic_unticked)
                     checkbox_nme.setButtonDrawable(image5)
-                    OverDueActivity.name1 =""
+                    name =""
                 }
             })
 

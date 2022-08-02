@@ -351,11 +351,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 if (checked) {
                     val image4 = resources.getDrawable(R.drawable.ic_ticked)
                     checkbox_nme.setButtonDrawable(image4)
-                    OverDueActivity.name1 =etxt_name1!!.text.toString()
+                    name1 =etxt_name1!!.text.toString()
                 } else {
                     val image5 = resources.getDrawable(R.drawable.ic_unticked)
                     checkbox_nme.setButtonDrawable(image5)
-                    OverDueActivity.name1 =""
+                    name1 =""
                 }
             })
 

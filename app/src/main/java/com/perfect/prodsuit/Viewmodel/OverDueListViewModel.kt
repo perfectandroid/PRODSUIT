@@ -11,8 +11,8 @@ class OverDueListViewModel : ViewModel() {
 
     var overduelistLiveData: MutableLiveData<OverDueModel>? = null
 
-    fun getOverduelist(context: Context) : LiveData<OverDueModel>? {
-        overduelistLiveData = OverDueRepository.getServicesApiCall(context)
+    fun getOverduelist(context: Context,submode : String, name: String, criteria: String,date: String) : LiveData<OverDueModel>? {
+        overduelistLiveData = OverDueRepository.getServicesApiCall(context,submode, name, criteria,date)
         return overduelistLiveData
     }
 

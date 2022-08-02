@@ -93,7 +93,8 @@ object LeadManagFilterRepository {
 
 
 
-               val dateFrom = inputFormat.parse(OverDueActivity.nxtactndate)
+                var nxtactndate = ""
+               val dateFrom = inputFormat.parse(nxtactndate)
                // val dateFrom = inputFormat.parse("08-04-2022")
                 val strNxtactDate = outputFormat.format(dateFrom)
 

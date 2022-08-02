@@ -87,12 +87,12 @@ object SortLeadMangeListRepository {
 
 
 
-
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name1))
-                requestObject1.put("Todate", ProdsuitApplication.encryptStart(OverDueActivity.date))
+//
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//                requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name1))
+//                requestObject1.put("Todate", ProdsuitApplication.encryptStart(OverDueActivity.date))
 
                 Log.i("requestobject",requestObject1.toString())
             } catch (e: Exception) {
