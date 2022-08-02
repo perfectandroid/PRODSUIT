@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_remark.xml" value="0.26666666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_add_remark_multiple.xml" value="0.26666666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.29259259259259257" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.24010416666666667" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
@@ -12,10 +13,14 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.2692307692307692" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.25076923076923074" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/filter_popup.xml" value="0.34375" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/reminder_agenda_popup.xml" value="0.29259259259259257" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.25076923076923074" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/sort_popup.xml" value="0.34375" />
       </map>
     </option>
   </component>

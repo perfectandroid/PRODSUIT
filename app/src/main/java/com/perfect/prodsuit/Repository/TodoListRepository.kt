@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -23,13 +24,14 @@ object TodoListRepository {
 
     val todolistSetterGetter = MutableLiveData<TodoListModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context): MutableLiveData<TodoListModel> {
-        getTodolist(context)
+    fun getServicesApiCall(context: Context,submode : String, name  : String, criteria  : String,date : String): MutableLiveData<TodoListModel> {
+        getTodolist(context,submode,name,criteria,date)
         return todolistSetterGetter
     }
 
-    private fun getTodolist(context: Context) {
+    private fun getTodolist(context: Context,submode : String, name  : String, criteria  : String,date : String) {
         try {
+            todolistSetterGetter.value = TodoListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -54,15 +56,29 @@ object TodoListRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                {"ReqMode":"Pwq34Rtdxss=\n","SubMode":"8Ld7pH+WkK0=\n","BankKey":"\/mXqmq3ZMvs=\n","FK_Employee":"C9jcamVv4wY=\n",
+//                    "Token":"NlkUb1ACgHOTaH2Q1mri2xHtaz0iuN7HwF5Ju6q\/vuGe9XjwVXN9kw==\n","Name":"Ua9c\/VfdCVs=\n","Todate":"mrxcAaqbHMz56wTwHExKBA==\n",
+//                    "criteria":"vJ\/8asrP+O0=\n"}
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(submode))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.i("request",requestObject1.toString())
+
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
+
+                Log.e("TAG","requestObject1   801     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
+                Log.e("TAG","requestObject1   802     "+requestObject1)
+
             } catch (e: Exception) {
                 Log.i("Exception",e.toString());
                 e.printStackTrace()
@@ -88,16 +104,19 @@ object TodoListRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 

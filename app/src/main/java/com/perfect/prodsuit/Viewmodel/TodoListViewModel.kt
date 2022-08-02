@@ -11,8 +11,8 @@ class TodoListViewModel : ViewModel() {
 
     var todolistLiveData: MutableLiveData<TodoListModel>? = null
 
-    fun getTodolist(context: Context) : LiveData<TodoListModel>? {
-        todolistLiveData = TodoListRepository.getServicesApiCall(context)
+    fun getTodolist(context: Context ,submode : String, name  : String, criteria  : String,date : String) : LiveData<TodoListModel>? {
+        todolistLiveData = TodoListRepository.getServicesApiCall(context,submode,name,criteria,date)
         return todolistLiveData
     }
 

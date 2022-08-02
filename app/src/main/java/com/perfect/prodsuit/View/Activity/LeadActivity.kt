@@ -27,7 +27,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeadActivity : AppCompatActivity() , View.OnClickListener {
+class
+LeadActivity : AppCompatActivity() , View.OnClickListener {
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null

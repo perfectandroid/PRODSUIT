@@ -186,26 +186,45 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="5dp">
 
+
                         <EditText
                             android:id="@+id/etxt_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/et_bggreybottom"
+                            android:drawableLeft="@drawable/ic_calsort"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/colorPrimary"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="left"
                             android:text=""
                             android:hint="Date"
                             android:textColor="@color/black"
-                            android:textSize="17dp"
-                            android:textStyle="normal"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:textSize="13dp"
+                            android:padding="5dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center" />
 
-                        <CheckBox
-                            android:id="@+id/checkbox_Date"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:button="@drawable/ic_sortchk"
-                            android:layout_weight="4"/>
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:layout_weight="4">
+
+                            <CheckBox
+                                android:id="@+id/checkbox_Date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:button="@drawable/ic_sortchk"
+                                android:layout_gravity="center"
+                                android:gravity="center" />
+
+                        </LinearLayout>
+
+
 
                     </LinearLayout>
 
@@ -235,23 +254,41 @@
 
                         <EditText
                             android:id="@+id/etxt_name"
-                            android:hint="Name"
-                            android:textColor="@color/black"
-                            android:textSize="17dp"
-                            android:textStyle="normal"
-                            android:layout_gravity="center"
-                            android:gravity="left"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                        <CheckBox
-                            android:id="@+id/checkbox_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:button="@drawable/ic_sortchk"
-                            android:layout_weight="4"/>
+                            android:background="@drawable/et_bggreybottom"
+                            android:drawableLeft="@drawable/ic_personsort"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/colorPrimary"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="left"
+                            android:padding="5dp"
+                            android:hint="Name"
+                            android:textColor="@color/black"
+                            android:textSize="13dp"
+                            android:textStyle="normal"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:layout_weight="4">
+
+                            <CheckBox
+                                android:id="@+id/checkbox_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:button="@drawable/ic_sortchk" />
+
+
+                        </LinearLayout>
+
+
 
                     </LinearLayout>
 
@@ -290,6 +327,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center">
+
                     <LinearLayout
                         android:id="@+id/ll_cancel"
                         android:layout_width="match_parent"
