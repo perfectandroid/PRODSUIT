@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -26,14 +27,15 @@ object AgendaDetailRepository {
     val agendaDetailSetterGetter = MutableLiveData<AgendaDetailModel>()
     val TAG: String = "AgendaDetailRepository"
 
-    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String): MutableLiveData<AgendaDetailModel> {
-        getAgendaDetail(context,ID_ActionType,SubMode,Id_Agenda)
+    fun getServicesApiCall(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String, name : String,date : String, criteria : String): MutableLiveData<AgendaDetailModel> {
+        getAgendaDetail(context,ID_ActionType,SubMode,Id_Agenda, name,date, criteria)
         return agendaDetailSetterGetter
     }
 
-    private fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String) {
+    private fun getAgendaDetail(context: Context,ID_ActionType : String ,SubMode : String,Id_Agenda : String, name : String,date : String, criteria : String) {
 
         try {
+            agendaDetailSetterGetter.value = AgendaDetailModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -66,6 +68,11 @@ object AgendaDetailRepository {
 //                "ID_ActionType:"1",
 //                "SubMode:"1"
 
+//                {"ReqMode":"auUEMC+jdGg=\n","BankKey":"\/mXqmq3ZMvs=\n","FK_Employee":"C9jcamVv4wY=\n",
+//                    "Token":"\/5rBx4fwNIcSGqZdWCf+L58o2XZj5E\/vnvRXz7rh91NFknPbbSK\/3w==\n",
+//                    "ID_ActionType":"KZtbclVmL7w=\n","SubMode":"vJ\/8asrP+O0=\n","Id_Agenda":"vJ\/8asrP+O0=\n",
+//                    "Name":"j4rFcTOFBx0=\n","Todate":"14sAcoSwi6n9b\/3WNKFIWA==\n","criteria":"j4rFcTOFBx0=\n"}
+
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -79,7 +86,11 @@ object AgendaDetailRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(Id_Agenda))
 
-                Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode)
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
+
+                Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
                 Log.e(TAG,"requestObject1   78   "+ID_ActionType+"   "+ID_ActionType)
 
@@ -106,15 +117,18 @@ object AgendaDetailRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
 
     }

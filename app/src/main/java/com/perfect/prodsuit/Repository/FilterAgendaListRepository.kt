@@ -75,9 +75,10 @@ object FilterAgendaListRepository {
                 requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(Id_Agenda))
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(AgendaActivity.name))
 
+                val nxtactndate = ""
                 val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
                 val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val dateFrom = inputFormat.parse(AgendaActivity.nxtactndate)
+                val dateFrom = inputFormat.parse(nxtactndate)
                 // val dateFrom = inputFormat.parse("08-04-2022")
                 val strNxtactDate = outputFormat.format(dateFrom)
 

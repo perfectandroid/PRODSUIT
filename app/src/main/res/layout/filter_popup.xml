@@ -164,7 +164,7 @@
                 android:drawableTint="@color/colorPrimary"
                 android:fontFamily="@font/myfont"
                 android:gravity="left"
-                android:hint="Product Name"
+                android:hint="Name"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textSize="13dp"

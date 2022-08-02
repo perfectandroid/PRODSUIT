@@ -103,6 +103,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var agendaTypeClick : String?= "0"
     var ID_ActionType : String?= ""
     var SubMode : String?= "1"
+    internal var sortFilter:Int = 0
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
     lateinit var sortAgendaViewModel: SortAgendaViewModel
@@ -132,8 +133,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     companion object{
         var CUSTOM_INTENT : String?= "PRODSUIT_CALL"
         var name = ""
-        var nxtactndate = ""
-        var name1 = ""
+//        var nxtactndate = ""
+//        var name1 = ""
         var date = ""
         var criteria = ""
         var ID_LeadGenerate = ""
@@ -167,6 +168,10 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         setRegViews()
       //  addTabItem()
         SubMode ="1"
+        name = ""
+        date = ""
+        criteria = ""
+        ID_LeadGenerate = ""
        // getAgendaCounts()
         getAgendatypes()
 //        getActionTypes()
@@ -681,7 +686,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
 
             Log.e(TAG,"ID_ActionType   607   "+ID_ActionType)
-
+            name = ""
+            date = ""
+            criteria = ""
             getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
 
@@ -884,6 +891,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             })
             etdate!!.setOnClickListener(View.OnClickListener {
 //                dateSelector()
+                sortFilter = 2
                 openBottomSheet()
             })
             btncancel.setOnClickListener {
@@ -989,14 +997,19 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     strMonth ="0"+strMonth
                 }
 
-                etdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+               // etdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
 
-//                if (dateSelectMode == 0){
-//                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-//                }
-//                if (dateSelectMode == 1){
-//                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-//                }
+                if (sortFilter == 0){
+                    etxt_date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (sortFilter == 1){
+                    etxt_date1!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (sortFilter == 2){
+                    etdate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
 
 
             }
@@ -1225,61 +1238,78 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!,Id_Agenda)!!.observe(
+                agendaDetailViewModel.getAgendaDetail(this,ID_ActionType,SubMode!!,Id_Agenda, name,date, criteria)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        progressDialog!!.dismiss()
-                        if (msg!!.length > 0) {
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            //  progressDialog!!.dismiss()
+                            if (msg!!.length > 0) {
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   443   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AgendaDetails")
-                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                if (agendaDetailArrayList.length()>0){
+                                if (agendaDetail == 0){
+                                    agendaDetail++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   443   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("AgendaDetails")
+                                        agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
+                                        if (agendaDetailArrayList.length()>0){
 //                                    if (agendaDetail == 0){
 //                                        agendaDetail++
-                                      //  agendaTypePopup(agendaActionArrayList)
+                                            //  agendaTypePopup(agendaActionArrayList)
 
-                                    val editor = sharedPreferences!!.edit()
-                                    editor.clear()
-                                    editor.commit()
+                                            val editor = sharedPreferences!!.edit()
+                                            editor.clear()
+                                            editor.commit()
 
 
 
-                                        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-                                        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-                                        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-                                        recyAgendaDetail!!.adapter = adapter
-                                        adapter.setClickListener(this@AgendaActivity)
-                                  // }
+                                            recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
+                                            val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                            recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
+                                            recyAgendaDetail!!.adapter = adapter
+                                            adapter.setClickListener(this@AgendaActivity)
+                                            // }
 
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@AgendaActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            onBackPressed()
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
 
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AgendaActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
-               // progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -1322,64 +1352,17 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     private fun filterData() {
 
-     /*   try {
-            val builder1 = AlertDialog.Builder(this)
-            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout1 = inflater1.inflate(R.layout.filter_popup, null)
-
-            val btncancel = layout1.findViewById(R.id.btncancel) as Button
-            val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
-            etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
-            etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
-
-            etxt_date!!.setKeyListener(null)
-
-            val c = Calendar.getInstance()
-            val sdf = SimpleDateFormat("dd-MM-yyyy")
-            yr = c.get(Calendar.YEAR)
-            month = c.get(Calendar.MONTH)
-            day = c.get(Calendar.DAY_OF_MONTH)
-           //  etxt_date!!.setText(sdf.format(c.time))
-
-            etxt_date!!.setOnClickListener(View.OnClickListener { dateSelector() })
-
-            builder1.setView(layout1)
-            val alertDialogSort = builder1.create()
-
-            btncancel.setOnClickListener {
-
-                alertDialogSort.dismiss() }
-            btnsubmit.setOnClickListener {
-
-               name = etxt_Name!!.text.toString()
-               nxtactndate = etxt_date!!.text.toString()
-
-                if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
-                    Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
-                        .show()
-                }
-                else {
-
-                    getAgendaDetails1(ID_ActionType!!, Id_Agenda)
-                    alertDialogSort.dismiss()
-                }
-            }
-
-            alertDialogSort.show()
-
-        }catch (e: Exception){
-
-        }*/
         try {
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.filter_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
             etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
             etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
-
+            criteria = ""
             etxt_date!!.setKeyListener(null)
 
             val c = Calendar.getInstance()
@@ -1389,7 +1372,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             day = c.get(Calendar.DAY_OF_MONTH)
             // etxt_date!!.setText(sdf.format(c.time))
 
-            etxt_date!!.setOnClickListener(View.OnClickListener { dateSelector() })
+            etxt_date!!.setOnClickListener(View.OnClickListener {
+//                dateSelector()
+                sortFilter = 0
+                openBottomSheet()
+            })
 
             builder1.setView(layout1)
             val alertDialogSort = builder1.create()
@@ -1400,14 +1387,15 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             btnsubmit.setOnClickListener {
 
                 name = etxt_Name!!.text.toString()
-                nxtactndate = etxt_date!!.text.toString()
+                date = etxt_date!!.text.toString()
 
                 if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
                     Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
                         .show()
                 }
                 else {
-                    getAgendaDetails1(ID_ActionType!!, Id_Agenda)
+//                    getAgendaDetails1(ID_ActionType!!, Id_Agenda)
+                    getAgendaDetails(ID_ActionType!!, Id_Agenda)
                     alertDialogSort.dismiss()
                 }
             }
@@ -1532,6 +1520,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
@@ -1544,6 +1533,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
             etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
             etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
+            etxt_date1!!.setKeyListener(null)
 
 
             //  etxt_date1!!.setKeyListener(null)
@@ -1555,11 +1545,15 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             day = c.get(Calendar.DAY_OF_MONTH)
             // etxt_date!!.setText(sdf.format(c.time))
 
-            etxt_date1!!.setOnClickListener(View.OnClickListener { dateSelector1() })
+            etxt_date1!!.setOnClickListener(View.OnClickListener {
+//                dateSelector1()
+                sortFilter = 1
+                openBottomSheet()
+            })
 
             if (checkbox_asc.isChecked)
             {
-                OverDueActivity.criteria ="1"
+                criteria ="1"
                 checkbox_asc.isChecked=true
                 checkbox_dsc.isChecked=false
                 val image = resources.getDrawable(R.drawable.ic_chkboxascdsc)
@@ -1570,7 +1564,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
             }
             if (checkbox_dsc.isChecked){
-                OverDueActivity.criteria ="2"
+                criteria ="2"
                 checkbox_asc.isChecked=false
                 checkbox_dsc.isChecked=true
 
@@ -1587,11 +1581,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 if (checked) {
                     val image2 = resources.getDrawable(R.drawable.ic_ticked)
                     checkbox_date.setButtonDrawable(image2)
-                    OverDueActivity.date =etxt_date1!!.text.toString()
+                    date =etxt_date1!!.text.toString()
                 } else {
                     val image5 = resources.getDrawable(R.drawable.ic_unticked)
                     checkbox_date.setButtonDrawable(image5)
-                    OverDueActivity.date =""
+                    date =""
                 }
             })
 
@@ -1620,12 +1614,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 val image1 = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
                 checkbox_dsc.setButtonDrawable(image1)
 
-                OverDueActivity.criteria ="1"
+                criteria ="1"
             })
             checkbox_dsc.setOnClickListener(View.OnClickListener {
                 checkbox_dsc.isChecked=true
                 checkbox_asc.isChecked=false
-                OverDueActivity.criteria ="2"
+                criteria ="2"
 
                 val image = resources.getDrawable(R.drawable.ic_chkbxascdesc_light)
                 checkbox_asc.setButtonDrawable(image)
@@ -1647,8 +1641,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
-                var date =etxt_date1!!.text.toString()
-                var name =etxt_name1!!.text.toString()
+                date =etxt_date1!!.text.toString()
+                name =etxt_name1!!.text.toString()
                 Log.i("Detail",date+"\n"+name)
 
                 if(date.equals("")&& name.equals("") )
@@ -1659,58 +1653,62 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
                 else
                 {
-                    if(!(date.equals("")))
-                    {
-                        if (!(checkbox_date.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
 
-                    }
-                    else if(!(name.equals("")))
-                    {
-                        if (!(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
+                    getAgendaDetails(ID_ActionType!!, Id_Agenda)
+                    alertDialogSort.dismiss()
 
-                    }
-                    else if(!(date.equals(""))&& !(name.equals(""))){
-
-
-                        if (!(checkbox_date.isChecked)&&!(checkbox_nme.isChecked)){
-
-
-
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        if (!(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else if (!(checkbox_date.isChecked)&&(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
-
-                    }
+//                    if(!(date.equals("")))
+//                    {
+//                        if (!(checkbox_date.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
+//                    else if(!(name.equals("")))
+//                    {
+//                        if (!(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
+//                    else if(!(date.equals(""))&& !(name.equals(""))){
+//
+//
+//                        if (!(checkbox_date.isChecked)&&!(checkbox_nme.isChecked)){
+//
+//
+//
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        if (!(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else if (!(checkbox_date.isChecked)&&(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
 
                 }
 
