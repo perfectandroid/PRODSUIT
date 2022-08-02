@@ -212,13 +212,16 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
 
             R.id.tie_ActionType->{
+                Config.disableClick(v)
                 ActiontypeFN = 0
                 getFollowupType()
             }
             R.id.tie_FollowupBy->{
+                Config.disableClick(v)
                 getAllEmployee()
             }
             R.id.tie_Status->{
+                Config.disableClick(v)
                 getStatus()
             }
             R.id.tie_Date->{
@@ -226,21 +229,26 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 openBottomSheet()
             }
             R.id.tie_NextAction->{
+                Config.disableClick(v)
                 getFollowupAction()
             }
             R.id.tie_NextActionType->{
+                Config.disableClick(v)
                 ActiontypeFN = 1
                 getFollowupType()
             }
             R.id.tie_NextFollowupDate->{
+
                 DateType = 1
                 openBottomSheet()
             }
             R.id.tie_Priority->{
+                Config.disableClick(v)
                 getProductPriority()
             }
 
             R.id.tie_Department->{
+                Config.disableClick(v)
                 getDepartment()
             }
 
@@ -251,6 +259,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     Config.snackBars(context,v,"Select Department")
 
                 }else{
+                    Config.disableClick(v)
                     getEmployee()
                 }
 
@@ -346,39 +355,53 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 followUpTypeViewModel.getFollowupType(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   82   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-                                followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-                                if (followUpTypeArrayList.length()>0){
-                                    if (followUpType == 0){
-                                        followUpType++
-                                        followupTypePopup(followUpTypeArrayList)
-                                    }
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (followUpType == 0){
+                                    followUpType++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   82   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                        followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                        if (followUpTypeArrayList.length()>0){
+
+                                            followupTypePopup(followUpTypeArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -467,39 +490,51 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 employeeAllViewModel.getEmployeeAll(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1224   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                if (employeeAllArrayList.length()>0){
-                                    if (employee == 0){
-                                        employee++
-                                        employeeAllPopup(employeeAllArrayList)
-                                    }
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (employee == 0){
+                                    employee++
 
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length()>0){
+
+                                            employeeAllPopup(employeeAllArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -707,38 +742,51 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 productStatusViewModel.getProductStatus(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   333   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("StatusDetailsList")
-                                prodStatusArrayList = jobjt.getJSONArray("StatusList")
-                                if (prodStatusArrayList.length()>0){
-                                    if (prodstatus == 0){
-                                        prodstatus++
-                                        productStatusPopup(prodStatusArrayList)
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (prodstatus == 0){
+                                    prodstatus++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   333   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                        prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                        if (prodStatusArrayList.length()>0){
+
+                                            productStatusPopup(prodStatusArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
