@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -23,13 +24,14 @@ object UpcomingtasksRepository {
 
     val upcomingtasksSetterGetter = MutableLiveData<UpcomingtasksModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context): MutableLiveData<UpcomingtasksModel> {
-        getUpcomingtasks(context)
+    fun getServicesApiCall(context: Context,submode : String, name : String, criteria : String, date : String): MutableLiveData<UpcomingtasksModel> {
+        getUpcomingtasks(context,submode,name,criteria,date)
         return upcomingtasksSetterGetter
     }
 
-    private fun getUpcomingtasks(context: Context) {
+    private fun getUpcomingtasks(context: Context,submode : String, name : String, criteria : String, date : String) {
         try {
+            upcomingtasksSetterGetter.value = UpcomingtasksModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -54,14 +56,32 @@ object UpcomingtasksRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+//                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+//                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))
+//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("3"))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("3"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(submode))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
+
+                Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
+                Log.e("TAG","requestObject1   741     "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -86,16 +106,19 @@ object UpcomingtasksRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 

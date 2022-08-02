@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -53,6 +54,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var mMinute:Int = 0
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
+    internal var sortFilter:Int = 0
+
     lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
     lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +67,15 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        submode = "3"
+        name = ""
+        date = ""
+        criteria = ""
         getUpcomingtasksList()
     }
     companion object {
-        var submode = ""
+        var submode = "3"
         var name = ""
-        var nxtactndate = ""
-        var name1 = ""
         var date = ""
         var criteria = ""
     }
@@ -86,6 +91,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     private fun getUpcomingtasksList() {
+        var UpcomingDet = 0
         context = this@UpcomingtaskActivity
         upcomingtaskslistViewModel = ViewModelProvider(this).get(UpcomingtasksListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -96,42 +102,61 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                upcomingtaskslistViewModel.getUpcomingtasklist(this)!!.observe(
+                upcomingtaskslistViewModel.getUpcomingtasklist(this,submode!!, name!!, criteria!!, date!!)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                    upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                    val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
-                                    rv_upcmngtasklist!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                    rv_upcmngtasklist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList,SubMode!!)
-                                    rv_upcmngtasklist!!.adapter = adapter
-                                    adapter.setClickListener(this@UpcomingtaskActivity)
+
+                            try {
+                                val msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
+
+                                    if (UpcomingDet == 0){
+                                        UpcomingDet++
+
+                                        val jObject = JSONObject(msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
+                                            upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                            val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
+                                            rv_upcmngtasklist!!.layoutManager =
+                                                lLayout as RecyclerView.LayoutManager?
+                                            rv_upcmngtasklist!!.setHasFixedSize(true)
+                                            val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList,SubMode!!)
+                                            rv_upcmngtasklist!!.adapter = adapter
+                                            adapter.setClickListener(this@UpcomingtaskActivity)
+
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@UpcomingtaskActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                onBackPressed()
+                                                finish()
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
+                                    }
 
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                            this@UpcomingtaskActivity,
-                                            R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
                                 }
-                            } else {
+
+                            }catch (e : Exception){
                                 Toast.makeText(
-                                        applicationContext,
-                                        "Some Technical Issues.",
-                                        Toast.LENGTH_LONG
+                                    applicationContext,
+                                    ""+Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
                                 ).show()
                             }
+
                         })
                 progressDialog!!.dismiss()
             }
@@ -282,6 +307,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
@@ -294,7 +320,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
             etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
-
+            etxt_date1!!.setKeyListener(null)
 
             //  etxt_date1!!.setKeyListener(null)
 
@@ -305,7 +331,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             day = c.get(Calendar.DAY_OF_MONTH)
             // etxt_date!!.setText(sdf.format(c.time))
 
-            etxt_date1!!.setOnClickListener(View.OnClickListener { dateSelector1() })
+            etxt_date1!!.setOnClickListener(View.OnClickListener {
+//                dateSelector1()
+                sortFilter = 1
+                openBottomSheet()
+            })
 
             if (checkbox_asc.isChecked)
             {
@@ -337,11 +367,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 if (checked) {
                     val image2 = resources.getDrawable(R.drawable.ic_ticked)
                     checkbox_date.setButtonDrawable(image2)
-                    OverDueActivity.date =etxt_date1!!.text.toString()
+                    date =etxt_date1!!.text.toString()
                 } else {
                     val image5 = resources.getDrawable(R.drawable.ic_unticked)
                     checkbox_date.setButtonDrawable(image5)
-                    OverDueActivity.date =""
+                    date =""
                 }
             })
 
@@ -351,11 +381,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 if (checked) {
                     val image4 = resources.getDrawable(R.drawable.ic_ticked)
                     checkbox_nme.setButtonDrawable(image4)
-                    name1 =etxt_name1!!.text.toString()
+                    name =etxt_name1!!.text.toString()
                 } else {
                     val image5 = resources.getDrawable(R.drawable.ic_unticked)
                     checkbox_nme.setButtonDrawable(image5)
-                    name1 =""
+                    name =""
                 }
             })
 
@@ -397,8 +427,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 alertDialogSort.dismiss() }
             btnsubmit.setOnClickListener {
 
-                var date =etxt_date1!!.text.toString()
-                var name =etxt_name1!!.text.toString()
+                date =etxt_date1!!.text.toString()
+                name =etxt_name1!!.text.toString()
                 Log.i("Detail",date+"\n"+name)
 
                 if(date.equals("")&& name.equals("") )
@@ -409,58 +439,62 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                 else
                 {
-                    if(!(date.equals("")))
-                    {
-                        if (!(checkbox_date.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
 
-                    }
-                    else if(!(name.equals("")))
-                    {
-                        if (!(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
+                    getUpcomingtasksList()
+                    alertDialogSort.dismiss()
 
-                    }
-                    else if(!(date.equals(""))&& !(name.equals(""))){
-
-
-                        if (!(checkbox_date.isChecked)&&!(checkbox_nme.isChecked)){
-
-
-
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        if (!(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                        else if (!(checkbox_date.isChecked)&&(checkbox_nme.isChecked)){
-                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
-                                .show()
-                        }
-
-                        else
-                        {
-                            getSortList()
-                            alertDialogSort.dismiss()
-                        }
-
-                    }
+//                    if(!(date.equals("")))
+//                    {
+//                        if (!(checkbox_date.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
+//                    else if(!(name.equals("")))
+//                    {
+//                        if (!(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
+//                    else if(!(date.equals(""))&& !(name.equals(""))){
+//
+//
+//                        if (!(checkbox_date.isChecked)&&!(checkbox_nme.isChecked)){
+//
+//
+//
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        if (!(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//                        else if (!(checkbox_date.isChecked)&&(checkbox_nme.isChecked)){
+//                            Toast.makeText(applicationContext, "Please select checkbox", Toast.LENGTH_LONG)
+//                                .show()
+//                        }
+//
+//                        else
+//                        {
+//                            getSortList()
+//                            alertDialogSort.dismiss()
+//                        }
+//
+//                    }
 
                 }
 
@@ -541,11 +575,13 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.filter_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
             etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
             etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
+            criteria = ""
 
             etxt_date!!.setKeyListener(null)
 
@@ -556,7 +592,11 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             day = c.get(Calendar.DAY_OF_MONTH)
             // etxt_date!!.setText(sdf.format(c.time))
 
-            etxt_date!!.setOnClickListener(View.OnClickListener { dateSelector() })
+            etxt_date!!.setOnClickListener(View.OnClickListener {
+//                dateSelector()
+                sortFilter = 0
+                openBottomSheet()
+            })
 
             builder1.setView(layout1)
             val alertDialogSort = builder1.create()
@@ -567,7 +607,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             btnsubmit.setOnClickListener {
 
                 name = etxt_Name!!.text.toString()
-                nxtactndate = etxt_date!!.text.toString()
+                date = etxt_date!!.text.toString()
 
                 if(etxt_date!!.text.toString().equals("") && etxt_Name!!.text.toString().equals("")) {
                     Toast.makeText(applicationContext, "Please select a value", Toast.LENGTH_LONG)
@@ -575,7 +615,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 }
                 else {
 
-                    getUpcomingtasksList1()
+//                    getUpcomingtasksList1()
+                    getUpcomingtasksList()
                     alertDialogSort.dismiss()
                 }
             }
@@ -707,6 +748,65 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         } catch (e: ParseException) {
             e.printStackTrace()
         }
+    }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1!!.minDate = System.currentTimeMillis() - 1000
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day1: Int = date_Picker1!!.getDayOfMonth()
+                val mon1: Int = date_Picker1!!.getMonth()
+                val month1: Int = mon1+1
+                val year1: Int = date_Picker1!!.getYear()
+                var strDay = day1.toString()
+                var strMonth = month1.toString()
+                var strYear = year1.toString()
+
+                yr = year1
+                month =  month1
+                day= day1
+
+
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                //  etxt_date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+                if (sortFilter == 0){
+                    etxt_date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+                if (sortFilter == 1){
+                    etxt_date1!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
 }

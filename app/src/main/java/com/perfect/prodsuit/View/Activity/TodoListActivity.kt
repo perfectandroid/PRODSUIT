@@ -477,6 +477,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
             etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
+            etxt_date1!!.setKeyListener(null)
             criteria ="1"
 
 

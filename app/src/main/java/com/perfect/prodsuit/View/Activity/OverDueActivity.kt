@@ -191,6 +191,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.sort_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
@@ -203,6 +204,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
              etxt_date1 = layout1.findViewById<EditText>(R.id.etxt_date) as EditText
              etxt_name1 = layout1.findViewById<EditText>(R.id.etxt_name)  as EditText
+             etxt_date1!!.setKeyListener(null)
 
 
           //  etxt_date1!!.setKeyListener(null)
@@ -409,6 +411,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val builder1 = AlertDialog.Builder(this)
             val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout1 = inflater1.inflate(R.layout.filter_popup, null)
+            builder1.setCancelable(false)
 
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button

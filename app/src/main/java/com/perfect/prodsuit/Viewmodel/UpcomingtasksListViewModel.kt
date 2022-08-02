@@ -13,8 +13,8 @@ class UpcomingtasksListViewModel : ViewModel() {
 
     var upcomingtaskslistLiveData: MutableLiveData<UpcomingtasksModel>? = null
 
-    fun getUpcomingtasklist(context: Context) : LiveData<UpcomingtasksModel>? {
-        upcomingtaskslistLiveData = UpcomingtasksRepository.getServicesApiCall(context)
+    fun getUpcomingtasklist(context: Context,submode : String, name : String, criteria : String, date : String) : LiveData<UpcomingtasksModel>? {
+        upcomingtaskslistLiveData = UpcomingtasksRepository.getServicesApiCall(context,submode,name,criteria,date)
         return upcomingtaskslistLiveData
     }
 
