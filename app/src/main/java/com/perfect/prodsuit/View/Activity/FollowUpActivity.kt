@@ -623,39 +623,54 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 employeeViewModel.getEmployee(this, ID_Department!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1224   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                if (employeeArrayList.length()>0){
-                                    if (employee == 0){
-                                        employee++
-                                        employeePopup(employeeArrayList)
-                                    }
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (employee == 0){
+                                    employee++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeArrayList.length()>0){
+
+                                                employeePopup(employeeArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e:Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -924,39 +939,52 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 followUpActionViewModel.getFollowupAction(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   82   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
-                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
-                                if (followUpActionArrayList.length()>0){
-                                    if (followUpAction == 0){
-                                        followUpAction++
-                                        followUpActionPopup(followUpActionArrayList)
-                                    }
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (followUpAction == 0){
+                                    followUpAction++
 
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   82   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                        followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                        if (followUpActionArrayList.length()>0){
+
+                                            followUpActionPopup(followUpActionArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -1046,41 +1074,54 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 productPriorityViewModel.getProductPriority(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   353   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("PriorityDetailsList")
-                                prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
-                                if (prodPriorityArrayList.length()>0){
-                                    if (prodpriority == 0){
-                                        prodpriority++
-                                        productPriorityPopup(prodPriorityArrayList)
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (prodpriority == 0){
+                                    prodpriority++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   353   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("PriorityDetailsList")
+                                        prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
+                                        if (prodPriorityArrayList.length()>0){
+
+                                                productPriorityPopup(prodPriorityArrayList)
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-
                                 }
 
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -1170,39 +1211,53 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 departmentViewModel.getDepartment(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1142   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
-                                if (departmentArrayList.length()>0){
-                                    if (department == 0){
-                                        department++
-                                        departmentPopup(departmentArrayList)
-                                    }
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (department == 0){
+                                    department++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1142   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                        departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        if (departmentArrayList.length()>0){
+
+                                            departmentPopup(departmentArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
+
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@FollowUpActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
+                        }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                "Some Technical Issues.",
+                                ""+Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
