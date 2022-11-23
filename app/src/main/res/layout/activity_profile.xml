@@ -183,7 +183,7 @@
                                 android:visibility="visible"
                                 android:gravity="center_vertical"
                                 android:textStyle="bold"
-                                android:text="Ranjith"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="20dp"
                                 app:fontFamily="@font/myfont" />
