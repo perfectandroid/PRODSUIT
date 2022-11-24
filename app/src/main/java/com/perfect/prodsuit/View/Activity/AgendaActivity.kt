@@ -811,9 +811,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                    i.putExtra("message", "HELLO")
 //                    context.sendBroadcast(i)
 
-                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+                   // intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
 
-                  //  intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
                     startActivity(intent)
 
 
