@@ -11,8 +11,8 @@ class LeadInfoViewModel: ViewModel() {
 
     var leadInfoData: MutableLiveData<LeadInfoModel>? = null
 
-    fun getLeadInfo(context: Context) : LiveData<LeadInfoModel>? {
-        leadInfoData = LeadInfoRepository.getServicesApiCall(context)
+    fun getLeadInfo(context: Context,ID_LeadGenerateProduct : String) : LiveData<LeadInfoModel>? {
+        leadInfoData = LeadInfoRepository.getServicesApiCall(context,ID_LeadGenerateProduct)
         return leadInfoData
     }
 

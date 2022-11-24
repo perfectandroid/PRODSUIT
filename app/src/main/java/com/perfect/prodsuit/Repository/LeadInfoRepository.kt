@@ -27,13 +27,14 @@ object LeadInfoRepository {
     val leadInfoSetterGetter = MutableLiveData<LeadInfoModel>()
     val TAG: String = "LeadInfoRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadInfoModel> {
-        getLeadInfo(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String): MutableLiveData<LeadInfoModel> {
+        getLeadInfo(context,ID_LeadGenerateProduct)
         return leadInfoSetterGetter
     }
 
-    private fun getLeadInfo(context: Context) {
+    private fun getLeadInfo(context: Context,ID_LeadGenerateProduct : String) {
         try {
+            leadInfoSetterGetter.value = LeadInfoModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -58,8 +59,11 @@ object LeadInfoRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
-                Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+
+                Log.e(TAG,"requestObject1   82   "+ID_LeadGenerateProduct)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

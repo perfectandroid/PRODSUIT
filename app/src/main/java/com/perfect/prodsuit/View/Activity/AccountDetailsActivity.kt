@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -25,6 +26,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -77,6 +79,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     var llHistory: LinearLayout? = null
+    var ll_call: RelativeLayout? = null
     var llMainDetail: LinearLayout? = null
     lateinit var locationViewModel: LocationViewModel
     lateinit var activitylistViewModel: ActivityListViewModel
@@ -209,7 +212,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        Log.e(TAG,"jsonObj   "+jsonObj)
+        Log.e(TAG,"jsonObj  123456 "+jsonObj)
 
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
@@ -341,6 +344,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        ll_call = findViewById<RelativeLayout>(R.id.ll_call)
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         ll_msg = findViewById<LinearLayout>(R.id.ll_msg)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
@@ -398,6 +402,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llImages!!.setOnClickListener(this)
         ll_msg!!.setOnClickListener(this)
      //   tv_actionType!!.setOnClickListener(this)
+
+        ll_call!!.setOnClickListener(this)
 
     }
 
@@ -716,7 +722,58 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
               //  getActionTypes()
                 getFollowup(agendaTypeClick1)
             }
+
+            R.id.ll_call->{
+
+                callFunction()
+
+            }
         }
+    }
+
+    private fun callFunction() {
+
+
+        val ALL_PERMISSIONS = 101
+
+        val permissions = arrayOf(
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_PHONE_STATE
+        )
+        if (ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.CALL_PHONE
+            ) + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.RECORD_AUDIO
+            )
+            + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.READ_PHONE_STATE
+            )
+            + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.READ_CALL_LOG
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
+        } else {
+            val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
+            val BroadCallEditer = BroadCallSP.edit()
+            BroadCallEditer.putString("BroadCall", "Yes")
+            BroadCallEditer.putString("ID_LeadGenerate", ID_LeadGenerate)
+            BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+            BroadCallEditer.commit()
+
+            var mobileno = txtPhone!!.text.toString()
+            //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+            intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+            startActivity(intent)
+        }
+       // Toast.makeText(applicationContext,"Call ",Toast.LENGTH_SHORT).show()
+
     }
 
     private fun getDeletelead() {
@@ -881,7 +938,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var leadInfo = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                leadInfoViewModel.getLeadInfo(this)!!.observe(
+                leadInfoViewModel.getLeadInfo(this,ID_LeadGenerateProduct!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -911,11 +968,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             } else {
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
             }
