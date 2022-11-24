@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:background="@drawable/welcomesliderbgbg">
+    android:background="@drawable/welcomesliderbg">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,7 +37,7 @@
                 android:textStyle="bold"
                 android:text="ERP SOLUTIONS"
                 app:fontFamily="@font/myfont"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/p_green"/>
             <TextView
                 android:id="@+id/tvdescriptn1"
                 android:layout_width="wrap_content"

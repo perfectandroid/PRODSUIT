@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="p_green">#2e666a</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -14,8 +15,8 @@
     <color name="greydarks">#8F8D8D</color>
     <color name="greydark">#676666</color>
     <color name="grey_dark">#A3A1A1</color>
-    <color name="colorPrimary">#E8465F</color>
-    <color name="colorPrimaryDark">#E10426</color>
+    <color name="colorPrimary">#2e666a</color>
+    <color name="colorPrimaryDark">#1E4648</color>
     <color name="colorPrimaryExtraDark">#A8031D</color>
     <color name="colorAccent">#ED724B</color>
     <color name="homebgcolor">#FDEDF0</color>

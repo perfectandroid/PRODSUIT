@@ -84,7 +84,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/p_green"
                     app:fontFamily="@font/myfont"
                     android:background="@drawable/btn_bg"/>
             </LinearLayout>
