@@ -26,6 +26,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -724,21 +725,55 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             R.id.ll_call->{
 
-                Toast.makeText(applicationContext,"Call ",Toast.LENGTH_SHORT).show()
-                val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
-                val BroadCallEditer = BroadCallSP.edit()
-                BroadCallEditer.putString("BroadCall", "Yes")
-                BroadCallEditer.putString("ID_LeadGenerate", ID_LeadGenerate)
-                BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
-                BroadCallEditer.commit()
-
-                var mobileno = txtPhone!!.text.toString()
-                //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
-                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
-                startActivity(intent)
+                callFunction()
 
             }
         }
+    }
+
+    private fun callFunction() {
+
+
+        val ALL_PERMISSIONS = 101
+
+        val permissions = arrayOf(
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_PHONE_STATE
+        )
+        if (ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.CALL_PHONE
+            ) + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.RECORD_AUDIO
+            )
+            + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.READ_PHONE_STATE
+            )
+            + ContextCompat.checkSelfPermission(
+                this@AccountDetailsActivity,
+                Manifest.permission.READ_CALL_LOG
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
+        } else {
+            val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
+            val BroadCallEditer = BroadCallSP.edit()
+            BroadCallEditer.putString("BroadCall", "Yes")
+            BroadCallEditer.putString("ID_LeadGenerate", ID_LeadGenerate)
+            BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+            BroadCallEditer.commit()
+
+            var mobileno = txtPhone!!.text.toString()
+            //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+            intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+            startActivity(intent)
+        }
+       // Toast.makeText(applicationContext,"Call ",Toast.LENGTH_SHORT).show()
+
     }
 
     private fun getDeletelead() {

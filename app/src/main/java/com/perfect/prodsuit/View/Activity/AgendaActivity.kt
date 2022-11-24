@@ -121,6 +121,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var recyActionType: RecyclerView? = null
     var recyAgendaDetail: RecyclerView? = null
     var recyAgendaType: RecyclerView? = null
+    var submode = "";
 
 
 
@@ -1853,7 +1854,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     }
     private fun getSortList() {
 
-        TodoListActivity.submode ="1"
+        submode ="1"
         context = this@AgendaActivity
 
         sortAgendaViewModel = ViewModelProvider(this).get(
