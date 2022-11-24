@@ -163,8 +163,12 @@
     <color name="report_list5">#EDD7AF</color>
     <color name="report_list6">#EFC5BE</color>
 
-    <color name="tab_background_selected">#EF667B</color>
-    <color name="tab_background_unselected">#E8465F</color>
+<!--    <color name="tab_background_selected">#EF667B</color>-->
+<!--    <color name="tab_background_unselected">#E8465F</color>-->
+<!--    <color name="service_header">#E4E3E3</color>-->
+
+    <color name="tab_background_selected">#2E666A</color>
+    <color name="tab_background_unselected">#1E4648</color>
     <color name="service_header">#E4E3E3</color>
 <!--    <color name="service_header">#0f3460</color>-->
 
