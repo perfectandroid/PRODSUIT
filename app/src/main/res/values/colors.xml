@@ -128,7 +128,7 @@
     <color name="shape_color">#938fa6</color>
     <color name="leadbg_color">#F0F0F0</color>
     <color name="btn_color">#a78fa0</color>
-    <color name="home_top">#F45A71</color>
+    <color name="home_top">#35787D</color>
     <color name="color_background">#eeeeee</color>
     <color name="color_background1">#f2f2f2</color>
     <color name="color_reset">#dd0304</color>
@@ -163,8 +163,12 @@
     <color name="report_list5">#EDD7AF</color>
     <color name="report_list6">#EFC5BE</color>
 
-    <color name="tab_background_selected">#EF667B</color>
-    <color name="tab_background_unselected">#E8465F</color>
+<!--    <color name="tab_background_selected">#EF667B</color>-->
+<!--    <color name="tab_background_unselected">#E8465F</color>-->
+<!--    <color name="service_header">#E4E3E3</color>-->
+
+    <color name="tab_background_selected">#2E666A</color>
+    <color name="tab_background_unselected">#1E4648</color>
     <color name="service_header">#E4E3E3</color>
 <!--    <color name="service_header">#0f3460</color>-->
 
@@ -202,8 +206,13 @@
 
 <!--    <color name="list_si">#F695A3</color>-->
 <!--    <color name="list_data">#F8B1BC</color>-->
-    <color name="list_si">#F8E7E8</color>
-    <color name="list_data">#F8EFF0</color>
+
+<!--    <color name="list_si">#F8E7E8</color>-->
+<!--    <color name="list_data">#F8EFF0</color>-->
+<!--    <color name="list_line">#CECECE</color>-->
+
+    <color name="list_si">#CEE6E8</color>
+    <color name="list_data">#E5F2F3</color>
     <color name="list_line">#CECECE</color>
 
 
