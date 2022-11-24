@@ -123,7 +123,8 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputLayout
                                             android:id="@+id/til_Date"
@@ -199,7 +200,8 @@
                                         android:layout_margin="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_CallStatus"
@@ -229,7 +231,8 @@
                                         android:layout_margin="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_CallDuration"
@@ -240,6 +243,7 @@
                                             android:paddingTop="8dp"
                                             android:paddingBottom="8dp"
                                             android:textSize="14dp"
+                                            android:inputType="number"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             android:textColor="@color/greydarks"
@@ -257,7 +261,8 @@
                                         android:layout_margin="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_RiskType"
@@ -293,8 +298,8 @@
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_AgentNote"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
+                                            android:layout_height="100dp"
+                                            android:gravity="top|start"
                                             android:paddingLeft="10dp"
                                             android:paddingTop="8dp"
                                             android:paddingBottom="8dp"
@@ -322,8 +327,8 @@
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_CustomerNote"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
+                                            android:layout_height="100dp"
+                                            android:gravity="top|start"
                                             android:paddingLeft="10dp"
                                             android:paddingTop="8dp"
                                             android:paddingBottom="8dp"
@@ -346,7 +351,8 @@
                                         android:layout_margin="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_CustomerMentionDate"
@@ -371,7 +377,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:visibility="gone">
 
                                         <CheckBox
                                             android:id="@+id/cbAcknowledgement"
@@ -392,7 +399,8 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:visibility="gone">
 
                                         <CheckBox
                                             android:id="@+id/cbSiteVisit"
@@ -460,10 +468,10 @@
                             android:fontFamily="@font/myfont"
                             android:padding="2dp"
                             android:text="Reset"
-                            android:textStyle="bold"
-                            android:textColor="@color/greydark"
                             android:textAllCaps="true"
+                            android:textColor="@color/greydark"
                             android:textSize="15dp"
+                            android:textStyle="bold"
                             android:visibility="visible" />
 
                         <Button

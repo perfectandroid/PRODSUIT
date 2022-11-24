@@ -1635,7 +1635,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 val jobjt = jObject.getJSONObject("LeadImageDetails")
                                 latitude = jobjt!!.getString("LocationLatitude")
                                 longitude = jobjt!!.getString("LocationLongitude")
-                                Log.i("LocationDetails", latitude + "\n" + longitude)
+                                Log.e("LocationDetails", latitude + "\n" + longitude)
 
                                 fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
                                 fetchLocation()

@@ -492,6 +492,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                    /* val intent = Intent(context, AddRemarkActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)*/
+                    val jsonObject1 =  jsonArray.getJSONObject(position)
+                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerate"))
+                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerateProduct"))
+
                     clickListener!!.onClick(position, "agendaCall")
                 })
 

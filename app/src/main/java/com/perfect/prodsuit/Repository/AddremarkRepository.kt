@@ -27,13 +27,13 @@ object AddremarkRepository {
 
     val addRemarkSetterGetter = MutableLiveData<AddRemarkModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context): MutableLiveData<AddRemarkModel> {
-        getAddRemark(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct : String,agentnote : String,customernote : String): MutableLiveData<AddRemarkModel> {
+        getAddRemark(context,ID_LeadGenerate,ID_LeadGenerateProduct,agentnote,customernote)
         return addRemarkSetterGetter
     }
 
 
-    private fun getAddRemark(context: Context) {
+    private fun getAddRemark(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct : String,agentnote : String,customernote : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -66,10 +66,11 @@ object AddremarkRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(AgendaActivity.ID_LeadGenerate))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
-                requestObject1.put("CustomerNote", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("EmployeeNote", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+                requestObject1.put("CustomerNote", ProdsuitApplication.encryptStart(customernote))
+                requestObject1.put("EmployeeNote", ProdsuitApplication.encryptStart(agentnote))
+                Log.e("TAG","739   "+ID_LeadGenerate+"  :  "+ID_LeadGenerateProduct+"  :  "+customernote+"  :  "+agentnote)
                 Log.i("requestobject",requestObject1.toString()+"\n"+AccountDetailsActivity.ID_ActionType+"\n"+AccountDetailsActivity.ID_LeadGenerateProduct)
             } catch (e: Exception) {
                 e.printStackTrace()

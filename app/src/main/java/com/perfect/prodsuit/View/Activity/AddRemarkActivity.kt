@@ -41,6 +41,7 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var context: Context
     var shortTimeStr:String?=""
     var strCallStatus:String?=""
+    var strCallDuration:String?=""
     var strRiskType:String?=""
     var btnSubmit: Button? = null
     var tie_Date: TextInputEditText? = null
@@ -52,6 +53,8 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
     var tie_RiskType: TextInputEditText? = null
     var tie_CustomerMentionDate: TextInputEditText? = null
     lateinit var addRemarkViewModel: AddremarkViewModel
+    var ID_LeadGenerate:String?=""
+    var ID_LeadGenerateProduct:String?=""
     companion object{
 
         var agentnote = ""
@@ -68,9 +71,18 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
         context = this@AddRemarkActivity
 
         setRegViews()
-        getCallDetails()
+       // getCallDetails()
+        ID_LeadGenerate = intent.getStringExtra("ID_LeadGenerate")
+        ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")
+
+        Log.e(TAG,"IDS  76891   "+ID_LeadGenerate)
+        Log.e(TAG,"IDS  76892   "+ID_LeadGenerateProduct)
+        getCurrentDateNTime();
+
 
     }
+
+
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -90,7 +102,20 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
         tie_CustomerMentionDate = findViewById<TextInputEditText>(R.id.tie_CustomerMentionDate)
 
         tie_RiskType!!.setOnClickListener(this)
+        tie_CallStatus!!.setOnClickListener(this)
         tie_CustomerMentionDate!!.setOnClickListener(this)
+    }
+
+    private fun getCurrentDateNTime() {
+
+        val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+     //   val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
+        val currentTime1 = SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(Date())
+
+        Log.e(TAG,"CUR DATE TIME   1743     "+currentDate1+"   "+currentTime1)
+        tie_Date!!.setText(currentDate1)
+        tie_Time!!.setText(currentTime1)
+
     }
 
     private fun getCallDetails() {
@@ -171,17 +196,37 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
 
                 getRiskType()
             }
+            R.id.tie_CallStatus->{
+
+                getCallStatus()
+            }
             R.id.tie_CustomerMentionDate->{
                 openBottomSheet()
             }
             R.id.btnSubmit->{
                 agentnote = tie_AgentNote!!.text.toString()
                 customernote = tie_CustomerNote!!.text.toString()
+                strCallDuration = tie_CallDuration!!.text.toString()
+
+//                if (strCallStatus.equals("")){
+//                    Config.snackBars(context,v,"Select Call Status")
+//                }
+//                else if (strCallDuration.equals("")){
+//                    Config.snackBars(context,v,"Enter Call Duration")
+//                }
+//                else if (strRiskType.equals("")){
+//                    Config.snackBars(context,v,"Select Risk Type")
+//                }
+//                else{
+//                    getAddremark(agentnote, customernote)
+//                }
 
                 getAddremark(agentnote, customernote)
             }
         }
     }
+
+
 
     private fun getAddremark(agentnote: String, customernote: String) {
         addRemarkViewModel = ViewModelProvider(this).get(AddremarkViewModel::class.java)
@@ -193,7 +238,7 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                addRemarkViewModel.getAddremark(this)!!.observe(this,
+                addRemarkViewModel.getAddremark(this,ID_LeadGenerate!!,ID_LeadGenerateProduct!!,agentnote,customernote)!!.observe(this,
                     { addRemarkSetterGetter ->
                         val msg = addRemarkSetterGetter.message
                         if (msg!!.length > 0) {
@@ -209,7 +254,9 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
                                     R.style.MyDialogTheme
                                 )
                                 builder.setMessage(msg)
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                builder.setPositiveButton("Ok") {
+                                        dialogInterface, which ->
+                                    onBackPressed()
                                 }
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
@@ -270,14 +317,50 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
                 val value = adapter.getItem(position)
                 tie_RiskType!!.setText(value)
                 if (position == 0) {
-                    SiteVisitActivity.strRiskType = "1"
+                    strRiskType = "1"
                 }
                 if (position == 1) {
-                    SiteVisitActivity.strRiskType = "2"
+                    strRiskType = "2"
                 }
                 if (position == 2) {
-                    SiteVisitActivity.strRiskType = "3"
+                    strRiskType = "3"
                 }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCallStatus() {
+
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.call_status)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvCallStatus.setAdapter(adapter)
+            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                tie_CallStatus!!.setText(value)
+                if (position == 0) {
+                    strCallStatus = "1"
+
+                }
+                if (position == 1) {
+                    strCallStatus = "2"
+
+                }
+//                if (position == 2) {
+//                    SiteVisitActivity.strRiskType = "3"
+//                }
                 alertDialog.dismiss()
             })
             alertDialog.show()

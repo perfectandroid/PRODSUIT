@@ -170,6 +170,14 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         txttoDate!!.text = currentDate
         tie_FromDate!!.setText(currentDate)
         tie_ToDate!!.setText(currentDate)
+
+        Log.e(TAG,"  1741   "+currentDate)
+        Log.e(TAG,"  1742   "+currentDate)
+
+        val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
+
+        Log.e(TAG,"CUR DATE TIME   1743     "+currentDate1+"   "+currentTime1)
     }
 
     private fun setRegViews() {

@@ -41,12 +41,23 @@ class PhoneStatReceiver : BroadcastReceiver() {
                Log.e("MyReceiver", "   2512221   "+BroadCallSP.getString("BroadCall",""));
                if (BroadCallSP.getString("BroadCall","").equals("Yes")){
 
+
+                   var ID_LeadGenerate = BroadCallSP.getString("ID_LeadGenerate","")
+                   var ID_LeadGenerateProduct = BroadCallSP.getString("ID_LeadGenerateProduct","")
+
+//                   Log.e(TAG,"4871     "+ID_LeadGenerate)
+//                   Log.e(TAG,"4872     "+ID_LeadGenerateProduct)
+
                    val BroadCallSP = context.getSharedPreferences(Config.SHARED_PREF16, 0)
                    val BroadCallEditer = BroadCallSP.edit()
                    BroadCallEditer.putString("BroadCall", "")
+                   BroadCallEditer.putString("ID_LeadGenerate", "")
+                   BroadCallEditer.putString("ID_LeadGenerateProduct", "")
                    BroadCallEditer.commit()
 
                    val intent = Intent(context, AddRemarkActivity::class.java)
+                   intent.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                   intent.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                    context.startActivity(intent)
                }

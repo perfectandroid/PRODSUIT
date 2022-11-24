@@ -56,6 +56,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     val TAG : String = "AgendaActivity"
     private var progressDialog: ProgressDialog? = null
+    private var progressDialog1: ProgressDialog? = null
     lateinit var context: Context
     var sharedPreferences: SharedPreferences? =null
 
@@ -173,6 +174,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         criteria = ""
         ID_LeadGenerate = ""
        // getAgendaCounts()
+
         getAgendatypes()
 //        getActionTypes()
 
@@ -323,6 +325,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="1"
+                Log.e(TAG," 8301   1")
                 getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_upcoming->{
@@ -332,6 +335,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_trans);
                 agendaTypeClick = "0"
                 SubMode ="2"
+                Log.e(TAG," 8301   2")
                 getActionTypes(Id_Agenda)
             }
             R.id.tv_tab_completed->{
@@ -341,11 +345,13 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 tv_tab_completed!!.setBackgroundResource(R.drawable.under_line_color);
                 agendaTypeClick = "0"
                 SubMode ="3"
+                Log.e(TAG," 8301   3")
                 getActionTypes(Id_Agenda)
             }
             R.id.tv_actionType->{
                 Log.e(TAG,"tv_actionType  232   ")
                 agendaTypeClick = "1"
+                Log.e(TAG," 8301   4")
                 getActionTypes(Id_Agenda)
 
             }
@@ -387,6 +393,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     private fun getAgendatypes() {
         var typeAgenda = 0
+        Log.e(TAG,"msg   3966   ")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -420,7 +427,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                     adapter.setClickListener(this@AgendaActivity)
 
                                     Id_Agenda = agendaTypeArrayList.getJSONObject(0).getString("Id_Agenda")
-
+                                    Log.e(TAG,"Id_Agenda   423   "+Id_Agenda)
+                                    Log.e(TAG," 8301   5")
                                     getActionTypes(Id_Agenda)
 
                                 }
@@ -441,11 +449,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues1.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -532,26 +540,28 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
+        Log.e(TAG,"537777      "+Id_Agenda)
         var agendaAction = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+
+                progressDialog1 = ProgressDialog(context, R.style.Progress)
+                progressDialog1!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog1!!.setCancelable(false)
+                progressDialog1!!.setIndeterminate(true)
+                progressDialog1!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog1!!.show()
 
                 agendaActionViewModel.getAgendaAction(this,Id_Agenda)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        progressDialog!!.dismiss()
+
                         if (msg!!.length > 0) {
 
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   284   "+msg)
+                            Log.e(TAG,"msg   5577   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("ActionType")
                                 agendaActionArrayList = jobjt.getJSONArray("ActionTypeList")
@@ -583,7 +593,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                             ).show()
                         }
                     })
-
+                progressDialog1!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -595,6 +605,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     private fun agendaTypePopup(agendaActionArrayList: JSONArray) {
 
+        Log.e(TAG,"agendaTypePopup  599   "+agendaTypeClick)
         if (agendaTypeClick.equals("0")){
 
             agendaActionSort = JSONArray()
@@ -782,7 +793,12 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                     val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
                     val BroadCallEditer = BroadCallSP.edit()
                     BroadCallEditer.putString("BroadCall", "Yes")
+                    BroadCallEditer.putString("ID_LeadGenerate", jsonObject.getString("ID_LeadGenerate"))
+                    BroadCallEditer.putString("ID_LeadGenerateProduct", jsonObject.getString("ID_LeadGenerateProduct"))
                     BroadCallEditer.commit()
+
+                    Log.e(TAG,"8001   "+jsonObject.getString("ID_LeadGenerate"))
+                    Log.e(TAG,"8002   "+jsonObject.getString("ID_LeadGenerateProduct"))
 
 //                    val i= Intent(this, PhoneStatReceiver::class.java)
 //                    i.putExtra("txt", "the string value");
@@ -796,6 +812,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                    context.sendBroadcast(i)
 
                     intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+
+                  //  intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
                     startActivity(intent)
 
 
@@ -821,6 +839,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //            if (jsonObject.getString("Id_Agenda").equals("2")){
 ////                Service
 //            }
+            Log.e(TAG," 8301   6")
             Id_Agenda = jsonObject.getString("Id_Agenda")
             agendaTypeClick = "0"
             getActionTypes(Id_Agenda)
