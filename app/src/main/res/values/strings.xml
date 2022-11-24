@@ -30,6 +30,12 @@
         <item>Low</item>
     </string-array>
 
+    <string-array name="call_status">
+        <item>Attended</item>  // 1
+        <item>Not Connected</item>  //2
+
+    </string-array>
+
     <integer-array name="color1">
         <item>@color/greydark</item>
         <item>@color/red</item>

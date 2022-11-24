@@ -32,6 +32,7 @@ object AgendaTypeRepository {
 
     private fun getAgendaType(context: Context) {
         try {
+            agendaTypeSetterGetter.value = AgendaTypeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

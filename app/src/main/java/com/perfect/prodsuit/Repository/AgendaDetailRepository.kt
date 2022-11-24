@@ -91,7 +91,7 @@ object AgendaDetailRepository {
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
 
                 Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
+                Log.e(TAG,"requestObject1   7817   "+requestObject1)
                 Log.e(TAG,"requestObject1   78   "+ID_ActionType+"   "+ID_ActionType)
 
             } catch (e: Exception) {

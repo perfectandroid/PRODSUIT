@@ -15,8 +15,8 @@ class AddremarkViewModel : ViewModel() {
 
     var addRemarkLiveData: MutableLiveData<AddRemarkModel>? = null
 
-    fun getAddremark(context: Context) : LiveData<AddRemarkModel>? {
-        addRemarkLiveData = AddremarkRepository.getServicesApiCall(context)
+    fun getAddremark(context: Context,ID_LeadGenerate : String,ID_LeadGenerateProduct : String,agentnote : String,customernote : String) : LiveData<AddRemarkModel>? {
+        addRemarkLiveData = AddremarkRepository.getServicesApiCall(context,ID_LeadGenerate,ID_LeadGenerateProduct,agentnote,customernote)
         return addRemarkLiveData
     }
 

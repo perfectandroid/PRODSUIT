@@ -57,7 +57,7 @@ object LocationRepository {
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
 
 
-                Log.i("TAG33",requestObject1.toString())
+                Log.e("TAG33",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -73,7 +73,7 @@ object LocationRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i("Location Response",response.body())
+                        Log.e("Location Response",response.body())
                         val users = ArrayList<LocationModel>()
                         users.add(LocationModel(response.body()))
                         val msg = users[0].message

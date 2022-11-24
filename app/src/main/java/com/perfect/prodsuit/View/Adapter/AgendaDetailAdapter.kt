@@ -100,7 +100,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
                 }
 
-                if (jsonObject!!.getString("ID_ActionType").equals("2")){
+                    if (jsonObject!!.getString("ID_ActionType").equals("2")){
                         holder.ll_Message.visibility = View.VISIBLE
                         holder.card_Message.visibility = View.VISIBLE
                         holder.tvMessage_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
@@ -492,6 +492,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                    /* val intent = Intent(context, AddRemarkActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)*/
+                    val jsonObject1 =  jsonArray.getJSONObject(position)
+                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerate"))
+                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerateProduct"))
+
                     clickListener!!.onClick(position, "agendaCall")
                 })
 
