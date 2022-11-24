@@ -236,7 +236,7 @@
                                                  android:textSize="11dp"
                                                  android:textStyle="normal" />
 
-<!--                                             android:text="On Duty from 12-05-2022 01:34 PM"-->
+                                             <!--                                             android:text="On Duty from 12-05-2022 01:34 PM"-->
 
                                          </LinearLayout>
 
