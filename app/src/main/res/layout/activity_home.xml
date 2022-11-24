@@ -64,7 +64,8 @@
                              android:layout_alignParentLeft="true"
                              android:padding="10dp"
                              android:src="@drawable/homemenu"
-                             android:tint="@color/white" />
+                             android:tint="@color/white"
+                             tools:ignore="UseAppTint" />
 
                          <ImageView
                              android:id="@+id/btn_logo"
@@ -422,7 +423,8 @@
                                     android:gravity="center"
                                     android:tint="@color/white"
                                     android:padding="10dp"
-                                    android:src="@drawable/agenda"/>
+                                    android:src="@drawable/agenda"
+                                tools:ignore="UseAppTint" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -452,7 +454,8 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:tint="@color/white"
-                            android:src="@drawable/dashboardicon"/>
+                            android:src="@drawable/dashboardicon"
+                            tools:ignore="UseAppTint" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -489,7 +492,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:tint="@color/white"
-                                android:src="@drawable/reportlogobg"/>
+                                android:src="@drawable/reportlogobg"
+                                tools:ignore="UseAppTint" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -519,7 +523,8 @@
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:tint="@color/white"
-                                android:src="@drawable/expenses"/>
+                                android:src="@drawable/expenses"
+                                tools:ignore="UseAppTint" />
 
                             <TextView
                                 android:layout_width="match_parent"
