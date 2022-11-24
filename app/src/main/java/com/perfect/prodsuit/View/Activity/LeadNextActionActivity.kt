@@ -14,7 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -30,24 +32,15 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-    private var llAction: LinearLayout? = null
-    private var llActionType: LinearLayout? = null
-    private var llFollowUpDate: LinearLayout? = null
-    private var llLeadType: LinearLayout? = null
-    private var llDepartment: LinearLayout? = null
-    private var llEmployee: LinearLayout? = null
-    private var ll_Todate: LinearLayout? = null
 
-    private var imDateclose: ImageView? = null
-    var date_Picker1: DatePicker? = null
+    private var tie_Action: TextInputEditText? = null
+    private var tie_ActionType: TextInputEditText? = null
+    private var tie_FollowDate: TextInputEditText? = null
+    private var tie_LeadType: TextInputEditText? = null
+    private var tie_Department: TextInputEditText? = null
+    private var tie_Employee: TextInputEditText? = null
 
-    private var txtAction: TextView? = null
-    private var txtActionType: TextView? = null
-    private var txtFollowUpDate: TextView? = null
-    private var txtLeadType: TextView? = null
-    private var txtDepartment: TextView? = null
-    private var txtEmployee: TextView? = null
-    private var txtok1: TextView? = null
+
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
@@ -111,40 +104,25 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        llAction = findViewById<LinearLayout>(R.id.llAction)
-        llActionType = findViewById<LinearLayout>(R.id.llActionType)
-        llFollowUpDate = findViewById<LinearLayout>(R.id.llFollowUpDate)
-        llLeadType = findViewById<LinearLayout>(R.id.llLeadType)
-        llDepartment = findViewById<LinearLayout>(R.id.llDepartment)
-        llEmployee = findViewById<LinearLayout>(R.id.llEmployee)
-        ll_Todate = findViewById<LinearLayout>(R.id.ll_Todate)
-
-        imDateclose = findViewById<ImageView>(R.id.imDateclose)
-        date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
-        date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+        tie_Action = findViewById<TextInputEditText>(R.id.tie_Action)
+        tie_ActionType = findViewById<TextInputEditText>(R.id.tie_ActionType)
+        tie_FollowDate = findViewById<TextInputEditText>(R.id.tie_FollowDate)
+        tie_LeadType = findViewById<TextInputEditText>(R.id.tie_LeadType)
+        tie_Department = findViewById<TextInputEditText>(R.id.tie_Department)
+        tie_Employee = findViewById<TextInputEditText>(R.id.tie_Employee)
 
 
-        txtAction = findViewById<TextView>(R.id.txtAction)
-        txtActionType = findViewById<TextView>(R.id.txtActionType)
-        txtFollowUpDate = findViewById<TextView>(R.id.txtFollowUpDate)
-        txtLeadType = findViewById<TextView>(R.id.txtLeadType)
-        txtDepartment = findViewById<TextView>(R.id.txtDepartment)
-        txtEmployee = findViewById<TextView>(R.id.txtEmployee)
-        txtok1 = findViewById<TextView>(R.id.txtok1)
+
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
-        llAction!!.setOnClickListener(this)
-        llActionType!!.setOnClickListener(this)
-        llFollowUpDate!!.setOnClickListener(this)
-        llLeadType!!.setOnClickListener(this)
-        llDepartment!!.setOnClickListener(this)
-        llEmployee!!.setOnClickListener(this)
-
-        txtok1!!.setOnClickListener(this)
-
-        imDateclose!!.setOnClickListener(this)
+        tie_Action!!.setOnClickListener(this)
+        tie_ActionType!!.setOnClickListener(this)
+        tie_FollowDate!!.setOnClickListener(this)
+        tie_LeadType!!.setOnClickListener(this)
+        tie_Department!!.setOnClickListener(this)
+        tie_Employee!!.setOnClickListener(this)
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -161,12 +139,12 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         ID_Employee = ""
         strDate = ""
 
-        txtAction!!.setText("")
-        txtActionType!!.setText("")
-        txtFollowUpDate!!.setText("")
-        txtLeadType!!.setText("")
-        txtDepartment!!.setText("")
-        txtEmployee!!.setText("")
+        tie_Action!!.setText("")
+        tie_ActionType!!.setText("")
+        tie_FollowDate!!.setText("")
+        tie_LeadType!!.setText("")
+        tie_Department!!.setText("")
+        tie_Employee!!.setText("")
     }
 
     override fun onClick(v: View) {
@@ -174,28 +152,24 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             R.id.imback->{
                 finish()
             }
-            R.id.llAction->{
+            R.id.tie_Action->{
                 getFollowupAction()
             }
-            R.id.llActionType->{
+            R.id.tie_ActionType->{
                 getFollowupType()
             }
-            R.id.llFollowUpDate->{
-                if (dateMode.equals("0")){
-                    ll_Todate!!.visibility = View.GONE
-                    dateMode = "1"
-                }else{
-                    ll_Todate!!.visibility = View.VISIBLE
-                    dateMode = "0"
-                }
+            R.id.tie_FollowDate->{
+//                DateType = 0
+                openBottomSheet()
             }
-            R.id.llLeadType->{
+
+            R.id.tie_LeadType->{
                 getProductPriority()
             }
-            R.id.llDepartment->{
+            R.id.tie_Department->{
                 getDepartment()
             }
-            R.id.llEmployee->{
+            R.id.tie_Employee->{
                 if (ID_Department.equals("")){
 
                     val snackbar: Snackbar = Snackbar.make(v, "Select Department", Snackbar.LENGTH_LONG)
@@ -208,37 +182,6 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 }
             }
 
-            R.id.imDateclose->{
-                ll_Todate!!.visibility = View.GONE
-                dateMode = "1"
-            }
-
-            R.id.txtok1->{
-                try {
-                    date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
-                    val day: Int = date_Picker1!!.getDayOfMonth()
-                    val mon: Int = date_Picker1!!.getMonth()
-                    val month: Int = mon+1
-                    val year: Int = date_Picker1!!.getYear()
-                    var strDay = day.toString()
-                    var strMonth = month.toString()
-                    var strYear = year.toString()
-                    if (strDay.length == 1){
-                        strDay ="0"+day
-                    }
-                    if (strMonth.length == 1){
-                        strMonth ="0"+strMonth
-                    }
-                    txtFollowUpDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                    ll_Todate!!.visibility=View.GONE
-                    dateMode = "1"
-                    strDate = strDay+"-"+strMonth+"-"+strYear
-                }
-                catch (e: Exception){
-                    Log.e(TAG,"Exception   428   "+e.toString())
-                }
-
-            }
 
             R.id.btnReset->{
                 ResetData()
@@ -296,11 +239,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -377,11 +320,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -460,11 +403,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -541,11 +484,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -620,11 +563,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -666,7 +609,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = followUpActionArrayList.getJSONObject(position)
             Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
             ID_NextAction = jsonObject.getString("ID_NextAction")
-            txtAction!!.setText(jsonObject.getString("NxtActnName"))
+            tie_Action!!.setText(jsonObject.getString("NxtActnName"))
 
 
         }
@@ -676,7 +619,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = followUpTypeArrayList.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
-            txtActionType!!.setText(jsonObject.getString("ActnTypeName"))
+            tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
 
 
         }
@@ -685,7 +628,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = prodPriorityArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
             ID_Priority = jsonObject.getString("ID_Priority")
-            txtLeadType!!.setText(jsonObject.getString("PriorityName"))
+            tie_LeadType!!.setText(jsonObject.getString("PriorityName"))
 
 
         }
@@ -695,7 +638,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = departmentArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
             ID_Department = jsonObject.getString("ID_Department")
-            txtDepartment!!.setText(jsonObject.getString("DeptName"))
+            tie_Department!!.setText(jsonObject.getString("DeptName"))
 
 
         }
@@ -705,7 +648,7 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = employeeArrayList.getJSONObject(position)
             Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
-            txtEmployee!!.setText(jsonObject.getString("EmpName"))
+            tie_Employee!!.setText(jsonObject.getString("EmpName"))
 
 
         }
@@ -803,4 +746,53 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
             }
         }
     }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                tie_FollowDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                strDate = strDay+"-"+strMonth+"-"+strYear
+
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
 }
+

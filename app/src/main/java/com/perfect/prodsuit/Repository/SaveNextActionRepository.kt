@@ -125,6 +125,16 @@ object SaveNextActionRepository {
                         savenextactionsetterGetter.value = SaveNextActionModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
+                        val builder = AlertDialog.Builder(
+                            context,
+                            R.style.MyDialogTheme
+                        )
+                        builder.setMessage("Some Technical Issue")
+                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                        }
+                        val alertDialog: AlertDialog = builder.create()
+                        alertDialog.setCancelable(false)
+                        alertDialog.show()
 
                     }
                 }
