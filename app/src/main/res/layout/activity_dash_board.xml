@@ -108,7 +108,7 @@
                             android:textAllCaps="true"
                             android:textStyle="bold"
                             android:textColor="@color/white"
-                            android:background="@color/blue"
+                            android:background="@color/p_green"
                             android:textSize="18dp"
                             android:layout_weight=".8"
                             android:fontFamily="@font/myfont" />
