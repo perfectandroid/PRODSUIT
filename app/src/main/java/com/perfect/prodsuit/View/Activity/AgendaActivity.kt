@@ -587,11 +587,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog1!!.dismiss()
@@ -619,6 +619,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val jsonObject = agendaActionArrayList.getJSONObject(0)
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActionTypeName"))
+            Log.e(TAG,"agendaTypePopup  6222   "+tv_actionType)
 
             getAgendaDetails(ID_ActionType!!,Id_Agenda)
 
@@ -842,6 +843,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //            }
             Log.e(TAG," 8301   6")
             Id_Agenda = jsonObject.getString("Id_Agenda")
+            Log.e(TAG," 8301   7     "+Id_Agenda)
             agendaTypeClick = "0"
             getActionTypes(Id_Agenda)
         }
@@ -1248,6 +1250,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //        if (progressDialog != null && progressDialog!!.isShowing()) {
 //            progressDialog!!.dismiss()
 //        }
+        recyAgendaDetail!!.adapter  =null
         var agendaDetail = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1303,8 +1306,8 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                            onBackPressed()
-                                            finish()
+//                                            onBackPressed()
+//                                            finish()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)

@@ -99,6 +99,7 @@ object ProductPriorityRepository {
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 
