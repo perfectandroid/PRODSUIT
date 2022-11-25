@@ -170,17 +170,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                             val jObject = JSONObject(msg)
                             Log.e("TAG","msg   227   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                startActivity(getIntent());
-                              /*  val jobjt = jObject.getJSONObject("NotificationDetails")
-                                notifreadArrayList = jobjt.getJSONArray("NotificationInfo")
-
-                                val lLayout = GridLayoutManager(this@NotificationActivity, 1)
-                                rv_notificationlist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_notificationlist!!.setHasFixedSize(true)
-                                val adapter1 = ReadstatusAdapter(applicationContext, notifreadArrayList)
-                                rv_notificationlist!!.adapter = adapter1
-*/
+                              //  startActivity(getIntent());
+                                getNotificationList()
                             } else {
                                 val builder = AlertDialog.Builder(
                                     this@NotificationActivity,
@@ -194,11 +185,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
