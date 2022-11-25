@@ -69,8 +69,7 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/logopink"
-                    />
+                    android:src="@drawable/logopink" />
                 <RelativeLayout
                     android:id="@+id/rlnotification"
                     android:layout_width="60dp"

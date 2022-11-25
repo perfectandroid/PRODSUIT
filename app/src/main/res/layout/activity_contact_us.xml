@@ -29,7 +29,7 @@
                     android:layout_gravity="left"
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
-                    android:tint="@color/colorPrimaryExtraDark"
+                    android:tint="@color/colorPrimaryDark"
                     android:src="@drawable/icback"/>
                 <ImageView
                     android:layout_width="300dp"
