@@ -785,7 +785,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                deleteLeadViewModel.getDeletelead(this)!!.observe(
+                deleteLeadViewModel.getDeletelead(this, ID_LeadGenerate!!)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
@@ -1508,11 +1508,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
 
