@@ -74,6 +74,10 @@ object AgendaDetailRepository {
 //                    "Name":"j4rFcTOFBx0=\n","Todate":"14sAcoSwi6n9b\/3WNKFIWA==\n","criteria":"j4rFcTOFBx0=\n"}
 
 
+
+
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -92,7 +96,7 @@ object AgendaDetailRepository {
 
                 Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
                 Log.e(TAG,"requestObject1   7817   "+requestObject1)
-                Log.e(TAG,"requestObject1   78   "+ID_ActionType+"   "+ID_ActionType)
+                Log.e(TAG,"requestObject1   78178   "+Id_Agenda+"   "+ID_ActionType)
 
             } catch (e: Exception) {
                 e.printStackTrace()

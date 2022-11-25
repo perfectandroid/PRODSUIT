@@ -66,6 +66,7 @@ object DeleteLeadRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
                 Log.i("requestobject deletelead",requestObject1.toString())
+                Log.e("requestobject deletelead",ID_LeadGenerate)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
