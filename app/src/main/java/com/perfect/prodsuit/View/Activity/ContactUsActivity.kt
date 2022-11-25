@@ -20,6 +20,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -80,6 +81,8 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
                 et_msg!!.setText("")
                 et_name!!.setText("")
                 et_subject!!.setText("")
+
+                Toast.makeText(applicationContext,"Work in progress",Toast.LENGTH_SHORT).show()
             }
         }
     }
