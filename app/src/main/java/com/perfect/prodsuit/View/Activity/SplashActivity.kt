@@ -112,6 +112,30 @@ class SplashActivity : AppCompatActivity() {
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 var jobj = jObject.getJSONObject("ResellerDetails")
+
+                                val ResellerNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF32, 0)
+                                val ResellerNameEditer = ResellerNameSP.edit()
+                                ResellerNameEditer.putString("ResellerName",jobj.getString("ResellerName"))
+                                ResellerNameEditer.commit()
+
+                                val ContactNumberSP = applicationContext.getSharedPreferences(Config.SHARED_PREF33, 0)
+                                val ContactNumberEditer = ContactNumberSP.edit()
+                                ContactNumberEditer.putString("ContactNumber",jobj.getString("ContactNumber"))
+                                ContactNumberEditer.commit()
+
+
+                                val ContactEmailSP = applicationContext.getSharedPreferences(Config.SHARED_PREF34, 0)
+                                val ContactEmailEditer = ContactEmailSP.edit()
+                                ContactEmailEditer.putString("ContactEmail",jobj.getString("ContactEmail"))
+                                ContactEmailEditer.commit()
+
+
+                                val ContactAddressSP = applicationContext.getSharedPreferences(Config.SHARED_PREF35, 0)
+                                val ContactAddressEditer = ContactAddressSP.edit()
+                                ContactAddressEditer.putString("ContactAddress",jobj.getString("ContactAddress"))
+                                ContactAddressEditer.commit()
+
+
                                 val TestingURLSP = applicationContext.getSharedPreferences(
                                     Config.SHARED_PREF10,
                                     0
@@ -184,6 +208,10 @@ class SplashActivity : AppCompatActivity() {
                                     Config.SHARED_PREF14,
                                     0
                                 )
+
+
+
+
                                 if (Loginmobilenumberpref.getString(
                                         "Loginmobilenumber",
                                         null

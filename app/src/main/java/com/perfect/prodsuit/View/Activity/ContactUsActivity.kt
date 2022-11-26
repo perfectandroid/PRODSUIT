@@ -17,10 +17,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -46,11 +43,18 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
     private var mHour:Int = 0
     private var mMinute:Int = 0
     private var chipNavigationBar: ChipNavigationBar? = null
+
     private var et_name: EditText? = null
     private var et_subject: EditText? = null
     private var et_msg: EditText? = null
     private var imback: ImageView? = null
     private var btnOk: Button? = null
+
+    private var txt_name: TextView? = null
+    private var txt_mobile: TextView? = null
+    private var txt_email: TextView? = null
+    private var txt_address: TextView? = null
+
     lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +69,30 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         et_name = findViewById(R.id.et_name)
         et_subject = findViewById(R.id.et_subject)
         et_msg = findViewById(R.id.et_msg)
+
+        txt_name = findViewById(R.id.txt_name)
+        txt_mobile = findViewById(R.id.txt_mobile)
+        txt_email = findViewById(R.id.txt_email)
+        txt_address = findViewById(R.id.txt_address)
+
+
         imback = findViewById(R.id.imback)
         btnOk = findViewById(R.id.btnOk)
         btnOk!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
+
+        val ResellerNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF32, 0)
+        txt_name!!.text =  ResellerNameSP.getString("ResellerName", "")
+
+        val ContactNumberSP = applicationContext.getSharedPreferences(Config.SHARED_PREF33, 0)
+        txt_mobile!!.text =  ContactNumberSP.getString("ContactNumber", "")
+
+        val ContactEmailSP = applicationContext.getSharedPreferences(Config.SHARED_PREF34, 0)
+        txt_email!!.text =  ContactEmailSP.getString("ContactEmail", "")
+
+        val ContactAddressSP = applicationContext.getSharedPreferences(Config.SHARED_PREF35, 0)
+        txt_address!!.text =  ContactAddressSP.getString("ContactAddress", "")
+
     }
 
     override fun onClick(v: View) {
