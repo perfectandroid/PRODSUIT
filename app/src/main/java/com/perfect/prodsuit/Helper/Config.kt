@@ -63,6 +63,10 @@ object Config {
     const val SHARED_PREF29 = "IMAGE_URL"
     const val SHARED_PREF30 = "LOGIN_DATETIME"
     const val SHARED_PREF31 = "ABOUTUS"
+    const val SHARED_PREF32 = "RESELLER_NAME"
+    const val SHARED_PREF33 = "CONTACT_NUMBER"
+    const val SHARED_PREF34 = "CONTACT_EMAIL"
+    const val SHARED_PREF35 = "CONTACT_ADDRESS"
 
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
