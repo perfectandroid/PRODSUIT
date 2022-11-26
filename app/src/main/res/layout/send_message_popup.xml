@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/rl_main"
+    android:background="@drawable/shadow"
     android:layout_margin="1dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -26,11 +27,12 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/reminderlogo"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/svg_message_pop"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"/>
+<!--            android:src="@drawable/reminderlogo"-->
         </LinearLayout>
 
 
@@ -41,7 +43,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
             <TextView
@@ -135,22 +137,23 @@
 
 
             <EditText
-                android:id="@+id/etdis"
+                android:id="@+id/edt_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="2.5dp"
-                android:background="@drawable/et_bggrey"
+                android:background="@drawable/et_border"
                 android:drawableRight="@drawable/ic_remindermessage"
+                android:drawableTint="@color/greydark"
                 android:fontFamily="@font/myfont"
-                android:gravity="center"
+                android:gravity="start"
                 android:hint="Messages"
                 android:lines="3"
                 android:padding="5dp"
-                android:textColor="@color/black"
+                android:textColor="@color/greydark"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -161,29 +164,35 @@
                 android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/chk_whats"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="Whats app"
+                    android:buttonTint="@color/color_msg_tab"
                     android:fontFamily="@font/myfont"
-                    android:textSize="15dp" />
+                    android:textSize="10dp" />
 
                 <CheckBox
+                    android:id="@+id/chk_Email"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:text="Intimation"
+                    android:text="Email"
+                    android:buttonTint="@color/color_msg_tab"
                     android:fontFamily="@font/myfont"
-                    android:textSize="15dp" />
+                    android:textSize="10dp" />
 
 
                 <CheckBox
+                    android:id="@+id/chk_Message"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:text="Reminder"
+                    android:text="Message"
+                    android:buttonTint="@color/color_msg_tab"
                     android:fontFamily="@font/myfont"
-                    android:textSize="15dp" />
+                    android:textSize="10dp" />
 
 
 
@@ -215,7 +224,7 @@
                     android:layout_weight="1"
                     android:gravity="center">
                     <Button
-                        android:id="@+id/btncancel"
+                        android:id="@+id/btnMscancel"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -235,7 +244,7 @@
                     android:layout_weight="1"
                     android:gravity="center">
                     <Button
-                        android:id="@+id/btnsubmit"
+                        android:id="@+id/btnMssubmit"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

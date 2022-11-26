@@ -283,6 +283,8 @@
 
     <color name="color_fab1">#8DD3D8</color>
     <color name="color_fab2">#84EDF4</color>
+    <color name="color_msg_tab">#54999E</color>
+    <color name="color_bg_tab">#CEF4F4F4</color>
 
 
 </resources>
