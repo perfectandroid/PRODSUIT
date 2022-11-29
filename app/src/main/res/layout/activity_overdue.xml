@@ -113,6 +113,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:tint="@color/white"
+            app:fabCustomSize="50dp"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/svg_add_alarm"
+            tools:ignore="MissingConstraints" />
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

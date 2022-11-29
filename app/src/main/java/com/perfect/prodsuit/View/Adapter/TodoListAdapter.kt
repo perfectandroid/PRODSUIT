@@ -1,14 +1,17 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -22,12 +25,15 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
     private var SubMode:String?=SubMode
+    var sharedPreferences: SharedPreferences? =null
+    var lstChk = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
             R.layout.adapter_todolist, parent, false
         )
+        sharedPreferences =context.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
         vh = MainViewHolder(v)
         return vh
     }
@@ -98,6 +104,64 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                     clickListener!!.onClick(position, "todoMessage")
                 })
+
+                holder.cb_Meeting.setTag(position)
+                holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val NextActionDate = jsonObject1!!.getString("NextActionDate")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+                        val Customer = jsonObject1!!.getString("LgCusName")
+                        val ProdName = jsonObject1!!.getString("ProdName")
+                        val NextActionDate = jsonObject1!!.getString("NextActionDate")
+
+
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        val desc = "Customer : "+Customer+", Product : "+ProdName+" , Next Action Date : "+NextActionDate
+                        lstChk.add(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3413  " + desc)
+
+                    }
+                    else
+                    {
+                        val jsonObject1 =  jsonArray.getJSONObject(position)
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val Status1 = jsonObject1!!.getString("Status")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+
+//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+                        val Customer = jsonObject1!!.getString("LgCusName")
+                        val ProdName = jsonObject1!!.getString("ProdName")
+                        val NextActionDate = jsonObject1!!.getString("NextActionDate")
+
+
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+                        val desc = "Customer : "+Customer+", Product : "+ProdName+" , Next Action Date : "+NextActionDate
+
+                        lstChk.remove(desc)
+                        val gson = Gson()
+                        val json = gson.toJson(lstChk)
+                        val editor = sharedPreferences!!.edit()
+                        editor.putString("Set", json);
+                        editor.commit();
+                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+                        Log.e(TAG, "desc  3414  " + desc)
+                    }
+
+
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -132,6 +196,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
         internal var impreference    : ImageView
         internal var imcall    : ImageView
         internal var immessage    : ImageView
+        internal var cb_Meeting  : CheckBox
        init {
            lToDoList          = v.findViewById<View>(R.id.lToDoList) as LinearLayout
            ll_leadNo          = v.findViewById<View>(R.id.ll_leadNo) as LinearLayout
@@ -147,6 +212,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
            imcall           = v.findViewById<View>(R.id.imcall) as ImageView
            immessage           = v.findViewById<View>(R.id.immessage) as ImageView
            impreference           = v.findViewById<View>(R.id.impreference) as ImageView
+           cb_Meeting            = v.findViewById<View>(R.id.cb_Meeting) as CheckBox
         }
     }
 

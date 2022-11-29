@@ -240,10 +240,20 @@
                     android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:src="@drawable/messageicon"
                     android:layout_gravity="center"
                     android:gravity="center"/>
+
+                <CheckBox
+                    android:id="@+id/cb_Meeting"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:button="@drawable/selector_reminder"
+                    android:visibility="visible"/>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
