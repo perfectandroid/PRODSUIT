@@ -717,22 +717,27 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val i = Intent(this@AgendaActivity, MapsAgendaActivity::class.java)
             i.putExtra("LocationName", jsonObject.getString("LocationName"))
             i.putExtra("Longitude",jsonObject.getString("Longitude"))
+            i.putExtra("ID_LeadGenerate", jsonObject.getString("ID_LeadGenerate"))
+            i.putExtra("ID_LeadGenerateProduct", jsonObject.getString("ID_LeadGenerateProduct"))
             i.putExtra("Latitude",jsonObject.getString("Latitude"))
             startActivity(i)
         }
 
         if (data.equals("agendaMessage")){
+
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+
+            val i = Intent(this@AgendaActivity, FollowUpActivity::class.java)
+            i.putExtra("ID_LeadGenerate", jsonObject.getString("ID_LeadGenerate"))
+            i.putExtra("ID_LeadGenerateProduct", jsonObject.getString("ID_LeadGenerateProduct"))
+            i.putExtra("ActionMode","2")
+            startActivity(i)
+
 //            val jsonObject = agendaDetailArrayList.getJSONObject(position)
-//            val i = Intent(this@AgendaActivity, MessagesActivity::class.java)
+//            val i = Intent(this@AgendaActivity, AddRemarkMultipleActivity::class.java)
 //            i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
 //            i.putExtra("LgCusEmail","")
 //            startActivity(i)
-
-            val jsonObject = agendaDetailArrayList.getJSONObject(position)
-            val i = Intent(this@AgendaActivity, AddRemarkMultipleActivity::class.java)
-            i.putExtra("LgCusMobile", jsonObject.getString("CustomerMobile"))
-            i.putExtra("LgCusEmail","")
-            startActivity(i)
 
         }
 

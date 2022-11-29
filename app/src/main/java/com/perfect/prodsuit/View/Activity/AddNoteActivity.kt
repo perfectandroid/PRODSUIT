@@ -51,6 +51,7 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
     var datePickerFrom: DatePicker? = null
     var datePickerFrom1: DatePicker? = null
     var txtnxt_actndte: TextView? = null
+    var strDate = ""
 
     companion object{
         var date1= ""
@@ -249,7 +250,7 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
                     txtv_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                     llFromDatePick!!.visibility=View.GONE
                     fromDateMode = "1"
-                    SiteVisitActivity.strDate = strDay+"-"+strMonth+"-"+strYear
+                    strDate = strDay+"-"+strMonth+"-"+strYear
 
 
                 }
@@ -278,7 +279,7 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
                     txtnxt_actndte!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                     llFromDatePick1!!.visibility=View.GONE
                     fromDateMode1 = "1"
-                    SiteVisitActivity.strDate = strDay+"-"+strMonth+"-"+strYear
+                    strDate = strDay+"-"+strMonth+"-"+strYear
                 }
                 catch (e: Exception){
                     Log.e("TAG","Exception   428   "+e.toString())

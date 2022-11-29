@@ -26,6 +26,8 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
     var Latitude      : String =""
     var Longitude     : String  =""
     var LocationName  : String =""
+    var ID_LeadGenerate  : String =""
+    var ID_LeadGenerateProduct  : String =""
 
     var tv_LocationName: TextView? = null
     var fabSiteVisit: FloatingActionButton? = null
@@ -41,6 +43,8 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
         Latitude      = intent.getStringExtra("Latitude")!!
         Longitude     = intent.getStringExtra("Longitude")!!
         LocationName  = intent.getStringExtra("LocationName")!!
+        ID_LeadGenerate  = intent.getStringExtra("ID_LeadGenerate")!!
+        ID_LeadGenerateProduct  = intent.getStringExtra("ID_LeadGenerateProduct")!!
 
 //        tv_LocationName = findViewById(R.id.tv_LocationName);
 //        if (!LocationName.equals("")){
@@ -96,7 +100,15 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
         when (v.id){
 
             R.id.fabSiteVisit->{
-                val i = Intent(this@MapsAgendaActivity, SiteVisitActivity::class.java)
+//                val i = Intent(this@MapsAgendaActivity, SiteVisitActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+//                i.putExtra("ID_LeadGenerate", ID_LeadGenerate)
+//                i.putExtra("ActionMode","2")
+//                startActivity(i)
+                val i = Intent(this@MapsAgendaActivity, FollowUpActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+                i.putExtra("ID_LeadGenerate", ID_LeadGenerate)
+                i.putExtra("ActionMode","2")
                 startActivity(i)
             }
         }

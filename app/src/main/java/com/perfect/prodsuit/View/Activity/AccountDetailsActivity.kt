@@ -81,7 +81,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     var llHistory: LinearLayout? = null
-    var ll_call: RelativeLayout? = null
+    var ll_call: LinearLayout? = null
+    var ll_meet: LinearLayout? = null
     var llMainDetail: LinearLayout? = null
     lateinit var locationViewModel: LocationViewModel
     lateinit var activitylistViewModel: ActivityListViewModel
@@ -353,7 +354,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
-        ll_call = findViewById<RelativeLayout>(R.id.ll_call)
+        ll_call = findViewById<LinearLayout>(R.id.ll_call)
+        ll_meet = findViewById<LinearLayout>(R.id.ll_meet)
         llHistory = findViewById<LinearLayout>(R.id.llHistory)
         ll_msg = findViewById<LinearLayout>(R.id.ll_msg)
         llMainDetail = findViewById<LinearLayout>(R.id.llMainDetail)
@@ -413,6 +415,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
      //   tv_actionType!!.setOnClickListener(this)
 
         ll_call!!.setOnClickListener(this)
+        ll_meet!!.setOnClickListener(this)
 
     }
 
@@ -646,6 +649,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("ActionMode","0")
                 startActivity(i)
 
             }
@@ -735,6 +739,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             R.id.ll_call->{
 
                 callFunction()
+
+            }
+            R.id.ll_meet->{
+                val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("ActionMode","2")
+                startActivity(i)
 
             }
             R.id.ll_msg->{
