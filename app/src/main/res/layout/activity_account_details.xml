@@ -221,6 +221,7 @@
                                         android:orientation="horizontal">
 
                                         <LinearLayout
+                                            android:id="@+id/ll_call"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -228,7 +229,6 @@
                                             android:layout_gravity="center"                                android:orientation="vertical">
 
                                             <RelativeLayout
-                                                android:id="@+id/ll_call"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
@@ -258,6 +258,7 @@
                                         </LinearLayout>
 
                                         <LinearLayout
+                                            android:id="@+id/ll_meet"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -836,12 +837,12 @@
                         android:layout_width="180dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddQuotation"
+                        android:layout_marginBottom="5dp"
                         android:layout_toLeftOf="@+id/fabdlteLead"
                         android:background="@drawable/fab_text_bg"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:layout_marginBottom="5dp"
                         android:text="Delete Lead"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -865,12 +866,12 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddDocument"
+                        android:layout_marginBottom="5dp"
                         android:layout_toLeftOf="@+id/fabAddQuotation"
                         android:background="@color/tabbgColor"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:layout_marginBottom="5dp"
                         android:text="Add Quotation"
                         android:textSize="18dp"
                         android:textStyle="bold"
@@ -958,12 +959,12 @@
                         android:layout_width="180dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddActivities"
+                        android:layout_marginBottom="5dp"
                         android:layout_toLeftOf="@+id/fabAddNextAction"
                         android:background="@drawable/fab_text_bg"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:layout_marginBottom="5dp"
                         android:text="Next Action"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -989,12 +990,12 @@
                         android:layout_width="180dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fabAddNote"
+                        android:layout_marginBottom="5dp"
                         android:layout_toLeftOf="@+id/fabAddActivities"
                         android:background="@drawable/fab_text_bg"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:layout_marginBottom="5dp"
                         android:text="Follow Up Details"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -1019,12 +1020,12 @@
                         android:layout_width="180dp"
                         android:layout_height="50dp"
                         android:layout_above="@+id/fab"
+                        android:layout_marginBottom="5dp"
                         android:layout_toLeftOf="@+id/fabAddActivities"
                         android:background="@drawable/fab_text_bg"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:layout_marginBottom="5dp"
                         android:text="Attach File"
                         android:textSize="18dp"
                         android:textStyle="bold" />

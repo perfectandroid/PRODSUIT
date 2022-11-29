@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.View.Activity.AddRemarkActivity
+import com.perfect.prodsuit.View.Activity.FollowUpActivity
 
 class PhoneStatReceiver : BroadcastReceiver() {
 
@@ -55,11 +56,19 @@ class PhoneStatReceiver : BroadcastReceiver() {
                    BroadCallEditer.putString("ID_LeadGenerateProduct", "")
                    BroadCallEditer.commit()
 
-                   val intent = Intent(context, AddRemarkActivity::class.java)
+//                   val intent = Intent(context, AddRemarkActivity::class.java)
+//                   intent.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+//                   intent.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                   context.startActivity(intent)
+
+                   val intent = Intent(context, FollowUpActivity::class.java)
                    intent.putExtra("ID_LeadGenerate",ID_LeadGenerate)
                    intent.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                   intent.putExtra("ActionMode","1")
                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                    context.startActivity(intent)
+
                }
 
 

@@ -1,21 +1,38 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.location.Location
+import android.location.LocationManager
+import android.net.Uri
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.os.Looper
+import android.provider.MediaStore
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -26,6 +43,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,10 +52,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     val TAG : String = "FollowUpActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+    val PERMISSION_ID = 42
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
 
 
     var til_Date: TextInputLayout? = null
     var til_NextFollowupDate: TextInputLayout? = null
+    var til_CallTime: TextInputLayout? = null
 
     var tie_ActionType: TextInputEditText? = null
     var tie_FollowupBy: TextInputEditText? = null
@@ -52,6 +73,32 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var tie_Priority: TextInputEditText? = null
     var tie_Department: TextInputEditText? = null
     var tie_NextEmployee: TextInputEditText? = null
+
+//    Call
+
+    var til_CallStatus: TextInputLayout? = null
+    var til_CallDuration: TextInputLayout? = null
+    var ll_location: LinearLayout? = null
+    var ll_images: LinearLayout? = null
+
+
+    var tie_CallTime: TextInputEditText? = null
+    var tie_CallStatus: TextInputEditText? = null
+    var tie_CallDuration: TextInputEditText? = null
+    var tie_Latitude: TextInputEditText? = null
+    var tie_Longitude: TextInputEditText? = null
+    var imgv_upload1: ImageView? = null
+    var imgv_upload2: ImageView? = null
+    private val GALLERY = 1
+    private val CAMERA = 2
+    private val PERMISSION_REQUEST_CODE = 200
+    private var strImage: String? = null
+    private var destination: File? = null
+    private var image1 = ""
+    private var image2 = ""
+    private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
+
+
 
     lateinit var followUpTypeViewModel: FollowUpTypeViewModel
     lateinit var followUpTypeArrayList : JSONArray
@@ -115,8 +162,19 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var ActiontypeFN:Int = 0
     private var DateType:Int = 0
 
+    var strCallStatus:String?=""
+    var strRiskType:String?=""
+    var strAcknowledgement:String?="0"
+    var strSiteVisit:String?="0"
+    var strNotice:String?="0"
+
+
+
     var btnReset: Button? = null
     var btnSubmit: Button? = null
+
+    var ActionMode:String?=""
+
 
 
 
@@ -139,18 +197,43 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
         updateLeadManagementViewModel = ViewModelProvider(this).get(UpdateLeadManagementViewModel::class.java)
 
+        ActionMode = intent.getStringExtra("ActionMode")
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")
         ID_LeadGenerate = intent.getStringExtra("ID_LeadGenerate")
 
+        Log.e(TAG,"LN204    "+ActionMode+"   :  "+ID_LeadGenerate+"   :   "+ID_LeadGenerateProduct)
+
         setRegViews()
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        tie_Date!!.setText(currentDate)
-        tie_NextFollowupDate!!.setText(currentDate)
+//        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val currentDate = sdf.format(Date())
+//        tie_Date!!.setText(currentDate)
+//        tie_NextFollowupDate!!.setText(currentDate)
+        Log.e(TAG,"ActionMode  8141    "+ActionMode)
+        if (ActionMode.equals("1") || ActionMode.equals("2")){
+            tie_ActionType!!.isEnabled = false
+            getFollowupType()
+        }
         setDefaultFollowupBy()
         getDefaultValueSettings()
+        getCurrentDateNTime()
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+
+    }
+
+    private fun getCurrentDateNTime() {
+
+        val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        //   val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
+        val currentTime1 = SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(Date())
+
+        Log.e(TAG,"CUR DATE TIME   1743     "+currentDate1+"   "+currentTime1)
+
+        tie_CallTime!!.setText(currentTime1)
+
+        tie_Date!!.setText(currentDate1)
+        tie_NextFollowupDate!!.setText(currentDate1)
 
     }
 
@@ -168,6 +251,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         til_Date       = findViewById(R.id.til_Date) as TextInputLayout
         til_NextFollowupDate   = findViewById(R.id.til_NextFollowupDate) as TextInputLayout
+        til_CallTime   = findViewById(R.id.til_CallTime) as TextInputLayout
 
         tie_ActionType       = findViewById(R.id.tie_ActionType) as TextInputEditText
         tie_FollowupBy       = findViewById(R.id.tie_FollowupBy) as TextInputEditText
@@ -183,13 +267,30 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_Department       = findViewById(R.id.tie_Department) as TextInputEditText
         tie_NextEmployee     = findViewById(R.id.tie_NextEmployee) as TextInputEditText
 
+        til_CallStatus              = findViewById(R.id.til_CallStatus) as TextInputLayout
+        til_CallDuration            = findViewById(R.id.til_CallDuration) as TextInputLayout
+        ll_location                 = findViewById(R.id.ll_location) as LinearLayout
+        ll_images                   = findViewById(R.id.ll_images) as LinearLayout
+
+
+        tie_CallTime             = findViewById(R.id.tie_CallTime) as TextInputEditText
+        tie_CallStatus = findViewById<TextInputEditText>(R.id.tie_CallStatus)
+        tie_CallDuration = findViewById<TextInputEditText>(R.id.tie_CallDuration)
+
+        tie_Latitude             = findViewById(R.id.tie_Latitude) as TextInputEditText
+        tie_Longitude             = findViewById(R.id.tie_Longitude) as TextInputEditText
+        imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
+        imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
+
+
+
         btnSubmit     = findViewById(R.id.btnSubmit) as Button
         btnReset     = findViewById(R.id.btnReset) as Button
 
         tie_ActionType!!.setOnClickListener(this)
         tie_FollowupBy!!.setOnClickListener(this)
         tie_Status!!.setOnClickListener(this)
-        tie_Date!!.setOnClickListener(this)
+     //   tie_Date!!.setOnClickListener(this)
 
         tie_NextAction!!.setOnClickListener(this)
         tie_NextActionType!!.setOnClickListener(this)
@@ -197,6 +298,16 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_Priority!!.setOnClickListener(this)
         tie_Department!!.setOnClickListener(this)
         tie_NextEmployee!!.setOnClickListener(this)
+
+
+      //  tie_CallTime!!.setOnClickListener(this)
+
+        tie_CallStatus!!.setOnClickListener(this)
+        tie_Latitude!!.setOnClickListener(this)
+        tie_Longitude!!.setOnClickListener(this)
+        imgv_upload1!!.setOnClickListener(this)
+        imgv_upload2!!.setOnClickListener(this)
+
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -224,10 +335,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 Config.disableClick(v)
                 getStatus()
             }
-            R.id.tie_Date->{
-                DateType = 0
-                openBottomSheet()
-            }
+//            R.id.tie_Date->{
+//                DateType = 0
+//                openBottomSheet()
+//            }
             R.id.tie_NextAction->{
                 Config.disableClick(v)
                 getFollowupAction()
@@ -265,8 +376,61 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             }
 
+
+//            R.id.tie_CallTime->{
+//
+//            }
+
+            R.id.tie_CallStatus->{
+
+                getCallStatus()
+            }
+
+
+            R.id.tie_Latitude->{
+                getLastLocation()
+            }
+            R.id.tie_Longitude->{
+                getLastLocation()
+            }
+
+            R.id.imgv_upload1->{
+                try
+                {
+                    Config.Utils.hideSoftKeyBoard(this@FollowUpActivity,v)
+                    strImage="1"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
+            }
+            R.id.imgv_upload2->{
+                try {
+                    Config.Utils.hideSoftKeyBoard(this@FollowUpActivity,v)
+                    strImage="2"
+                    showPictureDialog()
+                }
+                catch(e:java.lang.Exception)
+                {
+                    if (checkCamera()){} else{
+                        requestPermission()
+                    }
+                }
+            }
+
+
             R.id.btnReset->{
-                clearData()
+
+                if (ActionMode.equals("1") || ActionMode.equals("2")){
+                    clearData("0")
+                }else{
+                    clearData("1")
+                }
+
             }
 
             R.id.btnSubmit->{
@@ -277,6 +441,289 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
 
+        }
+    }
+
+    private fun getCallStatus() {
+
+        try {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val listItem = resources.getStringArray(R.array.callstatus)
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+            )
+            lvCallStatus.setAdapter(adapter)
+            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                // TODO Auto-generated method stub
+                val value = adapter.getItem(position)
+                tie_CallStatus!!.setText(value)
+                if (position == 0) {
+                    strCallStatus = "1"
+                }
+                if (position == 1) {
+                    strCallStatus = "2"
+                }
+                if (position == 2) {
+                    strCallStatus = "3"
+                }
+//                if (position == 2) {
+//                    FollowUpActivity.strRiskType = "3"
+//                }
+                alertDialog.dismiss()
+            })
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if (location == null) {
+                        requestNewLocationData()
+                    } else {
+
+                        tie_Longitude!!.setText(location.longitude.toString())
+                        tie_Latitude!!.setText(location.latitude.toString())
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        var mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 0
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var mLastLocation: Location = locationResult.lastLocation
+            tie_Longitude!!.setText(mLastLocation.longitude.toString())
+            tie_Latitude!!.setText(mLastLocation.latitude.toString())
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+
+    private fun choosePhotoFromGallary() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+    private fun showPictureDialog() {
+        val pictureDialog = AlertDialog.Builder(this)
+        pictureDialog.setTitle("Select From")
+        val pictureDialogItems = arrayOf("Gallery", "Camera")
+        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+            when (which) {
+                0 -> choosePhotoFromGallary()
+                1 -> takePhotoFromCamera()
+            }
+        }
+        pictureDialog.show()
+    }
+
+    private fun checkCamera(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        return true;
+
+    }
+
+    private fun takePhotoFromCamera() {
+        val photo =  Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(photo, CAMERA)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf<String>(Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE)
+    }
+
+    fun getRealPathFromURI(uri: Uri): String {
+        var path = ""
+        if (getContentResolver() != null) {
+            val cursor = getContentResolver().query(uri, null, null, null, null)
+            if (cursor != null) {
+                cursor!!.moveToFirst()
+                val idx = cursor!!.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                path = cursor!!.getString(idx)
+                cursor!!.close()
+            }
+        }
+        return path
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
+        if (requestCode == GALLERY ) {
+            if (data != null) {
+                val contentURI = data!!.data
+                try {
+                    var selectedImageUri: Uri = data.getData()!!
+                    data.getData()
+                    if(strImage.equals("1")) {
+                        imgv_upload1!!.setImageURI(contentURI)
+                        image1 = getRealPathFromURI(selectedImageUri)
+                        if (image1 != null) {
+                        }
+                    }
+                    if(strImage.equals("2")) {
+                        imgv_upload2!!.setImageURI(contentURI)
+                        image2 = getRealPathFromURI(selectedImageUri)
+                        if (image2 != null) {
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else if (requestCode == CAMERA) {
+            if (data != null) {
+                try {
+                    if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                        } else {
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
+                        }
+                    }
+                    else {
+                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val bytes = ByteArrayOutputStream()
+                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                        destination = File(
+                            (Environment.getExternalStorageDirectory()).toString() + "/" +
+                                    getString(R.string.app_name),
+                            "IMG_" + System.currentTimeMillis() + ".jpg"
+                        )
+                        val fo: FileOutputStream
+                        try {
+                            if (!destination!!.getParentFile().exists()) {
+                                destination!!.getParentFile().mkdirs()
+                            }
+                            if (!destination!!.exists()) {
+                                destination!!.createNewFile()
+                            }
+                            fo = FileOutputStream(destination)
+                            fo.write(bytes.toByteArray())
+                            fo.close()
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                        if (strImage.equals("1")) {
+                            image1 = destination!!.getAbsolutePath()
+                            destination = File(image1)
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            if (imgv_upload1 != null) {
+                                imgv_upload1!!.setImageBitmap(myBitmap)
+                            }
+                            imgv_upload1!!.setImageBitmap(myBitmap)
+                            if (image1 != null) {
+                            }
+                        }
+                        if (strImage.equals("2")) {
+                            image2 = destination!!.getAbsolutePath()
+                            destination = File(image2)
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            if (imgv_upload2 != null) {
+                                imgv_upload2!!.setImageBitmap(myBitmap)
+                            }
+                            imgv_upload2!!.setImageBitmap(myBitmap)
+                            if (image2 != null) {
+                            }
+                        }
+                    }
+                }
+                catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
         }
     }
 
@@ -369,11 +816,55 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                         followUpTypeArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
                                         if (followUpTypeArrayList.length()>0){
 
-                                            followupTypePopup(followUpTypeArrayList)
+                                            Log.e(TAG,"8142    "+followUpTypeArrayList)
 
+                                            if (ActionMode!!.equals("1") || ActionMode!!.equals("2")){
+                                                for (i in 0 until followUpTypeArrayList.length()) {
+                                                    val jsonObject = followUpTypeArrayList.getJSONObject(i)
+                                                    Log.e(TAG,"8143    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
+
+
+                                                    if (jsonObject.getString("ID_ActionType")!!.contains(ActionMode!!)){
+                                                        Log.e(TAG,"81431    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
+                                                        if (ActionMode.equals("1")){
+                                                            Log.e(TAG,"81432    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
+                                                            ID_ActionType = jsonObject.getString("ID_ActionType")
+                                                            tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+                                                            til_CallStatus!!.visibility = View.VISIBLE
+                                                            til_CallDuration!!.visibility = View.VISIBLE
+                                                            ll_location!!.visibility = View.GONE
+                                                            ll_images!!.visibility = View.GONE
+                                                            til_CallTime!!.visibility = View.VISIBLE
+                                                        }
+                                                        if (ActionMode.equals("2")){
+                                                            Log.e(TAG,"81434    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
+                                                            ID_ActionType = jsonObject.getString("ID_ActionType")
+                                                            tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+                                                            til_CallStatus!!.visibility = View.GONE
+                                                            til_CallDuration!!.visibility = View.GONE
+                                                            ll_location!!.visibility = View.VISIBLE
+                                                            ll_images!!.visibility = View.VISIBLE
+
+                                                            til_CallTime!!.visibility = View.VISIBLE
+                                                        }
+                                                    }
+//                                                    if (jsonObject.getString("ID_ActionType").equals("1")){
+//
+//                                                    }
+//                                                    if (jsonObject.getString("ID_ActionType").equals("2")){
+//
+//                                                    }
+
+                                                }
+
+                                            }else{
+                                                tie_ActionType!!.isEnabled = true
+                                                followupTypePopup(followUpTypeArrayList)
+                                            }
 
                                         }
                                     } else {
+                                        tie_ActionType!!.isEnabled = true
                                         val builder = AlertDialog.Builder(
                                             this@FollowUpActivity,
                                             R.style.MyDialogTheme
@@ -395,6 +886,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                                ).show()
                             }
                         }catch (e : Exception){
+                            tie_ActionType!!.isEnabled = true
+                            Log.e(TAG,"8146    "+e.toString())
                             Toast.makeText(
                                 applicationContext,
                                 ""+Config.SOME_TECHNICAL_ISSUES,
@@ -406,6 +899,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 progressDialog!!.dismiss()
             }
             false -> {
+                tie_ActionType!!.isEnabled = true
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
@@ -913,6 +1407,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }
 
 
+
+
+
             }
             catch (e: Exception){
                 Log.e(TAG,"Exception   428   "+e.toString())
@@ -1346,6 +1843,54 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             if (ActiontypeFN == 0 ){
                 ID_ActionType = jsonObject.getString("ID_ActionType")
                 tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+
+                if (ID_ActionType.equals("1")){
+
+                    til_CallStatus!!.visibility = View.VISIBLE
+                    til_CallDuration!!.visibility = View.VISIBLE
+                    ll_location!!.visibility = View.GONE
+                    ll_images!!.visibility = View.GONE
+                    til_CallTime!!.visibility = View.VISIBLE
+
+                }else if(ID_ActionType.equals("2")){
+
+                    til_CallStatus!!.visibility = View.GONE
+                    til_CallDuration!!.visibility = View.GONE
+                    ll_location!!.visibility = View.VISIBLE
+                    ll_images!!.visibility = View.VISIBLE
+
+                    til_CallTime!!.visibility = View.VISIBLE
+                }
+                else{
+                    til_CallTime!!.visibility = View.GONE
+                    til_CallStatus!!.visibility = View.GONE
+                    til_CallDuration!!.visibility = View.GONE
+                    ll_location!!.visibility = View.GONE
+                    ll_images!!.visibility = View.GONE
+
+                }
+
+//                tie_CallStatus!!.setText("")
+//                tie_CallDuration!!.setText("")
+//
+//                strCallStatus = ""
+//                strRiskType = ""
+//                tie_Longitude!!.setText("")
+//                tie_Latitude!!.setText("")
+//                image1 = ""
+//                image2 = ""
+//                imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+//                imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+
+                clearData("0")
+
+
+
+
+//                var til_CallStatus: TextInputLayout? = null
+//                var til_CallDuration: TextInputLayout? = null
+
+
             }
             if (ActiontypeFN == 1 ){
                 ID_NextActionType = jsonObject.getString("ID_ActionType")
@@ -1425,14 +1970,27 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     }
 
-    private fun clearData() {
-        tie_ActionType!!.setText("")
+    private fun clearData(mode :  String) {
+
+        if (!mode.equals("0")){
+            tie_ActionType!!.setText("")
+            ID_ActionType = ""
+
+            til_CallStatus!!.visibility = View.GONE
+            til_CallDuration!!.visibility = View.GONE
+            ll_location!!.visibility = View.GONE
+            ll_images!!.visibility = View.GONE
+            til_CallTime!!.visibility = View.GONE
+
+        }
+
+
         tie_FollowupBy!!.setText("")
         tie_Status!!.setText("")
         tie_CustomerRemark!!.setText("")
         tie_EmployeeRemarks!!.setText("")
 
-        ID_ActionType = ""
+
         ID_Employee = ""
         ID_Status = ""
 
@@ -1448,10 +2006,27 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         ID_Department = ""
         ID_NextEmployee = ""
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        tie_Date!!.setText(currentDate)
-        tie_NextFollowupDate!!.setText(currentDate)
+        tie_CallStatus!!.setText("")
+        tie_CallDuration!!.setText("")
+
+
+        strCallStatus = ""
+        strRiskType = ""
+        tie_Longitude!!.setText("")
+        tie_Latitude!!.setText("")
+        image1 = ""
+        image2 = ""
+        imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+        imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+
+
+
+        getCurrentDateNTime()
+
+//        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val currentDate = sdf.format(Date())
+//        tie_Date!!.setText(currentDate)
+//        tie_NextFollowupDate!!.setText(currentDate)
 
         til_Date!!.hint = "Date"
         setDefaultFollowupBy()

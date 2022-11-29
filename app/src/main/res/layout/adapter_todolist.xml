@@ -182,6 +182,22 @@
                     android:textColor="@color/black"/>
 <!--                android:drawableLeft="@drawable/deadline"-->
 
+                <TextView
+                    android:id="@+id/tv_actionType"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="10dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/svg_action_type"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/black"
+                    android:visibility="gone"/>
+                <!--                android:drawableLeft="@drawable/deadline"-->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

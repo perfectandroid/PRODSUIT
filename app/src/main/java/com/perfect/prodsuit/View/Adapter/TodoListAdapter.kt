@@ -92,6 +92,12 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                     clickListener!!.onClick(position, "todocall")
                 })
+
+                holder.immessage!!.setTag(position)
+                holder.immessage!!.setOnClickListener(View.OnClickListener {
+
+                    clickListener!!.onClick(position, "todoMessage")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()

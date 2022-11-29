@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -62,6 +63,7 @@ class AboutUsActivity : AppCompatActivity() , View.OnClickListener {
         tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
         val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
         tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
+        tvAboutus.setMovementMethod(ScrollingMovementMethod())
 
     }
 

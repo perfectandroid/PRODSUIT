@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/loginbg"
-                android:layout_weight="1.2">
+                android:layout_weight="1.7">
                <ImageView
                     android:id="@+id/imback"
                     android:layout_width="60dp"
@@ -30,39 +32,7 @@
                     android:padding="10dp"
                     android:tint="@color/colorPrimaryDark"
                     android:src="@drawable/icback"/>
-                <TextView
-                    android:id="@+id/tvAboutus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:lineSpacingMultiplier="1"
-                    android:gravity="left"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/myfont"
-                    android:justificationMode="inter_word"
-                    android:text="Mscore is the mobile app to perform all the common banking facilities for Co-operative Banks. This Mobile Application from Perfect Software Solutions (CLT) Pvt Ltd is very well designed benefiting both Banks &amp; Customers equally. Mscore is an up-to-date app which strictly follows all the guidelines which makes Banking much Simpler &amp; Superior."
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
-                <TextView
-                    android:id="@+id/tvVersionid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:lineSpacingMultiplier="1.5"
-                    android:layout_gravity="center"
-                    android:gravity="left"
-                    android:fontFamily="@font/myfont"
-                    android:justificationMode="inter_word"
-                    android:text="Version : "
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/transparentbg"
-                android:layout_weight="1.5">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,40 +50,98 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/myfont"
-                        android:text="Licenced By"/>
+                        android:text="Licenced By"
+                        android:visibility="gone"/>
                     <ImageView
                         android:layout_width="200dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/applogo"
+                        android:src="@drawable/whiteapplogo"
                         android:layout_gravity="center"/>
                 </LinearLayout>
+
+
+
+                <TextView
+                    android:id="@+id/tvVersionid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:layout_gravity="center"
+                    android:gravity="left"
+                    android:fontFamily="@font/myfont"
+                    android:justificationMode="inter_word"
+                    android:text="Version : "
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/transparentbg"
+                android:layout_weight="1.5">
+
+
+                <TextView
+                    android:id="@+id/tvAboutus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_partner"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="start"
+                    android:justificationMode="inter_word"
+                    android:lineSpacingMultiplier="1"
+                    android:overScrollMode="always"
+                    android:scrollbars="vertical"
+                    android:text="Mscore is the mobile app to perform all the common banking facilities for Co-operative Banks. This Mobile Application from Perfect Software Solutions (CLT) Pvt Ltd is very well designed benefiting both Banks &amp; Customers equally. Mscore is an up-to-date app which strictly follows all the guidelines which makes Banking much Simpler &amp; Superior."
+                    android:textColor="@color/greydark"
+                    android:textSize="15dp" />
+
+
                 <LinearLayout
+                    android:id="@+id/ll_partner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginTop="15dp"
+                    android:layout_alignParentBottom="true"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/tvtechpartner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="5dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/myfont"
                         android:textSize="18dp"
                         android:text="Technology Partner"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        android:src="@drawable/companylogo" />
+
                </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/white"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:src="@drawable/companylogo"/>
-            </LinearLayout>
+
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar

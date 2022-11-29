@@ -188,7 +188,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     txtFromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                     llFromDatePick!!.visibility=View.GONE
                     fromDateMode = "1"
-                    SiteVisitActivity.strDate = strDay+"-"+strMonth+"-"+strYear
+                    strDate = strDay+"-"+strMonth+"-"+strYear
                 }
                 catch (e: Exception){
                     Log.e(TAG,"Exception   428   "+e.toString())

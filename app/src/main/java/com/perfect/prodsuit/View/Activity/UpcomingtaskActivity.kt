@@ -3,6 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -10,10 +11,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -31,14 +29,17 @@ import com.perfect.prodsuit.View.Adapter.UpcmngtaskListAdapter
 import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
 import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.UpcomingtasksListViewModel
+import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,
+    RadioGroup.OnCheckedChangeListener {
 
+    val TAG : String = "UpcomingtaskActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var upcomingtaskslistViewModel: UpcomingtasksListViewModel
@@ -60,6 +61,12 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
     internal var sortFilter:Int = 0
+
+    private var messageType = "";
+    private var messageDesc = "";
+    private var cbWhat = "0";
+    private var cbEmail = "0";
+    private var cbMessage = "0";
 
     lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
     lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
@@ -244,7 +251,118 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             }
         }
+
+        if (data.equals("todoMessage")){
+            val jsonObject = upcmngtaskArrayList.getJSONObject(position)
+            Log.e("TAG","313  ID_LeadGenerate   :  "+jsonObject.getString("ID_LeadGenerate"))
+            messagePopup()
+        }
     }
+
+    private fun messagePopup() {
+        try {
+
+            messageType = ""
+            cbWhat = "0"
+            cbEmail = "0"
+            cbMessage = "0"
+
+            val dialog1 = Dialog(this)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog1 .setCancelable(false)
+            dialog1 .setContentView(R.layout.send_message_popup)
+            dialog1.window!!.attributes.gravity = Gravity.CENTER;
+
+            val rbMessages = dialog1 .findViewById(R.id.rbMessages) as RadioButton
+            val rbReminder = dialog1 .findViewById(R.id.rbReminder) as RadioButton
+            val rbIntimation = dialog1 .findViewById(R.id.rbIntimation) as RadioButton
+
+            val edt_message = dialog1 .findViewById(R.id.edt_message) as EditText
+
+            val chk_whats = dialog1 .findViewById(R.id.chk_whats) as CheckBox
+            val chk_Email = dialog1 .findViewById(R.id.chk_Email) as CheckBox
+            val chk_Message = dialog1 .findViewById(R.id.chk_Message) as CheckBox
+
+            val btnMssubmit = dialog1 .findViewById(R.id.btnMssubmit) as Button
+            val btnMscancel = dialog1 .findViewById(R.id.btnMscancel) as Button
+
+            val segmented2 = dialog1 .findViewById(R.id.segmented2) as SegmentedGroup
+            segmented2.setTintColor(resources.getColor(R.color.color_msg_tab));
+            segmented2.setOnCheckedChangeListener(this@UpcomingtaskActivity);
+
+            rbMessages.isChecked  =true
+            rbReminder.isChecked  =false
+            rbIntimation.isChecked  =false
+
+            chk_whats.setOnClickListener {
+                if (chk_whats.isChecked){
+
+                    cbWhat = "1"
+                }else{
+                    cbWhat = "0"
+                }
+            }
+
+            chk_Email.setOnClickListener {
+                if (chk_Email.isChecked){
+                    cbEmail = "1"
+                }else{
+                    cbEmail = "0"
+                }
+            }
+
+            chk_Message.setOnClickListener {
+
+                if (chk_Message.isChecked){
+                    cbMessage = "1"
+                }else{
+                    cbMessage = "0"
+                }
+            }
+
+            btnMscancel.setOnClickListener {
+                dialog1 .dismiss()
+            }
+
+            btnMssubmit.setOnClickListener {
+                messageDesc = edt_message.text.toString()
+                if (messageType.equals("")){
+
+                }
+                else if(messageDesc.equals("")){
+                    Config.snackBars(context,it,"Please enter message")
+//
+                }
+                else if (cbWhat.equals("0") && cbEmail.equals("0") && cbMessage.equals("0") ){
+                    Config.snackBars(context,it,"Please select sending options")
+//
+                }
+                else{
+                    Log.e(TAG,"  927  messageType  "+messageType)
+                    Log.e(TAG,"  927  messageDesc  "+messageDesc)
+                    Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
+
+                    Config.Utils.hideSoftKeyBoard(context,it)
+                    dialog1 .dismiss()
+                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            dialog1.show()
+
+//            val builder = AlertDialog.Builder(this)
+//            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            val layout = inflater1.inflate(R.layout.send_message_popup, null)
+//
+//            var  ss =inflater1.findViewById(android.R.id.segmented2).setTintColor(Color.DKGRAY)
+//            builder.setView(layout)
+//            val alertDialog = builder.create()
+//            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     /*private fun sortData() {
 
         try {
@@ -863,6 +981,25 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         dialog!!.setContentView(view)
 
         dialog.show()
+    }
+
+
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+        when(checkedId){
+            R.id.rbMessages->{
+
+                messageType = "Message"
+                Log.e(TAG,"rbMessages")
+            }
+            R.id.rbReminder->{
+                Log.e(TAG,"rbReminder")
+                messageType = "Reminder"
+            }
+            R.id.rbIntimation->{
+                Log.e(TAG,"rbIntimation")
+                messageType = "Intimation"
+            }
+        }
     }
 
 }
