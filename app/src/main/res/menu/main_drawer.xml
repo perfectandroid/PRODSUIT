@@ -9,6 +9,12 @@
             app:iconTint="@color/dot_dark_screen3"
             android:title="Profile"/>
         <item
+            android:id="@+id/nav_collection"
+            android:icon="@drawable/person_icon"
+            android:fontFamily="@font/myfont"
+            app:iconTint="@color/dot_dark_screen3"
+            android:title="Collection"/>
+        <item
             android:id="@+id/nav_changempin"
             android:icon="@drawable/ic_mpin"
             android:fontFamily="@font/myfont"

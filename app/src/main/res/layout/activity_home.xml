@@ -375,19 +375,21 @@
                         android:background="@drawable/servicenewbg"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginRight="40dp"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
-                            android:layout_marginRight="40dp"
                             android:src="@drawable/rightcurve_whitebg"
                             android:text="Services"
-                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:textSize="18dp" />
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

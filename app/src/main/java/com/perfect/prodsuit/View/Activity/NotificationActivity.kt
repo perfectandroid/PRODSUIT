@@ -1,16 +1,16 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +20,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
-import com.perfect.prodsuit.View.Adapter.ReadstatusAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import org.json.JSONArray
@@ -42,9 +41,6 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         setContentView(R.layout.activity_notification)
         setRegViews()
         getNotificationList()
-
-
-
 
     }
     companion object {
@@ -148,6 +144,30 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             Log.i("IDd",id)
 
             getReadstatus()
+            try {
+                val dialog1 = Dialog(this)
+                dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog1 .setCancelable(false)
+                dialog1 .setContentView(R.layout.notf_popup)
+                dialog1.window!!.attributes.gravity = Gravity.CENTER_HORIZONTAL;
+                val txtv_notifdate = dialog1 .findViewById(R.id.txtv_notifdate) as TextView
+                val txt_msg = dialog1 .findViewById(R.id.txt_msg) as TextView
+               // val txt_dtls = dialog1 .findViewById(R.id.txt_dtls) as TextView
+                val btnCancel = dialog1 .findViewById(R.id.btnCancel) as ImageButton
+                val rl_main1= dialog1 .findViewById(R.id.rl_main1) as LinearLayout
+
+                txtv_notifdate.text=jsonObject.getString("NoticeDate");
+                txt_msg.text=jsonObject.getString("NotificationMessage");
+               // txt_dtls.text=jsonObject.getString("NoticeDate");
+
+                btnCancel.setOnClickListener {
+                    dialog1 .dismiss()
+                }
+
+                dialog1.show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
         }
     }
