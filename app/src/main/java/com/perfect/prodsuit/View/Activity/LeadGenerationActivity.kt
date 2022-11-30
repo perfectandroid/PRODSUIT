@@ -1724,23 +1724,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
                             } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@LeadGenerationActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
