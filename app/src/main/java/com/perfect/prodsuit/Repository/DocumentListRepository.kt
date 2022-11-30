@@ -27,13 +27,14 @@ object DocumentListRepository {
     private var progressDialog: ProgressDialog? = null
     val documentlistSetterGetter = MutableLiveData<DocumentListModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<DocumentListModel> {
-        getdocumentlist(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String): MutableLiveData<DocumentListModel> {
+        getdocumentlist(context,ID_LeadGenerateProduct)
         return documentlistSetterGetter
     }
 
-    private fun getdocumentlist(context: Context) {
+    private fun getdocumentlist(context: Context,ID_LeadGenerateProduct : String) {
         try {
+            documentlistSetterGetter.value = DocumentListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -64,7 +65,7 @@ object DocumentListRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
                 Log.i("Document reequest",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()

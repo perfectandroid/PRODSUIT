@@ -108,7 +108,6 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
     lateinit var sortAgendaViewModel: SortAgendaViewModel
-    lateinit var filterAgendaDetailListViewModel: FilterAgendaDetailListViewModel
     lateinit var agendaTypeArrayList : JSONArray
 
     lateinit var agendaCountViewModel: AgendaCountViewModel
@@ -155,7 +154,6 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         agendaActionViewModel = ViewModelProvider(this).get(AgendaActionViewModel::class.java)
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
-        filterAgendaDetailListViewModel= ViewModelProvider(this).get(FilterAgendaDetailListViewModel::class.java)
         sortAgendaViewModel= ViewModelProvider(this).get(SortAgendaViewModel::class.java)
 
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
@@ -1752,186 +1750,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 
     }
 
-    private fun getAgendaDetails1(ID_ActionType: String , Id_Agenda : String) {
-//        if (progressDialog != null && progressDialog!!.isShowing()) {
-//            progressDialog!!.dismiss()
-//        }
-        var agendaDetail = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
 
-                filterAgendaDetailListViewModel.getFilterAgendalist(this,ID_ActionType,SubMode!!,Id_Agenda)!!.observe(
-                    this,
-                    Observer { filteragendalistSetterGetter ->
-                        val msg = filteragendalistSetterGetter.message
-                        progressDialog!!.dismiss()
-                        if (msg!!.length > 0) {
-
-
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   443   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AgendaDetails")
-                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                if (agendaDetailArrayList.length()>0){
-//                                    if (agendaDetail == 0){
-//                                        agendaDetail++
-                                    //  agendaTypePopup(agendaActionArrayList)
-
-                                    val editor = sharedPreferences!!.edit()
-                                    editor.clear()
-                                    editor.commit()
-
-
-
-                                    recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-                                    val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-                                    recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-                                    recyAgendaDetail!!.adapter = adapter
-                                    adapter.setClickListener(this@AgendaActivity)
-                                    // }
-
-                                }
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AgendaActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                // progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-        }
-
-//        var ss = ""
-//
-//        if (ID_ActionType.equals("1")){
-//            ss = "[{\"ID_ActionType\": 1,\"Fileds\": \"Call1\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call2\"},{\"ID_ActionType\": 1,\"Fileds\": \"Call3\"}]"
-//        }
-//        else if (ID_ActionType.equals("2")){
-//
-//            ss = "[{\"ID_ActionType\": 2,\"Fileds\": \"Message1\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message2\"},{\"ID_ActionType\": 2,\"Fileds\": \"Message3\"}]"
-//        }
-//        else if (ID_ActionType.equals("3")){
-//
-//            ss = "[{\"ID_ActionType\": 3,\"Fileds\": \"Meeting1\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting2\"},{\"ID_ActionType\": 3,\"Fileds\": \"Meeting3\"}]"
-//        }
-//        else if (ID_ActionType.equals("4")){
-//
-//            ss = "[{\"ID_ActionType\": 4,\"Fileds\": \"Document1\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document2\"},{\"ID_ActionType\": 4,\"Fileds\": \"Document3\"}]"
-//        }
-//        else if (ID_ActionType.equals("5")){
-//
-//            ss = "[{\"ID_ActionType\": 5,\"Fileds\": \"Quotation1\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation2\"},{\"ID_ActionType\": 5,\"Fileds\": \"Quotation3\"}]"
-//        }
-//
-//        agendaDetailArrayList = JSONArray(ss)
-//
-//        recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-//        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//        recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//        val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-//        recyAgendaDetail!!.adapter = adapter
-
-    }
-    private fun getSortList() {
-
-        submode ="1"
-        context = this@AgendaActivity
-
-        sortAgendaViewModel = ViewModelProvider(this).get(
-            SortAgendaViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                sortAgendaViewModel.getSortAgendalist(this,ID_ActionType!!,SubMode!!,Id_Agenda)!!.observe(
-                    this,
-                    Observer { sortagendalistSetterGetter ->
-                        val msg = sortagendalistSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AgendaDetails")
-                                agendaDetailArrayList = jobjt.getJSONArray("AgendaDetailsList")
-                                if (agendaDetailArrayList.length()>0){
-//                                    if (agendaDetail == 0){
-//                                        agendaDetail++
-                                    //  agendaTypePopup(agendaActionArrayList)
-
-                                    val editor = sharedPreferences!!.edit()
-                                    editor.clear()
-                                    editor.commit()
-
-
-
-                                    recyAgendaDetail = findViewById(R.id.recyAgendaDetail) as RecyclerView
-                                    val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-                                    recyAgendaDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = AgendaDetailAdapter(this@AgendaActivity, agendaDetailArrayList)
-                                    recyAgendaDetail!!.adapter = adapter
-                                    adapter.setClickListener(this@AgendaActivity)
-                                    // }
-
-                                }
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AgendaActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
     fun dateSelector1() {
         try {
             val sdf = SimpleDateFormat("dd-MM-yyyy")

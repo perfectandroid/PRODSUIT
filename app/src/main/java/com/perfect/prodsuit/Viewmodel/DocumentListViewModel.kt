@@ -11,8 +11,8 @@ class DocumentListViewModel : ViewModel() {
 
     var documentlistLiveData: MutableLiveData<DocumentListModel>? = null
 
-    fun getDocumentlist(context: Context) : LiveData<DocumentListModel>? {
-        documentlistLiveData = DocumentListRepository.getServicesApiCall(context)
+    fun getDocumentlist(context: Context,ID_LeadGenerateProduct : String) : LiveData<DocumentListModel>? {
+        documentlistLiveData = DocumentListRepository.getServicesApiCall(context,ID_LeadGenerateProduct)
         return documentlistLiveData
     }
 

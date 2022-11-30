@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -18,6 +19,7 @@ import java.util.*
 
 object MaintanaceMessageRepository {
 
+    var TAG = "MaintanaceMessageRepository"
     val maintanaceSetterGetter = MutableLiveData<MaintananceMessageModel>()
 
     fun getServicesApiCall(context: Context): MutableLiveData<MaintananceMessageModel> {
@@ -48,6 +50,8 @@ object MaintanaceMessageRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("11"))
+
+                Log.e(TAG,"541  requestObject1   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

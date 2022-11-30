@@ -1196,7 +1196,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             true -> {
                 imDocumentLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
-                documentViewModel.getDocumentlist(this)!!.observe(
+                documentViewModel.getDocumentlist(this, ID_LeadGenerateProduct)!!.observe(
                     this,
                     Observer { documentlistSetterGetter ->
                         val msg = documentlistSetterGetter.message
