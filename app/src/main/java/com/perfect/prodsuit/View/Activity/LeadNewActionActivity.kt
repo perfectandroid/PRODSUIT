@@ -302,11 +302,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -383,11 +383,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()

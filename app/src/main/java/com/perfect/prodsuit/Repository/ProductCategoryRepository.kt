@@ -88,7 +88,7 @@ object ProductCategoryRepository {
                         productcategorySetterGetter.value = ProductCategoryModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
