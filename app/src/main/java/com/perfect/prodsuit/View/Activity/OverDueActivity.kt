@@ -31,8 +31,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
-import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
-import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.OverDueListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -48,8 +46,6 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var overduelistViewModel: OverDueListViewModel
-    lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
-    lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
     private var rv_overduelist: RecyclerView?=null
     lateinit var overdueArrayList : JSONArray
     private var SubMode:String?=""
@@ -948,125 +944,9 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         }
     }
 
-    private fun getOverdueList1() {
-       // submode="2"
-        context = this@OverDueActivity
-        leadMangeFilterViewModel = ViewModelProvider(this).get(LeadMangeFilterViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                leadMangeFilterViewModel.getLeadMangfilter(this)!!.observe(
-                    this,
-                    Observer { leadmangfilterSetterGetter ->
-                        val msg = leadmangfilterSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                //   var jobj = jObject.getJSONObject("UserLoginDetails")
-                                val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                Log.e("Filter1","overdueArrayList 69  "+overdueArrayList)
-                                val lLayout = GridLayoutManager(this@OverDueActivity, 1)
-                                rv_overduelist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_overduelist!!.setHasFixedSize(true)
-                                val adapter = TodoListAdapter(applicationContext, overdueArrayList,SubMode!!)
-                                rv_overduelist!!.adapter = adapter
-                                adapter.setClickListener(this@OverDueActivity)
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@OverDueActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
 
-    private fun getSortList() {
 
-            submode="2"
-            context = this@OverDueActivity
 
-        activitySortLeadMngmntViewModel = ViewModelProvider(this).get(ActivitySortLeadMngmntViewModel::class.java)
-            when (Config.ConnectivityUtils.isConnected(this)) {
-                true -> {
-                    progressDialog = ProgressDialog(this, R.style.Progress)
-                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                    progressDialog!!.setCancelable(false)
-                    progressDialog!!.setIndeterminate(true)
-                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                    progressDialog!!.show()
-                    activitySortLeadMngmntViewModel.getSortlist(this)!!.observe(
-                        this,
-                        Observer { sortleadmngeSetterGetter ->
-                            val msg = sortleadmngeSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    //   var jobj = jObject.getJSONObject("UserLoginDetails")
-                                    val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                    overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                    Log.e("Filter1","overdueArrayList 69  "+overdueArrayList)
-                                    val lLayout = GridLayoutManager(this@OverDueActivity, 1)
-                                    rv_overduelist!!.layoutManager =
-                                        lLayout as RecyclerView.LayoutManager?
-                                    rv_overduelist!!.setHasFixedSize(true)
-                                    val adapter = TodoListAdapter(applicationContext, overdueArrayList,SubMode!!)
-                                    rv_overduelist!!.adapter = adapter
-                                    adapter.setClickListener(this@OverDueActivity)
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@OverDueActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                }
-                            } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Some Technical Issues.",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
-                    progressDialog!!.dismiss()
-                }
-                false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-        }
 
     fun dateSelector1() {
         try {

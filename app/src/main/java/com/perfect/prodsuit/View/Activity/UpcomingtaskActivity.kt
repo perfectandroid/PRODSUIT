@@ -31,9 +31,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
-import com.perfect.prodsuit.View.Adapter.UpcmngtaskListAdapter
-import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
-import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.UpcomingtasksListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -82,8 +79,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var etdis: EditText? = null
 
 
-    lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
-    lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -964,63 +960,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
     }
-    private fun getUpcomingtasksList1() {
-        submode ="3"
-        context = this@UpcomingtaskActivity
-        leadMangeFilterViewModel = ViewModelProvider(this).get(LeadMangeFilterViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                leadMangeFilterViewModel.getLeadMangfilter(this)!!.observe(
-                    this,
-                    Observer { leadmangfilterSetterGetter ->
-                        val msg = leadmangfilterSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
-                                rv_upcmngtasklist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_upcmngtasklist!!.setHasFixedSize(true)
-                                val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList,SubMode!!)
-                                rv_upcmngtasklist!!.adapter = adapter
-                                adapter.setClickListener(this@UpcomingtaskActivity)
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@UpcomingtaskActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
 
 
     private fun filterData() {
@@ -1084,66 +1024,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
-    private fun getSortList() {
 
-       submode ="3"
-        context = this@UpcomingtaskActivity
-
-        activitySortLeadMngmntViewModel = ViewModelProvider(this).get(
-            ActivitySortLeadMngmntViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                activitySortLeadMngmntViewModel.getSortlist(this)!!.observe(
-                    this,
-                    Observer { sortleadmngeSetterGetter ->
-                        val msg = sortleadmngeSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
-                                rv_upcmngtasklist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_upcmngtasklist!!.setHasFixedSize(true)
-                                val adapter = TodoListAdapter(applicationContext, upcmngtaskArrayList,SubMode!!)
-                                rv_upcmngtasklist!!.adapter = adapter
-                                adapter.setClickListener(this@UpcomingtaskActivity)
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@UpcomingtaskActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
     fun dateSelector() {
         try {
             val sdf = SimpleDateFormat("dd-MM-yyyy")

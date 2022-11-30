@@ -31,8 +31,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
-import com.perfect.prodsuit.Viewmodel.ActivitySortLeadMngmntViewModel
-import com.perfect.prodsuit.Viewmodel.LeadMangeFilterViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -52,8 +50,6 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var rv_todolist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
     private var SubMode:String?=""
-    lateinit var leadMangeFilterViewModel: LeadMangeFilterViewModel
-    lateinit var activitySortLeadMngmntViewModel: ActivitySortLeadMngmntViewModel
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
     internal var yr: Int =0
@@ -510,62 +506,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
 
 
-    private fun getTodoList1() {
-        submode ="1"
-        context = this@TodoListActivity
-        leadMangeFilterViewModel = ViewModelProvider(this).get(LeadMangeFilterViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                leadMangeFilterViewModel.getLeadMangfilter(this)!!.observe(
-                    this,
-                    Observer { leadmangfilterSetterGetter ->
-                        val msg = leadmangfilterSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                val lLayout = GridLayoutManager(this@TodoListActivity, 1)
-                                rv_todolist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_todolist!!.setHasFixedSize(true)
-                                val adapter = TodoListAdapter(applicationContext, todoArrayList,SubMode!!)
-                                rv_todolist!!.adapter = adapter
-                                adapter.setClickListener(this@TodoListActivity)
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TodoListActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
+
 
     override fun onClick(position: Int, data: String) {
         if (data.equals("todolist")){
@@ -1157,66 +1098,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
     }
 
-    private fun getSortList() {
 
-       submode ="1"
-        context = this@TodoListActivity
-
-        activitySortLeadMngmntViewModel = ViewModelProvider(this).get(
-            ActivitySortLeadMngmntViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                activitySortLeadMngmntViewModel.getSortlist(this)!!.observe(
-                    this,
-                    Observer { sortleadmngeSetterGetter ->
-                        val msg = sortleadmngeSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                //   var jobj = jObject.getJSONObject("UserLoginDetails")
-                                val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
-                                todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                val lLayout = GridLayoutManager(this@TodoListActivity, 1)
-                                rv_todolist!!.layoutManager =
-                                    lLayout as RecyclerView.LayoutManager?
-                                rv_todolist!!.setHasFixedSize(true)
-                                val adapter = TodoListAdapter(applicationContext, todoArrayList,SubMode!!)
-                                rv_todolist!!.adapter = adapter
-                                adapter.setClickListener(this@TodoListActivity)
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TodoListActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
     fun dateSelector() {
         try {
             val sdf = SimpleDateFormat("dd-MM-yyyy")

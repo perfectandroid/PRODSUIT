@@ -86,7 +86,7 @@ object LeadManagFilterRepository {
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(OverDueActivity.name))
+                requestObject1.put("Name", ProdsuitApplication.encryptStart("name"))
 
                 val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
                 val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
