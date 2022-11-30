@@ -89,30 +89,18 @@ object LeadFromRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(
-                            context,
-                            "Some Technical Issues.",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(
-                        context,
-                        "Some Technical Issues.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(
-                context,
-                "Some Technical Issues.",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 

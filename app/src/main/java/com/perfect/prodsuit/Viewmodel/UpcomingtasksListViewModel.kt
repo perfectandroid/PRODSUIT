@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.Model.UpcomingtasksModel
-import com.perfect.prodsuit.Repository.BannersRepository
 import com.perfect.prodsuit.Repository.UpcomingtasksRepository
 
 class UpcomingtasksListViewModel : ViewModel() {

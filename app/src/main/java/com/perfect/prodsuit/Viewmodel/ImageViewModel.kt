@@ -4,11 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.BannerModel
 import com.perfect.prodsuit.Model.ImageModel
-import com.perfect.prodsuit.Repository.BannersRepository
 import com.perfect.prodsuit.Repository.ImageRepository
-import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 
 class ImageViewModel : ViewModel() {
 
