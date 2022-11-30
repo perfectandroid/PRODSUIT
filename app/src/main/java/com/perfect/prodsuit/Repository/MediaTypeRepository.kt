@@ -27,12 +27,12 @@ object MediaTypeRepository {
     val mediaTypeSetterGetter = MutableLiveData<MediaTypeModel>()
     val TAG: String = "MediaTypeRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MediaTypeModel> {
-        getMediaType(context)
+    fun getServicesApiCall(context: Context,ID_LeadFrom : String): MutableLiveData<MediaTypeModel> {
+        getMediaType(context,ID_LeadFrom)
         return mediaTypeSetterGetter
     }
 
-    private fun getMediaType(context: Context) {
+    private fun getMediaType(context: Context,ID_LeadFrom : String) {
 
         try {
             mediaTypeSetterGetter.value = MediaTypeModel("")
@@ -76,12 +76,11 @@ object MediaTypeRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(
-                    LeadGenerationActivity.ID_LeadFrom))
+                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadFrom))
                 //requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart("1"))
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
-                Log.e(TAG,"ID_LeadFrom   82   "+ LeadGenerationActivity.ID_LeadFrom)
+                Log.e(TAG,"ID_LeadFrom   82   "+ID_LeadFrom)
 
             } catch (e: Exception) {
                 e.printStackTrace()

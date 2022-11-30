@@ -10,8 +10,8 @@ class MediaTypeViewModel: ViewModel() {
 
     var mediaTypeData: MutableLiveData<MediaTypeModel>? = null
 
-    fun getMediaType(context: Context) : MutableLiveData<MediaTypeModel>? {
-        mediaTypeData = MediaTypeRepository.getServicesApiCall(context)
+    fun getMediaType(context: Context,ID_LeadFrom : String) : MutableLiveData<MediaTypeModel>? {
+        mediaTypeData = MediaTypeRepository.getServicesApiCall(context,ID_LeadFrom)
         return mediaTypeData
     }
 

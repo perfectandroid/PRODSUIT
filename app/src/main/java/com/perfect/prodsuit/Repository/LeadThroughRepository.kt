@@ -26,12 +26,12 @@ object LeadThroughRepository {
     val leadThroghSetterGetter = MutableLiveData<LeadThroughModel>()
     val TAG: String = "LeadThroughRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadThroughModel> {
-        getLeadThrough(context)
+    fun getServicesApiCall(context: Context,ID_LeadFrom : String): MutableLiveData<LeadThroughModel> {
+        getLeadThrough(context,ID_LeadFrom)
         return leadThroghSetterGetter
     }
 
-    private fun getLeadThrough(context: Context) {
+    private fun getLeadThrough(context: Context,ID_LeadFrom : String) {
         try {
             leadThroghSetterGetter.value = LeadThroughModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -65,9 +65,9 @@ object LeadThroughRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(LeadGenerationActivity.ID_LeadFrom))
+                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadFrom))
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
-                Log.e(TAG,"ID_LeadFrom   82   "+LeadGenerationActivity.ID_LeadFrom)
+                Log.e(TAG,"ID_LeadFrom   82   "+ID_LeadFrom)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

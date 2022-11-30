@@ -10,8 +10,8 @@ class LeadThroughViewModel : ViewModel() {
 
     var leadThroughData: MutableLiveData<LeadThroughModel>? = null
 
-    fun getLeadThrough(context: Context) : MutableLiveData<LeadThroughModel>? {
-        leadThroughData = LeadThroughRepository.getServicesApiCall(context)
+    fun getLeadThrough(context: Context,ID_LeadFrom : String) : MutableLiveData<LeadThroughModel>? {
+        leadThroughData = LeadThroughRepository.getServicesApiCall(context,ID_LeadFrom)
         return leadThroughData
     }
 

@@ -2020,7 +2020,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                leadThroughViewModel.getLeadThrough(this)!!.observe(
+                leadThroughViewModel.getLeadThrough(this,ID_LeadFrom!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -2149,7 +2149,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                mediaTypeViewModel.getMediaType(this)!!.observe(
+                mediaTypeViewModel.getMediaType(this,ID_LeadFrom!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
