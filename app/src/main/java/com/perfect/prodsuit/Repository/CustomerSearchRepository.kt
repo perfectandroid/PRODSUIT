@@ -93,7 +93,7 @@ object CustomerSearchRepository {
                         customerSetterGetter.value = CustomerSearchModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG)
+                        Toast.makeText(context, ""+e.toString(), Toast.LENGTH_LONG)
                             .show()
                         progressDialog!!.dismiss()
                     }

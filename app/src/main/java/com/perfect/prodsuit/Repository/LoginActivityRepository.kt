@@ -130,7 +130,7 @@ object LoginActivityRepository {
                     progressDialog!!.dismiss()
                     Toast.makeText(
                         context,
-                        "Some Technical Issues.",
+                        ""+Config.SOME_TECHNICAL_ISSUES,
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -141,7 +141,7 @@ object LoginActivityRepository {
             progressDialog!!.dismiss()
             Toast.makeText(
                 context,
-                "Some Technical Issues.",
+                ""+Config.SOME_TECHNICAL_ISSUES,
                 Toast.LENGTH_LONG
             ).show()
         }
