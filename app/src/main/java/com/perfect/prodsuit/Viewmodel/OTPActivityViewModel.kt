@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.OTPModel
 import com.perfect.prodsuit.Repository.OTPActivityRepository
+import com.perfect.prodsuit.View.Activity.OTPActivity
 
 class OTPActivityViewModel : ViewModel() {
 
     var otpLiveData: MutableLiveData<OTPModel>? = null
 
-    fun getOTP(context: Context) : LiveData<OTPModel>? {
-        otpLiveData = OTPActivityRepository.getServicesApiCall(context)
+    fun getOTP(context: Context,strMOTP :  String) : LiveData<OTPModel>? {
+        otpLiveData = OTPActivityRepository.getServicesApiCall(context, strMOTP)
         return otpLiveData
     }
 

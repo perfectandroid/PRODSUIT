@@ -24,12 +24,12 @@ object OTPActivityRepository {
     private var progressDialog: ProgressDialog? = null
     val otpSetterGetter = MutableLiveData<OTPModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<OTPModel> {
-        doOTPVerification(context)
+    fun getServicesApiCall(context: Context,strMOTP : String): MutableLiveData<OTPModel> {
+        doOTPVerification(context, strMOTP)
         return otpSetterGetter
     }
 
-    private fun doOTPVerification(context: Context) {
+    private fun doOTPVerification(context: Context,strMOTP : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -61,7 +61,7 @@ object OTPActivityRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
-                requestObject1.put("OTP", ProdsuitApplication.encryptStart(OTPActivity.strMOTP))
+                requestObject1.put("OTP", ProdsuitApplication.encryptStart(strMOTP))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

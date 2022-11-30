@@ -25,12 +25,12 @@ object SetMpinActivityRepository {
     private var progressDialog: ProgressDialog? = null
     val setmpinSetterGetter = MutableLiveData<SetMpinModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<SetMpinModel> {
-        setMpinVerification(context)
+    fun getServicesApiCall(context: Context,strMPIN : String): MutableLiveData<SetMpinModel> {
+        setMpinVerification(context,strMPIN)
         return setmpinSetterGetter
     }
 
-    private fun setMpinVerification(context: Context) {
+    private fun setMpinVerification(context: Context,strMPIN : String) {
         try {
             setmpinSetterGetter.value = SetMpinModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -63,7 +63,7 @@ object SetMpinActivityRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("4"))
-                requestObject1.put("MPIN", ProdsuitApplication.encryptStart(SetMpinActivity.strMPIN))
+                requestObject1.put("MPIN", ProdsuitApplication.encryptStart(strMPIN))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

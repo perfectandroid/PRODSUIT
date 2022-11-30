@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.MpinModel
 import com.perfect.prodsuit.Repository.MpinActivityRepository
+import com.perfect.prodsuit.View.Activity.MpinActivity
 
 class MpinActivityViewModel : ViewModel() {
 
     var mpinLiveData: MutableLiveData<MpinModel>? = null
 
-    fun veryfyMpin(context: Context) : LiveData<MpinModel>? {
-        mpinLiveData = MpinActivityRepository.getServicesApiCall(context)
+    fun veryfyMpin(context: Context,strMPIN :  String) : LiveData<MpinModel>? {
+        mpinLiveData = MpinActivityRepository.getServicesApiCall(context, strMPIN)
         return mpinLiveData
     }
 

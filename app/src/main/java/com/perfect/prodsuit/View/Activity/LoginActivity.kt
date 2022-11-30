@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         else if (etxt_mob!!.text.toString().isNotEmpty() && etxt_mob!!.text.toString().length!=10) {
             etxt_mob!!.setError("Please Enter Valid Mobile Number")
         }else{
-            Companion.strEPhone = etxt_mob!!.text.toString()
+            strEPhone = etxt_mob!!.text.toString()
             when (Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
                     progressDialog = ProgressDialog(context, R.style.Progress)
@@ -89,7 +89,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, etxt_mob!!)
-                    loginActivityViewModel.getUser(this)!!.observe(
+                    loginActivityViewModel.getUser(this,strEPhone)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message

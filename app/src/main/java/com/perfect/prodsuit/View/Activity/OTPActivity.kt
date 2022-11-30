@@ -474,7 +474,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                otpActivityViewModel.getOTP(this)!!.observe(
+                otpActivityViewModel.getOTP(this,strMOTP)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

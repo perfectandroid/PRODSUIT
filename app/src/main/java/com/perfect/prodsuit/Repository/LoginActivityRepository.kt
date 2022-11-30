@@ -10,6 +10,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LoginModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LoginActivity
 import com.perfect.prodsuit.View.Activity.LoginActivity.Companion.strEPhone
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -25,12 +26,12 @@ object LoginActivityRepository {
     private var progressDialog: ProgressDialog? = null
     val loginSetterGetter = MutableLiveData<LoginModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LoginModel> {
-        doLogin(context)
+    fun getServicesApiCall(context: Context,strEPhone : String): MutableLiveData<LoginModel> {
+        doLogin(context, strEPhone)
         return loginSetterGetter
     }
 
-    private fun doLogin(context: Context) {
+    private fun doLogin(context: Context,strEPhone : String) {
         try {
             loginSetterGetter.value = LoginModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)

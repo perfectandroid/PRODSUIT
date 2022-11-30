@@ -11,8 +11,8 @@ class SetMpinActivityViewModel : ViewModel() {
 
     var setmpinLiveData: MutableLiveData<SetMpinModel>? = null
 
-    fun setMpin(context: Context) : LiveData<SetMpinModel>? {
-        setmpinLiveData = SetMpinActivityRepository.getServicesApiCall(context)
+    fun setMpin(context: Context,strMPIN : String) : LiveData<SetMpinModel>? {
+        setmpinLiveData = SetMpinActivityRepository.getServicesApiCall(context,strMPIN)
         return setmpinLiveData
     }
 

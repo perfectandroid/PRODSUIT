@@ -503,7 +503,7 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                         progressDialog!!.setIndeterminate(true)
                         progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                         progressDialog!!.show()
-                        setmpinActivityViewModel.setMpin(this)!!.observe(
+                        setmpinActivityViewModel.setMpin(this,strMPIN)!!.observe(
                             this,
                             Observer { serviceSetterGetter ->
                                 val msg = serviceSetterGetter.message

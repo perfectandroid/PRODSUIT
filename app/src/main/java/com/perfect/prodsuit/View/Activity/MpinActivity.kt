@@ -539,7 +539,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                mpinActivityViewModel.veryfyMpin(this)!!.observe(
+                mpinActivityViewModel.veryfyMpin(this,strMPIN)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         Log.e("TAG","message   :   183910   "+serviceSetterGetter.message)
