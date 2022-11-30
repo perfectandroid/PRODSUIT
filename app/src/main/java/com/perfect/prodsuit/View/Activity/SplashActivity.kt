@@ -20,16 +20,16 @@ class SplashActivity : AppCompatActivity() {
 
 
 //    DEVELOPMENT OLD
-//    val CERT_NAME = "static-vm.pem"
-//    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
-//    val BANK_KEY = "-500"
+    val CERT_NAME = "static-vm.pem"
+    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
+    val BANK_KEY = "-500"
 
 ////    DEVELOPMENT 30.11.2022
-    val CERT_NAME = "development.pem"
-    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
-    val BANK_KEY = "-500"
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
+//    val BANK_KEY = "-500"
 
 
 
