@@ -780,6 +780,8 @@
                                     android:scrollbars="horizontal"
                                     app:tabTextColor="@color/black"
                                     app:tabTextAppearance="@style/customfontstyle"/>
+
+
                                 <LinearLayout
                                     android:id="@+id/llMainDetail"
                                     android:layout_width="match_parent"
@@ -789,6 +791,8 @@
 
 
                                 </LinearLayout>
+
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -859,7 +863,7 @@
                         android:backgroundTint="@color/color_fab1"
                         android:tint="@color/black"
                         app:fabCustomSize="50dp"
-                        app:srcCompat="@drawable/add_lead" />
+                        app:srcCompat="@drawable/white_delete" />
 
                     <TextView
                         android:id="@+id/txtAddQuotation"
@@ -967,7 +971,8 @@
                         android:padding="10dp"
                         android:text="Next Action"
                         android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fabAddNextAction"
@@ -982,7 +987,8 @@
                         android:scaleType="center"
                         android:tint="@color/black"
                         app:fabCustomSize="50dp"
-                        app:srcCompat="@drawable/add_activities" />
+                        app:srcCompat="@drawable/white_nextaction"
+                        android:visibility="gone"/>
 
 
                     <TextView
@@ -1013,7 +1019,7 @@
                         android:scaleType="center"
                         android:tint="@color/black"
                         app:fabCustomSize="50dp"
-                        app:srcCompat="@drawable/add_activities" />
+                        app:srcCompat="@drawable/white_followup" />
 
                     <TextView
                         android:id="@+id/txtAddNote"
@@ -1043,7 +1049,7 @@
                         android:backgroundTint="@color/color_fab1"
                         android:tint="@color/black"
                         app:fabCustomSize="50dp"
-                        app:srcCompat="@drawable/add_notes" />
+                        app:srcCompat="@drawable/white_atachfile" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fab"

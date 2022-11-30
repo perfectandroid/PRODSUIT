@@ -11,6 +11,7 @@ import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ImageModel
 import com.perfect.prodsuit.Model.LocationModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.ImageActivity
 import com.perfect.prodsuit.View.Activity.LocationActivity
 import okhttp3.OkHttpClient
@@ -26,13 +27,14 @@ object ImageRepository {
 
     val ImageSetterGetter = MutableLiveData<ImageModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context): MutableLiveData<ImageModel> {
-        getLocation(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String): MutableLiveData<ImageModel> {
+        getLocation(context, ID_LeadGenerateProduct)
         return ImageSetterGetter
     }
 
-    private fun getLocation(context: Context) {
+    private fun getLocation(context: Context,ID_LeadGenerateProduct : String) {
         try {
+            ImageSetterGetter.value = ImageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -66,7 +68,7 @@ object ImageRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ImageActivity.strid))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
 
 
                 Log.i("TAG33",requestObject1.toString())

@@ -10,8 +10,8 @@ import com.perfect.prodsuit.Repository.InfoRepository
 class InfoViewModel: ViewModel() {
 
     var InfoData: MutableLiveData<InfoModel>? = null
-    fun getInfo(context: Context) : LiveData<InfoModel>? {
-        InfoData = InfoRepository.getServicesApiCall(context)
+    fun getInfo(context: Context,ID_LeadGenerateProduct  : String) : LiveData<InfoModel>? {
+        InfoData = InfoRepository.getServicesApiCall(context,ID_LeadGenerateProduct)
         return InfoData
     }
 

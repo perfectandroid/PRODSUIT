@@ -23,13 +23,14 @@ object LocationRepository {
 
     val locationSetterGetter = MutableLiveData<LocationModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LocationModel> {
-        getLocation(context)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :  String): MutableLiveData<LocationModel> {
+        getLocation(context,ID_LeadGenerateProduct)
         return locationSetterGetter
     }
 
-    private fun getLocation(context: Context) {
+    private fun getLocation(context: Context,ID_LeadGenerateProduct : String) {
         try {
+            locationSetterGetter.value = LocationModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -54,7 +55,7 @@ object LocationRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.strid))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
 
 
                 Log.e("TAG33",requestObject1.toString())

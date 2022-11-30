@@ -64,7 +64,7 @@ class ImageActivity : AppCompatActivity(),View.OnClickListener{
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                imageViewModel.getImage(this)!!.observe(this,
+                imageViewModel.getImage(this,strid)!!.observe(this,
                         { ImageSetterGetter ->
                             val msg = ImageSetterGetter.message
                             if (msg!!.length > 0) {

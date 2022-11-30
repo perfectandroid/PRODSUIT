@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ActivityListModel
 import com.perfect.prodsuit.Repository.ActivityListRepository
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 
 class ActivityListViewModel : ViewModel() {
 
     var activitylistLiveData: MutableLiveData<ActivityListModel>? = null
 
-    fun getActivitylist(context: Context) : LiveData<ActivityListModel>? {
-        activitylistLiveData = ActivityListRepository.getServicesApiCall(context)
+    fun getActivitylist(context: Context, ID_LeadGenerateProduct :  String,ID_ActionType :  String) : LiveData<ActivityListModel>? {
+        activitylistLiveData = ActivityListRepository.getServicesApiCall(context,ID_LeadGenerateProduct,ID_ActionType)
         return activitylistLiveData
     }
 

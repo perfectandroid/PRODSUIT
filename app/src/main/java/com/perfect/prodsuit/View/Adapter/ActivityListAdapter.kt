@@ -79,7 +79,8 @@ class ActivityListAdapter(internal var context: Context, internal var jsonArray:
                 {
                     holder.im_Call_Icon.setImageDrawable(email)
                 }
-                holder.txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+               // holder.txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+                holder.txtStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.status_png, 0, 0, 0);
 
             }
 

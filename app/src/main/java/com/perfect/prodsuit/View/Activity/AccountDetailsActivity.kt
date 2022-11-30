@@ -1127,7 +1127,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             true -> {
                 imInfoLoading.visibility = View.VISIBLE
                 Glide.with(this).load(R.drawable.loadinggif).into(imInfoLoading);
-                infoViewModel.getInfo(this)!!.observe(
+                infoViewModel.getInfo(this,ID_LeadGenerateProduct)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -1169,11 +1169,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             }
                         } else {
                             imInfoLoading.visibility = View.GONE
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
             }
@@ -1724,7 +1724,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                activitylistViewModel.getActivitylist(this)!!.observe(
+                activitylistViewModel.getActivitylist(this, ID_LeadGenerateProduct,ID_ActionType)!!.observe(
                     this,
                     Observer { activitylistSetterGetter ->
                         val msg = activitylistSetterGetter.message
@@ -1764,11 +1764,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 alertDialog.show()
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 // progressDialog!!.dismiss()
@@ -1796,7 +1796,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                locationViewModel.getLocation(this)!!.observe(
+                locationViewModel.getLocation(this, ID_LeadGenerateProduct)!!.observe(
                     this,
                     Observer { locationSetterGetter ->
                         val msg = locationSetterGetter.message
@@ -1826,11 +1826,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()
@@ -1919,7 +1919,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                imageViewModel.getImage(this)!!.observe(this,
+                imageViewModel.getImage(this, ID_LeadGenerateProduct)!!.observe(this,
                     { ImageSetterGetter ->
                         val msg = ImageSetterGetter.message
                         if (msg!!.length > 0) {
@@ -1968,11 +1968,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             }
 
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()

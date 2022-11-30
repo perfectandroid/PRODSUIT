@@ -25,14 +25,15 @@ object ActivityListRepository {
 
     val activitylistSetterGetter = MutableLiveData<ActivityListModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context): MutableLiveData<ActivityListModel> {
-        getActivitylist(context)
+    fun getServicesApiCall(context: Context, ID_LeadGenerateProduct :  String,ID_ActionType :  String): MutableLiveData<ActivityListModel> {
+        getActivitylist(context,ID_LeadGenerateProduct,ID_ActionType)
         return activitylistSetterGetter
     }
 
 
-    private fun getActivitylist(context: Context) {
+    private fun getActivitylist(context: Context, ID_LeadGenerateProduct :  String,ID_ActionType :  String) {
         try {
+            activitylistSetterGetter.value = ActivityListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -64,9 +65,12 @@ object ActivityListRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_LeadGenerateProduct))
-                requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(AccountDetailsActivity.ID_ActionType))
-                Log.i("requestobject",requestObject1.toString()+"\n"+AccountDetailsActivity.ID_ActionType+"\n"+AccountDetailsActivity.ID_LeadGenerateProduct)
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+                requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
+
+                Log.e("requestobject  7011  ","\n"+ID_ActionType+"\n"+ID_LeadGenerateProduct)
+                Log.e("requestobject  7012  ","\n"+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
