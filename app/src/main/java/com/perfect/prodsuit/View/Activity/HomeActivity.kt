@@ -493,7 +493,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                changempinViewModel.changeMpin(this)!!.observe(
+                changempinViewModel.changeMpin(this,strOldMPIN, strNewMPIN)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message

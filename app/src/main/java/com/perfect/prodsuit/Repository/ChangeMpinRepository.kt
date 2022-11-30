@@ -24,12 +24,12 @@ object ChangeMpinRepository {
     private var progressDialog: ProgressDialog? = null
     val changempinSetterGetter = MutableLiveData<ChangeMpinModel>()
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ChangeMpinModel> {
-        ChangeMpin(context)
+    fun getServicesApiCall(context: Context,strOldMPIN : String, strNewMPIN : String): MutableLiveData<ChangeMpinModel> {
+        ChangeMpin(context,strOldMPIN,strNewMPIN)
         return changempinSetterGetter
     }
 
-    private fun ChangeMpin(context: Context) {
+    private fun ChangeMpin(context: Context,strOldMPIN : String, strNewMPIN : String) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -61,8 +61,8 @@ object ChangeMpinRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("6"))
-                requestObject1.put("MPIN", ProdsuitApplication.encryptStart(HomeActivity.strNewMPIN))
-                requestObject1.put("OldMPIN", ProdsuitApplication.encryptStart(HomeActivity.strOldMPIN))
+                requestObject1.put("MPIN", ProdsuitApplication.encryptStart(strNewMPIN))
+                requestObject1.put("OldMPIN", ProdsuitApplication.encryptStart(strOldMPIN))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

@@ -10,9 +10,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.DistrictModel
-import com.perfect.prodsuit.Model.StateModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
 import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody

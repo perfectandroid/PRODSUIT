@@ -10,9 +10,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.CountryModel
-import com.perfect.prodsuit.Model.PincodeSearchModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.CustomerSearchActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
