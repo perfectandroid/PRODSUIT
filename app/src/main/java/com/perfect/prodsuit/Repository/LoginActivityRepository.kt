@@ -2,6 +2,7 @@ package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
@@ -96,6 +97,9 @@ object LoginActivityRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("2"))
                 requestObject1.put("MobileNumber", ProdsuitApplication.encryptStart(strEPhone))
+
+                Log.e("TAG","requestObject1  101   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

@@ -2,6 +2,7 @@ package com.perfect.prodsuit.Repository
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
@@ -22,6 +23,7 @@ import java.util.*
 
 object SetMpinActivityRepository {
 
+    var TAG = "SetMpinActivityRepository"
     private var progressDialog: ProgressDialog? = null
     val setmpinSetterGetter = MutableLiveData<SetMpinModel>()
 
@@ -64,6 +66,9 @@ object SetMpinActivityRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("4"))
                 requestObject1.put("MPIN", ProdsuitApplication.encryptStart(strMPIN))
+
+                Log.e(TAG,"requestObject1  691   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
