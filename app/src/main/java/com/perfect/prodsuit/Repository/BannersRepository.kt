@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Repository
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
@@ -19,6 +20,7 @@ import java.util.*
 
 object BannersRepository {
 
+    var TAG = "BannersRepository"
     val bannerSetterGetter = MutableLiveData<BannerModel>()
 
     fun getServicesApiCall(context: Context): MutableLiveData<BannerModel> {
@@ -49,6 +51,8 @@ object BannersRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("12"))
+
+                Log.e(TAG,"requestObject1   54   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
