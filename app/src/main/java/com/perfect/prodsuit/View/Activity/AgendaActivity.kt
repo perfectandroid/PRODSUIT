@@ -1327,11 +1327,18 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
 //                                ).show()
                             }
                         }catch (e : Exception){
-                            Toast.makeText(
-                                applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            val builder = AlertDialog.Builder(
+                                this@AgendaActivity,
+                                R.style.MyDialogTheme
+                            )
+                            builder.setMessage(""+e.toString())
+                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                            onBackPressed()
+//                                            finish()
+                            }
+                            val alertDialog: AlertDialog = builder.create()
+                            alertDialog.setCancelable(false)
+                            alertDialog.show()
                         }
 
                     })
