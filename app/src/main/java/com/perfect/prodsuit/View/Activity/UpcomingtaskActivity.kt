@@ -118,6 +118,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun getUpcomingtasksList() {
         var UpcomingDet = 0
+        rv_upcmngtasklist!!.adapter = null
         context = this@UpcomingtaskActivity
         upcomingtaskslistViewModel = ViewModelProvider(this).get(UpcomingtasksListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -162,8 +163,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             )
                                             builder.setMessage(jObject.getString("EXMessage"))
                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                onBackPressed()
-                                                finish()
+//                                                onBackPressed()
+//                                                finish()
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)

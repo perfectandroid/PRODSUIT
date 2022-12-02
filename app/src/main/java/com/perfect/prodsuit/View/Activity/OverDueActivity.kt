@@ -120,6 +120,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
     private fun getOverdueList() {
         var overDueDet = 0
+        rv_overduelist!!.adapter = null
         context = this@OverDueActivity
         overduelistViewModel = ViewModelProvider(this).get(OverDueListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -166,8 +167,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             )
                                             builder.setMessage(jObject.getString("EXMessage"))
                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                onBackPressed()
-                                                finish()
+
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)

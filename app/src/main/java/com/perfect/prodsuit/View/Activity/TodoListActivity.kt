@@ -126,6 +126,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
     private fun getTodoList() {
         var toDoDet = 0
+        rv_todolist!!.adapter = null
         context = this@TodoListActivity
         todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -168,8 +169,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             )
                                             builder.setMessage(jObject.getString("EXMessage"))
                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                onBackPressed()
-                                                finish()
+//                                                onBackPressed()
+//                                                finish()
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)
