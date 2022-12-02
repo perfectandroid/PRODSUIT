@@ -56,7 +56,9 @@ object InfoRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
-                Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
+
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

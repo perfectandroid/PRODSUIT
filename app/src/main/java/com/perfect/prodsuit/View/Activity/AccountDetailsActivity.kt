@@ -1056,38 +1056,43 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   724   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadInfoetails")
-                                leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
-                                if (leadInfoArrayList.length()>0){
-                                    if (leadInfo == 0){
-                                        leadInfo++
-                                        val jObjectLeadInfo = leadInfoArrayList.getJSONObject(0)
-                                        txtName!!.setText(""+jObjectLeadInfo.getString("LgCusName"))
-                                        txtAddress!!.setText(""+jObjectLeadInfo.getString("LgCusAddress"))
-                                        txtPhone!!.setText(""+jObjectLeadInfo.getString("LgCusMobile"))
-                                        txtEmail!!.setText(""+jObjectLeadInfo.getString("LgCusEmail"))
-                                        txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LgLeadNo"))
-                                        txtCategory!!.setText(""+jObjectLeadInfo.getString("CatName"))
-                                        txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
-                                        txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
-                                        txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
-                                        LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
-                                        LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   724   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("LeadInfoetails")
+                                    leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                    if (leadInfoArrayList.length()>0){
+                                        if (leadInfo == 0){
+                                            leadInfo++
+                                            val jObjectLeadInfo = leadInfoArrayList.getJSONObject(0)
+                                            txtName!!.setText(""+jObjectLeadInfo.getString("LgCusName"))
+                                            txtAddress!!.setText(""+jObjectLeadInfo.getString("LgCusAddress"))
+                                            txtPhone!!.setText(""+jObjectLeadInfo.getString("LgCusMobile"))
+                                            txtEmail!!.setText(""+jObjectLeadInfo.getString("LgCusEmail"))
+                                            txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LgLeadNo"))
+                                            txtCategory!!.setText(""+jObjectLeadInfo.getString("CatName"))
+                                            txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
+                                            txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
+                                            txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
+                                            LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
+                                            LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
+                                        }
                                     }
+                                } else {
                                 }
                             } else {
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext,""+e.toString(),Toast.LENGTH_SHORT).show()
                         }
+
                     })
             }
             false -> {

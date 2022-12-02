@@ -77,6 +77,7 @@ object AgendaCountRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 Log.e(TAG,"requestObject1   7711   "+requestObject1)
+                Log.e(TAG,"requestObject1   7711   "+ProdsuitApplication.encryptStart("42"))
 
             } catch (e: Exception) {
                 e.printStackTrace()
