@@ -18,6 +18,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 object OverDueRepository {
@@ -57,6 +58,14 @@ object OverDueRepository {
             val requestObject1 = JSONObject()
             try {
 
+                var formateDate = ""
+                if (!date.equals("")){
+                    val parser = SimpleDateFormat("dd-MM-yyyy")
+                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    formateDate = formatter.format(parser.parse(date))
+                }
+
+
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -69,11 +78,14 @@ object OverDueRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
-                requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+               // requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(formateDate))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
 
                 Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
                 Log.e("TAG","requestObject1   741     "+requestObject1)
+                Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
+                Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
 
 
 

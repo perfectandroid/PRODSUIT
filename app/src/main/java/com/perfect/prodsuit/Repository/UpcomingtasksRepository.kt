@@ -18,6 +18,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 object UpcomingtasksRepository {
@@ -65,6 +66,13 @@ object UpcomingtasksRepository {
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 //                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
+                var formateDate = ""
+                if (!date.equals("")){
+                    val parser = SimpleDateFormat("dd-MM-yyyy")
+                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    formateDate = formatter.format(parser.parse(date))
+                }
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -76,7 +84,8 @@ object UpcomingtasksRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
-                requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+              //  requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(formateDate))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
 
                 Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
