@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -31,6 +32,7 @@ object LeadStatusDashRepository {
 
     private fun getLeadStatusDashboard(context: Context) {
         try {
+            leadstatusdashSetterGetter.value = LeadStatusDashModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -66,7 +68,7 @@ object LeadStatusDashRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                Log.e(LeadDashRepository.TAG,"requestObject1   69   "+requestObject1)
+                Log.e(LeadDashRepository.TAG,"requestObject1   71   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -92,15 +94,18 @@ object LeadStatusDashRepository {
                         leadstatusdashSetterGetter.value = LeadStatusDashModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
         }
     }
 }

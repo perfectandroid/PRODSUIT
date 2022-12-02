@@ -134,47 +134,52 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   100   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   100   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                               // val ss = "[{\"Count\": 10,\"Fileds\": \"Hot\"},{\"Count\": 25,\"Fileds\": \"Cool\"},{\"Count\": 55,\"Fileds\": \"Warm\"}]"
-                               //  chartLineArrayList = JSONArray(ss)
+                                    // val ss = "[{\"Count\": 10,\"Fileds\": \"Hot\"},{\"Count\": 25,\"Fileds\": \"Cool\"},{\"Count\": 55,\"Fileds\": \"Warm\"}]"
+                                    //  chartLineArrayList = JSONArray(ss)
 
-                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                leadDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                tv_leadTotal!!.setText(jobjt.getString("TotalCount"))
-                                Log.e(TAG,"array  125   "+leadDashArrayList)
+                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                    leadDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                    tv_leadTotal!!.setText(jobjt.getString("TotalCount"))
+                                    Log.e(TAG,"array  125   "+leadDashArrayList)
 
-                                setLineChart()
-                                val recycLineChart = findViewById(R.id.recycLineChart) as RecyclerView
-                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
-                                recycLineChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                val adapter = LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
-                                recycLineChart!!.adapter = adapter
-                              //  adapter.setClickListener(this@DashBoardActivity)
+                                    setLineChart()
+                                    val recycLineChart = findViewById(R.id.recycLineChart) as RecyclerView
+                                    val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                    recycLineChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
+                                    recycLineChart!!.adapter = adapter
+                                    //  adapter.setClickListener(this@DashBoardActivity)
 
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@DashBoardActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@DashBoardActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : java.lang.Exception){
+                            Toast.makeText(applicationContext,""+e.toString(),Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -201,22 +206,23 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   190   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   190   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                leadStatusDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
-                                Log.e(TAG,"array  125   "+leadStatusDashArrayList)
+                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                    leadStatusDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
+                                    Log.e(TAG,"array  125   "+leadStatusDashArrayList)
 
-                                setBarchart()
-                                val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
-                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
-                                recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                val adapter = BarChartAdapter(this@DashBoardActivity, leadStatusDashArrayList)
-                                recycBarChart!!.adapter = adapter
+                                    setBarchart()
+                                    val recycBarChart = findViewById(R.id.recycBarChart) as RecyclerView
+                                    val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                    recycBarChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = BarChartAdapter(this@DashBoardActivity, leadStatusDashArrayList)
+                                    recycBarChart!!.adapter = adapter
 
 //                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
 //                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
@@ -227,25 +233,29 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
 //                                    }
 //
 //                                }
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@DashBoardActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@DashBoardActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : Exception){
+                            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -271,42 +281,47 @@ class DashBoardActivity : AppCompatActivity() , View.OnClickListener{
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   190   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   190   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                leadStagesDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
-                                Log.e(TAG,"array  264   "+leadStagesDashArrayList)
+                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                    leadStagesDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                    tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
+                                    Log.e(TAG,"array  264   "+leadStagesDashArrayList)
 
-                                setPieChart()
-                                val recycPieChart = findViewById(R.id.recycPieChart) as RecyclerView
-                                val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
-                                recycPieChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                val adapter = PieChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
-                                recycPieChart!!.adapter = adapter
+                                    setPieChart()
+                                    val recycPieChart = findViewById(R.id.recycPieChart) as RecyclerView
+                                    val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                    recycPieChart!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = PieChartAdapter(this@DashBoardActivity, leadStagesDashArrayList)
+                                    recycPieChart!!.adapter = adapter
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@DashBoardActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@DashBoardActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : Exception){
+                            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
