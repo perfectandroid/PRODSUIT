@@ -812,50 +812,55 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
+                        try {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
-                            //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
-                            if (jObject.getString("StatusCode") == "0") {
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("DeleteLeadGenerate")
-                                var responsemessage = jobjt.getString("ResponseMessage")
+                                        val jobjt = jObject.getJSONObject("DeleteLeadGenerate")
+                                        var responsemessage = jobjt.getString("ResponseMessage")
 
 
-                                Log.i("Result",responsemessage)
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(responsemessage)
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    //  val i = Intent(this@AddNoteActivity, AccountDetailsActivity::class.java)
-                                    // startActivity(i)
+                                        Log.i("Result",responsemessage)
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountDetailsActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(responsemessage)
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            //  val i = Intent(this@AddNoteActivity, AccountDetailsActivity::class.java)
+                                            // startActivity(i)
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountDetailsActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -1597,42 +1602,47 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Observer { followuptypeSetterGetter ->
                         val msg = followuptypeSetterGetter.message
                         progressDialog!!.dismiss()
-                        if (msg!!.length > 0) {
+                        try {
+                            if (msg!!.length > 0) {
 
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   284   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
-                                followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
-                                if (followupDetailArrayList.length()>0){
-                                    if (agendaAction == 0){
-                                        agendaAction++
-                                         agendaTypePopup(followupDetailArrayList,agendaTypeClick1)
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   284   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                    followupDetailArrayList = jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                    if (followupDetailArrayList.length()>0){
+                                        if (agendaAction == 0){
+                                            agendaAction++
+                                            agendaTypePopup(followupDetailArrayList,agendaTypeClick1)
+
+                                        }
 
                                     }
 
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext,""+e.toString(),Toast.LENGTH_SHORT).show()
                         }
+
                     })
 
             }
@@ -1734,47 +1744,54 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     Observer { activitylistSetterGetter ->
                         val msg = activitylistSetterGetter.message
                         progressDialog!!.dismiss()
-                        if (msg!!.length > 0) {
+
+                        try {
+                            if (msg!!.length > 0) {
 
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"activity   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("ActivitiesDetails")
-                                activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
-                                if (activityArrayList.length()>0){
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"activity   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("ActivitiesDetails")
+                                    activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
+                                    if (activityArrayList.length()>0){
 //
-                                    rv_activity!!.visibility=View.VISIBLE
-                                    rv_activity = findViewById(R.id.rv_activity) as RecyclerView
-                                    val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
-                                    rv_activity!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = ActivityListAdapter(this@AccountDetailsActivity, activityArrayList)
-                                    rv_activity!!.adapter = adapter
-                                    adapter.setClickListener(this@AccountDetailsActivity)
-                                    // }
+                                        rv_activity!!.visibility=View.VISIBLE
+                                        rv_activity = findViewById(R.id.rv_activity) as RecyclerView
+                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                        rv_activity!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ActivityListAdapter(this@AccountDetailsActivity, activityArrayList)
+                                        rv_activity!!.adapter = adapter
+                                        adapter.setClickListener(this@AccountDetailsActivity)
+                                        // }
 
+                                    }
+
+                                } else {
+                                    rv_activity!!.visibility=View.GONE
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                rv_activity!!.visibility=View.GONE
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
+
                     })
                 // progressDialog!!.dismiss()
             }
@@ -1805,38 +1822,43 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { locationSetterGetter ->
                         val msg = locationSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                latitude = jobjt!!.getString("LocationLatitude")
-                                longitude = jobjt!!.getString("LocationLongitude")
-                                Log.e("LocationDetails", latitude + "\n" + longitude)
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("LeadImageDetails")
+                                    latitude = jobjt!!.getString("LocationLatitude")
+                                    longitude = jobjt!!.getString("LocationLongitude")
+                                    Log.e("LocationDetails", latitude + "\n" + longitude)
 
-                                fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
-                                fetchLocation()
+                                    fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
+                                    fetchLocation()
 
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-
-                            }
-                        } else {
+                            } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }

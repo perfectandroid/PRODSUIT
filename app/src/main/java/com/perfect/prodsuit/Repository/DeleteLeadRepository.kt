@@ -93,7 +93,7 @@ object DeleteLeadRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -105,7 +105,7 @@ object DeleteLeadRepository {
         }
         catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
         }
     }
 
