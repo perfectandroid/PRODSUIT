@@ -95,8 +95,9 @@ object TodoListRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
+                        Log.e("TodoList Respose",response.body())
                         val jObject = JSONObject(response.body())
-                        Log.i("TodoList Respose",response.body())
+
                         val users = ArrayList<TodoListModel>()
                         users.add(TodoListModel(response.body()))
                         val msg = users[0].message

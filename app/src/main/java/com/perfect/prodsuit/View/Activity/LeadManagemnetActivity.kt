@@ -432,7 +432,16 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
                                 tv_upcoming_count!!.setText(jobjt.getString("UpComingWorks"))
 
                             } else {
-
+                                val builder = AlertDialog.Builder(
+                                    this@LeadManagemnetActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                             }
                         } else {
                             progressDialog!!.dismiss()
