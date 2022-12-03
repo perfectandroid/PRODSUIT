@@ -743,23 +743,24 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                        try {
+                            if (msg!!.length > 0) {
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   14781   "+msg.length)
-                            Log.e(TAG,"msg   14782   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   14781   "+msg.length)
+                                Log.e(TAG,"msg   14782   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
-                                Log.e(TAG,"msg   14783   "+jobjt.getString("EmpFName"))
+                                    val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
+                                    Log.e(TAG,"msg   14783   "+jobjt.getString("EmpFName"))
 
-                                ID_Department = jobjt.getString("FK_Department")
-                                tie_Department!!.setText(jobjt.getString("Department"))
-                                ID_NextEmployee = jobjt.getString("ID_Employee")
-                                tie_NextEmployee!!.setText(jobjt.getString("EmpFName"))
+                                    ID_Department = jobjt.getString("FK_Department")
+                                    tie_Department!!.setText(jobjt.getString("Department"))
+                                    ID_NextEmployee = jobjt.getString("ID_Employee")
+                                    tie_NextEmployee!!.setText(jobjt.getString("EmpFName"))
 
 
-                            } else {
+                                } else {
 //                                val builder = AlertDialog.Builder(
 //                                    this@LeadGenerationActivity,
 //                                    R.style.MyDialogTheme
@@ -770,14 +771,18 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                                val alertDialog: AlertDialog = builder.create()
 //                                alertDialog.setCancelable(false)
 //                                alertDialog.show()
-                            }
-                        } else {
+                                }
+                            } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -2103,63 +2108,68 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
+                        try {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
-                                //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
-                                Log.e(TAG,"msg  1126     "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                                    Log.e(TAG,"msg  1126     "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("UpdateLeadManagement")
-                                    try {
+                                        val jobjt = jObject.getJSONObject("UpdateLeadManagement")
+                                        try {
 
-                                        val suceessDialog = Dialog(this)
-                                        suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                        suceessDialog!!.setCancelable(false)
-                                        suceessDialog!! .setContentView(R.layout.success_popup)
-                                        suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
-                                        val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
-                                        val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
-                                        val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-                                        val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
-                                        //LeadNumber
-                                        tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                        tv_label!!.setText("LeadGenerate Action")
-                                        tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                            tv_label!!.setText("LeadGenerate Action")
+                                            tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
 
-                                        tv_succesok!!.setOnClickListener {
-                                            suceessDialog!!.dismiss()
-                                            onBackPressed()
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                onBackPressed()
 
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
                                         }
-
-                                        suceessDialog!!.show()
-                                        suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@FollowUpActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
-                            }
-                        } else {
+                            } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }

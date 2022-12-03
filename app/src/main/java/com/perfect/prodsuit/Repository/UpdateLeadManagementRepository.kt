@@ -115,7 +115,7 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+              //  requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
 
                 requestObject1.put("FK_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
                 requestObject1.put("FK_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))

@@ -78,9 +78,11 @@ object StateRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(FK_Country))
+                requestObject1.put("FK_Country", ProdsuitApplication.encryptStart(FK_Country))
 
+                Log.e(TAG,"requestObject1   83   "+FK_Country)
                 Log.e(TAG,"requestObject1   83   "+requestObject1)
+
 
             } catch (e: Exception) {
                 e.printStackTrace()
