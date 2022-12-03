@@ -546,47 +546,53 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   82   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AddDocument")
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   82   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("AddDocument")
 
-                                val builder = AlertDialog.Builder(
-                                    this@AddDocumentActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jobjt.getString("ResponseMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    val builder = AlertDialog.Builder(
+                                        this@AddDocumentActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobjt.getString("ResponseMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
 //                                    val i = Intent(this@AddDocumentActivity, AccountDetailsActivity::class.java)
 //                                    startActivity(i)
 //                                    finish()
 
-                                    onBackPressed()
+                                        onBackPressed()
 
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AddDocumentActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@AddDocumentActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
