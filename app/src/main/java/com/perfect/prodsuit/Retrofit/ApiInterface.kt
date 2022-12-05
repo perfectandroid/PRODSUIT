@@ -127,6 +127,9 @@ interface ApiInterface {
     @POST("UserValidations/DistrictDetails")
     fun getDistrictDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AreaDetails")
+    fun getAreaDetails(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/PostDetails")
     fun getPostDetails(@Body body: RequestBody): Call<String>
 

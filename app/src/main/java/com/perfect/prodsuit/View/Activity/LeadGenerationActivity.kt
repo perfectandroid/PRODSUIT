@@ -186,8 +186,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var recyDistrict: RecyclerView? = null
 
     lateinit var postViewModel: PostViewModel
+    lateinit var areaViewModel: AreaViewModel
+    lateinit var areaArrayList : JSONArray
+    lateinit var areaSort : JSONArray
     lateinit var postArrayList : JSONArray
     lateinit var postSort : JSONArray
+    private var dialogArea : Dialog? = null
     private var dialogPost : Dialog? = null
     var recyPost: RecyclerView? = null
 
@@ -196,6 +200,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var edtCountry: EditText? = null
     private var edtState: EditText? = null
     private var edtDistrict: EditText? = null
+    private var edtArea: EditText? = null
     private var edtPost: EditText? = null
     private var edtLandLine: EditText? = null
     private var imgPinSearch: ImageView? = null
@@ -382,6 +387,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
         districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
+        areaViewModel = ViewModelProvider(this).get(AreaViewModel::class.java)
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         customerAddViewModel = ViewModelProvider(this).get(CustomerAddViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
@@ -463,6 +469,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCountry!!.setText("")
         edtState!!.setText("")
         edtDistrict!!.setText("")
+        edtArea!!.setText("")
         edtPost!!.setText("")
         edtLandLine!!.setText("")
 
@@ -643,6 +650,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCountry= findViewById<EditText>(R.id.edtCountry)
         edtState= findViewById<EditText>(R.id.edtState)
         edtDistrict= findViewById<EditText>(R.id.edtDistrict)
+        edtArea= findViewById<EditText>(R.id.edtArea)
         edtPost= findViewById<EditText>(R.id.edtPost)
         edtLandLine= findViewById<EditText>(R.id.edtLandLine)
 
@@ -722,6 +730,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCountry!!.setOnClickListener(this)
         edtState!!.setOnClickListener(this)
         edtDistrict!!.setOnClickListener(this)
+        edtArea!!.setOnClickListener(this)
         edtPost!!.setOnClickListener(this)
         imgPinSearch!!.setOnClickListener(this)
 
@@ -887,13 +896,26 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
 
             }
-            R.id.edtPost->{
+            R.id.edtArea->{
                 if (FK_District.equals("")){
 //                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
 //                    snackbar.setActionTextColor(Color.WHITE)
 //                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
 //                    snackbar.show()
                     Config.snackBars(applicationContext,v,"Select District")
+                }else{
+                    Config.disableClick(v)
+                    getArea(v)
+                }
+
+            }
+            R.id.edtPost->{
+                if (FK_Area.equals("")){
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(applicationContext,v,"Select Area")
                 }else{
                     Config.disableClick(v)
                     getPost(v)
@@ -2947,6 +2969,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                              edtCountry!!.setText(jobjt.getString("Country"))
                                              edtState!!.setText(jobjt.getString("States"))
                                              edtDistrict!!.setText(jobjt.getString("District"))
+                                             edtArea!!.setText("")
                                              edtPost!!.setText(jobjt.getString("Post"))
 
                                              Log.e(TAG,"Post  21082   "+jobjt.getString("Post"))
@@ -3006,6 +3029,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCountry!!.setText("")
         edtState!!.setText("")
         edtDistrict!!.setText("")
+        edtArea!!.setText("")
         edtPost!!.setText("")
         edtLandLine!!.setText("")
     }
@@ -3458,7 +3482,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                postViewModel.getPost(this, FK_District)!!.observe(
+                postViewModel.getPost(this, FK_Area)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -3583,6 +3607,145 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
 
     }
+
+    private fun getArea(v: View) {
+        var areaDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
+                areaViewModel.getArea(this, FK_District)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (areaDet == 0){
+                                    areaDet++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   2353   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("AreaDetails")
+                                        areaArrayList = jobjt.getJSONArray("AreaDetailsList")
+
+                                        if (areaArrayList.length()>0){
+//                                            if (postDet == 0){
+//                                                postDet++
+                                            areaDetailPopup(areaArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e: Exception){
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun areaDetailPopup(areaArrayList: JSONArray) {
+
+        try {
+
+            dialogArea = Dialog(this)
+            dialogArea!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogArea!! .setContentView(R.layout.area_list_popup)
+            dialogArea!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycArea = dialogArea!! .findViewById(R.id.recycArea) as RecyclerView
+            val etsearch = dialogArea!! .findViewById(R.id.etsearch) as EditText
+
+            areaSort = JSONArray()
+            for (k in 0 until areaArrayList.length()) {
+                val jsonObject = areaArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                areaSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycArea!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, areaArrayList)
+            val adapter = AreaDetailAdapter(this@LeadGenerationActivity, areaSort)
+            recycArea!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    areaSort = JSONArray()
+
+                    for (k in 0 until areaArrayList.length()) {
+                        val jsonObject = areaArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Area").length) {
+                            if (jsonObject.getString("Area")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                areaSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"areaSort               7103    "+areaSort)
+                    val adapter = AreaDetailAdapter(this@LeadGenerationActivity, areaSort)
+                    recycArea!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
+
+            dialogArea!!.show()
+            dialogArea!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogArea!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
 
     private fun validations(v: View) {
 
@@ -5097,6 +5260,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             edtCountry!!.setText(jsonObject.getString("Country"))
             edtState!!.setText(jsonObject.getString("States"))
             edtDistrict!!.setText(jsonObject.getString("District"))
+            edtArea!!.setText("")
             edtPost!!.setText(jsonObject.getString("Post"))
 
 
@@ -5244,6 +5408,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              edtState!!.setText("")
              edtDistrict!!.setText("")
+             edtArea!!.setText("")
              edtPost!!.setText("")
              edtPincode!!.setText("")
              edtLandLine!!.setText("")
@@ -5265,6 +5430,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              FK_Post     = ""
 
              edtDistrict!!.setText("")
+             edtArea!!.setText("")
              edtPost!!.setText("")
              edtPincode!!.setText("")
              edtLandLine!!.setText("")
@@ -5284,6 +5450,27 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              FK_Place    = ""
              FK_Post     = ""
 
+             edtArea!!.setText("")
+             edtPost!!.setText("")
+             edtPincode!!.setText("")
+             edtLandLine!!.setText("")
+
+
+         }
+
+         if (data.equals("areadetail")){
+             dialogArea!!.dismiss()
+//             val jsonObject = postArrayList.getJSONObject(position)
+             val jsonObject = areaSort.getJSONObject(position)
+             Log.e(TAG,"jsonObject  5465    "+jsonObject)
+//             Log.e(TAG,"FK_Post  3672    "+jsonObject.getString("FK_Post"))
+//             Log.e(TAG,"PinCode  3672    "+jsonObject.getString("PinCode"))
+
+             FK_Area = jsonObject.getString("FK_Area")
+             edtArea!!.setText(jsonObject.getString("Area"))
+//             edtPincode!!.setText(jsonObject.getString("PinCode"))
+
+             FK_Post     = ""
              edtPost!!.setText("")
              edtPincode!!.setText("")
              edtLandLine!!.setText("")
@@ -5423,6 +5610,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         else if (FK_District.equals("")){
             Config.snackBars(context,v,"Select District")
+        }
+        else if (FK_Area.equals("")){
+            Config.snackBars(context,v,"Select Area")
         }
         else if (FK_Post.equals("")){
             Config.snackBars(context,v,"Select Post")
@@ -5900,7 +6090,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                         FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
                         strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
                         ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
-                        encode1, encode2,saveUpdateMode!!,strContactPerson!!, strContactNumber!!)!!.observe(
+                        encode1, encode2,saveUpdateMode!!,strContactPerson!!, strContactNumber!!, FK_Area)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
