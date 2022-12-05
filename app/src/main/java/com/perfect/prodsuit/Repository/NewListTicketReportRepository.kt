@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
@@ -35,6 +36,7 @@ object NewListTicketReportRepository {
                                        ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
 
         try {
+            newListTicketReportSetterGetter.value = NewListTicketReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -95,6 +97,7 @@ object NewListTicketReportRepository {
                 requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
                 requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
 
+                Log.e(TAG,"ReportMode   98   "+ReportMode)
                 Log.e(TAG,"requestObject1   98   "+requestObject1)
 
             } catch (e: Exception) {
@@ -119,16 +122,19 @@ object NewListTicketReportRepository {
                         newListTicketReportSetterGetter.value = NewListTicketReportModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
         }
 
     }

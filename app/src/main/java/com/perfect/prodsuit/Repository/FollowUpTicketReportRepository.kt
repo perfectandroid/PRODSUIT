@@ -99,6 +99,7 @@ object FollowUpTicketReportRepository {
                 requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
                 requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
 
+                Log.e(TAG,"ReportMode   77   "+ReportMode)
                 Log.e(TAG,"requestObject1   77   "+requestObject1)
 
             } catch (e: Exception) {

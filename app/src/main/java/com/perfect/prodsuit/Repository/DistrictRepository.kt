@@ -105,7 +105,7 @@ object DistrictRepository {
                         progressDialog!!.dismiss()
                         Toast.makeText(
                             context,
-                            ""+Config.SOME_TECHNICAL_ISSUES,
+                            ""+e.toString(),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -124,7 +124,7 @@ object DistrictRepository {
             progressDialog!!.dismiss()
             Toast.makeText(
                 context,
-                ""+Config.SOME_TECHNICAL_ISSUES,
+                ""+e.toString(),
                 Toast.LENGTH_LONG
             ).show()
         }

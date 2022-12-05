@@ -72,7 +72,7 @@ object NotificationRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i("Notification Response",response.body())
+                        Log.e("Notification Response",response.body())
                         val users = ArrayList<NotificationModel>()
                         users.add(NotificationModel(response.body()))
                         val msg = users[0].message

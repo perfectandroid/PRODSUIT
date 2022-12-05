@@ -344,50 +344,55 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                        try {
+                            if (msg!!.length > 0) {
 
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   344 1  "+msg.length)
-                            Log.e(TAG,"msg   3442   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("NewListDetailsReport")
-                                newListTicketReportArrayList = jobjt.getJSONArray("NewListDetails")
-                                if (newListTicketReportArrayList.length()>0){
-                                    Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
-                                    ll_NewListTicket!!.visibility = View.VISIBLE
-                                    try {
-                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-                                        recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        // recyLeadGenReport!!.setHasFixedSize(true)
-                                        val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
-                                        recyNewListTicketReport!!.adapter = adapter
-                                    }catch (e: Exception){
-                                        Log.e(TAG,"msg   3444   "+e.toString())
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   344 1  "+msg.length)
+                                Log.e(TAG,"msg   3442   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("NewListDetailsReport")
+                                    newListTicketReportArrayList = jobjt.getJSONArray("NewListDetails")
+                                    if (newListTicketReportArrayList.length()>0){
+                                        Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
+                                        ll_NewListTicket!!.visibility = View.VISIBLE
+                                        try {
+                                            val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                            recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
+                                            recyNewListTicketReport!!.adapter = adapter
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   3444   "+e.toString())
+                                        }
+
+
                                     }
 
-
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TicketReportDetailActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportDetailActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -417,50 +422,55 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                        try {
+                            if (msg!!.length > 0) {
 
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   3961   "+msg.length)
-                            Log.e(TAG,"msg   3962   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("StatusListDetailsReport")
-                                statusListTicketReportArrayList = jobjt.getJSONArray("StatusListDetails")
-                                if (statusListTicketReportArrayList.length()>0){
-                                    Log.e(TAG,"msg   3963   "+statusListTicketReportArrayList)
-                                    ll_StatusListTicket!!.visibility = View.VISIBLE
-                                    try {
-                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-                                        recyStatusListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        // recyLeadGenReport!!.setHasFixedSize(true)
-                                        val adapter = StatusListTicketReportAdapter(applicationContext, statusListTicketReportArrayList)
-                                        recyStatusListTicketReport!!.adapter = adapter
-                                    }catch (e: Exception){
-                                        Log.e(TAG,"msg   3964   "+e.toString())
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   3961   "+msg.length)
+                                Log.e(TAG,"msg   3962   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("StatusListDetailsReport")
+                                    statusListTicketReportArrayList = jobjt.getJSONArray("StatusListDetails")
+                                    if (statusListTicketReportArrayList.length()>0){
+                                        Log.e(TAG,"msg   3963   "+statusListTicketReportArrayList)
+                                        ll_StatusListTicket!!.visibility = View.VISIBLE
+                                        try {
+                                            val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                            recyStatusListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter = StatusListTicketReportAdapter(applicationContext, statusListTicketReportArrayList)
+                                            recyStatusListTicketReport!!.adapter = adapter
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   3964   "+e.toString())
+                                        }
+
+
                                     }
 
-
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TicketReportDetailActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportDetailActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }

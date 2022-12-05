@@ -1348,40 +1348,45 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   353   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   353   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("PriorityDetailsList")
-                                prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
-                                if (prodPriorityArrayList.length()>0){
-                                    if (prodpriority == 0){
-                                        prodpriority++
-                                        productPriorityPopup(prodPriorityArrayList)
+                                    val jobjt = jObject.getJSONObject("PriorityDetailsList")
+                                    prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
+                                    if (prodPriorityArrayList.length()>0){
+                                        if (prodpriority == 0){
+                                            prodpriority++
+                                            productPriorityPopup(prodPriorityArrayList)
+                                        }
+
                                     }
 
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TicketReportActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
@@ -1470,40 +1475,45 @@ class TicketReportActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   333   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   333   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("StatusDetailsList")
-                                prodStatusArrayList = jobjt.getJSONArray("StatusList")
-                                if (prodStatusArrayList.length()>0){
-                                    if (prodstatus == 0){
-                                        prodstatus++
-                                        productStatusPopup(prodStatusArrayList)
+                                    val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                    prodStatusArrayList = jobjt.getJSONArray("StatusList")
+                                    if (prodStatusArrayList.length()>0){
+                                        if (prodstatus == 0){
+                                            prodstatus++
+                                            productStatusPopup(prodStatusArrayList)
+                                        }
+
                                     }
 
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TicketReportActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }
