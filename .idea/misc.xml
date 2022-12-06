@@ -65,6 +65,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/fab_text_bg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_area.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_categorys.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_date.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_name.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_posts.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/pending_svg.xml" value="0.1695" />
@@ -75,6 +76,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_closered.xml" value="0.169" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_document.xml" value="0.169" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_down_docs.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_fd_actiontype.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_fd_followupby.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_icon_location.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_icon_mail.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_mail.xml" value="0.1695" />
