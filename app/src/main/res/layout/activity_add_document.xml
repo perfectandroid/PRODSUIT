@@ -130,7 +130,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:drawableRight="@drawable/arrow_down"
-                                        android:drawablePadding="10dp"
+                                        android:drawableStart="@drawable/svg_fd_date"
+                                        android:drawablePadding="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:editable="false"
                                         android:fontFamily="@font/myfont"
@@ -160,7 +161,8 @@
                                         android:id="@+id/tie_Subject"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:drawablePadding="10dp"
+                                        android:drawableStart="@drawable/svg_atc_subject"
+                                        android:drawablePadding="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center_vertical"
@@ -172,6 +174,8 @@
                                         android:textStyle="normal" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/til_Description"
@@ -189,10 +193,11 @@
                                         android:id="@+id/tie_Description"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:drawablePadding="10dp"
+                                        android:drawableStart="@drawable/svg_atc_desc"
+                                        android:drawablePadding="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        android:gravity="left"
+                                        android:gravity="top|left"
                                         android:lines="3"
                                         android:paddingLeft="10dp"
                                         android:paddingTop="8dp"
@@ -219,7 +224,8 @@
                                         android:id="@+id/tie_Attachment"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:drawablePadding="10dp"
+                                        android:drawableStart="@drawable/svg_atc_attachment"
+                                        android:drawablePadding="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:editable="false"
                                         android:fontFamily="@font/myfont"
