@@ -515,7 +515,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
+        return position % 2
     }
 
 

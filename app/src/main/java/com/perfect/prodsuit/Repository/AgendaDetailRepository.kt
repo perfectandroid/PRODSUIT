@@ -94,9 +94,9 @@ object AgendaDetailRepository {
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
 
-                Log.e(TAG,"Id_Agenda   78   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
-                Log.e(TAG,"requestObject1   7817   "+requestObject1)
-                Log.e(TAG,"requestObject1   78178   "+Id_Agenda+"   "+ID_ActionType)
+                Log.e(TAG,"Id_Agenda   0971   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
+                Log.e(TAG,"requestObject1   0972   "+requestObject1)
+                Log.e(TAG,"requestObject1   0973   "+Id_Agenda+"   "+ID_ActionType)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -112,6 +112,7 @@ object AgendaDetailRepository {
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"0974  response    "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<AgendaDetailModel>()
