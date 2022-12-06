@@ -128,54 +128,59 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
+                        try {
+                            if (msg!!.length > 0) {
 
-                            Log.e(TAG,"msg   89   "+msg)
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   302   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-
-
-
-                                val jobjt = jObject.getJSONObject("DocumentDetails")
-                                documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
-                                if (documentDetailArrayList.length()>0){
-
-                                    Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
+                                Log.e(TAG,"msg   89   "+msg)
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   302   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
 
 
-                                    recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
-                                    // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-                                    recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                                    // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = DocumentDetailAdapter(this@DocumentListActivity, documentDetailArrayList)
-                                    recyDocumentDetail!!.adapter = adapter
-                                    adapter.setClickListener(this@DocumentListActivity)
+                                    val jobjt = jObject.getJSONObject("DocumentDetails")
+                                    documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
+                                    if (documentDetailArrayList.length()>0){
+
+                                        Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
 
 
+
+                                        recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
+                                        // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                        recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                                        // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = DocumentDetailAdapter(this@DocumentListActivity, documentDetailArrayList)
+                                        recyDocumentDetail!!.adapter = adapter
+                                        adapter.setClickListener(this@DocumentListActivity)
+
+
+                                    }
+
+                                } else {
+
+                                    val builder = AlertDialog.Builder(
+                                        this@DocumentListActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
                             } else {
-
-                                val builder = AlertDialog.Builder(
-                                    this@DocumentListActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
+
                     })
                 progressDialog!!.dismiss()
             }

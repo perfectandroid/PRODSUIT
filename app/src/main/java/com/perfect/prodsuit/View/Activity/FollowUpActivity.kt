@@ -14,6 +14,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.opengl.Visibility
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -163,7 +164,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var DateType:Int = 0
 
     var strCallStatus:String?=""
+    var strCallDuration:String?=""
+    var strLongitude:String?=""
+    var strLatitude:String?=""
     var strRiskType:String?=""
+    var encode1: String?= ""
+    var encode2: String?= ""
     var strAcknowledgement:String?="0"
     var strSiteVisit:String?="0"
     var strNotice:String?="0"
@@ -2016,6 +2022,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
         strCallStatus = ""
+        strCallDuration=""
+        strLongitude=""
+        strLatitude=""
+        encode1 = ""
+        encode2 = ""
         strRiskType = ""
         tie_Longitude!!.setText("")
         tie_Latitude!!.setText("")
@@ -2066,6 +2077,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         else{
 
+
             Log.e(TAG,"FOLLOWUP  9941 "
                     +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
                     +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
@@ -2085,14 +2097,86 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     +"\n ID_Department         :  "+ID_Department
                     +"\n ID_NextEmployee       :  "+ID_NextEmployee)
 
-            saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
-                strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee)
+            strCallDuration = tie_CallDuration!!.text.toString()
+
+            if (ID_ActionType.equals("1")){
+
+                if (strCallStatus.equals("")){
+                    Config.snackBars(context,v,"Select Call Status")
+                }else if (strCallDuration.equals("")){
+                    Config.snackBars(context,v,"Enter Call Duration")
+                }
+                else{
+                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+                }
+
+            }else if (ID_ActionType.equals("2")){
+
+                strLongitude =tie_Longitude!!.text.toString();
+                strLatitude=tie_Latitude!!.text.toString();
+
+                if (strLatitude.equals("")){
+                    Config.snackBars(context,v,"Select Latitude")
+                }
+                else if (strLongitude.equals("")){
+                    Config.snackBars(context,v,"Select Longitude")
+                }
+                else{
+
+                    if(image1.equals(""))
+                    {
+                        encode1 = ""
+                    }
+                    else
+                    {
+                        val bitmap = BitmapFactory.decodeFile(image1)
+                        val stream =  ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                        } else {
+                            encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                        }
+                    }
+                    if(image2.equals(""))
+                    {
+                        encode2 = ""
+                    }
+                    else
+                    {
+                        val bitmap = BitmapFactory.decodeFile(image2)
+                        val stream =  ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                        } else {
+                            encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                        }
+                    }
+
+                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+                }
+            }
+            else{
+                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+            }
+
+
+
+
         }
     }
 
     private fun saveUpdateLeadManagement(ID_LeadGenerateProduct: String?, ID_LeadGenerate: String?, ID_ActionType: String?, ID_Employee: String?,
         ID_Status: String?, strFollowUpDate: String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
-        strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?) {
+        strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
+                                         strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
 
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2104,7 +2188,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 updateLeadManagementViewModel.getUpdateLeadManagement(this,ID_LeadGenerateProduct!!,ID_LeadGenerate!!,ID_ActionType!!,ID_Employee!!,ID_Status!!,strFollowUpDate,
-                    strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!)!!.observe(
+                    strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!,
+                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
