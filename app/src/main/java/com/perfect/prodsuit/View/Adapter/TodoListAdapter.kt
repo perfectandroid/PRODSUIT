@@ -86,7 +86,13 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                     holder.impreference.setColorFilter(context.getColor(R.color.ColorCold))
 
                 }
-                holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                if (SubMode.equals("2")){
+                    holder.tv_nextdate.text        = "Due Date : "+jsonObject!!.getString("NextActionDate")
+                }
+                else{
+                    holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                }
+
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {

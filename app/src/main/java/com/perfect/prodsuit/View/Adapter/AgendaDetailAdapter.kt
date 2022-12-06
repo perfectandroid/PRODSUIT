@@ -499,6 +499,11 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     clickListener!!.onClick(position, "agendaCall")
                 })
 
+                holder.ll_agenda!!.setTag(position)
+                holder.ll_agenda!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "agendaList")
+                })
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -522,6 +527,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
+        internal var ll_agenda   : LinearLayout
         internal var card_call        : CardView
         internal var card_Message     : CardView
         internal var card_Meeting     : CardView
@@ -607,6 +613,7 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
         init {
 
+            ll_agenda          = v.findViewById<View>(R.id.ll_agenda) as LinearLayout
             card_call          = v.findViewById<View>(R.id.card_call) as CardView
             card_Message       = v.findViewById<View>(R.id.card_Message) as CardView
             card_Meeting       = v.findViewById<View>(R.id.card_Meeting) as CardView

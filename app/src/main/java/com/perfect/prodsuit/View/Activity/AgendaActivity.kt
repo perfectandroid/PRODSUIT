@@ -871,6 +871,15 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
            // i.putExtra("jsonObject", jsonObject.toString())
             startActivity(i)
         }
+
+        if (data.equals("agendaList")){
+//
+//            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+//            val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
+//            i.putExtra("jsonObject",jsonObject.toString())
+//            startActivity(i)
+
+        }
     }
 
     private fun setReminder(ActionTypeName1 : String,EnquiryAbout1: String,descriptn: String) {

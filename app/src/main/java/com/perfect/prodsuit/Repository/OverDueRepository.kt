@@ -23,6 +23,7 @@ import java.util.*
 
 object OverDueRepository {
 
+    var TAG = "OverDueRepository"
     val overdueSetterGetter = MutableLiveData<OverDueModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,submode : String, name: String, criteria: String,date: String): MutableLiveData<OverDueModel> {
@@ -105,7 +106,7 @@ object OverDueRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("Overdue Respose",response.body())
+                        Log.e(TAG,"108  response  "+response.body())
                         val users = ArrayList<OverDueModel>()
                         users.add(OverDueModel(response.body()))
                         val msg = users[0].message
