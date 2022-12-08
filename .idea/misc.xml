@@ -57,12 +57,15 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/bottom_rounded.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bggrey.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/calendar_svglist.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/et_bg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/et_bggrey.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/et_border.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/fab_text_bg.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/layers.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_area.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_categorys.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_date.xml" value="0.1695" />
@@ -88,6 +91,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_subject.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_color_selector.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_selector.xml" value="0.169" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/todolistbg_svg.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.27025641025641023" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2520833333333333" />
@@ -103,7 +108,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.30615384615384617" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_next_action.xml" value="0.2923076923076923" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.27037037037037037" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.17395833333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_maps_agenda.xml" value="0.26145833333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.2791666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.27037037037037037" />

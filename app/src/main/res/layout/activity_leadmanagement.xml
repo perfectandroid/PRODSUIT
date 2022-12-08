@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+            //    android:background="@color/colorPrimary"
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -92,6 +93,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
+<!--                    android:background="@drawable/gradient_lead"-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -106,238 +108,254 @@
                             android:src="@drawable/leadmangmnticon"/>
 
                     </LinearLayout>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:layout_marginTop="0dp"
                         android:orientation="vertical">
 
+<!--                        <ImageView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:background="@color/colorPrimary"-->
+<!--                            android:alpha="0.2"-->
+<!--                            android:layout_alignParentBottom="true"/>-->
+
+
                         <LinearLayout
-                            android:id="@+id/lltodolist"
                             android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:layout_gravity="center"
+                            android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/todolistbg_svg"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/lltodolist"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="90dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/todolistbg_svg"
+                                android:gravity="center"
                                 android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.3"/>
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1.6"
-                                    android:layout_gravity="center"
-                                    android:gravity="center_vertical"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:paddingLeft="10dp"
-                                    android:text="To-Do List"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp"
-                                    android:fontFamily="@font/myfont" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="2.6"
-                                    android:gravity="center"
                                     android:orientation="horizontal">
 
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.3" />
+
                                     <TextView
-                                        android:id="@+id/tv_todo_count"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:gravity="center"
                                         android:layout_marginTop="10dp"
                                         android:layout_marginBottom="10dp"
-                                        android:text="0"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/white"
-                                        android:textSize="12dp"
+                                        android:layout_weight="1.6"
                                         android:fontFamily="@font/myfont"
-                                        android:background="@drawable/circle_todo"/>
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:text="To-Do List"
+                                        android:textColor="@color/black"
+                                        android:textSize="18dp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.6"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/tv_todo_count"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@drawable/circle_todo"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:text="0"
+                                            android:textColor="@color/white"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold" />
+
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.8" />
 
 
                                 </LinearLayout>
 
-                                <View
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/lloverdue"
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/overduelistbg_svg"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+                                <!--                            overduelistbg-->
+
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="2.8"/>
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.3" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1.6"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:text="Over Due"
+                                        android:textColor="@color/black"
+                                        android:textSize="18dp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.6"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/tv_overdue_count"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@drawable/circle_overdue"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:text="0"
+                                            android:textColor="@color/white"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold" />
 
 
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.8" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/lloverUpcoming"
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/upcomingtaskbg_svg"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.3" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1.6"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:text="Upcoming Tasks"
+                                        android:textColor="@color/black"
+                                        android:textSize="18dp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.6"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/tv_upcoming_count"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@drawable/circle_upcoming"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:text="0"
+                                            android:textColor="@color/white"
+                                            android:textSize="12dp"
+                                            android:textStyle="bold" />
+
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.8" />
+
+
+                                </LinearLayout>
 
 
                             </LinearLayout>
 
 
-
                         </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/lloverdue"
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/overduelistbg_svg"
-                            android:orientation="horizontal">
-<!--                            overduelistbg-->
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.3"/>
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1.6"
-                                    android:layout_gravity="center"
-                                    android:gravity="center_vertical"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:paddingLeft="10dp"
-                                    android:text="Over Due"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp"
-                                    android:fontFamily="@font/myfont" />
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.6"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/tv_overdue_count"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginBottom="10dp"
-                                        android:text="0"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/white"
-                                        android:textSize="12dp"
-                                        android:fontFamily="@font/myfont"
-                                        android:background="@drawable/circle_overdue"/>
-
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.8"/>
 
 
 
 
-                            </LinearLayout>
-
-
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/lloverUpcoming"
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/upcomingtaskbg_svg"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.3"/>
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1.6"
-                                    android:layout_gravity="center"
-                                    android:gravity="center_vertical"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:text="Upcoming Tasks"
-                                    android:paddingLeft="10dp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp"
-                                    android:fontFamily="@font/myfont" />
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.6"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/tv_upcoming_count"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginBottom="10dp"
-                                        android:text="0"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/white"
-                                        android:textSize="12dp"
-                                        android:fontFamily="@font/myfont"
-                                        android:background="@drawable/circle_upcoming"/>
-
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2.8"/>
-
-
-
-
-                            </LinearLayout>
-
-
-
-                        </LinearLayout>
 
 
 
@@ -512,10 +530,12 @@
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>-->
-                    </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
         </LinearLayout>
         </LinearLayout>
+
+
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"

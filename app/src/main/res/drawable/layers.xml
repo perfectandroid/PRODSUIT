@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <rotate
+            android:fromDegrees="-1"
+            android:pivotX="5%"
+            android:pivotY="10%"
+            android:toDegrees="100">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/grey" />
+                <corners android:bottomLeftRadius="100dp"
+                    android:bottomRightRadius="100dp"/>
+            </shape>
+        </rotate>
+    </item>
+    <item android:bottom="250dp">
+        <rotate
+            android:fromDegrees="0"
+            android:pivotX="10%"
+            android:pivotY="-100%"
+            android:toDegrees="10">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/white" />
+                <corners android:bottomLeftRadius="850dp"
+                    android:bottomRightRadius="0dp"/>
+            </shape>
+        </rotate>
+    </item>
+
+</layer-list>
+
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item-->
+<!--        android:height="500dp"-->
+<!--        android:gravity="bottom">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <solid android:color="@color/grey" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:height="200dp"-->
+<!--        android:width="500dp"-->
+<!--        android:bottom="30dp"-->
+<!--        android:gravity="top">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <solid android:color="@color/white" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item-->
+<!--        android:width="150dp"-->
+<!--        android:height="100dp"-->
+<!--        android:gravity="top"-->
+<!--        android:top="150dp">-->
+<!--        <shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:shape="rectangle">-->
+
+<!--            <solid android:color="@color/green" />-->
+<!--            <corners-->
+<!--                android:bottomLeftRadius="0dp"-->
+<!--                android:bottomRightRadius="100dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:width="150dp"-->
+<!--        android:height="100dp"-->
+<!--        android:gravity="top"-->
+<!--        android:left="10dp"-->
+<!--        android:top="120dp">-->
+<!--        <shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:shape="rectangle">-->
+
+<!--            <solid android:color="@color/green" />-->
+<!--            <corners-->
+<!--                android:bottomLeftRadius="0dp"-->
+<!--                android:bottomRightRadius="100dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:width="100dp"-->
+<!--        android:height="100dp"-->
+<!--        android:gravity="bottom"-->
+<!--        android:top="-0dp"-->
+<!--        android:left="90dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#ffffffff" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:width="300dp"-->
+<!--        android:height="50dp"-->
+<!--        android:gravity="top"-->
+<!--        android:top="170dp"-->
+<!--        android:left="180dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="@color/green" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+
+<!--</layer-list>-->
+
+
+<!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:width="120dp"-->
+<!--    android:height="120dp"-->
+<!--    android:viewportWidth="24"-->
+<!--    android:viewportHeight="24">-->
+
+<!--    <group-->
+<!--        android:name="groupTickCross"-->
+<!--        android:pivotX="12"-->
+<!--        android:pivotY="12">-->
+
+<!--        <path-->
+<!--            android:name="tick"-->
+<!--            android:fillColor="@color/quantum_error_light"-->
+<!--            android:pathData="@string/google_maps_key"-->
+<!--            android:strokeWidth="2"-->
+<!--            android:strokeColor="@color/white"-->
+<!--            android:strokeLineCap="square"-->
+<!--            />-->
+
+<!--    </group>-->
+
+<!--</vector>-->
+
+
+
+
+
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:opacity="translucent">-->
+
+<!--    <item-->
+<!--        android:top="0px"-->
+<!--        android:height="200dp">-->
+<!--        <shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="#3F51B5" />-->
+
+
+
+<!--            <corners-->
+<!--                android:bottomLeftRadius="800dp"-->
+<!--                android:bottomRightRadius="0dp"-->
+<!--                android:topLeftRadius="0dp"-->
+<!--                android:topRightRadius="0dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item-->
+<!--        android:top="200dp"-->
+<!--        android:height="300dp">-->
+<!--        <shape-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="@color/grey_dark" />-->
+<!--            <stroke android:color="@color/grey_dark" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+
+
+<!--    &lt;!&ndash;    <item&ndash;&gt;-->
+<!--&lt;!&ndash;        android:width="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:top="80px">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <shape&ndash;&gt;-->
+<!--&lt;!&ndash;            android:shape="rectangle">&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="@color/white" />/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <size android:width="5dip" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <stroke android:color="@color/white" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <item&ndash;&gt;-->
+<!--&lt;!&ndash;        android:width="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:top="500px">&ndash;&gt;-->
+<!--&lt;!&ndash;        <shape&ndash;&gt;-->
+<!--&lt;!&ndash;            android:shape="rectangle">&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="@color/colorAccent" />/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <size android:width="5dip" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <stroke android:color="@color/colorAccent" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+
+<!--</layer-list>-->
+

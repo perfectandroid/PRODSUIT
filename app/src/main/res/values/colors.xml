@@ -225,6 +225,9 @@
     <color name="service3">#f26514</color>
 
     <color name="color_line">#C5C5C5</color>
+    <color name="colorGradient1">#77E3F3F4</color>
+    <color name="colorGradient2">#779BBBBD</color>
+    <color name="colorGradient3">#2e666a</color>
 
 
 <!--    <color name="leadstages_color1">#fcca00</color>-->
