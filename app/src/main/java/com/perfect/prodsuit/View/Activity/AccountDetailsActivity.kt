@@ -15,6 +15,8 @@ import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
 import android.provider.CalendarContract
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,6 +25,7 @@ import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -43,6 +46,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -56,6 +60,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,6 +69,7 @@ import java.util.*
 
 class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
     OnMapReadyCallback, RadioGroup.OnCheckedChangeListener {
+
 
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
@@ -101,6 +108,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var documentViewModel: DocumentListViewModel
     lateinit var historyActViewModel: HistoryActViewModel
     lateinit var imageViewModel: ImageViewModel
+    lateinit var documentDetailViewModel: DocumentDetailViewModel
+    lateinit var viewDocumentViewModel: ViewDocumentViewModel
     lateinit var notelistViewModel: NoteListViewModel
     lateinit var deleteLeadViewModel:DeleteLeadViewModel
     lateinit var leadHistoryArrayList : JSONArray
@@ -108,8 +117,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var infoArrayList : JSONArray
     lateinit var agendaActionArrayList : JSONArray
     lateinit var quotationArrayList : JSONArray
-    lateinit var documentArrayList : JSONArray
     lateinit var historyActArrayList : JSONArray
+    lateinit var documentDetailArrayList : JSONArray
+    lateinit var documentArrayList : JSONArray
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
     private var fabAddActivities : FloatingActionButton? = null
@@ -183,6 +193,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var cbEmail = "0";
     private var cbMessage = "0";
 
+    private var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
+    var ID_LeadDocumentDetails : String = ""
+    var DocumentImageFormat : String = ""
+    private var destination: File? = null
 
     private lateinit var mMap: GoogleMap
     internal var mCurrLocationMarker: Marker? = null
@@ -205,6 +219,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         setContentView(R.layout.activity_account_details)
 
         context = this@AccountDetailsActivity
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
@@ -218,6 +235,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         agendaDetailViewModel = ViewModelProvider(this).get(AgendaDetailViewModel::class.java)
         followuptypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
+        documentDetailViewModel = ViewModelProvider(this).get(DocumentDetailViewModel::class.java)
+        viewDocumentViewModel = ViewModelProvider(this).get(ViewDocumentViewModel::class.java)
         deleteLeadViewModel= ViewModelProvider(this).get(DeleteLeadViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -242,7 +261,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("History"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
-       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Quotation"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         getInfoetails()
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -274,13 +293,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                     getImages()
                 }
-              /*  if (tab.position == 4){
+                if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
                     llMainDetail!!.removeAllViews()
+                    getDocuments()
                  //   tv_actionType!!.visibility=View.GONE
-                    recyAgendaDetail!!.visibility=View.GONE
-                    getQuotationtails()
-                }*/
+//                    recyAgendaDetail!!.visibility=View.GONE
+//                    getQuotationtails()
+                }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabUnselected  162  "+tab.position)
@@ -991,6 +1011,209 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         }
 
+        if (data.equals("ViewDescription")) {
+
+            try {
+                val jsonObject = documentDetailArrayList.getJSONObject(position)
+                val subject = jsonObject.getString("DocumentSubject")
+                val description = jsonObject.getString("DocumentDescription")
+
+                openDescBottomSheet(subject,description)
+            }
+            catch (e:Exception){
+
+            }
+
+        }
+
+        if (data.equals("Documents")) {
+
+            try {
+
+                Log.e(TAG, "Documents   162")
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                    } else {
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                }
+                else{
+
+                    val jsonObject = documentDetailArrayList.getJSONObject(position)
+                    ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
+                    DocumentImageFormat = jsonObject.getString("DocumentImageFormat")
+
+
+                    if (DocumentImageFormat.equals("")){
+                        Toast.makeText(applicationContext,"Document not found",Toast.LENGTH_SHORT).show()
+                    }else{
+                        getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
+                    }
+
+
+                }
+            }
+            catch (e : Exception){
+
+                Log.e(TAG,"1065     "+e.toString())
+            }
+
+
+
+
+        }
+
+    }
+
+    private fun getDocumentView(ID_LeadGenerate: String, ID_LeadGenerateProduct: String, ID_LeadDocumentDetails: String) {
+
+        var typeAgenda = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+
+                viewDocumentViewModel.getViewDocument(this,ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+
+                                Log.e(TAG,"msg   89   "+msg)
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   302   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+//                                AccountDetailsActivity
+//                                getImages
+//                                https://stackoverflow.com/questions/31129644/how-to-download-an-image-from-server-side-to-android-using-bytearray
+
+                                    try {
+
+
+                                        if (typeAgenda == 0){
+                                            typeAgenda++
+                                            val jobjt = jObject.getJSONObject("DocumentImageDetails")
+                                            val DocumentImage = jobjt.getString("DocumentImage")
+                                            val decodedString = Base64.decode(DocumentImage, Base64.DEFAULT)
+                                            //  val mediaData: ByteArray = Base64.decode(decodedString, 0)
+                                            //  val bytes = decodedString.toByteArray()
+                                            val sdf = SimpleDateFormat("ddMMyyyyHHmmss")
+                                            val datetime = sdf.format(Date())
+                                            destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+//                                    destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+datetime + DocumentImageFormat)
+                                            val fo: FileOutputStream
+                                            try {
+                                                if (!destination!!.getParentFile().exists()) {
+                                                    destination!!.getParentFile().mkdirs()
+                                                }
+                                                if (!destination!!.exists()) {
+                                                    destination!!.createNewFile()
+                                                }
+                                                fo = FileOutputStream(destination)
+                                                fo.write(decodedString)
+                                                fo.close()
+
+                                                Log.e(TAG,"Success   1230    ")
+
+                                                val file: File = File(destination,"")
+                                                val map: MimeTypeMap = MimeTypeMap.getSingleton()
+                                                val ext: String = MimeTypeMap.getFileExtensionFromUrl(file.name)
+                                                var type: String? = map.getMimeTypeFromExtension(ext)
+                                                if (type == null)
+                                                    type = "*/*";
+
+                                                val intent = Intent(Intent.ACTION_VIEW)
+                                                val data: Uri = Uri.fromFile(file)
+                                                intent.setDataAndType(data, type)
+                                                startActivity(intent)
+
+
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                                Log.e(TAG,"Exception   1231    "+e.toString())
+                                            }
+                                        }
+
+                                    }catch (e: Exception){
+                                        Log.e(TAG,"Exception   1232    "+e.toString())
+                                    }
+
+                                } else {
+
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        }catch (e : Exception){
+
+                        }
+
+                    })
+             //   progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
+
+
+    private fun openDescBottomSheet(subject: String, description: String) {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_description, null)
+
+        val imgClose = view.findViewById<ImageView>(R.id.imgClose)
+        val tv_subject = view.findViewById<TextView>(R.id.tv_subject)
+        val tv_description = view.findViewById<TextView>(R.id.tv_description)
+
+        tv_subject.text = subject
+        tv_description.text = description
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+
     }
 
     private fun getHistory(PrductOnly: String) {
@@ -1198,6 +1421,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
         val inflatedLayout: View = inflater.inflate(R.layout.activity_subdocument, null, false)
         llMainDetail!!.addView(inflatedLayout);
+
+
         var imDocumentLoading = inflatedLayout.findViewById<ImageView>(R.id.imgv_docmnt)
         var recySubDocs = inflatedLayout.findViewById<RecyclerView>(R.id.rv_docmnt)
         Glide.with(this).load(R.drawable.loadinggif).into(imDocumentLoading);
@@ -2013,6 +2238,87 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)
+    }
+
+    private fun getDocuments() {
+        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+        val inflatedLayout1: View = inflater.inflate(R.layout.activity_documents, null, false)
+        llMainDetail!!.addView(inflatedLayout1);
+        var recyDocumentDetail = inflatedLayout1.findViewById<RecyclerView>(R.id.recyDocumentDetail)
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                documentDetailViewModel.getDocumentDetail(this,ID_LeadGenerate,ID_LeadGenerateProduct)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+
+                                Log.e(TAG,"msg   89   "+msg)
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   302   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("DocumentDetails")
+                                    documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
+                                    if (documentDetailArrayList.length()>0){
+
+                                        Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
+
+                                        recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
+                                        // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                        recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                                        // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = DocumentDetailAdapter(this@AccountDetailsActivity, documentDetailArrayList)
+                                        recyDocumentDetail!!.adapter = adapter
+                                        adapter.setClickListener(this@AccountDetailsActivity)
+
+
+                                    }
+
+                                } else {
+
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+
     }
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
