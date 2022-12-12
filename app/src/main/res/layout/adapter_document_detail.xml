@@ -50,6 +50,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:padding="2dp"
+                            android:tint="@color/colorPrimary"
+                            android:foregroundTint="@color/white"
                             android:src="@drawable/svg_subject"/>
 
                         <TextView
@@ -62,7 +64,7 @@
                             android:drawablePadding="5dp"
                             android:justificationMode="inter_word"
                             android:paddingLeft="5dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="15dp"
                             android:drawableTint="@color/black"
                             android:textStyle="bold" />
@@ -79,6 +81,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:padding="2dp"
+                            android:tint="@color/colorPrimary"
                             android:src="@drawable/svg_notepad"/>
 
                         <TextView
@@ -91,7 +94,7 @@
                             android:paddingLeft="5dp"
                             android:drawablePadding="5dp"
                             android:justificationMode="inter_word"
-                            android:textColor="@color/greydark"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="13dp"
                             android:drawableTint="@color/black"
                             android:textStyle="normal" />

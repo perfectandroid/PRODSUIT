@@ -90,9 +90,20 @@ object LeadGenerateSaveRepository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("UserName", ProdsuitApplication.encryptStart(UserNameSP.getString("UserName", null)))
+                requestObject1.put("UserName", ProdsuitApplication.encryptStart(UserNameSP.getString("UserName", null))) //New
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart(saveUpdateMode))
+
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart("LFLG")) // HARD //New
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart("0"))  //New
+                requestObject1.put("LgCusNameTitle", ProdsuitApplication.encryptStart("Mr. ")) //New
+                requestObject1.put("CusMobileAlternate", ProdsuitApplication.encryptStart(strContactNumber)) //New
+                requestObject1.put("FK_LeadByName", ProdsuitApplication.encryptStart("Lead NAme")) //New
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart("1"))  //New
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart("2"))  //New
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart("test"))  //New
+                requestObject1.put("PreviousID", ProdsuitApplication.encryptStart("0")) // HARD //New
+                requestObject1.put("LastID", ProdsuitApplication.encryptStart("0")) //New
 
                 requestObject1.put("LgLeadDate", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("LgCollectedBy", ProdsuitApplication.encryptStart(ID_CollectedBy))
@@ -107,6 +118,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("CusPerson", ProdsuitApplication.encryptStart(strContactPerson))
                 requestObject1.put("CusPhone", ProdsuitApplication.encryptStart(strContactNumber))
                 requestObject1.put("FK_MediaMaster", ProdsuitApplication.encryptStart(ID_MediaMaster))
+                requestObject1.put("FK_SubMedia", ProdsuitApplication.encryptStart("0")) //New
 
                 requestObject1.put("FK_Country", ProdsuitApplication.encryptStart(FK_Country))
                 requestObject1.put("FK_State", ProdsuitApplication.encryptStart(FK_States))

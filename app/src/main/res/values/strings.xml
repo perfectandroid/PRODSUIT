@@ -47,4 +47,15 @@
         <item>Mobile</item>
     </string-array>
 
+    <string-array name="array_NameTitle">
+        <item>Mr. </item>
+        <item>Mrs. </item>
+        <item>Miss. </item>
+        <item>M/s. </item>
+        <item>Dr. </item>
+        <item>Ms. </item>
+        <item>Fr. </item>
+        <item>Sr. </item>
+    </string-array>
+
 </resources>

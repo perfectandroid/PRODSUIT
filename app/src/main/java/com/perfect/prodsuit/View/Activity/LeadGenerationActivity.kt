@@ -52,6 +52,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      internal var ettime: EditText? = null
      internal var etdis: EditText? = null
      internal var actv_nammob: AutoCompleteTextView? = null
+     internal var actv_namTitle: AutoCompleteTextView? = null
      internal var yr: Int =0
      internal var month:Int = 0
      internal var day:Int = 0
@@ -87,6 +88,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
+    private var edtleadthrough: EditText? = null
     private var txtleadby: TextView? = null
     private var txtproduct: TextView? = null
     private var txtMediatype: TextView? = null
@@ -295,6 +297,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var dateSelectMode : Int= 0
 
     var searchType = arrayOf<String>()
+    var searchNameTitle = arrayOf<String>()
     var SubModeSearch : String?= ""
 
     companion object {
@@ -306,6 +309,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var moreCommInfoMode : String?= "1"
         var companyNameMode : String?= "1"
         var Customer_Mode : String?= "0"
+        var CusNameTitle : String?= ""
         var ID_Customer : String?= ""
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
@@ -363,8 +367,35 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_LeadGenerate : String = ""
         var ID_LeadGenerateProduct : String = ""
 
+        var strLeadFromHint : String?= ""
+
 
     }
+    var countLeadFrom = 0
+    var countLeadThrough = 0
+    var countLeadBy = 0
+
+    var custDet = 0
+    var pinCodeDet = 0
+    var countryDet = 0
+    var stateDet = 0
+    var distDet = 0
+    var areaDet = 0
+    var postDet = 0
+
+    var prodcategory = 0
+    var proddetail = 0
+    var prodpriority = 0
+    var prodstatus = 0
+
+    var followUpAction = 0
+    var followUpType = 0
+
+    var branchType = 0
+    var branch = 0
+    var department = 0
+    var employee = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -405,6 +436,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         setRegViews()
         searchType = resources.getStringArray(R.array.array_spinner)
+     //   searchNameTitle = resources.getStringArray(R.array.array_NameTitle)
+        searchNameTitle = arrayOf("Mr. ","Mrs. ","Miss. ","M/s. ","Dr. ","Ms. ","Fr. ","Sr. ")
        // getCalendarId(context)
 
         clearData()
@@ -538,6 +571,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         txtleadfrom!!.setText("")
         txtleadthrough!!.setText("")
+        edtleadthrough!!.setText("")
         txtleadby!!.setText("")
         txtMediatype!!.setText("")
 
@@ -586,6 +620,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         val imback = findViewById<ImageView>(R.id.imback)
         val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
         actv_nammob = findViewById<AutoCompleteTextView>(R.id.actv_nammob)
+        actv_namTitle = findViewById<AutoCompleteTextView>(R.id.actv_namTitle)
         img_search = findViewById<ImageView>(R.id.img_search)
         imCustclose = findViewById<ImageView>(R.id.imCustclose)
         imDateclose = findViewById<ImageView>(R.id.imDateclose)
@@ -614,6 +649,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
+        edtleadthrough = findViewById<EditText>(R.id.edtleadthrough)
         txtleadby = findViewById<TextView>(R.id.txtleadby)
         txtproduct = findViewById<TextView>(R.id.txtproduct)
         txtMediatype = findViewById<TextView>(R.id.txtMediatype)
@@ -855,6 +891,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                     }else{
                         Config.disableClick(v)
+                        pinCodeDet = 0
                         getPinCodeSearch(strPincode)
                     }
                 }catch (e  :Exception){
@@ -865,6 +902,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             R.id.edtCountry->{
                 Log.e(TAG,"edtCountry  549  ")
                 Config.disableClick(v)
+                countryDet = 0
                 getCountry(v)
             }
 
@@ -878,6 +916,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
                 else{
                     Config.disableClick(v)
+                    stateDet = 0
                     getState(v)
                 }
 
@@ -892,6 +931,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     Config.snackBars(applicationContext,v,"Select State")
                 }else{
                     Config.disableClick(v)
+                    distDet = 0
                     getDistrict(v)
                 }
 
@@ -905,6 +945,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     Config.snackBars(applicationContext,v,"Select District")
                 }else{
                     Config.disableClick(v)
+                    areaDet = 0
                     getArea(v)
                 }
 
@@ -918,6 +959,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     Config.snackBars(applicationContext,v,"Select Area")
                 }else{
                     Config.disableClick(v)
+                    postDet = 0
                     getPost(v)
                 }
 
@@ -929,15 +971,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                    snackbar.setActionTextColor(Color.WHITE)
 //                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
 //                    snackbar.show()
-                    Config.snackBars(applicationContext,v,"Select Lead From")
+                    Config.snackBars(applicationContext,v,"Select Lead Source")
                 }else{
+                   // Log.e(TAG,"201900    ")
                     Config.disableClick(v)
-                    getLeadThrough(v)
+                   // getLeadThrough(v)
                 }
             }
             R.id.llLeadFrom->{
                 Config.disableClick(v)
-                getLeadFrom(v)
+              //  getLeadFrom(v)
             }
 
             R.id.imgv_upload1->{
@@ -970,6 +1013,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.llleadby->{
                 Config.disableClick(v)
+                countLeadBy = 0
                 getLeadBy(v)
 
             }
@@ -1115,6 +1159,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.txtleadfrom->{
                 Config.disableClick(v)
+                countLeadFrom = 0
                 getLeadFrom(v)
             }
 
@@ -1143,7 +1188,20 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.txtleadthrough->{
                 Config.disableClick(v)
-                getLeadThrough(v)
+                Log.e(TAG,"201900    ")
+                if (ID_LeadFrom.equals("")){
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(applicationContext,v,"Select Lead Source")
+                }else{
+                    Log.e(TAG,"2019   ")
+                    Config.disableClick(v)
+                    countLeadThrough = 0
+                    getLeadThrough(v)
+                }
+
             }
 
             R.id.tv_LeadByClick->{
@@ -1171,6 +1229,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.txtleadby->{
                 Config.disableClick(v)
+                countLeadBy = 0
                 getLeadBy(v)
             }
 
@@ -1251,6 +1310,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                     }else{
                         Config.disableClick(v)
+                        custDet = 0
                         getCustomerSearch()
                     }
                 }catch (e  :Exception){
@@ -1356,6 +1416,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 Config.disableClick(v)
                 ID_Product = ""
                 edtProdproduct!!.setText("")
+                prodcategory = 0
                 getCategory()
             }
             R.id.edtProdproduct->{
@@ -1371,24 +1432,29 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
                 else{
                    Config.disableClick(v)
+                    proddetail = 0
                     getProductDetail(ID_Category!!)
                 }
             }
 
             R.id.edtProdpriority->{
                 Config.disableClick(v)
+                prodpriority = 0
                 getProductPriority()
             }
             R.id.edtProdstatus->{
                 Config.disableClick(v)
+                prodstatus = 0
                 getProductStatus()
             }
             R.id.edtFollowaction->{
                 Config.disableClick(v)
+                followUpAction = 0
                 getFollowupAction()
             }
             R.id.edtFollowtype->{
                 Config.disableClick(v)
+                followUpType = 0
                 getFollowupType()
             }
             R.id.edtFollowdate->{
@@ -1408,6 +1474,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.edtbarnchtype->{
                 Config.disableClick(v)
+                branchType = 0
                 getBranchType()
             }
             R.id.edtbranch->{
@@ -1422,12 +1489,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 }else{
                     Config.disableClick(v)
+                    branch = 0
                     getBranch()
                 }
 
             }
             R.id.edtdepartment->{
                 Config.disableClick(v)
+                department = 0
                 getDepartment()
             }
             R.id.edtEmployee->{
@@ -1442,6 +1511,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                 }else{
                     Config.disableClick(v)
+                    employee = 0
                     getEmployee()
                 }
             }
@@ -1530,53 +1600,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
 
 
-//        val aa: ArrayAdapter<*> =
-//            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, searchType)
-//            aa.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-//            sp_namemob!!.adapter = aa
-//            sp_namemob!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, v: View, position: Int, arg3: Long) {
-//
-//                Log.e(TAG,"position  1410   "+position)
-//
-//
-////                strCusMobileNo = ""
-////                strCustomerName = ""
-////                strBcLnNumber = ""
-////                strCusAdharNo = ""
-////                if (position == 0) {
-////                    search.setText("")
-////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(10)))
-////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-////                    search.setTransformationMethod(null)
-////                    intPosition = position
-////                }
-////                if (position == 1) {
-////                    search.setText("")
-////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(20)))
-////                    search.setInputType(InputType.TYPE_CLASS_TEXT)
-////                    intPosition = position
-////                }
-////                if (position == 2) {
-////                    search.setText("")
-////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(15)))
-////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-////                    search.setTransformationMethod(null)
-////                    intPosition = position
-////                }
-////                if (position == 3) {
-////                    search.setText("")
-////                    search.setFilters(arrayOf<InputFilter>(filter, InputFilter.LengthFilter(12)))
-////                    search.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-////                    search.setTransformationMethod(null)
-////                    intPosition = position
-////                }
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>?) {
-//                // TODO Auto-generated method stub
-//            }
-//        })
+
+        /////////////////
+
+
+        Log.e(TAG,"1542    "+searchNameTitle.get(0).length+"  :   "+searchNameTitle.get(0))
+        Log.e(TAG,"1542    "+searchNameTitle)
+        val adapter1 = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchNameTitle)
+        actv_namTitle!!.setAdapter(adapter1)
+        actv_namTitle!!.setText(searchNameTitle.get(0),false)
+        actv_namTitle!!.setOnClickListener {
+            actv_namTitle!!.showDropDown()
+        }
+        actv_namTitle!!.setOnItemClickListener { parent, view, position, id ->
+            Log.e(TAG, "info: $position $id"+"   "+searchNameTitle.get(position))
+
+        }
+
+
+
 
     }
 
@@ -1778,7 +1820,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private fun getLeadBy(v: View) {
 
-        var countLeadBy = 0
+//        var countLeadBy = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1904,7 +1946,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getLeadFrom(v: View) {
-        var countLeadFrom = 0
+//        var countLeadFrom = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2032,7 +2074,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getLeadThrough(v: View) {
-        var countLeadThrough = 0
+//        var countLeadThrough = 0
+        Log.e(TAG,"msg   20191   ")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2047,42 +2090,46 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     Observer { serviceSetterGetter ->
 
                         try {
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   267   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("LeadThroughDetailsList")
-                                    leadThroughArrayList = jobjt.getJSONArray("LeadThroughDetails")
-                                    if (leadThroughArrayList.length()>0){
-                                        if (countLeadThrough == 0){
-                                            countLeadThrough++
-                                            leadThroghPopup(leadThroughArrayList)
+
+                                var msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   20192   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("LeadThroughDetailsList")
+                                        leadThroughArrayList = jobjt.getJSONArray("LeadThroughDetails")
+                                        if (leadThroughArrayList.length()>0){
+                                            if (countLeadThrough == 0) {
+                                                Log.e(TAG,"msg   20192   "+msg)
+                                                countLeadThrough++
+                                                leadThroghPopup(leadThroughArrayList)
+                                            }
                                         }
+                                    } else {
 
-
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@LeadGenerationActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                }
-                            } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
-                            }
+                                }
+
+
                         }catch (e : Exception){
 
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
 
                     })
@@ -2841,7 +2888,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
      private fun getCustomerSearch() {
-         var custDet = 0
+//         var custDet = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2930,7 +2977,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
     private fun getPinCodeSearch(strPincode: String) {
-        var pinCodeDet = 0
+//        var pinCodeDet = 0
         clearCommunicationInfo()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -3059,7 +3106,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getCountry(v: View) {
-        var countryDet = 0
+//        var countryDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3196,7 +3243,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private fun getState(v: View) {
 
-        var stateDet = 0
+//        var stateDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3334,7 +3381,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getDistrict(v: View) {
-        var distDet = 0
+//        var distDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3472,7 +3519,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getPost(v: View) {
-        var postDet = 0
+//        var postDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3609,7 +3656,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun getArea(v: View) {
-        var areaDet = 0
+//        var areaDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3800,7 +3847,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
      private fun getCategory() {
-         var prodcategory = 0
+//         var prodcategory = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3933,7 +3980,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getProductDetail(ID_Category: String) {
-         var proddetail = 0
+//         var proddetail = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4070,7 +4117,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getProductPriority() {
-         var prodpriority = 0
+//         var prodpriority = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4193,7 +4240,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getProductStatus() {
-         var prodstatus = 0
+//         var prodstatus = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4330,7 +4377,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getFollowupAction() {
-         var followUpAction = 0
+//         var followUpAction = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4468,7 +4515,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
      private fun getFollowupType() {
-         var followUpType = 0
+//         var followUpType = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4664,7 +4711,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
      private fun getBranchType() {
-         var branchType = 0
+//         var branchType = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4798,7 +4845,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getBranch() {
-         var branch = 0
+//         var branch = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4932,7 +4979,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getDepartment() {
-         var department = 0
+//         var department = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -5062,7 +5109,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
      }
 
      private fun getEmployee() {
-         var employee = 0
+//         var employee = 0
          when (Config.ConnectivityUtils.isConnected(this)) {
              true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -5201,6 +5248,33 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Log.e(TAG,"ID_LeadFrom   "+jsonObject.getString("ID_LeadFrom"))
             ID_LeadFrom = jsonObject.getString("ID_LeadFrom")
             txtleadfrom!!.text = jsonObject.getString("LeadFromName")
+
+            ID_LeadThrough = ""
+            txtleadthrough!!.text = ""
+            edtleadthrough!!.setText("")
+            txtleadthrough!!.hint = jsonObject.getString("LeadFromName")+" Name"
+            edtleadthrough!!.hint = jsonObject.getString("LeadFromName")+" Name"
+            strLeadFromHint = jsonObject.getString("LeadFromName")+" Name"
+
+            if (ID_LeadFrom.equals("8")){
+                //Third Party
+                txtleadthrough!!.visibility = View.GONE
+                edtleadthrough!!.visibility = View.VISIBLE
+            }
+            else if(ID_LeadFrom.equals("10")){
+                //Phone
+                txtleadthrough!!.visibility = View.GONE
+                edtleadthrough!!.visibility = View.GONE
+            }
+            else if(ID_LeadFrom.equals("11")){
+                // direct
+                txtleadthrough!!.visibility = View.GONE
+                edtleadthrough!!.visibility = View.GONE
+            }
+            else{
+                txtleadthrough!!.visibility = View.VISIBLE
+                edtleadthrough!!.visibility = View.GONE
+            }
         }
         if (data.equals("leadthrough")){
             dialogLeadThrough!!.dismiss()
@@ -5539,20 +5613,23 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Config.snackBars(context,v,"Select Date")
         }
         else if (ID_LeadFrom.equals("")){
-            Config.snackBars(context,v,"Select Lead From")
+            Config.snackBars(context,v,"Select Lead Source")
         }
         else if (ID_LeadThrough.equals("")){
-            Config.snackBars(context,v,"Select Lead Through")
+            Config.snackBars(context,v,"Select "+strLeadFromHint)
         }
         else if (ID_CollectedBy.equals("")){
             Config.snackBars(context,v,"Select Collected By")
         }
         else if (ID_Customer!!.equals("")){
             Customer_Mode = "0"
+            CusNameTitle = actv_namTitle!!.text.toString()
             Customer_Name = edtCustname!!.text.toString()
             Customer_Mobile = edtCustphone!!.text.toString()
             Customer_Email = edtCustemail!!.text.toString()
             Customer_Address = edtCustaddress!!.text.toString()
+
+            Log.e(TAG,"CusNameTitle   5533    "+CusNameTitle)
           //  Config.snackBars(context,v,"Search OR Add Customer ")
             if (Customer_Name.equals("")){
                 Config.snackBars(context,v,"Enter Customer Name")
@@ -5592,6 +5669,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         Log.e(TAG,"LeadValidations  37321"
                 +"\n"+"Customer_Mode     : "+Customer_Mode
+                +"\n"+"CusNameTitle      : "+CusNameTitle+"@"
+                +"\n"+"CusNameTitle      : "+CusNameTitle!!.length
                 +"\n"+"ID_Customer       : "+ID_Customer
                 +"\n"+"Customer_Name     : "+ Customer_Name
                 +"\n"+"Customer_Mobile   : "+ Customer_Mobile

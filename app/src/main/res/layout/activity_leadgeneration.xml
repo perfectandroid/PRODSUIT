@@ -342,7 +342,7 @@
                                                 android:drawableTint="@color/greydark"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Lead From"
+                                                android:hint="Lead Source"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="7dp"
                                                 android:singleLine="true"
@@ -363,12 +363,34 @@
                                                 android:drawableTint="@color/greydark"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Lead Through"
+                                                android:hint="Lead From"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
+
+                                            <EditText
+                                                android:id="@+id/edtleadthrough"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="0dp"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:background="@drawable/shape_bg"
+                                                android:drawableLeft="@drawable/lead_through"
+                                                android:drawableTint="@color/greydark"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:hint="Lead From"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:singleLine="true"
+                                                android:text=""
+                                                android:textSize="15dp"
+                                                android:visibility="gone"/>
 
                                             <TextView
                                                 android:id="@+id/txtleadby"
@@ -509,8 +531,9 @@
 
                                                     <AutoCompleteTextView
                                                         android:id="@+id/actv_nammob"
-                                                        android:layout_width="wrap_content"
+                                                        android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
+                                                        android:layout_weight="3"
                                                         android:dropDownWidth="200dp"
                                                         android:background="@android:color/transparent"
                                                         android:drawableRight="@drawable/arrow_down"
@@ -538,6 +561,7 @@
 
                                                     <RelativeLayout
                                                         android:layout_width="match_parent"
+                                                        android:layout_weight="1"
                                                         android:layout_height="wrap_content">
 
 
@@ -596,25 +620,49 @@
                                                 android:orientation="vertical">
 
 
-
-                                                <EditText
-                                                    android:id="@+id/edtCustname"
+                                                <LinearLayout
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="Name"
-                                                    android:drawableLeft="@drawable/lead_name"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_height="wrap_content"
                                                     android:layout_marginLeft="10dp"
+                                                    android:layout_marginTop="10dp"
                                                     android:layout_marginRight="10dp"
-                                                    android:padding="5dp"
-                                                    android:textSize="15dp"
-                                                    android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
-                                                    android:text="" />
+                                                    android:orientation="horizontal">
 
+                                                    <AutoCompleteTextView
+                                                        android:id="@+id/actv_namTitle"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_weight="3"
+                                                        android:layout_height="match_parent"
+                                                        android:dropDownWidth="200dp"
+                                                        android:background="@android:color/transparent"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:drawablePadding="5dp"
+                                                        android:drawableTint="@color/greydark"
+                                                        android:editable="false"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:paddingLeft="5dp"
+                                                        android:text=""
+                                                        android:textSize="15dp"
+                                                        android:visibility="visible" />
 
+                                                    <EditText
+                                                        android:id="@+id/edtCustname"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:layout_weight="1"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:hint="Name"
+                                                        android:drawableLeft="@drawable/lead_name"
+                                                        android:drawableTint="@color/greydark"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="5dp"
+                                                        android:textSize="15dp"
+                                                        android:singleLine="true"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:text="" />
+
+                                                </LinearLayout>
 
 
 
