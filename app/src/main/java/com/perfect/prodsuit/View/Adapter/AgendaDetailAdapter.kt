@@ -51,9 +51,9 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
-                    if (jsonObject!!.getString("ID_ActionType").equals("1")){
-                    holder.ll_Call.visibility = View.VISIBLE
-                    holder.card_call.visibility = View.VISIBLE
+//                    if (jsonObject!!.getString("ID_ActionType").equals("1")){
+//                    holder.ll_Call.visibility = View.VISIBLE
+//                    holder.card_call.visibility = View.VISIBLE
 
                     holder.tvcall_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
                     holder.tvcall_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
@@ -63,6 +63,9 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                     holder.tvCall_address.setText(jsonObject!!.getString("CustomerAddress"))
                     holder.tvCall_product.setText(jsonObject!!.getString("EnquiryAbout"))
                     holder.tvCall_preference.setText(jsonObject!!.getString("PriorityName"))
+                    holder.tv_nextdate.setText("Next Action Date : ")
+                    holder.tv_nextaction.setText("Next Action  : "+jsonObject!!.getString("Action"))
+                    holder.tvCall_collectedby.setText( "Collected By : "+"")
 
                    if (jsonObject!!.getString("SubMode").equals("1")){
                        // PENDING
@@ -98,337 +101,339 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                         }
 
 
-                }
+            //    }
 
-                    if (jsonObject!!.getString("ID_ActionType").equals("2")){
-                        holder.ll_Message.visibility = View.VISIBLE
-                        holder.card_Message.visibility = View.VISIBLE
-                        holder.tvMessage_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
-                        holder.tvMessage_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
-                        holder.tvMessage_name.setText(jsonObject!!.getString("CustomerName"))
-                        holder.tvMessage_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
-                        holder.tvMessage_phone.setText(jsonObject!!.getString("CustomerMobile"))
-                        holder.tvMessage_address.setText(jsonObject!!.getString("CustomerAddress"))
-                        holder.tvMessage_product.setText(jsonObject!!.getString("EnquiryAbout"))
-                        holder.tvMessage_preference.setText(jsonObject!!.getString("PriorityName"))
+//                    if (jsonObject!!.getString("ID_ActionType").equals("2")){
+//                        holder.ll_Message.visibility = View.VISIBLE
+//                        holder.card_Message.visibility = View.VISIBLE
+//                        holder.tvMessage_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
+//                        holder.tvMessage_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
+//                        holder.tvMessage_name.setText(jsonObject!!.getString("CustomerName"))
+//                        holder.tvMessage_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
+//                        holder.tvMessage_phone.setText(jsonObject!!.getString("CustomerMobile"))
+//                        holder.tvMessage_address.setText(jsonObject!!.getString("CustomerAddress"))
+//                        holder.tvMessage_product.setText(jsonObject!!.getString("EnquiryAbout"))
+//                        holder.tvMessage_preference.setText(jsonObject!!.getString("PriorityName"))
+//
+//                         if (jsonObject!!.getString("SubMode").equals("1")){
+//                             // PENDING
+//                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
+//                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_pending))
+//                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+//                         }
+//                         else if (jsonObject!!.getString("SubMode").equals("2")){
+//                             // UPCOMING
+//                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
+//                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_upcoming))
+//                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
+//                         }
+//                         else if (jsonObject!!.getString("SubMode").equals("3")){
+//                             // COMPLETED
+//                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
+//                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_complete))
+//                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
+//                             holder.ll_Message_Icon.visibility = View.GONE
+//                         }
+//
+//                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
+//                            holder.imMessage_preference.setImageResource(R.drawable.preference2)
+//                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorHot))
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
+//                            holder.imMessage_preference.setImageResource(R.drawable.preference3)
+//                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorWarm))
+//
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
+//                            holder.imMessage_preference.setImageResource(R.drawable.preference1)
+//                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorCold))
+//
+//                        }
+//
+//                    }
+//
+//                    if (jsonObject!!.getString("ID_ActionType").equals("3")){
+//                        holder.ll_Meeting.visibility = View.VISIBLE
+//                        holder.card_Meeting.visibility = View.VISIBLE
+//                        holder.tvMeeting_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
+//                        holder.tvMeeting_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
+//                        holder.tvMeeting_name.setText(jsonObject!!.getString("CustomerName"))
+//                        holder.tvMeeting_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
+//                        holder.tvMeeting_phone.setText(jsonObject!!.getString("CustomerMobile"))
+//                        holder.tvMeeting_address.setText(jsonObject!!.getString("CustomerAddress"))
+//                        holder.tvMeeting_product.setText(jsonObject!!.getString("EnquiryAbout"))
+//                        holder.tvMeeting_preference.setText(jsonObject!!.getString("PriorityName"))
+//
+//                        if (jsonObject!!.getString("SubMode").equals("1")){
+//                            // PENDING
+//                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_pending))
+//                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("2")){
+//                            // UPCOMING
+//                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_upcoming))
+//                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("3")){
+//                            // COMPLETED
+//                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_complete))
+//                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
+//                            holder.ll_Meeting_Icon.visibility = View.GONE
+//                        }
+//
+//                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
+//                            holder.imMeeting_preference.setImageResource(R.drawable.preference2)
+//                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorHot))
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
+//                            holder.imMeeting_preference.setImageResource(R.drawable.preference3)
+//                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorWarm))
+//
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
+//                            holder.imMeeting_preference.setImageResource(R.drawable.preference1)
+//                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorCold))
+//
+//                        }
+//
+//
+//
+//
+//                    }
+//
+//                    if (jsonObject!!.getString("ID_ActionType").equals("4")){
+//                        holder.ll_Document.visibility = View.VISIBLE
+//                        holder.card_Document.visibility = View.VISIBLE
+//                        holder.tvDocument_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
+//                        holder.tvDocument_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
+//                        holder.tvDocument_name.setText(jsonObject!!.getString("CustomerName"))
+//                        holder.tvDocument_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
+//                        holder.tvDocument_phone.setText(jsonObject!!.getString("CustomerMobile"))
+//                        holder.tvDocument_address.setText(jsonObject!!.getString("CustomerAddress"))
+//                        holder.tvDocument_product.setText(jsonObject!!.getString("EnquiryAbout"))
+//                        holder.tvDocument_preference.setText(jsonObject!!.getString("PriorityName"))
+//
+//                        if (jsonObject!!.getString("SubMode").equals("1")){
+//                            // PENDING
+//                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_pending))
+//                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("2")){
+//                            // UPCOMING
+//                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_upcoming))
+//                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("3")){
+//                            // COMPLETED
+//                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_complete))
+//                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
+//                            holder.ll_Document_Icon.visibility = View.GONE
+//                        }
+//
+//                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
+//                            holder.imDocument_preference.setImageResource(R.drawable.preference2)
+//                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorHot))
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
+//                            holder.imDocument_preference.setImageResource(R.drawable.preference3)
+//                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorWarm))
+//
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
+//                            holder.imDocument_preference.setImageResource(R.drawable.preference1)
+//                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorCold))
+//
+//                        }
+//
+//
+//                    }
 
-                         if (jsonObject!!.getString("SubMode").equals("1")){
-                             // PENDING
-                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
-                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_pending))
-                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
-                         }
-                         else if (jsonObject!!.getString("SubMode").equals("2")){
-                             // UPCOMING
-                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
-                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_upcoming))
-                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
-                         }
-                         else if (jsonObject!!.getString("SubMode").equals("3")){
-                             // COMPLETED
-                             holder.tvMessage_Status.setText(jsonObject!!.getString("Status"))
-                             holder.tvMessage_Status.setTextColor(context.getColor(R.color.color_complete))
-                             holder.tvMessage_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
-                             holder.ll_Message_Icon.visibility = View.GONE
-                         }
-
-                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
-                            holder.imMessage_preference.setImageResource(R.drawable.preference2)
-                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorHot))
-                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
-                            holder.imMessage_preference.setImageResource(R.drawable.preference3)
-                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorWarm))
-
-                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
-                            holder.imMessage_preference.setImageResource(R.drawable.preference1)
-                            holder.imMessage_preference.setColorFilter(context.getColor(R.color.ColorCold))
-
-                        }
-
-                    }
-
-                    if (jsonObject!!.getString("ID_ActionType").equals("3")){
-                        holder.ll_Meeting.visibility = View.VISIBLE
-                        holder.card_Meeting.visibility = View.VISIBLE
-                        holder.tvMeeting_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
-                        holder.tvMeeting_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
-                        holder.tvMeeting_name.setText(jsonObject!!.getString("CustomerName"))
-                        holder.tvMeeting_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
-                        holder.tvMeeting_phone.setText(jsonObject!!.getString("CustomerMobile"))
-                        holder.tvMeeting_address.setText(jsonObject!!.getString("CustomerAddress"))
-                        holder.tvMeeting_product.setText(jsonObject!!.getString("EnquiryAbout"))
-                        holder.tvMeeting_preference.setText(jsonObject!!.getString("PriorityName"))
-
-                        if (jsonObject!!.getString("SubMode").equals("1")){
-                            // PENDING
-                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_pending))
-                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("2")){
-                            // UPCOMING
-                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_upcoming))
-                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("3")){
-                            // COMPLETED
-                            holder.tvMeeting_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvMeeting_Status.setTextColor(context.getColor(R.color.color_complete))
-                            holder.tvMeeting_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
-                            holder.ll_Meeting_Icon.visibility = View.GONE
-                        }
-
-                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
-                            holder.imMeeting_preference.setImageResource(R.drawable.preference2)
-                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorHot))
-                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
-                            holder.imMeeting_preference.setImageResource(R.drawable.preference3)
-                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorWarm))
-
-                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
-                            holder.imMeeting_preference.setImageResource(R.drawable.preference1)
-                            holder.imMeeting_preference.setColorFilter(context.getColor(R.color.ColorCold))
-
-                        }
-
-
-
-
-                    }
-
-                    if (jsonObject!!.getString("ID_ActionType").equals("4")){
-                        holder.ll_Document.visibility = View.VISIBLE
-                        holder.card_Document.visibility = View.VISIBLE
-                        holder.tvDocument_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
-                        holder.tvDocument_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
-                        holder.tvDocument_name.setText(jsonObject!!.getString("CustomerName"))
-                        holder.tvDocument_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
-                        holder.tvDocument_phone.setText(jsonObject!!.getString("CustomerMobile"))
-                        holder.tvDocument_address.setText(jsonObject!!.getString("CustomerAddress"))
-                        holder.tvDocument_product.setText(jsonObject!!.getString("EnquiryAbout"))
-                        holder.tvDocument_preference.setText(jsonObject!!.getString("PriorityName"))
-
-                        if (jsonObject!!.getString("SubMode").equals("1")){
-                            // PENDING
-                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_pending))
-                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("2")){
-                            // UPCOMING
-                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_upcoming))
-                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("3")){
-                            // COMPLETED
-                            holder.tvDocument_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvDocument_Status.setTextColor(context.getColor(R.color.color_complete))
-                            holder.tvDocument_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
-                            holder.ll_Document_Icon.visibility = View.GONE
-                        }
-
-                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
-                            holder.imDocument_preference.setImageResource(R.drawable.preference2)
-                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorHot))
-                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
-                            holder.imDocument_preference.setImageResource(R.drawable.preference3)
-                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorWarm))
-
-                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
-                            holder.imDocument_preference.setImageResource(R.drawable.preference1)
-                            holder.imDocument_preference.setColorFilter(context.getColor(R.color.ColorCold))
-
-                        }
-
-
-                    }
-
-                    if (jsonObject!!.getString("ID_ActionType").equals("5")){
-                        holder.ll_Quotation.visibility = View.VISIBLE
-                        holder.card_Quotation.visibility = View.VISIBLE
-                        holder.tvQuotation_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
-                        holder.tvQuotation_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
-                        holder.tvQuotation_name.setText(jsonObject!!.getString("CustomerName"))
-                        holder.tvQuotation_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
-                        holder.tvQuotation_phone.setText(jsonObject!!.getString("CustomerMobile"))
-                        holder.tvQuotation_address.setText(jsonObject!!.getString("CustomerAddress"))
-                        holder.tvQuotation_product.setText(jsonObject!!.getString("EnquiryAbout"))
-                        holder.tvQuotation_preference.setText(jsonObject!!.getString("PriorityName"))
-
-                        if (jsonObject!!.getString("SubMode").equals("1")){
-                            // PENDING
-                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_pending))
-                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("2")){
-                            // UPCOMING
-                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_upcoming))
-                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
-                        }
-                        else if (jsonObject!!.getString("SubMode").equals("3")){
-                            // COMPLETED
-                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
-                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_complete))
-                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
-                            holder.ll_Quotation_Icon.visibility = View.GONE
-                        }
-
-
-                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
-                            holder.imQuotation_preference.setImageResource(R.drawable.preference2)
-                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorHot))
-                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
-                            holder.imQuotation_preference.setImageResource(R.drawable.preference3)
-                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorWarm))
-
-                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
-                            holder.imQuotation_preference.setImageResource(R.drawable.preference1)
-                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorCold))
-
-                        }
-
-
-                    }
-
-
-                holder.im_Meeting_Icon.setTag(position)
-                holder.im_Meeting_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaLocation")
-                })
-
-                holder.im_Meeting_Document.setTag(position)
-                holder.im_Meeting_Document.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "DocumentList")
-                })
-
-                holder.cb_Meeting.setTag(position)
-                holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-
-                        val jsonObject1 =  jsonArray.getJSONObject(position)
-
-                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
-                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
-                        val Status1 = jsonObject1!!.getString("Status")
-                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
-
-                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
-                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
-                        lstChk.add(desc)
-                        val gson = Gson()
-                        val json = gson.toJson(lstChk)
-                        val editor = sharedPreferences!!.edit()
-                        editor.putString("Set", json);
-                        editor.commit();
-                        Log.e(TAG, "lstChk_size  " + lstChk.size)
-                        Log.e(TAG, "desc  3413  " + desc)
-
-                    }
-                    else
-                    {
-                        val jsonObject1 =  jsonArray.getJSONObject(position)
-                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
-                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
-                        val Status1 = jsonObject1!!.getString("Status")
-                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
-
-//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
-                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
-                        lstChk.remove(desc)
-                        val gson = Gson()
-                        val json = gson.toJson(lstChk)
-                        val editor = sharedPreferences!!.edit()
-                        editor.putString("Set", json);
-                        editor.commit();
-                        Log.e(TAG, "lstChk_size  " + lstChk.size)
-                        Log.e(TAG, "desc  3414  " + desc)
-                    }
-
-                    /*if(lstChk.size!=0) {
-                            holder.tvReminder.visibility = View.VISIBLE
-                    }*/
-                }
+//                    if (jsonObject!!.getString("ID_ActionType").equals("5")){
+//                        holder.ll_Quotation.visibility = View.VISIBLE
+//                        holder.card_Quotation.visibility = View.VISIBLE
+//                        holder.tvQuotation_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
+//                        holder.tvQuotation_leadno.setText(jsonObject!!.getString("ID_LeadGenerate"))
+//                        holder.tvQuotation_name.setText(jsonObject!!.getString("CustomerName"))
+//                        holder.tvQuotation_TrnsDate.setText(jsonObject!!.getString("TrnsDate"))
+//                        holder.tvQuotation_phone.setText(jsonObject!!.getString("CustomerMobile"))
+//                        holder.tvQuotation_address.setText(jsonObject!!.getString("CustomerAddress"))
+//                        holder.tvQuotation_product.setText(jsonObject!!.getString("EnquiryAbout"))
+//                        holder.tvQuotation_preference.setText(jsonObject!!.getString("PriorityName"))
+//
+//                        if (jsonObject!!.getString("SubMode").equals("1")){
+//                            // PENDING
+//                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_pending))
+//                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pending_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("2")){
+//                            // UPCOMING
+//                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_upcoming))
+//                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.upcoming_svg, 0, 0, 0);
+//                        }
+//                        else if (jsonObject!!.getString("SubMode").equals("3")){
+//                            // COMPLETED
+//                            holder.tvQuotation_Status.setText(jsonObject!!.getString("Status"))
+//                            holder.tvQuotation_Status.setTextColor(context.getColor(R.color.color_complete))
+//                            holder.tvQuotation_Status.setCompoundDrawablesWithIntrinsicBounds(R.drawable.completed_svg, 0, 0, 0);
+//                            holder.ll_Quotation_Icon.visibility = View.GONE
+//                        }
+//
+//
+//                        if(jsonObject!!.getString("PriorityName").equals("Hot")){
+//                            holder.imQuotation_preference.setImageResource(R.drawable.preference2)
+//                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorHot))
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Warm")){
+//                            holder.imQuotation_preference.setImageResource(R.drawable.preference3)
+//                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorWarm))
+//
+//                        }else if (jsonObject!!.getString("PriorityName").equals("Cold")){
+//                            holder.imQuotation_preference.setImageResource(R.drawable.preference1)
+//                            holder.imQuotation_preference.setColorFilter(context.getColor(R.color.ColorCold))
+//
+//                        }
+//
+//
+//                    }
+//
+//
+//                holder.im_Meeting_Icon.setTag(position)
+//                holder.im_Meeting_Icon.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "agendaLocation")
+//                })
+//
+//                holder.im_Meeting_Document.setTag(position)
+//                holder.im_Meeting_Document.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "DocumentList")
+//                })
+//
+//                holder.cb_Meeting.setTag(position)
+//                holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
+//                    if (isChecked) {
+//
+//                        val jsonObject1 =  jsonArray.getJSONObject(position)
+//
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val Status1 = jsonObject1!!.getString("Status")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+//
+//                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+//                        lstChk.add(desc)
+//                        val gson = Gson()
+//                        val json = gson.toJson(lstChk)
+//                        val editor = sharedPreferences!!.edit()
+//                        editor.putString("Set", json);
+//                        editor.commit();
+//                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+//                        Log.e(TAG, "desc  3413  " + desc)
+//
+//                    }
+//                    else
+//                    {
+//                        val jsonObject1 =  jsonArray.getJSONObject(position)
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val Status1 = jsonObject1!!.getString("Status")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+//
+////                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+//                        lstChk.remove(desc)
+//                        val gson = Gson()
+//                        val json = gson.toJson(lstChk)
+//                        val editor = sharedPreferences!!.edit()
+//                        editor.putString("Set", json);
+//                        editor.commit();
+//                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+//                        Log.e(TAG, "desc  3414  " + desc)
+//                    }
+//
+//                    /*if(lstChk.size!=0) {
+//                            holder.tvReminder.visibility = View.VISIBLE
+//                    }*/
+//                }
 
                 ////////////////////////////////////
 
-                holder.im_Message_Icon.setTag(position)
-                holder.im_Message_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaMessage")
-                })
-
-                holder.im_Message_Document.setTag(position)
-                holder.im_Message_Document.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "DocumentList")
-                })
-
-                holder.cb_Message.setTag(position)
-                holder.cb_Message.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-
-                        val jsonObject1 =  jsonArray.getJSONObject(position)
-
-                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
-                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
-                        val Status1 = jsonObject1!!.getString("Status")
-                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
-
-                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
-                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
-                        lstChk.add(desc)
-                        val gson = Gson()
-                        val json = gson.toJson(lstChk)
-                        val editor = sharedPreferences!!.edit()
-                        editor.putString("Set", json);
-                        editor.commit();
-                        Log.e(TAG, "lstChk_size  " + lstChk.size)
-                        Log.e(TAG, "desc  3413  " + desc)
-
-                    }
-                    else
-                    {
-                        val jsonObject1 =  jsonArray.getJSONObject(position)
-                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
-                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
-                        val Status1 = jsonObject1!!.getString("Status")
-                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
-
-//                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
-                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
-                        lstChk.remove(desc)
-                        val gson = Gson()
-                        val json = gson.toJson(lstChk)
-                        val editor = sharedPreferences!!.edit()
-                        editor.putString("Set", json);
-                        editor.commit();
-                        Log.e(TAG, "lstChk_size  " + lstChk.size)
-                        Log.e(TAG, "desc  3414  " + desc)
-                    }
-
-                    /*if(lstChk.size!=0) {
-                            holder.tvReminder.visibility = View.VISIBLE
-                    }*/
-                }
+//                holder.im_Message_Icon.setTag(position)
+//                holder.im_Message_Icon.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "agendaMessage")
+//                })
+//
+//                holder.im_Message_Document.setTag(position)
+//                holder.im_Message_Document.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "DocumentList")
+//                })
+//
+//                holder.cb_Message.setTag(position)
+//                holder.cb_Message.setOnCheckedChangeListener { buttonView, isChecked ->
+//                    if (isChecked) {
+//
+//                        val jsonObject1 =  jsonArray.getJSONObject(position)
+//
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val Status1 = jsonObject1!!.getString("Status")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+//
+//                        //   val desc = "Action : "+ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+//                        lstChk.add(desc)
+//                        val gson = Gson()
+//                        val json = gson.toJson(lstChk)
+//                        val editor = sharedPreferences!!.edit()
+//                        editor.putString("Set", json);
+//                        editor.commit();
+//                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+//                        Log.e(TAG, "desc  3413  " + desc)
+//
+//                    }
+//                    else
+//                    {
+//                        val jsonObject1 =  jsonArray.getJSONObject(position)
+//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
+//                        val Status1 = jsonObject1!!.getString("Status")
+//                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")
+//
+////                        val desc = ActionTypeName1+"\n"+EnquiryAbout1+"\n"+Status1
+//                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
+//                        lstChk.remove(desc)
+//                        val gson = Gson()
+//                        val json = gson.toJson(lstChk)
+//                        val editor = sharedPreferences!!.edit()
+//                        editor.putString("Set", json);
+//                        editor.commit();
+//                        Log.e(TAG, "lstChk_size  " + lstChk.size)
+//                        Log.e(TAG, "desc  3414  " + desc)
+//                    }
+//
+//                    /*if(lstChk.size!=0) {
+//                            holder.tvReminder.visibility = View.VISIBLE
+//                    }*/
+//                }
 
                 ////////////////////////
 
 
 
-             /*   holder.im_Call_Icon.setTag(position)
+                holder.im_Call_Icon.setTag(position)
                 holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaCall")
-                })*/
-
-                holder.im_Call_Alarm.setTag(position)
-                holder.im_Call_Alarm.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "CallReminder")
                 })
+
+
+//                holder.im_Call_Alarm.setTag(position)
+//                holder.im_Call_Alarm.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "CallReminder")
+//                })
                 holder.im_Call_Document.setTag(position)
                 holder.im_Call_Document.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "DocumentList")
+                 //   clickListener!!.onClick(position, "DocumentList")
+                    clickListener!!.onClick(position, "agendaMessage")
                 })
 
                 holder.cb_Call.setTag(position)
@@ -481,24 +486,24 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
                 ////////////////////////////////////////
 
-                holder.im_Document_Icon.setTag(position)
-                holder.im_Document_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaDocument")
-                })
-
-                holder.ll_Call_Icon!!.setTag(position)
-                holder.ll_Call_Icon!!.setOnClickListener(View.OnClickListener {
-
-                   /* val intent = Intent(context, AddRemarkActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)*/
-                    val jsonObject1 =  jsonArray.getJSONObject(position)
-                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerate"))
-                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerateProduct"))
-
-                    clickListener!!.onClick(position, "agendaCall")
-                })
-
+//                holder.im_Document_Icon.setTag(position)
+//                holder.im_Document_Icon.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "agendaDocument")
+//                })
+//
+//                holder.ll_Call_Icon!!.setTag(position)
+//                holder.ll_Call_Icon!!.setOnClickListener(View.OnClickListener {
+//
+//                   /* val intent = Intent(context, AddRemarkActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                    context.startActivity(intent)*/
+//                    val jsonObject1 =  jsonArray.getJSONObject(position)
+//                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerate"))
+//                    Log.e(TAG,""+jsonObject1.getString("ID_LeadGenerateProduct"))
+//
+//                    clickListener!!.onClick(position, "agendaCall")
+//                })
+//
                 holder.ll_agenda!!.setTag(position)
                 holder.ll_agenda!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "agendaList")
@@ -553,7 +558,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
         internal var tvCall_address    : TextView
         internal var tvCall_phone      : TextView
         internal var tvCall_Status     : TextView
+        internal var tvCall_collectedby     : TextView
         internal var tvCall_product    : TextView
+        internal var tv_nextdate    : TextView
+        internal var tv_nextaction    : TextView
         internal var tvCall_preference    : TextView
 
         internal var im_Call_Icon      : ImageView
@@ -637,7 +645,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
             tvCall_address      = v.findViewById<View>(R.id.tvCall_address) as TextView
             tvCall_phone        = v.findViewById<View>(R.id.tvCall_phone) as TextView
             tvCall_Status       = v.findViewById<View>(R.id.tvCall_Status) as TextView
+            tvCall_collectedby       = v.findViewById<View>(R.id.tvCall_collectedby) as TextView
             tvCall_product      = v.findViewById<View>(R.id.tvCall_product) as TextView
+            tv_nextdate      = v.findViewById<View>(R.id.tv_nextdate) as TextView
+            tv_nextaction      = v.findViewById<View>(R.id.tv_nextaction) as TextView
             tvCall_preference      = v.findViewById<View>(R.id.tvCall_preference) as TextView
             im_Call_Icon        = v.findViewById<View>(R.id.im_Call_Icon) as ImageView
             im_Call_Alarm        = v.findViewById<View>(R.id.im_Call_Alarm) as ImageView

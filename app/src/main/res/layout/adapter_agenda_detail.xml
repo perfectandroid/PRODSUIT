@@ -21,7 +21,7 @@
             android:backgroundTint="@color/white"
             app:cardCornerRadius="10dp"
             app:cardUseCompatPadding="true"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/ll_Call"
@@ -194,7 +194,22 @@
                         android:drawablePadding="5dp"
                         android:textColor="@color/black"
                         android:text="Call"
-                        android:visibility="invisible"/>
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_nextaction"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:gravity="left|center"
+                        android:textSize="10dp"
+                        android:layout_marginTop="2dp"
+                        android:drawableLeft="@drawable/svg_action_type"
+                        android:drawableTint="@color/greydark"
+                        android:drawablePadding="5dp"
+                        android:textColor="@color/black"
+                        android:visibility="visible"/>
                     <!--                android:drawableLeft="@drawable/deadline"-->
 
                     <View
@@ -216,6 +231,20 @@
                            android:layout_alignParentRight="true"
                             android:textSize="10dp"
                             android:text=""
+                            android:drawablePadding="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/black"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/tvCall_collectedby"
+                            android:fontFamily="@font/myfont"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="right"
+                            android:textSize="10dp"
                             android:drawablePadding="10dp"
                             android:layout_marginRight="5dp"
                             android:layout_marginBottom="5dp"
@@ -257,12 +286,16 @@
 
                     <ImageView
                         android:id="@+id/im_Call_Document"
-                        android:fontFamily="@font/myfont"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_height="27dp"
                         android:layout_marginBottom="15dp"
-                        android:src="@drawable/svg_document"
-                        android:gravity="center"/>
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center"
+                        android:src="@drawable/messageicon" />
+
+<!--                    android:src="@drawable/svg_document"-->
+
+
 
                     <CheckBox
                         android:id="@+id/cb_Call"

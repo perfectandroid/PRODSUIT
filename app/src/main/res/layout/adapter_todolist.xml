@@ -183,7 +183,7 @@
 <!--                android:drawableLeft="@drawable/deadline"-->
 
                 <TextView
-                    android:id="@+id/tv_actionType"
+                    android:id="@+id/tv_nextaction"
                     android:fontFamily="@font/myfont"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
                     android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
                 <!--                android:drawableLeft="@drawable/deadline"-->
 
                 <View

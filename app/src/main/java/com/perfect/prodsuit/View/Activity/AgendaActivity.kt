@@ -873,11 +873,11 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
 
         if (data.equals("agendaList")){
-//
-//            val jsonObject = agendaDetailArrayList.getJSONObject(position)
-//            val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
-//            i.putExtra("jsonObject",jsonObject.toString())
-//            startActivity(i)
+
+            val jsonObject = agendaDetailArrayList.getJSONObject(position)
+            val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
+            startActivity(i)
 
         }
     }

@@ -74,6 +74,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
                 holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_preference.text        = jsonObject!!.getString("Preference")
+                holder.tv_nextaction.text        = "Next Action  : "+jsonObject!!.getString("Action")
                 if(jsonObject!!.getString("Preference").equals("Hot")){
                     holder.impreference.setImageResource(R.drawable.preference2)
                     holder.impreference.setColorFilter(context.getColor(R.color.ColorHot))
@@ -87,7 +88,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 }
                 if (SubMode.equals("2")){
-                    holder.tv_nextdate.text        = "Due Date : "+jsonObject!!.getString("NextActionDate")
+                    holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
                 }
                 else{
                     holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
@@ -198,6 +199,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
         internal var tv_mobile    : TextView
         internal var tv_product    : TextView
         internal var tv_nextdate    : TextView
+        internal var tv_nextaction    : TextView
         internal var txtv_collectedby    : TextView
         internal var impreference    : ImageView
         internal var imcall    : ImageView
@@ -214,6 +216,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
            tv_mobile              = v.findViewById<View>(R.id.tv_mobile) as TextView
            tv_product           = v.findViewById<View>(R.id.tv_product) as TextView
            tv_nextdate           = v.findViewById<View>(R.id.tv_nextdate) as TextView
+           tv_nextaction           = v.findViewById<View>(R.id.tv_nextaction) as TextView
            txtv_collectedby           = v.findViewById<View>(R.id.txtv_collectedby) as TextView
            imcall           = v.findViewById<View>(R.id.imcall) as ImageView
            immessage           = v.findViewById<View>(R.id.immessage) as ImageView
