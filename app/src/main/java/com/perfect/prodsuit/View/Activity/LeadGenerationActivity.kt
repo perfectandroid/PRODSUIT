@@ -100,7 +100,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var edtCustname: EditText? = null
     private var edtCustphone: EditText? = null
     private var edtCustemail: EditText? = null
-    private var edtCustaddress: EditText? = null
+    private var edtCustaddress1: EditText? = null
+    private var edtCustaddress2: EditText? = null
     private var edtCompanyName: EditText? = null
     private var edtContactPerson: EditText? = null
     private var edtContactNumber: EditText? = null
@@ -204,7 +205,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var edtDistrict: EditText? = null
     private var edtArea: EditText? = null
     private var edtPost: EditText? = null
-    private var edtLandLine: EditText? = null
+    private var edtWhatsApp: EditText? = null
+    private var edtCompanyContact: EditText? = null
     private var imgPinSearch: ImageView? = null
 
      private var edtProdcategory: EditText? = null
@@ -314,7 +316,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var Customer_Name : String?= ""
         var Customer_Mobile : String?= ""
         var Customer_Email : String?= ""
-        var Customer_Address : String?= ""
+        var Customer_Address1 : String?= ""
+        var Customer_Address2 : String?= ""
         var strComapnyName : String?= ""
         var strContactPerson : String?= ""
         var strContactNumber : String?= ""
@@ -359,7 +362,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
-        var strMoreLandPhone : String = ""
+        var strWhatsAppNo : String = ""
+        var strCompanyContact : String = ""
 
         var encode1 : String = ""
         var encode2 : String = ""
@@ -477,12 +481,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
-        Customer_Address = ""
+        Customer_Address1 = ""
+        Customer_Address2 = ""
         edt_customer!!.setText("")
         edtCustname!!.setText("")
         edtCustphone!!.setText("")
         edtCustemail!!.setText("")
-        edtCustaddress!!.setText("")
+        edtCustaddress1!!.setText("")
+        edtCustaddress2!!.setText("")
         strCustomer = ""
         strComapnyName = ""
         strContactPerson = ""
@@ -504,7 +510,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtDistrict!!.setText("")
         edtArea!!.setText("")
         edtPost!!.setText("")
-        edtLandLine!!.setText("")
+        edtWhatsApp!!.setText("")
+        edtCompanyContact!!.setText("")
 
         ID_Category = ""
         ID_Product = ""
@@ -576,7 +583,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtMediatype!!.setText("")
 
         custDetailMode = "1"
-        strMoreLandPhone = ""
+        strWhatsAppNo = ""
 
         image1 = ""
         image2 = ""
@@ -675,7 +682,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtCustname= findViewById<EditText>(R.id.edtCustname)
         edtCustemail= findViewById<EditText>(R.id.edtCustemail)
         edtCustphone= findViewById<EditText>(R.id.edtCustphone)
-        edtCustaddress= findViewById<EditText>(R.id.edtCustaddress)
+        edtCustaddress1= findViewById<EditText>(R.id.edtCustaddress1)
+        edtCustaddress2= findViewById<EditText>(R.id.edtCustaddress2)
         edtCompanyName= findViewById<EditText>(R.id.edtCompanyName)
         edtContactPerson= findViewById<EditText>(R.id.edtContactPerson)
         edtContactNumber= findViewById<EditText>(R.id.edtContactNumber)
@@ -688,7 +696,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtDistrict= findViewById<EditText>(R.id.edtDistrict)
         edtArea= findViewById<EditText>(R.id.edtArea)
         edtPost= findViewById<EditText>(R.id.edtPost)
-        edtLandLine= findViewById<EditText>(R.id.edtLandLine)
+        edtWhatsApp= findViewById<EditText>(R.id.edtWhatsApp)
+        edtCompanyContact= findViewById<EditText>(R.id.edtCompanyContact)
 
         imgPinSearch= findViewById<ImageView>(R.id.imgPinSearch)
 
@@ -937,31 +946,48 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             }
             R.id.edtArea->{
-                if (FK_District.equals("")){
-//                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.WHITE)
-//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-//                    snackbar.show()
-                    Config.snackBars(applicationContext,v,"Select District")
-                }else{
-                    Config.disableClick(v)
-                    areaDet = 0
-                    getArea(v)
-                }
+
+//                if (FK_Country.equals("")){
+//                    Config.disableClick(v)
+//                    areaDet = 0
+//                    getArea(v)
+//                }else{
+//                    if (FK_District.equals("")){
+////                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
+////                    snackbar.setActionTextColor(Color.WHITE)
+////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+////                    snackbar.show()
+//                        Config.snackBars(applicationContext,v,"Select District")
+//                    }else{
+//                        Config.disableClick(v)
+//                        areaDet = 0
+//                        getArea(v)
+//                    }
+//                }
+
+                Config.disableClick(v)
+                areaDet = 0
+                getArea(v)
+
 
             }
             R.id.edtPost->{
-                if (FK_Area.equals("")){
-//                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.WHITE)
-//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-//                    snackbar.show()
-                    Config.snackBars(applicationContext,v,"Select Area")
-                }else{
-                    Config.disableClick(v)
-                    postDet = 0
-                    getPost(v)
-                }
+//                if (FK_Area.equals("")){
+////                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
+////                    snackbar.setActionTextColor(Color.WHITE)
+////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+////                    snackbar.show()
+//                    Config.snackBars(applicationContext,v,"Select Area")
+//                }else{
+//                    Config.disableClick(v)
+//                    postDet = 0
+//                    getPost(v)
+//                }
+
+                Log.e(TAG,"FK_Area   745  "+FK_Area)
+                Config.disableClick(v)
+                postDet = 0
+                getPost(v)
 
             }
 
@@ -1501,19 +1527,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
             R.id.edtEmployee->{
 
-                if (ID_Department.equals("")){
-
-//                    val snackbar: Snackbar = Snackbar.make(v, "Select Department", Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.WHITE)
-//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-//                    snackbar.show()
-                    Config.snackBars(context,v,"Select Department")
-
-                }else{
+//                if (ID_Department.equals("")){
+//
+////                    val snackbar: Snackbar = Snackbar.make(v, "Select Department", Snackbar.LENGTH_LONG)
+////                    snackbar.setActionTextColor(Color.WHITE)
+////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+////                    snackbar.show()
+//                    Config.snackBars(context,v,"Select Department")
+//
+//                }else{
                     Config.disableClick(v)
                     employee = 0
                     getEmployee()
-                }
+               // }
             }
 
             R.id.btnReset->{
@@ -1785,6 +1811,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                 edtdepartment!!.setText(jobjt.getString("Department"))
                                 ID_Employee = jobjt.getString("ID_Employee")
                                 edtEmployee!!.setText(jobjt.getString("EmpFName"))
+
+                                ID_CollectedBy = jobjt.getString("ID_Employee")
+                                txtleadby!!.text= jobjt.getString("EmpFName")
 
 
                             } else {
@@ -3078,7 +3107,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edtDistrict!!.setText("")
         edtArea!!.setText("")
         edtPost!!.setText("")
-        edtLandLine!!.setText("")
+        edtWhatsApp!!.setText("")
+        edtCompanyContact!!.setText("")
     }
 
     private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
@@ -3799,7 +3829,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
          val Cust_Name =  edtCustname!!.text.toString()
          val Cust_Email =  edtCustemail!!.text.toString()
          val Cust_Mobile =  edtCustphone!!.text.toString()
-         val Cust_Address =  edtCustaddress!!.text.toString()
+         val Cust_Address1 =  edtCustaddress1!!.text.toString()
+         val Cust_Address2 =  edtCustaddress2!!.text.toString()
 
          if (Cust_Name.equals("")){
              val snackbar: Snackbar = Snackbar.make(v, "Enter Name", Snackbar.LENGTH_LONG)
@@ -3819,7 +3850,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
              snackbar.show()
          }
-         else if (Cust_Address.equals("")){
+         else if (Cust_Address1.equals("")){
              val snackbar: Snackbar = Snackbar.make(v, "Enter Address", Snackbar.LENGTH_LONG)
              snackbar.setActionTextColor(Color.WHITE)
              snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
@@ -3838,7 +3869,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              Customer_Name     = Cust_Name
              Customer_Mobile   = Cust_Mobile
              Customer_Email    = Cust_Email
-             Customer_Address  = Cust_Address
+             Customer_Address1  = Cust_Address1
+             Customer_Address2  = Cust_Address2
              llCustomerDetail!!.visibility = View.GONE
 
          }
@@ -5316,13 +5348,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Customer_Name     = jsonObject.getString("Name")
             Customer_Mobile   = jsonObject.getString("MobileNumber")
             Customer_Email    = jsonObject.getString("Email")
-            Customer_Address  = jsonObject.getString("Address")
+            Customer_Address1  = jsonObject.getString("Address")
 
            // llCustomerDetail!!.visibility = View.GONE
             edtCustname!!.setText(jsonObject.getString("Name"))
             edtCustphone!!.setText(jsonObject.getString("MobileNumber"))
             edtCustemail!!.setText(jsonObject.getString("Email"))
-            edtCustaddress!!.setText(jsonObject.getString("Address"))
+            edtCustaddress1!!.setText(jsonObject.getString("Address"))
+            edtCustaddress2!!.setText("")
+
 
 
             FK_Country = jsonObject.getString("FK_Country")
@@ -5476,16 +5510,17 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
              FK_States   = ""
              FK_District = ""
-             FK_Area     = ""
+         //    FK_Area = ""
              FK_Place    = ""
              FK_Post     = ""
 
              edtState!!.setText("")
              edtDistrict!!.setText("")
-             edtArea!!.setText("")
+         //    edtArea!!.setText("")
              edtPost!!.setText("")
              edtPincode!!.setText("")
-             edtLandLine!!.setText("")
+//             edtWhatsApp!!.setText("")
+//             edtCompanyContact!!.setText("")
 
 
          }
@@ -5499,15 +5534,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              edtState!!.setText(jsonObject.getString("States"))
 
              FK_District = ""
-             FK_Area     = ""
+         //    FK_Area = ""
              FK_Place    = ""
              FK_Post     = ""
 
              edtDistrict!!.setText("")
-             edtArea!!.setText("")
+          //   edtArea!!.setText("")
              edtPost!!.setText("")
              edtPincode!!.setText("")
-             edtLandLine!!.setText("")
+//             edtWhatsApp!!.setText("")
+//             edtCompanyContact!!.setText("")
 
 
          }
@@ -5520,34 +5556,32 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              FK_District = jsonObject.getString("FK_District")
              edtDistrict!!.setText(jsonObject.getString("District"))
 
-             FK_Area     = ""
+           //  FK_Area = ""
              FK_Place    = ""
              FK_Post     = ""
 
-             edtArea!!.setText("")
+          //   edtArea!!.setText("")
              edtPost!!.setText("")
              edtPincode!!.setText("")
-             edtLandLine!!.setText("")
+//             edtWhatsApp!!.setText("")
+//             edtCompanyContact!!.setText("")
 
 
          }
 
          if (data.equals("areadetail")){
              dialogArea!!.dismiss()
-//             val jsonObject = postArrayList.getJSONObject(position)
              val jsonObject = areaSort.getJSONObject(position)
              Log.e(TAG,"jsonObject  5465    "+jsonObject)
-//             Log.e(TAG,"FK_Post  3672    "+jsonObject.getString("FK_Post"))
-//             Log.e(TAG,"PinCode  3672    "+jsonObject.getString("PinCode"))
+
 
              FK_Area = jsonObject.getString("FK_Area")
              edtArea!!.setText(jsonObject.getString("Area"))
 //             edtPincode!!.setText(jsonObject.getString("PinCode"))
-
+//
              FK_Post     = ""
              edtPost!!.setText("")
-             edtPincode!!.setText("")
-             edtLandLine!!.setText("")
+        //     edtPincode!!.setText("")
 
 
          }
@@ -5562,7 +5596,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              edtPost!!.setText(jsonObject.getString("PostName"))
              edtPincode!!.setText(jsonObject.getString("PinCode"))
 
-             edtLandLine!!.setText("")
+//             edtWhatsApp!!.setText("")
+//             edtCompanyContact!!.setText("")
 
 
          }
@@ -5610,16 +5645,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
         if (strDate.equals("")){
-            Config.snackBars(context,v,"Select Date")
+            Config.snackBars(context,v,"Select Enquiry Date")
         }
-        else if (ID_LeadFrom.equals("")){
-            Config.snackBars(context,v,"Select Lead Source")
-        }
-        else if (ID_LeadThrough.equals("")){
-            Config.snackBars(context,v,"Select "+strLeadFromHint)
-        }
+//        else if (ID_LeadFrom.equals("")){
+//            Config.snackBars(context,v,"Select Lead Source")
+//        }
+//        else if (ID_LeadThrough.equals("")){
+//            Config.snackBars(context,v,"Select "+strLeadFromHint)
+//        }
         else if (ID_CollectedBy.equals("")){
-            Config.snackBars(context,v,"Select Collected By")
+            Config.snackBars(context,v,"Select Attended By")
         }
         else if (ID_Customer!!.equals("")){
             Customer_Mode = "0"
@@ -5627,31 +5662,44 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Customer_Name = edtCustname!!.text.toString()
             Customer_Mobile = edtCustphone!!.text.toString()
             Customer_Email = edtCustemail!!.text.toString()
-            Customer_Address = edtCustaddress!!.text.toString()
+            Customer_Address1 = edtCustaddress1!!.text.toString()
+            Customer_Address2 = edtCustaddress2!!.text.toString()
 
             Log.e(TAG,"CusNameTitle   5533    "+CusNameTitle)
           //  Config.snackBars(context,v,"Search OR Add Customer ")
             if (Customer_Name.equals("")){
                 Config.snackBars(context,v,"Enter Customer Name")
             }
-            else if (Customer_Mobile.equals("")){
-                Config.snackBars(context,v,"Enter Customer Mobile")
-            }
-            else if (Customer_Email.equals("") || Customer_Email.equals("null")){
-                Config.snackBars(context,v,"Enter Customer Email")
-            }
-            else if (Customer_Address.equals("")){
-                Config.snackBars(context,v,"Enter Customer Address")
-            }
-//            else if (strComapnyName.equals("")){
-//                Config.snackBars(context,v,"Enter Company Name")
+//            else if (Customer_Mobile.equals("")){
+//                Config.snackBars(context,v,"Enter Customer Mobile")
 //            }
+//            else if (Customer_Email.equals("") || Customer_Email.equals("null")){
+//                Config.snackBars(context,v,"Enter Customer Email")
+//            }
+//            else if (Customer_Address1.equals("")){
+//                Config.snackBars(context,v,"Enter Customer Address")
+//            }
+//            else if (Customer_Address2.equals("")){
+//                Config.snackBars(context,v,"Enter Customer Address")
+//            }
+            else if (FK_Area.equals("")){
+                Config.snackBars(context,v,"Select Address 3")
+            }
+
             else{
                 MoreValidations(v)
             }
         }
         else{
             Customer_Mode = "1"
+            CusNameTitle = actv_namTitle!!.text.toString()
+            Customer_Name = edtCustname!!.text.toString()
+            Customer_Mobile = edtCustphone!!.text.toString()
+            Customer_Email = edtCustemail!!.text.toString()
+            strWhatsAppNo = edtWhatsApp!!.text.toString()
+            strCompanyContact = edtCompanyContact!!.text.toString()
+            Customer_Address1 = edtCustaddress1!!.text.toString()
+            Customer_Address2 = edtCustaddress2!!.text.toString()
 //            if (strComapnyName.equals("")){
 //                Config.snackBars(context,v,"Enter Company Name")
 //            }
@@ -5659,8 +5707,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                MoreValidations(v)
 //            }
 
+            if (Customer_Name.equals("")){
+                Config.snackBars(context,v,"Enter Customer Name")
+            }
+//            else if (FK_Area.equals("")){
+//                Config.snackBars(context,v,"Select Address 3")
+//            }
 
-            MoreValidations(v)
+            else{
+                MoreValidations(v)
+            }
+
+
+           // MoreValidations(v)
         }
 
     }
@@ -5668,40 +5727,50 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private fun MoreValidations(v: View) {
 
         Log.e(TAG,"LeadValidations  37321"
-                +"\n"+"Customer_Mode     : "+Customer_Mode
-                +"\n"+"CusNameTitle      : "+CusNameTitle+"@"
-                +"\n"+"CusNameTitle      : "+CusNameTitle!!.length
-                +"\n"+"ID_Customer       : "+ID_Customer
-                +"\n"+"Customer_Name     : "+ Customer_Name
-                +"\n"+"Customer_Mobile   : "+ Customer_Mobile
-                +"\n"+"Customer_Email    : "+ Customer_Email
-                +"\n"+"Customer_Address  : "+ Customer_Address)
+                +"\n"+"Enquiry date       : "+strDate
+                +"\n"+"Attended by        : "+ID_CollectedBy
+                +"\n"+"Lead Source        : "+ID_LeadFrom
+                +"\n"+"Lead From          : "+ID_LeadThrough
+                +"\n"+"Customer_Mode      : "+Customer_Mode
+                +"\n"+"CusNameTitle       : "+CusNameTitle+"@"
+                +"\n"+"CusNameTitle       : "+CusNameTitle!!.length
+                +"\n"+"ID_Customer        : "+ID_Customer
+                +"\n"+"Customer_Name      : "+Customer_Name
+                +"\n"+"Customer_Mobile    : "+Customer_Mobile
+                +"\n"+"WhatsApp No        : "+strWhatsAppNo
+                +"\n"+"Company Contact    : "+strCompanyContact
+                +"\n"+"Customer_Email     : "+Customer_Email
+                +"\n"+"Customer_Address1  : "+Customer_Address1
+                +"\n"+"Customer_Address2  : "+Customer_Address2
+                +"\n"+"Address 3  : "+ FK_Area)
 
 
 
-        strMoreLandPhone = edtLandLine!!.text.toString()
 
-        if (FK_Country.equals("")){
-            Config.snackBars(context,v,"Select Country")
-        }
-        else if (FK_States.equals("")){
-            Config.snackBars(context,v,"Select State")
-        }
-        else if (FK_District.equals("")){
-            Config.snackBars(context,v,"Select District")
-        }
-        else if (FK_Area.equals("")){
-            Config.snackBars(context,v,"Select Area")
-        }
-        else if (FK_Post.equals("")){
-            Config.snackBars(context,v,"Select Post")
-        }
-//        else if (strMoreLandPhone.equals("")){
-//            Config.snackBars(context,v,"Enter LandLine")
+
+//        if (FK_Country.equals("")){
+//            Config.snackBars(context,v,"Select Country")
 //        }
-        else{
-            ProductValidations(v)
-        }
+//        else if (FK_States.equals("")){
+//            Config.snackBars(context,v,"Select State")
+//        }
+//        else if (FK_District.equals("")){
+//            Config.snackBars(context,v,"Select District")
+//        }
+//        else if (FK_Area.equals("")){
+//            Config.snackBars(context,v,"Select Area")
+//        }
+//        else if (FK_Post.equals("")){
+//            Config.snackBars(context,v,"Select Post")
+//        }
+////        else if (strWhatsAppNo.equals("")){
+////            Config.snackBars(context,v,"Enter LandLine")
+////        }
+//        else{
+//            ProductValidations(v)
+//        }
+
+        ProductValidations(v)
 
 
     }
@@ -5711,25 +5780,27 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 +"\n"+"FK_Country        : "+FK_Country
                 +"\n"+"FK_States         : "+FK_States
                 +"\n"+"FK_District       : "+ FK_District
+                +"\n"+"FK_Area           : "+ FK_Area
                 +"\n"+"FK_Post           : "+ FK_Post
-                +"\n"+"strMoreLandPhone  : "+ strMoreLandPhone)
+                +"\n"+"strWhatsAppNo  : "+ strWhatsAppNo)
+
         strQty = edtProdqty!!.text.toString()
         strFeedback = edtProdfeedback!!.text.toString()
         if (ID_Category.equals("")){
             Config.snackBars(context,v,"Select Category")
         }
-        else if (ID_Product.equals("")){
-            Config.snackBars(context,v,"Select Product")
-        }
-        else if (strQty.equals("")){
-            Config.snackBars(context,v,"Enter Quantity ")
-        }
+//        else if (ID_Product.equals("")){
+//            Config.snackBars(context,v,"Select Product")
+//        }
+//        else if (strQty.equals("")){
+//            Config.snackBars(context,v,"Enter Quantity ")
+//        }
         else if (ID_Priority.equals("")){
             Config.snackBars(context,v,"Select Priority")
         }
-//        else if (strFeedback.equals("")){
-//            Config.snackBars(context,v,"Enter Feedback ")
-//        }
+        else if (strFeedback.equals("")){
+            Config.snackBars(context,v,"Enter Enquiry Note ")
+        }
         else if (ID_Status.equals("")){
             Config.snackBars(context,v,"Select Status")
         }
@@ -5744,27 +5815,32 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             else if (strFollowupdate.equals("")){
                 Config.snackBars(context,v,"Select Followup Date")
             }
+            else if (ID_Employee.equals("")){
+                Config.snackBars(context,v,"Select Assigned To")
+            }
             else{
-               if (strNeedCheck.equals("1")){
-                   if (ID_Branch.equals("")){
-                       Config.snackBars(context,v,"Select Branch")
-                   }
-                   else if (ID_BranchType.equals("")){
-                       Config.snackBars(context,v,"Select Branch Type")
-                   }
-                   else if (ID_Department.equals("")){
-                       Config.snackBars(context,v,"Select Department")
-                   }
-                   else if (ID_Employee.equals("")){
-                       Config.snackBars(context,v,"Select Employee")
-                   }
-                   else{
-                       LocationValidation(v)
-                   }
-               }
-               else{
-                    LocationValidation(v)
-               }
+//               if (strNeedCheck.equals("1")){
+//                   if (ID_Branch.equals("")){
+//                       Config.snackBars(context,v,"Select Branch")
+//                   }
+//                   else if (ID_BranchType.equals("")){
+//                       Config.snackBars(context,v,"Select Branch Type")
+//                   }
+//                   else if (ID_Department.equals("")){
+//                       Config.snackBars(context,v,"Select Department")
+//                   }
+//                   else if (ID_Employee.equals("")){
+//                       Config.snackBars(context,v,"Select Employee")
+//                   }
+//                   else{
+//                       LocationValidation(v)
+//                   }
+//               }
+//               else{
+//                    LocationValidation(v)
+//               }
+
+                LocationValidation(v)
             }
         }
         else{
@@ -5793,18 +5869,18 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         if (strLatitude.equals("") && strLongitue.equals("")){
             Config.snackBars(context,v,"Select Location")
         }
-        else if (strDate.equals("")){
-            Config.snackBars(context,v,"Select Date")
-        }
-        else if (ID_LeadFrom.equals("")){
-            Config.snackBars(context,v,"Select Lead From")
-        }
-        else if (ID_LeadThrough.equals("")){
-            Config.snackBars(context,v,"Select Lead Through")
-        }
-        else if (ID_CollectedBy.equals("")){
-            Config.snackBars(context,v,"Select Collected By")
-        }
+//        else if (strDate.equals("")){
+//            Config.snackBars(context,v,"Select Date")
+//        }
+//        else if (ID_LeadFrom.equals("")){
+//            Config.snackBars(context,v,"Select Lead From")
+//        }
+//        else if (ID_LeadThrough.equals("")){
+//            Config.snackBars(context,v,"Select Lead Through")
+//        }
+//        else if (ID_CollectedBy.equals("")){
+//            Config.snackBars(context,v,"Select Collected By")
+//        }
 //        else if (ID_MediaMaster.equals("")){
 //            Config.snackBars(context,v,"Select Media Type")
 //        }
@@ -5868,22 +5944,77 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             dialogConfirmPop!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
 
+            ////////////////////////
+
+            val  ll_LeadDetails            = dialogConfirmPop!! .findViewById(R.id. ll_LeadDetails) as LinearLayout
+            val  ll_lead_date            = dialogConfirmPop!! .findViewById(R.id. ll_lead_date) as LinearLayout
+            val  ll_collected_by            = dialogConfirmPop!! .findViewById(R.id. ll_collected_by) as LinearLayout
+            val  ll_lead_source            = dialogConfirmPop!! .findViewById(R.id. ll_lead_source) as LinearLayout
+            val  ll_lead_from            = dialogConfirmPop!! .findViewById(R.id. ll_lead_from) as LinearLayout
 
             val tvp_lead_date        = dialogConfirmPop!! .findViewById(R.id.tvp_lead_date) as TextView
-            val tvp_lead_from        = dialogConfirmPop!! .findViewById(R.id.tvp_lead_from) as TextView
-            val tvp_lead_through     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_through) as TextView
             val tvp_collected_by     = dialogConfirmPop!! .findViewById(R.id.tvp_collected_by) as TextView
+            val tvp_lead_source        = dialogConfirmPop!! .findViewById(R.id.tvp_lead_source) as TextView
+            val tvp_lead_from     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_from) as TextView
+            val tvp_lead_from_label     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_from_label) as TextView
+
+
+
+
+            ////////////////////////
+            val  ll_CustomerDetail         = dialogConfirmPop!! .findViewById(R.id. ll_CustomerDetail) as LinearLayout
+            val ll_cust_name            = dialogConfirmPop!! .findViewById(R.id.ll_cust_name) as LinearLayout
+            val ll_cust_phone            = dialogConfirmPop!! .findViewById(R.id.ll_cust_phone) as LinearLayout
+            val ll_whats_app            = dialogConfirmPop!! .findViewById(R.id.ll_whats_app) as LinearLayout
+            val ll_company_contact            = dialogConfirmPop!! .findViewById(R.id.ll_company_contact) as LinearLayout
+            val ll_cust_email            = dialogConfirmPop!! .findViewById(R.id.ll_cust_email) as LinearLayout
+            val ll_cust_address            = dialogConfirmPop!! .findViewById(R.id.ll_cust_address) as LinearLayout
+            val ll_cust_address2            = dialogConfirmPop!! .findViewById(R.id.ll_cust_address2) as LinearLayout
+            val ll_cust_address3            = dialogConfirmPop!! .findViewById(R.id.ll_cust_address3) as LinearLayout
 
             val tvp_cust_name        = dialogConfirmPop!! .findViewById(R.id.tvp_cust_name) as TextView
-            val tvp_cust_address     = dialogConfirmPop!! .findViewById(R.id.tvp_cust_address) as TextView
-            val tvp_cust_email       = dialogConfirmPop!! .findViewById(R.id.tvp_cust_email) as TextView
             val tvp_cust_phone       = dialogConfirmPop!! .findViewById(R.id.tvp_cust_phone) as TextView
+            val tvp_whats_app       = dialogConfirmPop!! .findViewById(R.id.tvp_whats_app) as TextView
+            val tvp_company_contact       = dialogConfirmPop!! .findViewById(R.id.tvp_company_contact) as TextView
+            val tvp_cust_email       = dialogConfirmPop!! .findViewById(R.id.tvp_cust_email) as TextView
+            val tvp_cust_address     = dialogConfirmPop!! .findViewById(R.id.tvp_cust_address) as TextView
+            val tvp_cust_address2     = dialogConfirmPop!! .findViewById(R.id.tvp_cust_address2) as TextView
+            val tvp_cust_address3     = dialogConfirmPop!! .findViewById(R.id.tvp_cust_address3) as TextView
+
+
+            ////////////////////////
+            val  ll_MoreCommunicationInfo  = dialogConfirmPop!! .findViewById(R.id. ll_MoreCommunicationInfo) as LinearLayout
+            val ll_cust_country            = dialogConfirmPop!! .findViewById(R.id.ll_cust_country) as LinearLayout
+            val ll_cust_state            = dialogConfirmPop!! .findViewById(R.id.ll_cust_state) as LinearLayout
+            val ll_cust_district            = dialogConfirmPop!! .findViewById(R.id.ll_cust_district) as LinearLayout
+            val ll_cust_post            = dialogConfirmPop!! .findViewById(R.id.ll_cust_post) as LinearLayout
+            val ll_cust_pincode            = dialogConfirmPop!! .findViewById(R.id.ll_cust_pincode) as LinearLayout
+            val ll_cust_landline            = dialogConfirmPop!! .findViewById(R.id.ll_cust_landline) as LinearLayout
+
             val tvp_cust_coutry      = dialogConfirmPop!! .findViewById(R.id.tvp_cust_coutry) as TextView
             val tvp_cust_state       = dialogConfirmPop!! .findViewById(R.id.tvp_cust_state) as TextView
             val tvp_cust_district    = dialogConfirmPop!! .findViewById(R.id.tvp_cust_district) as TextView
             val tvp_cust_post        = dialogConfirmPop!! .findViewById(R.id.tvp_cust_post) as TextView
             val tvp_cust_pincode     = dialogConfirmPop!! .findViewById(R.id.tvp_cust_pincode) as TextView
             val tvp_cust_landline    = dialogConfirmPop!! .findViewById(R.id.tvp_cust_landline) as TextView
+
+
+            ////////////////////////
+            val  ll_ProductDetails  = dialogConfirmPop!! .findViewById(R.id. ll_ProductDetails) as LinearLayout
+            val ll_prod_category            = dialogConfirmPop!! .findViewById(R.id.ll_prod_category) as LinearLayout
+            val ll_prod_product            = dialogConfirmPop!! .findViewById(R.id.ll_prod_product) as LinearLayout
+            val ll_prod_quantity            = dialogConfirmPop!! .findViewById(R.id.ll_prod_quantity) as LinearLayout
+            val ll_prod_priority            = dialogConfirmPop!! .findViewById(R.id.ll_prod_priority) as LinearLayout
+            val ll_prod_status            = dialogConfirmPop!! .findViewById(R.id.ll_prod_status) as LinearLayout
+            val ll_prod_feedback            = dialogConfirmPop!! .findViewById(R.id.ll_prod_feedback) as LinearLayout
+
+            val ll_followup_action          = dialogConfirmPop!! .findViewById(R.id.ll_followup_action) as LinearLayout
+            val ll_followup_type            = dialogConfirmPop!! .findViewById(R.id.ll_followup_type) as LinearLayout
+            val ll_followup_date            = dialogConfirmPop!! .findViewById(R.id.ll_followup_date) as LinearLayout
+            val ll_branchtype               = dialogConfirmPop!! .findViewById(R.id.ll_branchtype) as LinearLayout
+            val ll_branch                   = dialogConfirmPop!! .findViewById(R.id.ll_branch) as LinearLayout
+            val ll_department               = dialogConfirmPop!! .findViewById(R.id.ll_department) as LinearLayout
+            val ll_employee                 = dialogConfirmPop!! .findViewById(R.id.ll_employee) as LinearLayout
 
             val tvp_company_name     = dialogConfirmPop!! .findViewById(R.id.tvp_company_name) as TextView
             val tvp_contact_person   = dialogConfirmPop!! .findViewById(R.id.tvp_contact_person) as TextView
@@ -5907,61 +6038,35 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             val tvp_location         = dialogConfirmPop!! .findViewById(R.id.tvp_location) as TextView
 
 
-            ////////////////////////
 
-            val ll_lead_from            = dialogConfirmPop!! .findViewById(R.id.ll_lead_from) as LinearLayout
-            val ll_lead_through            = dialogConfirmPop!! .findViewById(R.id.ll_lead_through) as LinearLayout
-            val ll_collected_by            = dialogConfirmPop!! .findViewById(R.id.ll_collected_by) as LinearLayout
-
-            /////////
+            ////////////////////////////
 
 
-            val ll_cust_name            = dialogConfirmPop!! .findViewById(R.id.ll_cust_name) as LinearLayout
-            val ll_cust_address            = dialogConfirmPop!! .findViewById(R.id.ll_cust_address) as LinearLayout
-            val ll_cust_email            = dialogConfirmPop!! .findViewById(R.id.ll_cust_email) as LinearLayout
-            val ll_cust_phone            = dialogConfirmPop!! .findViewById(R.id.ll_cust_phone) as LinearLayout
 
-            val ll_cust_country            = dialogConfirmPop!! .findViewById(R.id.ll_cust_country) as LinearLayout
-            val ll_cust_state            = dialogConfirmPop!! .findViewById(R.id.ll_cust_state) as LinearLayout
-            val ll_cust_district            = dialogConfirmPop!! .findViewById(R.id.ll_cust_district) as LinearLayout
-            val ll_cust_post            = dialogConfirmPop!! .findViewById(R.id.ll_cust_post) as LinearLayout
-            val ll_cust_pincode            = dialogConfirmPop!! .findViewById(R.id.ll_cust_pincode) as LinearLayout
-            val ll_cust_landline            = dialogConfirmPop!! .findViewById(R.id.ll_cust_landline) as LinearLayout
+
 
             ///////////
-            val ll_MoreCommunicationInfo    = dialogConfirmPop!! .findViewById(R.id.ll_MoreCommunicationInfo) as LinearLayout
+
             val ll_company_name             = dialogConfirmPop!! .findViewById(R.id.ll_company_name) as LinearLayout
             val ll_contact_person           = dialogConfirmPop!! .findViewById(R.id.ll_contact_person) as LinearLayout
             val ll_contact_number           = dialogConfirmPop!! .findViewById(R.id.ll_contact_number) as LinearLayout
             val ll_media_type               = dialogConfirmPop!! .findViewById(R.id.ll_media_type) as LinearLayout
 
             ///////////
-            val ll_prod_category            = dialogConfirmPop!! .findViewById(R.id.ll_prod_category) as LinearLayout
-            val ll_prod_product            = dialogConfirmPop!! .findViewById(R.id.ll_prod_product) as LinearLayout
-            val ll_prod_quantity            = dialogConfirmPop!! .findViewById(R.id.ll_prod_quantity) as LinearLayout
-            val ll_prod_priority            = dialogConfirmPop!! .findViewById(R.id.ll_prod_priority) as LinearLayout
-            val ll_prod_status            = dialogConfirmPop!! .findViewById(R.id.ll_prod_status) as LinearLayout
-            val ll_prod_feedback            = dialogConfirmPop!! .findViewById(R.id.ll_prod_feedback) as LinearLayout
 
-            val ll_followup_action          = dialogConfirmPop!! .findViewById(R.id.ll_followup_action) as LinearLayout
-            val ll_followup_type            = dialogConfirmPop!! .findViewById(R.id.ll_followup_type) as LinearLayout
-            val ll_followup_date            = dialogConfirmPop!! .findViewById(R.id.ll_followup_date) as LinearLayout
-            val ll_branchtype               = dialogConfirmPop!! .findViewById(R.id.ll_branchtype) as LinearLayout
-            val ll_branch                   = dialogConfirmPop!! .findViewById(R.id.ll_branch) as LinearLayout
-            val ll_department               = dialogConfirmPop!! .findViewById(R.id.ll_department) as LinearLayout
-            val ll_employee                 = dialogConfirmPop!! .findViewById(R.id.ll_employee) as LinearLayout
 
             val btnCancel                 = dialogConfirmPop!! .findViewById(R.id.btnCancel) as Button
             val btnOk                 = dialogConfirmPop!! .findViewById(R.id.btnOk) as Button
 
             Log.e(TAG,"")
 
+
             if (ID_LeadFrom.equals("")){
-                ll_lead_from!!.visibility = View.GONE
+                ll_lead_source!!.visibility = View.GONE
             }
 
             if (ID_LeadThrough.equals("")){
-                ll_lead_through!!.visibility = View.GONE
+                ll_lead_from!!.visibility = View.GONE
             }
 
             if (ID_CollectedBy.equals("")){
@@ -5973,15 +6078,29 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             if (edtCustname!!.text.toString().equals("")){
                 ll_cust_name!!.visibility = View.GONE
             }
-            if (edtCustaddress!!.text.toString().equals("")){
-                ll_cust_address!!.visibility = View.GONE
+            if (edtCustphone!!.text.toString().equals("")){
+                ll_cust_phone!!.visibility = View.GONE
+            }
+            if (edtWhatsApp!!.text.toString().equals("")){
+                ll_whats_app!!.visibility = View.GONE
+            }
+            if (edtCompanyContact!!.text.toString().equals("")){
+                ll_company_contact!!.visibility = View.GONE
             }
             if (edtCustemail!!.text.toString().equals("")){
                 ll_cust_email!!.visibility = View.GONE
             }
-            if (edtCustphone!!.text.toString().equals("")){
-                ll_cust_phone!!.visibility = View.GONE
+            if (edtCustaddress1!!.text.toString().equals("")){
+                ll_cust_address!!.visibility = View.GONE
             }
+            if (edtCustaddress2!!.text.toString().equals("")){
+                ll_cust_address2!!.visibility = View.GONE
+            }
+            if (edtArea!!.text.toString().equals("")){
+                ll_cust_address3!!.visibility = View.GONE
+            }
+
+
 
             if (edtCountry!!.text.toString().equals("")){
                 ll_cust_country!!.visibility = View.GONE
@@ -6003,9 +6122,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 ll_cust_pincode!!.visibility = View.GONE
             }
 
-            if (edtLandLine!!.text.toString().equals("")){
-                ll_cust_landline!!.visibility = View.GONE
-            }
+
 
             //////////////////////////////////
 
@@ -6026,7 +6143,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             ///////////////////
 
-            if (edtCompanyName!!.text.toString().equals("") && edtContactPerson!!.text.toString().equals("") && edtContactNumber!!.text.toString().equals("") && txtMediatype!!.text.toString().equals("")){
+//            if (edtCompanyName!!.text.toString().equals("") && edtContactPerson!!.text.toString().equals("") && edtContactNumber!!.text.toString().equals("") && txtMediatype!!.text.toString().equals("")){
+//                ll_MoreCommunicationInfo!!.visibility = View.GONE
+//            }
+
+            if (FK_Country.equals("") && FK_States.equals("") && FK_District.equals("") && FK_Post.equals("") && edtPincode!!.text.toString().equals("")){
                 ll_MoreCommunicationInfo!!.visibility = View.GONE
             }
 
@@ -6084,20 +6205,28 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
 
             tvp_lead_date.text = txtDate!!.text.toString()
-            tvp_lead_from.text = txtleadfrom!!.text.toString()
-            tvp_lead_through.text = txtleadthrough!!.text.toString()
             tvp_collected_by.text = txtleadby!!.text.toString()
+            tvp_lead_source.text = txtleadfrom!!.text.toString()
+            tvp_lead_from.text = txtleadthrough!!.text.toString()
+            tvp_lead_from_label.text = strLeadFromHint
 
-            tvp_cust_name.text = edtCustname!!.text.toString()
-            tvp_cust_address.text = edtCustaddress!!.text.toString()
+
+            tvp_cust_name.text = actv_namTitle!!.text.toString()+""+edtCustname!!.text.toString()
             tvp_cust_phone.text = edtCustphone!!.text.toString()
+            tvp_whats_app.text = edtWhatsApp!!.text.toString()
+            tvp_company_contact.text = edtCompanyContact!!.text.toString()
+            tvp_cust_address.text = edtCustaddress1!!.text.toString()
+            tvp_cust_address2.text = edtCustaddress2!!.text.toString()
+            tvp_cust_address3.text = edtArea!!.text.toString()
+
             tvp_cust_email.text = edtCustemail!!.text.toString()
+
             tvp_cust_coutry.text = edtCountry!!.text.toString()
             tvp_cust_state.text = edtState!!.text.toString()
             tvp_cust_district.text = edtDistrict!!.text.toString()
             tvp_cust_post.text = edtPost!!.text.toString()
             tvp_cust_pincode.text = edtPincode!!.text.toString()
-            tvp_cust_landline.text = edtLandLine!!.text.toString()
+            tvp_cust_landline.text = edtWhatsApp!!.text.toString()
 
 
             tvp_company_name.text = edtCompanyName!!.text.toString()
@@ -6164,7 +6293,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
                     leadGenerateSaveViewModel.saveLeadGenerate(this, strDate, ID_LeadFrom!!,
-                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address!!,
+                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address1!!,
                         Customer_Mobile!!, Customer_Email!!,strComapnyName!!,"", ID_MediaMaster!!, FK_Country, FK_States,
                         FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
                         strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
@@ -6468,7 +6597,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                         edtCustname!!.setText(jobjt.getString("LgCusName"))
                                         edtCustphone!!.setText(jobjt.getString("LgCusMobile"))
                                         edtCustemail!!.setText(jobjt.getString("LgCusEmail"))
-                                        edtCustaddress!!.setText(jobjt.getString("LgCusAddress"))
+                                        edtCustaddress1!!.setText(jobjt.getString("LgCusAddress"))
 
                                         edtCompanyName!!.setText(jobjt.getString("CusCompany"))
                                       //  edtContactPerson!!.setText(jobjt.getString("CusCompany"))
@@ -6483,7 +6612,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                         edtState!!.setText(jobjt.getString("States"))
                                         edtDistrict!!.setText(jobjt.getString("District"))
                                         edtPost!!.setText(jobjt.getString("Post"))
-                                        edtLandLine!!.setText(jobjt.getString("CusPhone"))
+                                        edtWhatsApp!!.setText(jobjt.getString("CusPhone"))
 
                                         ID_Category = jobjt.getString("FK_Category")
                                         ID_Product = jobjt.getString("FK_Category")

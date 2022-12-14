@@ -74,6 +74,13 @@ object AreaRepository {
 //                }
 
 
+               var  FK_District_New = "0"
+
+                if (!FK_District.equals("")){
+                    FK_District_New = FK_District
+                }
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -83,9 +90,11 @@ object AreaRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("5"))
-                requestObject1.put("FK_District", ProdsuitApplication.encryptStart(FK_District))
+              //  requestObject1.put("FK_District", ProdsuitApplication.encryptStart("0"))  // All area
+                requestObject1.put("FK_District", ProdsuitApplication.encryptStart(FK_District_New))  // All area
 
                 Log.e(TAG,"FK_District   74   "+FK_District)
+                Log.e(TAG,"FK_District_New   74   "+FK_District_New)
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()

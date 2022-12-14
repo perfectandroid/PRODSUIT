@@ -69,6 +69,11 @@ object PostRepository {
 //                "SubMode:"4",
 //                "FK_District":"1"
 
+                var FK_Area_new = "0"
+                if (!FK_Area.equals("")){
+                    FK_Area_new = FK_Area
+                }
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -78,9 +83,11 @@ object PostRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("4"))
-                requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area))
+              //  requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area))
+                requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area_new))
 
-                Log.e(TAG,"FK_Area   74   "+ LeadGenerationActivity.FK_Area)
+                Log.e(TAG,"FK_Area   74   "+ FK_Area+"  :  ")
+                Log.e(TAG,"FK_Area_new   74   "+ FK_Area_new+"  :  ")
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -305,23 +305,64 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
+                                            android:paddingBottom="10dp"
                                             android:visibility="gone">
 
-                                            <TextView
-                                                android:id="@+id/txtDate"
+                                            <RelativeLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:layout_toLeftOf="@+id/img_search"
+                                                android:layout_marginLeft="10dp"
                                                 android:layout_marginTop="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="0dp">
+
+
+                                                <TextView
+                                                    android:id="@+id/txtDate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:drawableLeft="@drawable/lead_date"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:hint="Enquiry Date"
+                                                    android:padding="7dp"
+                                                    android:paddingLeft="5dp"
+                                                    android:paddingRight="5dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+                                                <TextView
+                                                    android:layout_width="15dp"
+                                                    android:layout_height="15dp"
+                                                    android:gravity="center"
+                                                    android:text="*"
+                                                    android:textColor="@color/red"
+                                                    android:textSize="15dp"
+                                                    android:textStyle="bold"
+                                                    android:visibility="gone"/>
+
+
+                                            </RelativeLayout>
+
+
+                                            <TextView
+                                                android:id="@+id/txtleadby"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="0dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
-                                                android:drawableLeft="@drawable/lead_date"
+                                                android:drawableLeft="@drawable/lead_collectedby"
                                                 android:drawableTint="@color/greydark"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:hint="Date"
+                                                android:hint="Attended By"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="7dp"
                                                 android:singleLine="true"
@@ -392,26 +433,7 @@
                                                 android:textSize="15dp"
                                                 android:visibility="gone"/>
 
-                                            <TextView
-                                                android:id="@+id/txtleadby"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="5dp"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_marginBottom="10dp"
-                                                android:layout_toLeftOf="@+id/img_search"
-                                                android:background="@drawable/shape_bg"
-                                                android:drawableLeft="@drawable/lead_collectedby"
-                                                android:drawableTint="@color/greydark"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:hint="Collected By"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
-                                                android:singleLine="true"
-                                                android:text=""
-                                                android:textSize="15dp" />
+
 
 
                                             <LinearLayout
@@ -496,6 +518,7 @@
                                             android:layout_height="match_parent"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
+                                            android:paddingBottom="10dp"
                                             android:visibility="gone">
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -652,7 +675,7 @@
                                                         android:layout_height="match_parent"
                                                         android:layout_weight="1"
                                                         android:layout_toLeftOf="@+id/img_search"
-                                                        android:hint="Name"
+                                                        android:hint="Customer Name"
                                                         android:drawableLeft="@drawable/lead_name"
                                                         android:drawableTint="@color/greydark"
                                                         android:fontFamily="@font/myfont"
@@ -671,7 +694,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="Phone"
+                                                    android:hint="Contact No"
                                                     android:drawableLeft="@drawable/lead_phones"
                                                     android:drawableTint="@color/greydark"
                                                     android:fontFamily="@font/myfont"
@@ -679,12 +702,51 @@
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
                                                     android:padding="7dp"
-                                                    android:maxLength="10"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
+
+                                                <EditText
+                                                    android:id="@+id/edtWhatsApp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:drawableLeft="@drawable/lead_landlines"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:hint="WhatsApp No"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_marginBottom="0dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:singleLine="true"
+                                                    android:inputType="phone"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
+                                                <EditText
+                                                    android:id="@+id/edtCompanyContact"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:drawableLeft="@drawable/lead_landlines"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:hint="Company/Contact Person"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_marginBottom="0dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
 
                                                 <EditText
                                                     android:id="@+id/edtCustemail"
@@ -693,7 +755,7 @@
                                                     android:layout_toLeftOf="@+id/img_search"
                                                     android:drawableLeft="@drawable/lead_emails"
                                                     android:drawableTint="@color/greydark"
-                                                    android:hint="Email"
+                                                    android:hint="Contact Email"
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
@@ -706,226 +768,88 @@
                                                     android:text="" />
 
                                                 <EditText
-                                                    android:id="@+id/edtCustaddress"
+                                                    android:id="@+id/edtCustaddress1"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="100dp"
+                                                    android:layout_height="match_parent"
                                                     android:layout_toLeftOf="@+id/img_search"
-                                                    android:hint="Address"
                                                     android:drawableLeft="@drawable/laed_address"
                                                     android:drawableTint="@color/greydark"
-                                                    android:layout_gravity="left"
+                                                    android:hint="Address 1"
                                                     android:fontFamily="@font/myfont"
-                                                    android:gravity="start"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
-                                                    android:paddingLeft="10dp"
-                                                    android:paddingTop="3dp"
+                                                    android:padding="7dp"
                                                     android:textSize="15dp"
-                                                    android:paddingRight="10dp"
-                                                    android:paddingBottom="3dp"
-                                                    android:inputType="textMultiLine"
-                                                    android:maxLines="3"
-                                                    android:layout_marginBottom="10dp"
+                                                    android:singleLine="true"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
 
-
-                                                <LinearLayout
+                                                <EditText
+                                                    android:id="@+id/edtCustaddress2"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
-                                                    android:orientation="vertical"
-                                                    android:background="@color/leadbg_color"
-                                                    android:visibility="visible">
-<!--                                                    android:id="@+id/llMoreCommInfo"-->
-                                                    <!--                                            android:background="@drawable/etselect_bggrey"-->
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:drawableLeft="@drawable/laed_address"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:hint="Address 2"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
 
+                                                <EditText
+                                                    android:id="@+id/edtCustaddress3"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:drawableLeft="@drawable/laed_address"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:hint="Address 3"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:editable="false"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text=""
+                                                    android:visibility="gone"/>
 
-
-
-                                                    <RelativeLayout
-                                                        android:id="@+id/rltvPinCode"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:background="@drawable/shape_bg"
-                                                        android:layout_marginLeft="10dp"
-                                                        android:layout_marginRight="10dp"
-                                                        android:layout_marginTop="10dp">
-
-
-                                                        <EditText
-                                                            android:id="@+id/edtPincode"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_toLeftOf="@+id/imgPinSearch"
-                                                            android:background="@android:color/transparent"
-                                                            android:drawableLeft="@drawable/lead_pincode"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:hint="Pincode"
-                                                            android:inputType="number"
-                                                            android:padding="7dp"
-                                                            android:singleLine="true"
-                                                            android:text=""
-                                                            android:textSize="15dp" />
-
-                                                        <ImageView
-                                                            android:id="@+id/imgPinSearch"
-                                                            android:layout_width="30dp"
-                                                            android:layout_height="30dp"
-                                                            android:layout_alignParentRight="true"
-                                                            android:layout_centerInParent="true"
-                                                            android:layout_marginRight="5dp"
-                                                            android:background="@drawable/ic_search"
-                                                            android:backgroundTint="@color/greydark"
-                                                            android:padding="5dp" />
-
-
-
-                                                    </RelativeLayout>
-
-
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10sp"
-                                                        android:orientation="vertical">
-
-
-
-                                                        <EditText
-                                                            android:id="@+id/edtCountry"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:hint="Country"
-                                                            android:drawableRight="@drawable/arrowright"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:drawableLeft="@drawable/lead_countrys"
-                                                            android:editable="false"
-                                                            android:textSize="15dp"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:padding="7dp"
-                                                            android:singleLine="true"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-
-
-                                                        <EditText
-                                                            android:id="@+id/edtState"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:hint="State"
-                                                            android:drawableRight="@drawable/arrowright"
-                                                            android:drawableLeft="@drawable/lead_states"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:editable="false"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:padding="7dp"
-                                                            android:textSize="15dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:singleLine="true"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-
-                                                        <EditText
-                                                            android:id="@+id/edtDistrict"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:hint="District"
-                                                            android:drawableRight="@drawable/arrowright"
-                                                            android:drawableLeft="@drawable/lead_districts"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:editable="false"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:padding="7dp"
-                                                            android:textSize="15dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:singleLine="true"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-                                                        <EditText
-                                                            android:id="@+id/edtArea"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:hint="Area"
-                                                            android:drawableRight="@drawable/arrowright"
-                                                            android:drawableLeft="@drawable/lead_area"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:editable="false"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:padding="7dp"
-                                                            android:textSize="15dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:singleLine="true"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-                                                        <EditText
-                                                            android:id="@+id/edtPost"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:hint="Post"
-                                                            android:drawableRight="@drawable/arrowright"
-                                                            android:drawableLeft="@drawable/lead_posts"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:editable="false"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:padding="7dp"
-                                                            android:textSize="15dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:singleLine="true"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-
-
-                                                        <EditText
-                                                            android:id="@+id/edtLandLine"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:drawableLeft="@drawable/lead_landlines"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:hint="LandLine"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:layout_marginBottom="10dp"
-                                                            android:padding="7dp"
-                                                            android:textSize="15dp"
-                                                            android:singleLine="true"
-                                                            android:inputType="phone"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:text="" />
-
-
-                                                    </LinearLayout>
+                                                <EditText
+                                                    android:id="@+id/edtArea"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:hint="Address 3"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/lead_area"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text=""
+                                                    android:visibility="visible"/>
 
 
 
 
 
 
-                                                </LinearLayout>
+
 
 
                                                 <LinearLayout
@@ -1095,7 +1019,166 @@
                                         android:orientation="vertical"
                                         android:layout_margin="10dp"
                                         android:background="@color/leadbg_color"
+                                        android:paddingBottom="10dp"
                                         android:visibility="gone">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="vertical"
+                                            android:background="@color/leadbg_color"
+                                            android:visibility="visible">
+                                            <!--                                                    android:id="@+id/llMoreCommInfo"-->
+                                            <!--                                            android:background="@drawable/etselect_bggrey"-->
+
+
+
+
+                                            <RelativeLayout
+                                                android:id="@+id/rltvPinCode"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:background="@drawable/shape_bg"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginTop="10dp">
+
+
+                                                <EditText
+                                                    android:id="@+id/edtPincode"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_toLeftOf="@+id/imgPinSearch"
+                                                    android:background="@android:color/transparent"
+                                                    android:drawableLeft="@drawable/lead_pincode"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:hint="Pincode"
+                                                    android:inputType="number"
+                                                    android:padding="7dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
+
+                                                <ImageView
+                                                    android:id="@+id/imgPinSearch"
+                                                    android:layout_width="30dp"
+                                                    android:layout_height="30dp"
+                                                    android:layout_alignParentRight="true"
+                                                    android:layout_centerInParent="true"
+                                                    android:layout_marginRight="5dp"
+                                                    android:background="@drawable/ic_search"
+                                                    android:backgroundTint="@color/greydark"
+                                                    android:padding="5dp" />
+
+
+
+                                            </RelativeLayout>
+
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="10sp"
+                                                android:orientation="vertical">
+
+
+
+                                                <EditText
+                                                    android:id="@+id/edtCountry"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:hint="Country"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:drawableLeft="@drawable/lead_countrys"
+                                                    android:editable="false"
+                                                    android:textSize="15dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:padding="7dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
+
+
+                                                <EditText
+                                                    android:id="@+id/edtState"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:hint="State"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/lead_states"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
+
+                                                <EditText
+                                                    android:id="@+id/edtDistrict"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:hint="District"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/lead_districts"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
+
+                                                <EditText
+                                                    android:id="@+id/edtPost"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:hint="Post"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/lead_posts"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:padding="7dp"
+                                                    android:textSize="15dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:singleLine="true"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:text="" />
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+
+
+
+                                        </LinearLayout>
 
                                         <EditText
                                             android:id="@+id/edtCompanyName"
@@ -1113,7 +1196,8 @@
                                             android:padding="7dp"
                                             android:singleLine="true"
                                             android:text=""
-                                            android:textSize="15dp" />
+                                            android:textSize="15dp"
+                                            android:visibility="gone"/>
 
                                         <EditText
                                             android:id="@+id/edtContactPerson"
@@ -1131,7 +1215,8 @@
                                             android:padding="7dp"
                                             android:singleLine="true"
                                             android:text=""
-                                            android:textSize="15dp" />
+                                            android:textSize="15dp"
+                                            android:visibility="gone"/>
 
                                         <EditText
                                             android:id="@+id/edtContactNumber"
@@ -1151,7 +1236,8 @@
                                             android:padding="7dp"
                                             android:singleLine="true"
                                             android:text=""
-                                            android:textSize="15dp" />
+                                            android:textSize="15dp"
+                                            android:visibility="gone"/>
 
                                         <TextView
                                             android:id="@+id/txtMediatype"
@@ -1173,7 +1259,8 @@
                                             android:padding="7dp"
                                             android:singleLine="true"
                                             android:text=""
-                                            android:textSize="15dp" />
+                                            android:textSize="15dp"
+                                            android:visibility="gone"/>
 
 
                                     </LinearLayout>
@@ -1345,7 +1432,7 @@
                                                     android:background="@drawable/shape_bg"
                                                     android:drawableLeft="@drawable/lead_feedbacks"
                                                     android:drawableTint="@color/greydark"
-                                                    android:hint="Feedback"
+                                                    android:hint="Enquiry Note"
                                                     android:fontFamily="@font/myfont"
                                                     android:padding="7dp"
                                                     android:singleLine="true"
@@ -1379,7 +1466,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
                                                 android:orientation="vertical"
-                                                android:visibility="gone">
+                                                android:visibility="visible">
 
                                                 <TextView
                                                     android:layout_width="match_parent"
@@ -1431,7 +1518,7 @@
                                                         android:drawableLeft="@drawable/lead_actiontypes"
                                                         android:drawableTint="@color/greydark"
                                                         android:editable="false"
-                                                        android:hint="Type"
+                                                        android:hint="Action Type"
                                                         android:fontFamily="@font/myfont"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
@@ -1457,7 +1544,25 @@
                                                         android:drawableLeft="@drawable/lead_date"
                                                         android:drawableTint="@color/greydark"
                                                         android:editable="false"
-                                                        android:hint="Date"
+                                                        android:hint="Follow up Date"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="7dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+                                                    <EditText
+                                                        android:id="@+id/edtEmployee"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableRight="@drawable/arrowright"
+                                                        android:drawableLeft="@drawable/lead_name"
+                                                        android:drawableTint="@color/greydark"
+                                                        android:editable="false"
+                                                        android:hint="Assigned To"
                                                         android:fontFamily="@font/myfont"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
@@ -1557,7 +1662,8 @@
                                                         android:layout_height="match_parent"
                                                         android:layout_marginTop="10dp"
                                                         android:layout_weight="1"
-                                                        android:orientation="horizontal">
+                                                        android:orientation="horizontal"
+                                                        android:visibility="gone">
 
 
                                                         <Switch
@@ -1658,23 +1764,7 @@
                                                         android:textSize="15dp" />
 
 
-                                                    <EditText
-                                                        android:id="@+id/edtEmployee"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
-                                                        android:layout_toLeftOf="@+id/img_search"
-                                                        android:background="@drawable/shape_bg"
-                                                        android:drawableRight="@drawable/arrowright"
-                                                        android:drawableLeft="@drawable/lead_name"
-                                                        android:drawableTint="@color/greydark"
-                                                        android:editable="false"
-                                                        android:hint="Employee"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:padding="7dp"
-                                                        android:singleLine="true"
-                                                        android:text=""
-                                                        android:textSize="15dp" />
+
 
 
                                                 </LinearLayout>

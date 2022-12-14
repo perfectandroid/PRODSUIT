@@ -79,6 +79,7 @@ object PincodeSearchRepository {
                 requestObject1.put("Pincode", ProdsuitApplication.encryptStart(strPincode))
 
 
+                Log.e(TAG,"strPincode   79   "+strPincode)
                 Log.e(TAG,"requestObject1   79   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
