@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.EmployeeModel
+import com.perfect.prodsuit.Model.LeadSubMediaModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,20 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object EmployeeRepository {
+object LeadSubMediaRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val employeeSetterGetter = MutableLiveData<EmployeeModel>()
-    val TAG: String = "EmployeeRepository"
+    val leadSubMedaiSetterGetter = MutableLiveData<LeadSubMediaModel>()
+    val TAG: String = "LeadSubMediaRepository"
 
-    fun getServicesApiCall(context: Context,ID_Department: String): MutableLiveData<EmployeeModel> {
-        getEmployee(context,ID_Department)
-        return employeeSetterGetter
+    fun getServicesApiCall(context: Context, ID_LeadThrough : String): MutableLiveData<LeadSubMediaModel> {
+        getLeadThrough(context, ID_LeadThrough)
+        return leadSubMedaiSetterGetter
     }
 
-    private fun getEmployee(context: Context,ID_Department: String) {
+    private fun getLeadThrough(context: Context, ID_LeadThrough: String) {
+
         try {
-            employeeSetterGetter.value= EmployeeModel("")
+            leadSubMedaiSetterGetter.value = LeadSubMediaModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -57,15 +58,10 @@ object EmployeeRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
 
-//                "ReqMode":"23",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_Department":1
-
+//                {"ReqMode":"aeHFs1nH9so=\n","BankKey":"\/mXqmq3ZMvs=\n","FK_Company":"07\/ybAx1yS4=\n","
+//                    Token":"6rmMCa8uA0BfOmGpLiWZv\/HsKID6nOcnqR8mW7iZ\/6AXKhpJCldXCA==\n","FK_MediaMaster":"vJ\/8asrP+O0=\n"}
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -73,16 +69,12 @@ object EmployeeRepository {
 
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("23"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("59"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ID_Department))
-
-
-                Log.e(TAG,"78"+requestObject1)
-
-
+                requestObject1.put("FK_MediaMaster", ProdsuitApplication.encryptStart(ID_LeadThrough))
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"ID_LeadThrough   82   "+ID_LeadThrough)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -90,7 +82,7 @@ object EmployeeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getEmployee(body)
+            val call = apiService.getSubMediaTypeDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -99,28 +91,26 @@ object EmployeeRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<EmployeeModel>()
-                        leads.add(EmployeeModel(response.body()))
+                        val leads = ArrayList<LeadSubMediaModel>()
+                        leads.add(LeadSubMediaModel(response.body()))
                         val msg = leads[0].message
-                        employeeSetterGetter.value = EmployeeModel(msg)
+                        leadSubMedaiSetterGetter.value = LeadSubMediaModel(msg)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
+
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
     }
-
 }

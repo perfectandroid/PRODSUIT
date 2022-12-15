@@ -77,6 +77,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
     private var llproduct: LinearLayout? = null
+    private var ll_product_qty: LinearLayout? = null
     private var llmediatype: LinearLayout? = null
     private var llUploadImages: LinearLayout? = null
     private var lldate: LinearLayout? = null
@@ -88,6 +89,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var txtcustomer: TextView? = null
     private var txtleadfrom: TextView? = null
     private var txtleadthrough: TextView? = null
+    private var txtSubMedia: TextView? = null
     private var edtleadthrough: EditText? = null
     private var txtleadby: TextView? = null
     private var txtproduct: TextView? = null
@@ -118,11 +120,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private var SELECT_PRODUCT: Int? = 102
     private var SELECT_LOCATION: Int? = 103
     lateinit var leadThroughViewModel: LeadThroughViewModel
+    lateinit var leadSubMediaViewModel: LeadSubMediaViewModel
     lateinit var leadFromViewModel: LeadFromViewModel
     lateinit var leadByViewModel: LeadByViewModel
     lateinit var mediaTypeViewModel: MediaTypeViewModel
     var recyLeadFrom: RecyclerView? = null
     var recyLeadThrough: RecyclerView? = null
+    var recySubMedia: RecyclerView? = null
     var recyLeadby: RecyclerView? = null
     var recyMediaType: RecyclerView? = null
     private var imgvupload1: ImageView? = null
@@ -139,12 +143,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     lateinit var leadFromSort : JSONArray
     lateinit var leadThroughArrayList : JSONArray
     lateinit var leadThroughSort : JSONArray
+    lateinit var leadSubMediaArrayList : JSONArray
+    lateinit var leadSubMediaSort : JSONArray
     lateinit var leadByArrayList : JSONArray
     lateinit var leadBySort : JSONArray
     lateinit var mediaTypeArrayList : JSONArray
     lateinit var mediaTypeSort : JSONArray
     var dialogLeadFrom : Dialog? = null
     var dialogLeadThrough : Dialog? = null
+    var dialogSubMedia : Dialog? = null
     var dialogLeadBy : Dialog? = null
     var dialogMediaType : Dialog? = null
     var dialogCustSearch : Dialog? = null
@@ -211,6 +218,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
      private var edtProdcategory: EditText? = null
      private var edtProdproduct: EditText? = null
+     private var edtProjectName: EditText? = null
      private var edtProdqty: EditText? = null
      private var edtProdfeedback: EditText? = null
      private var edtProdpriority: EditText? = null
@@ -303,8 +311,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var SubModeSearch : String?= ""
 
     companion object {
+        var LeadFromType : String?= ""   //  0-Text ,  1-Dropdown ,  2-None
+        var HasSubMedia : String?= ""   //  0-None ,  1-Has
+
         var ID_LeadFrom : String?= ""
         var ID_LeadThrough : String?= ""
+        var ID_MediaSubMaster : String?= ""
         var ID_CollectedBy : String?= ""
         var ID_MediaMaster : String?= ""
         var custDetailMode : String?= "1"
@@ -358,7 +370,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var ID_Department : String = ""
         var ID_Employee : String = ""
         var strQty : String = ""
+        var strProduct : String = ""
+        var strProject : String = ""
         var strDate : String = ""
+        var strLeadThrough : String = ""
         var strFeedback : String = ""
         var strFollowupdate : String = ""
         var strNeedCheck : String = "0"
@@ -368,7 +383,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         var encode1 : String = ""
         var encode2 : String = ""
 
-        var ID_LeadGenerate : String = ""
+        var ID_LeadGenerate : String = "0"
         var ID_LeadGenerateProduct : String = ""
 
         var strLeadFromHint : String?= ""
@@ -377,6 +392,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
     var countLeadFrom = 0
     var countLeadThrough = 0
+    var countSubMedia = 0
     var countLeadBy = 0
 
     var custDet = 0
@@ -399,6 +415,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var branch = 0
     var department = 0
     var employee = 0
+    var saveLead = 0
+    var saveLeadGenDet = 0
 
 
 
@@ -412,6 +430,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         context = this@LeadGenerationActivity
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
+        leadSubMediaViewModel = ViewModelProvider(this).get(LeadSubMediaViewModel::class.java)
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
@@ -475,6 +494,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     private fun clearData() {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
+        strLeadFromHint = "Lead From"
 
         Customer_Mode = "0"
         ID_Customer = ""
@@ -517,7 +537,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         ID_Product = ""
         strProdName = ""
         strQty = ""
+        strProduct = ""
+        strProject = ""
         strDate = ""
+        strLeadThrough = ""
         ID_Priority = ""
         strFeedback = ""
         ID_Status = ""
@@ -532,6 +555,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         edtProdcategory!!.setText("")
         edtProdproduct!!.setText("")
+        edtProjectName!!.setText("")
         edtProdqty!!.setText("")
         edtProdfeedback!!.setText("")
         edtProdpriority!!.setText("")
@@ -573,11 +597,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
         ID_LeadFrom  = ""
         ID_LeadThrough = ""
+        ID_MediaSubMaster = ""
         ID_CollectedBy = ""
         ID_MediaMaster = ""
 
         txtleadfrom!!.setText("")
         txtleadthrough!!.setText("")
+        txtSubMedia!!.setText("")
         edtleadthrough!!.setText("")
         txtleadby!!.setText("")
         txtMediatype!!.setText("")
@@ -613,8 +639,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         saveUpdateMode = "1"  //SAVE
         rltvPinCode!!.visibility = View.VISIBLE
 
-        ID_LeadGenerate = ""
+        ID_LeadGenerate = "0"
         ID_LeadGenerateProduct = ""
+        ll_product_qty!!.visibility = View.VISIBLE
+        edtProjectName!!.visibility = View.GONE
+
 
         getDefaultValueSettings()
 
@@ -643,6 +672,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
         llproduct = findViewById<LinearLayout>(R.id.llproduct)
+        ll_product_qty = findViewById<LinearLayout>(R.id.ll_product_qty)
         llmediatype = findViewById<LinearLayout>(R.id.llmediatype)
         llUploadImages = findViewById<LinearLayout>(R.id.llUploadImages)
         lldate = findViewById<LinearLayout>(R.id.lldate)
@@ -656,6 +686,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtcustomer = findViewById<TextView>(R.id.txtcustomer)
         txtleadfrom = findViewById<TextView>(R.id.txtleadfrom)
         txtleadthrough = findViewById<TextView>(R.id.txtleadthrough)
+        txtSubMedia = findViewById<TextView>(R.id.txtSubMedia)
         edtleadthrough = findViewById<EditText>(R.id.edtleadthrough)
         txtleadby = findViewById<TextView>(R.id.txtleadby)
         txtproduct = findViewById<TextView>(R.id.txtproduct)
@@ -667,6 +698,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
+        edtProjectName = findViewById<EditText>(R.id.edtProjectName)
         edtProdqty = findViewById<EditText>(R.id.edtProdqty)
         edtProdfeedback = findViewById<EditText>(R.id.edtProdfeedback)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
@@ -767,6 +799,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         tv_MoreCommInfoClick!!.setOnClickListener(this)
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
+        txtSubMedia!!.setOnClickListener(this)
         txtleadby!!.setOnClickListener(this)
         txtMediatype!!.setOnClickListener(this)
         txtDate!!.setOnClickListener(this)
@@ -952,42 +985,42 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                    areaDet = 0
 //                    getArea(v)
 //                }else{
-//                    if (FK_District.equals("")){
-////                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
-////                    snackbar.setActionTextColor(Color.WHITE)
-////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-////                    snackbar.show()
-//                        Config.snackBars(applicationContext,v,"Select District")
-//                    }else{
-//                        Config.disableClick(v)
-//                        areaDet = 0
-//                        getArea(v)
-//                    }
-//                }
+                    if (FK_District.equals("")){
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                        Config.snackBars(applicationContext,v,"Select District")
+                    }else{
+                        Config.disableClick(v)
+                        areaDet = 0
+                        getArea(v)
+                    }
+               // }
 
-                Config.disableClick(v)
-                areaDet = 0
-                getArea(v)
+//                Config.disableClick(v)
+//                areaDet = 0
+//                getArea(v)
 
 
             }
             R.id.edtPost->{
-//                if (FK_Area.equals("")){
-////                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
-////                    snackbar.setActionTextColor(Color.WHITE)
-////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-////                    snackbar.show()
-//                    Config.snackBars(applicationContext,v,"Select Area")
-//                }else{
-//                    Config.disableClick(v)
-//                    postDet = 0
-//                    getPost(v)
-//                }
+                if (FK_Area.equals("")){
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select District", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(applicationContext,v,"Select Area")
+                }else{
+                    Config.disableClick(v)
+                    postDet = 0
+                    getPost(v)
+                }
 
-                Log.e(TAG,"FK_Area   745  "+FK_Area)
-                Config.disableClick(v)
-                postDet = 0
-                getPost(v)
+//                Log.e(TAG,"FK_Area   745  "+FK_Area)
+//                Config.disableClick(v)
+//                postDet = 0
+//                getPost(v)
 
             }
 
@@ -1229,6 +1262,24 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 }
 
             }
+            R.id.txtSubMedia->{
+                Config.disableClick(v)
+                Log.e(TAG,"201900    ")
+                if (ID_LeadThrough.equals("")){
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Lead From", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(applicationContext,v,""+ strLeadFromHint)
+                }else{
+                    Log.e(TAG,"2019   ")
+                    Config.disableClick(v)
+                    countSubMedia = 0
+                    getSubMedia(v)
+                }
+
+            }
+
 
             R.id.tv_LeadByClick->{
                  if (leadByMode.equals("0")){
@@ -1440,13 +1491,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             R.id.edtProdcategory->{
                 Config.disableClick(v)
-                ID_Product = ""
-                edtProdproduct!!.setText("")
                 prodcategory = 0
                 getCategory()
             }
             R.id.edtProdproduct->{
-                strProdName = edtProdproduct!!.text.toString()
+               // strProdName = edtProdproduct!!.text.toString()
 
                if (ID_Category.equals("")){
 //                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
@@ -1553,6 +1602,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnSubmit->{
+                saveLeadGenDet = 0
                 Config.disableClick(v)
                 LeadValidations(v)
 
@@ -2230,6 +2280,142 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             dialogLeadThrough!!.show()
             dialogLeadThrough!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
+    private fun getSubMedia(v: View) {
+//        var countLeadThrough = 0
+        Log.e(TAG,"msg   2272   ")
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadSubMediaViewModel.getLeadSubMedia(this, ID_LeadThrough!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+
+                            var msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   22722   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("SubMediaTypeDetails")
+                                    leadSubMediaArrayList = jobjt.getJSONArray("SubMediaTypeDetailsList")
+                                    if (leadSubMediaArrayList.length()>0){
+                                        if (countSubMedia == 0) {
+                                            Log.e(TAG,"msg   20192   "+msg)
+                                            countSubMedia++
+                                            leadSubMediaPopup(leadSubMediaArrayList)
+                                        }
+                                    }
+                                } else {
+
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+
+
+                        }catch (e : Exception){
+
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
+    private fun leadSubMediaPopup(leadSubMediaArrayList: JSONArray) {
+
+        try {
+
+
+            dialogSubMedia = Dialog(this)
+            dialogSubMedia!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogSubMedia!! .setContentView(R.layout.submedia_popup)
+            dialogSubMedia!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recySubMedia = dialogSubMedia!! .findViewById(R.id.recySubMedia) as RecyclerView
+            val etsearch = dialogSubMedia!! .findViewById(R.id.etsearch) as EditText
+
+            leadSubMediaSort = JSONArray()
+            for (k in 0 until leadSubMediaArrayList.length()) {
+                val jsonObject = leadSubMediaArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadSubMediaSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recySubMedia!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = LeadThroughAdapter(this@LeadGenerationActivity, leadSubMediaArrayList)
+            val adapter = SubMediaAdapter(this@LeadGenerationActivity, leadSubMediaSort)
+            recySubMedia!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadSubMediaSort = JSONArray()
+
+                    for (k in 0 until leadSubMediaArrayList.length()) {
+                        val jsonObject = leadSubMediaArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("SubMdaName").length) {
+                            if (jsonObject.getString("SubMdaName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadSubMediaSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadSubMediaSort               7103    "+leadSubMediaSort)
+                    val adapter = SubMediaAdapter(this@LeadGenerationActivity, leadSubMediaSort)
+                    recySubMedia!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
+
+            dialogSubMedia!!.show()
+            dialogSubMedia!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -5282,31 +5468,36 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             txtleadfrom!!.text = jsonObject.getString("LeadFromName")
 
             ID_LeadThrough = ""
+            ID_MediaSubMaster = ""
             txtleadthrough!!.text = ""
+            txtSubMedia!!.text = ""
             edtleadthrough!!.setText("")
             txtleadthrough!!.hint = jsonObject.getString("LeadFromName")+" Name"
             edtleadthrough!!.hint = jsonObject.getString("LeadFromName")+" Name"
             strLeadFromHint = jsonObject.getString("LeadFromName")+" Name"
+            txtSubMedia!!.visibility = View.GONE
 
-            if (ID_LeadFrom.equals("8")){
-                //Third Party
+            LeadFromType =  jsonObject.getString("LeadFromType")
+
+//            0-Text
+//            1-Dropdown
+//            2-None
+            if (LeadFromType.equals("0")){
                 txtleadthrough!!.visibility = View.GONE
                 edtleadthrough!!.visibility = View.VISIBLE
             }
-            else if(ID_LeadFrom.equals("10")){
-                //Phone
-                txtleadthrough!!.visibility = View.GONE
-                edtleadthrough!!.visibility = View.GONE
-            }
-            else if(ID_LeadFrom.equals("11")){
-                // direct
-                txtleadthrough!!.visibility = View.GONE
-                edtleadthrough!!.visibility = View.GONE
-            }
-            else{
+            else if (LeadFromType.equals("1")){
                 txtleadthrough!!.visibility = View.VISIBLE
                 edtleadthrough!!.visibility = View.GONE
             }
+            else if (LeadFromType.equals("2")){
+                txtleadthrough!!.visibility = View.GONE
+                edtleadthrough!!.visibility = View.GONE
+            }
+
+
+
+
         }
         if (data.equals("leadthrough")){
             dialogLeadThrough!!.dismiss()
@@ -5315,10 +5506,35 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Log.e(TAG,"ID_LeadThrough   "+jsonObject.getString("ID_LeadThrough"))
             ID_LeadThrough = jsonObject.getString("ID_LeadThrough")
             txtleadthrough!!.text = jsonObject.getString("LeadThroughName")
+            HasSubMedia =  jsonObject.getString("HasSub")
+            ID_MediaSubMaster = ""
+            txtSubMedia!!.text = ""
+
+//            1-Has
+//            0-None
+            if (HasSubMedia.equals("0")){
+
+                txtSubMedia!!.visibility = View.GONE
+            }
+            else if (HasSubMedia.equals("1")){
+                txtSubMedia!!.visibility = View.VISIBLE
+            }
+
+
 
         }
 
-        if (data.equals("leadby")){
+         if (data.equals("submedia")){
+             dialogSubMedia!!.dismiss()
+             val jsonObject = leadSubMediaSort.getJSONObject(position)
+             Log.e(TAG,"ID_MediaSubMaster   "+jsonObject.getString("ID_MediaSubMaster"))
+             ID_MediaSubMaster = jsonObject.getString("ID_MediaSubMaster")
+             txtSubMedia!!.text = jsonObject.getString("SubMdaName")
+
+         }
+
+
+         if (data.equals("leadby")){
             dialogLeadBy!!.dismiss()
 //            val jsonObject = leadByArrayList.getJSONObject(position)
             val jsonObject = leadBySort.getJSONObject(position)
@@ -5339,37 +5555,42 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         if (data.equals("customer")){
             dialogCustSearch!!.dismiss()
             val jsonObject = customerArrayList.getJSONObject(position)
-            txtcustomer!!.text = jsonObject!!.getString("Name")
-            edt_customer!!.setText(jsonObject!!.getString("Name"))
+            txtcustomer!!.text = jsonObject!!.getString("CusName")
+            edt_customer!!.setText(jsonObject!!.getString("CusName"))
 
            // custDetailMode = "1"
             Customer_Mode     = "1"  // SEARCH
             ID_Customer       = jsonObject.getString("ID_Customer")
-            Customer_Name     = jsonObject.getString("Name")
-            Customer_Mobile   = jsonObject.getString("MobileNumber")
-            Customer_Email    = jsonObject.getString("Email")
-            Customer_Address1  = jsonObject.getString("Address")
+            Customer_Name     = jsonObject.getString("CusName")
+            Customer_Mobile   = jsonObject.getString("CusPhnNo")
+            Customer_Email    = jsonObject.getString("CusEmail")
+            Customer_Address1  = jsonObject.getString("CusAddress1")
+            Customer_Address2  = jsonObject.getString("CusAddress2")
 
            // llCustomerDetail!!.visibility = View.GONE
-            edtCustname!!.setText(jsonObject.getString("Name"))
-            edtCustphone!!.setText(jsonObject.getString("MobileNumber"))
-            edtCustemail!!.setText(jsonObject.getString("Email"))
-            edtCustaddress1!!.setText(jsonObject.getString("Address"))
-            edtCustaddress2!!.setText("")
+            edtCustname!!.setText(jsonObject.getString("CusName"))
+            edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
+            edtCustemail!!.setText(jsonObject.getString("CusEmail"))
+            edtCustaddress1!!.setText(jsonObject.getString("CusAddress1"))
+            edtCustaddress2!!.setText(jsonObject.getString("CusAddress2"))
+            edtWhatsApp!!.setText(jsonObject.getString("CusMobileAlternate"))
 
 
 
-            FK_Country = jsonObject.getString("FK_Country")
-            FK_States = jsonObject.getString("FK_States")
-            FK_District = jsonObject.getString("FK_District")
-            FK_Post = jsonObject.getString("FK_Post")
+            FK_Country = jsonObject.getString("CountryID")
+            FK_States = jsonObject.getString("StatesID")
+            FK_District = jsonObject.getString("DistrictID")
+            FK_Post = jsonObject.getString("PostID")
+            FK_Area = jsonObject.getString("FK_Area")
 
             edtPincode!!.setText(jsonObject.getString("Pincode"))
-            edtCountry!!.setText(jsonObject.getString("Country"))
-            edtState!!.setText(jsonObject.getString("States"))
-            edtDistrict!!.setText(jsonObject.getString("District"))
-            edtArea!!.setText("")
-            edtPost!!.setText(jsonObject.getString("Post"))
+            edtCountry!!.setText(jsonObject.getString("CntryName"))
+            edtState!!.setText(jsonObject.getString("StName"))
+            edtDistrict!!.setText(jsonObject.getString("DtName"))
+            edtArea!!.setText(jsonObject.getString("Area"))
+            edtPost!!.setText(jsonObject.getString("PostName"))
+            edtPincode!!.setText(jsonObject.getString("Pincode"))
+
 
 
         }
@@ -5381,6 +5602,19 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
              Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
              ID_Category = jsonObject.getString("ID_Category")
              edtProdcategory!!.setText(jsonObject.getString("CategoryName"))
+             ID_Product = ""
+             strQty = ""
+             edtProdproduct!!.setText("")
+             edtProdqty!!.setText("")
+             edtProjectName!!.setText("")
+
+             if (jsonObject.getString("Project").equals("0")){
+                 ll_product_qty!!.visibility = View.GONE
+                 edtProjectName!!.visibility = View.VISIBLE
+             }else if (jsonObject.getString("Project").equals("1")){
+                 ll_product_qty!!.visibility = View.VISIBLE
+                 edtProjectName!!.visibility = View.GONE
+             }
          }
          if (data.equals("proddetails")){
              dialogProdDet!!.dismiss()
@@ -5641,6 +5875,17 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         strComapnyName = edtCompanyName!!.text.toString()
         strContactPerson = edtContactPerson!!.text.toString()
         strContactNumber = edtContactNumber!!.text.toString()
+        strPincode = edtPincode!!.text.toString()
+
+        strLeadThrough = ""
+
+        if (!txtleadthrough!!.text.toString().equals("")){
+            strLeadThrough = txtleadthrough!!.text.toString()
+        }
+        if (!edtleadthrough!!.text.toString().equals("")){
+            strLeadThrough = edtleadthrough!!.text.toString()
+        }
+//        strLeadThrough = edtleadthrough!!.text.toString()
         val MobilePattern = "[0-9]{10}"
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
@@ -5662,6 +5907,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Customer_Name = edtCustname!!.text.toString()
             Customer_Mobile = edtCustphone!!.text.toString()
             Customer_Email = edtCustemail!!.text.toString()
+            strWhatsAppNo = edtWhatsApp!!.text.toString()
+            strCompanyContact = edtCompanyContact!!.text.toString()
             Customer_Address1 = edtCustaddress1!!.text.toString()
             Customer_Address2 = edtCustaddress2!!.text.toString()
 
@@ -5682,9 +5929,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //            else if (Customer_Address2.equals("")){
 //                Config.snackBars(context,v,"Enter Customer Address")
 //            }
-            else if (FK_Area.equals("")){
-                Config.snackBars(context,v,"Select Address 3")
-            }
+//            else if (FK_Area.equals("")){
+//                Config.snackBars(context,v,"Select Address 3")
+//            }
 
             else{
                 MoreValidations(v)
@@ -5731,6 +5978,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 +"\n"+"Attended by        : "+ID_CollectedBy
                 +"\n"+"Lead Source        : "+ID_LeadFrom
                 +"\n"+"Lead From          : "+ID_LeadThrough
+                +"\n"+"ID_MediaSubMaster  : "+ID_MediaSubMaster
+                +"\n"+"strLeadThrough     : "+strLeadThrough
                 +"\n"+"Customer_Mode      : "+Customer_Mode
                 +"\n"+"CusNameTitle       : "+CusNameTitle+"@"
                 +"\n"+"CusNameTitle       : "+CusNameTitle!!.length
@@ -5785,7 +6034,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 +"\n"+"strWhatsAppNo  : "+ strWhatsAppNo)
 
         strQty = edtProdqty!!.text.toString()
+        strProduct = edtProdproduct!!.text.toString()
+        strProject = edtProjectName!!.text.toString()
         strFeedback = edtProdfeedback!!.text.toString()
+
+        if (strQty.equals("")){
+            strQty = "0"
+        }
+
         if (ID_Category.equals("")){
             Config.snackBars(context,v,"Select Category")
         }
@@ -5845,6 +6101,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
         else{
             Log.e(TAG,"ProductValidations  373222   "+ ID_Status)
+            strFollowupdate = ""
             LocationValidation(v)
         }
     }
@@ -5951,12 +6208,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             val  ll_collected_by            = dialogConfirmPop!! .findViewById(R.id. ll_collected_by) as LinearLayout
             val  ll_lead_source            = dialogConfirmPop!! .findViewById(R.id. ll_lead_source) as LinearLayout
             val  ll_lead_from            = dialogConfirmPop!! .findViewById(R.id. ll_lead_from) as LinearLayout
+            val  ll_lead_SubMedia            = dialogConfirmPop!! .findViewById(R.id. ll_lead_SubMedia) as LinearLayout
 
             val tvp_lead_date        = dialogConfirmPop!! .findViewById(R.id.tvp_lead_date) as TextView
             val tvp_collected_by     = dialogConfirmPop!! .findViewById(R.id.tvp_collected_by) as TextView
             val tvp_lead_source        = dialogConfirmPop!! .findViewById(R.id.tvp_lead_source) as TextView
             val tvp_lead_from     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_from) as TextView
             val tvp_lead_from_label     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_from_label) as TextView
+            val tvp_lead_SubMedia     = dialogConfirmPop!! .findViewById(R.id.tvp_lead_SubMedia) as TextView
 
 
 
@@ -6065,12 +6324,15 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 ll_lead_source!!.visibility = View.GONE
             }
 
-            if (ID_LeadThrough.equals("")){
+            if (ID_LeadThrough.equals("") && edtleadthrough!!.text.toString().equals("")){
                 ll_lead_from!!.visibility = View.GONE
             }
 
             if (ID_CollectedBy.equals("")){
                 ll_collected_by!!.visibility = View.GONE
+            }
+            if (ID_MediaSubMaster.equals("")){
+                ll_lead_SubMedia!!.visibility = View.GONE
             }
 
             ////////////////////////////
@@ -6207,8 +6469,14 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             tvp_lead_date.text = txtDate!!.text.toString()
             tvp_collected_by.text = txtleadby!!.text.toString()
             tvp_lead_source.text = txtleadfrom!!.text.toString()
-            tvp_lead_from.text = txtleadthrough!!.text.toString()
+            if (!txtleadthrough!!.text.toString().equals("")){
+                tvp_lead_from.text = txtleadthrough!!.text.toString()
+            }
+            if (!edtleadthrough!!.text.toString().equals("")){
+                tvp_lead_from.text = edtleadthrough!!.text.toString()
+            }
             tvp_lead_from_label.text = strLeadFromHint
+            tvp_lead_SubMedia.text = txtSubMedia!!.text.toString()
 
 
             tvp_cust_name.text = actv_namTitle!!.text.toString()+""+edtCustname!!.text.toString()
@@ -6269,19 +6537,64 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     }
 
     private fun saveLeadGeneration() {
-        var saveLeadGenDet = 0
+//        var saveLeadGenDet = 0
         try {
 
-//            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-//            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-//
-//            val LeadDate = inputFormat.parse(strDate)
-//            val strLeadDate = outputFormat.format(LeadDate)
-//            val Followupdate = inputFormat.parse(strFollowupdate)
-//            val strLeadFollowupdate = outputFormat.format(Followupdate)
-//
             Log.e(TAG,"strDate   4759   "+strDate+"   "+strFollowupdate)
 
+
+
+
+
+
+            Log.e(TAG,"LocationValidation  64211"
+                    +"\n"+"ID_LeadGenerate    : "+ID_LeadGenerate
+                    +"\n"+"Enquiry date       : "+strDate
+                    +"\n"+"Attended by        : "+ID_CollectedBy
+                    +"\n"+"Lead Source        : "+ID_LeadFrom
+                    +"\n"+"Lead From          : "+ID_LeadThrough
+                    +"\n"+"ID_MediaSubMaster  : "+ID_MediaSubMaster
+                    +"\n"+"strLeadThrough     : "+strLeadThrough
+                    +"\n"
+                    +"\n"+"Customer_Mode      : "+Customer_Mode
+                    +"\n"+"CusNameTitle       : "+CusNameTitle+"@"
+                    +"\n"+"CusNameTitle       : "+CusNameTitle!!.length
+                    +"\n"+"ID_Customer        : "+ID_Customer
+                    +"\n"+"Customer_Name      : "+Customer_Name
+                    +"\n"+"Customer_Mobile    : "+Customer_Mobile
+                    +"\n"+"WhatsApp No        : "+strWhatsAppNo
+                    +"\n"+"Company Contact    : "+strCompanyContact
+                    +"\n"+"Customer_Email     : "+Customer_Email
+                    +"\n"+"Customer_Address1  : "+Customer_Address1
+                    +"\n"+"Customer_Address2  : "+Customer_Address2
+                    +"\n"+"Address 3          : "+ FK_Area
+                    +"\n"
+                    +"\n"+"FK_Country        : "+FK_Country
+                    +"\n"+"FK_States         : "+FK_States
+                    +"\n"+"FK_District       : "+FK_District
+                    +"\n"+"FK_Area           : "+FK_Area
+                    +"\n"+"FK_Post           : "+FK_Post
+                    +"\n"+"strPincode        : "+strPincode
+                    +"\n"
+                    +"\n"+"ID_Category        : "+ ID_Category
+                    +"\n"+"ID_Product         : "+ ID_Product
+                    +"\n"+"strQty             : "+ strQty
+                    +"\n"+"strProduct         : "+ strProduct
+                    +"\n"+"strProject         : "+ strProject
+                    +"\n"+"ID_Priority        : "+ ID_Priority
+                    +"\n"+"strFeedback        : "+ strFeedback
+                    +"\n"+"ID_Status          : "+ ID_Status
+                    +"\n"+"ID_NextAction      : "+ ID_NextAction
+                    +"\n"+"ID_ActionType      : "+ ID_ActionType
+                    +"\n"+"strFollowupdate    : "+ strFollowupdate
+                    +"\n"+"ID_Branch          : "+ ID_Branch
+                    +"\n"+"ID_BranchType      : "+ ID_BranchType
+                    +"\n"+"ID_Department      : "+ ID_Department
+                    +"\n"+"ID_Employee        : "+ ID_Employee
+                    +"\n"
+                    +"\n"+"strLatitude        : "+ strLatitude
+                    +"\n"+"strLongitue        : "+ strLongitue
+                    +"\n"+"locAddress         : "+ locAddress+","+ locCity+","+ locState+","+ locCountry+","+ locpostalCode)
 
             when (Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
@@ -6292,54 +6605,72 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
                     Config.Utils.hideSoftKeyBoard(this, edt_customer!!)
-                    leadGenerateSaveViewModel.saveLeadGenerate(this, strDate, ID_LeadFrom!!,
-                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address1!!,
-                        Customer_Mobile!!, Customer_Email!!,strComapnyName!!,"", ID_MediaMaster!!, FK_Country, FK_States,
-                        FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
-                        strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
-                        ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
-                        encode1, encode2,saveUpdateMode!!,strContactPerson!!, strContactNumber!!, FK_Area)!!.observe(
+//                    leadGenerateSaveViewModel.saveLeadGenerate(this, strDate, ID_LeadFrom!!,
+//                        ID_LeadThrough!!, ID_CollectedBy!!, ID_Customer!!, Customer_Name!!, Customer_Address1!!,
+//                        Customer_Mobile!!, Customer_Email!!,strComapnyName!!,"", ID_MediaMaster!!, FK_Country, FK_States,
+//                        FK_District, FK_Post, ID_Category!!, ID_Product!!,strProdName, strQty, ID_Priority!!,
+//                        strFeedback, ID_Status!!, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch,
+//                        ID_BranchType, ID_Department, ID_Employee, strLatitude!!, strLongitue!!, locAddress!!,
+//                        encode1, encode2,saveUpdateMode!!,strContactPerson!!, strContactNumber!!, FK_Area)!!.observe(
+                    leadGenerateSaveViewModel.saveLeadGenerate(this, saveUpdateMode!!, ID_LeadGenerate!!,strDate,ID_Customer!!,ID_MediaSubMaster!!,
+                        CusNameTitle!!,Customer_Name!!,Customer_Address1!!,Customer_Address2!!,Customer_Mobile!!,Customer_Email!!,strCompanyContact,FK_Country,
+                        FK_States,FK_District,FK_Post,strPincode,FK_Area,ID_LeadFrom!!,ID_LeadThrough!!,strLeadThrough,ID_CollectedBy!!,strWhatsAppNo,ID_Category!!,
+                        ID_Product!!, strProduct,strProject,strQty,ID_Priority!!,strFeedback,ID_Status!!,ID_NextAction,ID_ActionType,strFollowupdate,ID_Branch,
+                        ID_BranchType,ID_Department,ID_Employee,strLatitude!!,strLongitue!!, encode1, encode2)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
 
 
                             try {
-//                            if (pinCodeDet == 0){
-//                                pinCodeDet++
+
                                 if (msg!!.length > 0) {
-                                    val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   4120   "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
-                                        try {
+                                    if (saveLeadGenDet == 0){
+                                        saveLeadGenDet++
+                                        val jObject = JSONObject(msg)
+                                        Log.e(TAG,"msg   4120   "+msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
+                                            try {
 
-                                            val suceessDialog = Dialog(this)
-                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                            suceessDialog!!.setCancelable(false)
-                                            suceessDialog!! .setContentView(R.layout.success_popup)
-                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                                val suceessDialog = Dialog(this)
+                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                suceessDialog!!.setCancelable(false)
+                                                suceessDialog!! .setContentView(R.layout.success_popup)
+                                                suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
-                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
-                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
-                                            //LeadNumber
-                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                            tv_leadid!!.setText(jobjt.getString("LeadNumber"))
+                                                val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                                val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                                val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                                //LeadNumber
+                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                                tv_leadid!!.setText(jobjt.getString("LeadNumber"))
 
-                                            tv_succesok!!.setOnClickListener {
-                                                suceessDialog!!.dismiss()
-                                                val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
-                                                startActivity(i)
-                                                finish()
+                                                tv_succesok!!.setOnClickListener {
+                                                    suceessDialog!!.dismiss()
+                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+                                                    startActivity(i)
+                                                    finish()
+
+                                                }
+
+                                                suceessDialog!!.show()
+                                                suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                                val builder = AlertDialog.Builder(
+                                                    this@LeadGenerationActivity,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage(e.toString())
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                    onBackPressed()
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
 
                                             }
-
-                                            suceessDialog!!.show()
-                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                        }
 
 
 //                                        val jobjt = jObject.getJSONObject("UpdateLeadGeneration")
@@ -6362,31 +6693,44 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //                                        alertDialog.show()
 
 
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@LeadGenerationActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@LeadGenerationActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                onBackPressed()
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
+
                                 } else {
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Some Technical Issues.",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
                                 }
-                                //  }
+
 
 
                             }catch (e: Exception){
 
                                 Log.e(TAG,"Exception  4133    "+e.toString())
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(e.toString())
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
 
                             }
 

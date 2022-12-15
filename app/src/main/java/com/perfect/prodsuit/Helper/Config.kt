@@ -69,6 +69,14 @@ object Config {
     const val SHARED_PREF34 = "CONTACT_EMAIL"
     const val SHARED_PREF35 = "CONTACT_ADDRESS"
 
+    const val SHARED_PREF36 = "UserCode"
+    const val SHARED_PREF37 = "FK_Branch"
+    const val SHARED_PREF38 = "FK_BranchType"
+    const val SHARED_PREF39 = "FK_Company"
+    const val SHARED_PREF40 = "FK_BranchCodeUser"
+    const val SHARED_PREF41 = "FK_UserRole"
+    const val SHARED_PREF42 = "UserRole"
+
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
 

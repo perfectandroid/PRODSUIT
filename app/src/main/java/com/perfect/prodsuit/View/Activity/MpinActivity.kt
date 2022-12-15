@@ -559,6 +559,92 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 LOGIN_DATETIMEEditer.commit()
 
                                 var jobj = jObject.getJSONObject("UserLoginDetails")
+
+                                val FK_EmployeeSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF1,
+                                    0
+                                )
+                                val FK_EmployeeEditer = FK_EmployeeSP.edit()
+                                FK_EmployeeEditer.putString(
+                                    "FK_Employee",
+                                    jobj.getString("FK_Employee")
+                                )
+                                FK_EmployeeEditer.commit()
+                                val UserNameSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF2,
+                                    0
+                                )
+                                val UserNameEditer = UserNameSP.edit()
+                                UserNameEditer.putString("UserName", jobj.getString("UserName"))
+                                UserNameEditer.commit()
+                                val AddressSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF3,
+                                    0
+                                )
+                                val AddressEditer = AddressSP.edit()
+                                AddressEditer.putString("Address", jobj.getString("Address"))
+                                AddressEditer.commit()
+                                val MobileNumberSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF4,
+                                    0
+                                )
+                                val MobileNumberEditer = MobileNumberSP.edit()
+                                MobileNumberEditer.putString(
+                                    "MobileNumber",
+                                    jobj.getString("MobileNumber")
+                                )
+                                MobileNumberEditer.commit()
+                                val TokenSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF5,
+                                    0
+                                )
+                                val TokenEditer = TokenSP.edit()
+                                TokenEditer.putString("Token", jobj.getString("Token"))
+                                TokenEditer.commit()
+                                val EmailSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF6,
+                                    0
+                                )
+                                val EmailEditer = EmailSP.edit()
+                                EmailEditer.putString("Email", jobj.getString("Email"))
+                                EmailEditer.commit()
+
+                                val UserCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF36, 0)
+                                val UserCodeEditer = UserCodeSP.edit()
+                                UserCodeEditer.putString("UserCode", jobj.getString("UserCode"))
+                                UserCodeEditer.commit()
+
+                                val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
+                                val FK_BranchEditer = FK_BranchSP.edit()
+                                FK_BranchEditer.putString("FK_Branch", jobj.getString("FK_Branch"))
+                                FK_BranchEditer.commit()
+
+                                val FK_BranchTypeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF38, 0)
+                                val FK_BranchTypeEditer = FK_BranchTypeSP.edit()
+                                FK_BranchTypeEditer.putString("FK_BranchType", jobj.getString("FK_BranchType"))
+                                FK_BranchTypeEditer.commit()
+
+                                val FK_CompanySP = applicationContext.getSharedPreferences(Config.SHARED_PREF39, 0)
+                                val FK_CompanyEditer = FK_CompanySP.edit()
+                                FK_CompanyEditer.putString("FK_Company", jobj.getString("FK_Company"))
+                                FK_CompanyEditer.commit()
+
+                                val FK_BranchCodeUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF40, 0)
+                                val FK_BranchCodeUserEditer = FK_BranchCodeUserSP.edit()
+                                FK_BranchCodeUserEditer.putString("FK_BranchCodeUser", jobj.getString("FK_BranchCodeUser"))
+                                FK_BranchCodeUserEditer.commit()
+
+                                val FK_UserRoleSP = applicationContext.getSharedPreferences(Config.SHARED_PREF41, 0)
+                                val FK_UserRoleEditer = FK_UserRoleSP.edit()
+                                FK_UserRoleEditer.putString("FK_UserRole", jobj.getString("FK_UserRole"))
+                                FK_UserRoleEditer.commit()
+
+                                val UserRoleSP = applicationContext.getSharedPreferences(Config.SHARED_PREF42, 0)
+                                val UserRoleEditer = UserRoleSP.edit()
+                                UserRoleEditer.putString("UserRole", jobj.getString("UserRole"))
+                                UserRoleEditer.commit()
+
+
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)
                                 startActivity(i)
                                 finish()
