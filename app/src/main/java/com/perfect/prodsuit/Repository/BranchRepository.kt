@@ -62,8 +62,10 @@ object BranchRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("22"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(ID_BranchType))
@@ -84,6 +86,7 @@ object BranchRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.i("Branchresponse",response.body())
                         val leads = ArrayList<BranchModel>()
                         leads.add(BranchModel(response.body()))
                         val msg = leads[0].message
