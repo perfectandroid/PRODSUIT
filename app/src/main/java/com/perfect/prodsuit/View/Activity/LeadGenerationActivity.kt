@@ -800,7 +800,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
         txtSubMedia!!.setOnClickListener(this)
-        var isAdmin = "0"
+
+        val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+        var isAdmin = IsAdminSP.getString("IsAdmin", null)
         if (isAdmin.equals("1")){
             txtleadby!!.setOnClickListener(this)
         }
@@ -1867,12 +1869,28 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                 val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
                                 Log.e(TAG,"msg   14783   "+jobjt.getString("EmpFName"))
 
+
+//                                {"LeadGenerationDefaultvalueSettings":{"ID_Employee":40,"EmpFName":"VYSHAKH PN","ID_BranchType":2,
+//                                    "BranchType":"Head Office","ID_Branch":2,"Branch":"Head Office Chalappuram","FK_Department":2,"Department":null,"FK_Country":0,
+//                                    "Country":"","FK_States":1,"StateName":"KERALA",
+//                                    "FK_District":4,"DistrictName":"KOZHIKODE","ResponseCode":"0","ResponseMessage":"Transaction Verified"}
+
                                 ID_BranchType = jobjt.getString("ID_BranchType")
                                 edtbarnchtype!!.setText(jobjt.getString("BranchType"))
                                 ID_Branch = jobjt.getString("ID_Branch")
                                 edtbranch!!.setText(jobjt.getString("Branch"))
                                 ID_Department = jobjt.getString("FK_Department")
                                 edtdepartment!!.setText(jobjt.getString("Department"))
+
+                                FK_Country = jobjt.getString("FK_Country")
+                                FK_States = jobjt.getString("FK_States")
+                                FK_District = jobjt.getString("FK_District")
+
+                                edtCountry!!.setText(jobjt.getString("Country"))
+                                edtState!!.setText(jobjt.getString("StateName"))
+                                edtDistrict!!.setText(jobjt.getString("DistrictName"))
+
+
 
 //                                ID_Employee = jobjt.getString("ID_Employee")
 //                                edtEmployee!!.setText(jobjt.getString("EmpFName"))
@@ -5583,6 +5601,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             Customer_Address2  = jsonObject.getString("CusAddress2")
 
            // llCustomerDetail!!.visibility = View.GONE
+            actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
             edtCustemail!!.setText(jsonObject.getString("CusEmail"))
@@ -5929,7 +5948,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             Log.e(TAG,"CusNameTitle   5533    "+CusNameTitle)
           //  Config.snackBars(context,v,"Search OR Add Customer ")
-            if (Customer_Name.equals("")){
+            if (CusNameTitle.equals("")){
+                Config.snackBars(context,v,"Select Customer Name Title")
+            }
+            else if (Customer_Name.equals("")){
                 Config.snackBars(context,v,"Enter Customer Name")
             }
 //            else if (Customer_Mobile.equals("")){
@@ -5968,8 +5990,10 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 //            else{
 //                MoreValidations(v)
 //            }
-
-            if (Customer_Name.equals("")){
+            if (CusNameTitle.equals("")){
+                Config.snackBars(context,v,"Select Customer Name Title")
+            }
+            else if (Customer_Name.equals("")){
                 Config.snackBars(context,v,"Enter Customer Name")
             }
 //            else if (FK_Area.equals("")){
@@ -6317,7 +6341,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             ////////////////////////////
 
-
+            val ll_LocationDetails            = dialogConfirmPop!! .findViewById(R.id.ll_LocationDetails) as LinearLayout
 
 
 
@@ -6483,6 +6507,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 ll_employee!!.visibility = View.GONE
             }
 
+            if (txtLocation!!.text.toString().equals("")){
+                ll_LocationDetails!!.visibility = View.GONE
+            }
 
 
 
@@ -6499,7 +6526,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             tvp_lead_SubMedia.text = txtSubMedia!!.text.toString()
 
 
-            tvp_cust_name.text = actv_namTitle!!.text.toString()+""+edtCustname!!.text.toString()
+            tvp_cust_name.text = actv_namTitle!!.text.toString()+"  "+edtCustname!!.text.toString()
             tvp_cust_phone.text = edtCustphone!!.text.toString()
             tvp_whats_app.text = edtWhatsApp!!.text.toString()
             tvp_company_contact.text = edtCompanyContact!!.text.toString()

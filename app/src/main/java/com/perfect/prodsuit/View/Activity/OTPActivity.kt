@@ -567,6 +567,10 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                 UserRoleEditer.putString("UserRole", jobj.getString("UserRole"))
                                 UserRoleEditer.commit()
 
+                                val IsAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF43, 0)
+                                val IsAdminEditer = IsAdminSP.edit()
+                                IsAdminEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
+                                IsAdminEditer.commit()
 
                                 val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                 startActivity(i)

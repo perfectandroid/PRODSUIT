@@ -76,6 +76,7 @@ object Config {
     const val SHARED_PREF40 = "FK_BranchCodeUser"
     const val SHARED_PREF41 = "FK_UserRole"
     const val SHARED_PREF42 = "UserRole"
+    const val SHARED_PREF43 = "IsAdmin"
 
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."

@@ -76,45 +76,54 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
                     biggerCircle.paint.color = context.getColor(R.color.cust_color1)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
-                   // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color1))
+
+                    //holder.txtFirst.setTextColor(context.getColor(R.color.cust_color1))
                 }
                 if (position%2 == 0){
-                  //  holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color2))
+
                     val biggerCircle = ShapeDrawable(OvalShape())
                     biggerCircle.intrinsicHeight = 60
                     biggerCircle.intrinsicWidth = 60
                     biggerCircle.bounds = Rect(30, 30, 30, 30)
                     biggerCircle.paint.color = context.getColor(R.color.cust_color2)
                     holder.txtFirst.setBackgroundDrawable(biggerCircle)
+
+                   // holder.txtFirst.setTextColor(context.getColor(R.color.cust_color2))
                 }
-//                if (position%3 == 0){
-//                    //holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color3))
-//                    val biggerCircle = ShapeDrawable(OvalShape())
-//                    biggerCircle.intrinsicHeight = 60
-//                    biggerCircle.intrinsicWidth = 60
-//                    biggerCircle.bounds = Rect(30, 30, 30, 30)
-//                    biggerCircle.paint.color = context.getColor(R.color.cust_color3)
-//                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
-//                }
-//                if (position%4 == 0){
-//                    //holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color4))
-//                    val biggerCircle = ShapeDrawable(OvalShape())
-//                    biggerCircle.intrinsicHeight = 60
-//                    biggerCircle.intrinsicWidth = 60
-//                    biggerCircle.bounds = Rect(30, 30, 30, 30)
-//                    biggerCircle.paint.color = context.getColor(R.color.cust_color4)
-//                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
-//                }
-//                if (position%5 == 0){
-//                   // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color5))
+                if (position%3 == 0){
+
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color3)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+
+                   // holder.txtFirst.setTextColor(context.getColor(R.color.cust_color3))
+                }
+                if (position%4 == 0){
 //
-//                    val biggerCircle = ShapeDrawable(OvalShape())
-//                    biggerCircle.intrinsicHeight = 60
-//                    biggerCircle.intrinsicWidth = 60
-//                    biggerCircle.bounds = Rect(30, 30, 30, 30)
-//                    biggerCircle.paint.color = context.getColor(R.color.cust_color5)
-//                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
-//                }
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color4)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+
+                //    holder.txtFirst.setTextColor(context.getColor(R.color.cust_color4))
+                }
+                if (position%5 == 0){
+                   // holder.llleftlay.setBackgroundColor(context.getColor(R.color.leadstatus_color5))
+
+                    val biggerCircle = ShapeDrawable(OvalShape())
+                    biggerCircle.intrinsicHeight = 60
+                    biggerCircle.intrinsicWidth = 60
+                    biggerCircle.bounds = Rect(30, 30, 30, 30)
+                    biggerCircle.paint.color = context.getColor(R.color.cust_color5)
+                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
+
+                  //  holder.txtFirst.setTextColor(context.getColor(R.color.cust_color5))
+                }
 
 //                if (jsonObject!!.getString("CusPhnNo").equals("")){
 //                    holder.txtMobile.visibility = View.GONE

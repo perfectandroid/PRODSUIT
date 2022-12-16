@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:background="@color/list_sii"
                 android:gravity="center"
                 android:layout_weight="4">
 
@@ -60,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:background="@color/list_data"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
