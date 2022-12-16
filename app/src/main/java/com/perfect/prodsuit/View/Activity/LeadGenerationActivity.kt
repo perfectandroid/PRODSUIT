@@ -800,7 +800,11 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadfrom!!.setOnClickListener(this)
         txtleadthrough!!.setOnClickListener(this)
         txtSubMedia!!.setOnClickListener(this)
-        txtleadby!!.setOnClickListener(this)
+        var isAdmin = "0"
+        if (isAdmin.equals("1")){
+            txtleadby!!.setOnClickListener(this)
+        }
+
         txtMediatype!!.setOnClickListener(this)
         txtDate!!.setOnClickListener(this)
         txtLocation!!.setOnClickListener(this)
@@ -1830,6 +1834,16 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
     private fun getDefaultValueSettings() {
 
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        Log.e(TAG," UserName  143     "+UserNameSP.getString("UserName", null))
+
+        ID_CollectedBy = FK_EmployeeSP.getString("FK_Employee", null)
+        txtleadby!!.text= UserNameSP.getString("UserName", null)
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1859,11 +1873,12 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                                 edtbranch!!.setText(jobjt.getString("Branch"))
                                 ID_Department = jobjt.getString("FK_Department")
                                 edtdepartment!!.setText(jobjt.getString("Department"))
-                                ID_Employee = jobjt.getString("ID_Employee")
-                                edtEmployee!!.setText(jobjt.getString("EmpFName"))
 
-                                ID_CollectedBy = jobjt.getString("ID_Employee")
-                                txtleadby!!.text= jobjt.getString("EmpFName")
+//                                ID_Employee = jobjt.getString("ID_Employee")
+//                                edtEmployee!!.setText(jobjt.getString("EmpFName"))
+
+//                                ID_CollectedBy = jobjt.getString("ID_Employee")
+//                                txtleadby!!.text= jobjt.getString("EmpFName")
 
 
                             } else {
@@ -6262,6 +6277,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             val  ll_ProductDetails  = dialogConfirmPop!! .findViewById(R.id. ll_ProductDetails) as LinearLayout
             val ll_prod_category            = dialogConfirmPop!! .findViewById(R.id.ll_prod_category) as LinearLayout
             val ll_prod_product            = dialogConfirmPop!! .findViewById(R.id.ll_prod_product) as LinearLayout
+            val ll_project            = dialogConfirmPop!! .findViewById(R.id.ll_project) as LinearLayout
             val ll_prod_quantity            = dialogConfirmPop!! .findViewById(R.id.ll_prod_quantity) as LinearLayout
             val ll_prod_priority            = dialogConfirmPop!! .findViewById(R.id.ll_prod_priority) as LinearLayout
             val ll_prod_status            = dialogConfirmPop!! .findViewById(R.id.ll_prod_status) as LinearLayout
@@ -6282,6 +6298,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
             val tvp_category         = dialogConfirmPop!! .findViewById(R.id.tvp_category) as TextView
             val tvp_product          = dialogConfirmPop!! .findViewById(R.id.tvp_product) as TextView
+            val tvp_project          = dialogConfirmPop!! .findViewById(R.id.tvp_project) as TextView
             val tvp_quantity         = dialogConfirmPop!! .findViewById(R.id.tvp_quantity) as TextView
             val tvp_priority         = dialogConfirmPop!! .findViewById(R.id.tvp_priority) as TextView
             val tvp_feedback         = dialogConfirmPop!! .findViewById(R.id.tvp_feedback) as TextView
@@ -6422,6 +6439,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             if (edtProdproduct!!.text.toString().equals("")){
                 ll_prod_product!!.visibility = View.GONE
             }
+            if (edtProjectName!!.text.toString().equals("")){
+                ll_project!!.visibility = View.GONE
+            }
 
             if (edtProdqty!!.text.toString().equals("")){
                 ll_prod_quantity!!.visibility = View.GONE
@@ -6505,6 +6525,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             tvp_category.text = edtProdcategory!!.text.toString()
             tvp_product.text = edtProdproduct!!.text.toString()
             tvp_quantity.text = edtProdqty!!.text.toString()
+            tvp_project.text = edtProjectName!!.text.toString()
             tvp_priority.text = edtProdpriority!!.text.toString()
             tvp_feedback.text = edtProdfeedback!!.text.toString()
             tvp_status.text = edtProdstatus!!.text.toString()

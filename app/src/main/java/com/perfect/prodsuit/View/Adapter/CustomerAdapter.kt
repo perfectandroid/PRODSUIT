@@ -55,12 +55,12 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
 
                 holder.txtEmail!!.setTag(position)
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("CusEmail")+"   "+jsonObject!!.getString("CusName")+"   "+jsonObject!!.getString("CusEmail").length)
-                if (jsonObject!!.getString("CusEmail").length==0){
-                      holder.txtEmail!!.visibility = View.GONE
-                }else{
-
-                    holder.txtEmail.text        = jsonObject!!.getString("Email")
-                }
+//                if (jsonObject!!.getString("CusEmail").length==0){
+//                      holder.txtEmail!!.visibility = View.GONE
+//                }else{
+//
+//                    holder.txtEmail.text        = jsonObject!!.getString("CusEmail")
+//                }
 
 //                if (position%2 == 0){
 //                    holder.llleftlay.setBackgroundColor(context.getColor(R.color.cust_1))
@@ -116,6 +116,15 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
 //                    holder.txtFirst.setBackgroundDrawable(biggerCircle)
 //                }
 
+//                if (jsonObject!!.getString("CusPhnNo").equals("")){
+//                    holder.txtMobile.visibility = View.GONE
+//                }
+//                if (jsonObject!!.getString("CusAddress1").equals("")){
+//                    holder.txtAddress.visibility = View.GONE
+//                }
+//                if (jsonObject!!.getString("CusEmail").equals("")){
+//                    holder.txtEmail.visibility = View.GONE
+//                }
 
                 holder.txtEmail.text        = jsonObject!!.getString("CusEmail")
                 holder.txtMobile.text     = jsonObject!!.getString("CusPhnNo")

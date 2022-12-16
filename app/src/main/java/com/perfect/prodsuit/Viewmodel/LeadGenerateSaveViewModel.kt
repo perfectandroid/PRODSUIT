@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Repository.LeadGenerateSaveRepository
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
-import java.lang.Exception
 import com.perfect.prodsuit.Model.LeadGenerateSaveModel as LeadGenerateSaveModel
 
 class LeadGenerateSaveViewModel : ViewModel()  {

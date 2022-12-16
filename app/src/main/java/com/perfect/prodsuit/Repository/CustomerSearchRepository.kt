@@ -72,6 +72,7 @@ object CustomerSearchRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubModeSearch))
 
+                Log.e(TAG,"strCustomer   74   "+strCustomer)
                 Log.e(TAG,"requestObject1   74   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
