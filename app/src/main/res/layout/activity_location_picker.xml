@@ -29,6 +29,7 @@
                 android:layout_marginRight="15dp"
                 android:visibility="visible"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/white_rounded_corner">
 
                 <EditText
@@ -37,7 +38,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/llSearch"
                     android:background="@android:color/transparent"
-                    android:editable="true"
+                    android:editable="false"
+                    android:enabled="false"
                     android:fontFamily="@font/myfont"
                     android:gravity="left|center_vertical"
                     android:hint="Search Location"
@@ -64,10 +66,9 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:layout_alignTop="@+id/edtSearch"
-
                         android:layout_marginRight="5dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_cancel_"
+                        android:src="@drawable/svg_tick"
                         android:visibility="visible" />
 
 
@@ -85,7 +86,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txtSubmit"

@@ -6138,25 +6138,25 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 +"\n"+"ID_Department      : "+ ID_Department
                 +"\n"+"ID_Employee        : "+ ID_Employee)
 
-        if (strLatitude.equals("") && strLongitue.equals("")){
-            Config.snackBars(context,v,"Select Location")
-        }
-//        else if (strDate.equals("")){
-//            Config.snackBars(context,v,"Select Date")
+//        if (strLatitude.equals("") && strLongitue.equals("")){
+//            Config.snackBars(context,v,"Select Location")
 //        }
-//        else if (ID_LeadFrom.equals("")){
-//            Config.snackBars(context,v,"Select Lead From")
-//        }
-//        else if (ID_LeadThrough.equals("")){
-//            Config.snackBars(context,v,"Select Lead Through")
-//        }
-//        else if (ID_CollectedBy.equals("")){
-//            Config.snackBars(context,v,"Select Collected By")
-//        }
-//        else if (ID_MediaMaster.equals("")){
-//            Config.snackBars(context,v,"Select Media Type")
-//        }
-        else{
+////        else if (strDate.equals("")){
+////            Config.snackBars(context,v,"Select Date")
+////        }
+////        else if (ID_LeadFrom.equals("")){
+////            Config.snackBars(context,v,"Select Lead From")
+////        }
+////        else if (ID_LeadThrough.equals("")){
+////            Config.snackBars(context,v,"Select Lead Through")
+////        }
+////        else if (ID_CollectedBy.equals("")){
+////            Config.snackBars(context,v,"Select Collected By")
+////        }
+////        else if (ID_MediaMaster.equals("")){
+////            Config.snackBars(context,v,"Select Media Type")
+////        }
+//        else{
             Log.e(TAG,"LocationValidation  37324"
                     +"\n"+"strLatitude        : "+ strLatitude
                     +"\n"+"strLongitue        : "+ strLongitue
@@ -6204,7 +6204,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             LeadConfirmationPopup()
 
           //  saveLeadGeneration()
-        }
+     //   }
     }
 
     private fun LeadConfirmationPopup() {
