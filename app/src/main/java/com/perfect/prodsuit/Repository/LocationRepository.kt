@@ -22,14 +22,15 @@ import java.util.*
 
 object LocationRepository {
 
+    val TAG = "LocationRepository"
     val locationSetterGetter = MutableLiveData<LocationModel>()
 
-    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :  String): MutableLiveData<LocationModel> {
-        getLocation(context,ID_LeadGenerateProduct)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :  String,ID_LeadGenerate :  String): MutableLiveData<LocationModel> {
+        getLocation(context,ID_LeadGenerateProduct,ID_LeadGenerate)
         return locationSetterGetter
     }
 
-    private fun getLocation(context: Context,ID_LeadGenerateProduct : String) {
+    private fun getLocation(context: Context,ID_LeadGenerateProduct : String,ID_LeadGenerate :  String) {
         try {
             locationSetterGetter.value = LocationModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -52,14 +53,16 @@ object LocationRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+
                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("29"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
 
 
-                Log.e("TAG33",requestObject1.toString())
+                Log.e(TAG,"  651 requestObject1     "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -75,7 +78,7 @@ object LocationRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.e("Location Response",response.body())
+                        Log.e(TAG,"  652 response     "+response.body())
                         val users = ArrayList<LocationModel>()
                         users.add(LocationModel(response.body()))
                         val msg = users[0].message
@@ -83,16 +86,18 @@ object LocationRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Log.e(TAG,"  653 Exception     "+e.toString())
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-                }
+                    Log.e(TAG,"  654 onFailure     "+t.message)                }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
+            Log.e(TAG,"  655 Exception     "+e.toString())
         }
     }
 

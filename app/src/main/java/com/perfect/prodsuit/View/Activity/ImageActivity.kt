@@ -51,119 +51,119 @@ class ImageActivity : AppCompatActivity(),View.OnClickListener{
     companion object {
         var strid= ""
     }
-    private fun getLocationDetails() {
-        strid = Id_leadgenrteprod!!
-        Log.i("Id", strid)
-        context = this@ImageActivity
-        imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                imageViewModel.getImage(this,strid)!!.observe(this,
-                        { ImageSetterGetter ->
-                            val msg = ImageSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    jobjt = jObject.getJSONObject("LeadImageDetails")
-                                    landmark = jobjt!!.getString("LocationLandMark1")
-                                    landmark2 = jobjt!!.getString("LocationLandMark2")
-
-
-                                    if (!landmark!!.isEmpty()&&!landmark2!!.isEmpty()) {
-                                        try {
-
-
-
-                                            viewPager = findViewById(R.id.viewpager)
-                                            setupViewPager(viewPager!!)
-
-                                            tabLayout = findViewById(R.id.tabs)
-                                            tabLayout!!.setupWithViewPager(viewPager)
-                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
-                                            ByteArrayToBitmap(decodedString)
-                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
-                                            val stream = ByteArrayOutputStream()
-                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
-                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                        }
-                                    }
-                                   else  if (!landmark!!.isEmpty()) {
-                                        try {
-
-                                            viewPager = findViewById(R.id.viewpager)
-                                            setupViewPager(viewPager!!)
-
-                                            tabLayout = findViewById(R.id.tabs)
-                                            tabLayout!!.setupWithViewPager(viewPager)
-                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
-                                            ByteArrayToBitmap(decodedString)
-                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
-                                            val stream = ByteArrayOutputStream()
-                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
-                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                        }
-                                    }
-                                    else if (!landmark2!!.isEmpty()) {
-                                        try {
-
-                                            viewPager = findViewById(R.id.viewpager)
-                                            setupViewPager(viewPager!!)
-
-                                            tabLayout = findViewById(R.id.tabs)
-                                            tabLayout!!.setupWithViewPager(viewPager)
-                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
-                                            ByteArrayToBitmap(decodedString)
-                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
-                                            val stream = ByteArrayOutputStream()
-                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
-                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                        }
-                                    }
-                                    progressDialog!!.dismiss()
-                                }
-
-                                else {
-                                    val builder = AlertDialog.Builder(
-                                            this@ImageActivity,
-                                            R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-
-                                }
-
-                            } else {
-                                Toast.makeText(
-                                        applicationContext,
-                                        "Some Technical Issues.",
-                                        Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
-            }
-        }
-    }
+//    private fun getLocationDetails() {
+//        strid = Id_leadgenrteprod!!
+//        Log.i("Id", strid)
+//        context = this@ImageActivity
+//        imageViewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
+//        when (Config.ConnectivityUtils.isConnected(this)) {
+//            true -> {
+//                progressDialog = ProgressDialog(this, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+//                imageViewModel.getImage(this,strid)!!.observe(this,
+//                        { ImageSetterGetter ->
+//                            val msg = ImageSetterGetter.message
+//                            if (msg!!.length > 0) {
+//                                val jObject = JSONObject(msg)
+//                                if (jObject.getString("StatusCode") == "0") {
+//                                    jobjt = jObject.getJSONObject("LeadImageDetails")
+//                                    landmark = jobjt!!.getString("LocationLandMark1")
+//                                    landmark2 = jobjt!!.getString("LocationLandMark2")
+//
+//
+//                                    if (!landmark!!.isEmpty()&&!landmark2!!.isEmpty()) {
+//                                        try {
+//
+//
+//
+//                                            viewPager = findViewById(R.id.viewpager)
+//                                            setupViewPager(viewPager!!)
+//
+//                                            tabLayout = findViewById(R.id.tabs)
+//                                            tabLayout!!.setupWithViewPager(viewPager)
+//                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
+//                                            ByteArrayToBitmap(decodedString)
+//                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
+//                                            val stream = ByteArrayOutputStream()
+//                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
+//                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
+//                                        } catch (e: Exception) {
+//                                            e.printStackTrace()
+//                                        }
+//                                    }
+//                                   else  if (!landmark!!.isEmpty()) {
+//                                        try {
+//
+//                                            viewPager = findViewById(R.id.viewpager)
+//                                            setupViewPager(viewPager!!)
+//
+//                                            tabLayout = findViewById(R.id.tabs)
+//                                            tabLayout!!.setupWithViewPager(viewPager)
+//                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
+//                                            ByteArrayToBitmap(decodedString)
+//                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
+//                                            val stream = ByteArrayOutputStream()
+//                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
+//                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
+//                                        } catch (e: Exception) {
+//                                            e.printStackTrace()
+//                                        }
+//                                    }
+//                                    else if (!landmark2!!.isEmpty()) {
+//                                        try {
+//
+//                                            viewPager = findViewById(R.id.viewpager)
+//                                            setupViewPager(viewPager!!)
+//
+//                                            tabLayout = findViewById(R.id.tabs)
+//                                            tabLayout!!.setupWithViewPager(viewPager)
+//                                            /* val decodedString = Base64.decode(landmark, Base64.DEFAULT)
+//                                            ByteArrayToBitmap(decodedString)
+//                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString,0, decodedString.size)
+//                                            val stream = ByteArrayOutputStream()
+//                                            decodedByte.compress(Bitmap.CompressFormat.PNG,100, stream)
+//                                            Glide.with(this@ImageActivity) .load(stream.toByteArray()).into(imLandmark)*/
+//                                        } catch (e: Exception) {
+//                                            e.printStackTrace()
+//                                        }
+//                                    }
+//                                    progressDialog!!.dismiss()
+//                                }
+//
+//                                else {
+//                                    val builder = AlertDialog.Builder(
+//                                            this@ImageActivity,
+//                                            R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
+//
+//                                }
+//
+//                            } else {
+//                                Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                ).show()
+//                            }
+//                        })
+//                progressDialog!!.dismiss()
+//            }
+//            false -> {
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+//            }
+//        }
+//    }
 
 
     private fun setRegViews() {
@@ -171,7 +171,7 @@ class ImageActivity : AppCompatActivity(),View.OnClickListener{
          val imback = findViewById<ImageView>(R.id.imback)
 
          imback!!.setOnClickListener(this)
-         getLocationDetails()
+     //    getLocationDetails()
 
       }
     private fun setupViewPager(viewPager: ViewPager) {

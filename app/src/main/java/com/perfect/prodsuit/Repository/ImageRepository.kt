@@ -27,12 +27,12 @@ object ImageRepository {
 
     val ImageSetterGetter = MutableLiveData<ImageModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String): MutableLiveData<ImageModel> {
-        getLocation(context, ID_LeadGenerateProduct)
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String,ID_LeadGenerate :  String): MutableLiveData<ImageModel> {
+        getLocation(context, ID_LeadGenerateProduct,ID_LeadGenerate)
         return ImageSetterGetter
     }
 
-    private fun getLocation(context: Context,ID_LeadGenerateProduct : String) {
+    private fun getLocation(context: Context,ID_LeadGenerateProduct : String,ID_LeadGenerate :  String) {
         try {
             ImageSetterGetter.value = ImageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -69,6 +69,7 @@ object ImageRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
 
 
                 Log.i("TAG33",requestObject1.toString())

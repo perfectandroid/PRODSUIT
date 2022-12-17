@@ -132,6 +132,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var fabAddQuotation : FloatingActionButton? = null
     private var fabdlteLead : FloatingActionButton? = null
     private var fabCloseLead : FloatingActionButton? = null
+    private var rltv_subfab : RelativeLayout? = null
     private var fab_open : Animation? = null
     private var fab_close : Animation? = null
     private var fab_clock : Animation? = null
@@ -330,6 +331,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun fabOpenClose() {
         if (isOpen!!) {
+
+            fabdlteLead!!.visibility = View.GONE
+            txtEditLead!!.visibility = View.GONE
+            fabAddActivities!!.visibility = View.GONE
+            txtAddActivities!!.visibility = View.GONE
+            fabAddNote!!.visibility = View.GONE
+            txtAddNote!!.visibility = View.GONE
+            rltv_subfab!!.visibility = View.GONE
+
             fabAddNote!!.startAnimation(fab_close);
             fabAddActivities!!.startAnimation(fab_close);
             fabAddNextAction!!.startAnimation(fab_close);
@@ -356,7 +366,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             fabdlteLead!!.setClickable(false);
             fabCloseLead!!.setClickable(false);
             isOpen = false;
+
+
         } else {
+
+            fabdlteLead!!.visibility = View.VISIBLE
+            txtEditLead!!.visibility = View.VISIBLE
+            fabAddActivities!!.visibility = View.VISIBLE
+            txtAddActivities!!.visibility = View.VISIBLE
+            fabAddNote!!.visibility = View.VISIBLE
+            txtAddNote!!.visibility = View.VISIBLE
+            rltv_subfab!!.visibility = View.VISIBLE
+
             fabAddNote!!.startAnimation(fab_open);
             fabAddActivities!!.startAnimation(fab_open);
             fabAddNextAction!!.startAnimation(fab_open);
@@ -409,6 +430,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         fabAddQuotation = findViewById(R.id.fabAddQuotation);
         fabdlteLead = findViewById(R.id.fabdlteLead);
         fabCloseLead = findViewById(R.id.fabCloseLead);
+        rltv_subfab = findViewById(R.id.rltv_subfab);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
@@ -2254,7 +2276,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                locationViewModel.getLocation(this, ID_LeadGenerateProduct)!!.observe(
+                locationViewModel.getLocation(this, ID_LeadGenerateProduct, ID_LeadGenerate)!!.observe(
                     this,
                     Observer { locationSetterGetter ->
                         val msg = locationSetterGetter.message
@@ -2382,7 +2404,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                imageViewModel.getImage(this, ID_LeadGenerateProduct)!!.observe(this,
+                imageViewModel.getImage(this, ID_LeadGenerateProduct, ID_LeadGenerate)!!.observe(this,
                     { ImageSetterGetter ->
                         val msg = ImageSetterGetter.message
                         if (msg!!.length > 0) {

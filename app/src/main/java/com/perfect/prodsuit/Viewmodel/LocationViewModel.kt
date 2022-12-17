@@ -11,8 +11,8 @@ class LocationViewModel : ViewModel() {
 
     var locationLiveData: MutableLiveData<LocationModel>? = null
 
-    fun getLocation(context: Context,ID_LeadGenerateProduct :  String) : LiveData<LocationModel>? {
-        locationLiveData = LocationRepository.getServicesApiCall(context, ID_LeadGenerateProduct)
+    fun getLocation(context: Context,ID_LeadGenerateProduct :  String,ID_LeadGenerate :  String) : LiveData<LocationModel>? {
+        locationLiveData = LocationRepository.getServicesApiCall(context, ID_LeadGenerateProduct,ID_LeadGenerate)
         return locationLiveData
     }
 

@@ -11,8 +11,8 @@ class ImageViewModel : ViewModel() {
 
     var imagelistLiveData: MutableLiveData<ImageModel>? = null
 
-    fun getImage(context: Context,ID_LeadGenerateProduct :  String) : LiveData<ImageModel>? {
-        imagelistLiveData = ImageRepository.getServicesApiCall(context, ID_LeadGenerateProduct)
+    fun getImage(context: Context,ID_LeadGenerateProduct :  String,ID_LeadGenerate :  String) : LiveData<ImageModel>? {
+        imagelistLiveData = ImageRepository.getServicesApiCall(context, ID_LeadGenerateProduct,ID_LeadGenerate)
         return imagelistLiveData
     }
 
