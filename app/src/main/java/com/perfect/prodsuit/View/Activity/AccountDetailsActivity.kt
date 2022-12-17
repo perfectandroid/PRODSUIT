@@ -432,6 +432,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         llLocation!!.setOnClickListener(this)
         llImages!!.setOnClickListener(this)
         ll_msg!!.setOnClickListener(this)
+        txtEditLead!!.setOnClickListener(this)
+        txtAddActivities!!.setOnClickListener(this)
+        txtAddNote!!.setOnClickListener(this)
+
      //   tv_actionType!!.setOnClickListener(this)
 
         ll_call!!.setOnClickListener(this)
@@ -658,7 +662,37 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 startActivity(i)
 
             }
+            R.id.txtAddNote->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+
+//                val i = Intent(this@AccountDetailsActivity, AddNoteActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                startActivity(i)
+
+                val i = Intent(this@AccountDetailsActivity, AddDocumentActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                startActivity(i)
+
+            }
             R.id.fabAddActivities->{
+                isOpen = true
+                fabOpenClose()
+                llHistory!!.visibility = View.GONE
+//                val i = Intent(this@AccountDetailsActivity, SiteVisitActivity::class.java)
+//                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+//                startActivity(i)
+
+                val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
+                i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("ActionMode","0")
+                startActivity(i)
+
+            }
+
+            R.id.txtAddActivities->{
                 isOpen = true
                 fabOpenClose()
                 llHistory!!.visibility = View.GONE
@@ -708,6 +742,30 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 //messagePopup()
             }
             R.id.fabdlteLead->{
+                isOpen = true
+                fabOpenClose()
+                try {
+                    val dialog1 = Dialog(this)
+                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    dialog1 .setCancelable(false)
+                    dialog1 .setContentView(R.layout.dlte_lead)
+                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
+                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
+                    btn_No.setOnClickListener {
+                        dialog1 .dismiss()
+                    }
+                    btn_Yes.setOnClickListener {
+                        dialog1.dismiss()
+                        getDeletelead()
+                    }
+                    dialog1.show()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+            R.id.txtEditLead->{
                 isOpen = true
                 fabOpenClose()
                 try {
