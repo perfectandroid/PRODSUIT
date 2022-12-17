@@ -105,7 +105,7 @@
                                  android:background="@drawable/ic_circle"
                                  android:fontFamily="@font/myfont"
                                  android:gravity="center"
-                                 android:text=""
+                                 android:text="0"
                                  android:textColor="@color/white"
                                  android:textSize="7dp"
                                  android:textStyle="bold" />

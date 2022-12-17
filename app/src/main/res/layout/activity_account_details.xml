@@ -250,7 +250,7 @@
                                                 android:text="Call"
                                                 android:gravity="center"
                                                 android:fontFamily="@font/myfont"
-                                                android:textSize="17dp"
+                                                android:textSize="15dp"
                                                 android:textColor="@color/black"
                                                 android:textStyle="bold"/>
 
@@ -284,8 +284,8 @@
                                             <TextView
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="Meeting"
-                                                android:textSize="17dp"
+                                                android:text="Site Visit"
+                                                android:textSize="15dp"
                                                 android:gravity="center"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/black"
@@ -321,7 +321,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:text="Message"
-                                                android:textSize="17dp"
+                                                android:textSize="15dp"
                                                 android:gravity="center"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/black"
@@ -357,7 +357,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:text="Note"
-                                                android:textSize="17dp"
+                                                android:textSize="15dp"
                                                 android:gravity="center"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/black"
