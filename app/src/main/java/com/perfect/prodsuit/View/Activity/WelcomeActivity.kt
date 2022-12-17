@@ -31,5 +31,9 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
- }
+    override fun onBackPressed() {
+        finishAffinity()
+        super.onBackPressed()
+    }
+}
 
