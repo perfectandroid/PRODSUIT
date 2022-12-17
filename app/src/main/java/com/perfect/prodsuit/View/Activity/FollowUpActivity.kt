@@ -181,6 +181,14 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     var ActionMode:String?=""
 
+    var followUpType = 0
+    var employee = 0
+    var prodstatus = 0
+    var followUpAction = 0
+    var prodpriority = 0
+    var department = 0
+    var employee1 = 0
+
 
 
 
@@ -331,14 +339,17 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             R.id.tie_ActionType->{
                 Config.disableClick(v)
                 ActiontypeFN = 0
+                followUpType = 0
                 getFollowupType()
             }
             R.id.tie_FollowupBy->{
+                employee = 0
                 Config.disableClick(v)
                 getAllEmployee()
             }
             R.id.tie_Status->{
                 Config.disableClick(v)
+                prodstatus = 0
                 getStatus()
             }
 //            R.id.tie_Date->{
@@ -347,11 +358,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //            }
             R.id.tie_NextAction->{
                 Config.disableClick(v)
+                followUpAction = 0
                 getFollowupAction()
             }
             R.id.tie_NextActionType->{
                 Config.disableClick(v)
                 ActiontypeFN = 1
+                followUpType = 0
                 getFollowupType()
             }
             R.id.tie_NextFollowupDate->{
@@ -361,11 +374,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
             R.id.tie_Priority->{
                 Config.disableClick(v)
+                prodpriority = 0
                 getProductPriority()
             }
 
             R.id.tie_Department->{
                 Config.disableClick(v)
+                department = 0
                 getDepartment()
             }
 
@@ -377,6 +392,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
                 }else{
                     Config.disableClick(v)
+                    employee = 0
                     getEmployee()
                 }
 
@@ -801,7 +817,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getFollowupType() {
-        var followUpType = 0
+//        var followUpType = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -983,7 +999,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     private fun getAllEmployee() {
 
-        var employee = 0
+//        var employee = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1116,7 +1132,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getEmployee() {
-        var employee = 0
+     //   var employee = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1133,8 +1149,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (employee == 0){
-                                    employee++
+                                if (employee1 == 0){
+                                    employee1++
 
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1224   "+msg)
@@ -1250,7 +1266,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getStatus() {
-        var prodstatus = 0
+       // var prodstatus = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1435,7 +1451,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
     private fun getFollowupAction() {
-        var followUpAction = 0
+//        var followUpAction = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1570,7 +1586,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getProductPriority() {
-        var prodpriority = 0
+//        var prodpriority = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1707,7 +1723,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getDepartment() {
-        var department = 0
+//        var department = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)

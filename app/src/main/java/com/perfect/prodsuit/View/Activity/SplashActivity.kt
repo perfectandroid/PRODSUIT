@@ -32,7 +32,11 @@ class SplashActivity : AppCompatActivity() {
     val BANK_KEY = "-500"
 
 
-
+    ////    QA 16.12.2022
+//    val CERT_NAME = "prodsuiteqa.pem"
+//    val BASE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
+//    val BANK_KEY = "-500"
 
 
     var TAG = "SplashActivity"
@@ -355,58 +359,63 @@ class SplashActivity : AppCompatActivity() {
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                getResellerData()
-                            }
-                            else if(jObject.getString("StatusCode") == "1"){
-                                var jobj = jObject.getJSONObject("MaintenanceMessage")
-
-                                val builder = AlertDialog.Builder(
-                                    this@SplashActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jobj.getString("Description"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
                                     getResellerData()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                            else if(jObject.getString("StatusCode") == "2"){
-                                var jobj = jObject.getJSONObject("MaintenanceMessage")
-                                val builder = AlertDialog.Builder(
-                                    this@SplashActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jobj.getString("Description"))
-                               /* builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }*/
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                            else {
-                                val builder = AlertDialog.Builder(
-                                    this@SplashActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                else if(jObject.getString("StatusCode") == "1"){
+                                    var jobj = jObject.getJSONObject("MaintenanceMessage")
+
+                                    val builder = AlertDialog.Builder(
+                                        this@SplashActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobj.getString("Description"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        getResellerData()
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
+                                else if(jObject.getString("StatusCode") == "2"){
+                                    var jobj = jObject.getJSONObject("MaintenanceMessage")
+                                    val builder = AlertDialog.Builder(
+                                        this@SplashActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobj.getString("Description"))
+                                    /* builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                     }*/
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                                else {
+                                    val builder = AlertDialog.Builder(
+                                        this@SplashActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            }
+                        }catch (e: Exception){
+                            Log.e(TAG,"Exception  419   "+e.toString())
                         }
+
                     })
             }
             false -> {

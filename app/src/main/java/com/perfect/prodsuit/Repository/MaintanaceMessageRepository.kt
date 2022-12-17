@@ -52,6 +52,8 @@ object MaintanaceMessageRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("11"))
 
+                Log.e(TAG,"541  requestObject1   "+BASE_URLSP.getString("BASE_URL", null))
+                Log.e(TAG,"541  requestObject1   "+requestObject1)
                 Log.e(TAG,"541  requestObject1   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -80,6 +82,7 @@ object MaintanaceMessageRepository {
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG,"541  response   "+t.message)
                 }
             })
          }
