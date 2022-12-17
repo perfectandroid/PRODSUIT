@@ -49,6 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -120,6 +121,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var historyActArrayList : JSONArray
     lateinit var documentDetailArrayList : JSONArray
     lateinit var documentArrayList : JSONArray
+    lateinit var reasonArrayList : JSONArray
+    lateinit var leadDeleteReasonViewModel: LeadDeleteReasonViewModel
     private var fab_main : FloatingActionButton? = null
     private var fabAddNote : FloatingActionButton? = null
     private var fabAddActivities : FloatingActionButton? = null
@@ -206,11 +209,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     companion object{
         var ID_LeadGenerateProduct :String = ""
         var ID_LeadGenerate :String = ""
+        var LeadNo :String = ""
         var LgCusMobile :String = ""
         var LgCusEmail  :String = ""
         var strid= ""
         var ID_ActionType : String?= ""
     }
+
+    var ID_Reason: String?= ""
+    var tie_DeleteReason:TextInputEditText?=null
+    var recyDelateReason :RecyclerView?=null
+    var tv_leadNumber :TextView?=null
+    var leadDelete = 0
+    var deleteLead = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,6 +234,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         StrictMode.setVmPolicy(builder.build())
 
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
+        leadDeleteReasonViewModel = ViewModelProvider(this).get(LeadDeleteReasonViewModel::class.java)
         leadInfoViewModel = ViewModelProvider(this).get(LeadInfoViewModel::class.java)
         infoViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
         documentViewModel = ViewModelProvider(this).get(DocumentListViewModel::class.java)
@@ -245,6 +257,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
+        LeadNo = jsonObj!!.getString("LeadNo")
 
         setRegViews()
         bottombarnav()
@@ -279,6 +292,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     llMainDetail!!.removeAllViews()
 
                     getActivityDetails1()
+//                    getActivitylist("0")
 
                 }
                 if (tab.position == 2){
@@ -745,21 +759,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 try {
-                    val dialog1 = Dialog(this)
-                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    dialog1 .setCancelable(false)
-                    dialog1 .setContentView(R.layout.dlte_lead)
-                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
-                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
-                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
-                    btn_No.setOnClickListener {
-                        dialog1 .dismiss()
-                    }
-                    btn_Yes.setOnClickListener {
-                        dialog1.dismiss()
-                        getDeletelead()
-                    }
-                    dialog1.show()
+
+//                    rrrrrrrr
+//                    val dialog1 = Dialog(this)
+//                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                    dialog1 .setCancelable(false)
+//                    dialog1 .setContentView(R.layout.dlte_lead)
+//                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+//                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
+//                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
+//                    btn_No.setOnClickListener {
+//                        dialog1 .dismiss()
+//                    }
+//                    btn_Yes.setOnClickListener {
+//                        dialog1.dismiss()
+//                        getDeletelead()
+//                    }
+//                    dialog1.show()
+
+
+
+                    deleteLeadBottomSheet(LeadNo)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -769,21 +789,23 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 isOpen = true
                 fabOpenClose()
                 try {
-                    val dialog1 = Dialog(this)
-                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    dialog1 .setCancelable(false)
-                    dialog1 .setContentView(R.layout.dlte_lead)
-                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
-                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
-                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
-                    btn_No.setOnClickListener {
-                        dialog1 .dismiss()
-                    }
-                    btn_Yes.setOnClickListener {
-                        dialog1.dismiss()
-                        getDeletelead()
-                    }
-                    dialog1.show()
+//                    val dialog1 = Dialog(this)
+//                    dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                    dialog1 .setCancelable(false)
+//                    dialog1 .setContentView(R.layout.dlte_lead)
+//                    dialog1.window!!.attributes.gravity = Gravity.BOTTOM;
+//                    val btn_Yes = dialog1 .findViewById(R.id.btnYes) as Button
+//                    val btn_No = dialog1 .findViewById(R.id.btnNo) as Button
+//                    btn_No.setOnClickListener {
+//                        dialog1 .dismiss()
+//                    }
+//                    btn_Yes.setOnClickListener {
+//                        dialog1.dismiss()
+//                        deleteLead = 0
+//                        getDeletelead(ID_LeadGenerate,ID_Reason!!)
+//                    }
+//                    dialog1.show()
+                    deleteLeadBottomSheet(LeadNo)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -877,7 +899,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     }
 
-    private fun getDeletelead() {
+    private fun getDeletelead(ID_LeadGenerate : String,ID_Reason : String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -886,14 +908,16 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                deleteLeadViewModel.getDeletelead(this, ID_LeadGenerate!!)!!.observe(
+                deleteLeadViewModel.getDeletelead(this, ID_LeadGenerate!!,ID_Reason)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
                         try {
                             if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (msg!!.length > 0) {
+
+                                if (deleteLead == 0){
+                                    deleteLead++
+
                                     val jObject = JSONObject(msg)
                                     //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
                                     if (jObject.getString("StatusCode") == "0") {
@@ -902,7 +926,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         var responsemessage = jobjt.getString("ResponseMessage")
 
 
-                                        Log.i("Result",responsemessage)
+                                        Log.e("Result",responsemessage)
                                         val builder = AlertDialog.Builder(
                                             this@AccountDetailsActivity,
                                             R.style.MyDialogTheme
@@ -911,6 +935,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
                                             //  val i = Intent(this@AddNoteActivity, AccountDetailsActivity::class.java)
                                             // startActivity(i)
+                                            onBackPressed()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
@@ -928,6 +953,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         alertDialog.show()
                                     }
                                 }
+
+
+
                             } else {
 //                            Toast.makeText(
 //                                applicationContext,
@@ -1064,7 +1092,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
-            getActivitylist(ID_ActionType!!)
+          //  getActivitylist(ID_ActionType!!)
 
 
         }
@@ -1130,6 +1158,22 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
 
+
+        }
+
+        if (data.equals("deletereasons")) {
+
+            try {
+                recyDelateReason!!.adapter=null
+                val jsonObject = reasonArrayList.getJSONObject(position)
+                Log.e(TAG,"jsonObject  1157   "+jsonObject)
+                tie_DeleteReason!!.setText(""+jsonObject.getString("ResnName"))
+                ID_Reason = jsonObject.getString("ID_Reason")
+
+            }
+            catch (e:Exception){
+
+            }
 
         }
 
@@ -1272,6 +1316,112 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         dialog.show()
 
+    }
+
+    private fun deleteLeadBottomSheet(LeadNo : String) {
+
+
+
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_deletelead, null)
+
+
+        tie_DeleteReason = view.findViewById<TextInputEditText>(R.id.tie_DeleteReason)
+        recyDelateReason = view.findViewById<RecyclerView>(R.id.recyDelateReason)
+        tv_leadNumber = view.findViewById<TextView>(R.id.tv_leadNumber)
+        val btnDeleteNo = view.findViewById<Button>(R.id.btnDeleteNo)
+        val btnDeleteYes = view.findViewById<Button>(R.id.btnDeleteYes)
+        tie_DeleteReason!!.setText("")
+        ID_Reason = ""
+        tv_leadNumber!!.text = "Lead Number  :  "+LeadNo
+        tie_DeleteReason!!.setOnClickListener {
+            leadDelete = 0
+            recyDelateReason!!.adapter = null
+            getLeadDeleteReason()
+
+
+
+        }
+
+        btnDeleteNo!!.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnDeleteYes!!.setOnClickListener {
+
+            if (ID_Reason.equals("")){
+                Toast.makeText(applicationContext, "Select Reason", Toast.LENGTH_SHORT).show()
+            }else{
+                dialog.dismiss()
+                deleteLead = 0
+                getDeletelead(ID_LeadGenerate ,ID_Reason!! )
+
+            }
+
+        }
+
+
+        dialog.setCancelable(true)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+
+    }
+
+    private fun getLeadDeleteReason() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadDeleteReasonViewModel.getLeadDeleteReason(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   1339   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("ReasonDetails")
+                                    reasonArrayList = jobjt.getJSONArray("ReasonDetailsList")
+                                    if (reasonArrayList.length()>0){
+                                        if (leadDelete == 0){
+                                            leadDelete++
+
+                                            val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
+                                            recyDelateReason!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = ReasonAdapter(this@AccountDetailsActivity, reasonArrayList)
+                                            recyDelateReason!!.adapter = adapter
+                                            adapter.setClickListener(this@AccountDetailsActivity)
+                                        }
+                                    }
+                                } else {
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext,""+e.toString(),Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     private fun getHistory(PrductOnly: String) {
@@ -1860,9 +2010,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         rv_activity = inflatedLayout1.findViewById<RecyclerView>(R.id.rv_activity)
         tv_actionType= inflatedLayout1.findViewById<TextView>(R.id.tv_actionType);
 
-        tv_actionType!!.setOnClickListener(this)
+      //  tv_actionType!!.setOnClickListener(this)
 
-        getFollowup(agendaTypeClick1)
+     //   getFollowup(agendaTypeClick1)
+
+        getActivitylist("0")
 
       //  getActivitylist(ID_ActionType!!)
 
@@ -1945,7 +2097,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             ID_ActionType = jsonObject.getString("ID_ActionType")
             tv_actionType!!.setText(jsonObject.getString("ActnTypeName"))
 
-            getActivitylist(ID_ActionType!!)
+         //   getActivitylist(ID_ActionType!!)
+        //    getActivitylist("0")
 
         }else{
 
@@ -2033,20 +2186,20 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"activity   "+msg)
+                                Log.e(TAG,"activity 2182   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("ActivitiesDetails")
                                     activityArrayList = jobjt.getJSONArray("ActivitiesDetailsList")
                                     if (activityArrayList.length()>0){
 //
                                         rv_activity!!.visibility=View.VISIBLE
-                                        rv_activity = findViewById(R.id.rv_activity) as RecyclerView
+//                                        rv_activity = findViewById(R.id.rv_activity) as RecyclerView
                                         val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
                                         rv_activity!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         val adapter = ActivityListAdapter(this@AccountDetailsActivity, activityArrayList)
                                         rv_activity!!.adapter = adapter
                                         adapter.setClickListener(this@AccountDetailsActivity)
-                                        // }
+//                                        // }
 
                                     }
 

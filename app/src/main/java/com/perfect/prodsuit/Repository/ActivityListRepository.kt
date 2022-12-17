@@ -24,6 +24,7 @@ import java.util.*
 
 object ActivityListRepository {
 
+    val TAG = "ActivityListRepository"
     val activitylistSetterGetter = MutableLiveData<ActivityListModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context, ID_LeadGenerateProduct :  String,ID_ActionType :  String): MutableLiveData<ActivityListModel> {
@@ -62,6 +63,7 @@ object ActivityListRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("45"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
@@ -88,7 +90,7 @@ object ActivityListRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("Addactivity", response.body())
+                        Log.e(TAG,"7012  response  "+ response.body())
                         val users = ArrayList<ActivityListModel>()
                         users.add(ActivityListModel(response.body()))
                         val msg = users[0].message
@@ -97,18 +99,21 @@ object ActivityListRepository {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
                         Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Log.e(TAG,"70121    "+e.toString())
                     }
                 }
 
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
                     Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG,"70122    "+t.message)
                 }
             })
         }
         catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
+            Log.e(TAG,"70123    "+e.toString())
         }
     }
 

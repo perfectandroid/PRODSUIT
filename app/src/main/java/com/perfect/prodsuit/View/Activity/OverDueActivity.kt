@@ -1059,4 +1059,13 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.e(TAG,"741  onRestart ")
+        getOverdueList()
+    }
+//
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//    }
 }

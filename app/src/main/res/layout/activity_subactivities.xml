@@ -31,7 +31,8 @@
                                     android:padding="8dp"
                                     android:singleLine="true"
                                     android:text=""
-                                    android:textSize="15dp" />
+                                    android:textSize="15dp"
+                android:visibility="gone"/>
 
 
     <ScrollView
@@ -44,10 +45,8 @@
             android:id="@+id/rv_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:visibility="gone" />
+            android:layout_margin="1dp"
+            android:visibility="visible" />
 
     </ScrollView>
 

@@ -13,8 +13,8 @@ class DeleteLeadViewModel : ViewModel() {
 
     var deleteleadLiveData: MutableLiveData<DeleteLeadModel>? = null
 
-    fun getDeletelead(context: Context,ID_LeadGenerate :  String) : LiveData<DeleteLeadModel>? {
-        deleteleadLiveData = DeleteLeadRepository.getServicesApiCall(context,ID_LeadGenerate)
+    fun getDeletelead(context: Context,ID_LeadGenerate :  String,ID_Reason :  String) : LiveData<DeleteLeadModel>? {
+        deleteleadLiveData = DeleteLeadRepository.getServicesApiCall(context,ID_LeadGenerate,ID_Reason)
         return deleteleadLiveData
     }
 

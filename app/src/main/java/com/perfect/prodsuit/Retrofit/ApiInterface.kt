@@ -258,4 +258,7 @@ interface ApiInterface {
 
     @POST("UserValidations/AddRemark")
     fun getAddremark(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ReasonDetails")
+    fun getReasonDetails(@Body body: RequestBody): Call<String>
 }

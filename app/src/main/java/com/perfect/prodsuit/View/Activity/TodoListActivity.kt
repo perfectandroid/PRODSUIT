@@ -1241,6 +1241,12 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     }
 
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.e(TAG,"741  onRestart ")
+        getTodoList()
+    }
+
 
 }
 

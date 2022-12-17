@@ -25,15 +25,16 @@ import java.util.*
 
 object DeleteLeadRepository {
 
+    val TAG = "DeleteLeadRepository"
     val deleteleadSetterGetter = MutableLiveData<DeleteLeadModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,ID_LeadGenerate :  String): MutableLiveData<DeleteLeadModel> {
-        getDeleteLead(context, ID_LeadGenerate)
+    fun getServicesApiCall(context: Context,ID_LeadGenerate :  String,ID_Reason :  String): MutableLiveData<DeleteLeadModel> {
+        getDeleteLead(context, ID_LeadGenerate,ID_Reason)
         return deleteleadSetterGetter
     }
 
 
-    private fun getDeleteLead(context: Context,ID_LeadGenerate :  String) {
+    private fun getDeleteLead(context: Context,ID_LeadGenerate :  String,ID_Reason :  String) {
         try {
             deleteleadSetterGetter.value = DeleteLeadModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -60,15 +61,32 @@ object DeleteLeadRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+//                {"BankKey":"\/mXqmq3ZMvs=\n","FK_Employee":"07\/ybAx1yS4=\n","Token":"dRRRSTGkN3TPxZ0TbbHnHXaEbr\/4vdCRNiXEdQ5aPy9vQRNrOEf18w==\n",
+//                    "TransMode":"19gZibW7I3Y=\n","ID_LeadGenerate":"19gZibW7I3Y=\n","EntrBy":"19gZibW7I3Y=\n","FK_Reason":"19gZibW7I3Y=\n",
+//                    "FK_Company":"19gZibW7I3Y=\n","FK_BranchCodeUser":"19gZibW7I3Y=\n"}
+
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart("LFLG"))
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
-                Log.e("requestobject deletelead",requestObject1.toString())
-                Log.e("requestobject deletelead",ID_LeadGenerate)
+                requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
+                requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+
+
+                Log.e(TAG,"86 UserCodeSP    "+UserCodeSP.getString("UserCode", null))
+                Log.e(TAG,"86 FK_BranchCodeUserSP    "+FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null))
+                Log.e(TAG,"86 requestObject1    "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -85,7 +103,7 @@ object DeleteLeadRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("DeleteLead", response.body())
+                        Log.e("DeleteLead", response.body())
                         val users = ArrayList<DeleteLeadModel>()
                         users.add(DeleteLeadModel(response.body()))
                         val msg = users[0].message

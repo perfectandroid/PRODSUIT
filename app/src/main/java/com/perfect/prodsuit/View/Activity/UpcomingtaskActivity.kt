@@ -1167,4 +1167,10 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.e(TAG,"741  onRestart ")
+        getUpcomingtasksList()
+    }
+
 }
