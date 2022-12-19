@@ -50,6 +50,7 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    var TAG = "HomeActivity"
     lateinit var context: Context
     lateinit var changempinViewModel: ChangeMpinViewModel
     lateinit var bannerListViewModel: BannerListViewModel
@@ -112,6 +113,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var SubMode : String = ""
 
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
+    val UPDATE_INTERVAL = 1500L
+    private val updateWidgetHandler = Handler()
 
 
 
@@ -125,11 +128,33 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setRegViews()
         bottombarnav()
         getBannerlist()
-        getNotfCount()
+//        getNotfCount()
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
-//
+
+    }
+
+    private var updateWidgetRunnable: Runnable = Runnable {
+        run {
+            //Update UI
+            // Re-run it after the update interval
+            getNotfCount()
+            updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
+    }
+
+
+    // REMOVE callback if app in background
+    override fun onPause() {
+        super.onPause()
+        updateWidgetHandler.removeCallbacks(updateWidgetRunnable);
     }
 
     private fun getNotfCount() {
@@ -138,12 +163,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+//                progressDialog = ProgressDialog(this, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
                 notificationViewModel.getNotificaationlist(this)!!.observe(
                     this,
                     Observer { notificationSetterGetter ->
@@ -178,11 +203,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                            ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+           //     progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
 

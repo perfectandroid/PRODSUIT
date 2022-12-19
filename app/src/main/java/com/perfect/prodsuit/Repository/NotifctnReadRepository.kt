@@ -28,6 +28,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object NotifctnReadRepository {
 
+    var TAG = "NotifctnReadRepository"
     private var progressDialog: ProgressDialog? = null
     val notifreadSetterGetter = MutableLiveData<NotifReadModel>()
 
@@ -40,12 +41,12 @@ object NotifctnReadRepository {
         try {
             notifreadSetterGetter.value = NotifReadModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-            progressDialog = ProgressDialog(context, R.style.Progress)
-            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-            progressDialog!!.show()
+//            progressDialog = ProgressDialog(context, R.style.Progress)
+//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//            progressDialog!!.setCancelable(false)
+//            progressDialog!!.setIndeterminate(true)
+//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -65,14 +66,17 @@ object NotifctnReadRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val NotifidSP = context.getSharedPreferences(Config.SHARED_PREF28, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("55"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_NotificationDetails", ProdsuitApplication.encryptStart(NotificationActivity.id))
-                Log.i("Request Readstatus",requestObject1.toString())
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+
+                Log.e(TAG,"requestObject1   78   "+requestObject1.toString())
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -88,7 +92,7 @@ object NotifctnReadRepository {
                     Response<String>
                 ) {
                     try {
-                        progressDialog!!.dismiss()
+                      //  progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.i("NotifreadResponse",response.body())
                         val users = ArrayList<NotifReadModel>()
@@ -97,20 +101,20 @@ object NotifctnReadRepository {
                         notifreadSetterGetter.value = NotifReadModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                      //  progressDialog!!.dismiss()
+                      //  Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                    progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                  //  progressDialog!!.dismiss()
+                   // Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
          }
         catch (e: Exception) {
             e.printStackTrace()
-            progressDialog!!.dismiss()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+          //  progressDialog!!.dismiss()
+         //   Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 
