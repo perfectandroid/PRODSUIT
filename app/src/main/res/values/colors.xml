@@ -125,6 +125,7 @@
     <color name="cust_3">#f5f5f5</color>
     <color name="cust_4">#53C5CA</color>
 
+
     <color name="shape_color">#938fa6</color>
     <color name="leadbg_color">#F0F0F0</color>
     <color name="btn_color">#a78fa0</color>
@@ -285,10 +286,12 @@
         <item>@color/dot_dark_screen4</item>
     </array>
 
-    <color name="color_fab1">#8DD3D8</color>
-    <color name="color_fab2">#84EDF4</color>
+    <color name="color_fab1">#9DB7B8</color>
+    <color name="color_fab2">#9DB7B8</color>
     <color name="color_msg_tab">#54999E</color>
     <color name="color_bg_tab">#CEF4F4F4</color>
+    <color name="color_tab">#9DB7B8</color>
+    <color name="color_account">#45888A</color>
 
 
 </resources>

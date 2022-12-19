@@ -23,7 +23,8 @@
             //    android:background="@color/colorPrimary"
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_header">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -39,8 +40,9 @@
                             android:layout_gravity="left"
                             android:background="@color/color_activity_transparent"
                             android:padding="10dp"
-                            android:tint="@color/black"
-                            android:src="@drawable/back_arro"/>
+                            android:tint="@color/white"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
 
                     </LinearLayout>
 
@@ -56,7 +58,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:tint="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"

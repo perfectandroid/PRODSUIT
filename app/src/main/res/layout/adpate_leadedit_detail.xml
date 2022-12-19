@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
-    android:backgroundTint="@color/white"
     android:layout_marginTop="1dp"
     android:layout_marginRight="1dp"
     android:layout_marginLeft="1dp"
@@ -19,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/list_si"
+        android:background="@drawable/shape_shadow"
         android:padding="0dp">
         android:padding="10dp"
 
@@ -56,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:text="Sahid"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     android:textStyle="normal" />
 
@@ -77,11 +77,11 @@
                     android:layout_weight="1"
                     android:text=""
                     android:fontFamily="@font/myfont"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:justificationMode="inter_word"
                     android:textSize="13dp"
                     android:drawableLeft="@drawable/location_svg"
-                    android:drawableTint="@color/black"
+                    android:drawableTint="@color/colorPrimary"
                     android:drawablePadding="5dp"
                     android:textStyle="normal"
                     android:visibility="visible"/>
@@ -94,12 +94,27 @@
                     android:text=""
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:drawableTint="@color/black"
+                    android:drawableTint="@color/colorPrimary"
                     android:drawableLeft="@drawable/product_svg"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="13dp"
                     android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtNextActionDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10/12/2022"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:gravity="end"
+                    android:paddingRight="10dp"
+                    android:textSize="13dp"
+                    android:textStyle="normal"
+                    android:visibility="gone"/>
 
 
             </LinearLayout>
@@ -107,21 +122,8 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtNextActionDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="10/12/2022"
-            android:fontFamily="@font/myfont"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:background="@color/list_si"
-            android:gravity="end"
-            android:paddingRight="10dp"
-            android:textSize="13dp"
-            android:textStyle="normal" />
 
+<!--        android:background="@color/list_si"-->
 <!--        android:background="@color/greylight"-->
 
         <View

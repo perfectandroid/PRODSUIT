@@ -18,7 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@drawable/shape_header">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -34,8 +34,9 @@
                         android:layout_gravity="left"
                         android:background="@color/color_activity_transparent"
                         android:padding="10dp"
-                        android:tint="@color/black"
-                        android:src="@drawable/back_arro"/>
+                        android:tint="@color/white"
+                        android:src="@drawable/back_arro"
+                        tools:ignore="UseAppTint" />
 
 
 
@@ -54,7 +55,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:tint="@color/black"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
@@ -73,6 +74,7 @@
                         android:layout_gravity="right|center_vertical"
                         android:layout_alignParentLeft="true"
                         android:layout_width="match_parent"
+                        android:tint="@color/white"
                         android:layout_weight="3"
                         android:layout_height="match_parent"
                         android:visibility="visible"/>
@@ -92,8 +94,10 @@
                         android:layout_alignParentLeft="true"
                         android:layout_width="match_parent"
                         android:layout_weight="3"
+                        android:tint="@color/white"
                         android:layout_height="match_parent"
-                        android:visibility="visible"/>
+                        android:visibility="visible"
+                        tools:ignore="UseAppTint" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,6 +112,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="10dp"
+                        android:tint="@color/white"
                         android:background="@color/color_activity_transparent"
                         android:padding="5dp"
                         android:src="@drawable/ic_edit"

@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
@@ -189,6 +190,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var department = 0
     var employee1 = 0
 
+    private var tabLayout : TabLayout? = null
+    private var card_followup : CardView? = null
+    private var card_nextaction : CardView? = null
+
 
 
 
@@ -233,7 +238,44 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         getCurrentDateNTime()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        addTabItem()
 
+
+    }
+
+    private fun addTabItem() {
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Follow up"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Next Action"))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
+       // tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+        card_followup!!.visibility = View.VISIBLE
+        card_nextaction!!.visibility = View.GONE
+        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabSelected  113  "+tab.position)
+                if (tab.position == 0){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+
+                    card_followup!!.visibility = View.VISIBLE
+                    card_nextaction!!.visibility = View.GONE
+                }
+                if (tab.position == 1){
+                    Log.e(TAG,"onTabSelected  1131  "+tab.position)
+
+                    card_followup!!.visibility = View.GONE
+                    card_nextaction!!.visibility = View.VISIBLE
+                }
+
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabUnselected  162  "+tab.position)
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabReselected  165  "+tab.position)
+            }
+        })
     }
 
     private fun getCurrentDateNTime() {
@@ -295,6 +337,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_Longitude             = findViewById(R.id.tie_Longitude) as TextInputEditText
         imgv_upload1 = findViewById(R.id.imgv_upload1) as ImageView
         imgv_upload2 = findViewById(R.id.imgv_upload2) as ImageView
+
+        tabLayout = findViewById(R.id.tabLayout) as TabLayout
+        card_followup = findViewById(R.id.card_followup) as CardView
+        card_nextaction = findViewById(R.id.card_nextaction) as CardView
 
 
 
