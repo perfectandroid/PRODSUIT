@@ -4,7 +4,7 @@
     android:shape="oval">
 
     <solid
-        android:color="#035AA0"/>
+        android:color="@color/todolist_round"/>
 
     <size
         android:width="120dp"

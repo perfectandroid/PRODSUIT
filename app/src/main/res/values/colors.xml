@@ -193,14 +193,49 @@
 <!--    <color name="upcomung_Color">#55E4A7</color>-->
 <!--    <color name="right_Color">#E6E5E5</color>-->
 
-    <color name="todolist_Color">#48a9f8</color>
-    <color name="todolist_light_Color">#8FC8F7</color>
-    <color name="overdue_Color">#e94560</color>
-    <color name="overdue_light_Color">#F47D91</color>
-    <color name="upcomung_Color">#1bd084</color>
-    <color name="upcomung_light_Color">#74F4BF</color>
-    <color name="right_Color">#E6E5E5</color>
+<!--    <color name="todolist_Color">#48a9f8</color>-->
+<!--    <color name="todolist_light_Color">#8FC8F7</color>-->
+<!--    <color name="overdue_Color">#e94560</color>-->
+<!--    <color name="overdue_light_Color">#F47D91</color>-->
+<!--    <color name="upcomung_Color">#1bd084</color>-->
+<!--    <color name="upcomung_light_Color">#74F4BF</color>-->
+<!--    <color name="right_Color">#E6E5E5</color>-->
 
+<!--    19.12.2022-->
+
+<!--    <color name="todolist_round">#8293A8</color>-->
+<!--    <color name="todolist_Color">#A9B6C6</color>-->
+<!--    <color name="todolist_light_Color">#DCE4ED</color>-->
+
+<!--    <color name="overdue_round">#BCAFB3</color>-->
+<!--    <color name="overdue_Color">#C1B9BC</color>-->
+<!--    <color name="overdue_light_Color">#EAE6E7</color>-->
+
+<!--    <color name="upcomung_round">#96AE97</color>-->
+<!--    <color name="upcomung_Color">#AFC3B1</color>-->
+<!--    <color name="upcomung_light_Color">#E2E8E2</color>-->
+
+<!--    <color name="upcomung_round">#9DB7B8</color>-->
+<!--    <color name="upcomung_Color">#CEB8CDCD</color>-->
+<!--    <color name="upcomung_light_Color">#E2E8E2</color>-->
+
+
+<!--    19.12.2022 new-->
+
+    <color name="todolist_round">#2C6887</color>
+    <color name="todolist_Color">#5F94AE</color>
+    <color name="todolist_light_Color">#8BADBE</color>
+
+    <color name="overdue_round">#877E87</color>
+    <color name="overdue_Color">#A199A1</color>
+    <color name="overdue_light_Color">#CCC4CC</color>
+
+    <color name="upcomung_round">#667B7C</color>
+    <color name="upcomung_Color">#CE748E8E</color>
+    <color name="upcomung_light_Color">#CEC2D8D8</color>
+
+
+    <color name="right_Color">#E6E5E5</color>
     <color name="pop_gradient1">#972839</color>
     <color name="pop_gradient2">#B33F51</color>
     <color name="pop_gradient3">#ED5970</color>

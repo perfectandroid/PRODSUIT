@@ -513,7 +513,7 @@
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp"
-                                    android:visibility="visible">
+                                    android:visibility="gone">
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -1328,7 +1328,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
