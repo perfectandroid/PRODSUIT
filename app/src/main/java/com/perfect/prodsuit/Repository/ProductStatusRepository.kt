@@ -26,12 +26,12 @@ object ProductStatusRepository {
     val productstatusSetterGetter = MutableLiveData<ProductStatusModel>()
     val TAG: String = "ProductStatusRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ProductStatusModel> {
-        getProductStatus(context)
+    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<ProductStatusModel> {
+        getProductStatus(context,ReqMode)
         return productstatusSetterGetter
     }
 
-    private fun getProductStatus(context: Context) {
+    private fun getProductStatus(context: Context,ReqMode : String) {
         try {
             productstatusSetterGetter.value = ProductStatusModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -63,7 +63,7 @@ object ProductStatusRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))

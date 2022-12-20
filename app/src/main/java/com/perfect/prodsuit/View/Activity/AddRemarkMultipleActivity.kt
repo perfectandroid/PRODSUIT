@@ -636,6 +636,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
 
     private fun getStatus() {
         var prodstatus = 0
+        var ReqMode = "15"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -644,7 +645,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productStatusViewModel.getProductStatus(this)!!.observe(
+                productStatusViewModel.getProductStatus(this,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

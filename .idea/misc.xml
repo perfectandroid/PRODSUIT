@@ -143,6 +143,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.2203125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_area_list.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_call_status.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.2712962962962963" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_document_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.2630208333333333" />
@@ -164,9 +165,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_messages.xml" value="0.34322916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.1734375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.34322916666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/call_status_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.2916666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.35052083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dlte_lead.xml" value="0.33229166666666665" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_generation_confirmation_popup.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_through_popup.xml" value="0.3416666666666667" />
@@ -176,6 +179,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/reminder_agenda_popup.xml" value="0.2791666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.2916666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.26875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/spinner_item.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/submedia_popup.xml" value="0.3416666666666667" />
       </map>
     </option>

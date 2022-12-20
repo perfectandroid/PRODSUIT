@@ -11,8 +11,8 @@ class ProductStatusViewModel : ViewModel() {
 
     var productstatusData: MutableLiveData<ProductStatusModel>? = null
 
-    fun getProductStatus(context: Context) : LiveData<ProductStatusModel>? {
-        productstatusData = ProductStatusRepository.getServicesApiCall(context)
+    fun getProductStatus(context: Context,ReqMode : String) : LiveData<ProductStatusModel>? {
+        productstatusData = ProductStatusRepository.getServicesApiCall(context,ReqMode)
         return productstatusData
     }
 

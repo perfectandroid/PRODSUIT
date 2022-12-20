@@ -114,6 +114,17 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var dialogEmployeeAll : Dialog? = null
     var recyEmployeeAll: RecyclerView? = null
 
+    lateinit var leadByViewModel: LeadByViewModel
+    lateinit var leadByArrayList : JSONArray
+    var dialogLeadBy : Dialog? = null
+    var recyLeadby: RecyclerView? = null
+    lateinit var leadBySort : JSONArray
+
+//    lateinit var callStatusViewModel: CallStatusViewModel
+//    lateinit var callStatusArrayList : JSONArray
+//    var dialogCallStatus : Dialog? = null
+//    var recyCallStatus: RecyclerView? = null
+
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
     lateinit var prodStatusSort : JSONArray
@@ -150,6 +161,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     var ID_LeadGenerateProduct : String?= ""
     var ID_LeadGenerate : String?= ""
+    var AssignedToID : String?= ""
+    var AssignedTo : String?= ""
+
 
     var ID_ActionType : String?= ""
     var ID_Employee : String?= ""
@@ -189,6 +203,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var prodpriority = 0
     var department = 0
     var employee1 = 0
+    var countLeadBy = 0
+    var countCallStatus = 0
 
     private var tabLayout : TabLayout? = null
     private var card_followup : CardView? = null
@@ -205,6 +221,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         setContentView(R.layout.activity_follow_up)
         context = this@FollowUpActivity
 
+        leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
+     //   callStatusViewModel = ViewModelProvider(this).get(CallStatusViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         employeeAllViewModel = ViewModelProvider(this).get(EmployeeAllViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
@@ -219,6 +237,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         ActionMode = intent.getStringExtra("ActionMode")
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")
         ID_LeadGenerate = intent.getStringExtra("ID_LeadGenerate")
+        AssignedToID = intent.getStringExtra("FK_Employee")
+        AssignedTo = intent.getStringExtra("AssignedTo")
 
         Log.e(TAG,"LN204    "+ActionMode+"   :  "+ID_LeadGenerate+"   :   "+ID_LeadGenerateProduct)
 
@@ -294,11 +314,16 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun setDefaultFollowupBy() {
-        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-        Log.e(TAG," UserName  143     "+UserNameSP.getString("UserName", null))
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null)
-        tie_FollowupBy!!.setText(UserNameSP.getString("UserName", null))
+//        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+//        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//        Log.e(TAG," UserName  143     "+UserNameSP.getString("UserName", null))
+//        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null)
+//        tie_FollowupBy!!.setText(UserNameSP.getString("UserName", null))
+
+
+        ID_Employee = AssignedToID
+        tie_FollowupBy!!.setText(AssignedTo)
+
     }
 
     private fun setRegViews() {
@@ -348,7 +373,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         btnReset     = findViewById(R.id.btnReset) as Button
 
         tie_ActionType!!.setOnClickListener(this)
-        tie_FollowupBy!!.setOnClickListener(this)
+        val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+        var isAdmin = IsAdminSP.getString("IsAdmin", null)
+        if (isAdmin.equals("1")){
+            tie_FollowupBy!!.setOnClickListener(this)
+        }
+
         tie_Status!!.setOnClickListener(this)
      //   tie_Date!!.setOnClickListener(this)
 
@@ -389,9 +419,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 getFollowupType()
             }
             R.id.tie_FollowupBy->{
-                employee = 0
+               // employee = 0
                 Config.disableClick(v)
-                getAllEmployee()
+               // getAllEmployee()
+
+                countLeadBy = 0
+                getLeadBy(v)
+
             }
             R.id.tie_Status->{
                 Config.disableClick(v)
@@ -451,7 +485,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             R.id.tie_CallStatus->{
 
-                getCallStatus()
+            //    getCallStatus()
             }
 
 
@@ -512,42 +546,165 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
     }
 
-    private fun getCallStatus() {
-
-        try {
-            val builder = android.app.AlertDialog.Builder(this)
-            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
-            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
-            builder.setView(layout)
-            val alertDialog = builder.create()
-            val listItem = resources.getStringArray(R.array.callstatus)
-            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
-            )
-            lvCallStatus.setAdapter(adapter)
-            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
-                // TODO Auto-generated method stub
-                val value = adapter.getItem(position)
-                tie_CallStatus!!.setText(value)
-                if (position == 0) {
-                    strCallStatus = "1"
-                }
-                if (position == 1) {
-                    strCallStatus = "2"
-                }
-                if (position == 2) {
-                    strCallStatus = "3"
-                }
-//                if (position == 2) {
-//                    FollowUpActivity.strRiskType = "3"
+//    private fun getCallStatus() {
+//
+//        try {
+//            when (Config.ConnectivityUtils.isConnected(this)) {
+//                true -> {
+//                    progressDialog = ProgressDialog(context, R.style.Progress)
+//                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                    progressDialog!!.setCancelable(false)
+//                    progressDialog!!.setIndeterminate(true)
+//                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                    progressDialog!!.show()
+//
+//                    callStatusViewModel.getLeadBy(this)!!.observe(
+//                        this,
+//                        Observer { serviceSetterGetter ->
+//                            val msg = serviceSetterGetter.message
+//                            if (msg!!.length > 0) {
+//                                    val jObject = JSONObject(msg)
+//                                    Log.e(TAG,"msg   228   "+msg.length)
+//                                    Log.e(TAG,"msg   228   "+msg)
+//                                    if (jObject.getString("StatusCode") == "0") {
+//
+//                                        val jobjt = jObject.getJSONObject("StatusDetailsList")
+//                                        callStatusArrayList = jobjt.getJSONArray("StatusList")
+//                                        if (callStatusArrayList.length()>0){
+//                                            if (countCallStatus == 0){
+//                                                countCallStatus++
+//                                             //   leadByPopup(leadByArrayList)
+//
+//                                             //   callStatusPopup(callStatusArrayList)
+//                                            }
+//
+//                                        }
+//
+//                                    } else {
+//                                        val builder = AlertDialog.Builder(
+//                                            this@FollowUpActivity,
+//                                            R.style.MyDialogTheme
+//                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
+//                                    }
+//
+//
+//
+//                            } else {
+////                            Toast.makeText(
+////                                applicationContext,
+////                                "Some Technical Issues.",
+////                                Toast.LENGTH_LONG
+////                            ).show()
+//                            }
+//                        })
+//                    progressDialog!!.dismiss()
 //                }
-                alertDialog.dismiss()
-            })
-            alertDialog.show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+//                false -> {
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+//                }
+//
+//            }
+//
+//
+//
+////            val builder = android.app.AlertDialog.Builder(this)
+////            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+////            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+////            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+////            builder.setView(layout)
+////            val alertDialog = builder.create()
+////            val listItem = resources.getStringArray(R.array.callstatus)
+////            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+////            )
+////            lvCallStatus.setAdapter(adapter)
+////            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+////                // TODO Auto-generated method stub
+////                val value = adapter.getItem(position)
+////                tie_CallStatus!!.setText(value)
+////                if (position == 0) {
+////                    strCallStatus = "1"
+////                }
+////                if (position == 1) {
+////                    strCallStatus = "2"
+////                }
+////                if (position == 2) {
+////                    strCallStatus = "3"
+////                }
+//////                if (position == 2) {
+//////                    FollowUpActivity.strRiskType = "3"
+//////                }
+////                alertDialog.dismiss()
+////            })
+////            alertDialog.show()
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
+
+//    private fun callStatusPopup(callStatusArrayList: JSONArray) {
+//
+//        try {
+//
+//            dialogCallStatus = Dialog(this)
+//            dialogCallStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogCallStatus!! .setContentView(R.layout.call_status_popup)
+//            dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+//            recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
+//        //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
+//
+//
+//
+////            val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
+////            recyCallStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//////            recyCustomer!!.setHasFixedSize(true)
+//////            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+////            val adapter = CallStatusAdapter(this@FollowUpActivity, callStatusArrayList)
+////            recyCallStatus!!.adapter = adapter
+////            adapter.setClickListener(this@FollowUpActivity)
+//
+////            etsearch!!.addTextChangedListener(object : TextWatcher {
+////                override fun afterTextChanged(p0: Editable?) {
+////                }
+////
+////                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+////                }
+////
+////                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+////
+////                    //  list_view!!.setVisibility(View.VISIBLE)
+////                    val textlength = etsearch!!.text.length
+////                    leadBySort = JSONArray()
+////
+////                    for (k in 0 until leadByArrayList.length()) {
+////                        val jsonObject = leadByArrayList.getJSONObject(k)
+////                        if (textlength <= jsonObject.getString("Name").length) {
+////                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+////                                leadBySort.put(jsonObject)
+////                            }
+////
+////                        }
+////                    }
+////
+////                    Log.e(TAG,"leadBySort               7103    "+leadBySort)
+////                    val adapter = LeadByAdapter(this@FollowUpActivity, leadBySort)
+////                    recyLeadby!!.adapter = adapter
+////                    adapter.setClickListener(this@FollowUpActivity)
+////                }
+////            })
+//
+//            dialogCallStatus!!.show()
+//            dialogCallStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
 
 
 
@@ -897,9 +1054,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                     Log.e(TAG,"8143    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
 
 
-                                                    if (jsonObject.getString("ID_ActionType")!!.contains(ActionMode!!)){
+                                                    if (jsonObject.getString("ActionMode")!!.contains(ActionMode!!)){
                                                         Log.e(TAG,"81431    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
-                                                        if (ActionMode.equals("1")){
+                                                        if (jsonObject.getString("ActionMode").equals("1")){
                                                             Log.e(TAG,"81432    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
                                                             ID_ActionType = jsonObject.getString("ID_ActionType")
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
@@ -909,7 +1066,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                             ll_images!!.visibility = View.GONE
                                                             til_CallTime!!.visibility = View.VISIBLE
                                                         }
-                                                        if (ActionMode.equals("2")){
+                                                        if (jsonObject.getString("ActionMode").equals("2")){
                                                             Log.e(TAG,"81434    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
                                                             ID_ActionType = jsonObject.getString("ID_ActionType")
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
@@ -1041,6 +1198,133 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             e.printStackTrace()
         }
 
+    }
+
+    private fun getLeadBy(v: View) {
+
+//        var countLeadBy = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadByViewModel.getLeadBy(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   228   "+msg.length)
+                            Log.e(TAG,"msg   228   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("CollectedByUsersList")
+                                leadByArrayList = jobjt.getJSONArray("CollectedByUsers")
+                                if (leadByArrayList.length()>0){
+                                    if (countLeadBy == 0){
+                                        countLeadBy++
+                                        leadByPopup(leadByArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@FollowUpActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
+
+    private fun leadByPopup(leadByArrayList: JSONArray) {
+
+        try {
+
+            dialogLeadBy = Dialog(this)
+            dialogLeadBy!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogLeadBy!! .setContentView(R.layout.lead_by_popup)
+            dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadby = dialogLeadBy!! .findViewById(R.id.recyLeadby) as RecyclerView
+            val etsearch = dialogLeadBy!! .findViewById(R.id.etsearch) as EditText
+
+            leadBySort = JSONArray()
+            for (k in 0 until leadByArrayList.length()) {
+                val jsonObject = leadByArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadBySort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
+            recyLeadby!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+            val adapter = LeadByAdapter(this@FollowUpActivity, leadBySort)
+            recyLeadby!!.adapter = adapter
+            adapter.setClickListener(this@FollowUpActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadBySort = JSONArray()
+
+                    for (k in 0 until leadByArrayList.length()) {
+                        val jsonObject = leadByArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadBySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadBySort               7103    "+leadBySort)
+                    val adapter = LeadByAdapter(this@FollowUpActivity, leadBySort)
+                    recyLeadby!!.adapter = adapter
+                    adapter.setClickListener(this@FollowUpActivity)
+                }
+            })
+
+            dialogLeadBy!!.show()
+            dialogLeadBy!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getAllEmployee() {
@@ -1313,6 +1597,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     private fun getStatus() {
        // var prodstatus = 0
+        var ReqMode = "61"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1321,7 +1606,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productStatusViewModel.getProductStatus(this)!!.observe(
+                productStatusViewModel.getProductStatus(this,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1917,7 +2202,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 ID_ActionType = jsonObject.getString("ID_ActionType")
                 tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
 
-                if (ID_ActionType.equals("1")){
+                if (jsonObject.getString("ActionMode").equals("1")){
 
                     til_CallStatus!!.visibility = View.VISIBLE
                     til_CallDuration!!.visibility = View.VISIBLE
@@ -1925,7 +2210,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     ll_images!!.visibility = View.GONE
                     til_CallTime!!.visibility = View.VISIBLE
 
-                }else if(ID_ActionType.equals("2")){
+                }else if(jsonObject.getString("ActionMode").equals("2")){
 
                     til_CallStatus!!.visibility = View.GONE
                     til_CallDuration!!.visibility = View.GONE
@@ -1984,6 +2269,19 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         }
 
+        if (data.equals("leadby")){
+            dialogLeadBy!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = leadBySort.getJSONObject(position)
+
+            Log.e(TAG,"jsonObject   "+jsonObject)
+            ID_Employee = jsonObject.getString("ID_CollectedBy")
+            tie_FollowupBy!!.setText(jsonObject.getString("Name"))
+
+
+        }
+
+
 
         if (data.equals("prodstatus")){
             dialogProdStatus!!.dismiss()
@@ -2024,6 +2322,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
             ID_Department = jsonObject.getString("ID_Department")
             tie_Department!!.setText(jsonObject.getString("DeptName"))
+
+            ID_NextEmployee = ""
+            tie_NextEmployee!!.setText("")
 
 
         }

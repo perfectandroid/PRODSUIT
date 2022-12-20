@@ -670,6 +670,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun getProductStatus() {
         var prodstatus = 0
+        var ReqMode = "15"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -678,7 +679,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productStatusViewModel.getProductStatus(this)!!.observe(
+                productStatusViewModel.getProductStatus(this,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

@@ -513,6 +513,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 BroadCallEditer.putString("BroadCall", "Yes")
                 BroadCallEditer.putString("ID_LeadGenerate", jsonObject.getString("ID_LeadGenerate"))
                 BroadCallEditer.putString("ID_LeadGenerateProduct", jsonObject.getString("ID_LeadGenerateProduct"))
+                BroadCallEditer.putString("FK_Employee", jsonObject.getString("FK_Employee"))
+                BroadCallEditer.putString("AssignedTo", jsonObject.getString("AssignedTo"))
                 BroadCallEditer.commit()
 
 

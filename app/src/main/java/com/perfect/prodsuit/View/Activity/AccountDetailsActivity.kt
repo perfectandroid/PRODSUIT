@@ -224,6 +224,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var leadDelete = 0
     var deleteLead = 0
 
+    var AssignedToID : String?= ""
+    var AssignedTo : String?= ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -259,6 +262,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
         LeadNo = jsonObj!!.getString("LeadNo")
+        AssignedToID = jsonObj!!.getString("FK_Employee")
+        AssignedTo = jsonObj!!.getString("AssignedTo")
 
         setRegViews()
         bottombarnav()
@@ -723,6 +728,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("FK_Employee",AssignedToID)
+                i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","0")
                 startActivity(i)
 
@@ -739,6 +746,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("FK_Employee",AssignedToID)
+                i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","0")
                 startActivity(i)
 
@@ -867,6 +876,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                i.putExtra("FK_Employee",AssignedToID)
+                i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","2")
                 startActivity(i)
 
@@ -910,6 +921,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             BroadCallEditer.putString("BroadCall", "Yes")
             BroadCallEditer.putString("ID_LeadGenerate", ID_LeadGenerate)
             BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
+            BroadCallEditer.putString("FK_Employee", AssignedToID)
+            BroadCallEditer.putString("AssignedTo", AssignedTo)
             BroadCallEditer.commit()
 
             var mobileno = txtPhone!!.text.toString()
