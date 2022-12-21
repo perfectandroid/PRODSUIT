@@ -2478,9 +2478,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             var str: String? = null
             date = inputTimeFormat.parse(tie_CallTime!!.text.toString())
             strFollowUpTime = outputTimeFormat.format(date)
-            Log.e(TAG,"str    "+str)
+            Log.e(TAG,"str   2481   "+str)
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e(TAG,"str  2481  "+e.toString())
         }
 
 
@@ -2605,7 +2606,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                         }
                     }
 
-                  //  saveUpdate()
+                    saveUpdate()
 
 //                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
 //                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
