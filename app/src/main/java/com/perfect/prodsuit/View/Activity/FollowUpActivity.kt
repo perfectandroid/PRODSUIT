@@ -314,7 +314,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_CallTime!!.setText(currentTime1)
 
         tie_Date!!.setText(currentDate1)
-        tie_NextFollowupDate!!.setText(currentDate1)
+     //   tie_NextFollowupDate!!.setText(currentDate1)
+        tie_NextFollowupDate!!.setText("")
 
     }
 
@@ -1752,6 +1753,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1.setMinDate(System.currentTimeMillis());
 
         txtCancel.setOnClickListener {
             dialog.dismiss()
