@@ -135,6 +135,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("1")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("1")
@@ -165,6 +166,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("2")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("2")
@@ -195,6 +197,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("3")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("3")
@@ -225,6 +228,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("4")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("4")
@@ -255,6 +259,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("5")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("5")
@@ -285,6 +290,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("6")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("6")
@@ -315,6 +321,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("7")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("7")
@@ -345,6 +352,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("8")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("8")
@@ -375,6 +383,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("9")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("9")
@@ -405,6 +414,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                     et_6!!.setText("0")
                                     MpinVerification(et_1!!.getText().toString()+et_2!!.getText().toString()+et_3!!.getText().toString() +
                                             et_4!!.getText().toString()+et_5!!.getText().toString()+et_6!!.getText().toString())
+                                    clearAll()
                                 }
                                 else {
                                     et_5!!.setText("0")
@@ -529,8 +539,10 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun MpinVerification(Mpin:String) {
+        Log.v("sdfsdfdsfdf33","called mpin")
         var cMpin = 0
-        strMPIN = et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
+        strMPIN = Mpin
+//            et_1!!.text.toString()+et_2!!.text.toString()+et_3!!.text.toString()+et_4!!.text.toString()+et_5!!.text.toString()+et_6!!.text.toString()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -544,16 +556,19 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                     Observer { serviceSetterGetter ->
                         Log.e("TAG","message   :   183910   "+serviceSetterGetter.message)
                        val msg = serviceSetterGetter.message
-
                         if (msg!!.length > 0) {
+                            if (cMpin == 0) {
+                                Log.v("dsfsdfdsddddd", "in1")
+                                cMpin++
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
 
                                 val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss a")
                                 val currentDate = sdf.format(Date())
-                                Log.e("currentDate","503   "+currentDate)
+                                Log.e("currentDate", "503   " + currentDate)
 
-                                val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
+                                val LOGIN_DATETIMESP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
                                 val LOGIN_DATETIMEEditer = LOGIN_DATETIMESP.edit()
                                 LOGIN_DATETIMEEditer.putString("LOGIN_DATETIME", currentDate)
                                 LOGIN_DATETIMEEditer.commit()
@@ -609,47 +624,68 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 EmailEditer.putString("Email", jobj.getString("Email"))
                                 EmailEditer.commit()
 
-                                val UserCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF36, 0)
+                                val UserCodeSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF36, 0)
                                 val UserCodeEditer = UserCodeSP.edit()
                                 UserCodeEditer.putString("UserCode", jobj.getString("UserCode"))
                                 UserCodeEditer.commit()
 
-                                val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
+                                val FK_BranchSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
                                 val FK_BranchEditer = FK_BranchSP.edit()
                                 FK_BranchEditer.putString("FK_Branch", jobj.getString("FK_Branch"))
                                 FK_BranchEditer.commit()
 
-                                val FK_BranchTypeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF38, 0)
+                                val FK_BranchTypeSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF38, 0)
                                 val FK_BranchTypeEditer = FK_BranchTypeSP.edit()
-                                FK_BranchTypeEditer.putString("FK_BranchType", jobj.getString("FK_BranchType"))
+                                FK_BranchTypeEditer.putString(
+                                    "FK_BranchType",
+                                    jobj.getString("FK_BranchType")
+                                )
                                 FK_BranchTypeEditer.commit()
 
-                                val FK_CompanySP = applicationContext.getSharedPreferences(Config.SHARED_PREF39, 0)
+                                val FK_CompanySP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF39, 0)
                                 val FK_CompanyEditer = FK_CompanySP.edit()
-                                FK_CompanyEditer.putString("FK_Company", jobj.getString("FK_Company"))
+                                FK_CompanyEditer.putString(
+                                    "FK_Company",
+                                    jobj.getString("FK_Company")
+                                )
                                 FK_CompanyEditer.commit()
 
-                                val FK_BranchCodeUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF40, 0)
+                                val FK_BranchCodeUserSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF40, 0)
                                 val FK_BranchCodeUserEditer = FK_BranchCodeUserSP.edit()
-                                FK_BranchCodeUserEditer.putString("FK_BranchCodeUser", jobj.getString("FK_BranchCodeUser"))
+                                FK_BranchCodeUserEditer.putString(
+                                    "FK_BranchCodeUser",
+                                    jobj.getString("FK_BranchCodeUser")
+                                )
                                 FK_BranchCodeUserEditer.commit()
 
-                                val FK_UserRoleSP = applicationContext.getSharedPreferences(Config.SHARED_PREF41, 0)
+                                val FK_UserRoleSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF41, 0)
                                 val FK_UserRoleEditer = FK_UserRoleSP.edit()
-                                FK_UserRoleEditer.putString("FK_UserRole", jobj.getString("FK_UserRole"))
+                                FK_UserRoleEditer.putString(
+                                    "FK_UserRole",
+                                    jobj.getString("FK_UserRole")
+                                )
                                 FK_UserRoleEditer.commit()
 
-                                val UserRoleSP = applicationContext.getSharedPreferences(Config.SHARED_PREF42, 0)
+                                val UserRoleSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF42, 0)
                                 val UserRoleEditer = UserRoleSP.edit()
                                 UserRoleEditer.putString("UserRole", jobj.getString("UserRole"))
                                 UserRoleEditer.commit()
 
-                                val IsAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF43, 0)
+                                val IsAdminSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF43, 0)
                                 val IsAdminEditer = IsAdminSP.edit()
                                 IsAdminEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
                                 IsAdminEditer.commit()
 
-                                val ID_UserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF44, 0)
+                                val ID_UserSP =
+                                    applicationContext.getSharedPreferences(Config.SHARED_PREF44, 0)
                                 val ID_UserEditer = ID_UserSP.edit()
                                 ID_UserEditer.putString("ID_User", jobj.getString("ID_User"))
                                 ID_UserEditer.commit()
@@ -671,6 +707,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 alertDialog.show()
                                 clearAll()
                             }
+                        }
                         } else {
 //                            Toast.makeText(
 //                                applicationContext,
