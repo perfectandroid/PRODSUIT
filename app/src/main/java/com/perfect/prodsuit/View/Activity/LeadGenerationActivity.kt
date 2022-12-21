@@ -608,6 +608,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadby!!.setText("")
         txtMediatype!!.setText("")
 
+        txtleadthrough!!.visibility = View.GONE
+        txtSubMedia!!.visibility = View.GONE
+
         custDetailMode = "1"
         strWhatsAppNo = ""
 

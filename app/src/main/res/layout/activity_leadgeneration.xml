@@ -727,6 +727,7 @@
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
+                                                    android:maxLength="15"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
 
@@ -744,6 +745,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="0dp"
                                                     android:padding="7dp"
+                                                    android:maxLength="15"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
