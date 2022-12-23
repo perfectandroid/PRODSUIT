@@ -13,9 +13,7 @@ import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.os.Looper
@@ -26,6 +24,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -49,6 +48,8 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
     val TAG : String = "FollowUpActivity"
@@ -120,10 +121,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var recyLeadby: RecyclerView? = null
     lateinit var leadBySort : JSONArray
 
-//    lateinit var callStatusViewModel: CallStatusViewModel
-//    lateinit var callStatusArrayList : JSONArray
-//    var dialogCallStatus : Dialog? = null
-//    var recyCallStatus: RecyclerView? = null
+    lateinit var callStatusViewModel: CallStatusViewModel
+    lateinit var callStatusArrayList : JSONArray
+    var dialogCallStatus : Dialog? = null
+    var recyCallStatus: RecyclerView? = null
 
     lateinit var productStatusViewModel: ProductStatusViewModel
     lateinit var prodStatusArrayList : JSONArray
@@ -163,6 +164,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var ID_LeadGenerate : String?= ""
     var AssignedToID : String?= ""
     var AssignedTo : String?= ""
+    var ActionModeIntent : String?= ""
 
 
     var ID_ActionType : String?= ""
@@ -188,6 +190,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var strAcknowledgement:String?="0"
     var strSiteVisit:String?="0"
     var strNotice:String?="0"
+    var strFollowUpDate = ""
+    var strFollowUpTime = ""
+    var strCustomerRemark = ""
+    var strEmployeeRemark = ""
+    var strNextFollowUpDate = ""
+
 
 
 
@@ -222,7 +230,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         context = this@FollowUpActivity
 
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
-     //   callStatusViewModel = ViewModelProvider(this).get(CallStatusViewModel::class.java)
+        callStatusViewModel = ViewModelProvider(this).get(CallStatusViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         employeeAllViewModel = ViewModelProvider(this).get(EmployeeAllViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
@@ -235,6 +243,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         updateLeadManagementViewModel = ViewModelProvider(this).get(UpdateLeadManagementViewModel::class.java)
 
         ActionMode = intent.getStringExtra("ActionMode")
+        ActionModeIntent = intent.getStringExtra("ActionMode")
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")
         ID_LeadGenerate = intent.getStringExtra("ID_LeadGenerate")
         AssignedToID = intent.getStringExtra("FK_Employee")
@@ -248,11 +257,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //        val currentDate = sdf.format(Date())
 //        tie_Date!!.setText(currentDate)
 //        tie_NextFollowupDate!!.setText(currentDate)
-        Log.e(TAG,"ActionMode  8141    "+ActionMode)
-        if (ActionMode.equals("1") || ActionMode.equals("2")){
-            tie_ActionType!!.isEnabled = false
-            getFollowupType()
-        }
+
         setDefaultFollowupBy()
         getDefaultValueSettings()
         getCurrentDateNTime()
@@ -309,7 +314,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_CallTime!!.setText(currentTime1)
 
         tie_Date!!.setText(currentDate1)
-        tie_NextFollowupDate!!.setText(currentDate1)
+     //   tie_NextFollowupDate!!.setText(currentDate1)
+        tie_NextFollowupDate!!.setText("")
 
     }
 
@@ -323,6 +329,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         ID_Employee = AssignedToID
         tie_FollowupBy!!.setText(AssignedTo)
+        ActionMode = ActionModeIntent
+        Log.e(TAG,"ActionMode  8141    "+ActionMode)
+        if (ActionMode.equals("1") || ActionMode.equals("2")){
+            tie_ActionType!!.isEnabled = false
+            getFollowupType()
+        }
 
     }
 
@@ -484,15 +496,18 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //            }
 
             R.id.tie_CallStatus->{
-
-            //    getCallStatus()
+                Config.disableClick(v)
+                countCallStatus = 0
+                getCallStatus()
             }
 
 
             R.id.tie_Latitude->{
+                Config.disableClick(v)
                 getLastLocation()
             }
             R.id.tie_Longitude->{
+                Config.disableClick(v)
                 getLastLocation()
             }
 
@@ -527,6 +542,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             R.id.btnReset->{
 
+                Config.disableClick(v)
                 if (ActionMode.equals("1") || ActionMode.equals("2")){
                     clearData("0")
                 }else{
@@ -537,6 +553,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             R.id.btnSubmit->{
 
+                Config.disableClick(v)
                 ValidateData(v)
             }
 
@@ -546,165 +563,165 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
     }
 
-//    private fun getCallStatus() {
-//
-//        try {
-//            when (Config.ConnectivityUtils.isConnected(this)) {
-//                true -> {
-//                    progressDialog = ProgressDialog(context, R.style.Progress)
-//                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                    progressDialog!!.setCancelable(false)
-//                    progressDialog!!.setIndeterminate(true)
-//                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                    progressDialog!!.show()
-//
-//                    callStatusViewModel.getLeadBy(this)!!.observe(
-//                        this,
-//                        Observer { serviceSetterGetter ->
-//                            val msg = serviceSetterGetter.message
-//                            if (msg!!.length > 0) {
-//                                    val jObject = JSONObject(msg)
-//                                    Log.e(TAG,"msg   228   "+msg.length)
-//                                    Log.e(TAG,"msg   228   "+msg)
-//                                    if (jObject.getString("StatusCode") == "0") {
-//
-//                                        val jobjt = jObject.getJSONObject("StatusDetailsList")
-//                                        callStatusArrayList = jobjt.getJSONArray("StatusList")
-//                                        if (callStatusArrayList.length()>0){
-//                                            if (countCallStatus == 0){
-//                                                countCallStatus++
-//                                             //   leadByPopup(leadByArrayList)
-//
-//                                             //   callStatusPopup(callStatusArrayList)
-//                                            }
-//
-//                                        }
-//
-//                                    } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this@FollowUpActivity,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
-//                                    }
-//
-//
-//
-//                            } else {
-////                            Toast.makeText(
-////                                applicationContext,
-////                                "Some Technical Issues.",
-////                                Toast.LENGTH_LONG
-////                            ).show()
-//                            }
-//                        })
-//                    progressDialog!!.dismiss()
-//                }
-//                false -> {
-//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                        .show()
-//                }
-//
-//            }
-//
-//
-//
-////            val builder = android.app.AlertDialog.Builder(this)
-////            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-////            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
-////            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
-////            builder.setView(layout)
-////            val alertDialog = builder.create()
-////            val listItem = resources.getStringArray(R.array.callstatus)
-////            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
-////            )
-////            lvCallStatus.setAdapter(adapter)
-////            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
-////                // TODO Auto-generated method stub
-////                val value = adapter.getItem(position)
-////                tie_CallStatus!!.setText(value)
-////                if (position == 0) {
-////                    strCallStatus = "1"
-////                }
-////                if (position == 1) {
-////                    strCallStatus = "2"
-////                }
-////                if (position == 2) {
-////                    strCallStatus = "3"
-////                }
-//////                if (position == 2) {
-//////                    FollowUpActivity.strRiskType = "3"
-//////                }
-////                alertDialog.dismiss()
-////            })
-////            alertDialog.show()
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//    }
+    private fun getCallStatus() {
 
-//    private fun callStatusPopup(callStatusArrayList: JSONArray) {
-//
-//        try {
-//
-//            dialogCallStatus = Dialog(this)
-//            dialogCallStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialogCallStatus!! .setContentView(R.layout.call_status_popup)
-//            dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-//            recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
-//        //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
-//
-//
-//
-////            val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
-////            recyCallStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//////            recyCustomer!!.setHasFixedSize(true)
-//////            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
-////            val adapter = CallStatusAdapter(this@FollowUpActivity, callStatusArrayList)
-////            recyCallStatus!!.adapter = adapter
-////            adapter.setClickListener(this@FollowUpActivity)
-//
-////            etsearch!!.addTextChangedListener(object : TextWatcher {
-////                override fun afterTextChanged(p0: Editable?) {
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+
+                    callStatusViewModel.getCallStatus(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   228   "+msg.length)
+                                    Log.e(TAG,"msg   228   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                        callStatusArrayList = jobjt.getJSONArray("StatusList")
+                                        if (callStatusArrayList.length()>0){
+                                            if (countCallStatus == 0){
+                                                countCallStatus++
+                                             //   leadByPopup(leadByArrayList)
+
+                                                callStatusPopups(callStatusArrayList)
+                                            }
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+            }
+
+
+
+//            val builder = android.app.AlertDialog.Builder(this)
+//            val inflater1 = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            val layout = inflater1.inflate(R.layout.callstatus_popup, null)
+//            val lvCallStatus  = layout.findViewById<ListView>(R.id.lvCallStatus)
+//            builder.setView(layout)
+//            val alertDialog = builder.create()
+//            val listItem = resources.getStringArray(R.array.callstatus)
+//            val adapter = ArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, listItem
+//            )
+//            lvCallStatus.setAdapter(adapter)
+//            lvCallStatus.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
+//                // TODO Auto-generated method stub
+//                val value = adapter.getItem(position)
+//                tie_CallStatus!!.setText(value)
+//                if (position == 0) {
+//                    strCallStatus = "1"
+//                }
+//                if (position == 1) {
+//                    strCallStatus = "2"
+//                }
+//                if (position == 2) {
+//                    strCallStatus = "3"
+//                }
+////                if (position == 2) {
+////                    FollowUpActivity.strRiskType = "3"
 ////                }
-////
-////                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-////                }
-////
-////                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-////
-////                    //  list_view!!.setVisibility(View.VISIBLE)
-////                    val textlength = etsearch!!.text.length
-////                    leadBySort = JSONArray()
-////
-////                    for (k in 0 until leadByArrayList.length()) {
-////                        val jsonObject = leadByArrayList.getJSONObject(k)
-////                        if (textlength <= jsonObject.getString("Name").length) {
-////                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-////                                leadBySort.put(jsonObject)
-////                            }
-////
-////                        }
-////                    }
-////
-////                    Log.e(TAG,"leadBySort               7103    "+leadBySort)
-////                    val adapter = LeadByAdapter(this@FollowUpActivity, leadBySort)
-////                    recyLeadby!!.adapter = adapter
-////                    adapter.setClickListener(this@FollowUpActivity)
-////                }
-////            })
+//                alertDialog.dismiss()
+//            })
+//            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun callStatusPopups(callStatusArrayList: JSONArray) {
+
+        try {
+
+            dialogCallStatus = Dialog(this)
+            dialogCallStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCallStatus!! .setContentView(R.layout.call_status_popup)
+            dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
+        //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
+
+
+
+            val lLayout = GridLayoutManager(this@FollowUpActivity, 1)
+            recyCallStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+            val adapter = CallStatusAdapter(this@FollowUpActivity, callStatusArrayList)
+            recyCallStatus!!.adapter = adapter
+            adapter.setClickListener(this@FollowUpActivity)
+
+//            etsearch!!.addTextChangedListener(object : TextWatcher {
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
 //
-//            dialogCallStatus!!.show()
-//            dialogCallStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//    }
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                    //  list_view!!.setVisibility(View.VISIBLE)
+//                    val textlength = etsearch!!.text.length
+//                    leadBySort = JSONArray()
+//
+//                    for (k in 0 until leadByArrayList.length()) {
+//                        val jsonObject = leadByArrayList.getJSONObject(k)
+//                        if (textlength <= jsonObject.getString("Name").length) {
+//                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+//                                leadBySort.put(jsonObject)
+//                            }
+//
+//                        }
+//                    }
+//
+//                    Log.e(TAG,"leadBySort               7103    "+leadBySort)
+//                    val adapter = LeadByAdapter(this@FollowUpActivity, leadBySort)
+//                    recyLeadby!!.adapter = adapter
+//                    adapter.setClickListener(this@FollowUpActivity)
+//                }
+//            })
+
+            dialogCallStatus!!.show()
+            dialogCallStatus!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 
 
@@ -1047,8 +1064,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                         if (followUpTypeArrayList.length()>0){
 
                                             Log.e(TAG,"8142    "+followUpTypeArrayList)
+                                            Log.e(TAG,"81422    "+ActionMode)
 
-                                            if (ActionMode!!.equals("1") || ActionMode!!.equals("2")){
+                                            if (ActionModeIntent!!.equals("1") || ActionModeIntent!!.equals("2")){
                                                 for (i in 0 until followUpTypeArrayList.length()) {
                                                     val jsonObject = followUpTypeArrayList.getJSONObject(i)
                                                     Log.e(TAG,"8143    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
@@ -1060,6 +1078,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                             Log.e(TAG,"81432    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
                                                             ID_ActionType = jsonObject.getString("ID_ActionType")
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+                                                            ActionMode =  jsonObject.getString("ActionMode")
                                                             til_CallStatus!!.visibility = View.VISIBLE
                                                             til_CallDuration!!.visibility = View.VISIBLE
                                                             ll_location!!.visibility = View.GONE
@@ -1070,6 +1089,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                             Log.e(TAG,"81434    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
                                                             ID_ActionType = jsonObject.getString("ID_ActionType")
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+                                                            ActionMode =  jsonObject.getString("ActionMode")
                                                             til_CallStatus!!.visibility = View.GONE
                                                             til_CallDuration!!.visibility = View.GONE
                                                             ll_location!!.visibility = View.VISIBLE
@@ -1734,6 +1754,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1.setMinDate(System.currentTimeMillis());
 
         txtCancel.setOnClickListener {
             dialog.dismiss()
@@ -2196,11 +2217,27 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //            val jsonObject = followUpTypeArrayList.getJSONObject(position)
             val jsonObject = followUpTypeSort.getJSONObject(position)
             Log.e(TAG,"ID_ActionType   "+jsonObject.getString("ID_ActionType"))
+
             Log.e(TAG,"ActiontypeFN   "+ActiontypeFN)
+            Log.e(TAG,"ActionMode   "+jsonObject.getString("ActionMode"))
 
             if (ActiontypeFN == 0 ){
                 ID_ActionType = jsonObject.getString("ID_ActionType")
                 tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
+                ActionMode =  jsonObject.getString("ActionMode")
+
+                strCallStatus = ""
+                strCallDuration = ""
+                tie_CallStatus!!.setText("")
+                tie_CallDuration!!.setText("")
+
+                tie_Longitude!!.setText("")
+                tie_Latitude!!.setText("")
+
+                image1 = ""
+                image2 = ""
+                imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
+                imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
 
                 if (jsonObject.getString("ActionMode").equals("1")){
 
@@ -2240,7 +2277,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
 //                imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
 
-                clearData("0")
+          //      clearData("0")
 
 
 
@@ -2281,6 +2318,19 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         }
 
+        if (data.equals("callStatus")){
+            dialogCallStatus!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = callStatusArrayList.getJSONObject(position)
+
+            Log.e(TAG,"jsonObject   "+jsonObject)
+            strCallStatus = jsonObject.getString("ID_Status")
+            tie_CallStatus!!.setText(jsonObject.getString("StatusName"))
+
+
+
+        }
+
 
 
         if (data.equals("prodstatus")){
@@ -2291,6 +2341,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             ID_Status = jsonObject.getString("ID_Status")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
             til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
+
+            if (ID_Status.equals("1")){
+                (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = false
+            }else{
+                (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = true
+            }
         }
 
         if (data.equals("followupaction")){
@@ -2414,17 +2470,41 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     private fun ValidateData(v: View) {
 
+
         val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
         val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
+        val inputTimeFormat = SimpleDateFormat("h:mm a")
+        val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
+
         val dateFollowUp = inputFormat.parse(tie_Date!!.text.toString())
-        val strFollowUpDate = outputFormat.format(dateFollowUp)
-        val dateNextFollowUp = inputFormat.parse(tie_NextFollowupDate!!.text.toString())
-        val strNextFollowUpDate = outputFormat.format(dateNextFollowUp)
+        strFollowUpDate = outputFormat.format(dateFollowUp)
+        Log.e(TAG,"str    "+tie_CallTime!!.text.toString())
+        Log.e(TAG,"ActionMode   2465   "+ActionMode)
+
+        try {
+            var date: Date? = null
+            var str: String? = null
+            date = inputTimeFormat.parse(tie_CallTime!!.text.toString())
+            strFollowUpTime = outputTimeFormat.format(date)
+            Log.e(TAG,"str   2481   "+str)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"str  2481  "+e.toString())
+        }
 
 
-        val strCustomerRemark = tie_CustomerRemark!!.text.toString()
-        val strEmployeeRemark = tie_EmployeeRemarks!!.text.toString()
+        strNextFollowUpDate = ""
+        strCallDuration = ""
+        if (!tie_NextFollowupDate!!.text.toString().equals("")){
+            val dateNextFollowUp = inputFormat.parse(tie_NextFollowupDate!!.text.toString())
+            strNextFollowUpDate = outputFormat.format(dateNextFollowUp)
+        }
+
+
+
+        strCustomerRemark = tie_CustomerRemark!!.text.toString()
+        strEmployeeRemark = tie_EmployeeRemarks!!.text.toString()
 
 
         if (ID_ActionType.equals("")){
@@ -2441,41 +2521,61 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         else{
 
 
-            Log.e(TAG,"FOLLOWUP  9941 "
-                    +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
-                    +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
-                    +"\n ID_ActionType          :  "+ID_ActionType
-                    +"\n ID_Employee            :  "+ID_Employee
-                    +"\n ID_Status              :  "+ID_Status
-                    +"\n strFollowUpDate        :  "+strFollowUpDate
-                    +"\n strCustomerRemark      :  "+strCustomerRemark
-                    +"\n strEmployeeRemark      :  "+strEmployeeRemark)
+//            Log.e(TAG,"FOLLOWUP  9941 "
+//                    +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
+//                    +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
+//                    +"\n ID_ActionType          :  "+ID_ActionType
+//                    +"\n ID_Employee            :  "+ID_Employee
+//                    +"\n ID_Status              :  "+ID_Status
+//                    +"\n strFollowUpDate        :  "+strFollowUpDate
+//                    +"\n strFollowUpTime        :  "+strFollowUpTime
+//                    +"\n strCallStatus          :  "+strCallStatus
+//                    +"\n strCallDuration        :  "+strCallDuration
+//                    +"\n strCustomerRemark      :  "+strCustomerRemark
+//                    +"\n strEmployeeRemark      :  "+strEmployeeRemark)
 
 
-            Log.e(TAG,"NEXTACTION  9942 "
-                    +"\n ID_NextAction         :  "+ID_NextAction
-                    +"\n ID_NextActionType     :  "+ID_NextActionType
-                    +"\n strNextFollowUpDate   :  "+strNextFollowUpDate
-                    +"\n ID_Priority           :  "+ID_Priority
-                    +"\n ID_Department         :  "+ID_Department
-                    +"\n ID_NextEmployee       :  "+ID_NextEmployee)
 
-            strCallDuration = tie_CallDuration!!.text.toString()
 
-            if (ID_ActionType.equals("1")){
+           val strCallDur = tie_CallDuration!!.text.toString()
+
+            if (ActionMode.equals("1")){
 
                 if (strCallStatus.equals("")){
                     Config.snackBars(context,v,"Select Call Status")
-                }else if (strCallDuration.equals("")){
+                }else if (strCallDur.equals("")){
                     Config.snackBars(context,v,"Enter Call Duration")
                 }
                 else{
-                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
-                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+                  //  val millis: Long = 35555
+//                    val millis: Long = strCallDur.toLong()
+//                    strCallDuration = java.lang.String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+//                        TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+//                        TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+//                    )
+
+//                    val Second: Long = strCallDur.toLong()
+//                    strCallDuration = java.lang.String.format("%02d:%02d:%02d", TimeUnit.SECONDS.toHours(Second),
+//                        TimeUnit.SECONDS.toMinutes(Second) - TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(Second)),
+//                        TimeUnit.SECONDS.toSeconds(Second) - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(Second))
+//                    )
+//
+//                    Log.e(TAG,"2547 strCallDuration   "+strCallDuration)
+
+                    // val seconds = 3661
+                    val seconds = strCallDur.toInt()
+                    val duration: String = convertSeconds(seconds)
+                    strCallDuration = duration
+                    Log.e(TAG,"duration   2463   "+duration)
+
+
+                    saveUpdate()
+//                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+//                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+//                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
                 }
 
-            }else if (ID_ActionType.equals("2")){
+            }else if (ActionMode.equals("2")){
 
                 strLongitude =tie_Longitude!!.text.toString();
                 strLatitude=tie_Latitude!!.text.toString();
@@ -2519,15 +2619,19 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                         }
                     }
 
-                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
-                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+                    saveUpdate()
+
+//                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+//                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+//                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
                 }
             }
             else{
-                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
-                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+//                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+//                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+//                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+
+                saveUpdate()
             }
 
 
@@ -2536,10 +2640,71 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
     }
 
+    private fun convertSeconds(seconds: Int): String {
+//        val h = seconds / 3600
+//        val m = seconds % 3600 / 60
+//        val s = seconds % 60
+//        val sh = if (h > 0) "$h h" else ""
+//        val sm =
+//            (if (m < 10 && m > 0 && h > 0) "0" else "") + if (m > 0) if (h > 0 && s == 0) m.toString() else "$m min" else ""
+//        val ss =
+//            if (s == 0 && (h > 0 || m > 0)) "" else (if (s < 10 && (h > 0 || m > 0)) "0" else "") + s.toString() + " " + "sec"
+//        return sh + (if (h > 0) " " else "") + sm + (if (m > 0) " " else "") + ss
+
+        val hours = seconds / 3600;
+        val minutes = (seconds % 3600) / 60;
+        val second = seconds % 60;
+
+        return twoDigitString(hours) + " : " + twoDigitString(minutes) + " : " + twoDigitString(second)
+    }
+    private fun twoDigitString(number: Int): String? {
+        if (number == 0) {
+            return "00"
+        }
+        return if (number / 10 == 0) {
+            "0$number"
+        } else number.toString()
+    }
+
+    private fun saveUpdate() {
+
+        Log.e(TAG,"FOLLOWUP  25981 "
+                +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
+                +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
+                +"\n ID_ActionType          :  "+ID_ActionType
+                +"\n ID_Employee            :  "+ID_Employee
+                +"\n ID_Status              :  "+ID_Status
+                +"\n strFollowUpDate        :  "+strFollowUpDate
+                +"\n strFollowUpTime        :  "+strFollowUpTime
+                +"\n strCallStatus          :  "+strCallStatus
+                +"\n strCallDuration        :  "+strCallDuration
+                +"\n strCustomerRemark      :  "+strCustomerRemark
+                +"\n strEmployeeRemark      :  "+strEmployeeRemark
+
+                +"\n NEXT ACTION                :  "
+                +"\n ID_NextAction              :  "+ID_NextAction
+                +"\n ID_NextActionType          :  "+ID_NextActionType
+                +"\n val strNextFollowUpDate    :  "+strNextFollowUpDate
+                +"\n ID_Priority                :  "+ID_Priority
+                +"\n ID_Department              :  "+ID_Department
+                +"\n ID_NextEmployee            :  "+ID_NextEmployee)
+
+
+
+        saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
+            strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+            strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+
+
+
+
+    }
+
     private fun saveUpdateLeadManagement(ID_LeadGenerateProduct: String?, ID_LeadGenerate: String?, ID_ActionType: String?, ID_Employee: String?,
-        ID_Status: String?, strFollowUpDate: String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
+        ID_Status: String?, strFollowUpDate: String,strFollowUpTime : String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
         strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
                                          strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
+
 
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2551,7 +2716,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 updateLeadManagementViewModel.getUpdateLeadManagement(this,ID_LeadGenerateProduct!!,ID_LeadGenerate!!,ID_ActionType!!,ID_Employee!!,ID_Status!!,strFollowUpDate,
-                    strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!,
+                    strFollowUpTime, strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!,
                     strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->

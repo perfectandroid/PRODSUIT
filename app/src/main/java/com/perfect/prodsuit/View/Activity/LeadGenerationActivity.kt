@@ -607,6 +607,9 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         txtleadby!!.setText("")
         txtMediatype!!.setText("")
 
+        txtleadthrough!!.visibility = View.GONE
+        txtSubMedia!!.visibility = View.GONE
+
         custDetailMode = "1"
         strWhatsAppNo = ""
 
@@ -4910,6 +4913,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1.setMinDate(System.currentTimeMillis());
 
         txtCancel.setOnClickListener {
             dialog.dismiss()

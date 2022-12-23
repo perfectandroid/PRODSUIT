@@ -516,6 +516,7 @@
                                                         android:paddingLeft="10dp"
                                                         android:paddingTop="8dp"
                                                         android:paddingBottom="8dp"
+                                                        android:maxLength="6"
                                                         android:drawableLeft="@drawable/svg_fd_callduration"
                                                         android:drawablePadding="5dp"
                                                         android:drawableTint="@color/textColor"

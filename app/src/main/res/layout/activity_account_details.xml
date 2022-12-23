@@ -146,8 +146,8 @@
                                                 android:layout_height="80dp"
                                                 android:padding="15dp"
                                                 android:scaleType="fitXY"
-                                                android:tint="@color/white"
-                                                android:src="@drawable/placeorder"/>
+                                                android:src="@drawable/placeorder"
+                                                app:tint="@color/white" />
                                         </LinearLayout>
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -337,7 +337,9 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
                                             android:gravity="center"
-                                            android:layout_gravity="center"                                android:orientation="vertical">
+                                            android:layout_gravity="center"
+                                            android:orientation="vertical"
+                                            android:visibility="gone">
 
                                             <RelativeLayout
                                                 android:layout_width="wrap_content"
@@ -980,7 +982,7 @@
                             android:text="Next Action"
                             android:textSize="18dp"
                             android:textStyle="bold"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/fabAddNextAction"
@@ -994,9 +996,9 @@
                             android:backgroundTint="@color/color_fab1"
                             android:scaleType="center"
                             android:tint="@color/black"
+                            android:visibility="gone"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/white_nextaction"
-                            android:visibility="gone"/>
+                            app:srcCompat="@drawable/white_nextaction" />
 
 
                         <TextView

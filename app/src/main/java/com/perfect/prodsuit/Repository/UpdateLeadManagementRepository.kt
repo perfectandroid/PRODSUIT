@@ -25,37 +25,41 @@ object UpdateLeadManagementRepository {
     val TAG : String = "UpdateLeadManagementRepository"
     val updateLeadManagementSetterGetter = MutableLiveData<UpdateLeadManagementModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,
+    fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,strFollowUpTime : String,
                            strCustomerRemark :String,strEmployeeRemark :String,ID_NextAction :String,ID_NextActionType :String,strNextFollowUpDate :String,ID_Priority :String,
                            ID_Department :String,ID_NextEmployee :String, strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?): MutableLiveData<UpdateLeadManagementModel> {
-        getUpdateLeadManagement(context,ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+        getUpdateLeadManagement(context,ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
             strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
         return updateLeadManagementSetterGetter
     }
 
-    private fun getUpdateLeadManagement(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,
+    private fun getUpdateLeadManagement(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,strFollowUpTime : String,
                                         strCustomerRemark :String,strEmployeeRemark :String,ID_NextAction :String,ID_NextActionType :String,strNextFollowUpDate :String,ID_Priority :String,
                                         ID_Department :String,ID_NextEmployee :String,strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
 
+        Log.e(TAG,"FOLLOWUP  25981 "
+                +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
+                +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
+                +"\n ID_ActionType          :  "+ID_ActionType
+                +"\n ID_Employee            :  "+ID_Employee
+                +"\n ID_Status              :  "+ID_Status
+                +"\n strFollowUpDate        :  "+strFollowUpDate
+           //     +"\n strFollowUpTime        :  "+strFollowUpTime
+                +"\n strCallStatus          :  "+strCallStatus
+                +"\n strCallDuration        :  "+strCallDuration
+                +"\n strCustomerRemark      :  "+strCustomerRemark
+                +"\n strEmployeeRemark      :  "+strEmployeeRemark
 
-//        Log.e(TAG,"FOLLOWUP  99431 "
-//                +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
-//                +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
-//                +"\n ID_ActionType          :  "+ID_ActionType
-//                +"\n ID_Employee            :  "+ID_Employee
-//                +"\n ID_Status              :  "+ID_Status
-//                +"\n strFollowUpDate        :  "+strFollowUpDate
-//                +"\n strCustomerRemark      :  "+strCustomerRemark
-//                +"\n strEmployeeRemark      :  "+strEmployeeRemark)
-//
-//
-//        Log.e(TAG,"NEXTACTION  99432 "
-//                +"\n ID_NextAction         :  "+ID_NextAction
-//                +"\n ID_NextActionType     :  "+ID_NextActionType
-//                +"\n strNextFollowUpDate   :  "+strNextFollowUpDate
-//                +"\n ID_Priority           :  "+ID_Priority
-//                +"\n ID_Department         :  "+ID_Department
-//                +"\n ID_NextEmployee       :  "+ID_NextEmployee)
+                +"\n NEXT ACTION                :  "
+                +"\n ID_NextAction              :  "+ID_NextAction
+                +"\n ID_NextActionType          :  "+ID_NextActionType
+                +"\n val strNextFollowUpDate    :  "+strNextFollowUpDate
+                +"\n ID_Priority                :  "+ID_Priority
+                +"\n ID_Department              :  "+ID_Department
+                +"\n ID_NextEmployee            :  "+ID_NextEmployee
+                +"\n ID_LeadGenerate            :  "+ID_LeadGenerate
+                +"\n ID_LeadGenerateProduct     :  "+ID_LeadGenerateProduct)
+
 
 
         try {
@@ -111,14 +115,23 @@ object UpdateLeadManagementRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-              //  requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("UserAction", ProdsuitApplication.encryptStart("1"))  // Save 1 Update 2
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart("ERP"))  // Default
 
-                requestObject1.put("FK_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
-                requestObject1.put("FK_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))  // Login
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))  // Login
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))  // Login
+
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
+                requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
+
                 requestObject1.put("LgActMode", ProdsuitApplication.encryptStart(ID_ActionType))
                 requestObject1.put("ID_FollowUpBy", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
@@ -133,7 +146,17 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
                 requestObject1.put("FK_ToEmployee", ProdsuitApplication.encryptStart(ID_NextEmployee))
 
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                requestObject1.put("LgFollowUpTime", ProdsuitApplication.encryptStart(strFollowUpTime))
+                requestObject1.put("LgFollowUpStatus", ProdsuitApplication.encryptStart(strCallStatus))
+                requestObject1.put("LgFollowupDuration", ProdsuitApplication.encryptStart(strCallDuration))
+                requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
+                requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitude))
+                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
+                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
+
+
+                Log.e(TAG,"requestObject1   1581   "+requestObject1)
+                Log.e(TAG,"UserCode   1582   "+UserCodeSP.getString("UserCode", null))
 
 
             } catch (e: Exception) {

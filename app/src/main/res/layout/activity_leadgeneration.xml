@@ -728,6 +728,7 @@
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
+                                                    android:maxLength="15"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
 
@@ -746,6 +747,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="0dp"
                                                     android:padding="7dp"
+                                                    android:maxLength="15"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
                                                     android:inputType="phone"
@@ -1332,7 +1334,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -1508,7 +1510,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
                                                 android:orientation="vertical"
-                                                android:visibility="gone">
+                                                android:visibility="visible">
 
                                                 <TextView
                                                     android:layout_width="match_parent"
