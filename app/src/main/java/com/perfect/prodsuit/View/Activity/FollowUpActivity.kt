@@ -542,6 +542,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             R.id.btnReset->{
 
+                Config.disableClick(v)
                 if (ActionMode.equals("1") || ActionMode.equals("2")){
                     clearData("0")
                 }else{
@@ -2340,6 +2341,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             ID_Status = jsonObject.getString("ID_Status")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
             til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
+
+            if (ID_Status.equals("1")){
+                (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = false
+            }else{
+                (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = true
+            }
         }
 
         if (data.equals("followupaction")){
