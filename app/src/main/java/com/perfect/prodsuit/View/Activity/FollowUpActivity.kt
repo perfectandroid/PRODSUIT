@@ -2487,9 +2487,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
 
 
+        strNextFollowUpDate = ""
         strCallDuration = ""
-        val dateNextFollowUp = inputFormat.parse(tie_NextFollowupDate!!.text.toString())
-        strNextFollowUpDate = outputFormat.format(dateNextFollowUp)
+        if (!tie_NextFollowupDate!!.text.toString().equals("")){
+            val dateNextFollowUp = inputFormat.parse(tie_NextFollowupDate!!.text.toString())
+            strNextFollowUpDate = outputFormat.format(dateNextFollowUp)
+        }
+
 
 
         strCustomerRemark = tie_CustomerRemark!!.text.toString()
