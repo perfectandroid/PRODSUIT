@@ -513,7 +513,7 @@
                                     android:layout_marginTop="1dp"
                                     android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -541,7 +541,7 @@
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 <!--                                            android:background="@drawable/etselect_bggrey"-->
 
 
@@ -722,6 +722,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
+                                                    android:importantForAutofill="no"
                                                     android:layout_marginTop="10dp"
                                                     android:padding="7dp"
                                                     android:textSize="15dp"
@@ -741,6 +742,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
                                                     android:layout_marginRight="10dp"
+                                                    android:importantForAutofill="no"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="0dp"
                                                     android:padding="7dp"
@@ -760,6 +762,7 @@
                                                     android:hint="Company/Contact Person"
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
+                                                    android:importantForAutofill="no"
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginBottom="0dp"
@@ -780,6 +783,7 @@
                                                     android:hint="Contact Email"
                                                     android:fontFamily="@font/myfont"
                                                     android:layout_marginLeft="10dp"
+                                                    android:importantForAutofill="no"
                                                     android:layout_marginRight="10dp"
                                                     android:layout_marginTop="10dp"
                                                     android:padding="7dp"

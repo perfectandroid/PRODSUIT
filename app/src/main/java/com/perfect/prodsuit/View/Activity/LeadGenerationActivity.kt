@@ -425,8 +425,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_leadgeneration)
-
-
+        window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
         context = this@LeadGenerationActivity
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
@@ -1598,7 +1597,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             }
 
             R.id.btnReset->{
-
+                Config.disableClick(v)
                 clearData()
 //                finish();
 //                startActivity(getIntent());
@@ -1859,6 +1858,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+                        Log.v("hkhkhkjjj","in")
                         if (msg!!.length > 0) {
 
                             val jObject = JSONObject(msg)
