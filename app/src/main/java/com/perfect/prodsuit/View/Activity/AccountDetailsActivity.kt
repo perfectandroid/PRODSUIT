@@ -731,7 +731,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 i.putExtra("FK_Employee",AssignedToID)
                 i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","0")
-                startActivity(i)
+                startActivityForResult(i,2)
+              //  startActivity(i)
 
             }
 
@@ -749,7 +750,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 i.putExtra("FK_Employee",AssignedToID)
                 i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","0")
-                startActivity(i)
+//                startActivity(i)
+                startActivityForResult(i,2)
 
             }
             R.id.fabAddNextAction->{
@@ -879,7 +881,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 i.putExtra("FK_Employee",AssignedToID)
                 i.putExtra("AssignedTo",AssignedTo)
                 i.putExtra("ActionMode","2")
-                startActivity(i)
+              //  startActivity(i)
+                startActivityForResult(i,2)
 
             }
             R.id.ll_msg->{
@@ -2582,6 +2585,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 Log.e(TAG,"rbIntimation")
                 messageType = "Intimation"
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        Log.e(TAG,"resultCode  2591   "+requestCode+"   "+resultCode)
+        if (resultCode == 2) {
+            onBackPressed()
         }
     }
 

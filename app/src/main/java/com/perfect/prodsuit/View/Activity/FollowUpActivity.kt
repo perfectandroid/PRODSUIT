@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -48,7 +49,6 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
@@ -180,6 +180,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var ActiontypeFN:Int = 0
     private var DateType:Int = 0
 
+    var isFuture = 0
     var strCallStatus:String?=""
     var strCallDuration:String?=""
     var strLongitude:String?=""
@@ -213,6 +214,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var employee1 = 0
     var countLeadBy = 0
     var countCallStatus = 0
+    var saveFollowupDet = 0
 
     private var tabLayout : TabLayout? = null
     private var card_followup : CardView? = null
@@ -392,7 +394,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
 
         tie_Status!!.setOnClickListener(this)
-     //   tie_Date!!.setOnClickListener(this)
+        tie_Date!!.setOnClickListener(this)
 
         tie_NextAction!!.setOnClickListener(this)
         tie_NextActionType!!.setOnClickListener(this)
@@ -421,6 +423,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
+                setResult(2)
                 finish()
             }
 
@@ -444,10 +447,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 prodstatus = 0
                 getStatus()
             }
-//            R.id.tie_Date->{
-//                DateType = 0
-//                openBottomSheet()
-//            }
+            R.id.tie_Date->{
+                DateType = 0
+                openBottomSheet()
+            }
             R.id.tie_NextAction->{
                 Config.disableClick(v)
                 followUpAction = 0
@@ -462,7 +465,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             R.id.tie_NextFollowupDate->{
 
                 DateType = 1
-                openBottomSheet()
+                openBottomSheet1()
             }
             R.id.tie_Priority->{
                 Config.disableClick(v)
@@ -552,7 +555,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
 
             R.id.btnSubmit->{
-
+                saveFollowupDet = 0
                 Config.disableClick(v)
                 ValidateData(v)
             }
@@ -1753,6 +1756,62 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker = view.findViewById<DatePicker>(R.id.date_Picker1)
+        if (isFuture == 1){
+            date_Picker.minDate = System.currentTimeMillis()
+        }else{
+            date_Picker.maxDate = System.currentTimeMillis()
+        }
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker!!.getDayOfMonth()
+                val mon: Int = date_Picker!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+
+                if (DateType == 0){
+                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
+
+
+
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun openBottomSheet1() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1.setMinDate(System.currentTimeMillis());
 
@@ -2339,10 +2398,18 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             val jsonObject = prodStatusSort.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
+            var IsEnable = jsonObject.getString("IsEnable")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
             til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
 
-            if (ID_Status.equals("1")){
+            if (ID_Status.equals("2")){
+                isFuture = 1
+            }
+            else{
+                isFuture = 0
+            }
+
+            if (IsEnable.equals("0")){
                 (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = false
             }else{
                 (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = true
@@ -2439,7 +2506,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_CallStatus!!.setText("")
         tie_CallDuration!!.setText("")
 
-
+        isFuture = 0  // 0 = back , 1 = future
         strCallStatus = ""
         strCallDuration=""
         strLongitude=""
@@ -2705,8 +2772,6 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
                                          strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
 
-
-
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -2722,63 +2787,61 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
                         try {
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
                                 if (msg!!.length > 0) {
-                                    val jObject = JSONObject(msg)
-                                    //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
                                     Log.e(TAG,"msg  1126     "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    val jObject = JSONObject(msg)
+                                    if (saveFollowupDet == 0){
+                                        saveFollowupDet++
+                                        if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("UpdateLeadManagement")
-                                        try {
+                                            val jobjt = jObject.getJSONObject("UpdateLeadManagement")
+                                            try {
 
-                                            val suceessDialog = Dialog(this)
-                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                            suceessDialog!!.setCancelable(false)
-                                            suceessDialog!! .setContentView(R.layout.success_popup)
-                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                                val suceessDialog = Dialog(this)
+                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                suceessDialog!!.setCancelable(false)
+                                                suceessDialog!! .setContentView(R.layout.success_popup)
+                                                suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
-                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
-                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
-                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
-                                            //LeadNumber
-                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                            tv_label!!.setText("LeadGenerate Action")
-                                            tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
+                                                val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                                val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+                                                val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                                val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                                //LeadNumber
+                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                                tv_label!!.setText("LeadGenerate Action")
+                                                tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
 
-                                            tv_succesok!!.setOnClickListener {
-                                                suceessDialog!!.dismiss()
-                                                onBackPressed()
+                                                tv_succesok!!.setOnClickListener {
+                                                    suceessDialog!!.dismiss()
+                                                    val intent = Intent()
+                                                    intent.putExtra("MESSAGE", message)
+                                                    setResult(2, intent)
+                                                    onBackPressed()
 
+                                                }
+
+                                                suceessDialog!!.show()
+                                                suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
                                             }
-
-                                            suceessDialog!!.show()
-                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@FollowUpActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@FollowUpActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
+
                                 }
-                            } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                            }
+
                         }catch (e : Exception){
                             Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
@@ -2793,5 +2856,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         }
 
     }
+
+    override fun onBackPressed() {
+        Log.e(TAG,"onBackPressed   2858   ")
+        super.onBackPressed()
+    }
+
 
 }

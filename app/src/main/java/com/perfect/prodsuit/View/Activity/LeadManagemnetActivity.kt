@@ -457,5 +457,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.e(TAG,"741  onRestart ")
+        getCounts()
+    }
+
 
 }

@@ -173,8 +173,10 @@ object UpdateLeadManagementRepository {
                     Response<String>
                 ) {
                     try {
+
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"response  1126     "+response.body())
                         val customer = ArrayList<UpdateLeadManagementModel>()
                         customer.add(UpdateLeadManagementModel(response.body()))
                         val msg = customer[0].message
@@ -197,4 +199,6 @@ object UpdateLeadManagementRepository {
         }
 
     }
+
+
 }
