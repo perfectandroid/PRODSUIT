@@ -810,7 +810,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         }
 
         txtMediatype!!.setOnClickListener(this)
-        txtDate!!.setOnClickListener(this)
+      //  txtDate!!.setOnClickListener(this)
         txtLocation!!.setOnClickListener(this)
 
         edtCountry!!.setOnClickListener(this)
@@ -4914,6 +4914,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1.setMinDate(System.currentTimeMillis());
+        date_Picker1.minDate = System.currentTimeMillis()
 
         txtCancel.setOnClickListener {
             dialog.dismiss()
@@ -6312,6 +6313,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
             val ll_prod_status            = dialogConfirmPop!! .findViewById(R.id.ll_prod_status) as LinearLayout
             val ll_prod_feedback            = dialogConfirmPop!! .findViewById(R.id.ll_prod_feedback) as LinearLayout
 
+            val ll_followup                 = dialogConfirmPop!! .findViewById(R.id.ll_followup) as LinearLayout
             val ll_followup_action          = dialogConfirmPop!! .findViewById(R.id.ll_followup_action) as LinearLayout
             val ll_followup_type            = dialogConfirmPop!! .findViewById(R.id.ll_followup_type) as LinearLayout
             val ll_followup_date            = dialogConfirmPop!! .findViewById(R.id.ll_followup_date) as LinearLayout
@@ -6492,6 +6494,7 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                 ll_followup_action!!.visibility = View.GONE
                 ll_followup_type!!.visibility = View.GONE
                 ll_followup_date!!.visibility = View.GONE
+                ll_employee!!.visibility = View.GONE
             }
 
 
@@ -6701,8 +6704,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
 
                                                 tv_succesok!!.setOnClickListener {
                                                     suceessDialog!!.dismiss()
-                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
-                                                    startActivity(i)
+//                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+//                                                    startActivity(i)
                                                     finish()
 
                                                 }
