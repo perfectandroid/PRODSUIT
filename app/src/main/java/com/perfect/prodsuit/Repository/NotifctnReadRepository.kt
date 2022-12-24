@@ -76,7 +76,7 @@ object NotifctnReadRepository {
                 requestObject1.put("ID_NotificationDetails", ProdsuitApplication.encryptStart(NotificationActivity.id))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1.toString())
+                Log.e(TAG,"requestObject1   791   "+requestObject1.toString())
 
             } catch (e: Exception) {
                 e.printStackTrace()
