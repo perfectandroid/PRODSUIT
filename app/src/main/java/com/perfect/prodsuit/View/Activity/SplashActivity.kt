@@ -48,11 +48,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
+
         splashresellerActivityViewModel = ViewModelProvider(this).get(
             SplashresellerActivityViewModel::class.java
         )
         maintanceMessageViewModel = ViewModelProvider(this).get(
             MaintanceMessageViewModel::class.java
+
+
         )
         val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
         val TestingMobileNopref = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
