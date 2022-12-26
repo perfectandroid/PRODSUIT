@@ -131,6 +131,8 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
     var recyMediaType: RecyclerView? = null
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
+    private var imgClose1: ImageView? = null
+    private var imgClose2: ImageView? = null
     private val GALLERY = 1
     private val CAMERA = 2
     private val PERMISSION_REQUEST_CODE = 200
@@ -775,8 +777,13 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
         lllocation!!.setOnClickListener(this)
         imgvupload1 = findViewById(R.id.imgv_upload1)
         imgvupload2 = findViewById(R.id.imgv_upload2)
+        imgClose1 = findViewById(R.id.imgClose1)
+        imgClose2 = findViewById(R.id.imgClose2)
+
         imgvupload1!!.setOnClickListener(this)
         imgvupload2!!.setOnClickListener(this)
+        imgClose1!!.setOnClickListener(this)
+        imgClose2!!.setOnClickListener(this)
         edtProdcategory!!.setOnClickListener(this)
         edtProdproduct!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
@@ -1075,6 +1082,33 @@ class LeadGenerationActivity : AppCompatActivity() , View.OnClickListener , Item
                     if (checkCamera()){} else{
                         requestPermission()
                     }
+                }
+            }
+
+            R.id.imgClose1->{
+                try
+                {
+                    image1 = ""
+                    encode1 = ""
+                    imgvupload1!!.setImageResource(R.drawable.lead_uploads)
+                }
+                catch(e:java.lang.Exception)
+                {
+
+                }
+            }
+            R.id.imgClose2->{
+                try
+                {
+
+                    image2 = ""
+                    encode2 = ""
+
+                    imgvupload2!!.setImageResource(R.drawable.lead_uploads)
+                }
+                catch(e:java.lang.Exception)
+                {
+
                 }
             }
 
