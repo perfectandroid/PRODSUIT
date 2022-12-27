@@ -36,7 +36,7 @@ class LeadDetailAdapter(internal var context: Context, internal var jsonArray: J
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtSino.text        = pos.toString()
-                holder.txtLeadName.text        = jsonObject!!.getString("EmpName")
+                holder.txtLeadName.text        = jsonObject!!.getString("TodoListLeadDetailsName")
 
                 holder.llLeadDetail!!.setTag(position)
                 holder.llLeadDetail!!.setOnClickListener(View.OnClickListener {

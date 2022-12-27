@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
@@ -118,6 +119,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var dialogleadDetail : Dialog? = null
     var recyleadDetail: RecyclerView? = null
 
+    var til_LeadValue: TextInputLayout? = null
     var tie_Branch: TextInputEditText? = null
     var tie_Employee: TextInputEditText? = null
     var tie_LeadDetails: TextInputEditText? = null
@@ -645,10 +647,10 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         if (data.equals("LeadDetail1")){
             dialogleadDetail!!.dismiss()
             val jsonObject = leadDetailSort.getJSONObject(position)
-            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
-            ID_Lead_Details = jsonObject.getString("ID_Employee")
-            tie_LeadDetails!!.setText(jsonObject.getString("EmpName"))
-         //   tie_LeadValue!!.setText(jsonObject.getString("EmpName"))
+            Log.e(TAG,"ID_TodoListLeadDetails   "+jsonObject.getString("ID_TodoListLeadDetails"))
+            ID_Lead_Details = jsonObject.getString("ID_TodoListLeadDetails")
+            tie_LeadDetails!!.setText(jsonObject.getString("TodoListLeadDetailsName"))
+            til_LeadValue!!.setHint(jsonObject.getString("TodoListLeadDetailsName"))
 
 
         }
@@ -834,8 +836,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             val layout1 = layoutInflater.inflate(R.layout.filter_popup, null)
 
             val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
+
             val txtCancel = layout1.findViewById(R.id.txtCancel) as TextView
             val txtSubmit = layout1.findViewById(R.id.txtSubmit) as TextView
+
+             til_LeadValue = layout1.findViewById(R.id.til_LeadValue) as TextInputLayout
              tie_Branch = layout1.findViewById(R.id.tie_Branch) as TextInputEditText
              tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
              tie_LeadDetails = layout1.findViewById(R.id.tie_LeadDetails) as TextInputEditText
@@ -853,6 +858,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             ID_Lead_Details = ""
             tie_LeadDetails!!.setText("")
             tie_LeadValue!!.setText("")
+            til_LeadValue!!.setHint("")
 
 
 
@@ -910,6 +916,25 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             txtCancel.setOnClickListener {
                 dialog.dismiss()
+            }
+
+            txtSubmit.setOnClickListener {
+
+                if (ID_Branch.equals("")){
+                    Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
+                  // Config.snackBars(context,it,"Select Branch")
+                }
+                else if (ID_Employee.equals("")){
+                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
+                   // Config.snackBars(context,it,"Select Employee")
+                }
+                else if (ID_Lead_Details.equals("")){
+                    Toast.makeText(applicationContext, "Select Lead Details", Toast.LENGTH_SHORT).show()
+                   // Config.snackBars(context,it,"Select Lead Details")
+                }
+                else{
+                    Log.e(TAG,"927  ")
+                }
             }
 
 
@@ -1209,8 +1234,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1224   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                        leadDetailArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        val jobjt = jObject.getJSONObject("TodoListLeadDetails")
+                                        leadDetailArrayList = jobjt.getJSONArray("TodoListLeadDetailsList")
                                         if (leadDetailArrayList.length()>0){
 
                                             Log.e(TAG,"leadDetailArrayList   1205    "+leadDetailArrayList)
@@ -1302,8 +1327,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
                     for (k in 0 until leadDetailArrayList.length()) {
                         val jsonObject = leadDetailArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("EmpName").length) {
-                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("TodoListLeadDetailsName").length) {
+                            if (jsonObject.getString("TodoListLeadDetailsName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 leadDetailSort.put(jsonObject)
                             }
 
