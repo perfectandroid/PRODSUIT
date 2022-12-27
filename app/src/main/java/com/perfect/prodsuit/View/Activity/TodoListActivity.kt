@@ -35,9 +35,11 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
+import com.perfect.prodsuit.View.Adapter.LeadDetailAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.BranchViewModel
 import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
+import com.perfect.prodsuit.Viewmodel.LeadDetailViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -109,6 +111,13 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var dialogEmployeeAll : Dialog? = null
     var recyEmployeeAll: RecyclerView? = null
 
+    var leadDetails = 0
+    lateinit var leadDetailViewModel: LeadDetailViewModel
+    lateinit var leadDetailArrayList : JSONArray
+    lateinit var leadDetailSort : JSONArray
+    private var dialogleadDetail : Dialog? = null
+    var recyleadDetail: RecyclerView? = null
+
     var tie_Branch: TextInputEditText? = null
     var tie_Employee: TextInputEditText? = null
     var tie_LeadDetails: TextInputEditText? = null
@@ -124,6 +133,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
+        leadDetailViewModel = ViewModelProvider(this).get(LeadDetailViewModel::class.java)
 
         setRegViews()
         if (getIntent().hasExtra("SubMode")) {
@@ -631,6 +641,17 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
 
         }
+
+        if (data.equals("LeadDetail1")){
+            dialogleadDetail!!.dismiss()
+            val jsonObject = leadDetailSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Lead_Details = jsonObject.getString("ID_Employee")
+            tie_LeadDetails!!.setText(jsonObject.getString("EmpName"))
+         //   tie_LeadValue!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
     }
 
 
@@ -880,6 +901,10 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             tie_LeadDetails!!.setOnClickListener(View.OnClickListener {
 
                 Log.e(TAG," 796   tie_LeadDetails")
+
+                Config.disableClick(it)
+                leadDetails = 0
+                getLeadDetails()
             })
 
 
@@ -1158,6 +1183,142 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             dialogEmployeeAll!!.show()
             dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getLeadDetails() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadDetailViewModel.getLeadDetail(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (leadDetails == 0){
+                                    leadDetails++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        leadDetailArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (leadDetailArrayList.length()>0){
+
+                                            Log.e(TAG,"leadDetailArrayList   1205    "+leadDetailArrayList)
+                                            leadDetailPopup(leadDetailArrayList)
+                                         //   employeeAllPopup(leadDetailArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun leadDetailPopup(leadDetailArrayList: JSONArray) {
+        try {
+
+            dialogleadDetail = Dialog(this)
+            dialogleadDetail!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogleadDetail!! .setContentView(R.layout.leaddetail_popup)
+            dialogleadDetail!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyleadDetail = dialogleadDetail!! .findViewById(R.id.recyleadDetail) as RecyclerView
+            val etsearch = dialogleadDetail!! .findViewById(R.id.etsearch) as EditText
+
+
+            leadDetailSort = JSONArray()
+            for (k in 0 until leadDetailArrayList.length()) {
+                val jsonObject = leadDetailArrayList.getJSONObject(k)
+                leadDetailSort.put(jsonObject)
+            }
+
+
+            try {
+                val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+                recyleadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                val adapter = LeadDetailAdapter(this@TodoListActivity, leadDetailSort)
+                recyleadDetail!!.adapter = adapter
+                adapter.setClickListener(this@TodoListActivity)
+            }catch (e: Exception){
+                Log.e(TAG,"Exception  1275   "+e.toString())
+            }
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadDetailSort = JSONArray()
+
+                    for (k in 0 until leadDetailArrayList.length()) {
+                        val jsonObject = leadDetailArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadDetailSort               7103    "+leadDetailSort)
+                    val adapter = LeadDetailAdapter(this@TodoListActivity, leadDetailSort)
+                    recyleadDetail!!.adapter = adapter
+                    adapter.setClickListener(this@TodoListActivity)
+                }
+            })
+
+            dialogleadDetail!!.show()
+            dialogleadDetail!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
