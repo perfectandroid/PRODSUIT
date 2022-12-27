@@ -147,6 +147,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onResume() {
         super.onResume()
+        getNotfCount()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
     }
 
@@ -183,6 +184,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
                             } else {
+                                Log.e(TAG,"187777   "+jObject.getString("StatusCode"))
+                                txtv_notfcount!!.text="0"
 //                                val builder = AlertDialog.Builder(
 //                                    this@HomeActivity,
 //                                    R.style.MyDialogTheme

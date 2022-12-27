@@ -84,6 +84,7 @@
                         android:drawableRight="@drawable/arrow_down"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
+                        android:focusableInTouchMode="false"
                         android:textSize="14dp"
                         android:editable="false"
                         android:fontFamily="@font/myfont"

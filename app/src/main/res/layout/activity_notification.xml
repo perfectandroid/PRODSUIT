@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@drawable/shape_header">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -36,28 +36,29 @@
                         android:layout_gravity="left"
                         android:background="@color/color_activity_transparent"
                         android:padding="10dp"
-                        android:tint="@color/black"
+                        android:tint="@color/white"
                         android:src="@drawable/back_arro"
                         tools:ignore="UseAppTint" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:text="Notifications"
                     android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:tint="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/myfont" />
+                    android:tint="@color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,6 +67,41 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
+                    <RelativeLayout
+                        android:id="@+id/rlnotification"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_notifications">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_notifications"
+                            android:tint="@color/white"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:id="@+id/txtv_notfcount"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/ic_circle"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="7dp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
 
 
                 </LinearLayout>

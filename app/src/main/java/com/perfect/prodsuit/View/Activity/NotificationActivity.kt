@@ -37,7 +37,10 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var notifreadArrayList : JSONArray
     var notifAdapter: NotificationAdapter? = null
     var notificationDet = 0
+    var notificationStart = 0
+    var notificationCount = 1
     val UPDATE_INTERVAL = 2000L
+    internal var txtv_notfcount: TextView? = null
     private val updateWidgetHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +60,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
     private fun setRegViews() {
         rv_notificationlist = findViewById(R.id.rv_notificationlist)
+        txtv_notfcount= findViewById(R.id.txtv_notfcount)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
         notificationReadStatusViewModel = ViewModelProvider(this).get(NotificationReadStatusViewModel::class.java)
@@ -90,25 +94,34 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+                if (notificationStart == 0){
+                    progressDialog = ProgressDialog(this, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                }
                 notificationViewModel.getNotificaationlist(this)!!.observe(
                         this,
                         Observer { notificationSetterGetter ->
                             val msg = notificationSetterGetter.message
                             try {
                                 if (msg!!.length > 0) {
+                                    if (notificationStart == 0){
+                                        notificationStart++
+                                        progressDialog!!.dismiss()
+                                    }
+
                                     if (notificationDet == 0){
                                         notificationDet++
                                         val jObject = JSONObject(msg)
                                         if (jObject.getString("StatusCode") == "0") {
                                             val jobjt = jObject.getJSONObject("NotificationDetails")
                                             todoArrayList = jobjt.getJSONArray("NotificationInfo")
+                                            notificationCount = 0
                                             count = todoArrayList.length().toString();
+                                            txtv_notfcount!!.text=count
                                             Log.i("Array size", count)
 
                                             // var jobj = jObject.getJSONObject("UserLoginDetails")
@@ -121,27 +134,30 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             adapter.setClickListener(this@NotificationActivity)
 
 
-
-
-
-
                                         } else {
-//                                            val builder = AlertDialog.Builder(
-//                                                this@NotificationActivity,
-//                                                R.style.MyDialogTheme
-//                                            )
-//                                            builder.setMessage(jObject.getString("EXMessage"))
-//                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                                onBackPressed()
-//                                            }
-//                                            val alertDialog: AlertDialog = builder.create()
-//                                            alertDialog.setCancelable(false)
-//                                            alertDialog.show()
+                                            txtv_notfcount!!.text="0"
+                                            rv_notificationlist!!.adapter = null
+                                            if (notificationCount > 0){
+                                                notificationCount = 0
+                                                val builder = AlertDialog.Builder(
+                                                    this@NotificationActivity,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage(jObject.getString("EXMessage"))
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                     onBackPressed()
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
+                                            }
+
 
                                         }
                                     }
 
                                 } else {
+
 //                                Toast.makeText(
 //                                        applicationContext,
 //                                        "Some Technical Issues.",
@@ -154,7 +170,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                             }
 
                         })
-                progressDialog!!.dismiss()
+//                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)

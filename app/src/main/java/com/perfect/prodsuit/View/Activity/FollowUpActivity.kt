@@ -335,6 +335,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         Log.e(TAG,"ActionMode  8141    "+ActionMode)
         if (ActionMode.equals("1") || ActionMode.equals("2")){
             tie_ActionType!!.isEnabled = false
+            followUpType = 0
             getFollowupType()
         }
 
@@ -393,6 +394,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             tie_FollowupBy!!.setOnClickListener(this)
         }
 
+        tie_Status!!.focusable
         tie_Status!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
 
@@ -546,7 +548,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             R.id.btnReset->{
 
                 Config.disableClick(v)
-                if (ActionMode.equals("1") || ActionMode.equals("2")){
+//                if (ActionMode.equals("1") || ActionMode.equals("2")){
+                if (ActionModeIntent.equals("1") || ActionModeIntent.equals("2")){
                     clearData("0")
                 }else{
                     clearData("1")
@@ -1059,6 +1062,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                 if (followUpType == 0){
                                     followUpType++
 
+
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   82   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -1111,6 +1115,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                 }
 
                                             }else{
+
                                                 tie_ActionType!!.isEnabled = true
                                                 followupTypePopup(followUpTypeArrayList)
                                             }

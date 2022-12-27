@@ -974,12 +974,19 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val layout1 = inflater1.inflate(R.layout.filter_popup, null)
             builder1.setCancelable(false)
 
+            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
             etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
             etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
             criteria = ""
-
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+            if (isAdmin.equals("1")){
+                ll_admin_staff!!.visibility  =View.VISIBLE
+            }else{
+                ll_admin_staff!!.visibility  =View.GONE
+            }
             etxt_date!!.setKeyListener(null)
 
             val c = Calendar.getInstance()
@@ -1021,7 +1028,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             alertDialogSort.show()
 
         }catch (e: Exception){
-
+            Log.e(TAG,"Exception   925   "+e.toString())
         }
 
 
