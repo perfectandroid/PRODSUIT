@@ -34,8 +34,10 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
+import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.BranchViewModel
+import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -101,6 +103,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     var branch = 0
 
     var empUseBranch = 0
+    lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var employeeAllArrayList : JSONArray
+    lateinit var employeeAllSort : JSONArray
+    private var dialogEmployeeAll : Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
 
     var tie_Branch: TextInputEditText? = null
     var tie_Employee: TextInputEditText? = null
@@ -116,6 +123,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         context = this@TodoListActivity
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
 
         setRegViews()
         if (getIntent().hasExtra("SubMode")) {
@@ -612,6 +620,17 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
 
         }
+
+        if (data.equals("employeeAll")){
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            tie_Employee!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
     }
 
 
@@ -821,7 +840,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
             etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
-            UpcomingtaskActivity.criteria = ""
+            criteria = ""
             val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
             var isAdmin = IsAdminSP.getString("IsAdmin", null)
             Log.e(TAG,"isAdmin 796  "+isAdmin)
@@ -840,6 +859,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
                 Config.disableClick(it)
                 Log.e(TAG," 796   tie_Branch")
+                ID_Employee = ""
+                tie_Employee!!.setText("")
                 branch = 0
                 getBranch()
             })
@@ -847,8 +868,13 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             tie_Employee!!.setOnClickListener(View.OnClickListener {
                 Config.disableClick(it)
                 Log.e(TAG," 796   tie_Employee")
-                empUseBranch = 0
-                getEmpByBranch()
+                if (ID_Branch.equals("")){
+                    Config.snackBars(context,it,"Select Branch")
+                }else{
+                    empUseBranch = 0
+                    getEmpByBranch()
+                }
+
             })
 
             tie_LeadDetails!!.setOnClickListener(View.OnClickListener {
@@ -1016,38 +1042,38 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-//                                if (branch == 0){
-//                                    branch++
-//                                    val jObject = JSONObject(msg)
-//                                    Log.e(TAG,"msg   1062   "+msg)
-//                                    if (jObject.getString("StatusCode") == "0") {
-//                                        val jobjt = jObject.getJSONObject("BranchDetails")
-//                                        branchArrayList = jobjt.getJSONArray("BranchDetailsList")
-//                                        if (branchArrayList.length()>0){
-//
-//                                            branchPopup(branchArrayList)
-//
-//                                        }
-//                                    } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this@TodoListActivity,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
-//                                    }
-//                                }
+                                if (empUseBranch == 0){
+                                    empUseBranch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length()>0){
+
+                                            employeeAllPopup(employeeAllArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
 
                             } else {
 //                                 Toast.makeText(
@@ -1071,6 +1097,69 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeAllSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+            val adapter = EmployeeAllAdapter(this@TodoListActivity, employeeAllSort)
+            recyEmployeeAll!!.adapter = adapter
+            adapter.setClickListener(this@TodoListActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeAllSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                employeeAllSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
+                    val adapter = EmployeeAllAdapter(this@TodoListActivity, employeeAllSort)
+                    recyEmployeeAll!!.adapter = adapter
+                    adapter.setClickListener(this@TodoListActivity)
+                }
+            })
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

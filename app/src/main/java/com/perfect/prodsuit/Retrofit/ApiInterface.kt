@@ -79,6 +79,9 @@ interface ApiInterface {
     @POST("UserValidations/BranchDetails")
     fun getBranch(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/EmployeeDetails")
+    fun getEmpUsingBranch(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/DepartmentDetails")
     fun getDepartment(@Body body: RequestBody): Call<String>
 
