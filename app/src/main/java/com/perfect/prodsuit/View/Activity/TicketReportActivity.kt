@@ -114,11 +114,12 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var dialogFollowupType: Dialog? = null
     var recyFollowupType: RecyclerView? = null
 
-//    lateinit var employeeBranchWiseViewModel: EmployeeBranchWiseViewModel
-//    lateinit var employeeDetailArrayList: JSONArray
-//    lateinit var employeeDetailSort: JSONArray
-//    private var dialogEmployeeDet: Dialog? = null
-//    var recyEmplyeeDetail: RecyclerView? = null
+    var empUseBranch = 0
+    lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var employeeAllArrayList : JSONArray
+    lateinit var employeeAllSort : JSONArray
+    private var dialogEmployeeAll : Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
 
     lateinit var leadByViewModel: LeadByViewModel
     lateinit var leadByArrayList: JSONArray
@@ -157,6 +158,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var ID_Status: String = ""
     private var GroupId: String = ""
 
+    var countLeadBy = 0
+
     var btnSubmit: Button? = null
     var btnReset: Button? = null
 
@@ -178,8 +181,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-//        employeeBranchWiseViewModel =
-//            ViewModelProvider(this).get(EmployeeBranchWiseViewModel::class.java)
+        empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
         leadByViewModel = ViewModelProvider(this).get(LeadByViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
@@ -202,6 +204,17 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
 
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        tie_EmployeeName!!.setText(UserNameSP.getString("UserName", null))
+
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+        tie_Branch!!.setText(BranchSP.getString("BranchName", null))
+
+
     }
 
     private fun setRegViews() {
@@ -222,7 +235,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_Branch = findViewById(R.id.tie_Branch)
         tie_FromDate = findViewById(R.id.tie_FromDate)
         tie_ToDate = findViewById(R.id.tie_ToDate)
-        tie_EmployeeName = findViewById(R.id.tie_EmployeeName)
         tie_EmployeeName = findViewById(R.id.tie_EmployeeName)
         tie_CollectedBy = findViewById(R.id.tie_CollectedBy)
         tie_Product = findViewById(R.id.tie_Product)
@@ -245,7 +257,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_ReportName!!.setOnClickListener(this)
         val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
         var isAdmin = IsAdminSP.getString("IsAdmin", null)
-        Toast.makeText(this, "admin "+isAdmin, Toast.LENGTH_SHORT).show()
         if (isAdmin.equals("1")){
             tie_Branch!!.setOnClickListener(this)
             tie_EmployeeName!!.setOnClickListener(this)
@@ -340,7 +351,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
 
             R.id.tie_EmployeeName -> {
-
+                empUseBranch = 0
+                getEmpByBranch()
             }
             R.id.tie_Product -> {
                 getProductDetail()
@@ -741,6 +753,74 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
+    private fun getEmpByBranch() {
+//         var branch = 0
+        Log.v("sfsdfsdfdf","branch"+ID_Branch)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (empUseBranch == 0){
+                                    empUseBranch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length()>0){
+
+                                            employeeAllPopup(employeeAllArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TicketReportActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
     private fun reportNamePopup(reportNameArrayList: JSONArray) {
         try {
@@ -952,7 +1032,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private fun openBottomSheet(dateField1:TextInputEditText?,dateField2:TextInputEditText?) {
         // BottomSheet
         val dialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_date_chooser, null)
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val edt_fromDate = view.findViewById<EditText>(R.id.edt_fromDate)
         val edt_toDate = view.findViewById<EditText>(R.id.edt_toDate)
@@ -1217,72 +1297,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
-   /* private fun getEmployeeDetail() {
-        var empdetail = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                employeeBranchWiseViewModel.getEmployeeBranchWise(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        try {
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG, "msg   227   " + msg)
-                                if (jObject.getString("StatusCode") == "0") {
-
-                                    val jobjt = jObject.getJSONObject("EmployeeDetailsList")
-                                    employeeDetailArrayList = jobjt.getJSONArray("EmployeeList")
-                                    if (employeeDetailArrayList.length() > 0) {
-                                        if (empdetail == 0) {
-                                            empdetail++
-                                            emplyeeDetailPopup()
-                                        }
-
-                                    }
-
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@TicketReportActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                }
-                            } else {
-                                //                            Toast.makeText(
-                                //                                applicationContext,
-                                //                                "Some Technical Issues.",
-                                //                                Toast.LENGTH_LONG
-                                //                            ).show()
-                            }
-                        } catch (e: Exception) {
-                            Toast.makeText(
-                                applicationContext,
-                                "" + e.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }*/
 
     private fun getProductDetail() {
         var proddetail = 0
@@ -1821,6 +1835,69 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeAllSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+            val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+            recyEmployeeAll!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeAllSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                employeeAllSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
+                    val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+                    recyEmployeeAll!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun getProductPriority() {
         var prodpriority = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2311,16 +2388,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         }
 
-//        if (data.equals("EmployeeBranchWise")) {
-//            dialogLeadBy!!.dismiss()
-//            val jsonObject = employeeDetailSort.getJSONObject(position)
-//            Log.e(TAG, "jsonObject   " + jsonObject)
-//            ID_Employee = jsonObject.getString("ID_CollectedBy")
-//            tie_EmployeeName!!.setText(jsonObject.getString("Name"))
-//
-//
-//        }
-
         if (data.equals("prodpriority")) {
             dialogProdPriority!!.dismiss()
 //            val jsonObject = prodPriorityArrayList.getJSONObject(position)
@@ -2342,7 +2409,16 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         }
 
+        if (data.equals("employeeAll")){
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            tie_EmployeeName!!.setText(jsonObject.getString("EmpName"))
 
+
+        }
 
         if (data.equals("grouping")) {
             dialogGrouping!!.dismiss()
@@ -2384,7 +2460,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     private fun validateData(v: View) {
-
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val fromDa = sdf.parse(tie_FromDate!!.text.toString());
         val toDa = sdf.parse(tie_ToDate!!.text.toString());

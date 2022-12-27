@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,270 +16,28 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:textSize="17dp"
-            android:textColor="@color/textColor"
+            android:textColor="@color/black"
             android:textStyle="bold"
-            android:padding="10dp"
             android:fontFamily="@font/myfont"
+            android:background="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="20dp"
             android:textAllCaps="true"
             android:text="select date" />
-        <RelativeLayout
+
+        <DatePicker
+            android:id="@+id/date_Picker1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/curved_rectangle"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtv_slctperd"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/myfont"
-                    android:textStyle="bold"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="Select a period of your choice."
-                    android:textColor="@color/textColor"
-                    android:textSize="15sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:orientation="horizontal">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/greydark"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:id="@+id/rad_this_month"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="This Month"
-                                android:textColor="@color/textColor" />
-                            <RadioButton
-                                android:id="@+id/rad_last_month"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="Last Month"
-                                android:textColor="@color/textColor" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:id="@+id/rad_last_3_month"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="Last 3 Months"
-                                android:textColor="@color/textColor" />
-                            <RadioButton
-                                android:id="@+id/rad_last_6_month"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="Last 6 Months"
-                                android:textColor="@color/textColor" />
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-
-
-                            <RadioButton
-                                android:id="@+id/rad_last_12_month"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/myfont"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="Last 1 year"
-                                android:textColor="@color/textColor" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/txtv_or"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:datePickerMode = "spinner"
             android:layout_marginLeft="20dp"
-            android:fontFamily="@font/myfont"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:text="OR"
-            android:textColor="@color/textColor"
-            android:textSize="15dp"
-            android:textStyle="bold" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/curved_rectangle"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtv_slctcustomdte"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="start"
-                    android:fontFamily="@font/myfont"
-                    android:textStyle="bold"
-                    style="@style/Widget.App.TextInputLayout"
-                    android:backgroundTint="@color/grey"
-                    android:paddingLeft="10dp"
-                    android:text="Select a custom date of your choice."
-                    android:textColor="@color/textColor"
-                    android:textSize="15dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_marginBottom="2dp"
-                    android:orientation="horizontal">
+            android:layout_above="@+id/ll_btn"
+            android:calendarViewShown="false"/>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:orientation="horizontal"
-                                android:gravity="center"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:src="@drawable/from_date_svg"
-                                    android:layout_height="20dp"
-                                    app:tint="@color/textColor" />
-                                <EditText
-                                    android:id="@+id/edt_fromDate"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:clickable="true"
-                                    android:textColor="@color/textColor"
-                                    android:fontFamily="@font/myfont"
-                                    android:editable="false"
-                                    android:focusable="false"
-                                    android:hint="From Date"
-                                    android:padding="10dp"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:orientation="horizontal"
-                                android:gravity="center"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:src="@drawable/from_date_svg"
-                                    android:layout_height="20dp"
-                                    app:tint="@color/textColor"/>
-                                <EditText
-                                    android:id="@+id/edt_toDate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:clickable="true"
-                                    android:focusable="false"
-                                    android:fontFamily="@font/myfont"
-                                    android:textColor="@color/textColor"
-                                    android:editable="false"
-                                    android:hint="To Date"
-                                    android:padding="10dp"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-        </RelativeLayout>
         <LinearLayout
             android:id="@+id/ll_btn"
             android:layout_width="match_parent"
