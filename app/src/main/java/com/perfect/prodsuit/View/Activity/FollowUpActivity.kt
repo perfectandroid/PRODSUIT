@@ -1087,10 +1087,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
                                                             ActionMode =  jsonObject.getString("ActionMode")
                                                             til_CallStatus!!.visibility = View.VISIBLE
-                                                            til_CallDuration!!.visibility = View.VISIBLE
+//                                                            til_CallDuration!!.visibility = View.VISIBLE
                                                             ll_location!!.visibility = View.GONE
                                                             ll_images!!.visibility = View.GONE
-                                                            til_CallTime!!.visibility = View.VISIBLE
+//                                                            til_CallTime!!.visibility = View.VISIBLE
                                                         }
                                                         if (jsonObject.getString("ActionMode").equals("2")){
                                                             Log.e(TAG,"81434    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
@@ -1098,11 +1098,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                             tie_ActionType!!.setText(jsonObject.getString("ActnTypeName"))
                                                             ActionMode =  jsonObject.getString("ActionMode")
                                                             til_CallStatus!!.visibility = View.GONE
-                                                            til_CallDuration!!.visibility = View.GONE
+//                                                            til_CallDuration!!.visibility = View.GONE
                                                             ll_location!!.visibility = View.VISIBLE
                                                             ll_images!!.visibility = View.VISIBLE
 
-                                                            til_CallTime!!.visibility = View.VISIBLE
+//                                                            til_CallTime!!.visibility = View.VISIBLE
                                                         }
                                                     }
 //                                                    if (jsonObject.getString("ID_ActionType").equals("1")){
@@ -2306,24 +2306,24 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 if (jsonObject.getString("ActionMode").equals("1")){
 
                     til_CallStatus!!.visibility = View.VISIBLE
-                    til_CallDuration!!.visibility = View.VISIBLE
+//                    til_CallDuration!!.visibility = View.VISIBLE
                     ll_location!!.visibility = View.GONE
                     ll_images!!.visibility = View.GONE
-                    til_CallTime!!.visibility = View.VISIBLE
+//                    til_CallTime!!.visibility = View.VISIBLE
 
                 }else if(jsonObject.getString("ActionMode").equals("2")){
 
                     til_CallStatus!!.visibility = View.GONE
-                    til_CallDuration!!.visibility = View.GONE
+//                    til_CallDuration!!.visibility = View.GONE
                     ll_location!!.visibility = View.VISIBLE
                     ll_images!!.visibility = View.VISIBLE
 
-                    til_CallTime!!.visibility = View.VISIBLE
+//                    til_CallTime!!.visibility = View.VISIBLE
                 }
                 else{
-                    til_CallTime!!.visibility = View.GONE
+//                    til_CallTime!!.visibility = View.GONE
                     til_CallStatus!!.visibility = View.GONE
-                    til_CallDuration!!.visibility = View.GONE
+//                    til_CallDuration!!.visibility = View.GONE
                     ll_location!!.visibility = View.GONE
                     ll_images!!.visibility = View.GONE
 
@@ -2479,10 +2479,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             ID_ActionType = ""
 
             til_CallStatus!!.visibility = View.GONE
-            til_CallDuration!!.visibility = View.GONE
+//            til_CallDuration!!.visibility = View.GONE
             ll_location!!.visibility = View.GONE
             ll_images!!.visibility = View.GONE
-            til_CallTime!!.visibility = View.GONE
+//            til_CallTime!!.visibility = View.GONE
 
         }
 
@@ -2615,9 +2615,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
                 if (strCallStatus.equals("")){
                     Config.snackBars(context,v,"Select Call Status")
-                }else if (strCallDur.equals("")){
-                    Config.snackBars(context,v,"Enter Call Duration")
                 }
+//                else if (strCallDur.equals("")){
+//                    Config.snackBars(context,v,"Enter Call Duration")
+//                }
                 else{
                   //  val millis: Long = 35555
 //                    val millis: Long = strCallDur.toLong()
@@ -2635,11 +2636,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    Log.e(TAG,"2547 strCallDuration   "+strCallDuration)
 
                     // val seconds = 3661
-                    val seconds = strCallDur.toInt()
-                    val duration: String = convertSeconds(seconds)
-                    strCallDuration = duration
-                    Log.e(TAG,"duration   2463   "+duration)
-
+//                    val seconds = strCallDur.toInt()
+//                    val duration: String = convertSeconds(seconds)
+//                    strCallDuration = duration
+//                    Log.e(TAG,"duration   2463   "+duration)
+                    strCallDuration = "00:00:00"
 
                     saveUpdate()
 //                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
@@ -2648,7 +2649,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }
 
             }else if (ActionMode.equals("2")){
-
+                strCallDuration = "00:00:00"
                 strLongitude =tie_Longitude!!.text.toString();
                 strLatitude=tie_Latitude!!.text.toString();
 
@@ -2703,6 +2704,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
 //                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
 
+                strCallDuration = "00:00:00"
                 saveUpdate()
             }
 
@@ -2739,6 +2741,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun saveUpdate() {
+
+
 
         Log.e(TAG,"FOLLOWUP  25981 "
                 +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
