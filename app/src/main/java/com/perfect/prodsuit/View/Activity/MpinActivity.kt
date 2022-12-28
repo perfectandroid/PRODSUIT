@@ -775,6 +775,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun forgotMpin(mobileNumber : String) {
+        var mpinAttemptCount = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -789,31 +790,37 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                         val msg = serviceSetterGetter.message
                         try {
                             if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                Log.e("TAG","jObject   648   "+jObject)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if (mpinAttemptCount == 0) {
+                                    mpinAttemptCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e("TAG", "jObject   648   " + jObject)
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                    val builder = AlertDialog.Builder(this@MpinActivity, R.style.MyDialogTheme)
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                    clearAll()
+                                        val builder = AlertDialog.Builder(
+                                            this@MpinActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                        clearAll()
 
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@MpinActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@MpinActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                        clearAll()
                                     }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                    clearAll()
                                 }
                             } else {
 //                            Toast.makeText(
