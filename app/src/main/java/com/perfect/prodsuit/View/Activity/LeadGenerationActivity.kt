@@ -7480,7 +7480,21 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     }
 
     private fun isValidEmail(email: String): Boolean {
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        if(TextUtils.isEmpty(email))
+        {
+            return true
+        }
+        else
+        {
+            if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
     }
 
 
