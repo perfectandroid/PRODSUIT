@@ -623,6 +623,11 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     ID_UserEditer.putString("ID_User", jobj.getString("ID_User"))
                                     ID_UserEditer.commit()
 
+                                    val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+                                    val BranchNameEditer = BranchNameSP.edit()
+                                    BranchNameEditer.putString("BranchName", jobj.getString("BranchName"))
+                                    BranchNameEditer.commit()
+
                                     val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                     startActivity(i)
                                     finish()

@@ -13,6 +13,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -25,12 +27,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.BranchAdapter
+import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
+import com.perfect.prodsuit.View.Adapter.LeadDetailAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
+import com.perfect.prodsuit.Viewmodel.BranchViewModel
+import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
+import com.perfect.prodsuit.Viewmodel.LeadDetailViewModel
 import com.perfect.prodsuit.Viewmodel.TodoListViewModel
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
@@ -84,6 +94,41 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     internal var etdis: EditText? = null
 
 
+    private var ID_Branch = "";
+    private var ID_Employee = "";
+    private var ID_Lead_Details = "";
+    private var strLeadValue = "";
+
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var branchArrayList : JSONArray
+    lateinit var branchSort : JSONArray
+    private var dialogBranch : Dialog? = null
+    var recyBranch: RecyclerView? = null
+    var branch = 0
+
+    var empUseBranch = 0
+    lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var employeeAllArrayList : JSONArray
+    lateinit var employeeAllSort : JSONArray
+    private var dialogEmployeeAll : Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
+
+    var leadDetails = 0
+    lateinit var leadDetailViewModel: LeadDetailViewModel
+    lateinit var leadDetailArrayList : JSONArray
+    lateinit var leadDetailSort : JSONArray
+    private var dialogleadDetail : Dialog? = null
+    var recyleadDetail: RecyclerView? = null
+
+    var til_LeadValue: TextInputLayout? = null
+    var tie_Branch: TextInputEditText? = null
+    var tie_Employee: TextInputEditText? = null
+    var tie_LeadDetails: TextInputEditText? = null
+    var tie_LeadValue: TextInputEditText? = null
+
+    var toDoDet = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -91,6 +136,10 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         setContentView(R.layout.activity_todolist)
         context = this@TodoListActivity
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
+        leadDetailViewModel = ViewModelProvider(this).get(LeadDetailViewModel::class.java)
+
         setRegViews()
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
@@ -101,6 +150,17 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         date = ""
         criteria = ""
 
+        val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+        ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+       // tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+      //  tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+
+        toDoDet = 0
         getTodoList()
     }
     companion object {
@@ -125,7 +185,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     }
 
     private fun getTodoList() {
-        var toDoDet = 0
+//        var toDoDet = 0
         rv_todolist!!.adapter = null
         context = this@TodoListActivity
         todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
@@ -137,7 +197,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                todolistViewModel.getTodolist(this, submode!!, name!!, criteria!!,date!!)!!.observe(
+                todolistViewModel.getTodolist(this, submode!!, name!!, criteria!!,date!!,ID_Branch!!,ID_Employee!!,ID_Lead_Details,strLeadValue)!!.observe(
                         this,
                         Observer { todolistSetterGetter ->
                             try {
@@ -210,7 +270,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 finish()
             }
             R.id.imgv_filter -> {
-                filterData()
+              //  filterData()
+                filterBottomData()
             }
             R.id.imgv_sort -> {
                 sortData()
@@ -574,6 +635,39 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             Log.e("TAG","313  ID_LeadGenerate   :  "+jsonObject.getString("ID_LeadGenerate"))
             messagePopup()
         }
+
+        if (data.equals("branch")){
+            dialogBranch!!.dismiss()
+//             val jsonObject = branchArrayList.getJSONObject(position)
+            val jsonObject = branchSort.getJSONObject(position)
+            Log.e(TAG,"ID_Branch   "+jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+
+        }
+
+        if (data.equals("employeeAll")){
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            tie_Employee!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
+
+        if (data.equals("LeadDetail1")){
+            dialogleadDetail!!.dismiss()
+            val jsonObject = leadDetailSort.getJSONObject(position)
+            Log.e(TAG,"ID_TodoListLeadDetails   "+jsonObject.getString("ID_TodoListLeadDetails"))
+            ID_Lead_Details = jsonObject.getString("ID_TodoListLeadDetails")
+            tie_LeadDetails!!.setText(jsonObject.getString("TodoListLeadDetailsName"))
+            til_LeadValue!!.setHint(jsonObject.getString("TodoListLeadDetailsName"))
+
+
+        }
     }
 
 
@@ -689,12 +783,21 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             val layout1 = inflater1.inflate(R.layout.filter_popup, null)
             builder1.setCancelable(false)
 
+
+            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
             val btncancel = layout1.findViewById(R.id.btncancel) as Button
             val btnsubmit = layout1.findViewById(R.id.btnsubmit) as Button
             etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
             etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
             criteria = ""
 
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+            if (isAdmin.equals("1")){
+                ll_admin_staff!!.visibility  =View.VISIBLE
+            }else{
+                ll_admin_staff!!.visibility  =View.GONE
+            }
             etxt_date!!.setKeyListener(null)
 
             val c = Calendar.getInstance()
@@ -726,6 +829,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                         .show()
                 }
                 else {
+                    toDoDet = 0
 //                    getTodoList1()
                     getTodoList()
                     alertDialogSort.dismiss()
@@ -735,11 +839,537 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             alertDialogSort.show()
 
         }catch (e: Exception){
-
+            Log.e(TAG,"Exception   925   "+e.toString())
         }
 
 
     }
+    private fun filterBottomData() {
+
+        try {
+            val dialog = BottomSheetDialog(this)
+            val layout1 = layoutInflater.inflate(R.layout.filter_popup, null)
+
+            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
+
+            val txtCancel = layout1.findViewById(R.id.txtCancel) as TextView
+            val txtSubmit = layout1.findViewById(R.id.txtSubmit) as TextView
+
+             til_LeadValue = layout1.findViewById(R.id.til_LeadValue) as TextInputLayout
+             tie_Branch = layout1.findViewById(R.id.tie_Branch) as TextInputEditText
+             tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
+             tie_LeadDetails = layout1.findViewById(R.id.tie_LeadDetails) as TextInputEditText
+             tie_LeadValue = layout1.findViewById(R.id.tie_LeadValue) as TextInputEditText
+
+            val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+            val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+            val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+            ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+            tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            ID_Lead_Details = ""
+            tie_LeadDetails!!.setText("")
+            tie_LeadValue!!.setText("")
+            til_LeadValue!!.setHint("")
+
+
+
+            tie_Branch!!.setOnClickListener(this)
+            tie_Employee!!.setOnClickListener(this)
+
+            etxt_date  = layout1.findViewById<EditText>(R.id.etxt_date)
+            etxt_Name  = layout1.findViewById<EditText>(R.id.etxt_Name)
+            criteria = ""
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+            Log.e(TAG,"isAdmin 796  "+isAdmin)
+            if (isAdmin.equals("1")){
+                ll_admin_staff!!.visibility  =View.VISIBLE
+                tie_Branch!!.isEnabled  = true
+                tie_Employee!!.isEnabled  = true
+            }else{
+                ll_admin_staff!!.visibility  =View.GONE
+                tie_Branch!!.isEnabled  = false
+                tie_Employee!!.isEnabled  = false
+            }
+
+
+            tie_Branch!!.setOnClickListener(View.OnClickListener {
+
+                Config.disableClick(it)
+                Log.e(TAG," 796   tie_Branch")
+                ID_Employee = ""
+                tie_Employee!!.setText("")
+                branch = 0
+                getBranch()
+            })
+
+            tie_Employee!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
+                Log.e(TAG," 796   tie_Employee")
+                if (ID_Branch.equals("")){
+                    Config.snackBars(context,it,"Select Branch")
+                }else{
+                    empUseBranch = 0
+                    getEmpByBranch()
+                }
+
+            })
+
+            tie_LeadDetails!!.setOnClickListener(View.OnClickListener {
+
+                Log.e(TAG," 796   tie_LeadDetails")
+
+                Config.disableClick(it)
+                leadDetails = 0
+                getLeadDetails()
+            })
+
+
+            txtCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            txtSubmit.setOnClickListener {
+                strLeadValue  = tie_LeadValue!!.text.toString()
+                if (ID_Branch.equals("")){
+                    Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
+                  // Config.snackBars(context,it,"Select Branch")
+                }
+                else if (ID_Employee.equals("")){
+                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
+                   // Config.snackBars(context,it,"Select Employee")
+                }
+                else if (ID_Lead_Details.equals("")){
+                    Toast.makeText(applicationContext, "Select Lead Details", Toast.LENGTH_SHORT).show()
+                   // Config.snackBars(context,it,"Select Lead Details")
+                }
+                else{
+                    Log.e(TAG,"927  ")
+                    dialog.dismiss()
+                    toDoDet = 0
+                    getTodoList()
+
+
+                }
+            }
+
+
+            dialog.setCancelable(false)
+            dialog!!.setContentView(layout1)
+
+            dialog.show()
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+
+
+
+    }
+
+    private fun getBranch() {
+//         var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (branch == 0){
+                                    branch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1062   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("BranchDetails")
+                                        branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                        if (branchArrayList.length()>0){
+
+                                            branchPopup(branchArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!! .setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!! .findViewById(R.id.recyBranch) as RecyclerView
+            val etsearch = dialogBranch!! .findViewById(R.id.etsearch) as EditText
+
+            branchSort = JSONArray()
+            for (k in 0 until branchArrayList.length()) {
+                val jsonObject = branchArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                branchSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = BranchAdapter(this@LeadGenerationActivity, branchArrayList)
+            val adapter = BranchAdapter(this@TodoListActivity, branchSort)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@TodoListActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    branchSort = JSONArray()
+
+                    for (k in 0 until branchArrayList.length()) {
+                        val jsonObject = branchArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BranchName").length) {
+                            if (jsonObject.getString("BranchName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                branchSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"branchSort               7103    "+branchSort)
+                    val adapter = BranchAdapter(this@TodoListActivity, branchSort)
+                    recyBranch!!.adapter = adapter
+                    adapter.setClickListener(this@TodoListActivity)
+                }
+            })
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1132   "+e.toString())
+        }
+    }
+
+    private fun getEmpByBranch() {
+//         var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (empUseBranch == 0){
+                                    empUseBranch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length()>0){
+
+                                            employeeAllPopup(employeeAllArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeAllSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+            val adapter = EmployeeAllAdapter(this@TodoListActivity, employeeAllSort)
+            recyEmployeeAll!!.adapter = adapter
+            adapter.setClickListener(this@TodoListActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeAllSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                employeeAllSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
+                    val adapter = EmployeeAllAdapter(this@TodoListActivity, employeeAllSort)
+                    recyEmployeeAll!!.adapter = adapter
+                    adapter.setClickListener(this@TodoListActivity)
+                }
+            })
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getLeadDetails() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadDetailViewModel.getLeadDetail(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (leadDetails == 0){
+                                    leadDetails++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("TodoListLeadDetails")
+                                        leadDetailArrayList = jobjt.getJSONArray("TodoListLeadDetailsList")
+                                        if (leadDetailArrayList.length()>0){
+
+                                            Log.e(TAG,"leadDetailArrayList   1205    "+leadDetailArrayList)
+                                            leadDetailPopup(leadDetailArrayList)
+                                         //   employeeAllPopup(leadDetailArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun leadDetailPopup(leadDetailArrayList: JSONArray) {
+        try {
+
+            dialogleadDetail = Dialog(this)
+            dialogleadDetail!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogleadDetail!! .setContentView(R.layout.leaddetail_popup)
+            dialogleadDetail!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyleadDetail = dialogleadDetail!! .findViewById(R.id.recyleadDetail) as RecyclerView
+            val etsearch = dialogleadDetail!! .findViewById(R.id.etsearch) as EditText
+
+
+            leadDetailSort = JSONArray()
+            for (k in 0 until leadDetailArrayList.length()) {
+                val jsonObject = leadDetailArrayList.getJSONObject(k)
+                leadDetailSort.put(jsonObject)
+            }
+
+
+            try {
+                val lLayout = GridLayoutManager(this@TodoListActivity, 1)
+                recyleadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                val adapter = LeadDetailAdapter(this@TodoListActivity, leadDetailSort)
+                recyleadDetail!!.adapter = adapter
+                adapter.setClickListener(this@TodoListActivity)
+            }catch (e: Exception){
+                Log.e(TAG,"Exception  1275   "+e.toString())
+            }
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadDetailSort = JSONArray()
+
+                    for (k in 0 until leadDetailArrayList.length()) {
+                        val jsonObject = leadDetailArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("TodoListLeadDetailsName").length) {
+                            if (jsonObject.getString("TodoListLeadDetailsName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadDetailSort               7103    "+leadDetailSort)
+                    val adapter = LeadDetailAdapter(this@TodoListActivity, leadDetailSort)
+                    recyleadDetail!!.adapter = adapter
+                    adapter.setClickListener(this@TodoListActivity)
+                }
+            })
+
+            dialogleadDetail!!.show()
+            dialogleadDetail!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
     /*private fun sortData() {
 
         try {
@@ -1026,6 +1656,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 else
                 {
 
+                    toDoDet = 0
+
                     getTodoList()
                     alertDialogSort.dismiss()
 
@@ -1246,6 +1878,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     override fun onRestart() {
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
+        toDoDet = 0
         getTodoList()
     }
 

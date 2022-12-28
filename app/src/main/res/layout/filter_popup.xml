@@ -1,274 +1,405 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@android:color/transparent"
     android:layout_height="wrap_content"
-    android:id="@+id/rl_main"
-    android:layout_margin="1dp"
-    android:orientation="vertical">
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:id="@+id/rl_main"
+        android:layout_margin="1dp"
         android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/reminder_clock"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginTop="30dp"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-            <TextView
-                android:id="@+id/tv_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/myfont"
-                android:gravity="center"
-                android:text="Filter"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="15dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:visibility="gone"
-                android:fontFamily="@font/myfont"
-                android:text="Set your convenient date &amp; time."
-                android:textColor="@color/black"/>
 
-            <!--    <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginBottom="10dp"
-                    style="@style/TextInputLayoutStyle"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etdate"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:hint="Select Date"
-                        android:fontFamily="@font/myfont"
-                        android:drawableRight="@drawable/ic_date"
-                        android:background="@drawable/custom_edt_txt_account_border"
-                        android:inputType="number"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginBottom="10dp"
-                    style="@style/TextInputLayoutStyle"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ettime"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:fontFamily="@font/myfont"
-                        android:drawableRight="@drawable/ic_time"
-                        android:hint="Select Time"
-                        android:background="@drawable/custom_edt_txt_account_border"
-                        android:inputType="number"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginBottom="10dp"
-                    style="@style/TextInputLayoutStyle"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etdis"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:maxLines="2"
-                        android:lines="4"
-                        android:fontFamily="@font/myfont"
-                        android:hint="Description"
-                        android:background="@drawable/custom_edt_txt_account_border"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-    -->
 
-            <EditText
-                android:id="@+id/etxt_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="2.5dp"
-                android:background="@drawable/et_bggreybottom"
-                android:drawableLeft="@drawable/ic_calsort"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/colorPrimary"
-                android:fontFamily="@font/myfont"
-                android:gravity="left"
-                android:hint="Next Action Date"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etxt_Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="2.5dp"
-                android:background="@drawable/et_bggreybottom"
-                android:drawableLeft="@drawable/ic_personsort"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/colorPrimary"
-                android:fontFamily="@font/myfont"
-                android:gravity="left"
-                android:hint="Name"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etdis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="2.5dp"
-                android:background="@drawable/et_bggreybottom"
-                android:drawableLeft="@drawable/ic_remindermessage"
-                android:fontFamily="@font/myfont"
-                android:drawableTint="@color/colorPrimary"
-                android:drawablePadding="10dp"
-                android:gravity="left|center"
-                android:hint="Set Reminder Message"
-                android:lines="2"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:visibility="gone"
-                android:textSize="12dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textStyle="bold|italic"
-                android:fontFamily="@font/myfont"
-                android:text="* You can change date, time &amp; description as your wish."
-                android:textColor="@color/redDark"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/reminder_clock"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="30dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="sort &amp; Filter"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
 
                 <LinearLayout
-                    android:id="@+id/ll_cancel"
+                    android:id="@+id/ll_admin_staff"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/btncancel"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_Branch"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:textSize="15dp"
-                        android:textAllCaps="false"
+                        android:layout_height="wrap_content"
+                        android:hint="Branch"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
-                        android:background="@drawable/btn_resetbg"
-                        android:text="Cancel" />
+                        style="@style/Widget.App.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_Branch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:drawableRight="@drawable/arrow_down"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/textColor"
+                            android:focusableInTouchMode="false"
+                            android:textSize="14dp"
+                            android:editable="false"
+                            android:fontFamily="@font/myfont"
+                            android:textColor="@color/greydarks"
+                            android:textStyle="normal"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_Employee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Employee"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        style="@style/Widget.App.TextInputLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_Employee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:drawableRight="@drawable/arrow_down"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/textColor"
+                            android:focusableInTouchMode="false"
+                            android:textSize="14dp"
+                            android:editable="false"
+                            android:fontFamily="@font/myfont"
+                            android:textColor="@color/greydarks"
+                            android:textStyle="normal"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
                 </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_LeadDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lead Details"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_LeadDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:focusableInTouchMode="false"
+                        android:textSize="14dp"
+                        android:editable="false"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_LeadValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=""
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_LeadValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:editable="true"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                <EditText
+                    android:id="@+id/etxt_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="2.5dp"
+                    android:background="@drawable/et_bggreybottom"
+                    android:drawableLeft="@drawable/ic_calsort"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="left"
+                    android:hint="Next Action Date"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etxt_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="2.5dp"
+                    android:background="@drawable/et_bggreybottom"
+                    android:drawableLeft="@drawable/ic_personsort"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="left"
+                    android:hint="Name"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/etdis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="2.5dp"
+                    android:background="@drawable/et_bggreybottom"
+                    android:drawableLeft="@drawable/ic_remindermessage"
+                    android:fontFamily="@font/myfont"
+                    android:drawableTint="@color/colorPrimary"
+                    android:drawablePadding="10dp"
+                    android:gravity="left|center"
+                    android:hint="Set Reminder Message"
+                    android:lines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textStyle="bold|italic"
+                    android:fontFamily="@font/myfont"
+                    android:text="* You can change date, time &amp; description as your wish."
+                    android:textColor="@color/redDark"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/greydark"
+                    android:fontFamily="@font/myfont"
+                    android:background="@drawable/btn_shape_reset"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textAllCaps="false"
+                    android:text="CANCEL" />
+
+
+                <TextView
+                    android:id="@+id/txtSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/myfont"
+                    android:background="@drawable/btn_shape_submit"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textAllCaps="false"
+                    android:text="OK" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:visibility="gone">
                 <LinearLayout
-                    android:id="@+id/ll_ok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0.5"
                     android:gravity="center">
-                    <Button
-                        android:id="@+id/btnsubmit"
+
+                    <LinearLayout
+                        android:id="@+id/ll_cancel"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
                         android:layout_margin="5dp"
-                        android:textSize="15dp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/myfont"
-                        android:background="@drawable/btn_bgcolour"
-                        android:textAllCaps="false"
-                        android:text="Submit" />
+                        android:layout_weight="1"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/btncancel"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:textSize="15dp"
+                            android:textAllCaps="false"
+                            android:fontFamily="@font/myfont"
+                            android:background="@drawable/btn_resetbg"
+                            android:text="Cancel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/btnsubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/myfont"
+                            android:background="@drawable/btn_bgcolour"
+                            android:textAllCaps="false"
+                            android:text="Submit" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
+    </RelativeLayout>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-</RelativeLayout>
 
 
 
