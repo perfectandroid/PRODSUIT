@@ -5750,7 +5750,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogCustSearch!!.dismiss()
             val jsonObject = customerArrayList.getJSONObject(position)
             txtcustomer!!.text = jsonObject!!.getString("CusName")
-            edt_customer!!.setText(jsonObject!!.getString("CusName"))
+            if(SubModeSearch=="1") {
+                edt_customer!!.setText(jsonObject!!.getString("CusName"))
+            }
+            else
+            {
+                edt_customer!!.setText(jsonObject!!.getString("CusPhnNo"))
+            }
 
             // custDetailMode = "1"
             Customer_Mode = "1"  // SEARCH
