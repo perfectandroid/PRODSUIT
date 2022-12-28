@@ -97,6 +97,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var ID_Branch = "";
     private var ID_Employee = "";
     private var ID_Lead_Details = "";
+    private var strLeadValue = "";
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
@@ -125,6 +126,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     var tie_LeadDetails: TextInputEditText? = null
     var tie_LeadValue: TextInputEditText? = null
 
+    var toDoDet = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,6 +150,17 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         date = ""
         criteria = ""
 
+        val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+        ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+       // tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+      //  tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+
+        toDoDet = 0
         getTodoList()
     }
     companion object {
@@ -171,7 +185,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     }
 
     private fun getTodoList() {
-        var toDoDet = 0
+//        var toDoDet = 0
         rv_todolist!!.adapter = null
         context = this@TodoListActivity
         todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
@@ -183,7 +197,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                todolistViewModel.getTodolist(this, submode!!, name!!, criteria!!,date!!)!!.observe(
+                todolistViewModel.getTodolist(this, submode!!, name!!, criteria!!,date!!,ID_Branch!!,ID_Employee!!,ID_Lead_Details,strLeadValue)!!.observe(
                         this,
                         Observer { todolistSetterGetter ->
                             try {
@@ -815,6 +829,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                         .show()
                 }
                 else {
+                    toDoDet = 0
 //                    getTodoList1()
                     getTodoList()
                     alertDialogSort.dismiss()
@@ -919,7 +934,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             }
 
             txtSubmit.setOnClickListener {
-
+                strLeadValue  = tie_LeadValue!!.text.toString()
                 if (ID_Branch.equals("")){
                     Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
                   // Config.snackBars(context,it,"Select Branch")
@@ -934,6 +949,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 }
                 else{
                     Log.e(TAG,"927  ")
+                    dialog.dismiss()
+                    toDoDet = 0
+                    getTodoList()
+
+
                 }
             }
 
@@ -1636,6 +1656,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 else
                 {
 
+                    toDoDet = 0
+
                     getTodoList()
                     alertDialogSort.dismiss()
 
@@ -1856,6 +1878,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     override fun onRestart() {
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
+        toDoDet = 0
         getTodoList()
     }
 
