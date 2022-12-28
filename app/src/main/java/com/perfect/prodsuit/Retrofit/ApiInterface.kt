@@ -267,4 +267,7 @@ interface ApiInterface {
 
     @POST("UserValidations/StatusDetails")
     fun getCallStatus(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ToDoListLeadDetails")
+    fun getToDoListLeadDetails(@Body body: RequestBody): Call<String>
 }
