@@ -630,6 +630,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             }
         }
+
         if (data.equals("todoMessage")){
             val jsonObject = todoArrayList.getJSONObject(position)
             Log.e("TAG","313  ID_LeadGenerate   :  "+jsonObject.getString("ID_LeadGenerate"))
