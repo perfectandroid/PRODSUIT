@@ -2203,6 +2203,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
 
     }
+
     private fun getActivitylist(ID_ActionType: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2280,67 +2281,76 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getLocation() {
-        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
-        llMainDetail!!.addView(inflatedLayout1);
-
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                locationViewModel.getLocation(this, ID_LeadGenerateProduct, ID_LeadGenerate)!!.observe(
-                    this,
-                    Observer { locationSetterGetter ->
-                        val msg = locationSetterGetter.message
-                        try {
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                    latitude = jobjt!!.getString("LocationLatitude")
-                                    longitude = jobjt!!.getString("LocationLongitude")
-                                    Log.e("LocationDetails", latitude + "\n" + longitude)
-
-                                    fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
-                                    fetchLocation()
 
 
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@AccountDetailsActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+        try {
+            val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+            val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
+            llMainDetail!!.addView(inflatedLayout1);
+
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(this, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    locationViewModel.getLocation(this, ID_LeadGenerateProduct, ID_LeadGenerate)!!.observe(
+                        this,
+                        Observer { locationSetterGetter ->
+                            val msg = locationSetterGetter.message
+                            try {
+                                if (msg!!.length > 0) {
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("LeadImageDetails")
+                                        latitude = jobjt!!.getString("LocationLatitude")
+                                        longitude = jobjt!!.getString("LocationLongitude")
+                                        Log.e("LocationDetails", latitude + "\n" + longitude)
+
+                                        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
+                                        fetchLocation()
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountDetailsActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+
                                     }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-
-                                }
-                            } else {
+                                } else {
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                                }
+                            }catch (e : Exception){
+                                Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                             }
-                        }catch (e : Exception){
-                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
-                        }
 
-                    })
-                progressDialog!!.dismiss()
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
+        }catch (e : Exception){
+            Log.e(TAG,"Exception  2348   "+e.toString())
         }
+
+
+
     }
 
     private fun fetchLocation() {
@@ -2484,6 +2494,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
         }
     }
+
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)

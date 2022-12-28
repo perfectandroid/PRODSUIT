@@ -61,7 +61,7 @@
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
-                    android:text="sort &amp; Filter"
+                    android:text="Filter"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="18dp"

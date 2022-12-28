@@ -1120,10 +1120,10 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                     Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
                     // Config.snackBars(context,it,"Select Employee")
                 }
-                else if (ID_Lead_Details.equals("")){
-                    Toast.makeText(applicationContext, "Select Lead Details", Toast.LENGTH_SHORT).show()
-                    // Config.snackBars(context,it,"Select Lead Details")
-                }
+//                else if (ID_Lead_Details.equals("")){
+//                    Toast.makeText(applicationContext, "Select Lead Details", Toast.LENGTH_SHORT).show()
+//                    // Config.snackBars(context,it,"Select Lead Details")
+//                }
                 else{
                     dialog.dismiss()
                     Log.e(TAG,"927  ")

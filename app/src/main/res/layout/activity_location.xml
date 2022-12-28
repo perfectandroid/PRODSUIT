@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 <!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +61,8 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                tools:context="com.perfect.prodsuit"
+                android:layout_weight="1" />
 
 
 
