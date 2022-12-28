@@ -72,10 +72,11 @@
                         android:layout_margin="10dp"
                         android:layout_gravity="right|center_vertical"
                         android:layout_alignParentLeft="true"
-                        android:layout_width="match_parent"
-                        android:layout_weight="3"
+                        android:layout_width="60dp"
+                        android:padding="10dp"
                         android:tint="@color/white"
-                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:layout_height="60dp"
                         android:visibility="visible"
                         tools:ignore="UseAppTint" />
                 </LinearLayout>
@@ -84,7 +85,8 @@
                     android:layout_height="60dp"
                     android:layout_weight="2"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgv_sort"
@@ -104,7 +106,8 @@
                     android:layout_height="60dp"
                     android:layout_weight="2"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
 

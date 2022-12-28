@@ -91,6 +91,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var ID_Branch = "";
     private var ID_Employee = "";
     private var ID_Lead_Details = "";
+    private var strLeadValue = "";
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
@@ -119,6 +120,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var tie_LeadDetails: TextInputEditText? = null
     var tie_LeadValue: TextInputEditText? = null
 
+    var UpcomingDet = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +141,16 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         name = ""
         date = ""
         criteria = ""
+        val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+        ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+     //   tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+     //   tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+        UpcomingDet = 0
         getUpcomingtasksList()
     }
     companion object {
@@ -160,7 +173,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     private fun getUpcomingtasksList() {
-        var UpcomingDet = 0
+//        var UpcomingDet = 0
         rv_upcmngtasklist!!.adapter = null
         context = this@UpcomingtaskActivity
         upcomingtaskslistViewModel = ViewModelProvider(this).get(UpcomingtasksListViewModel::class.java)
@@ -172,7 +185,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                upcomingtaskslistViewModel.getUpcomingtasklist(this,submode!!, name!!, criteria!!, date!!)!!.observe(
+                upcomingtaskslistViewModel.getUpcomingtasklist(this,submode!!, name!!, criteria!!, date!!,ID_Branch!!,ID_Employee!!,ID_Lead_Details,strLeadValue)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
 
@@ -968,6 +981,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                 else
                 {
+                    UpcomingDet = 0
 
                     getUpcomingtasksList()
                     alertDialogSort.dismiss()
@@ -1095,6 +1109,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 }
                 else {
 
+                    UpcomingDet = 0
 //                    getUpcomingtasksList1()
                     getUpcomingtasksList()
                     alertDialogSort.dismiss()
@@ -1199,6 +1214,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             txtSubmit.setOnClickListener {
 
+                strLeadValue  = tie_LeadValue!!.text.toString()
                 if (ID_Branch.equals("")){
                     Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
                     // Config.snackBars(context,it,"Select Branch")
@@ -1213,6 +1229,10 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 }
                 else{
                     Log.e(TAG,"927  ")
+
+                    dialog.dismiss()
+                    UpcomingDet = 0
+                    getUpcomingtasksList()
                 }
             }
 
@@ -1773,6 +1793,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     override fun onRestart() {
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
+        UpcomingDet = 0
         getUpcomingtasksList()
     }
 

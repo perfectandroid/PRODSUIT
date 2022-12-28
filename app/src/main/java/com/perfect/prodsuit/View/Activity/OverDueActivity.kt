@@ -91,6 +91,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var ID_Branch = "";
     private var ID_Employee = "";
     private var ID_Lead_Details = "";
+    private var strLeadValue = "";
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
@@ -119,6 +120,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     var tie_LeadDetails: TextInputEditText? = null
     var tie_LeadValue: TextInputEditText? = null
 
+    var overDueDet = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -139,6 +142,14 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
          criteria = ""
          submode = "2"
 
+        val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+        ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        overDueDet = 0
         getOverdueList()
     }
 
@@ -164,19 +175,20 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     }
 
     private fun getOverdueList() {
-        var overDueDet = 0
+//        var overDueDet = 0
         rv_overduelist!!.adapter = null
         context = this@OverDueActivity
         overduelistViewModel = ViewModelProvider(this).get(OverDueListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
+//                ,ID_Branch!!,ID_Employee!!,ID_Lead_Details,strLeadValue
                 progressDialog = ProgressDialog(this, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                overduelistViewModel.getOverduelist(this,submode!!, name!!, criteria!!,date!!)!!.observe(
+                overduelistViewModel.getOverduelist(this,submode!!, name!!, criteria!!,date!!,ID_Branch!!,ID_Employee!!,ID_Lead_Details,strLeadValue)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
 
@@ -659,6 +671,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 else
                 {
 
+                    overDueDet = 0
                     getOverdueList()
                     alertDialogSort.dismiss()
 //                   if(!(date.equals("")))
@@ -991,6 +1004,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                         .show()
                 }
                 else {
+                    overDueDet = 0
                     getOverdueList()
 //                    getOverdueList1()
                     alertDialogSort.dismiss()
@@ -1097,6 +1111,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
             txtSubmit.setOnClickListener {
 
+                strLeadValue = tie_LeadValue!!.text.toString()
                 if (ID_Branch.equals("")){
                     Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
                     // Config.snackBars(context,it,"Select Branch")
@@ -1110,7 +1125,10 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                     // Config.snackBars(context,it,"Select Lead Details")
                 }
                 else{
+                    dialog.dismiss()
                     Log.e(TAG,"927  ")
+                    overDueDet = 0
+                    getOverdueList()
                 }
             }
 
@@ -1675,6 +1693,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     override fun onRestart() {
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
+        overDueDet = 0
         getOverdueList()
     }
 //

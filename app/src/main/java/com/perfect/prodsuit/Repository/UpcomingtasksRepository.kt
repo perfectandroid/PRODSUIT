@@ -25,12 +25,12 @@ object UpcomingtasksRepository {
 
     val upcomingtasksSetterGetter = MutableLiveData<UpcomingtasksModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,submode : String, name : String, criteria : String, date : String): MutableLiveData<UpcomingtasksModel> {
-        getUpcomingtasks(context,submode,name,criteria,date)
+    fun getServicesApiCall(context: Context,submode : String, name : String, criteria : String, date : String,ID_Branch : String , ID_Employee : String, ID_Lead_Details : String,strLeadValue :String): MutableLiveData<UpcomingtasksModel> {
+        getUpcomingtasks(context,submode,name,criteria,date,ID_Branch,ID_Employee,ID_Lead_Details,strLeadValue)
         return upcomingtasksSetterGetter
     }
 
-    private fun getUpcomingtasks(context: Context,submode : String, name : String, criteria : String, date : String) {
+    private fun getUpcomingtasks(context: Context,submode : String, name : String, criteria : String, date : String,ID_Branch : String , ID_Employee : String, ID_Lead_Details : String,strLeadValue :String) {
         try {
             upcomingtasksSetterGetter.value = UpcomingtasksModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -73,25 +73,46 @@ object UpcomingtasksRepository {
                     formateDate = formatter.format(parser.parse(date))
                 }
 
+
+//                {"ReqMode":"Pwq34Rtdxss=\n",
+//                    "SubMode":"vJ\/8asrP+O0=\n",
+//                    "BankKey":"\/mXqmq3ZMvs=\n",
+//                    "FK_Employee":"07\/ybAx1yS4=\n",
+//                    "FK_Company":"vJ\/8asrP+O0=\n",
+//                    "Token":"dBzn9i\/p2ON5pT6gcWQMYFd87vIMuxCbUyAQhyNQ7dBroLvCSiR7Lg==\n",
+//                    "Name":"j4rFcTOFBx0=\n",
+//                    "Todate":"j4rFcTOFBx0=\n",
+//                    "criteria":"j4rFcTOFBx0=\n",  1 Asc 2 Asc
+//                    "BranchCode":2,
+//                    "ID_TodoListLeadDetails":2}
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
+
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("24"))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(submode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
-              //  requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
+                //  requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(strLeadValue))
+                // requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(formateDate))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
+                requestObject1.put("BranchCode", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("ID_TodoListLeadDetails", ProdsuitApplication.encryptStart(ID_Lead_Details))
 
                 Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
-                Log.e("TAG","requestObject1   741     "+requestObject1)
+                Log.e("TAG","requestObject1   7412     "+requestObject1)
+                Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
+                Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
 
             } catch (e: Exception) {
                 e.printStackTrace()
