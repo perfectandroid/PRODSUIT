@@ -45,13 +45,14 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:icon="@drawable/applogo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.perfect.prodsuit.View.Activity.AddRemarkMultipleActivity"
@@ -108,11 +109,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name="com.perfect.prodsuit.View.Activity.CustomerRegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+<!--        <activity-->
+<!--            android:name="com.perfect.prodsuit.View.Activity.CustomerRegisterActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme.NoActionBar"-->
+<!--            android:windowSoftInputMode="stateHidden|adjustPan" />-->
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

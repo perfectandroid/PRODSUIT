@@ -22,7 +22,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@drawable/shape_header">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -36,10 +36,9 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="left"
-                        android:background="@color/color_activity_transparent"
                         android:padding="10dp"
                         android:src="@drawable/back_arro"
-                        android:tint="@color/black"
+                        android:tint="@color/white"
                         tools:ignore="UseAppTint" />
 
                 </LinearLayout>
@@ -56,12 +55,12 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
-                    android:text="Customer Ticket Report"
+                    android:text="Lead Report"
                     android:textAllCaps="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold"
-                    android:tint="@color/black" />
+                    android:tint="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
