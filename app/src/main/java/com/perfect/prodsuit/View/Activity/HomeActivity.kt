@@ -665,16 +665,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     }
 
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                            this@HomeActivity,
-                                            R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+//                                    val builder = AlertDialog.Builder(
+//                                            this@HomeActivity,
+//                                            R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
                                 }
                             } else {
 //                                Toast.makeText(
