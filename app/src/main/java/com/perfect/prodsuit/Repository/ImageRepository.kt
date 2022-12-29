@@ -40,7 +40,7 @@ object ImageRepository {
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
             progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setMessage("Loading please wait..");
+            progressDialog!!.setMessage("");
            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
                     R.drawable.progress))
             progressDialog!!.show()

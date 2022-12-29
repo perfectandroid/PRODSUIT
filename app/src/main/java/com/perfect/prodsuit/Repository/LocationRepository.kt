@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LocationModel
+import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import com.perfect.prodsuit.View.Activity.LocationActivity
 import okhttp3.OkHttpClient
@@ -24,6 +26,7 @@ object LocationRepository {
 
     val TAG = "LocationRepository"
     val locationSetterGetter = MutableLiveData<LocationModel>()
+    private var progressDialog: ProgressDialog? = null
 
     fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :  String,ID_LeadGenerate :  String): MutableLiveData<LocationModel> {
         getLocation(context,ID_LeadGenerateProduct,ID_LeadGenerate)
@@ -33,7 +36,16 @@ object LocationRepository {
     private fun getLocation(context: Context,ID_LeadGenerateProduct : String,ID_LeadGenerate :  String) {
         try {
             locationSetterGetter.value = LocationModel("")
+
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setMessage("");
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+                R.drawable.progress))
+            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -64,6 +76,7 @@ object LocationRepository {
 
                 Log.e(TAG,"  651 requestObject1     "+requestObject1)
             } catch (e: Exception) {
+                progressDialog!!.dismiss()
                 e.printStackTrace()
             }
             val body = RequestBody.create(
@@ -77,6 +90,7 @@ object LocationRepository {
                     Response<String>
                 ) {
                     try {
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.e(TAG,"  652 response     "+response.body())
                         val users = ArrayList<LocationModel>()
@@ -84,17 +98,20 @@ object LocationRepository {
                         val msg = users[0].message
                         locationSetterGetter.value = LocationModel(msg)
                     } catch (e: Exception) {
+                        progressDialog!!.dismiss()
                         e.printStackTrace()
                         Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         Log.e(TAG,"  653 Exception     "+e.toString())
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    progressDialog!!.dismiss()
                     Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     Log.e(TAG,"  654 onFailure     "+t.message)                }
             })
          }
         catch (e: Exception) {
+            progressDialog!!.dismiss()
             e.printStackTrace()
             Toast.makeText(context, ""+e.toString(), Toast.LENGTH_SHORT).show()
             Log.e(TAG,"  655 Exception     "+e.toString())
