@@ -1073,7 +1073,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                             Log.e(TAG,"8142    "+followUpTypeArrayList)
                                             Log.e(TAG,"81422    "+ActionMode)
 
-                                            if (ActionModeIntent!!.equals("1") || ActionModeIntent!!.equals("2") && ActiontypeFN == 0){
+                                            if ((ActionModeIntent!!.equals("1") || ActionModeIntent!!.equals("2")) && ActiontypeFN == 0){
                                                 for (i in 0 until followUpTypeArrayList.length()) {
                                                     val jsonObject = followUpTypeArrayList.getJSONObject(i)
                                                     Log.e(TAG,"8143    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
