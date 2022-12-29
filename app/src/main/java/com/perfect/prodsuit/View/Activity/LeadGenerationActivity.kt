@@ -3069,11 +3069,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
                                 val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
                                 //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                                 if (imgvupload1 != null) {
-                                    imgvupload1!!.setImageBitmap(myBitmap)
+                                    imgvupload1!!.setImageBitmap(converetdImage)
                                 }
-                                imgvupload1!!.setImageBitmap(myBitmap)
+                                imgvupload1!!.setImageBitmap(converetdImage)
 
                                 if (image1 != null) {
 
@@ -3085,11 +3086,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 destination = File(image2)
 
                                 val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
                                 //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
                                 if (imgvupload2 != null) {
-                                    imgvupload2!!.setImageBitmap(myBitmap)
+                                    imgvupload2!!.setImageBitmap(converetdImage)
                                 }
-                                imgvupload2!!.setImageBitmap(myBitmap)
+                                imgvupload2!!.setImageBitmap(converetdImage)
 
                                 if (image2 != null) {
 

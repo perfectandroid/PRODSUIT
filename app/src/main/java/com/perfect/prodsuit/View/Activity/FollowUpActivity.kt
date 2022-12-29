@@ -930,10 +930,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                             image1 = destination!!.getAbsolutePath()
                             destination = File(image1)
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
                             if (imgv_upload1 != null) {
-                                imgv_upload1!!.setImageBitmap(myBitmap)
+                                imgv_upload1!!.setImageBitmap(converetdImage)
                             }
-                            imgv_upload1!!.setImageBitmap(myBitmap)
+                            imgv_upload1!!.setImageBitmap(converetdImage)
                             if (image1 != null) {
                             }
                         }
@@ -941,10 +942,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                             image2 = destination!!.getAbsolutePath()
                             destination = File(image2)
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
                             if (imgv_upload2 != null) {
-                                imgv_upload2!!.setImageBitmap(myBitmap)
+                                imgv_upload2!!.setImageBitmap(converetdImage)
                             }
-                            imgv_upload2!!.setImageBitmap(myBitmap)
+                            imgv_upload2!!.setImageBitmap(converetdImage)
                             if (image2 != null) {
                             }
                         }
