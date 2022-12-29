@@ -4,14 +4,15 @@
 
 
 
-    <item
+    <!--<item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:title="Home"
         app:cnb_backgroundColor="@color/white"
         app:iconTint="@color/white"
+        android:visible="false"
         app:cnb_iconColor="@color/colorPrimary"
-        app:cnb_textColor="@color/colorPrimaryExtraDark" />
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />-->
 
     <item
         android:id="@+id/reminder"

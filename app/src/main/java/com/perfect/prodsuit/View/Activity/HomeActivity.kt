@@ -223,11 +223,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
-                    R.id.home -> {
-//                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
-//                        startActivity(i)
-                        chipNavigationBar!!.setItemSelected(R.id.home, true)
-                    }
+//                    R.id.home -> {
+////                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
+////                        startActivity(i)
+//                        chipNavigationBar!!.setItemSelected(R.id.home, true)
+//                    }
                     R.id.reminder -> {
                         setReminder()
 
@@ -744,6 +744,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
                 alertDialog.dismiss()
             }
+            alertDialog.setCancelable(false)
             alertDialog.show()
         }
         catch (e: Exception) {
