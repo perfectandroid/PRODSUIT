@@ -2668,8 +2668,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     else
                     {
                         val bitmap = BitmapFactory.decodeFile(image1)
+                        val converetdImage = getResizedBitmap(bitmap, 500)
                         val stream =  ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
                         } else {
@@ -2683,8 +2684,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     else
                     {
                         val bitmap = BitmapFactory.decodeFile(image2)
+                        val converetdImage = getResizedBitmap(bitmap, 500)
                         val stream =  ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
                         } else {
@@ -2712,6 +2714,20 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
         }
+    }
+
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+        var width = image.width
+        var height = image.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
     private fun convertSeconds(seconds: Int): String {
