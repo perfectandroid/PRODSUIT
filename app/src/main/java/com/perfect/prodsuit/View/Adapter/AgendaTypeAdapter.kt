@@ -49,6 +49,7 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                 Log.e(TAG,"IMAGE_URL 43   "+IMAGE_URLSP.getString("IMAGE_URL", null))
                 val imgPath = IMAGE_URLSP.getString("IMAGE_URL", null)+jsonObject!!.getString("ImageCode")
                 holder.tv_AgendaName.setText(jsonObject!!.getString("AgendaName"))
+                holder.tv_count.setText(jsonObject!!.getString("Count"))
                 PicassoTrustAll.getInstance(context)!!.load(imgPath).into(holder.img_Type)
                 holder.ll_type.setTag(position)
                 holder.ll_type.setOnClickListener(View.OnClickListener {
