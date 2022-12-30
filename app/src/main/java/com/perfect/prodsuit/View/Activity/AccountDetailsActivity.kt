@@ -1299,7 +1299,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                             //  val bytes = decodedString.toByteArray()
                                             val sdf = SimpleDateFormat("ddMMyyyyHHmmss")
                                             val datetime = sdf.format(Date())
-                                            destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                         //   destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                            destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ""+System.currentTimeMillis() + DocumentImageFormat)
 //                                    destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+datetime + DocumentImageFormat)
                                             val fo: FileOutputStream
                                             try {

@@ -40,6 +40,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     private var ReportMode:String?=""
     private var ID_Branch:String?=""
+    private var ID_Employee:String?=""
     private var strFromdate:String?=""
     private var strTodate:String?=""
     private var ID_Product:String?=""
@@ -93,6 +94,9 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         if (getIntent().hasExtra("ID_Branch")) {
             ID_Branch = intent.getStringExtra("ID_Branch")
         }
+        if (getIntent().hasExtra("ID_Employee")) {
+            ID_Employee = intent.getStringExtra("ID_Employee")
+        }
         if (getIntent().hasExtra("Fromdate")) {
             strFromdate = intent.getStringExtra("Fromdate")
         }
@@ -126,25 +130,25 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         Log.e(TAG,"ReportMode   107   "+ReportMode)
 
-        if (ReportMode.equals("1")){
-//            ActionListT
-            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
-        }
+//        if (ReportMode.equals("1")){
+////            ActionListT
+//            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+//        }
         if (ReportMode.equals("2")){
 //            FollowUpTicket
-            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+            getFollowUpTicketReport(ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
         if (ReportMode.equals("5")){
 //            NewListTicket
                getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
-
-        if (ReportMode.equals("4")){
-//            StatusList
-              getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
-
-        }
+//
+//        if (ReportMode.equals("4")){
+////            StatusList
+//              getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+//
+//        }
 
 
 
@@ -254,7 +258,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     }
 
 
-    private fun getFollowUpTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    private fun getFollowUpTicketReport(ReportMode: String?, ID_Branch: String?, ID_Employee : String? ,strFromdate: String?, strTodate: String?, ID_Product: String?,
                                           ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
 
         var laedGen = 0
@@ -267,7 +271,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                followUpTicketReportViewModel.getFollowUpTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                followUpTicketReportViewModel.getFollowUpTicketReport(this,ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -277,37 +281,37 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   2701   "+msg.length)
                             Log.e(TAG,"msg   2702   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("FollowUpListDetailsReport")
-                                followUpTicketReportArrayList = jobjt.getJSONArray("FollowUpListDetails")
-                                if (followUpTicketReportArrayList.length()>0){
-                                    Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
-                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
-                                    try {
-                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        // recyLeadGenReport!!.setHasFixedSize(true)
-                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
-                                        recyFollowUpTicketReport!!.adapter = adapter
-                                    }catch (e: Exception){
-                                        Log.e(TAG,"msg   2704   "+e.toString())
-                                    }
-
-
-                                }
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportDetailActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
+//                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("FollowUpListDetailsReport")
+//                                followUpTicketReportArrayList = jobjt.getJSONArray("FollowUpListDetails")
+//                                if (followUpTicketReportArrayList.length()>0){
+//                                    Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
+//                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
+//                                    try {
+//                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+//                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        // recyLeadGenReport!!.setHasFixedSize(true)
+//                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
+//                                        recyFollowUpTicketReport!!.adapter = adapter
+//                                    }catch (e: Exception){
+//                                        Log.e(TAG,"msg   2704   "+e.toString())
+//                                    }
+//
+//
+//                                }
+//
+//                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@TicketReportDetailActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+//                            }
                         } else {
                             Toast.makeText(
                                 applicationContext,
