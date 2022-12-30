@@ -1038,6 +1038,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun openBottomSheet(dateField1:TextInputEditText?,dateField2:TextInputEditText?) {
         // BottomSheet
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottomsheet_date_chooser, null)
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
@@ -1067,6 +1068,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             rad_last_3_month!!.isChecked = false
             rad_last_6_month!!.isChecked = false
             rad_last_12_month!!.isChecked = false
+
 
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)

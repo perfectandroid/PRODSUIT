@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_followReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Lead No"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtLeadNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Lead Date"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtLeadDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Customer"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Product/Project"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Action"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Action Type"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtActionType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Commited Date"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtCommitedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Assignee"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtAssignee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Completed Date"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtCompletedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Due Days"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtDueDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.2"
+                    android:text="Remarks"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/txtRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

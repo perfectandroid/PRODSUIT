@@ -677,7 +677,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             dialogCallStatus = Dialog(this)
             dialogCallStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogCallStatus!! .setContentView(R.layout.call_status_popup)
+            dialogCallStatus!! .setContentView(R.layout.status_popup)
             dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
         //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
@@ -2836,8 +2836,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                 val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
                                                 //LeadNumber
                                                 tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                                tv_label!!.setText("LeadGenerate Action")
-                                                tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
+                                                tv_label!!.setText("Lead No : ")
+                                                tv_leadid!!.setText(jobjt.getString("LeadNo"))
 
                                                 tv_succesok!!.setOnClickListener {
                                                     suceessDialog!!.dismiss()
