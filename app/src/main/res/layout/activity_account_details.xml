@@ -798,7 +798,7 @@
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical"
                                         tools:ignore="MissingConstraints"
-                                        android:visibility="gone">
+                                        android:visibility="visible">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -843,7 +843,73 @@
                                                     android:layout_height="wrap_content"
                                                     android:orientation="vertical">
 
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
 
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/leadno"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Lead Number"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoLeadNo"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1157,6 +1223,19 @@
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
+
+
+                                                    <!--                    </androidx.cardview.widget.CardView>-->
+
+                                                    <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                                                    <!--                        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                                                    <!--                        android:layout_width="match_parent"-->
+                                                    <!--                        android:layout_height="wrap_content"-->
+                                                    <!--                        android:backgroundTint="@color/white"-->
+                                                    <!--                        app:cardCornerRadius="3dp"-->
+                                                    <!--                        app:cardElevation="2dp"-->
+                                                    <!--                        app:cardUseCompatPadding="true">-->
+
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1174,7 +1253,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/leadno"
+                                                                android:src="@drawable/category_icon"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -1187,14 +1266,14 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Lead Number"
+                                                                    android:text="Category Name"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
                                                                     android:fontFamily="@font/myfont" />
 
                                                                 <TextView
-                                                                    android:id="@+id/txtInfoLeadNo"
+                                                                    android:id="@+id/txtInfoCategoryName"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:gravity="center_vertical"
@@ -1204,7 +1283,6 @@
                                                                     android:textColor="@color/greydark"
                                                                     android:textStyle="normal"
                                                                     android:fontFamily="@font/myfont" />
-
 
                                                             </LinearLayout>
 
@@ -1224,18 +1302,6 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
                                                         android:background="@color/grey"/>
-
-                                                    <!--                    </androidx.cardview.widget.CardView>-->
-
-                                                    <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
-                                                    <!--                        xmlns:app="http://schemas.android.com/apk/res-auto"-->
-                                                    <!--                        android:layout_width="match_parent"-->
-                                                    <!--                        android:layout_height="wrap_content"-->
-                                                    <!--                        android:backgroundTint="@color/white"-->
-                                                    <!--                        app:cardCornerRadius="3dp"-->
-                                                    <!--                        app:cardElevation="2dp"-->
-                                                    <!--                        app:cardUseCompatPadding="true">-->
-
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1389,72 +1455,7 @@
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:orientation="vertical">
 
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:gravity="center"
-                                                            android:orientation="horizontal">
-
-                                                            <ImageView
-                                                                android:layout_width="30dp"
-                                                                android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
-                                                                android:src="@drawable/category_icon"
-                                                                android:visibility="visible"/>
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:orientation="vertical">
-
-                                                                <TextView
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:layout_marginLeft="10dp"
-                                                                    android:gravity="center_vertical"
-                                                                    android:text="Category Name"
-                                                                    android:textColor="@color/black"
-                                                                    android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
-
-                                                                <TextView
-                                                                    android:id="@+id/txtInfoCategoryName"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
-                                                                    android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
-
-                                                            </LinearLayout>
-
-
-
-
-                                                        </LinearLayout>
-
-
-
-
-
-
-                                                    </LinearLayout>
-
-                                                    <View
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 

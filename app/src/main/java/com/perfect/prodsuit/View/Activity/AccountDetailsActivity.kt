@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -2514,6 +2513,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         val stream = ByteArrayOutputStream()
                                         decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
                                         Glide.with(this) .load(stream.toByteArray()).into(imgv_1!!)
+                                        crdv_1!!.setOnClickListener(View.OnClickListener {
+                                            zoomImage(stream)
+                                        })
 
                                     }
                                     if(!landmark2.equals(""))
@@ -2525,6 +2527,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         val stream = ByteArrayOutputStream()
                                         decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
                                         Glide.with(this) .load(stream.toByteArray()).into(imgv_2!!)
+                                        crdv_2!!.setOnClickListener(View.OnClickListener {
+                                            zoomImage(stream)
+                                        })
                                     }
 
                                 }
@@ -2562,6 +2567,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     .show()
             }
         }
+    }
+
+    private fun zoomImage(stream: ByteArrayOutputStream) {
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.alert_image_viewer, null)
+        dialogBuilder.setView(dialogView)
+
+        val image = dialogView.findViewById<View>(R.id.id_image) as ImageView
+        Glide.with(this) .load(stream.toByteArray()).into(image!!)
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
     }
 
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
