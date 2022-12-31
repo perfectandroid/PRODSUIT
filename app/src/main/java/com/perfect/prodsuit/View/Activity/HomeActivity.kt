@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.location.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
@@ -233,10 +234,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                     }
                     R.id.logout -> {
-                        doLogout()
+                       // doLogout()
+                        LogoutBottomSheet()
                     }
                     R.id.quit -> {
-                        quit()
+                       // quit()
+                        QuitBottomSheet()
                     }
                 }
             }
@@ -377,14 +380,65 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(Intent.createChooser(shareIntent, "Invite this App to your friends"))
             }
             R.id.nav_logout -> {
-                doLogout()
+//                doLogout()
+                LogoutBottomSheet()
             }
             R.id.nav_quit -> {
-                quit()
+//                quit()
+                QuitBottomSheet()
             }
         }
         drawer_layout!!.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun LogoutBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.logout_popup, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btnNo)
+        val btnYes = view.findViewById<Button>(R.id.btnYes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+            chipNavigationBar!!.setItemSelected(R.id.home, true)
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            dologoutchanges()
+            startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+    private fun QuitBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.quit_popup, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btn_No)
+        val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+            chipNavigationBar!!.setItemSelected(R.id.home, true)
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            finish()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity()
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
     private fun doLogout() {
@@ -694,7 +748,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     override fun onBackPressed() {
-        quit()
+//        quit()
+        QuitBottomSheet()
     }
 
 
