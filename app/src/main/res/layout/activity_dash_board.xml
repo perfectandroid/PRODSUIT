@@ -117,7 +117,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llfromdate"
@@ -128,22 +128,33 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
                                     <!--                                    android:background="@color/dot_dark_screen3"-->
                                     <TextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
                                         android:layout_weight=".8"
                                         android:fontFamily="@font/myfont"
-                                        android:gravity="center"
                                         android:text="Leads"
                                         android:textAllCaps="true"
                                         android:textColor="@color/black"
                                         android:textSize="18dp"
+                                        android:textStyle="bold" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".8"
+                                        android:fontFamily="@font/myfont"
+                                        android:layout_marginTop="-8dp"
+                                        android:gravity="center"
+                                        android:text="IN PERCENTAGE"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/greydark"
+                                        android:textSize="8dp"
                                         android:textStyle="bold" />
 
                                     <TextView
@@ -178,18 +189,14 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-                                    <LinearLayout
-                                        android:id="@+id/id_lin1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
 
-                                        <com.github.mikephil.charting.charts.PieChart
-                                            android:id="@+id/pieChartLeads"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_margin="2dp"
-                                            android:visibility="visible" />
-                                    </LinearLayout>
+                                    <com.github.mikephil.charting.charts.PieChart
+                                        android:id="@+id/pieChartLeads"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="150dp"
+                                        android:layout_margin="2dp"
+                                        android:layout_weight="1"
+                                        android:visibility="visible" />
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -303,8 +310,8 @@
                             </LinearLayout>
 
                             <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@color/grey" />
@@ -313,20 +320,19 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
                                 android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
                                     <!--                                    android:background="@color/blue"-->
                                     <TextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginLeft="15dp"
                                         android:layout_weight=".8"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center"
@@ -335,6 +341,18 @@
                                         android:textColor="@color/black"
                                         android:textSize="18dp"
                                         android:textStyle="bold" />
+                                    <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:fontFamily="@font/myfont"
+                                    android:layout_marginTop="-8dp"
+                                    android:gravity="center"
+                                    android:text="IN PERCENTAGE"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/greydark"
+                                    android:textSize="8dp"
+                                    android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/tv_leadStatusTotal"
@@ -368,19 +386,14 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-                                    <LinearLayout
-                                        android:id="@+id/id_lin2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
                                     <com.github.mikephil.charting.charts.PieChart
                                         android:id="@+id/pieChart"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_height="150dp"
                                         android:layout_alignParentTop="true"
                                         android:layout_margin="5dp"
                                         android:layout_weight="1"
                                         android:visibility="visible" />
-                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -509,16 +522,15 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
                                 android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
                                 <!--                                android:background="@color/purple_700"-->
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="15dp"
                                     android:layout_weight=".8"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center"
@@ -526,6 +538,18 @@
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="18dp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:fontFamily="@font/myfont"
+                                    android:layout_marginTop="-8dp"
+                                    android:gravity="center"
+                                    android:text="IN COUNT"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/greydark"
+                                    android:textSize="8dp"
                                     android:textStyle="bold" />
 
                                 <TextView
