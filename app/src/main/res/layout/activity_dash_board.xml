@@ -117,7 +117,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/llfromdate"
@@ -178,14 +178,18 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-
-                                    <com.github.mikephil.charting.charts.PieChart
-                                        android:id="@+id/pieChartLeads"
+                                    <LinearLayout
+                                        android:id="@+id/id_lin1"
                                         android:layout_width="match_parent"
-                                        android:layout_height="150dp"
-                                        android:layout_margin="2dp"
-                                        android:layout_weight="1"
-                                        android:visibility="visible" />
+                                        android:layout_height="wrap_content">
+
+                                        <com.github.mikephil.charting.charts.PieChart
+                                            android:id="@+id/pieChartLeads"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="2dp"
+                                            android:visibility="visible" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -299,8 +303,8 @@
                             </LinearLayout>
 
                             <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@color/grey" />
@@ -364,14 +368,19 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
+                                    <LinearLayout
+                                        android:id="@+id/id_lin2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
                                     <com.github.mikephil.charting.charts.PieChart
                                         android:id="@+id/pieChart"
                                         android:layout_width="match_parent"
-                                        android:layout_height="150dp"
+                                        android:layout_height="match_parent"
                                         android:layout_alignParentTop="true"
                                         android:layout_margin="5dp"
                                         android:layout_weight="1"
                                         android:visibility="visible" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"

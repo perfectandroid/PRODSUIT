@@ -3,45 +3,36 @@ package com.perfect.prodsuit.View.Activity
 import android.app.*
 import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
-import androidx.lifecycle.ViewModelProvider
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.*
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.R
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimalRemover
 import com.perfect.prodsuit.Model.ScoreBar
-import com.perfect.prodsuit.Model.ScoreLine
 import com.perfect.prodsuit.Model.ScorePie
+import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BarChartAdapter
 import com.perfect.prodsuit.View.Adapter.LineChartAdapter
+import com.perfect.prodsuit.View.Adapter.PieChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.data.PieData
-
-import com.github.mikephil.charting.data.PieDataSet
-import com.perfect.prodsuit.Helper.DecimalRemover
-import com.perfect.prodsuit.View.Adapter.PieChartAdapter
-import java.text.DecimalFormat
 
 
 class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
@@ -148,14 +139,14 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                 Log.e(TAG, "msg   100   " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
-                                    Log.v("asdasdssss","in")
+                                    Log.v("asdasdssss", "in")
                                     // val ss = "[{\"Count\": 10,\"Fileds\": \"Hot\"},{\"Count\": 25,\"Fileds\": \"Cool\"},{\"Count\": 55,\"Fileds\": \"Warm\"}]"
                                     //  chartLineArrayList = JSONArray(ss)
 
                                     val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
                                     leadDashArrayList =
                                         jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                    Log.v("asdasdssss","size  "+leadDashArrayList.length())
+                                    Log.v("asdasdssss", "size  " + leadDashArrayList.length())
                                     tv_leadTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  125   " + leadDashArrayList)
 
@@ -318,7 +309,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  264   " + leadStagesDashArrayList)
 
-                                   // setPieChart()
+                                    // setPieChart()
                                     setBarchart()
                                     val recycPieChart =
                                         findViewById(R.id.recycPieChart) as RecyclerView
@@ -707,7 +698,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
 
         val pieEntries: ArrayList<PieEntry> = ArrayList()
-        val label = ""
+        val label = "%"
         pieChart.setUsePercentValues(false)
         pieChart.description.text = ""
         pieChart.isDrawHoleEnabled = true
@@ -715,7 +706,13 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         pieChart.setDrawEntryLabels(false)
         //adding padding
 //        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
-        pieChart.setUsePercentValues(false)
+        //pieChart.setUsePercentValues(false)
+        val layout: LinearLayout = findViewById(R.id.id_lin2)
+        val width: Int = layout.getWidth()
+        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
+        params.height = width
+        params.width = width
+        layout.layoutParams = params
         pieChart.isRotationEnabled = false
         pieChart.setDrawEntryLabels(false)
         pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
@@ -734,9 +731,10 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
         for (i in 0 until scoreListPie.size) {
             val score = scoreListPie[i]
+            Log.v("dfsdererer", "values " + score.Piescore)
             Log.e(TAG, "Piescore  594   " + score.Piescore.toFloat())
             //typeAmountMap[""] = score.Piescore
-            pieEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), "%"))
 
         }
 
@@ -746,7 +744,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         colorsStage.add(resources.getColor(R.color.leadstatus_color3))
 
         val pieDataSet = PieDataSet(pieEntries, label)
-        pieDataSet.setValueFormatter(DecimalRemover())
+        // pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
         pieDataSet.setColors(colorsStage)
         val pieData = PieData(pieDataSet)
@@ -772,14 +770,23 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
 
         val pieEntries: ArrayList<PieEntry> = ArrayList()
-        val label = ""
+        val label = "%"
         pieChartLead.setUsePercentValues(false)
+        // Gets linearlayout
+        // Gets linearlayout
+        val layout: LinearLayout = findViewById(R.id.id_lin1)
+        val width: Int = layout.getWidth()
+        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
+        params.height = width
+        params.width = width
+        layout.layoutParams = params
+
         pieChartLead.description.text = ""
         pieChartLead.isDrawHoleEnabled = true
         pieChartLead.setTouchEnabled(false)
         pieChartLead.setDrawEntryLabels(false)
         //adding padding
-       // pieChartLead.setExtraOffsets(20f, 0f, 20f, 20f)
+        // pieChartLead.setExtraOffsets(20f, 0f, 20f, 20f)
         pieChartLead.setUsePercentValues(false)
         pieChartLead.isRotationEnabled = false
         pieChartLead.setDrawEntryLabels(false)
@@ -790,7 +797,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         //initializing data
 
         //initializing data
-        val typeAmountMap: MutableMap<String, Int> = HashMap()
+        val typeAmountMap: MutableMap<String, Float> = HashMap()
 //        typeAmountMap["Toys"] = 200
 //        typeAmountMap["Snacks"] = 230
 //        typeAmountMap["Clothes"] = 100
@@ -802,7 +809,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             Log.v("dsfsdfd333", "ss  " + score.Piescore)
             Log.e(TAG, "Piescore  594   " + score.Piescore.toFloat())
             typeAmountMap[""] = score.Piescore
-            pieEntries.add(PieEntry(score.Piescore.toFloat(), ""))
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), "%"))
 
         }
 
@@ -812,7 +819,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         colorsStage.add(resources.getColor(R.color.line_color3))
 
         val pieDataSet = PieDataSet(pieEntries, label)
-        pieDataSet.setValueFormatter(DecimalRemover())
+        //pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
         pieDataSet.setColors(colorsStage)
         val pieData = PieData(pieDataSet)
@@ -834,7 +841,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             //apply your logic
             var jsonObject = leadStatusDashArrayList.getJSONObject(i)
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
-            scoreListPie.add(ScorePie("", jsonObject.getString("Count").toFloat().toInt()))
+            scoreListPie.add(ScorePie("", jsonObject.getString("Count").toFloat()))
         }
 
         return scoreListPie
@@ -847,7 +854,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             var jsonObject = leadDashArrayList.getJSONObject(i)
             Log.v("asdasdssss", "size2  " + jsonObject.getString("Count"))
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
-            scoreListPieLead.add(ScorePie("", jsonObject.getString("Count").toFloat().toInt()))
+            scoreListPieLead.add(ScorePie("", jsonObject.getString("Count").toFloat()))
         }
 
         return scoreListPieLead
