@@ -2783,6 +2783,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 +"\n ID_Department              :  "+ID_Department
                 +"\n ID_NextEmployee            :  "+ID_NextEmployee)
 
+        Log.e(TAG,"2786   "+encode1)
+        Log.e(TAG,"2786   "+encode1)
+
 
 
         saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,

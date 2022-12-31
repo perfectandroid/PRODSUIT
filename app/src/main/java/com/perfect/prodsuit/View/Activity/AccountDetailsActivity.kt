@@ -2363,12 +2363,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                        latitude = jobjt!!.getString("LocationLatitude")
-                                        longitude = jobjt!!.getString("LocationLongitude")
+//                                        latitude = jobjt!!.getString("LocationLatitude")
+//                                        longitude = jobjt!!.getString("LocationLongitude")
+
+                                        latitude = jobjt!!.getString("LocationLongitude")
+                                        longitude = jobjt!!.getString("LocationLatitude")
                                         Log.e("LocationDetails", latitude + "\n" + longitude)
 
-                                        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
-                                        fetchLocation()
+                                        if (!latitude.equals("") || !longitude.equals("")){
+
+                                            fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
+                                            fetchLocation()
+                                        }
+
 
 
                                     } else {

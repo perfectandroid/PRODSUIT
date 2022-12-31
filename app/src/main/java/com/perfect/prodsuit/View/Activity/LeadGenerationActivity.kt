@@ -6812,6 +6812,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        var saveLeadGenDet = 0
         try {
 
+            Log.e(TAG, "encode1   4759   " + encode1 )
             Log.e(TAG, "strDate   4759   " + strDate + "   " + strFollowupdate)
 
 
