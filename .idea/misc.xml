@@ -140,6 +140,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_subdocument.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_subimage.xml" value="0.2796875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_subinfo.xml" value="0.30052083333333335" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.30092592592592593" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.2760416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2791666666666667" />
@@ -156,6 +157,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_document_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.2630208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.36666666666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followupticket_report.xml" value="0.296875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.31354166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_history.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.3416666666666667" />
@@ -164,6 +166,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_notification.xml" value="0.3175925925925926" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_post_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_reason.xml" value="0.346875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_report_name.xml" value="0.23177083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_submedia.xml" value="0.3416666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.27037037037037037" />
@@ -174,6 +177,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_leadfilter.xml" value="0.3333333333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_messages.xml" value="0.34322916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_remark.xml" value="0.1734375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report.xml" value="0.32864583333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report_followup.xml" value="0.32864583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.34322916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/call_status_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.2916666666666667" />

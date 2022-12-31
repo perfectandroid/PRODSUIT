@@ -9,9 +9,9 @@ import com.perfect.prodsuit.Repository.NewListTicketReportRepository
 class NewListTicketReportViewModel : ViewModel() {
 
     var newListTicketReportData: MutableLiveData<NewListTicketReportModel>? = null
-    fun getNewListTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    fun getNewListTicketReport(context: Context,ReportMode: String?, ID_Branch: String?,ID_Employee : String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
                                ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) : MutableLiveData<NewListTicketReportModel>? {
-        newListTicketReportData = NewListTicketReportRepository.getServicesApiCall(context,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        newListTicketReportData = NewListTicketReportRepository.getServicesApiCall(context,ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         return newListTicketReportData
     }
 }

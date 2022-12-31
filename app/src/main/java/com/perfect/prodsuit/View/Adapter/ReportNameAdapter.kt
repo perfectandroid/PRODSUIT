@@ -19,6 +19,7 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
     internal val TAG : String = "ReportNameAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
+    var pos = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -34,9 +35,22 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-                val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtReportName.text        = jsonObject!!.getString("ReportName")
+
+
+                if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5")){
+                    holder.llReportName!!.visibility = View.GONE
+                    Log.e(TAG,"onBindViewHolder   10512   ")
+                }
+                else{
+                    pos++
+                    holder.txtsino.text        = pos.toString()
+                    holder.txtReportName.text        = jsonObject!!.getString("ReportName")
+                }
+
+
+
+
+
 //                if (position % 2 == 0){
 //                    holder.llbranch!!.setBackgroundColor(context.getColor(R.color.greylight))
 //                }

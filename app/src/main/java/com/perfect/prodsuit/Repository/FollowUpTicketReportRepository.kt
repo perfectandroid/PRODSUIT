@@ -34,6 +34,7 @@ object FollowUpTicketReportRepository {
     private fun getFollowUpTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, ID_Employee : String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
                                         ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
         try {
+            followUpTicketReportSetterGetter.value =FollowUpTicketReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -109,7 +110,7 @@ object FollowUpTicketReportRepository {
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(strFromdate))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(strTodate))
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
@@ -128,6 +129,7 @@ object FollowUpTicketReportRepository {
 //                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
 //                requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
 
+                Log.e(TAG,"ReportMode   77   "+ID_Branch)
                 Log.e(TAG,"ReportMode   77   "+ReportMode)
                 Log.e(TAG,"requestObject1   77   "+requestObject1)
 
