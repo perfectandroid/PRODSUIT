@@ -1303,6 +1303,7 @@
                                                         android:layout_height="1dp"
                                                         android:background="@color/grey"/>
                                                     <LinearLayout
+                                                        android:id="@+id/ll_projectVis"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
@@ -1357,14 +1358,14 @@
 
                                                         </LinearLayout>
 
-
+                                                        <View
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="1dp"
+                                                            android:background="@color/grey"/>
 
                                                     </LinearLayout>
 
-                                                    <View
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1378,6 +1379,7 @@
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
                                                     <LinearLayout
+                                                        android:id="@+id/ll_productVis"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
@@ -1435,14 +1437,14 @@
 
 
 
-
+                                                        <View
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="1dp"
+                                                            android:background="@color/grey"/>
 
                                                     </LinearLayout>
 
-                                                    <View
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 

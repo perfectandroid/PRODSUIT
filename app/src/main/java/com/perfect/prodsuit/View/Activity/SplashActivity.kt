@@ -38,6 +38,13 @@ class SplashActivity : AppCompatActivity() {
 //    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
 //    val BANK_KEY = "-500"
 
+    ////    LIVE 31.12.2022
+//    val CERT_NAME = "prodsuitlive.pem"
+//    val BASE_URL = "https://103.50.212.195/PerfectWebERPAPI/api/"
+//    val IMAGE_URL = "https://103.50.212.195/PerfectWebERPAPI/"
+//    val BANK_KEY = "-101"
+
+
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel

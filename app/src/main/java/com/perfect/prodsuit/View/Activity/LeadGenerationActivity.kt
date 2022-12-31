@@ -329,6 +329,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var Customer_Mode: String? = "0"
         var CusNameTitle: String? = ""
         var ID_Customer: String? = ""
+        var Customer_Type: String? = ""
         var Customer_Name: String? = ""
         var Customer_Mobile: String? = ""
         var Customer_Email: String? = ""
@@ -505,6 +506,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         Customer_Mode = "0"
         ID_Customer = ""
+        Customer_Type = ""
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
@@ -4178,6 +4180,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             custDetailMode = "1"
             ID_Customer = ""
+            Customer_Type = ""
             edt_customer!!.setText("")
             txtcustomer!!.text = Cust_Name
 
@@ -5763,6 +5766,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             // custDetailMode = "1"
             Customer_Mode = "1"  // SEARCH
             ID_Customer = jsonObject.getString("ID_Customer")
+            Customer_Type = jsonObject.getString("Customer_Type")
             Customer_Name = jsonObject.getString("CusName")
             Customer_Mobile = jsonObject.getString("CusPhnNo")
             Customer_Email = jsonObject.getString("CusEmail")
@@ -6930,7 +6934,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         strLatitude!!,
                         strLongitue!!,
                         encode1,
-                        encode2
+                        encode2,
+                        Customer_Mode!!,
+                        Customer_Type!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

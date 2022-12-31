@@ -1654,6 +1654,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var txtNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
         var txtActionType1 = findViewById<TextView>(R.id.txtInfoActionType)
 
+        var ll_projectVis = findViewById<LinearLayout>(R.id.ll_projectVis)
+        var ll_productVis = findViewById<LinearLayout>(R.id.ll_productVis)
+
 
         llInfoDetail.visibility = View.GONE
 
@@ -1692,12 +1695,22 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtEmail1.setText(jsonObject1.getString("LgCusEmail"))
                                         txtAssigned1.setText(jsonObject1.getString("AssignedTo"))
                                         txtLeadNo1.setText(jsonObject1.getString("LgLeadNo"))
-                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
-                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
                                         txtCategoryName1.setText(jsonObject1.getString("CatName"))
                                         txtNextAction1.setText(jsonObject1.getString("NxtActnName"))
                                         txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
                                         txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
+
+                                        if (jsonObject1.getString("ProjectName").equals("")){
+                                            ll_projectVis.visibility = View.GONE
+                                            ll_productVis.visibility = View.VISIBLE
+                                        }else{
+                                            ll_projectVis.visibility = View.VISIBLE
+                                            ll_productVis.visibility = View.GONE
+                                        }
+
+                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
+                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
+
                                     }
                                 }
                             } else {
