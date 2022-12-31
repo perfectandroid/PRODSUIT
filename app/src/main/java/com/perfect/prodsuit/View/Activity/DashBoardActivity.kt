@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalRemover
 import com.perfect.prodsuit.Model.ScoreBar
@@ -518,13 +519,15 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         val barDataSet = BarDataSet(entries, "")
         // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         barDataSet.setColors(colors)
-        barDataSet.setValueFormatter(DecimalRemover())
+        //barDataSet.setValueFormatter(DecimalRemover())
 
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
         data.setValueTextColor(Color.BLACK)
         barChart.data = data
-
+        barChart.setOnClickListener(View.OnClickListener {
+            ShowEnalargeGraphBar(entries)
+        })
 
 
         barChart.invalidate()
@@ -615,88 +618,8 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setPieChart() {
-
-//        https://intensecoder.com/piechart-tutorial-using-mpandroidchart-in-kotlin/
-
         scoreListPie.clear()
         scoreListPie = getScoreList2()
-//
-//        pieChart.setUsePercentValues(true)
-//        pieChart.description.text = ""
-//        //hollow pie chart
-//        pieChart.isDrawHoleEnabled = false
-//        pieChart.setTouchEnabled(false)
-//        pieChart.setDrawEntryLabels(false)
-//        //adding padding
-//        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
-//        pieChart.setUsePercentValues(true)
-//        pieChart.isRotationEnabled = false
-//        pieChart.setDrawEntryLabels(false)
-//        pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-//        pieChart.legend.isWordWrapEnabled = true
-//
-//        ////
-//
-//        pieChart.setUsePercentValues(true)
-//        val dataEntries = ArrayList<PieEntry>()
-//        dataEntries.add(PieEntry(72f, "Android"))
-//        dataEntries.add(PieEntry(26f, "Ios"))
-//        dataEntries.add(PieEntry(2f, "Other"))
-//        dataEntries.add(PieEntry(29f, "gfghg"))
-
-//        val dataEntries: ArrayList<PieEntry> = ArrayList()
-
-//        val dataEntries = ArrayList<PieEntry>()
-//        for (i in 0 until scoreListPie.size){
-//       // for (i in scoreListPie.indices) {
-//            val score = scoreListPie[i]
-//
-//            Log.e(TAG,"Piescore  594   "+score.Piescore.toFloat())
-//        //    dataEntries.add(PieEntry(i.toFloat(), score.Piescore.toFloat()))
-//            dataEntries.add(PieEntry(score.Piescore.toFloat(), ""))
-////            dataEntries.add(PieEntry(2f, "ere"))
-//////            dataEntries.add(PieEntry(2f, "Other"))
-//////            dataEntries.add(PieEntry(2f, "Other"))
-//        }
-
-
-//        Log.e(TAG,"Piescore  5941   "+dataEntries)
-//        val colors: ArrayList<Int> = ArrayList()
-//        colors.add(Color.parseColor("#4DD0E1"))
-//        colors.add(Color.parseColor("#FFF176"))
-//        colors.add(Color.parseColor("#FF8A65"))
-//        colors.add(Color.parseColor("#FFF176"))
-//        colors.add(Color.parseColor("#FF8A65"))
-//
-//        val dataSet = PieDataSet(dataEntries, "")
-//        Log.e(TAG,"dataSet  614   "+dataSet)
-//        val data = PieData(dataSet)
-//        Log.e(TAG,"dataSet  6141   "+data)
-//        // In Percentage
-//        data.setValueFormatter(PercentFormatter())
-//        dataSet.sliceSpace = 4f
-//        dataSet.colors = colors
-//        pieChart.data = data
-//        data.setValueTextSize(15f)
-//       // pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
-//        pieChart.animateY(1400, Easing.EaseInOutQuad)
-//
-//        //create hole in center
-//        pieChart.holeRadius = 58f
-//        pieChart.transparentCircleRadius = 61f
-//        pieChart.isDrawHoleEnabled = true
-//        pieChart.setHoleColor(Color.WHITE)
-//
-//
-//        //add text in center
-//        pieChart.setDrawCenterText(false);
-//        pieChart.centerText = "Lead Stages"
-//
-//
-//
-//        pieChart.invalidate()
-
-
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = "%"
         pieChart.setUsePercentValues(false)
@@ -704,31 +627,21 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         pieChart.isDrawHoleEnabled = true
         pieChart.setTouchEnabled(false)
         pieChart.setDrawEntryLabels(false)
+
         //adding padding
 //        pieChart.setExtraOffsets(20f, 0f, 20f, 20f)
         //pieChart.setUsePercentValues(false)
-        val layout: LinearLayout = findViewById(R.id.id_lin2)
-        val width: Int = layout.getWidth()
-        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
-        params.height = width
-        params.width = width
-        layout.layoutParams = params
+//        val layout: LinearLayout = findViewById(R.id.id_lin2)
+//        val width: Int = layout.getWidth()
+//        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
+//        params.height = width
+//        params.width = width
+//        layout.layoutParams = params
         pieChart.isRotationEnabled = false
         pieChart.setDrawEntryLabels(false)
         pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChart.legend.isWordWrapEnabled = true
-
-
-        //initializing data
-
-        //initializing data
         val typeAmountMap: MutableMap<String, Int> = HashMap()
-//        typeAmountMap["Toys"] = 200
-//        typeAmountMap["Snacks"] = 230
-//        typeAmountMap["Clothes"] = 100
-//        typeAmountMap["Stationary"] = 500
-//        typeAmountMap["Phone"] = 50
-
         for (i in 0 until scoreListPie.size) {
             val score = scoreListPie[i]
             Log.v("dfsdererer", "values " + score.Piescore)
@@ -744,11 +657,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         colorsStage.add(resources.getColor(R.color.leadstatus_color3))
 
         val pieDataSet = PieDataSet(pieEntries, label)
-        // pieDataSet.setValueFormatter(DecimalRemover())
+        pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
         pieDataSet.setColors(colorsStage)
         val pieData = PieData(pieDataSet)
-        // pieData.setValueFormatter(PercentFormatter())
+       // pieData.setValueFormatter(PercentFormatter())
         //    pieData.setValueFormatter(DecimalRemover(DecimalFormat("########")))
         pieData.setDrawValues(true)
 
@@ -756,8 +669,168 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         l.isEnabled = false
 
         pieChart.data = pieData
+        pieChart.setOnClickListener(View.OnClickListener {
+            ShowEnalargeGraph(pieEntries, 2)
+        })
+
 
         pieChart.invalidate()
+    }
+
+    private fun ShowEnalargeGraph(pieEntries: ArrayList<PieEntry>, graphType: Int) {
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.alert_pie_chart, null)
+        dialogBuilder.setView(dialogView)
+        var heading: TextView = dialogView.findViewById<TextView>(R.id.heading)
+        pieChart = dialogView.findViewById<PieChart>(R.id.pieChartLeads)
+        if (graphType == 1) {
+            heading.text = "LEADS"
+            pieChart.setUsePercentValues(false)
+            pieChart.description.text = ""
+            pieChart.isDrawHoleEnabled = true
+            pieChart.isRotationEnabled=true
+            pieChart.setTouchEnabled(false)
+            pieChart.setDrawEntryLabels(false)
+            pieChart.isRotationEnabled = false
+            pieChart.setDrawEntryLabels(false)
+            pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            pieChart.legend.isWordWrapEnabled = true
+            val colorsStage: ArrayList<Int> = ArrayList()
+            colorsStage.add(resources.getColor(R.color.line_color1))
+            colorsStage.add(resources.getColor(R.color.line_color2))
+            colorsStage.add(resources.getColor(R.color.line_color3))
+            val pieDataSet = PieDataSet(pieEntries, "")
+            pieDataSet.valueTextSize = 12f
+            pieDataSet.setValueFormatter(DecimalRemover())
+            pieDataSet.setColors(colorsStage)
+            val pieData = PieData(pieDataSet)
+            pieData.setDrawValues(true)
+            val l: Legend = pieChart.getLegend()
+            l.isEnabled = false
+            pieChart.data = pieData
+            pieChart.invalidate()
+            val recyceChart =
+                dialogView.findViewById(R.id.recycleView) as RecyclerView
+            val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+            recyceChart!!.layoutManager =
+                lLayout as RecyclerView.LayoutManager?
+            val adapter =
+                LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
+            recyceChart!!.adapter = adapter
+        } else if (graphType == 2) {
+            heading.text = "LEAD STATUS"
+            pieChart.setUsePercentValues(false)
+            pieChart.description.text = ""
+            pieChart.isDrawHoleEnabled = true
+            pieChart.setTouchEnabled(false)
+            pieChart.setDrawEntryLabels(false)
+            pieChart.isRotationEnabled = false
+            pieChart.setDrawEntryLabels(false)
+            pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            pieChart.legend.isWordWrapEnabled = true
+            val colorsStage: ArrayList<Int> = ArrayList()
+            colorsStage.add(resources.getColor(R.color.leadstatus_color1))
+            colorsStage.add(resources.getColor(R.color.leadstatus_color2))
+            colorsStage.add(resources.getColor(R.color.leadstatus_color3))
+            val pieDataSet = PieDataSet(pieEntries, "")
+            pieDataSet.valueTextSize = 12f
+            pieDataSet.setColors(colorsStage)
+            pieDataSet.setValueFormatter(DecimalRemover())
+            val pieData = PieData(pieDataSet)
+            pieData.setDrawValues(true)
+            val l: Legend = pieChart.getLegend()
+            l.isEnabled = false
+            pieChart.data = pieData
+            pieChart.invalidate()
+            val recyceChart =
+                dialogView.findViewById(R.id.recycleView) as RecyclerView
+            val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+            recyceChart!!.layoutManager =
+                lLayout as RecyclerView.LayoutManager?
+            val adapter = BarChartAdapter(
+                this@DashBoardActivity,
+                leadStatusDashArrayList
+            )
+            recyceChart!!.adapter = adapter
+        }
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog.show()
+    }
+
+    private fun ShowEnalargeGraphBar(entries: ArrayList<BarEntry>) {
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.alert_bar_chart, null)
+        dialogBuilder.setView(dialogView)
+        var heading: TextView = dialogView.findViewById<TextView>(R.id.heading)
+        barChart = dialogView.findViewById<BarChart>(R.id.barChart)
+        heading.text = "LEAD STAGES"
+        barChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = barChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+
+        //remove right y-axis
+        barChart.axisRight.isEnabled = false
+
+        //remove legend
+        barChart.legend.isEnabled = false
+        barChart!!.setScaleEnabled(false)
+        //remove description label
+        barChart.description.isEnabled = false
+
+
+        //add animation
+        barChart.animateY(1000)
+
+        // to draw label on xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+        xAxis.valueFormatter = MyAxisFormatterBar()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.WHITE
+
+
+//        barChart.legend.textSize = 15f
+//        barChart.legend.textColor = Color.RED
+
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        /////////////////////
+
+        val barDataSet = BarDataSet(entries, "")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        barChart.data = data
+        barChart.invalidate()
+        val recycleView =
+            dialogView.findViewById(R.id.recycleView) as RecyclerView
+        val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+        recycleView!!.layoutManager =
+            lLayout as RecyclerView.LayoutManager?
+        val adapter = PieChartAdapter(
+            this@DashBoardActivity,
+            leadStagesDashArrayList
+        )
+        recycleView!!.adapter = adapter
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog.show()
     }
 
     private fun setPieChartLead() {
@@ -774,12 +847,12 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         pieChartLead.setUsePercentValues(false)
         // Gets linearlayout
         // Gets linearlayout
-        val layout: LinearLayout = findViewById(R.id.id_lin1)
-        val width: Int = layout.getWidth()
-        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
-        params.height = width
-        params.width = width
-        layout.layoutParams = params
+//        val layout: LinearLayout = findViewById(R.id.id_lin1)
+//        val width: Int = layout.getWidth()
+//        val params: LinearLayout.LayoutParams = layout.layoutParams as LinearLayout.LayoutParams
+//        params.height = width
+//        params.width = width
+//        layout.layoutParams = params
 
         pieChartLead.description.text = ""
         pieChartLead.isDrawHoleEnabled = true
@@ -792,17 +865,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         pieChartLead.setDrawEntryLabels(false)
         pieChartLead.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChartLead.legend.isWordWrapEnabled = true
-
-
-        //initializing data
-
-        //initializing data
         val typeAmountMap: MutableMap<String, Float> = HashMap()
-//        typeAmountMap["Toys"] = 200
-//        typeAmountMap["Snacks"] = 230
-//        typeAmountMap["Clothes"] = 100
-//        typeAmountMap["Stationary"] = 500
-//        typeAmountMap["Phone"] = 50
 
         for (i in 0 until scoreListPieLead.size) {
             val score = scoreListPieLead[i]
@@ -819,9 +882,10 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         colorsStage.add(resources.getColor(R.color.line_color3))
 
         val pieDataSet = PieDataSet(pieEntries, label)
-        //pieDataSet.setValueFormatter(DecimalRemover())
+        pieDataSet!!.valueFormatter = PercentFormatter()
         pieDataSet.valueTextSize = 12f
         pieDataSet.setColors(colorsStage)
+        pieDataSet.setValueFormatter(DecimalRemover())
         val pieData = PieData(pieDataSet)
         // pieData.setValueFormatter(PercentFormatter())
         //    pieData.setValueFormatter(DecimalRemover(DecimalFormat("########")))
@@ -831,6 +895,9 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         l.isEnabled = false
 
         pieChartLead.data = pieData
+        pieChartLead.setOnClickListener(View.OnClickListener {
+            ShowEnalargeGraph(pieEntries, 1)
+        })
 
         pieChartLead.invalidate()
     }

@@ -9,7 +9,7 @@ class DecimalRemover : ValueFormatter() {
         return if (value == 0f) {
             "0"
         } else {
-            value.roundToInt().toString() + ""
+            value.toString() + "%"
         }
     }
 }
