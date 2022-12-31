@@ -70,12 +70,20 @@ object LeadDashRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("38"))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
 
@@ -86,6 +94,7 @@ object LeadDashRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.v("dsfsdd333","body "+requestObject1.toString())
             val call = apiService.getLeadsDashBoardDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
