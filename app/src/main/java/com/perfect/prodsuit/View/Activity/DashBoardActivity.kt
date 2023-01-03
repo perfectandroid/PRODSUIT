@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.*
@@ -637,7 +638,9 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 //        params.height = width
 //        params.width = width
 //        layout.layoutParams = params
-        pieChart.isRotationEnabled = false
+        pieChart.isRotationEnabled = true
+        pieChart.setRotationAngle(0f)
+        pieChart.animateY(1400, Easing.EaseInOutQuad)
         pieChart.setDrawEntryLabels(false)
         pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChart.legend.isWordWrapEnabled = true
@@ -692,7 +695,13 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             pieChart.isRotationEnabled=true
             pieChart.setTouchEnabled(false)
             pieChart.setDrawEntryLabels(false)
-            pieChart.isRotationEnabled = false
+            pieChart.setRotationAngle(0f)
+            pieChart.animateY(1400, Easing.EaseInOutQuad)
+            // enable rotation of the chart by touch
+            // enable rotation of the chart by touch
+            pieChart.setRotationEnabled(true)
+            pieChart.setHighlightPerTapEnabled(true)
+            pieChart.isRotationEnabled = true
             pieChart.setDrawEntryLabels(false)
             pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
             pieChart.legend.isWordWrapEnabled = true
@@ -725,7 +734,9 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             pieChart.isDrawHoleEnabled = true
             pieChart.setTouchEnabled(false)
             pieChart.setDrawEntryLabels(false)
-            pieChart.isRotationEnabled = false
+            pieChart.isRotationEnabled = true
+            pieChart.setRotationAngle(0f)
+            pieChart.animateY(1400, Easing.EaseInOutQuad)
             pieChart.setDrawEntryLabels(false)
             pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
             pieChart.legend.isWordWrapEnabled = true
@@ -861,7 +872,9 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         //adding padding
         // pieChartLead.setExtraOffsets(20f, 0f, 20f, 20f)
         pieChartLead.setUsePercentValues(false)
-        pieChartLead.isRotationEnabled = false
+        pieChartLead.isRotationEnabled = true
+        pieChartLead.setRotationAngle(0f)
+        pieChartLead.animateY(1400, Easing.EaseInOutQuad)
         pieChartLead.setDrawEntryLabels(false)
         pieChartLead.legend.orientation = Legend.LegendOrientation.VERTICAL
         pieChartLead.legend.isWordWrapEnabled = true
