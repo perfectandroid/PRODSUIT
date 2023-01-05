@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.MpinModel
@@ -114,7 +115,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         when(v.id){
             R.id.tvLogout->{
                 try {
-                    doLogout()
+                  //  doLogout()
+                    LogoutBottomSheet()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -744,8 +746,9 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             }
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
-                dologoutchanges()
-                startActivity(Intent(this@MpinActivity, WelcomeActivity::class.java))
+               // dologoutchanges()
+                Config.logOut(context)
+                startActivity(Intent(this@MpinActivity, SplashActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -762,6 +765,18 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         val loginmobileEditer = loginmobileSP.edit()
         loginmobileEditer.putString("Loginmobilenumber", "")
         loginmobileEditer.commit()
+
+        val companyCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF17, 0)
+        val companyCodeEditer = companyCodeSP.edit()
+        companyCodeEditer.putString("companyCode", "")
+        companyCodeEditer.commit()
+
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        val commonAppEditer = commonAppSP.edit()
+        commonAppEditer.putString("commonApp", "")
+        commonAppEditer.commit()
+
+
     }
 
     private fun clearAll() {
@@ -841,6 +856,31 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                     .show()
             }
         }
+    }
+
+    private fun LogoutBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.logout_popup, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btnNo)
+        val btnYes = view.findViewById<Button>(R.id.btnYes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            // dologoutchanges()
+            Config.logOut(context)
+            startActivity(Intent(this@MpinActivity, SplashActivity::class.java))
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
 }

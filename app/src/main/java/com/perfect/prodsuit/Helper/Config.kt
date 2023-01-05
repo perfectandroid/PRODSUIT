@@ -45,20 +45,29 @@ object Config {
     const val SHARED_PREF12 = "TestingBankKey"
     const val SHARED_PREF13 = "Testingsslcertificate"
     const val SHARED_PREF14 = "Loginmobilenumber"
-    const val SHARED_PREF15 = "callRecord"
+    const val SHARED_PREF15 = "TestingImageURL"
     const val SHARED_PREF16 = "BroadCall"
 
-    const val SHARED_PREF17 = "LS_LocLatitude"
-    const val SHARED_PREF18 = "LS_LocLongitude"
-    const val SHARED_PREF19 = "LS_LocationName"
-    const val SHARED_PREF20 = "LS_FK_Employee"
-    const val SHARED_PREF21 = "LS_Name"
-    const val SHARED_PREF22 = "LS_Address"
-    const val SHARED_PREF23 = "LS_LoginDate"
-    const val SHARED_PREF24 = "LS_LoginTime"
-    const val SHARED_PREF25 = "LS_LoginMode"
-    const val SHARED_PREF26 = "LS_LoginStauats"
-    const val SHARED_PREF27 = "LS_DutyStatus"
+    const val SHARED_PREF17 ="companyCode"
+    const val SHARED_PREF18 ="commonApp"
+    const val SHARED_PREF19 ="AppIconImageCode"
+    const val SHARED_PREF20 ="CompanyLogoImageCode"
+    const val SHARED_PREF21 ="ProductName"
+    const val SHARED_PREF22 ="PlayStoreLink"
+    const val SHARED_PREF23 ="mpinStatus"
+
+
+//    const val SHARED_PREF17 = "LS_LocLatitude"
+//    const val SHARED_PREF18 = "LS_LocLongitude"
+//    const val SHARED_PREF19 = "LS_LocationName"
+//    const val SHARED_PREF20 = "LS_FK_Employee"
+//    const val SHARED_PREF21 = "LS_Name"
+//    const val SHARED_PREF22 = "LS_Address"
+//    const val SHARED_PREF23 = "LS_LoginDate"
+//    const val SHARED_PREF24 = "LS_LoginTime"
+//    const val SHARED_PREF25 = "LS_LoginMode"
+//    const val SHARED_PREF26 = "LS_LoginStauats"
+//    const val SHARED_PREF27 = "LS_DutyStatus"
 
     const val SHARED_PREF28 = "Notifctn_Id"
     const val SHARED_PREF29 = "IMAGE_URL"
@@ -79,6 +88,7 @@ object Config {
     const val SHARED_PREF43 = "IsAdmin"
     const val SHARED_PREF44 = "ID_User"  // FK_User
     const val SHARED_PREF45 = "BranchName"
+
 
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
@@ -228,6 +238,245 @@ object Config {
         v.postDelayed({
             v.isEnabled = true
         },3000)
+    }
+
+
+    fun logOut(context : Context) {
+
+        val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
+        val loginEditer = loginSP.edit()
+        loginEditer.putString("loginsession", "No")
+        loginEditer.commit()
+
+        val FK_EmployeeSP = context.getSharedPreferences(SHARED_PREF1, 0)
+        val FK_EmployeeEditer = FK_EmployeeSP.edit()
+        FK_EmployeeEditer.putString("FK_Employee", "")
+        FK_EmployeeEditer.commit()
+
+        val UserNameSP = context.getSharedPreferences(SHARED_PREF2, 0)
+        val UserNameEditer = UserNameSP.edit()
+        UserNameEditer.putString("UserName", "")
+        UserNameEditer.commit()
+
+        val AddressSP = context.getSharedPreferences(SHARED_PREF3, 0)
+        val AddressEditer = AddressSP.edit()
+        AddressEditer.putString("Address", "")
+        AddressEditer.commit()
+
+        val MobileNumberSP = context.getSharedPreferences(SHARED_PREF4, 0)
+        val MobileNumberEditer = MobileNumberSP.edit()
+        MobileNumberEditer.putString("MobileNumber", "")
+        MobileNumberEditer.commit()
+
+        val TokenSP = context.getSharedPreferences(SHARED_PREF5, 0)
+        val TokenEditer = TokenSP.edit()
+        TokenEditer.putString("Token", "")
+        TokenEditer.commit()
+
+        val EmailSP = context.getSharedPreferences(SHARED_PREF6, 0)
+        val EmailEditer = EmailSP.edit()
+        EmailEditer.putString("Email", "")
+        EmailEditer.commit()
+
+        val BASE_URLSP = context.getSharedPreferences(SHARED_PREF7, 0)
+        val BASE_URLEditer = BASE_URLSP.edit()
+        BASE_URLEditer.putString("BASE_URL", "")
+        BASE_URLEditer.commit()
+
+        /////////
+
+        val IMAGE_URLSP = context.getSharedPreferences(SHARED_PREF29, 0)
+        val IMAGE_URLEditer = IMAGE_URLSP.edit()
+        IMAGE_URLEditer.putString("IMAGE_URL", "")
+        IMAGE_URLEditer.commit()
+
+        ///////////////
+
+
+        val CERT_NAMESP = context.getSharedPreferences(SHARED_PREF8, 0)
+        val CERT_NAMEEditer = CERT_NAMESP.edit()
+        CERT_NAMEEditer.putString("CERT_NAME", "")
+        CERT_NAMEEditer.commit()
+
+        val BANK_KEYESP = context.getSharedPreferences(SHARED_PREF9, 0)
+        val BANK_KEYEditer = BANK_KEYESP.edit()
+        BANK_KEYEditer.putString("BANK_KEY", "")
+        BANK_KEYEditer.commit()
+
+
+        val TestingURLSP = context.getSharedPreferences(SHARED_PREF10, 0)
+        val TestingURLEditer = TestingURLSP.edit()
+        TestingURLEditer.putString("TestingURL", "")
+        TestingURLEditer.commit()
+
+
+        val TestingMobileNoSP = context.getSharedPreferences(SHARED_PREF11, 0)
+        val TestingMobileNoEditer = TestingMobileNoSP.edit()
+        TestingMobileNoEditer.putString("TestingMobileNo", "")
+        TestingMobileNoEditer.commit()
+
+        val TestingBankKeySP = context.getSharedPreferences(SHARED_PREF12, 0)
+        val TestingBankKeyEditer = TestingBankKeySP.edit()
+        TestingBankKeyEditer.putString("TestingBankKey", "")
+        TestingBankKeyEditer.commit()
+
+        val TestingsslcertificateSP = context.getSharedPreferences(SHARED_PREF13, 0)
+        val TestingsslcertificateEditer = TestingsslcertificateSP.edit()
+        TestingsslcertificateEditer.putString("Testingsslcertificate", "")
+        TestingsslcertificateEditer.commit()
+
+        val loginmobileSP = context.getSharedPreferences(SHARED_PREF14, 0)
+        val loginmobileEditer = loginmobileSP.edit()
+        loginmobileEditer.putString("Loginmobilenumber", "")
+        loginmobileEditer.commit()
+
+
+        val TestingImageURLSP = context.getSharedPreferences(SHARED_PREF15, 0)
+        val TestingImageURLEditer = TestingImageURLSP.edit()
+        TestingImageURLEditer.putString("TestingImageURL", "")
+        TestingImageURLEditer.commit()
+
+        val BroadCallSP = context.getSharedPreferences(SHARED_PREF16, 0)
+        val BroadCallEditer = BroadCallSP.edit()
+        BroadCallEditer.putString("BroadCall", "")
+        BroadCallEditer.putString("ID_LeadGenerate", "")
+        BroadCallEditer.putString("ID_LeadGenerateProduct", "")
+        BroadCallEditer.putString("FK_Employee", "")
+        BroadCallEditer.putString("AssignedTo", "")
+        BroadCallEditer.commit()
+
+
+        val companyCodeSP = context.getSharedPreferences(SHARED_PREF17, 0)
+        val companyCodeEditer = companyCodeSP.edit()
+        companyCodeEditer.putString("companyCode", "")
+        companyCodeEditer.commit()
+
+        val commonAppSP = context.getSharedPreferences(SHARED_PREF18, 0)
+        val commonAppEditer = commonAppSP.edit()
+        commonAppEditer.putString("commonApp", "")
+        commonAppEditer.commit()
+
+
+        val AppIconImageCodeSP = context.getSharedPreferences(SHARED_PREF19, 0)
+        val AppIconImageCodeEditer = AppIconImageCodeSP.edit()
+        AppIconImageCodeEditer.putString("AppIconImageCode", "")
+        AppIconImageCodeEditer.commit()
+
+        val CompanyLogoImageCodeSP = context.getSharedPreferences(SHARED_PREF20, 0)
+        val CompanyLogoImageCodeEditer = CompanyLogoImageCodeSP.edit()
+        CompanyLogoImageCodeEditer.putString("CompanyLogoImageCode", "")
+        CompanyLogoImageCodeEditer.commit()
+
+        val ProductNameSP = context.getSharedPreferences(SHARED_PREF21, 0)
+        val ProductNameEditer = ProductNameSP.edit()
+        ProductNameEditer.putString("ProductName", "")
+        ProductNameEditer.commit()
+
+        val PlayStoreLinkSP = context.getSharedPreferences(SHARED_PREF22, 0)
+        val PlayStoreLinkEditer = PlayStoreLinkSP.edit()
+        PlayStoreLinkEditer.putString("PlayStoreLink", "")
+        PlayStoreLinkEditer.commit()
+
+        val mpinStatusSP = context.getSharedPreferences(SHARED_PREF23, 0)
+        val mpinStatusEditer = mpinStatusSP.edit()
+        mpinStatusEditer.putString("mpinStatus", "")
+        mpinStatusEditer.commit()
+
+
+        /////////////////////////
+
+
+        val LOGIN_DATETIMESP = context.getSharedPreferences(SHARED_PREF30, 0)
+        val LOGIN_DATETIMEEditer = LOGIN_DATETIMESP.edit()
+        LOGIN_DATETIMEEditer.putString("LOGIN_DATETIME", "")
+        LOGIN_DATETIMEEditer.commit()
+
+
+        val ABOUTUSSP = context.getSharedPreferences(SHARED_PREF31, 0)
+        val ABOUTUSEditer = ABOUTUSSP.edit()
+        ABOUTUSEditer.putString("ABOUTUS", "")
+        ABOUTUSEditer.commit()
+
+
+        val ResellerNameSP = context.getSharedPreferences(SHARED_PREF32, 0)
+        val ResellerNameEditer = ResellerNameSP.edit()
+        ResellerNameEditer.putString("ResellerName","")
+        ResellerNameEditer.commit()
+
+
+        val ContactNumberSP = context.getSharedPreferences(SHARED_PREF33, 0)
+        val ContactNumberEditer = ContactNumberSP.edit()
+        ContactNumberEditer.putString("ContactNumber","")
+        ContactNumberEditer.commit()
+
+
+        val ContactEmailSP = context.getSharedPreferences(SHARED_PREF34, 0)
+        val ContactEmailEditer = ContactEmailSP.edit()
+        ContactEmailEditer.putString("ContactEmail","")
+        ContactEmailEditer.commit()
+
+
+        val ContactAddressSP = context.getSharedPreferences(SHARED_PREF35, 0)
+        val ContactAddressEditer = ContactAddressSP.edit()
+        ContactAddressEditer.putString("ContactAddress","")
+        ContactAddressEditer.commit()
+
+
+        val UserCodeSP = context.getSharedPreferences(SHARED_PREF36, 0)
+        val UserCodeEditer = UserCodeSP.edit()
+        UserCodeEditer.putString("UserCode", "")
+        UserCodeEditer.commit()
+
+        val FK_BranchSP = context.getSharedPreferences(SHARED_PREF37, 0)
+        val FK_BranchEditer = FK_BranchSP.edit()
+        FK_BranchEditer.putString("FK_Branch", "")
+        FK_BranchEditer.commit()
+
+        val FK_BranchTypeSP = context.getSharedPreferences(SHARED_PREF38, 0)
+        val FK_BranchTypeEditer = FK_BranchTypeSP.edit()
+        FK_BranchTypeEditer.putString("FK_BranchType","")
+        FK_BranchTypeEditer.commit()
+
+        val FK_CompanySP = context.getSharedPreferences(SHARED_PREF39, 0)
+        val FK_CompanyEditer = FK_CompanySP.edit()
+        FK_CompanyEditer.putString("FK_Company", "")
+        FK_CompanyEditer.commit()
+
+        val FK_BranchCodeUserSP = context.getSharedPreferences(SHARED_PREF40, 0)
+        val FK_BranchCodeUserEditer = FK_BranchCodeUserSP.edit()
+        FK_BranchCodeUserEditer.putString("FK_BranchCodeUser", "")
+        FK_BranchCodeUserEditer.commit()
+
+        val FK_UserRoleSP = context.getSharedPreferences(SHARED_PREF41, 0)
+        val FK_UserRoleEditer = FK_UserRoleSP.edit()
+        FK_UserRoleEditer.putString("FK_UserRole", "")
+        FK_UserRoleEditer.commit()
+
+        val UserRoleSP = context.getSharedPreferences(SHARED_PREF42, 0)
+        val UserRoleEditer = UserRoleSP.edit()
+        UserRoleEditer.putString("UserRole", "")
+        UserRoleEditer.commit()
+
+        val IsAdminSP = context.getSharedPreferences(SHARED_PREF43, 0)
+        val IsAdminEditer = IsAdminSP.edit()
+        IsAdminEditer.putString("IsAdmin", "")
+        IsAdminEditer.commit()
+
+        val ID_UserSP = context.getSharedPreferences(SHARED_PREF44, 0)
+        val ID_UserEditer = ID_UserSP.edit()
+        ID_UserEditer.putString("ID_User", "")
+        ID_UserEditer.commit()
+
+        val BranchNameSP = context.getSharedPreferences(SHARED_PREF45, 0)
+        val BranchNameEditer = BranchNameSP.edit()
+        BranchNameEditer.putString("BranchName", "")
+        BranchNameEditer.commit()
+
+
+
+
+
+
     }
 
 

@@ -407,8 +407,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
         btnYes.setOnClickListener {
             dialog.dismiss()
-            dologoutchanges()
-            startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+           // dologoutchanges()
+            Config.logOut(context)
+            startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
         }
         dialog.setCancelable(false)
         dialog!!.setContentView(view)
@@ -456,8 +457,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
-                dologoutchanges()
-                startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+//                dologoutchanges()
+                Config.logOut(context)
+                startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -466,14 +468,27 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun dologoutchanges() {
+
         val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+
+
         val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
         val loginmobileEditer = loginmobileSP.edit()
         loginmobileEditer.putString("Loginmobilenumber", "")
         loginmobileEditer.commit()
+
+        val companyCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF17, 0)
+        val companyCodeEditer = companyCodeSP.edit()
+        companyCodeEditer.putString("companyCode", "")
+        companyCodeEditer.commit()
+
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        val commonAppEditer = commonAppSP.edit()
+        commonAppEditer.putString("commonApp", "")
+        commonAppEditer.commit()
     }
 
     private fun quit() {

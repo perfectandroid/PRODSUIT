@@ -2,13 +2,12 @@ package com.perfect.prodsuit.Repository
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.MaintananceMessageModel
+import com.perfect.prodsuit.Model.CommonAppModel
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -16,21 +15,20 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.*
+import java.util.ArrayList
 
-object MaintanaceMessageRepository {
+object CommonAppRepository {
 
-    var TAG = "MaintanaceMessageRepository"
-    val maintanaceSetterGetter = MutableLiveData<MaintananceMessageModel>()
-
-    fun getServicesApiCall(context: Context): MutableLiveData<MaintananceMessageModel> {
-        maintananceMessage(context)
-        return maintanaceSetterGetter
+    val TAG = "CommonAppRepository"
+    val commonAppSetterGetter = MutableLiveData<CommonAppModel>()
+    fun getServicesApiCall(context: Context): MutableLiveData<CommonAppModel> {
+        getCommonAppData(context)
+        return commonAppSetterGetter
     }
 
-    private fun maintananceMessage(context: Context) {
+    private fun getCommonAppData(context: Context) {
         try {
-            maintanaceSetterGetter.value = MaintananceMessageModel("")
+            commonAppSetterGetter.value = CommonAppModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -48,13 +46,12 @@ object MaintanaceMessageRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("11"))
 
-                Log.e(TAG,"541  requestObject1   "+BASE_URLSP.getString("BASE_URL", null))
-                Log.e(TAG,"541  requestObject1   "+requestObject1)
-                Log.e(TAG,"541  requestObject1   "+requestObject1)
+//                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("1"))
+
+                Log.e(TAG,"requestObject1   53   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -62,36 +59,29 @@ object MaintanaceMessageRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getMaintenanceMessage(body)
+            val call = apiService.getCommonAppData(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"541  response   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val users = ArrayList<MaintananceMessageModel>()
-                        users.add(MaintananceMessageModel(response.body()))
+                        Log.i("Splashresposne",response.body())
+                        val users = ArrayList<CommonAppModel>()
+                        users.add(CommonAppModel(response.body()))
                         val msg = users[0].message
-                        maintanaceSetterGetter.value = MaintananceMessageModel(msg)
+                        commonAppSetterGetter.value = CommonAppModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-                    Log.e(TAG,"541  response   "+t.message)
                 }
             })
-         }
+        }
         catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG,"541  response   "+e.toString())
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
-
 }
-
