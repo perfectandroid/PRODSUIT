@@ -88,6 +88,7 @@ object MaintanaceMessageRepository {
          }
         catch (e: Exception) {
             e.printStackTrace()
+            Log.e(TAG,"541  response   "+e.toString())
             Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }

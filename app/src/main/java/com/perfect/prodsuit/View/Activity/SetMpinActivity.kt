@@ -556,6 +556,14 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                             )
                                             LOGIN_DATETIMEEditer.commit()
 
+
+                                            val mpinStatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF23, 0)
+                                            val mpinStatusEditer = mpinStatusSP.edit()
+                                            mpinStatusEditer.putString("mpinStatus", "true")
+                                            mpinStatusEditer.commit()
+
+
+
                                             val i = Intent(
                                                 this@SetMpinActivity,
                                                 HomeActivity::class.java

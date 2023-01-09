@@ -151,8 +151,10 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("LgFollowupDuration", ProdsuitApplication.encryptStart(strCallDuration))
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitude))
-                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
-                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
+//                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
+//                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
+                requestObject1.put("LocationLandMark1", encode1)
+                requestObject1.put("LocationLandMark2", encode2)
 
 
                 Log.e(TAG,"requestObject1   1581   "+requestObject1)

@@ -25,15 +25,16 @@ object FollowUpTicketReportRepository {
     val followUpTicketReportSetterGetter = MutableLiveData<FollowUpTicketReportModel>()
     val TAG: String = "FollowUpTicketReportRepository"
 
-    fun getServicesApiCall(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    fun getServicesApiCall(context: Context,ReportMode: String?, ID_Branch: String?, ID_Employee : String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
                            ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?): MutableLiveData<FollowUpTicketReportModel> {
-        getFollowUpTicketReport(context,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+        getFollowUpTicketReport(context,ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         return followUpTicketReportSetterGetter
     }
 
-    private fun getFollowUpTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    private fun getFollowUpTicketReport(context: Context,ReportMode: String?, ID_Branch: String?, ID_Employee : String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
                                         ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
         try {
+            followUpTicketReportSetterGetter.value =FollowUpTicketReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -76,29 +77,59 @@ object FollowUpTicketReportRepository {
 //                "ActStatus":"1",
 //                "GroupId:"1"
 
+//                {"ReqMode":"e3xPo5Wjitk=\n",
+//                    "BankKey":"\/mXqmq3ZMvs=\n",
+//                    "Token":"jwonpNTplCKVqnZAinpI9GnYv21u\/NhK1ounzlHPDHaQqA1pDZoXDQ==\n",
+//                    "ReportMode":"4loivAI89ZU=",
+//                    "FromDate":"NB77ckLdG0x49IqlJwEJ4A==",
+//                    "Todate":"NB77ckLdG0wB1g3Lm6HPjA==",
+//                    "FK_Product":"KZtbclVmL7w=",
+//                    "FK_Branch":"8Ld7pH+WkK0=",
+//                    "FK_Employee":"KZtbclVmL7w=",
+//                    "FK_Priority":"KZtbclVmL7w=",
+//                    "FK_Company":"vJ/8asrP+O0=",
+//                    "FK_BranchCodeUser":"8Ld7pH+WkK0=",
+//                    "EntrBy":"ULGdkc8LeQE=",
+//                    "Status":"KZtbclVmL7w=",
+//                    "FK_CollectedBy":"KZtbclVmL7w="}
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+            //    val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("53"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("ReportMode", ProdsuitApplication.encryptStart(ReportMode))
-                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("Todate", ProdsuitApplication.encryptStart(strTodate))
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(strFromdate))
-                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("FK_Action", ProdsuitApplication.encryptStart(ID_NextAction))
-                requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
+                requestObject1.put("Todate", ProdsuitApplication.encryptStart(strTodate))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
-                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
-                requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("Status", ProdsuitApplication.encryptStart(ID_Status))
+                requestObject1.put("FK_CollectedBy", ProdsuitApplication.encryptStart("0"))
 
+
+
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+//                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
+//                requestObject1.put("FK_Action", ProdsuitApplication.encryptStart(ID_NextAction))
+//                requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
+//                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
+//                requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
+
+                Log.e(TAG,"ReportMode   77   "+ID_Branch)
                 Log.e(TAG,"ReportMode   77   "+ReportMode)
                 Log.e(TAG,"requestObject1   77   "+requestObject1)
 

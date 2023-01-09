@@ -204,6 +204,15 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
 
+        loadLoginEmpDetails()
+
+
+
+
+    }
+
+    private fun loadLoginEmpDetails() {
+
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
@@ -213,8 +222,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
         ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
         tie_Branch!!.setText(BranchSP.getString("BranchName", null))
-
-
     }
 
     private fun setRegViews() {
@@ -1031,6 +1038,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun openBottomSheet(dateField1:TextInputEditText?,dateField2:TextInputEditText?) {
         // BottomSheet
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottomsheet_date_chooser, null)
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
@@ -1060,6 +1068,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             rad_last_3_month!!.isChecked = false
             rad_last_6_month!!.isChecked = false
             rad_last_12_month!!.isChecked = false
+
 
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
@@ -2311,25 +2320,25 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             ReportMode = jsonObject.getString("ReportMode")
             tie_ReportName!!.setText(jsonObject.getString("ReportName"))
 
-            if (ReportMode.equals("1")) {
-//                ActionListT
-                til_FollowUpAction!!.visibility = View.VISIBLE
-                til_FollowUpType!!.visibility = View.VISIBLE
-            }
+//            if (ReportMode.equals("1")) {
+////                ActionListT
+//                til_FollowUpAction!!.visibility = View.VISIBLE
+//                til_FollowUpType!!.visibility = View.VISIBLE
+//            }
             if (ReportMode.equals("2")) {
 //                FollowUpTicket
-                til_FollowUpAction!!.visibility = View.VISIBLE
-                til_FollowUpType!!.visibility = View.VISIBLE
+//                til_FollowUpAction!!.visibility = View.VISIBLE
+//                til_FollowUpType!!.visibility = View.VISIBLE
             }
-            if (ReportMode.equals("4")) {
-//                StatusList
-                til_FollowUpAction!!.visibility = View.GONE
-                til_FollowUpType!!.visibility = View.GONE
-            }
+//            if (ReportMode.equals("4")) {
+////                StatusList
+//                til_FollowUpAction!!.visibility = View.GONE
+//                til_FollowUpType!!.visibility = View.GONE
+//            }
             if (ReportMode.equals("5")) {
 //                NewListTicket
-                til_FollowUpAction!!.visibility = View.GONE
-                til_FollowUpType!!.visibility = View.GONE
+//                til_FollowUpAction!!.visibility = View.GONE
+//                til_FollowUpType!!.visibility = View.GONE
             }
 
         }
@@ -2341,6 +2350,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             Log.e(TAG, "ID_Branch   " + jsonObject.getString("ID_Branch"))
             ID_Branch = jsonObject.getString("ID_Branch")
             tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+            ID_Employee = ""
+            tie_EmployeeName!!.setText("")
 
 
         }
@@ -2457,6 +2469,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         ID_Status = ""
         GroupId = ""
 
+        loadLoginEmpDetails()
+
     }
 
     private fun validateData(v: View) {
@@ -2468,7 +2482,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             Config.snackBars(context, v, "Select Report Name")
         } else if (ID_Branch.equals("")) {
             Config.snackBars(context, v, "Select Branch")
-        } else if (tie_FromDate!!.text.toString().equals("")) {
+        }
+        else if (ID_Employee.equals("")) {
+            Config.snackBars(context, v, "Select Employee")
+        }else if (tie_FromDate!!.text.toString().equals("")) {
             Config.snackBars(context, v, "Select From Date")
         } else if (tie_ToDate!!.text.toString().equals("")) {
             Config.snackBars(context, v, "Select To Date")
@@ -2536,6 +2553,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         intent.putExtra("ReportName", tie_ReportName!!.text.toString())
         intent.putExtra("ReportMode", ReportMode)
         intent.putExtra("ID_Branch", ID_Branch)
+        intent.putExtra("ID_Employee", ID_Employee)
         intent.putExtra("Fromdate", strFromDate)
         intent.putExtra("Todate", strToDate)
         intent.putExtra("ID_Product", ID_Product)

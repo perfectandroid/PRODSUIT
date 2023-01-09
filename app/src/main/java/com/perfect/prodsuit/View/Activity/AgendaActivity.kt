@@ -559,8 +559,9 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                         try {
                             val msg = todolistSetterGetter.message
                             if (msg!!.length > 0) {
-                                rv_todolist!!.adapter  =null
+
                                 Log.e(TAG,"getTodoList   524   "+msg)
+                                Log.e(TAG,"getTodoList   524   "+toDoDet)
                                 if (toDoDet == 0){
                                     toDoDet++
 
@@ -581,17 +582,14 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                         adapter.setClickListener(this@AgendaActivity)
 
 
-//
-//                                        Log.e(TAG,"agendaTypeArrayList   5521   "+agendaTypeArrayList)
-////                                        agendaTypeArrayList.put(0,"fff")
-//
-//                                        Log.e(TAG,"agendaTypeArrayList   552   "+agendaTypeArrayList)
-//                                       var jsonObject = agendaTypeArrayList.getJSONObject(0)
-//                                        jsonObject.put("AgendaName","ss")
-//                                        Log.e(TAG,"agendaTypeArrayList   553   "+agendaTypeArrayList)
-//                                        val adapter1 = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
-//                                        recyAgendaType!!.adapter = adapter1
-//                                        adapter1.setClickListener(this@AgendaActivity)
+                                        Log.e(TAG,"agendaTypeArrayList   5521   "+agendaTypeArrayList)
+                                        Log.e(TAG,"agendaTypeArrayList   552   "+agendaTypeArrayList.length())
+                                       var jsonObject = agendaTypeArrayList.getJSONObject(0)
+                                        jsonObject.put("Count",todoArrayList.length())
+                                        Log.e(TAG,"agendaTypeArrayList   553   "+agendaTypeArrayList)
+                                        val adapter1 = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
+                                        recyAgendaType!!.adapter = adapter1
+                                        adapter1.setClickListener(this@AgendaActivity)
 
 
                                     } else {
@@ -1046,8 +1044,6 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                 rv_todolist!!.visibility  =View.VISIBLE
                 rv_todolist!!.adapter = null
                 toDoDet = 0
-
-
                 getTodoList()
             }
             else if (Id_Agenda.equals("2")){

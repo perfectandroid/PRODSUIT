@@ -273,4 +273,11 @@ interface ApiInterface {
 
     @POST("UserValidations/EmployeeAllDetails")
     fun getEmployeeAllDetails(@Body body: RequestBody): Call<String>
+
+    @POST("AppDetails/GetAppType")
+    fun getCommonAppData(@Body body: RequestBody): Call<String>
+
+    @POST("AppDetails/GetCompanyCode")
+    fun getCompanyCode(@Body body: RequestBody): Call<String>
+
 }

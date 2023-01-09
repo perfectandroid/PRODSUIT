@@ -35,7 +35,7 @@ class LineChartAdapter(internal var context: Context, internal var jsonArray: JS
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
                 val pos = position+1
                 holder.tv_lineBox.setBackgroundResource(color[position])
-                holder.tv_lineName.text        = jsonObject!!.getString("Fileds")
+                holder.tv_lineName.text        = jsonObject!!.getString("Fileds")+" ( "+jsonObject!!.getString("Count")+"% )"
 
 
             }

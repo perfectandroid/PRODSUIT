@@ -9,16 +9,15 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ActionListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupTicketReportAdapter
@@ -30,7 +29,7 @@ import org.json.JSONObject
 import java.net.MalformedURLException
 import java.net.URL
 
-class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
+class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
     val TAG : String = "TicketReportDetailActivity"
     private var progressDialog: ProgressDialog? = null
@@ -40,6 +39,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     private var ReportMode:String?=""
     private var ID_Branch:String?=""
+    private var ID_Employee:String?=""
     private var strFromdate:String?=""
     private var strTodate:String?=""
     private var ID_Product:String?=""
@@ -70,6 +70,9 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var statusListTicketReportArrayList : JSONArray
     var recyStatusListTicketReport  : RecyclerView? = null
 
+    var followList = 0
+    var newList = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -92,6 +95,9 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
         if (getIntent().hasExtra("ID_Branch")) {
             ID_Branch = intent.getStringExtra("ID_Branch")
+        }
+        if (getIntent().hasExtra("ID_Employee")) {
+            ID_Employee = intent.getStringExtra("ID_Employee")
         }
         if (getIntent().hasExtra("Fromdate")) {
             strFromdate = intent.getStringExtra("Fromdate")
@@ -126,25 +132,27 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         Log.e(TAG,"ReportMode   107   "+ReportMode)
 
-        if (ReportMode.equals("1")){
-//            ActionListT
-            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
-        }
+//        if (ReportMode.equals("1")){
+////            ActionListT
+//            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+//        }
         if (ReportMode.equals("2")){
 //            FollowUpTicket
-            getFollowUpTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+            followList = 0
+            getFollowUpTicketReport(ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
 
         if (ReportMode.equals("5")){
 //            NewListTicket
-               getNewListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+            newList = 0
+               getNewListTicketReport(ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
         }
-
-        if (ReportMode.equals("4")){
-//            StatusList
-              getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
-
-        }
+//
+//        if (ReportMode.equals("4")){
+////            StatusList
+//              getStatusListReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
+//
+//        }
 
 
 
@@ -254,10 +262,10 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     }
 
 
-    private fun getFollowUpTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    private fun getFollowUpTicketReport(ReportMode: String?, ID_Branch: String?, ID_Employee : String? ,strFromdate: String?, strTodate: String?, ID_Product: String?,
                                           ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
 
-        var laedGen = 0
+//        var laedGen = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -267,47 +275,54 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                followUpTicketReportViewModel.getFollowUpTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                followUpTicketReportViewModel.getFollowUpTicketReport(this,ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
 
+                            if (followList == 0){
+                                followList++
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   2701   "+msg.length)
-                            Log.e(TAG,"msg   2702   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("FollowUpListDetailsReport")
-                                followUpTicketReportArrayList = jobjt.getJSONArray("FollowUpListDetails")
-                                if (followUpTicketReportArrayList.length()>0){
-                                    Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
-                                    ll_FollowUpTicket!!.visibility = View.VISIBLE
-                                    try {
-                                        val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-                                        recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        // recyLeadGenReport!!.setHasFixedSize(true)
-                                        val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
-                                        recyFollowUpTicketReport!!.adapter = adapter
-                                    }catch (e: Exception){
-                                        Log.e(TAG,"msg   2704   "+e.toString())
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   2701   "+msg.length)
+                                Log.e(TAG,"msg   2702   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("FollowUpListDetailsReport")
+                                    followUpTicketReportArrayList = jobjt.getJSONArray("FollowUpListDetails")
+                                    if (followUpTicketReportArrayList.length()>0){
+                                        Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
+                                        ll_FollowUpTicket!!.visibility = View.VISIBLE
+                                        try {
+                                            val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                            recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter = FollowupTicketReportAdapter(applicationContext, followUpTicketReportArrayList)
+                                            recyFollowUpTicketReport!!.adapter = adapter
+                                            adapter.setClickListener(this@TicketReportDetailActivity)
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   2704   "+e.toString())
+                                        }
+
+
                                     }
 
-
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TicketReportDetailActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@TicketReportDetailActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
                             }
+
+
+
                         } else {
                             Toast.makeText(
                                 applicationContext,
@@ -327,10 +342,10 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
-    private fun getNewListTicketReport(ReportMode: String?, ID_Branch: String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
+    private fun getNewListTicketReport(ReportMode: String?, ID_Branch: String?, ID_Employee : String?, strFromdate: String?, strTodate: String?, ID_Product: String?,
                                         ID_NextAction: String?, ID_ActionType: String?, ID_Priority: String?, ID_Status: String?, GroupId: String?) {
 
-        var laedGen = 0
+      //  var laedGen = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -340,48 +355,53 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                newListTicketReportViewModel.getNewListTicketReport(this,ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
+                newListTicketReportViewModel.getNewListTicketReport(this,ReportMode,ID_Branch,ID_Employee,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
                         try {
                             if (msg!!.length > 0) {
 
+                                if (newList == 0){
+                                    newList++
 
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   344 1  "+msg.length)
-                                Log.e(TAG,"msg   3442   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("NewListDetailsReport")
-                                    newListTicketReportArrayList = jobjt.getJSONArray("NewListDetails")
-                                    if (newListTicketReportArrayList.length()>0){
-                                        Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
-                                        ll_NewListTicket!!.visibility = View.VISIBLE
-                                        try {
-                                            val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
-                                            recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            // recyLeadGenReport!!.setHasFixedSize(true)
-                                            val adapter = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
-                                            recyNewListTicketReport!!.adapter = adapter
-                                        }catch (e: Exception){
-                                            Log.e(TAG,"msg   3444   "+e.toString())
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   344 1  "+msg.length)
+                                    Log.e(TAG,"msg   3442   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("NewListDetailsReport")
+                                        newListTicketReportArrayList = jobjt.getJSONArray("NewListDetails")
+                                        if (newListTicketReportArrayList.length()>0){
+                                            Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
+                                            ll_NewListTicket!!.visibility = View.VISIBLE
+                                            try {
+                                                val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
+                                                recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                // recyLeadGenReport!!.setHasFixedSize(true)
+                                                val adapter1 = NewListTicketReportAdapter(applicationContext, newListTicketReportArrayList)
+                                                recyNewListTicketReport!!.adapter = adapter1
+                                                adapter1.setClickListener(this@TicketReportDetailActivity)
+
+                                            }catch (e: Exception){
+                                                Log.e(TAG,"msg   3444   "+e.toString())
+                                            }
+
                                         }
 
-
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TicketReportDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@TicketReportDetailActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
+
                             } else {
 //                                Toast.makeText(
 //                                    applicationContext,
@@ -481,6 +501,96 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
         }
 
+    }
+
+    override fun onClick(position: Int, data: String) {
+        Log.e(TAG,"newListClick   5091")
+        if (data.equals("newListClick")) {
+            Log.e(TAG,"newListClick   5091")
+            openBottomSheetReport(newListTicketReportArrayList,position)
+        }
+
+        if (data.equals("followListClick")) {
+
+            Log.e(TAG,"followListClick  5092")
+            openBottomSheetReport(followUpTicketReportArrayList,position)
+
+        }
+    }
+
+
+
+    private fun openBottomSheetReport(jsonArray : JSONArray,position : Int) {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_report_followup, null)
+
+        var jsonObject = jsonArray.getJSONObject(position)
+
+        val ll_NewDisable = view.findViewById<LinearLayout>(R.id.ll_NewDisable)
+        val ll_followDisable = view.findViewById<LinearLayout>(R.id.ll_followDisable)
+
+        val imgClose = view.findViewById<ImageView>(R.id.imgClose)
+        val txtLeadNo = view.findViewById<TextView>(R.id.txtLeadNo)
+        val txtLeadDate = view.findViewById<TextView>(R.id.txtLeadDate)
+        val txtCustomer = view.findViewById<TextView>(R.id.txtCustomer)
+        val txtProduct = view.findViewById<TextView>(R.id.txtProduct)
+
+        val txtAction = view.findViewById<TextView>(R.id.txtAction)
+        val txtActionType = view.findViewById<TextView>(R.id.txtActionType)
+        val txtCommitedDate = view.findViewById<TextView>(R.id.txtCommitedDate)
+        val txtAssignee = view.findViewById<TextView>(R.id.txtAssignee)
+        val txtCompletedDate = view.findViewById<TextView>(R.id.txtCompletedDate)
+        val txtDueDays = view.findViewById<TextView>(R.id.txtDueDays)
+
+        val txtPriority = view.findViewById<TextView>(R.id.txtPriority)
+        val txtLeadFrom = view.findViewById<TextView>(R.id.txtLeadFrom)
+        val txtLeadSource = view.findViewById<TextView>(R.id.txtLeadSource)
+        val txtCollectedBy = view.findViewById<TextView>(R.id.txtCollectedBy)
+        val txtCurrentAssignee = view.findViewById<TextView>(R.id.txtCurrentAssignee)
+        val txtStatus = view.findViewById<TextView>(R.id.txtStatus)
+
+        val txtRemarks = view.findViewById<TextView>(R.id.txtRemarks)
+
+        txtLeadNo!!.setText(jsonObject.getString("LeadNo"))
+        txtLeadDate!!.setText(jsonObject.getString("LeadDate"))
+        txtCustomer!!.setText(jsonObject.getString("Customer"))
+        txtProduct!!.setText(jsonObject.getString("Product"))
+
+        if (ReportMode.equals("2")){
+            ll_NewDisable.visibility = View.GONE
+            ll_followDisable.visibility = View.VISIBLE
+            txtAction!!.setText(jsonObject.getString("NextAction"))
+            txtActionType!!.setText(jsonObject.getString("FollowUpMethod"))
+            txtCommitedDate!!.setText(jsonObject.getString("LeadDate"))
+            txtAssignee!!.setText(jsonObject.getString("AssignedTo"))
+            txtCompletedDate!!.setText(jsonObject.getString("CompletedDate"))
+            txtDueDays!!.setText(jsonObject.getString("DueDays"))
+        }
+        else if (ReportMode.equals("5")){
+            ll_NewDisable.visibility = View.VISIBLE
+            ll_followDisable.visibility = View.GONE
+
+            txtPriority!!.setText(jsonObject.getString("Priority"))
+            txtLeadFrom!!.setText(jsonObject.getString("LeadFrom"))
+            txtLeadSource!!.setText(jsonObject.getString("LeadByName"))
+            txtCollectedBy!!.setText(jsonObject.getString("CollectedBy"))
+            txtCurrentAssignee!!.setText(jsonObject.getString("AssignedTo"))
+            txtStatus!!.setText(jsonObject.getString("CurrentStatus"))
+        }
+
+
+
+        txtRemarks!!.setText(jsonObject.getString("Remarks"))
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
 

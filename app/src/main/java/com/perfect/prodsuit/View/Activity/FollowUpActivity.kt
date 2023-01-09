@@ -460,8 +460,6 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
             R.id.tie_NextActionType->{
                 Config.disableClick(v)
-//                tie_ActionType!!.isEnabled = true
-//                followupTypePopup(followUpTypeArrayList)
                 ActiontypeFN = 1
                 followUpType = 0
                 getFollowupType()
@@ -678,7 +676,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             dialogCallStatus = Dialog(this)
             dialogCallStatus!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogCallStatus!! .setContentView(R.layout.call_status_popup)
+            dialogCallStatus!! .setContentView(R.layout.status_popup)
             dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
         //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
@@ -931,10 +929,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                             image1 = destination!!.getAbsolutePath()
                             destination = File(image1)
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
                             if (imgv_upload1 != null) {
-                                imgv_upload1!!.setImageBitmap(myBitmap)
+                                imgv_upload1!!.setImageBitmap(converetdImage)
                             }
-                            imgv_upload1!!.setImageBitmap(myBitmap)
+                            imgv_upload1!!.setImageBitmap(converetdImage)
                             if (image1 != null) {
                             }
                         }
@@ -942,10 +941,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                             image2 = destination!!.getAbsolutePath()
                             destination = File(image2)
                             val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
                             if (imgv_upload2 != null) {
-                                imgv_upload2!!.setImageBitmap(myBitmap)
+                                imgv_upload2!!.setImageBitmap(converetdImage)
                             }
-                            imgv_upload2!!.setImageBitmap(myBitmap)
+                            imgv_upload2!!.setImageBitmap(converetdImage)
                             if (image2 != null) {
                             }
                         }
@@ -1074,7 +1074,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                             Log.e(TAG,"8142    "+followUpTypeArrayList)
                                             Log.e(TAG,"81422    "+ActionMode)
 
-                                            if (ActionModeIntent!!.equals("1") || ActionModeIntent!!.equals("2") && ActiontypeFN == 0){
+                                            if ((ActionModeIntent!!.equals("1") || ActionModeIntent!!.equals("2")) && ActiontypeFN == 0){
                                                 for (i in 0 until followUpTypeArrayList.length()) {
                                                     val jsonObject = followUpTypeArrayList.getJSONObject(i)
                                                     Log.e(TAG,"8143    "+jsonObject.getString("ID_ActionType")+"   :  "+i+"  :   "+ActionMode)
@@ -2669,8 +2669,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     else
                     {
                         val bitmap = BitmapFactory.decodeFile(image1)
+                        val converetdImage = getResizedBitmap(bitmap, 500)
                         val stream =  ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
                         } else {
@@ -2684,8 +2685,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     else
                     {
                         val bitmap = BitmapFactory.decodeFile(image2)
+                        val converetdImage = getResizedBitmap(bitmap, 500)
                         val stream =  ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
                         } else {
@@ -2713,6 +2715,20 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
         }
+    }
+
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+        var width = image.width
+        var height = image.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
     private fun convertSeconds(seconds: Int): String {
@@ -2765,6 +2781,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 +"\n ID_Priority                :  "+ID_Priority
                 +"\n ID_Department              :  "+ID_Department
                 +"\n ID_NextEmployee            :  "+ID_NextEmployee)
+
+        Log.e(TAG,"2786   "+encode1)
+        Log.e(TAG,"2786   "+encode1)
 
 
 
@@ -2819,7 +2838,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                 val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
                                                 //LeadNumber
                                                 tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                                tv_label!!.setText("LeadNo")
+                                                tv_label!!.setText("Lead No : ")
                                                 tv_leadid!!.setText(jobjt.getString("LeadNo"))
 
                                                 tv_succesok!!.setOnClickListener {

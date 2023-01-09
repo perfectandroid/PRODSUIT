@@ -329,6 +329,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var Customer_Mode: String? = "0"
         var CusNameTitle: String? = ""
         var ID_Customer: String? = ""
+        var Customer_Type: String? = ""
         var Customer_Name: String? = ""
         var Customer_Mobile: String? = ""
         var Customer_Email: String? = ""
@@ -505,6 +506,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         Customer_Mode = "0"
         ID_Customer = ""
+        Customer_Type = ""
         Customer_Name = ""
         Customer_Mobile = ""
         Customer_Email = ""
@@ -3069,11 +3071,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
                                 val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
                                 //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                                 if (imgvupload1 != null) {
-                                    imgvupload1!!.setImageBitmap(myBitmap)
+                                    imgvupload1!!.setImageBitmap(converetdImage)
                                 }
-                                imgvupload1!!.setImageBitmap(myBitmap)
+                                imgvupload1!!.setImageBitmap(converetdImage)
 
                                 if (image1 != null) {
 
@@ -3085,11 +3088,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 destination = File(image2)
 
                                 val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
                                 //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
                                 if (imgvupload2 != null) {
-                                    imgvupload2!!.setImageBitmap(myBitmap)
+                                    imgvupload2!!.setImageBitmap(converetdImage)
                                 }
-                                imgvupload2!!.setImageBitmap(myBitmap)
+                                imgvupload2!!.setImageBitmap(converetdImage)
 
                                 if (image2 != null) {
 
@@ -4176,6 +4180,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             custDetailMode = "1"
             ID_Customer = ""
+            Customer_Type = ""
             edt_customer!!.setText("")
             txtcustomer!!.text = Cust_Name
 
@@ -5761,6 +5766,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             // custDetailMode = "1"
             Customer_Mode = "1"  // SEARCH
             ID_Customer = jsonObject.getString("ID_Customer")
+            Customer_Type = jsonObject.getString("Customer_Type")
             Customer_Name = jsonObject.getString("CusName")
             Customer_Mobile = jsonObject.getString("CusPhnNo")
             Customer_Email = jsonObject.getString("CusEmail")
@@ -6353,8 +6359,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             encode1 = ""
         } else {
             val bitmap = BitmapFactory.decodeFile(image1)
+            val converetdImage = getResizedBitmap(bitmap, 500)
             val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
             } else {
@@ -6368,8 +6375,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             encode2 = ""
         } else {
             val bitmap = BitmapFactory.decodeFile(image2)
+            val converetdImage = getResizedBitmap(bitmap, 500)
             val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
             } else {
@@ -6387,6 +6395,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         //  saveLeadGeneration()
         //   }
+    }
+
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+        var width = image.width
+        var height = image.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
     private fun LeadConfirmationPopup() {
@@ -6794,6 +6816,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        var saveLeadGenDet = 0
         try {
 
+            Log.e(TAG, "encode1   4759   " + encode1 )
             Log.e(TAG, "strDate   4759   " + strDate + "   " + strFollowupdate)
 
 
@@ -6911,7 +6934,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         strLatitude!!,
                         strLongitue!!,
                         encode1,
-                        encode2
+                        encode2,
+                        Customer_Mode!!,
+                        Customer_Type!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

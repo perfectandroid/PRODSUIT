@@ -33,6 +33,8 @@
     <color name="tabColor">#67ADF6</color>
     <color name="tabbgColor">#F8DDB7</color>
     <color name="red">#E91E1E</color>
+    <color name="red_light">#EC5D5D</color>
+    <color name="red_light1">#EC8080</color>
     <color name="redDark">#7E1212</color>
     <color name="blue">#03A9F4</color>
     <color name="green">#4CAF50</color>

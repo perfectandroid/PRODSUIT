@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -227,6 +226,15 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var AssignedToID : String?= ""
     var AssignedTo : String?= ""
 
+    private var rltv_Info : RelativeLayout? = null
+    private var ll_location : LinearLayout? = null
+    private var ll_history : LinearLayout? = null
+    private var ll_images : LinearLayout? = null
+    private var rltv_document : RelativeLayout? = null
+
+    var imageDet = 0
+    var documentDet = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -282,44 +290,71 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+        rltv_Info!!.visibility = View.VISIBLE
         getInfoetails()
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                Log.e(TAG,"onTabSelected  113  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-                    llMainDetail!!.removeAllViews()
+               //     llMainDetail!!.removeAllViews()
 
-                    getInfoetails()
+                   rltv_Info!!.visibility = View.VISIBLE
+                    ll_location!!.visibility = View.GONE
+                    ll_history!!.visibility = View.GONE
+                    ll_images!!.visibility = View.GONE
+                    rltv_document!!.visibility = View.GONE
+                   getInfoetails()
 
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-                    llMainDetail!!.removeAllViews()
-
+              //      llMainDetail!!.removeAllViews()
+                    rltv_Info!!.visibility = View.GONE
+                    ll_location!!.visibility = View.GONE
+                    ll_history!!.visibility = View.VISIBLE
+                    ll_images!!.visibility = View.GONE
+                    rltv_document!!.visibility = View.GONE
                     getActivityDetails1()
 //                    getActivitylist("0")
 
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-                    llMainDetail!!.removeAllViews()
+                 //   llMainDetail!!.removeAllViews()
+                    rltv_Info!!.visibility = View.GONE
+                    ll_location!!.visibility = View.VISIBLE
+                    ll_history!!.visibility = View.GONE
+                    ll_images!!.visibility = View.GONE
+                    rltv_document!!.visibility = View.GONE
                     getLocation()
 
                 }
                 if (tab.position == 3){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-                    llMainDetail!!.removeAllViews()
+                 //   llMainDetail!!.removeAllViews()
+                    rltv_Info!!.visibility = View.GONE
+                    ll_location!!.visibility = View.GONE
+                    ll_history!!.visibility = View.GONE
+                    ll_images!!.visibility = View.VISIBLE
+                    rltv_document!!.visibility = View.GONE
 
+                    imageDet = 0
                     getImages()
                 }
                 if (tab.position == 4){
                     Log.e(TAG,"onTabSelected  1131  "+tab.position)
-                    llMainDetail!!.removeAllViews()
+               //     llMainDetail!!.removeAllViews()
+
+                    rltv_Info!!.visibility = View.GONE
+                    ll_location!!.visibility = View.GONE
+                    ll_history!!.visibility = View.GONE
+                    ll_images!!.visibility = View.GONE
+                    rltv_document!!.visibility = View.VISIBLE
+                    documentDet = 0
                     getDocuments()
-                 //   tv_actionType!!.visibility=View.GONE
-//                    recyAgendaDetail!!.visibility=View.GONE
-//                    getQuotationtails()
+
+
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -457,6 +492,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         txtProduct = findViewById(R.id.txtProduct);
         txtTargetDate = findViewById(R.id.txtTargetDate);
         txtAction = findViewById(R.id.txtAction);
+
+
+        rltv_Info = findViewById(R.id.rltv_Info);
+        ll_location = findViewById(R.id.ll_location);
+        ll_history = findViewById(R.id.ll_history);
+        ll_images = findViewById(R.id.ll_images);
+        rltv_document = findViewById(R.id.rltv_document);
 
 
         tabLayout = findViewById(R.id.tabLayout);
@@ -1257,7 +1299,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                             //  val bytes = decodedString.toByteArray()
                                             val sdf = SimpleDateFormat("ddMMyyyyHHmmss")
                                             val datetime = sdf.format(Date())
-                                            destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                         //   destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                            destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ""+System.currentTimeMillis() + DocumentImageFormat)
 //                                    destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+datetime + DocumentImageFormat)
                                             val fo: FileOutputStream
                                             try {
@@ -1578,25 +1621,42 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     private fun getInfoetails() {
         val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
-        llMainDetail!!.addView(inflatedLayout);
-        var imInfoLoading = inflatedLayout.findViewById<ImageView>(R.id.imInfoLoading)
-        var recySubInfo = inflatedLayout.findViewById<RecyclerView>(R.id.recySubInfo)
+//        val inflatedLayout: View = inflater.inflate(R.layout.activity_subinfo, null, false)
+//        llMainDetail!!.addView(inflatedLayout);
+        var imInfoLoading = findViewById<ImageView>(R.id.imInfoLoading)
+        var recySubInfo = findViewById<RecyclerView>(R.id.recySubInfo)
 
-        var llInfoDetail = inflatedLayout.findViewById<LinearLayout>(R.id.llInfoDetail)
+        var llInfoDetail = findViewById<LinearLayout>(R.id.llInfoDetail)
 
-        var txtName1 = inflatedLayout.findViewById<TextView>(R.id.txtName)
-        var txtAddress1 = inflatedLayout.findViewById<TextView>(R.id.txtAddress)
-        var txtMobile1 = inflatedLayout.findViewById<TextView>(R.id.txtMobile)
-        var txtEmail1 = inflatedLayout.findViewById<TextView>(R.id.txtEmail)
-        var txtAssigned1 = inflatedLayout.findViewById<TextView>(R.id.txtAssigned)
-        var txtLeadNo1 = inflatedLayout.findViewById<TextView>(R.id.txtLeadNo)
-        var txtProject1 = inflatedLayout.findViewById<TextView>(R.id.txtProject)
-        var txtProduct1 = inflatedLayout.findViewById<TextView>(R.id.txtProduct)
-        var txtCategoryName1 = inflatedLayout.findViewById<TextView>(R.id.txtCategoryName)
-        var txtNextAction1 = inflatedLayout.findViewById<TextView>(R.id.txtNextAction)
-        var txtNextActionDate1 = inflatedLayout.findViewById<TextView>(R.id.txtNextActionDate)
-        var txtActionType1 = inflatedLayout.findViewById<TextView>(R.id.txtActionType)
+//        var txtName1 = inflatedLayout.findViewById<TextView>(R.id.txtName)
+//        var txtAddress1 = inflatedLayout.findViewById<TextView>(R.id.txtAddress)
+//        var txtMobile1 = inflatedLayout.findViewById<TextView>(R.id.txtMobile)
+//        var txtEmail1 = inflatedLayout.findViewById<TextView>(R.id.txtEmail)
+//        var txtAssigned1 = inflatedLayout.findViewById<TextView>(R.id.txtAssigned)
+//        var txtLeadNo1 = inflatedLayout.findViewById<TextView>(R.id.txtLeadNo)
+//        var txtProject1 = inflatedLayout.findViewById<TextView>(R.id.txtProject)
+//        var txtProduct1 = inflatedLayout.findViewById<TextView>(R.id.txtProduct)
+//        var txtCategoryName1 = inflatedLayout.findViewById<TextView>(R.id.txtCategoryName)
+//        var txtNextAction1 = inflatedLayout.findViewById<TextView>(R.id.txtNextAction)
+//        var txtNextActionDate1 = inflatedLayout.findViewById<TextView>(R.id.txtNextActionDate)
+//        var txtActionType1 = inflatedLayout.findViewById<TextView>(R.id.txtActionType)
+
+        var txtName1 = findViewById<TextView>(R.id.txtInfoName)
+        var txtAddress1 = findViewById<TextView>(R.id.txtInfoAddress)
+        var txtMobile1 = findViewById<TextView>(R.id.txtInfoMobile)
+        var txtEmail1 = findViewById<TextView>(R.id.txtInfoEmail)
+        var txtAssigned1 = findViewById<TextView>(R.id.txtInfoAssigned)
+        var txtLeadNo1 = findViewById<TextView>(R.id.txtInfoLeadNo)
+        var txtProject1 = findViewById<TextView>(R.id.txtInfoProject)
+        var txtProduct1 = findViewById<TextView>(R.id.txtInfoProduct)
+        var txtCategoryName1 = findViewById<TextView>(R.id.txtInfoCategoryName)
+        var txtNextAction1 = findViewById<TextView>(R.id.txtInfoNextAction)
+        var txtNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
+        var txtActionType1 = findViewById<TextView>(R.id.txtInfoActionType)
+
+        var ll_projectVis = findViewById<LinearLayout>(R.id.ll_projectVis)
+        var ll_productVis = findViewById<LinearLayout>(R.id.ll_productVis)
+
 
         llInfoDetail.visibility = View.GONE
 
@@ -1635,12 +1695,22 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtEmail1.setText(jsonObject1.getString("LgCusEmail"))
                                         txtAssigned1.setText(jsonObject1.getString("AssignedTo"))
                                         txtLeadNo1.setText(jsonObject1.getString("LgLeadNo"))
-                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
-                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
                                         txtCategoryName1.setText(jsonObject1.getString("CatName"))
                                         txtNextAction1.setText(jsonObject1.getString("NxtActnName"))
                                         txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
                                         txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
+
+                                        if (jsonObject1.getString("ProjectName").equals("")){
+                                            ll_projectVis.visibility = View.GONE
+                                            ll_productVis.visibility = View.VISIBLE
+                                        }else{
+                                            ll_projectVis.visibility = View.VISIBLE
+                                            ll_productVis.visibility = View.GONE
+                                        }
+
+                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
+                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
+
                                     }
                                 }
                             } else {
@@ -2042,11 +2112,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
     private fun getActivityDetails1() {
-        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout1: View = inflater.inflate(R.layout.activity_subactivities, null, false)
-        llMainDetail!!.addView(inflatedLayout1);
-        rv_activity = inflatedLayout1.findViewById<RecyclerView>(R.id.rv_activity)
-        tv_actionType= inflatedLayout1.findViewById<TextView>(R.id.tv_actionType);
+//        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+//        val inflatedLayout1: View = inflater.inflate(R.layout.activity_subactivities, null, false)
+//        llMainDetail!!.addView(inflatedLayout1);
+
+        rv_activity = findViewById<RecyclerView>(R.id.rv_activity)
+        tv_actionType= findViewById<TextView>(R.id.tv_actionType);
 
       //  tv_actionType!!.setOnClickListener(this)
 
@@ -2284,9 +2355,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
         try {
-            val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-            val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
-            llMainDetail!!.addView(inflatedLayout1);
+//            val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+//            val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
+//            llMainDetail!!.addView(inflatedLayout1);
 
             when (Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
@@ -2305,12 +2376,19 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("LeadImageDetails")
-                                        latitude = jobjt!!.getString("LocationLatitude")
-                                        longitude = jobjt!!.getString("LocationLongitude")
+//                                        latitude = jobjt!!.getString("LocationLatitude")
+//                                        longitude = jobjt!!.getString("LocationLongitude")
+
+                                        latitude = jobjt!!.getString("LocationLongitude")
+                                        longitude = jobjt!!.getString("LocationLatitude")
                                         Log.e("LocationDetails", latitude + "\n" + longitude)
 
-                                        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
-                                        fetchLocation()
+                                        if (!latitude.equals("") || !longitude.equals("")){
+
+                                            fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@AccountDetailsActivity)
+                                            fetchLocation()
+                                        }
+
 
 
                                     } else {
@@ -2415,13 +2493,16 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getImages() {
-        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout1: View = inflater.inflate(R.layout.activity_subimage, null, false)
-        llMainDetail!!.addView(inflatedLayout1);
-        imgv_1 = inflatedLayout1.findViewById<ImageView>(R.id.imgv_1)
-        imgv_2 = inflatedLayout1.findViewById<ImageView>(R.id.imgv_2)
-        crdv_1 = inflatedLayout1.findViewById<CardView>(R.id.crdv_1)
-        crdv_2 = inflatedLayout1.findViewById<CardView>(R.id.crdv_2)
+//        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+//        val inflatedLayout1: View = inflater.inflate(R.layout.activity_subimage, null, false)
+//        llMainDetail!!.addView(inflatedLayout1);
+        imgv_1 = findViewById<ImageView>(R.id.imgv_1)
+        imgv_2 = findViewById<ImageView>(R.id.imgv_2)
+        crdv_1 = findViewById<CardView>(R.id.crdv_1)
+        crdv_2 = findViewById<CardView>(R.id.crdv_2)
+
+        crdv_1!!.visibility=View.GONE
+        crdv_2!!.visibility=View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -2434,49 +2515,60 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     { ImageSetterGetter ->
                         val msg = ImageSetterGetter.message
                         if (msg!!.length > 0) {
-                            val jObject = JSONObject(msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                jobjt = jObject.getJSONObject("LeadImageDetails")
-                                landmark = jobjt!!.getString("LocationLandMark1")
-                                landmark2 = jobjt!!.getString("LocationLandMark2")
 
-                                if(!landmark.equals(""))
-                                {
-                                    crdv_1!!.visibility=View.VISIBLE
-                                    val decodedString = Base64.decode(landmark, Base64.DEFAULT)
-                                    ByteArrayToBitmap(decodedString)
-                                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                                    val stream = ByteArrayOutputStream()
-                                    decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                                    Glide.with(this) .load(stream.toByteArray()).into(imgv_1!!)
+                            if (imageDet == 0){
+                                imageDet++
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    jobjt = jObject.getJSONObject("LeadImageDetails")
+                                    landmark = jobjt!!.getString("LocationLandMark1")
+                                    landmark2 = jobjt!!.getString("LocationLandMark2")
+
+                                    if(!landmark.equals(""))
+                                    {
+                                        crdv_1!!.visibility=View.VISIBLE
+                                        val decodedString = Base64.decode(landmark, Base64.DEFAULT)
+                                        ByteArrayToBitmap(decodedString)
+                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                        val stream = ByteArrayOutputStream()
+                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                        Glide.with(this) .load(stream.toByteArray()).into(imgv_1!!)
+                                        crdv_1!!.setOnClickListener(View.OnClickListener {
+                                            zoomImage(stream)
+                                        })
+
+                                    }
+                                    if(!landmark2.equals(""))
+                                    {
+                                        crdv_2!!.visibility=View.VISIBLE
+                                        val decodedString = Base64.decode(landmark2, Base64.DEFAULT)
+                                        ByteArrayToBitmap(decodedString)
+                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                        val stream = ByteArrayOutputStream()
+                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                        Glide.with(this) .load(stream.toByteArray()).into(imgv_2!!)
+                                        crdv_2!!.setOnClickListener(View.OnClickListener {
+                                            zoomImage(stream)
+                                        })
+                                    }
 
                                 }
-                                if(!landmark2.equals(""))
-                                {
-                                    crdv_2!!.visibility=View.VISIBLE
-                                    val decodedString = Base64.decode(landmark2, Base64.DEFAULT)
-                                    ByteArrayToBitmap(decodedString)
-                                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                                    val stream = ByteArrayOutputStream()
-                                    decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                                    Glide.with(this) .load(stream.toByteArray()).into(imgv_2!!)
-                                }
 
+                                else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountDetailsActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+
+                                }
                             }
 
-                            else {
-                                val builder = AlertDialog.Builder(
-                                    this@AccountDetailsActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-
-                            }
 
                         } else {
 //                            Toast.makeText(
@@ -2484,6 +2576,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+                            crdv_1!!.visibility=View.GONE
+                            crdv_2!!.visibility=View.GONE
                         }
                     })
                 progressDialog!!.dismiss()
@@ -2495,16 +2589,29 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
     }
 
+    private fun zoomImage(stream: ByteArrayOutputStream) {
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.alert_image_viewer, null)
+        dialogBuilder.setView(dialogView)
+
+        val image = dialogView.findViewById<View>(R.id.id_image) as ImageView
+        Glide.with(this) .load(stream.toByteArray()).into(image!!)
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
+    }
+
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)
     }
 
     private fun getDocuments() {
-        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
-        val inflatedLayout1: View = inflater.inflate(R.layout.activity_documents, null, false)
-        llMainDetail!!.addView(inflatedLayout1);
-        var recyDocumentDetail = inflatedLayout1.findViewById<RecyclerView>(R.id.recyDocumentDetail)
+//        val inflater = LayoutInflater.from(this@AccountDetailsActivity)
+//        val inflatedLayout1: View = inflater.inflate(R.layout.activity_documents, null, false)
+//        llMainDetail!!.addView(inflatedLayout1);
+        var recyDocumentDetail = findViewById<RecyclerView>(R.id.recyDocumentDetail)
+        recyDocumentDetail.adapter = null
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2522,41 +2629,47 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                         try {
                             if (msg!!.length > 0) {
 
-                                Log.e(TAG,"msg   89   "+msg)
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   302   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if(documentDet == 0){
+                                    documentDet++
+                                    Log.e(TAG,"msg   89   "+msg)
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   302   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("DocumentDetails")
-                                    documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
-                                    if (documentDetailArrayList.length()>0){
+                                        val jobjt = jObject.getJSONObject("DocumentDetails")
+                                        documentDetailArrayList = jobjt.getJSONArray("DocumentDetailsList")
+                                        if (documentDetailArrayList.length()>0){
 
-                                        Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
+                                            Log.e(TAG,"documentDetailArrayList  102   "+documentDetailArrayList)
 
-                                        recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
-                                        // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-                                        recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                                        // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = DocumentDetailAdapter(this@AccountDetailsActivity, documentDetailArrayList)
-                                        recyDocumentDetail!!.adapter = adapter
-                                        adapter.setClickListener(this@AccountDetailsActivity)
+                                            recyDocumentDetail = findViewById(R.id.recyDocumentDetail) as RecyclerView
+                                            // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+                                            recyDocumentDetail!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                                            // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = DocumentDetailAdapter(this@AccountDetailsActivity, documentDetailArrayList)
+                                            recyDocumentDetail!!.adapter = adapter
+                                            adapter.setClickListener(this@AccountDetailsActivity)
 
+
+                                        }
 
                                     }
+                                    else {
 
-                                } else {
-
-                                    val builder = AlertDialog.Builder(
-                                        this@AccountDetailsActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountDetailsActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
+
+
                             } else {
 //                            Toast.makeText(
 //                                applicationContext,

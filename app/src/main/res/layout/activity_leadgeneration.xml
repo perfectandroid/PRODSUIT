@@ -312,7 +312,7 @@
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
                                             <RelativeLayout
                                                 android:layout_width="match_parent"
@@ -585,7 +585,7 @@
                                                         android:id="@+id/actv_nammob"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_weight="3"
+                                                        android:layout_weight="2.5"
                                                         android:dropDownWidth="200dp"
                                                         android:background="@android:color/transparent"
                                                         android:drawableRight="@drawable/arrow_down"
@@ -596,7 +596,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:paddingLeft="5dp"
                                                         android:text="Name"
-                                                        android:textSize="15dp"
+                                                        android:textSize="14dp"
                                                         android:visibility="visible" />
                                                     <!--                                                    android:drawableLeft="@drawable/call_svg"-->
 
@@ -629,7 +629,7 @@
                                                             android:padding="7dp"
                                                             android:singleLine="true"
                                                             android:text=""
-                                                            android:textSize="15dp" />
+                                                            android:textSize="14dp" />
 
                                                         <ImageView
                                                             android:id="@+id/img_search"
@@ -685,7 +685,7 @@
                                                     <AutoCompleteTextView
                                                         android:id="@+id/actv_namTitle"
                                                         android:layout_width="match_parent"
-                                                        android:layout_weight="3"
+                                                        android:layout_weight="2.5"
                                                         android:layout_height="match_parent"
                                                         android:dropDownWidth="200dp"
                                                         android:background="@android:color/transparent"

@@ -35,11 +35,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var rv_notificationlist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
     lateinit var notifreadArrayList : JSONArray
-    var notifAdapter: NotificationAdapter? = null
+    var adapter: NotificationAdapter? = null
     var notificationDet = 0
     var notificationStart = 0
     var notificationCount = 1
-    val UPDATE_INTERVAL = 2000L
+    val UPDATE_INTERVAL = 10000L
     internal var txtv_notfcount: TextView? = null
     private val updateWidgetHandler = Handler()
 
@@ -70,8 +70,9 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         run {
             //Update UI
             // Re-run it after the update interval
-            notificationDet = 0
-            getNotificationList()
+//            notificationDet = 0
+//            getNotificationList()
+//            getNotificationList1()
             updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
         }
 
@@ -124,14 +125,30 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             txtv_notfcount!!.text=count
                                             Log.i("Array size", count)
 
-                                            // var jobj = jObject.getJSONObject("UserLoginDetails")
-                                            val lLayout = GridLayoutManager(this@NotificationActivity, 1)
-                                            rv_notificationlist!!.layoutManager =
-                                                lLayout as RecyclerView.LayoutManager?
-                                            rv_notificationlist!!.setHasFixedSize(true)
-                                            val adapter = NotificationAdapter(applicationContext, todoArrayList)
-                                            rv_notificationlist!!.adapter = adapter
-                                            adapter.setClickListener(this@NotificationActivity)
+//                                            if (adapter != null){
+//                                                Log.e("TAG","notificationStart   1381  "+notificationStart)
+//                                                val lLayout = GridLayoutManager(this@NotificationActivity, 1)
+//                                                rv_notificationlist!!.layoutManager =
+//                                                    lLayout as RecyclerView.LayoutManager?
+//                                                rv_notificationlist!!.setHasFixedSize(true)
+//                                                adapter = NotificationAdapter(applicationContext, todoArrayList)
+//                                                rv_notificationlist!!.adapter!!.notifyDataSetChanged()
+//
+//                                            }else{
+                                                Log.e("TAG","notificationStart   13812  "+notificationStart)
+                                                // var jobj = jObject.getJSONObject("UserLoginDetails")
+                                                val lLayout = GridLayoutManager(this@NotificationActivity, 1)
+                                                rv_notificationlist!!.layoutManager =
+                                                    lLayout as RecyclerView.LayoutManager?
+                                                rv_notificationlist!!.setHasFixedSize(true)
+                                                adapter = NotificationAdapter(applicationContext, todoArrayList)
+                                                rv_notificationlist!!.adapter = adapter
+                                                adapter!!.setClickListener(this@NotificationActivity)
+                                         //   }
+
+
+
+
 
 
                                         } else {
@@ -175,6 +192,68 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                         .show()
+            }
+        }
+    }
+
+    private fun getNotificationList1() {
+        context = this@NotificationActivity
+        notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                notificationViewModel.getNotificaationlist(this)!!.observe(
+                    this,
+                    Observer { notificationSetterGetter ->
+                        val msg = notificationSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (notificationDet == 0){
+                                    notificationDet++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("NotificationDetails")
+                                        todoArrayList = jobjt.getJSONArray("NotificationInfo")
+                                        notificationCount = 0
+                                        count = todoArrayList.length().toString();
+                                        txtv_notfcount!!.text=count
+                                        Log.i("Array size", count)
+
+                                        // var jobj = jObject.getJSONObject("UserLoginDetails")
+
+                                        adapter!!.notifyDataSetChanged()
+
+
+
+                                    } else {
+                                        txtv_notfcount!!.text="0"
+                                        rv_notificationlist!!.adapter = null
+                                        if (notificationCount > 0){
+                                            notificationCount = 0
+                                        }
+
+
+                                    }
+                                }
+
+                            } else {
+
+//                                Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }
+                        catch (e: Exception){
+
+                        }
+
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -253,8 +332,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                 Log.e("TAG","msg   227   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     //  startActivity(getIntent());
-//                                    notificationDet = 0
-//                                    getNotificationList()
+                                    notificationDet = 0
+                                    getNotificationList()
                                 } else {
 //                                Toast.makeText(applicationContext, ""+jObject.getString("EXMessage"), Toast.LENGTH_LONG)
 //                                    .show()

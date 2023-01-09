@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.location.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
@@ -223,20 +224,22 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(i: Int) {
                 when (i) {
-                    R.id.home -> {
-//                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
-//                        startActivity(i)
-                        chipNavigationBar!!.setItemSelected(R.id.home, true)
-                    }
+//                    R.id.home -> {
+////                        val i = Intent(this@HomeActivity, HomeActivity::class.java)
+////                        startActivity(i)
+//                        chipNavigationBar!!.setItemSelected(R.id.home, true)
+//                    }
                     R.id.reminder -> {
                         setReminder()
 
                     }
                     R.id.logout -> {
-                        doLogout()
+                       // doLogout()
+                        LogoutBottomSheet()
                     }
                     R.id.quit -> {
-                        quit()
+                       // quit()
+                        QuitBottomSheet()
                     }
                 }
             }
@@ -377,14 +380,66 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(Intent.createChooser(shareIntent, "Invite this App to your friends"))
             }
             R.id.nav_logout -> {
-                doLogout()
+//                doLogout()
+                LogoutBottomSheet()
             }
             R.id.nav_quit -> {
-                quit()
+//                quit()
+                QuitBottomSheet()
             }
         }
         drawer_layout!!.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun LogoutBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.logout_popup, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btnNo)
+        val btnYes = view.findViewById<Button>(R.id.btnYes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+            chipNavigationBar!!.setItemSelected(R.id.home, true)
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+           // dologoutchanges()
+            Config.logOut(context)
+            startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+    private fun QuitBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.quit_popup, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btn_No)
+        val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+            chipNavigationBar!!.setItemSelected(R.id.home, true)
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            finish()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity()
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
     private fun doLogout() {
@@ -402,8 +457,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
-                dologoutchanges()
-                startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+//                dologoutchanges()
+                Config.logOut(context)
+                startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -412,14 +468,27 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun dologoutchanges() {
+
         val loginSP = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
         loginEditer.commit()
+
+
         val loginmobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
         val loginmobileEditer = loginmobileSP.edit()
         loginmobileEditer.putString("Loginmobilenumber", "")
         loginmobileEditer.commit()
+
+        val companyCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF17, 0)
+        val companyCodeEditer = companyCodeSP.edit()
+        companyCodeEditer.putString("companyCode", "")
+        companyCodeEditer.commit()
+
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        val commonAppEditer = commonAppSP.edit()
+        commonAppEditer.putString("commonApp", "")
+        commonAppEditer.commit()
     }
 
     private fun quit() {
@@ -665,16 +734,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     }
 
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                            this@HomeActivity,
-                                            R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+//                                    val builder = AlertDialog.Builder(
+//                                            this@HomeActivity,
+//                                            R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
                                 }
                             } else {
 //                                Toast.makeText(
@@ -694,7 +763,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     override fun onBackPressed() {
-        quit()
+//        quit()
+        QuitBottomSheet()
     }
 
 
@@ -744,6 +814,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
                 alertDialog.dismiss()
             }
+            alertDialog.setCancelable(false)
             alertDialog.show()
         }
         catch (e: Exception) {

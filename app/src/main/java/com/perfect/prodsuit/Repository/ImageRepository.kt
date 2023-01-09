@@ -25,6 +25,7 @@ import java.util.*
 
 object ImageRepository {
 
+    val TAG = "ImageRepository"
     val ImageSetterGetter = MutableLiveData<ImageModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,ID_LeadGenerateProduct : String,ID_LeadGenerate :  String): MutableLiveData<ImageModel> {
@@ -40,7 +41,7 @@ object ImageRepository {
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
             progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setMessage("Loading please wait..");
+            progressDialog!!.setMessage("");
            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
                     R.drawable.progress))
             progressDialog!!.show()
@@ -64,7 +65,9 @@ object ImageRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-               requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("29"))
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("29"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -72,7 +75,9 @@ object ImageRepository {
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(ID_LeadGenerate))
 
 
-                Log.i("TAG33",requestObject1.toString())
+                Log.e(TAG,"7611     "+ID_LeadGenerate+"   :   "+ID_LeadGenerateProduct)
+                Log.e(TAG,"7612     "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
