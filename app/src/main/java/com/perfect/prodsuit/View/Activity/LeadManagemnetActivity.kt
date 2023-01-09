@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -16,16 +18,26 @@ import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
+import com.perfect.prodsuit.View.Adapter.EmployeeAllDetailAdapter
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
+import com.perfect.prodsuit.Viewmodel.LeadAllDetailsViewModel
+import org.json.JSONArray
 import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
+class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
     val TAG : String = "LeadManagemnetActivity"
     private var progressDialog: ProgressDialog? = null
@@ -42,18 +54,34 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
+    private var ID_Employee = ""
+    private var ID_employee2 = ""
+    private var emp_name = ""
+    private var emp_name2 = ""
+    private var UserName = ""
     private var chipNavigationBar: ChipNavigationBar? = null
     private var lltodolist: LinearLayout? = null
     private var lloverdue: LinearLayout? = null
     private var lloverUpcoming: LinearLayout? = null
+    private var tie_Employee: TextInputEditText? = null
+    lateinit var employeeArrayList : JSONArray
+    private var dialogEmployeeAllDetails : Dialog? = null
+    private var recyEmployeeAllDetails : RecyclerView? = null
+    lateinit var employeeAllDetailSort : JSONArray
+    var leadDetailsAll = 0
+
+
 
     private var tv_todo_count: TextView? = null
     private var tv_overdue_count: TextView? = null
     private var tv_upcoming_count: TextView? = null
+    private var imgv_filterManage: ImageView? = null
 
     lateinit var context: Context
 
     lateinit var agendaCountViewModel: AgendaCountViewModel
+    lateinit var leadAllDetailsViewModel: LeadAllDetailsViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +91,17 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         setRegViews()
         context = this@LeadManagemnetActivity
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
+        leadAllDetailsViewModel = ViewModelProvider(this).get(LeadAllDetailsViewModel::class.java)
+
         bottombarnav()
         getCalendarId(context)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        UserName = UserNameSP.getString("UserName", null).toString()
+
+        Log.e(TAG,"")
         getCounts()
     }
 
@@ -75,6 +112,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         lltodolist = findViewById(R.id.lltodolist)
         lloverdue = findViewById(R.id.lloverdue)
         lloverUpcoming = findViewById(R.id.lloverUpcoming)
+        imgv_filterManage = findViewById(R.id.imgv_filterManage)
 
         tv_todo_count = findViewById(R.id.tv_todo_count)
         tv_overdue_count = findViewById(R.id.tv_overdue_count)
@@ -83,6 +121,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
         lloverUpcoming!!.setOnClickListener(this)
+        imgv_filterManage!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -93,17 +132,36 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
             R.id.lltodolist->{
                 val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
                 i.putExtra("SubMode","1")
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("EmpName",emp_name)
+                i.putExtra("UserName",UserName)
+                Log.e(TAG,"88888    "+ID_Employee)
+                Log.e(TAG,"456321    "+UserName)
+//                i.putExtra("EmpName",)
                 startActivity(i)
             }
             R.id.lloverdue->{
                 val i = Intent(this@LeadManagemnetActivity, OverDueActivity::class.java)
                 i.putExtra("SubMode","2")
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("EmpName",emp_name)
+                i.putExtra("UserName",UserName)
+                Log.e(TAG,"606060    "+emp_name)
+                Log.e(TAG,"606060    "+ID_Employee)
                 startActivity(i)
             }
             R.id.lloverUpcoming->{
                 val i = Intent(this@LeadManagemnetActivity, UpcomingtaskActivity::class.java)
                 i.putExtra("SubMode","3")
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("EmpName",emp_name)
+                i.putExtra("UserName",UserName)
+                Log.e(TAG,"88552233    "+emp_name)
                 startActivity(i)
+            }
+            R.id.imgv_filterManage->{
+                filterBottomDataManagment()
+//                getEmployeeAllD()
             }
         }
     }
@@ -182,6 +240,118 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+    private fun filterBottomDataManagment() {
+
+        try {
+            val dialog = BottomSheetDialog(this)
+            val layout1 = layoutInflater.inflate(R.layout.filter_manage, null)
+
+            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
+
+            val txtCancel = layout1.findViewById(R.id.txtCancel) as TextView
+            val txtSubmit = layout1.findViewById(R.id.txtSubmit) as TextView
+            val refresh = layout1.findViewById(R.id.refresh) as ImageView
+
+
+            tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
+
+
+            val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+            val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+            val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+//            ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+//            tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+            if (emp_name.equals("")){
+
+                tie_Employee!!.setText(UserName)
+            }else{
+                tie_Employee!!.setText(emp_name)
+            }
+
+            txtCancel.setOnClickListener {
+                dialog.dismiss()
+
+                ID_employee2 = ID_Employee
+                emp_name2 = emp_name
+
+            }
+
+            txtSubmit.setOnClickListener {
+                dialog.dismiss()
+//                if (ID_employee2.equals("")){
+//                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
+//
+//                }
+//
+//                else{
+                    ID_Employee = ID_employee2
+                    emp_name = emp_name2
+                    Log.e(TAG,"002  "+ID_Employee)
+                    Log.e(TAG,"927  "+emp_name)
+                    dialog.dismiss()
+                    getCounts()
+//                }
+
+            }
+
+            refresh.setOnClickListener {
+//                dialog.dismiss()
+
+                    ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+                    ID_employee2 = ID_Employee
+                    emp_name2 = ""
+                    val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+                    tie_Employee!!.setText(UserNameSP.getString("UserName", null))
+                    Log.e(TAG,"002  "+ID_Employee)
+//                getCounts()
+            }
+
+
+//            ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+//            tie_Branch!!.setText(BranchNameSP.getString("BranchName", null))
+//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//            tie_Employee!!.setText(UserNameSP.getString("UserName", null))
+//            ID_Lead_Details = ""
+//            tie_LeadDetails!!.setText("")
+//            tie_LeadValue!!.setText("")
+//            til_LeadValue!!.setHint("")
+
+
+            tie_Employee!!.setOnClickListener(this)
+
+            tie_Employee!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
+//                ID_Employee = ""
+                leadDetailsAll = 0
+                getEmployeeAllD()
+                Log.e(TAG," 796   tie_Employee"+ID_Employee)
+
+            })
+
+
+
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+            Log.e(TAG, "isAdmin 796  " + isAdmin)
+            if (isAdmin.equals("1")) {
+                ll_admin_staff!!.visibility = View.VISIBLE
+                tie_Employee!!.isEnabled = true
+            }else{
+                tie_Employee!!.isEnabled = false
+            }
+
+            dialog.setCancelable(false)
+            dialog!!.setContentView(layout1)
+            dialog.show()
+
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+
     }
 
 
@@ -407,6 +577,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun getCounts() {
         var countAgenda = 0
+        Log.e(TAG,"455521      " + ID_Employee)
+        Log.e(TAG,"552255      " + UserName)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -416,7 +588,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaCountViewModel.getAgendaCount(this)!!.observe(
+                agendaCountViewModel.getAgendaCount(this,ID_Employee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -457,10 +629,146 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
+    private fun getEmployeeAllD() {
+        var countAgenda = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadAllDetailsViewModel.getLeadAllDetails(this,ID_Employee)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            progressDialog!!.dismiss()
+                            if (leadDetailsAll == 0) {
+                                leadDetailsAll++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   167   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("EmployeeAllDetails")
+                                    employeeArrayList = jobjt.getJSONArray("EmployeeAllDetailsList")
+                                    if (employeeArrayList.length() > 0) {
+                                        Log.e("TAG", "msg   1052   " + msg)
+
+                                        employeeAllPopup(employeeArrayList)
+//                                    customerSearchPopup(employeeArrayList)
+                                    }
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadManagemnetActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAllDetails = Dialog(this)
+            dialogEmployeeAllDetails!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAllDetails!! .setContentView(R.layout.employeealldetails_popup)
+            dialogEmployeeAllDetails!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAllDetails = dialogEmployeeAllDetails!! .findViewById(R.id.recyEmployeeAllDetails) as RecyclerView
+            val etsearch = dialogEmployeeAllDetails!! .findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllDetailSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                employeeAllDetailSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@LeadManagemnetActivity, 1)
+            recyEmployeeAllDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = EmployeeAllDetailAdapter(this@LeadManagemnetActivity, employeeAllDetailSort)
+            recyEmployeeAllDetails!!.adapter = adapter
+            adapter.setClickListener(this@LeadManagemnetActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    val textlength = etsearch!!.text.length
+                    employeeAllDetailSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                employeeAllDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"employeeAllDetailSort               7103    "+employeeAllDetailSort)
+                    val adapter = EmployeeAllDetailAdapter(this@LeadManagemnetActivity, employeeAllDetailSort)
+                    recyEmployeeAllDetails!!.adapter = adapter
+                    adapter.setClickListener(this@LeadManagemnetActivity)
+                }
+            })
+
+            dialogEmployeeAllDetails!!.show()
+            dialogEmployeeAllDetails!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun onRestart() {
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
         getCounts()
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("EmpName")){
+            dialogEmployeeAllDetails!!.dismiss()
+            val jsonObject = employeeAllDetailSort.getJSONObject(position)
+//            Toast.makeText(this, ""+jsonObject.getString("EmpName"), Toast.LENGTH_SHORT).show()
+            tie_Employee!!.setText(jsonObject.getString("EmpName"))
+//            emp_name = jsonObject.getString("EmpName")
+            emp_name2 = jsonObject.getString("EmpName")
+//            UserName = jsonObject.getString("UserCode")
+//            ID_Employee = jsonObject.getString("ID_Employee")
+            ID_employee2 = jsonObject.getString("ID_Employee")
+            Log.e(TAG,"iddddd "+jsonObject.getString("ID_Employee"))
+        }
+        dialogEmployeeAllDetails!!.dismiss()
     }
 
 

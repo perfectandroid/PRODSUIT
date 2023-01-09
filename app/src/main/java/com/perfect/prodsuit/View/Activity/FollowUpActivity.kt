@@ -465,7 +465,6 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 getFollowupType()
             }
             R.id.tie_NextFollowupDate->{
-
                 DateType = 1
                 openBottomSheet1()
             }

@@ -1848,6 +1848,7 @@
 
 
         </LinearLayout>
+
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
             android:layout_width="match_parent"

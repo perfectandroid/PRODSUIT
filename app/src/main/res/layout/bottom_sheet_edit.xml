@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="@font/myfont"
+            android:background="@color/white"
+            android:textAllCaps="false"
+            android:layout_marginTop="25dp"
+            android:text="" />
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_leadNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:textSize="14dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:lineSpacingExtra="-1dp"
+                    android:justificationMode="inter_word"
+                    android:textColor="@color/greydark"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/myfont"
+                    android:background="@color/white"
+                    android:textAllCaps="false"
+                    android:text=""
+                    android:visibility="gone"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_edit1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BRANCH"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_tvedit1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:focusableInTouchMode="false"
+                        android:textSize="14dp"
+                        android:editable="false"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_DeleteReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="EMPLOYEE"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_tvedit2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:focusableInTouchMode="false"
+                        android:textSize="14dp"
+                        android:editable="false"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/color_background"
+            android:layout_alignParentBottom="true">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="Reset"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="SUBMIT"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+            <!--            android:background="@color/white"-->
+
+            <Button
+                android:id="@+id/edit_No"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="2dp"
+                android:text="No"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="visible"/>
+            <!--            android:background="@drawable/btn_bgcolourshad"-->
+            <Button
+                android:id="@+id/Edit_yes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_shape_submit"
+                android:padding="2dp"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:text="Yes"
+                android:visibility="visible"/>
+            <!--            android:background="@drawable/btn_bgcolourshadow1"-->
+
+            <!--            btn_bgcolourblack-->
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

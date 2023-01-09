@@ -9,8 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.AgendaCountModel
-import com.perfect.prodsuit.Model.LeadFromModel
+import com.perfect.prodsuit.Model.LeadAllDetailsModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -21,20 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object AgendaCountRepository {
+object LeadAllDetailsRepository {
 
+    val LeadAllDetailsSetterGetter = MutableLiveData<LeadAllDetailsModel>()
     private var progressDialog: ProgressDialog? = null
-    val agendaCountSetterGetter = MutableLiveData<AgendaCountModel>()
-    val TAG: String = "AgendaCountRepository"
+    val TAG: String = "LeadAllDetailsRepository"
 
-    fun getServicesApiCall(context: Context,ID_Employee: String): MutableLiveData<AgendaCountModel> {
-        getAgendaCount(context,ID_Employee)
-        return agendaCountSetterGetter
-    }
 
-    private fun getAgendaCount(context: Context,ID_Employee: String) {
+    fun getServicesApiCall(context: Context,ID_Employee: String): MutableLiveData<LeadAllDetailsModel> {
+        getEmployeeAllDetails(context,ID_Employee)
+        return LeadAllDetailsSetterGetter
+        }
+
+    private fun getEmployeeAllDetails(context: Context,ID_Employee: String){
         try {
-            agendaCountSetterGetter.value = AgendaCountModel("")
+            LeadAllDetailsSetterGetter.value = LeadAllDetailsModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,27 +60,35 @@ object AgendaCountRepository {
             try {
 
 
-//                "ReqMode":"42",
+//                "ReqMode":"41",
 //                "BankKey":"-500",
 //                "FK_Employee":123,
 //                "Token":sfdsgdgdg
+//                "Id_Agenda",1
+
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39,0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36,0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("42"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("65"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Employee",ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
-                Log.e(TAG,"requestObject1   7711   "+requestObject1)
-                Log.e(TAG,"requestObject1   5555555  "+ID_Employee)
-                Log.e(TAG,"requestObject1   7711   "+ProdsuitApplication.encryptStart("42"))
+//                Log.e(AgendaActionRepository.TAG,"Id_Agenda        8222   ")
+                Log.e(TAG,"requestObject1   222221   "+ID_Employee)
+                Log.e(TAG,"requestObject1   0001   "+requestObject1)
+                Log.e(TAG,"requestObject1   0002   "+TokenSP.getString("Token", null))
+                Log.e(TAG,"requestObject1   0003   "+BankKeySP.getString("BANK_KEY", null))
+                Log.e(TAG,"requestObject1   0004   "+FK_CompanySP.getString("FK_Company", null))
+                Log.e(TAG,"requestObject1   0005   "+UserCodeSP.getString("UserCode", null))
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -89,35 +97,36 @@ object AgendaCountRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getPendingCountDetails(body)
+            val call = apiService.getEmployeeAllDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"requestObject1   771   "+response.body())
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"1111 response   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<AgendaCountModel>()
-                        leads.add(AgendaCountModel(response.body()))
+                        val leads = ArrayList<LeadAllDetailsModel>()
+                        leads.add(LeadAllDetailsModel(response.body()))
                         val msg = leads[0].message
-                        agendaCountSetterGetter.value = AgendaCountModel(msg)
+                        LeadAllDetailsSetterGetter.value = LeadAllDetailsModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
+            Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
+
 }

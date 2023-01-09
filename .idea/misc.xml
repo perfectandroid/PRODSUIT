@@ -3,52 +3,51 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/address_svg.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/bottom_rounded.xml" value="0.2005" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/btn_bg.xml" value="0.356" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/btn_bg3.xml" value="0.1875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/call_svg_profile.xml" value="0.1725" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/dob_svg.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_circle.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_close.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_mpin.xml" value="0.2005" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_notf_icon.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_notifications.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/ic_profile.xml" value="0.1725" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/profile.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/profile_svg.xml" value="0.189" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/rightcurve_whitebg.xml" value="0.2005" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/rounded_profile_bg.xml" value="0.1885" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/svg_message.xml" value="0.148" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_account_details.xml" value="0.17760416666666667" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_change_pin.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_customer_service.xml" value="0.18" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_customerregister.xml" value="0.33" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_dash_board.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_home.xml" value="0.22" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_homemain.xml" value="0.32563405797101447" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_lead_generatn.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_leads.xml" value="0.17760416666666667" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_login.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_mpin.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_otp.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_profile.xml" value="0.25" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_setmpin.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_splash.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_welcome.xml" value="0.2" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/activity_welcome_slider.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/adapter_notification.xml" value="0.13802083333333334" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/changepin_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/logout_notf.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/logout_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/nav_header_main.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/notf_popup.xml" value="0.16" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/quit_popup.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/welcome_slide1.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/welcome_slide2.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/welcome_slide3.xml" value="0.22" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/menu/main_drawer.xml" value="0.3546875" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/drawable/address_svg.xml" value="0.155" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/drawable/background_style.xml" value="0.2385" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/drawable/refresh.xml" value="0.155" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_account_details.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_call_remark.xml" value="0.1" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_follow_up.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_homemain.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_lead_generatn.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_lead_new_action.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_leadmanagement.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_overdue.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_reportview.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_ticketreport.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_todolist.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/activity_upcomingtask.xml" value="0.12552083333333333" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_branch.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_call_status.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_employee.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_employee_all.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_expense.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_followup_type.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_lead_by.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_leaddetail.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_overdue.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_state_list.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_todolist.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/adapter_upcmng.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/bottom_sheet_edit.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/bottomsheet_deletelead.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/bottomsheet_manage.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/bottomsheet_remark.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/bottomsheet_timer.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/branch_select.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/call_status_popup.xml" value="0.12552083333333333" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/employeeall_popup.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/employeealldetails.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/filter_manage.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/filter_popup.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/followup_type_popup.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/lead_by_popup.xml" value="0.25" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/send_message_popup.xml" value="0.27291666666666664" />
+        <entry key="..\:/December/Latest/Prodsuite 26.12.2022/app/src/main/res/layout/success_popup.xml" value="0.27291666666666664" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
