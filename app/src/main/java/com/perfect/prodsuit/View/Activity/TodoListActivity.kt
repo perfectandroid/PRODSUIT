@@ -60,6 +60,9 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var rv_todolist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
     private var SubMode:String?=""
+    private var ID_Employee:String? = ""
+    private var emp_name:String? = ""
+    private var UserName:String? = ""
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
     internal var yr: Int =0
@@ -95,7 +98,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
 
     private var ID_Branch = "";
-    private var ID_Employee = "";
+//    private var ID_Employee = "";
     private var ID_Lead_Details = "";
     private var strLeadValue = "";
 
@@ -144,6 +147,20 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("ID_Employee")) {
+            ID_Employee = intent.getStringExtra("ID_Employee")
+            Log.e(TAG,"7777777    "+ID_Employee)
+        }
+        if (getIntent().hasExtra("EmpName")) {
+            emp_name = intent.getStringExtra("EmpName")
+            Log.e(TAG,"7777777    "+emp_name)
+        }
+        if (getIntent().hasExtra("UserName")) {
+            UserName = intent.getStringExtra("UserName")
+            Log.e(TAG,"131313    "+UserName)
+        }
+
+
 
         name = ""
         submode = "1"
@@ -157,10 +174,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
         ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
        // tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
       //  tie_Employee!!.setText( UserNameSP.getString("UserName", null))
 
         toDoDet = 0
+        tie_Employee?.isEnabled = false
         getTodoList()
     }
     companion object {
@@ -185,6 +203,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     }
 
     private fun getTodoList() {
+        Log.v("9999999    ",""+ID_Employee)
 //        var toDoDet = 0
         rv_todolist!!.adapter = null
         context = this@TodoListActivity
@@ -869,8 +888,21 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 
             ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
             tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+//            ID_Employee
+            Log.v("gggggg   ",""+ID_Employee)
+//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            if (emp_name.equals("")) {
+
+                tie_Employee!!.setText(UserName)
+            }else{
+
+                tie_Employee!!.setText(emp_name)
+            }
+
+            tie_Employee?.isClickable = false
+
+
             ID_Lead_Details = ""
             tie_LeadDetails!!.setText("")
             tie_LeadValue!!.setText("")
@@ -890,7 +922,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             if (isAdmin.equals("1")){
                 ll_admin_staff!!.visibility  =View.VISIBLE
                 tie_Branch!!.isEnabled  = true
-                tie_Employee!!.isEnabled  = true
+                tie_Employee!!.isEnabled  = false
             }else{
                 ll_admin_staff!!.visibility  =View.GONE
                 tie_Branch!!.isEnabled  = false

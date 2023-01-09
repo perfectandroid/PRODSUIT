@@ -59,6 +59,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var rv_overduelist: RecyclerView?=null
     lateinit var overdueArrayList : JSONArray
     private var SubMode:String?=""
+    private var UserName:String? = ""
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -81,6 +82,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var cbWhat = "0";
     private var cbEmail = "0";
     private var cbMessage = "0";
+    private var ID_Employee:String? = ""
+    private var emp_name:String? = ""
 
     var sharedPreferences: SharedPreferences? =null
     var fab_Reminder: FloatingActionButton? = null
@@ -89,7 +92,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     internal var etdis: EditText? = null
 
     private var ID_Branch = "";
-    private var ID_Employee = "";
+//    private var ID_Employee = "";
     private var ID_Lead_Details = "";
     private var strLeadValue = "";
 
@@ -137,6 +140,18 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("ID_Employee")) {
+            ID_Employee = intent.getStringExtra("ID_Employee")
+            Log.e(TAG,"44444    "+ID_Employee)
+        }
+        if (getIntent().hasExtra("EmpName")) {
+            emp_name = intent.getStringExtra("EmpName")
+            Log.e(TAG,"44444    "+emp_name)
+        }
+        if (getIntent().hasExtra("UserName")) {
+            UserName = intent.getStringExtra("UserName")
+            Log.e(TAG,"3564855    "+UserName)
+        }
          name = ""
          date = ""
          criteria = ""
@@ -148,7 +163,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 
         ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
         overDueDet = 0
         getOverdueList()
     }
@@ -175,6 +190,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     }
 
     private fun getOverdueList() {
+        Log.v("5555555    ",""+ID_Employee)
 //        var overDueDet = 0
         rv_overduelist!!.adapter = null
         context = this@OverDueActivity
@@ -1045,8 +1061,18 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
             ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
             tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            ID_Employee
+//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+            Log.v("bbbbbb   ",""+ID_Employee)
+//            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            if (emp_name.equals("")) {
+
+                tie_Employee!!.setText(UserName)
+            }else{
+
+                tie_Employee!!.setText(emp_name)
+            }
+
             ID_Lead_Details = ""
             tie_LeadDetails!!.setText("")
             tie_LeadValue!!.setText("")
@@ -1065,7 +1091,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             if (isAdmin.equals("1")){
                 ll_admin_staff!!.visibility  =View.VISIBLE
                 tie_Branch!!.isEnabled  = true
-                tie_Employee!!.isEnabled  = true
+                tie_Employee!!.isEnabled  = false
             }else{
                 ll_admin_staff!!.visibility  =View.GONE
                 tie_Branch!!.isEnabled  = false

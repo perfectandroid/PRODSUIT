@@ -460,12 +460,13 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
             R.id.tie_NextActionType->{
                 Config.disableClick(v)
+//                tie_ActionType!!.isEnabled = true
+//                followupTypePopup(followUpTypeArrayList)
                 ActiontypeFN = 1
                 followUpType = 0
                 getFollowupType()
             }
             R.id.tie_NextFollowupDate->{
-
                 DateType = 1
                 openBottomSheet1()
             }
@@ -2818,8 +2819,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                                 val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
                                                 //LeadNumber
                                                 tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                                tv_label!!.setText("LeadGenerate Action")
-                                                tv_leadid!!.setText(jobjt.getString("FK_LeadGenerateAction"))
+                                                tv_label!!.setText("LeadNo")
+                                                tv_leadid!!.setText(jobjt.getString("LeadNo"))
 
                                                 tv_succesok!!.setOnClickListener {
                                                     suceessDialog!!.dismiss()

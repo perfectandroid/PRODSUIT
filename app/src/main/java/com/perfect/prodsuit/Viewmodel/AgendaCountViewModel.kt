@@ -9,8 +9,8 @@ import com.perfect.prodsuit.Repository.AgendaCountRepository
 class AgendaCountViewModel : ViewModel() {
 
     var agendaCountData: MutableLiveData<AgendaCountModel>? = null
-    fun getAgendaCount(context: Context) : MutableLiveData<AgendaCountModel>? {
-        agendaCountData = AgendaCountRepository.getServicesApiCall(context)
+    fun getAgendaCount(context: Context,ID_Employee: String) : MutableLiveData<AgendaCountModel>? {
+        agendaCountData = AgendaCountRepository.getServicesApiCall(context,ID_Employee)
         return agendaCountData
     }
 }

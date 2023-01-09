@@ -24,8 +24,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,80 +65,95 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-
-                <LinearLayout
-                    android:id="@+id/ll_admin_staff"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_Branch"
+                    <LinearLayout
+                        android:id="@+id/ll_admin_staff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Branch"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:drawableTint="@color/textColor"
-                        android:fontFamily="@font/myfont"
-                        style="@style/Widget.App.TextInputLayout">
+                        android:layout_toLeftOf="@+id/refresh"
+                        android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tie_Branch"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_Branch"
+                            style="@style/Widget.App.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:drawablePadding="5dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="15dp"
                             android:drawableTint="@color/textColor"
-                            android:focusableInTouchMode="false"
-                            android:textSize="14dp"
-                            android:editable="false"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/greydarks"
-                            android:textStyle="normal"/>
+                            android:hint="Branch"
+                            android:visibility="gone">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tie_Branch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:drawablePadding="5dp"
+                                android:drawableTint="@color/textColor"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:textColor="@color/greydarks"
+                                android:textSize="14dp"
+                                android:textStyle="normal" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_Employee"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Employee"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:drawableTint="@color/textColor"
-                        android:fontFamily="@font/myfont"
-                        style="@style/Widget.App.TextInputLayout">
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tie_Employee"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_Employee"
+                            style="@style/Widget.App.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:drawableRight="@drawable/arrow_down"
-                            android:drawablePadding="5dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="15dp"
                             android:drawableTint="@color/textColor"
-                            android:focusableInTouchMode="false"
-                            android:textSize="14dp"
-                            android:editable="false"
                             android:fontFamily="@font/myfont"
-                            android:textColor="@color/greydarks"
-                            android:textStyle="normal"/>
+                            android:hint="Employee">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tie_Employee"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableRight="@drawable/arrow_down"
+                                android:drawablePadding="5dp"
+                                android:drawableTint="@color/textColor"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:textColor="@color/greydarks"
+                                android:textSize="14dp"
+                                android:textStyle="normal" />
 
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/refresh"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="19dp"
+                        android:src="@drawable/reload" />
+                </RelativeLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_LeadDetails"
@@ -150,6 +163,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:visibility="gone"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     style="@style/Widget.App.TextInputLayout">
@@ -179,6 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=""
+                    android:visibility="gone"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
