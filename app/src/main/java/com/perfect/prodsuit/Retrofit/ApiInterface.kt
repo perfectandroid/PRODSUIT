@@ -277,4 +277,10 @@ interface ApiInterface {
     @POST("AppDetails/GetCompanyCode")
     fun getCompanyCode(@Body body: RequestBody): Call<String>
 
+//    CHANEL   ReqMode =66  SubMode =22
+//    CATEGORY   ReqMode =66  SubMode =20
+//    COMPANY   ReqMode =66  SubMode =
+    @POST("Service/GetCommonPopup")
+    fun getCommonPopup(@Body body: RequestBody): Call<String>
+
 }

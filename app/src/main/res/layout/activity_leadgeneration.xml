@@ -400,19 +400,19 @@
                                                 android:id="@+id/txtleadthrough"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="5dp"
                                                 android:layout_marginLeft="10dp"
+                                                android:layout_marginTop="5dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="0dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:drawableLeft="@drawable/lead_through"
                                                 android:drawableTint="@color/greydark"
+                                                android:fontFamily="@font/myfont"
+                                                android:hint="Lead From"
+                                                android:padding="7dp"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Lead From"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1349,7 +1349,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
                                             <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -1529,7 +1529,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
                                                 android:orientation="vertical"
-                                                android:visibility="gone">
+                                                android:visibility="visible">
 
                                                 <TextView
                                                     android:layout_width="match_parent"

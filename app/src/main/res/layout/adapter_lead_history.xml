@@ -35,6 +35,7 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:fontFamily="@font/myfont"
+                android:gravity="start"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
                 android:textStyle="normal" />
@@ -42,7 +43,8 @@
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtAbout"
@@ -51,7 +53,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
@@ -77,13 +79,15 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="15dp"
+                android:gravity="start"
                 android:drawableTint="@color/black"
                 android:textStyle="normal" />
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtAction"
@@ -92,7 +96,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
@@ -119,12 +123,14 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:gravity="start"/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtActiondate"
@@ -133,7 +139,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
@@ -160,12 +166,14 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:gravity="start"/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtStatus"
@@ -174,7 +182,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
@@ -202,12 +210,14 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:gravity="start"/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtAgentRemark"
@@ -216,7 +226,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
@@ -244,12 +254,14 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:gravity="start"/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:text=":"/>
+                android:text=":"
+                android:gravity="start"/>
 
             <TextView
                 android:id="@+id/txtFollowedBy"
@@ -258,7 +270,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:fontFamily="@font/myfont"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"

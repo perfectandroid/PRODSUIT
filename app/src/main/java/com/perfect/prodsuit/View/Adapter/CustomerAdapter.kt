@@ -43,6 +43,10 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
+
+                val pos = position+1
+                holder.txtsino.text        = pos.toString()
+
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 holder.txtName.text        = jsonObject!!.getString("CusName")
                 val name = jsonObject!!.getString("CusName")
@@ -55,19 +59,6 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
 
                 holder.txtEmail!!.setTag(position)
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("CusEmail")+"   "+jsonObject!!.getString("CusName")+"   "+jsonObject!!.getString("CusEmail").length)
-//                if (jsonObject!!.getString("CusEmail").length==0){
-//                      holder.txtEmail!!.visibility = View.GONE
-//                }else{
-//
-//                    holder.txtEmail.text        = jsonObject!!.getString("CusEmail")
-//                }
-
-//                if (position%2 == 0){
-//                    holder.llleftlay.setBackgroundColor(context.getColor(R.color.cust_1))
-//                }else{
-//                    holder.llleftlay.setBackgroundColor(context.getColor(R.color.cust_2))
-//                }
-
 
                 if (position%1 == 0){
                     val biggerCircle = ShapeDrawable(OvalShape())
@@ -125,15 +116,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                   //  holder.txtFirst.setTextColor(context.getColor(R.color.cust_color5))
                 }
 
-//                if (jsonObject!!.getString("CusPhnNo").equals("")){
-//                    holder.txtMobile.visibility = View.GONE
-//                }
-//                if (jsonObject!!.getString("CusAddress1").equals("")){
-//                    holder.txtAddress.visibility = View.GONE
-//                }
-//                if (jsonObject!!.getString("CusEmail").equals("")){
-//                    holder.txtEmail.visibility = View.GONE
-//                }
+
 
                 holder.txtEmail.text        = jsonObject!!.getString("CusEmail")
                 holder.txtMobile.text     = jsonObject!!.getString("CusPhnNo")
@@ -162,6 +145,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        internal var txtsino         : TextView
         internal var txtFirst         : TextView
         internal var txtName          : TextView
         internal var txtEmail         : TextView
@@ -170,6 +154,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
         internal var lladpcustomer    : LinearLayout
         internal var llleftlay        : LinearLayout
         init {
+            txtsino       = v.findViewById<View>(R.id.txtsino) as TextView
             txtFirst       = v.findViewById<View>(R.id.txtFirst) as TextView
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtEmail       = v.findViewById<View>(R.id.txtEmail) as TextView

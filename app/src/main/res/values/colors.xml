@@ -330,5 +330,8 @@
     <color name="color_tab">#9DB7B8</color>
     <color name="color_account">#45888A</color>
 
+    <color name="colorService">#B2C0C2</color>
+    <color name="colorbgService">#E8E9EA</color>
+
 
 </resources>

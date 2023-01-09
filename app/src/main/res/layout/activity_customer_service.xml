@@ -11,163 +11,223 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
+            android:layout_above="@+id/llBtn"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_header">
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imback"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="10dp"
+                        android:tint="@color/white"
+                        android:src="@drawable/back_arro"
+                        tools:ignore="UseAppTint" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Customer service"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:tint="@color/white"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/myfont" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imLeadedit"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_edit"
+                        android:visibility="invisible"
+                        tools:ignore="UseAppTint" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <ScrollView
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imback"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="left"
-                            android:background="@color/color_activity_transparent"
-                            android:padding="10dp"
-                            android:tint="@color/black"
-                            android:src="@drawable/back_arro"
-                            tools:ignore="UseAppTint" />
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Customer service"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:tint="@color/black"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:textAllCaps="true"
-                        android:fontFamily="@font/myfont" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="20dp"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/imLeadedit"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="10dp"
-                            android:background="@color/color_activity_transparent"
-                            android:padding="5dp"
-                            android:src="@drawable/ic_edit"
-                            android:visibility="invisible"
-                            tools:ignore="UseAppTint" />
 
-                    </LinearLayout>
-                </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_above="@+id/llBtn"
-                        android:background="@color/color_background1">
-
-                        <ScrollView
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="5dp"
+                            app:cardUseCompatPadding="true"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:backgroundTint="@color/white"
-                                    app:cardCornerRadius="3dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    app:cardElevation="5dp"
-                                    app:cardUseCompatPadding="true">
 
-                                    <LinearLayout
+                                <com.google.android.material.tabs.TabLayout
+                                    android:id="@+id/tabLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/tab_color_selector"
+                                    android:scrollbars="horizontal"
+                                    app:tabTextColor="@color/white"
+                                    app:tabIndicatorColor="@color/tab_background_selected"
+                                    app:tabTextAppearance="@style/customfontstyle1"
+                                    app:tabBackground="@drawable/tab_color_selector"/>
+
+                                <LinearLayout
+                                    android:id="@+id/llMainDetail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    tools:ignore="MissingConstraints" >
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_customerClick"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorService"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="customer details"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_customer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:background="@color/colorbgService"
+                                    android:visibility="visible">
+
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical"
-                                        android:background="#FFFFFF">
-<!--                                        android:background="#FBEEF0"-->
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="customer details"
-                                            android:textColor="@color/white"
-                                            android:gravity="center"
-                                            android:textAllCaps="true"
-                                            android:textStyle="bold"
-                                            android:textSize="15dp"
-                                            android:padding="10dp"
-                                            android:background="@drawable/shape_gradient_pop"
-                                            android:fontFamily="@font/myfont"/>
+                                        android:layout_marginBottom="10dp"
+                                        android:orientation="vertical">
 
                                         <com.google.android.material.textfield.TextInputLayout
-                                            android:id="@+id/til_CustomerNo"
+                                            android:id="@+id/til_Date"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:hint="Customer Number"
+                                            android:hint="Date"
                                             android:layout_marginTop="10dp"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginRight="15dp"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
-                                            app:endIconDrawable="@drawable/search_24"
+                                            app:endIconDrawable="@drawable/svg_tap_finger"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
-                                                android:id="@+id/tie_CustomerNo"
+                                                android:id="@+id/tie_Date"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="10dp"
-                                                android:paddingTop="8dp"
-                                                android:paddingBottom="8dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
-                                                android:editable="true"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
                                                 android:drawablePadding="10dp"
-                                                android:textStyle="normal" />
+                                                android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,6 +242,7 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/search_24"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
@@ -190,12 +251,13 @@
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="10dp"
-                                                android:paddingTop="8dp"
-                                                android:paddingBottom="8dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:editable="true"
+                                                android:focusableInTouchMode="true"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
@@ -203,6 +265,44 @@
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_MobileNo"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Mobile Number"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/search_24"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_MobileNo"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="true"
+                                                android:inputType="phone"
+                                                android:focusableInTouchMode="true"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal" />
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
 
                                         <com.google.android.material.textfield.TextInputLayout
                                             android:id="@+id/til_MobileNumber"
@@ -215,7 +315,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
-                                            style="@style/Widget.App.TextInputLayout">
+                                            style="@style/Widget.App.TextInputLayout"
+                                            android:visibility="gone">
 
                                             <com.google.android.material.textfield.TextInputEditText
                                                 android:id="@+id/tie_MobileNumber"
@@ -257,8 +358,8 @@
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="10dp"
-                                                android:paddingTop="8dp"
-                                                android:paddingBottom="8dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
@@ -291,12 +392,13 @@
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="10dp"
-                                                android:paddingTop="8dp"
-                                                android:paddingBottom="8dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:editable="false"
+                                                android:focusableInTouchMode="false"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
@@ -311,7 +413,6 @@
                                             android:layout_height="wrap_content"
                                             android:hint="Channel"
                                             android:layout_marginTop="5dp"
-                                            android:layout_marginBottom="10dp"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginRight="15dp"
                                             android:drawableTint="@color/textColor"
@@ -326,11 +427,289 @@
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
                                                 android:paddingLeft="10dp"
-                                                android:paddingTop="8dp"
-                                                android:paddingBottom="8dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
+                                                android:editable="false"
+                                                android:focusableInTouchMode="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_EmpOrMedia"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint=""
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout"
+                                            android:visibility="gone">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_EmpOrMedia"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="false"
+                                                android:focusableInTouchMode="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                                </LinearLayout>
+
+
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_complaintClick"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorService"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="complaint"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_complaint"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:background="@color/colorbgService"
+                                    android:visibility="gone">
+
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Category"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Category"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Category"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Company"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Company"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Company"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Product"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Product"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/search_24"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Product"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="true"
+                                                android:focusableInTouchMode="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Service"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Service"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Service"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Complaint"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Complaint"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Complaint"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
                                                 android:editable="false"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
@@ -341,111 +720,588 @@
                                         </com.google.android.material.textfield.TextInputLayout>
 
 
-                                    </LinearLayout>
 
-                                </androidx.cardview.widget.CardView>
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Description"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Description "
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            style="@style/Widget.App.TextInputLayout">
 
-                                <androidx.cardview.widget.CardView
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Description"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="true"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                                </LinearLayout>
+
+
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_contactClick"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:backgroundTint="@color/white"
-                                    app:cardCornerRadius="3dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    app:cardElevation="5dp"
-                                    app:cardUseCompatPadding="true">
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorService"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="CONTACT DETAILS"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
 
-                                    <LinearLayout
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_contact"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:background="@color/colorbgService"
+                                    android:visibility="gone">
+
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
 
-                                        <com.google.android.material.tabs.TabLayout
-                                            android:id="@+id/tabLayout"
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_ContactNo"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/tab_color_selector"
-                                            android:scrollbars="horizontal"
-                                            app:tabTextColor="@color/white"
-                                            app:tabIndicatorColor="@color/tab_background_selected"
-                                            app:tabTextAppearance="@style/customfontstyle1"
-                                            app:tabBackground="@drawable/tab_color_selector"/>
+                                            android:hint="Contact No"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            style="@style/Widget.App.TextInputLayout">
 
-                                        <LinearLayout
-                                            android:id="@+id/llMainDetail"
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_ContactNo"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="true"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Landmark"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            tools:ignore="MissingConstraints" >
+                                            android:hint="Land mark"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Landmark"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:editable="true"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                                        </LinearLayout>
 
-                                    </LinearLayout>
 
-                                </androidx.cardview.widget.CardView>
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                                </LinearLayout>
+
 
                             </LinearLayout>
 
+                        </androidx.cardview.widget.CardView>
 
-                        </ScrollView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_requestedClick"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorService"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Requested Visit Date and Time"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_requested"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:background="@color/colorbgService"
+                                    android:visibility="gone">
+
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_FromDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="From Date"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_FromDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_ToDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="To Date"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_ToDate"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_FromTime"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="From Time"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_FromTime"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_ToTime"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="To Time"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_ToTime"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_attendedClick"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorService"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="ATTENDED DETAILS"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_attended"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:background="@color/colorbgService"
+                                    android:visibility="gone">
+
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Status"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Status"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Status"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Attendedby"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Attended by"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Attendedby"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/svg_report"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
 
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/llBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/color_background"
-                        android:layout_alignParentBottom="true">
 
-
-                        <Button
-                            android:id="@+id/btnReset"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1.5"
-                            android:background="@drawable/btn_shape_reset"
-                            android:fontFamily="@font/myfont"
-                            android:padding="2dp"
-                            android:text="Reset"
-                            android:textStyle="bold"
-                            android:textColor="@color/greydark"
-                            android:textAllCaps="true"
-                            android:textSize="15dp"
-                            android:visibility="visible"/>
-
-                        <Button
-                            android:id="@+id/btnSubmit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/myfont"
-                            android:background="@drawable/btn_shape_submit"
-                            android:padding="2dp"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"
-                            android:text="Submit"
-                            android:visibility="visible"/>
-                        <!--            android:background="@drawable/btn_bgcolourshadow1"-->
-
-                        <!--            btn_bgcolourblack-->
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
+                </ScrollView>
 
 
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/color_background"
+            android:layout_alignParentBottom="true">
+
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="2dp"
+                android:text="Reset"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_shape_submit"
+                android:padding="2dp"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:text="Submit"
+                android:visibility="visible"/>
+            <!--            android:background="@drawable/btn_bgcolourshadow1"-->
+
+            <!--            btn_bgcolourblack-->
         </LinearLayout>
 
 
