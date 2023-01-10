@@ -13,16 +13,16 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceProductAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class ServiceComplaintAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
-    internal val TAG : String = "ServiceProductAdapter"
+    internal val TAG : String = "ServiceComplaintAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_service_product, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_service_complaint, parent, false)
         vh = MainViewHolder(v)
         return vh
     }
@@ -35,20 +35,12 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
                 val pos = position+1
 
                 holder.txtsino.text        = pos.toString()
-                holder.txtProduct.text        = jsonObject!!.getString("ProductName")
-//                holder.tv_prod_regOn.text      = jsonObject!!.getString("RegOn")
-//                holder.tv_prod_Complaint.text       = jsonObject!!.getString("Complaint")
-//                holder.tv_prod_Status.text        = jsonObject!!.getString("Status")
-//                holder.tv_prod_AttendBy.text      = jsonObject!!.getString("AttendedBy")
-//                holder.tv_prod_EmpNote.text       = jsonObject!!.getString("Employee")
-//
-//                if (position%2 != 0){
-//                    holder.llProduct.setBackgroundColor(context.getColor(R.color.alternate_color))
-//                }
+                holder.txtComplaint.text        = jsonObject!!.getString("ComplaintName")
 
-                holder.llProduct!!.setTag(position)
-                holder.llProduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "serviceProduct")
+
+                holder.llComplaint!!.setTag(position)
+                holder.llComplaint!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "compalint")
                 })
             }
         } catch (e: Exception) {
@@ -56,7 +48,6 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
-
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -72,12 +63,12 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var txtsino    : TextView
-        internal var txtProduct    : TextView
-        internal var llProduct       : LinearLayout
+        internal var txtComplaint    : TextView
+        internal var llComplaint       : LinearLayout
         init {
             txtsino      = v.findViewById<View>(R.id.txtsino) as TextView
-            txtProduct      = v.findViewById<View>(R.id.txtProduct) as TextView
-            llProduct         = v.findViewById<View>(R.id.llProduct) as LinearLayout
+            txtComplaint      = v.findViewById<View>(R.id.txtComplaint) as TextView
+            llComplaint         = v.findViewById<View>(R.id.llComplaint) as LinearLayout
         }
     }
 
@@ -86,3 +77,4 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
     }
 
 }
+

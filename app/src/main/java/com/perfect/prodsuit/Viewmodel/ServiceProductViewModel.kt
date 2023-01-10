@@ -11,8 +11,8 @@ class ServiceProductViewModel: ViewModel() {
 
     var serviceProductData: MutableLiveData<ServiceProductModel>? = null
 
-    fun getServiceProduct(context: Context) : LiveData<ServiceProductModel>? {
-        serviceProductData = ServiceProductRepository.getServicesApiCall(context)
+    fun getServiceProduct(context: Context,ReqMode: String, SubMode: String,Customer_Type: String,ID_Customer: String) : LiveData<ServiceProductModel>? {
+        serviceProductData = ServiceProductRepository.getServicesApiCall(context,ReqMode,SubMode,Customer_Type,ID_Customer)
         return serviceProductData
     }
 }

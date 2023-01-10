@@ -1446,6 +1446,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun getFollowupAction() {
         var followUpAction = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1454,7 +1455,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                followUpActionViewModel.getFollowupAction(this)!!.observe(
+                followUpActionViewModel.getFollowupAction(this,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

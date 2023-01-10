@@ -286,4 +286,18 @@ interface ApiInterface {
     @POST("Service/GetCommonPopup")
     fun getCommonPopup(@Body body: RequestBody): Call<String>
 
+    @POST("Service/GetServiceProductDetails")
+    fun getServiceProductDetails(@Body body: RequestBody): Call<String>
+
+    // Service ReqMode  69
+    @POST("Service/GetServiceDetails")
+    fun getServiceDetails(@Body body: RequestBody): Call<String>
+
+    // Complaint  ReqMode 70
+    @POST("Service/GetComplaints")
+    fun getComplaints(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetMedia")
+    fun getServiceMedia(@Body body: RequestBody): Call<String>
+
 }

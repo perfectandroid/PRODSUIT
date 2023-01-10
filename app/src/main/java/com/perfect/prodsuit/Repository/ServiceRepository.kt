@@ -9,8 +9,9 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CommonModel
 import com.perfect.prodsuit.Model.ProductPriorityModel
+import com.perfect.prodsuit.Model.ServiceModel
+import com.perfect.prodsuit.Model.ServiceProductModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -21,20 +22,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object CommonRepository {
+object ServiceRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val channelSetterGetter = MutableLiveData<CommonModel>()
-    val TAG: String = "ChannelRepository"
+    val serviceSetterGetter = MutableLiveData<ServiceModel>()
+    val TAG: String = "ServiceRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String,SubMode : String): MutableLiveData<CommonModel> {
-        getchannel(context,ReqMode,SubMode)
-        return channelSetterGetter
+    fun getServicesApiCall(context: Context,ReqMode : String, SubMode: String, ID_Product: String): MutableLiveData<ServiceModel> {
+        getServiceSetterGetter(context,ReqMode,SubMode,ID_Product)
+        return serviceSetterGetter
     }
 
-    private fun getchannel(context: Context,ReqMode: String,SubMode: String) {
+    private fun getServiceSetterGetter(context: Context,ReqMode : String, SubMode: String, ID_Product: String) {
+
         try {
-            channelSetterGetter.value = CommonModel("")
+            serviceSetterGetter.value = ServiceModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,26 +62,28 @@ object CommonRepository {
             val requestObject1 = JSONObject()
             try {
 
-                // Channel - Category
-               // {"ReqMode":"kIjonu0oPXI=","BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","SubMode":"C9jcamVv4wY="}
+                // Service
+             //   {"ReqMode":"E2NQgC1tmbk=","BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","FK_Product":"vJ/8asrP+O0="}
 
-                // Company ADD FK_Company
-//                {"FK_Company":"vJ\/8asrP+O0=\n","ReqMode":"K76obqhY0lw=","BankKey":"\/mXqmq3ZMvs=\n","Name":"7wl7K1mbCdw=\n",
-//                    "Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n"}
+                 // Complaint
+             //   {"ReqMode":"ZWsGPbKR62k=","BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","SubMode":"8Ld7pH+WkK0=","FK_Company":"vJ/8asrP+O0="}
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
-                Log.e(TAG,"requestObject1   782   ReqMode  :  "+ReqMode+"   SubMode  :  "+SubMode)
+
+                Log.e(TAG,"requestObject1   971   "+requestObject1)
+                Log.e(TAG,"requestObject1   972   ReqMode  :  "+ReqMode+"   ID_Product  :  "+ID_Product)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -88,7 +92,7 @@ object CommonRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCommonPopup(body)
+            val call = apiService.getServiceDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -101,7 +105,7 @@ object CommonRepository {
                         val leads = ArrayList<ProductPriorityModel>()
                         leads.add(ProductPriorityModel(response.body()))
                         val msg = leads[0].message
-                        channelSetterGetter.value = CommonModel(msg)
+                        serviceSetterGetter.value = ServiceModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()

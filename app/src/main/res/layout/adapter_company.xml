@@ -11,7 +11,7 @@
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
-        android:id="@+id/llProduct"
+        android:id="@+id/llCompany"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -45,7 +45,7 @@
             android:drawableRight="@drawable/svg_right_arrow"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
-            android:id="@+id/txtProduct" />
+            android:id="@+id/txtCompany" />
 
 
     </LinearLayout>
