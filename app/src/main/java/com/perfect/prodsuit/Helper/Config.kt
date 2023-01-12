@@ -88,6 +88,7 @@ object Config {
     const val SHARED_PREF43 = "IsAdmin"
     const val SHARED_PREF44 = "ID_User"  // FK_User
     const val SHARED_PREF45 = "BranchName"
+    const val SHARED_PREF46 = "CompanyCategory"
 
 
 
@@ -473,7 +474,10 @@ object Config {
         BranchNameEditer.commit()
 
 
-
+        val CompanyCategorySP = context.getSharedPreferences(SHARED_PREF46, 0)
+        val CompanyCategoryEditer = CompanyCategorySP.edit()
+        CompanyCategoryEditer.putString("CompanyCategory", "")
+        CompanyCategoryEditer.commit()
 
 
 
