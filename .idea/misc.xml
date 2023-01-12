@@ -86,6 +86,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_mandatory.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_confirm.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_grey.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_pop.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header.xml" value="0.1695" />
@@ -170,6 +171,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_company.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_country_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.2712962962962963" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_customer_list.xml" value="0.19791666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_district_list.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_document_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.2630208333333333" />
@@ -196,6 +198,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.27037037037037037" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_bar_chart.xml" value="0.315625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_pie_chart.xml" value="0.18697916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/area_list_popup.xml" value="0.2989583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_company_code.xml" value="0.17708333333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_deletelead.xml" value="0.33229166666666665" />
@@ -237,10 +240,12 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_media_popup.xml" value="0.31666666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_popup.xml" value="0.22552083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_product_popup.xml" value="0.209375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_register_confirm.xml" value="0.29583333333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sort_popup.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/spinner_item.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/submedia_popup.xml" value="0.3416666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup.xml" value="0.3015625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_service_popup.xml" value="0.2578125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/warnig_alert.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.30092592592592593" />

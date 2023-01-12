@@ -333,5 +333,8 @@
     <color name="colorService">#B2C0C2</color>
     <color name="colorbgService">#E8E9EA</color>
 
+    <color name="color_confirm">#E8E7E7</color>
+    <color name="color_confirm_list">#F3F3F3</color>
+
 
 </resources>

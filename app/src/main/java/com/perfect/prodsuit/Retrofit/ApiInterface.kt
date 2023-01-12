@@ -300,4 +300,10 @@ interface ApiInterface {
     @POST("Service/GetMedia")
     fun getServiceMedia(@Body body: RequestBody): Call<String>
 
+    @POST("Service/GetCustomerList")
+    fun getCustomerList(@Body body: RequestBody): Call<String>
+
+    @POST("Service/UpdateCustomerServiceRegister")
+    fun UpdateCustomerServiceRegister(@Body body: RequestBody): Call<String>
+
 }

@@ -293,6 +293,7 @@
                                                 android:textSize="14dp"
                                                 android:editable="true"
                                                 android:inputType="phone"
+                                                android:maxLength="15"
                                                 android:focusableInTouchMode="true"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
@@ -536,7 +537,7 @@
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
                                     android:background="@color/colorbgService"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -850,6 +851,8 @@
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:editable="true"
+                                                android:maxLength="15"
+                                                android:inputType="phone"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"

@@ -12,18 +12,18 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.libraries.places.internal.df
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.ServiceMediaRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -31,6 +31,7 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , ItemClickListener {
 
@@ -81,11 +82,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_Channel: TextInputEditText? = null
     private var tie_EmpOrMedia: TextInputEditText? = null
 
+    private var til_Date: TextInputLayout? = null
     private var til_CustomerName: TextInputLayout? = null
     private var til_MobileNo: TextInputLayout? = null
     private var til_Address: TextInputLayout? = null
+    private var til_Priority: TextInputLayout? = null
     private var til_EmpOrMedia: TextInputLayout? = null
-//    private var til_Address: TextInputLayout? = null
+
 //    private var til_Address: TextInputLayout? = null
 
     //Complaints
@@ -97,9 +100,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_Complaint: TextInputEditText? = null
     private var tie_Description: TextInputEditText? = null
 
+    private var til_Category: TextInputLayout? = null
     private var til_Company: TextInputLayout? = null
+    private var til_Product: TextInputLayout? = null
     private var til_Service: TextInputLayout? = null
     private var til_Complaint: TextInputLayout? = null
+    private var til_Description: TextInputLayout? = null
 
     //  CONTACT DETAILS
 
@@ -117,6 +123,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private var tie_Status: TextInputEditText? = null
     private var tie_Attendedby: TextInputEditText? = null
+
 
     var custDetailMode: String? = "0"
     var complaintMode: String? = "1"
@@ -139,6 +146,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var serviceDet = 0
     var complaintDet = 0
     var followUpAction = 0
+    var saveOrupdate = 0
 
     var SubModeSearch: String? = ""
     var strCustomer: String? = ""
@@ -147,7 +155,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var custNameMode = 0 // 0 Search , 1 =Clear
     var employeeMode = 0 // 0 Employee , 1 Attended By
 
-    lateinit var customersearchViewModel: CustomerSearchViewModel
+    lateinit var customerListViewModel: CustomerListViewModel
     lateinit var customerArrayList: JSONArray
     lateinit var customerSort : JSONArray
     var dialogCustSearch: Dialog? = null
@@ -209,12 +217,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var dialogFollowupAction : Dialog? = null
     var recyFollowupAction: RecyclerView? = null
 
+    lateinit var customerServiceRegisterViewModel: CustomerServiceRegisterViewModel
+
     var Customer_Type: String? = ""
     var ID_Customer: String? = ""
     var ID_Priority: String? = ""
     var ID_Channel: String? = ""
     var ID_Employee: String? = ""
     var ID_ServiceMedia: String? = ""
+    var ID_EmpMedia: String? = ""
     var ID_Category: String? = ""
     var ID_Company: String? = ""
     var ID_Product: String? = ""
@@ -225,6 +236,34 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     var ReqMode: String? = ""
     var SubMode: String? = ""
+
+    var strDate: String? = ""
+    var strCustomerName: String? = ""
+    var strMobileNo: String? = ""
+    var strAddress: String? = ""
+    var strPriority: String? = ""
+    var strChannel: String? = ""
+    var strChannelSub: String? = ""
+
+    var strCategory: String? = ""
+    var strCompany: String? = ""
+    var strProduct: String? = ""
+    var strService: String? = ""
+    var strComplaint: String? = ""
+    var strDescription: String? = ""
+
+    var strContactNo: String? = ""
+    var strLandMark: String? = ""
+
+    var strFromDate: String? = ""
+    var strToDate: String? = ""
+    var strFromTime: String? = ""
+    var strToTime: String? = ""
+
+    var strStatus: String? = ""
+    var strAttendedBy: String? = ""
+
+    var strUserAction: String? = ""
 
 
 
@@ -239,7 +278,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         serviceProductViewModel = ViewModelProvider(this).get(ServiceProductViewModel::class.java)
         serviceSalesViewModel = ViewModelProvider(this).get(ServiceSalesViewModel::class.java)
 
-        customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
+        customerListViewModel = ViewModelProvider(this).get(CustomerListViewModel::class.java)
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         serviceViewModel = ViewModelProvider(this).get(ServiceViewModel::class.java)
         serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
@@ -247,6 +286,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         serviceMediaViewModel = ViewModelProvider(this).get(ServiceMediaViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        customerServiceRegisterViewModel = ViewModelProvider(this).get(CustomerServiceRegisterViewModel::class.java)
 
         setRegViews()
 
@@ -262,6 +302,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             if (custNameMode == 0){
                 custNameMode = 1
                 custDet = 0
+                ReqMode = "73"
                 SubModeSearch = "1"
                 strCustomer = tie_CustomerName!!.text.toString()
                 getCustomerSearch()
@@ -332,8 +373,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Channel = findViewById<TextInputEditText>(R.id.tie_Channel)
         tie_EmpOrMedia = findViewById<TextInputEditText>(R.id.tie_EmpOrMedia)
 
+        til_Date = findViewById<TextInputLayout>(R.id.til_Date)
         til_CustomerName = findViewById<TextInputLayout>(R.id.til_CustomerName)
         til_MobileNo = findViewById<TextInputLayout>(R.id.til_MobileNo)
+        til_Address = findViewById<TextInputLayout>(R.id.til_Address)
+        til_Priority = findViewById<TextInputLayout>(R.id.til_Priority)
 
 
         tie_Date!!.setOnClickListener(this)
@@ -350,9 +394,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Complaint = findViewById<TextInputEditText>(R.id.tie_Complaint)
         tie_Description = findViewById<TextInputEditText>(R.id.tie_Description)
 
+        til_Category = findViewById<TextInputLayout>(R.id.til_Category)
         til_Company = findViewById<TextInputLayout>(R.id.til_Company)
+        til_Product = findViewById<TextInputLayout>(R.id.til_Product)
         til_Service = findViewById<TextInputLayout>(R.id.til_Service)
         til_Complaint = findViewById<TextInputLayout>(R.id.til_Complaint)
+        til_Description = findViewById<TextInputLayout>(R.id.til_Description)
 
 
         tie_Category!!.setOnClickListener(this)
@@ -387,9 +434,36 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Status!!.setOnClickListener(this)
         tie_Attendedby!!.setOnClickListener(this)
 
+
+        getCurrentDate()
+        onTextChangedValues()
+
     }
 
+    private fun getCurrentDate() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_Date!!.setText(currentDate)
+        tie_FromDate!!.setText(currentDate)
+    }
 
+    private fun onTextChangedValues() {
+
+        // customer Details
+        tie_Date!!.addTextChangedListener(watcher);
+        tie_CustomerName!!.addTextChangedListener(watcher);
+        tie_MobileNo!!.addTextChangedListener(watcher);
+        tie_Address!!.addTextChangedListener(watcher);
+        tie_Priority!!.addTextChangedListener(watcher);
+
+        //Complaint
+        tie_Category!!.addTextChangedListener(watcher);
+        tie_Product!!.addTextChangedListener(watcher);
+        tie_Service!!.addTextChangedListener(watcher);
+        tie_Complaint!!.addTextChangedListener(watcher);
+        tie_Description!!.addTextChangedListener(watcher);
+
+    }
 
 
 //    private fun getComplaints() {
@@ -741,7 +815,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 if (!ID_Product.equals("")){
                     getServices(ReqMode!!,SubMode!!)
                 }else{
-                    Config.snackBars(context,v,"Select Product")
+                  //  Config.snackBars(context,v,"Select Product")
+                    til_Product!!.setError("Select Product");
+                    til_Product!!.setErrorIconDrawable(null)
                 }
             }
 
@@ -753,7 +829,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 if (!ID_Product.equals("")){
                     getComplaints(ReqMode!!,SubMode!!)
                 }else{
-                    Config.snackBars(context,v,"Select Product")
+                   // Config.snackBars(context,v,"Select Product")
+                    til_Product!!.setError("Select Product");
+                    til_Product!!.setErrorIconDrawable(null)
                 }
             }
 
@@ -817,13 +895,45 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             R.id.btnSubmit->{
               //  til_Address!!.setError("You need to enter a name");
+              validation()
+
+       //   dateTimevalidations()
+
+
+//
+//                strFromTime = tie_FromTime!!.text.toString()
+//                strToTime = tie_ToTime!!.text.toString()
+//                val inputTimeFormat = SimpleDateFormat("h:mm a")
+//                val outputTimeFormat = SimpleDateFormat("HH:mm")
+//
+//                val c = Calendar.getInstance()
+//                val formattedDate: String = inputTimeFormat.format(c.time)
+//                Log.e(TAG,"formattedDate   1302   "+formattedDate)
+//
+//                var date: Date? = null
+//                date = inputTimeFormat.parse(formattedDate)
+//                val strFromTime1 = outputTimeFormat.format(date)
+//                Log.e(TAG,"DATE   1302   "+strFromTime1)
+//
+//                var date1: Date? = null
+//                date1 = inputTimeFormat.parse(strToTime)
+//                val strToTime1 = outputTimeFormat.format(date1)
+//                Log.e(TAG,"DATE   1302   "+strToTime1)
+//
+//                if(strFromTime1.compareTo(strToTime1) <= 0) {
+//                    Log.e(TAG,"  8984   "+strFromTime1+"  <=  "+strToTime1)
+//                }
+//                else{
+//                    Log.e(TAG,"  8985   "+strFromTime1+"  :  "+strToTime1)
+//                }
+
+
+
+
             }
 
             R.id.btnReset->{
                 //  til_Address!!.setError("You need to enter a name");
-                tie_CustomerName!!.isEnabled = true
-                tie_MobileNo!!.isEnabled = false
-                tie_Address!!.isEnabled = false
 
                 resetData()
             }
@@ -831,6 +941,273 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
     }
+
+    private fun dateTimevalidations() {
+
+        strFromDate = tie_FromDate!!.text.toString()
+        strToDate = tie_ToDate!!.text.toString()
+        strFromTime = tie_FromTime!!.text.toString()
+        strToTime = tie_ToTime!!.text.toString()
+
+
+        val sdfDate = SimpleDateFormat("dd-MM-yyyy")
+        val sdfTime = SimpleDateFormat("h:mm a")
+        val outputTimeFormat = SimpleDateFormat("HH:mm")
+
+        val c = Calendar.getInstance()
+        val currentDate = sdfDate.format(Date())
+        val strcurrentDate1 = sdfDate.parse(currentDate)
+        val strFromDate1 = sdfDate.parse(strFromDate)
+        val currentTime = sdfTime.format(c.time)
+        var time: Date? = null
+        time = sdfTime.parse(currentTime)
+        val strCurrentTime1 = outputTimeFormat.format(time)
+        Log.e(TAG," currentTime  961   "+currentTime)
+        Log.e(TAG,"DATE   961   "+strCurrentTime1)
+
+
+        if (!strFromDate.equals("") && !strToDate.equals("") && !strFromTime.equals("") && !strToTime.equals("")) {
+
+            val strFromDate1 = sdfDate.parse(strFromDate)
+            val strToDate1 = sdfDate.parse(strToDate)
+
+            var fromT: Date? = null
+            fromT = sdfTime.parse(strFromTime)
+            val strFromTime1 = outputTimeFormat.format(fromT)
+            Log.e(TAG,"DATE   1302   "+strFromTime1)
+
+            var toT: Date? = null
+            toT = sdfTime.parse(strToTime)
+            val strToTime1 = outputTimeFormat.format(toT)
+            Log.e(TAG,"DATE   1302   "+strToTime1)
+
+
+            Log.e(TAG,"All Data  945")
+
+            if (strFromDate.equals(currentDate) && strToDate.equals(currentDate)){
+
+                if ((strCurrentTime1.compareTo(strFromTime1) <= 0) && (strFromTime1.compareTo(strToTime1) <= 0)){
+                    Log.e(TAG,"All Data  9451  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"All Data  9452  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+
+                }
+
+            }
+            else if(strFromDate.equals(currentDate) && strFromDate1.before(strToDate1)){
+                if (strCurrentTime1.compareTo(strFromTime1) <= 0){
+                    Log.e(TAG,"All Data  9453  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+
+                }
+                else{
+                    Log.e(TAG,"All Data  9454  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+
+                }
+            }
+            else if(strFromDate1.before(strToDate1) || strFromDate1.equals(strToDate1)){
+                Log.e(TAG,"All Data  9455  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+            else{
+                Log.e(TAG,"All Data  9456  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+
+            }
+
+        }
+
+        else if (!strFromDate.equals("") && !strToDate.equals("") && !strFromTime.equals("") && strToTime.equals("")) {
+
+            val strFromDate1 = sdfDate.parse(strFromDate)
+            val strToDate1 = sdfDate.parse(strToDate)
+
+            var fromT: Date? = null
+            fromT = sdfTime.parse(strFromTime)
+            val strFromTime1 = outputTimeFormat.format(fromT)
+            Log.e(TAG,"DATE   1302   "+strFromTime1)
+
+
+            Log.e(TAG,"To Time Empty  984")
+
+            if (strFromDate.equals(currentDate) && strToDate.equals(currentDate)){
+
+                if (strCurrentTime1.compareTo(strFromTime1) <= 0){
+                    Log.e(TAG,"To Time Empty  9841  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"To Time Empty  9842  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+
+            }
+            else if(strFromDate.equals(currentDate) && strFromDate1.before(strToDate1)){
+                if (strCurrentTime1.compareTo(strFromTime1) <= 0){
+                    Log.e(TAG,"To Time Empty  9843  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"To Time Empty  9844  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+            }
+            else if(strFromDate1.before(strToDate1) || strFromDate1.equals(strToDate1)){
+                Log.e(TAG,"To Time Empty  9845  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+            else{
+                Log.e(TAG,"To Time Empty  9846  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+
+        }
+
+        else if (!strFromDate.equals("") && !strToDate.equals("") && strFromTime.equals("") && !strToTime.equals("")) {
+
+            val strFromDate1 = sdfDate.parse(strFromDate)
+            val strToDate1 = sdfDate.parse(strToDate)
+
+            var toT: Date? = null
+            toT = sdfTime.parse(strToTime)
+            val strToTime1 = outputTimeFormat.format(toT)
+            Log.e(TAG,"DATE   1302   "+strToTime1)
+
+            Log.e(TAG,"From Time Empty  1023")
+
+            if (strFromDate.equals(currentDate) && strToDate.equals(currentDate)){
+
+                if (strCurrentTime1.compareTo(strToTime1) <= 0){
+                    Log.e(TAG,"From Time Empty  10231  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"From Time Empty  10232  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+
+            }
+            else if(strFromDate.equals(currentDate) && strFromDate1.before(strToDate1)){
+                if (strCurrentTime1.compareTo(strToTime1) <= 0){
+                    Log.e(TAG,"From Time Empty  10233  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"From Time Empty  10234  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+            }
+            else if(strFromDate1.before(strToDate1) || strFromDate1.equals(strToDate1)){
+                Log.e(TAG,"From Time Empty  10235  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+            else{
+                Log.e(TAG,"From Time Empty  10236  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+
+        }
+
+        else if (!strFromDate.equals("") && strToDate.equals("") && !strFromTime.equals("") && !strToTime.equals("")) {
+
+
+
+
+            var fromT: Date? = null
+            fromT = sdfTime.parse(strFromTime)
+            val strFromTime1 = outputTimeFormat.format(fromT)
+            Log.e(TAG,"DATE   1302   "+strFromTime1)
+
+            var toT: Date? = null
+            toT = sdfTime.parse(strToTime)
+            val strToTime1 = outputTimeFormat.format(toT)
+            Log.e(TAG,"DATE   1302   "+strToTime1)
+
+            Log.e(TAG,"DATE   1302   "+strFromTime1)
+
+
+            Log.e(TAG,"To date Empty  1065")
+
+          if(strFromDate.equals(currentDate)){
+
+              if ((strCurrentTime1.compareTo(strFromTime1) <= 0) && (strFromTime1.compareTo(strToTime1) <= 0)){
+                  Log.e(TAG,"To date Empty  10651  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+              }
+              else{
+                  Log.e(TAG,"To date Empty  10652  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+              }
+
+            }
+              else if(strcurrentDate1.before(strFromDate1)){
+              Log.e(TAG,"To date Empty  106523  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+              }
+            else{
+              Log.e(TAG,"To date Empty  106524  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+
+        }
+
+        else if (!strFromDate.equals("") && !strToDate.equals("") && strFromTime.equals("") && strToTime.equals("")) {
+
+            val strFromDate1 = sdfDate.parse(strFromDate)
+            val strToDate1 = sdfDate.parse(strToDate)
+            Log.e(TAG,"From & To Time Empty 1097")
+           if(strFromDate1.before(strToDate1) || strFromDate1.equals(strToDate1)){
+                Log.e(TAG,"From & To Time Empty 10971  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+            else{
+                Log.e(TAG,"From & To Time Empty 10972  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+        }
+
+        else if (!strFromDate.equals("") && strToDate.equals("") && !strFromTime.equals("") && strToTime.equals("")) {
+
+            val strFromDate1 = sdfDate.parse(strFromDate)
+
+            var fromT: Date? = null
+            fromT = sdfTime.parse(strFromTime)
+            val strFromTime1 = outputTimeFormat.format(fromT)
+            Log.e(TAG,"DATE   1302   "+strFromTime1)
+
+            Log.e(TAG,"To date & Time Empty  1106")
+
+            if(strFromDate.equals(currentDate)){
+                if (strCurrentTime1.compareTo(strFromTime1) <= 0){
+                    Log.e(TAG,"To date & Time Empty  11061  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"To date & Time Empty  11062  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+            }
+            else if(strcurrentDate1.before(strFromDate1)){
+                Log.e(TAG,"To date & Time Empty  11063  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+            else{
+                Log.e(TAG,"To date & Time Empty  11064  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+        }
+
+        else if (!strFromDate.equals("") && strToDate.equals("") && strFromTime.equals("") && !strToTime.equals("")) {
+
+
+            var toT: Date? = null
+            toT = sdfTime.parse(strToTime)
+            val strToTime1 = outputTimeFormat.format(toT)
+            Log.e(TAG,"DATE   1302   "+strToTime1)
+
+            Log.e(TAG,"To date & From Time Empty  1135")
+
+            if(strFromDate.equals(currentDate)){
+                if (strCurrentTime1.compareTo(strToTime1) <= 0){
+                    Log.e(TAG,"To date & From Time Empty  11351  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+                else{
+                    Log.e(TAG,"To date & From Time Empty  11352  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+                }
+            }
+            else{
+                Log.e(TAG,"To date & From Time Empty  11353  "+strFromDate +" : "+strToDate+" : "+strFromTime+" : "+strToTime)
+            }
+
+
+        }
+
+        else {
+
+
+        }
+
+
+
+
+    }
+
 
     private fun resetData() {
         custDetailMode = "0"
@@ -846,6 +1223,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         ID_Priority = ""
         ID_Channel = ""
         ID_Employee = ""
+        ID_EmpMedia = ""
         ID_ServiceMedia = ""
 
         tie_Date!!.setText("")
@@ -856,6 +1234,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Channel!!.setText("")
         tie_EmpOrMedia!!.setText("")
 
+        tie_CustomerName!!.isEnabled = true
+        tie_MobileNo!!.isEnabled = true
+        tie_Address!!.isEnabled = true
+
+        til_EmpOrMedia!!.visibility = View.GONE
 
         // Complaint
         ID_Category = ""
@@ -870,6 +1253,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Service!!.setText("")
         tie_Complaint!!.setText("")
         tie_Description!!.setText("")
+
+        til_Company!!.visibility = View.GONE
+        til_Service!!.visibility = View.GONE
+        til_Complaint!!.visibility = View.GONE
 
         // Contact Details
         tie_ContactNo!!.setText("")
@@ -888,6 +1275,526 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Status!!.setText("")
         tie_Attendedby!!.setText("")
 
+        getCurrentDate()
+
+    }
+
+    private fun validation() {
+        strDate = tie_Date!!.text.toString()
+        strCustomerName = tie_CustomerName!!.text.toString()
+        strMobileNo = tie_MobileNo!!.text.toString()
+        strAddress = tie_Address!!.text.toString()
+        strPriority = tie_Priority!!.text.toString()
+        strChannel = tie_Channel!!.text.toString()
+        strChannelSub = tie_EmpOrMedia!!.text.toString()
+
+
+        if (strDate.equals("")){
+            til_Date!!.setError("Select Date");
+            til_Date!!.setErrorIconDrawable(null);
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (ID_Customer.equals("") && strCustomerName.equals("")){
+            til_CustomerName!!.setError("Enter or Select Customer ")
+            til_CustomerName!!.setErrorIconDrawable(null)
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (strMobileNo!!.length < 10){
+            til_MobileNo!!.setError("Enter Mobile Number");
+            til_MobileNo!!.setErrorIconDrawable(null)
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (strAddress.equals("")){
+            til_Address!!.setError("Enter Address");
+            til_Address!!.setErrorIconDrawable(null)
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (ID_Priority.equals("")){
+            til_Priority!!.setError("Select Priority");
+            til_Priority!!.setErrorIconDrawable(null)
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else{
+          Log.e(TAG,"Validation   9371"
+                  +"\n"+"Date           :  "+strDate
+                  +"\n"+"Customer Name  :  "+strCustomerName
+                  +"\n"+"Customer ID    :  "+ID_Customer
+                  +"\n"+"Mobile Number  :  "+strMobileNo
+                  +"\n"+"Address        :  "+strAddress
+                  +"\n"+"ID Priority    :  "+ID_Priority
+                  +"\n"+"ID Channel     :  "+ID_Channel
+                  +"\n"+"ID Employee    :  "+ID_Employee
+                  +"\n"+"ID EmpMedia    :  "+ID_EmpMedia
+                  +"\n"+"ID Media       :  "+ID_ServiceMedia)
+
+            validation1()
+
+        }
+    }
+
+    private fun validation1() {
+        strCategory = tie_Category!!.text.toString()
+        strCompany = tie_Company!!.text.toString()
+        strProduct = tie_Product!!.text.toString()
+        strService = tie_Service!!.text.toString()
+        strComplaint = tie_Complaint!!.text.toString()
+        strDescription = tie_Description!!.text.toString()
+        if (ID_Category.equals("")){
+
+            til_Category!!.setError("Select category");
+            til_Category!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (ID_Product.equals("")){
+            til_Product!!.setError("Select Product");
+            til_Product!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if ((ID_Category.equals("1") || ID_Category.equals("2")) && ID_Services.equals("")){
+            til_Service!!.setError("Select Service");
+            til_Service!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if ((ID_Category.equals("3") || ID_Category.equals("4")) && ID_ComplaintList.equals("")){
+            til_Complaint!!.setError("Select Complaint");
+            til_Complaint!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+
+        }
+        else if (strDescription.equals("")){
+            til_Description!!.setError("Enter Description");
+            til_Description!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+
+        }
+        else{
+            Log.e(TAG,"Validation   9372"
+                    +"\n"+"ID_Category       :  "+ID_Category
+                    +"\n"+"ID_Company        :  "+ID_Company
+                    +"\n"+"ID_Company        :  "+ID_Company
+                    +"\n"+"ID_Product        :  "+ID_Product
+                    +"\n"+"ID_Services       :  "+ID_Services
+                    +"\n"+"ID_ComplaintList  :  "+ID_ComplaintList
+                    +"\n"+"strDescription    :  "+strDescription)
+
+            strContactNo = tie_ContactNo!!.text.toString()
+            strLandMark = tie_Landmark!!.text.toString()
+
+            strFromDate = tie_FromDate!!.text.toString()
+            strToDate = tie_ToDate!!.text.toString()
+            strFromTime = tie_FromTime!!.text.toString()
+            strToTime = tie_ToTime!!.text.toString()
+
+            strStatus = tie_Status!!.text.toString()
+            strAttendedBy = tie_Attendedby!!.text.toString()
+
+
+            confirmationPopup()
+
+        }
+    }
+
+    private fun confirmationPopup() {
+        try {
+
+            val dialogConfirm = Dialog(this)
+            dialogConfirm!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogConfirm!! .setContentView(R.layout.service_register_confirm)
+            dialogConfirm!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogConfirm.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            dialogConfirm!!.setCancelable(false)
+
+            // Customer Details
+            val tv_conf_date = dialogConfirm!!.findViewById(R.id.tv_conf_date) as TextView
+            val tv_conf_name = dialogConfirm!!.findViewById(R.id.tv_conf_name) as TextView
+            val tv_conf_mobile = dialogConfirm!!.findViewById(R.id.tv_conf_mobile) as TextView
+            val tv_conf_address = dialogConfirm!!.findViewById(R.id.tv_conf_address) as TextView
+            val tv_conf_priority = dialogConfirm!!.findViewById(R.id.tv_conf_priority) as TextView
+            val tv_conf_channel = dialogConfirm!!.findViewById(R.id.tv_conf_channel) as TextView
+            val tv_conf_sub = dialogConfirm!!.findViewById(R.id.tv_conf_sub) as TextView
+            val tv_conf_sub_head = dialogConfirm!!.findViewById(R.id.tv_conf_sub_head) as TextView
+
+            val ll_conf_channel = dialogConfirm!!.findViewById(R.id.ll_conf_channel) as LinearLayout
+            val ll_conf_channel_sub = dialogConfirm!!.findViewById(R.id.ll_conf_channel_sub) as LinearLayout
+
+
+            // Customer Details
+
+            tv_conf_date!!.setText(""+strDate)
+            tv_conf_name!!.setText(""+strCustomerName)
+            tv_conf_mobile!!.setText(""+strMobileNo)
+            tv_conf_address!!.setText(""+strAddress)
+            tv_conf_priority!!.setText(""+strPriority)
+            tv_conf_channel!!.setText(""+strChannel)
+            tv_conf_sub!!.setText(""+strChannelSub)
+            tv_conf_sub_head!!.setText(""+strChannel)
+
+            if (ID_Channel!!.equals("")){
+                Log.e(TAG,"ID_Channel   11541   "+ID_Channel!!.length)
+                ll_conf_channel!!.visibility = View.GONE
+            }
+
+            if (ID_EmpMedia.equals("")){
+                ll_conf_channel_sub.visibility =View.GONE
+            }
+
+
+            // Complaints
+
+            val tv_comp_category = dialogConfirm!!.findViewById(R.id.tv_comp_category) as TextView
+            val tv_comp_company = dialogConfirm!!.findViewById(R.id.tv_comp_company) as TextView
+            val tv_comp_product = dialogConfirm!!.findViewById(R.id.tv_comp_product) as TextView
+            val tv_comp_service = dialogConfirm!!.findViewById(R.id.tv_comp_service) as TextView
+            val tv_comp_complaint = dialogConfirm!!.findViewById(R.id.tv_comp_complaint) as TextView
+            val tv_comp_desc = dialogConfirm!!.findViewById(R.id.tv_comp_desc) as TextView
+
+            val ll_comp_company = dialogConfirm!!.findViewById(R.id.ll_comp_company) as LinearLayout
+            val ll_comp_service = dialogConfirm!!.findViewById(R.id.ll_comp_service) as LinearLayout
+            val ll_comp_complaint = dialogConfirm!!.findViewById(R.id.ll_comp_complaint) as LinearLayout
+
+
+            tv_comp_category!!.setText(""+strCategory)
+            tv_comp_company!!.setText(""+strCompany)
+            tv_comp_product!!.setText(""+strProduct)
+            tv_comp_service!!.setText(""+strService)
+            tv_comp_complaint!!.setText(""+strComplaint)
+            tv_comp_desc!!.setText(""+strDescription)
+
+            if (ID_Company!!.equals("")){
+                ll_comp_company!!.visibility = View.GONE
+            }
+            if (ID_Services!!.equals("")){
+                ll_comp_service!!.visibility = View.GONE
+            }
+            if (ID_ComplaintList!!.equals("")){
+                ll_comp_complaint!!.visibility = View.GONE
+            }
+
+            // Contact Details
+
+            val tv_cont_no = dialogConfirm!!.findViewById(R.id.tv_cont_no) as TextView
+            val tv_cont_landmark = dialogConfirm!!.findViewById(R.id.tv_cont_landmark) as TextView
+
+            val ll_contact = dialogConfirm!!.findViewById(R.id.ll_contact) as LinearLayout
+            val ll_cont_no = dialogConfirm!!.findViewById(R.id.ll_cont_no) as LinearLayout
+            val ll_cont_landmark = dialogConfirm!!.findViewById(R.id.ll_cont_landmark) as LinearLayout
+
+            tv_cont_no!!.setText(""+strContactNo)
+            tv_cont_landmark!!.setText(""+strLandMark)
+
+            if (strContactNo!!.equals("") && strLandMark!!.equals("")){
+                ll_contact!!.visibility = View.GONE
+            }
+            if (strContactNo!!.equals("")){
+                ll_cont_no!!.visibility = View.GONE
+            }
+
+            if (strLandMark!!.equals("")){
+                ll_cont_landmark!!.visibility = View.GONE
+            }
+
+            // Requested date Time
+
+            val tv_req_fromdate = dialogConfirm!!.findViewById(R.id.tv_req_fromdate) as TextView
+            val tv_req_todate = dialogConfirm!!.findViewById(R.id.tv_req_todate) as TextView
+            val tv_req_fromtime = dialogConfirm!!.findViewById(R.id.tv_req_fromtime) as TextView
+            val tv_req_totime = dialogConfirm!!.findViewById(R.id.tv_req_totime) as TextView
+
+            tv_req_fromdate!!.setText(""+strFromDate)
+            tv_req_todate!!.setText(""+strToDate)
+            tv_req_fromtime!!.setText(""+strFromTime)
+            tv_req_totime!!.setText(""+strToTime)
+
+            // Attended details
+
+            val tv_attend_status = dialogConfirm!!.findViewById(R.id.tv_attend_status) as TextView
+            val tv_attend_by = dialogConfirm!!.findViewById(R.id.tv_attend_by) as TextView
+
+            val ll_attend = dialogConfirm!!.findViewById(R.id.ll_attend) as LinearLayout
+            val ll_attend_status = dialogConfirm!!.findViewById(R.id.ll_attend_status) as LinearLayout
+            val ll_attend_by = dialogConfirm!!.findViewById(R.id.ll_attend_by) as LinearLayout
+
+            tv_attend_status!!.setText(""+strStatus)
+            tv_attend_by!!.setText(""+strAttendedBy)
+
+            if (strStatus!!.equals("") && strAttendedBy!!.equals("")){
+                ll_attend!!.visibility = View.GONE
+            }
+            if (strStatus!!.equals("")){
+                ll_attend_status!!.visibility = View.GONE
+            }
+
+            if (strAttendedBy!!.equals("")){
+                ll_attend_by!!.visibility = View.GONE
+            }
+
+            val btnConfirmCancel = dialogConfirm!!.findViewById(R.id.btnConfirmCancel) as Button
+            val btnConfirmSubmit = dialogConfirm!!.findViewById(R.id.btnConfirmSubmit) as Button
+
+            btnConfirmCancel!!.setOnClickListener {
+                Config.disableClick(it)
+                dialogConfirm.dismiss()
+            }
+
+            btnConfirmSubmit!!.setOnClickListener {
+                Config.disableClick(it)
+                dialogConfirm.dismiss()
+
+                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val inputTimeFormat = SimpleDateFormat("h:mm a")
+                val outputTimeFormat = SimpleDateFormat("HH:mm")
+
+                Log.e(TAG,"DATE   13021   ")
+
+                if (strDate!!.equals("")){
+//                    strDate = "0000-00-00 00:00:00"
+                    strDate = ""
+                }else{
+                    var date: Date? = null
+                    date = inputFormat.parse(strDate)
+                    strDate = outputFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strDate)
+                }
+
+                if (strFromDate!!.equals("")){
+//                    strFromDate = "0000-00-00 00:00:00"
+                    strFromDate = ""
+                }else{
+                    var date: Date? = null
+                    date = inputFormat.parse(strFromDate)
+                    strFromDate = outputFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strFromDate)
+                }
+
+                if (strToDate!!.equals("")){
+                  //  strToDate = "0000-00-00 00:00:00"
+                    strToDate = ""
+                }else{
+                    var date: Date? = null
+                    date = inputFormat.parse(strToDate)
+                    strToDate = outputFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strToDate)
+                }
+
+
+
+                if (strFromTime!!.equals("")){
+                    strFromTime = "00:00"
+                }
+                else{
+                    var date: Date? = null
+                    date = inputTimeFormat.parse(strFromTime)
+                    strFromTime = outputTimeFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strFromTime)
+                }
+
+                if (strToTime!!.equals("")){
+                    strToTime = "00:00"
+                }
+                else{
+                    var date: Date? = null
+                    date = inputTimeFormat.parse(strToTime)
+                    strToTime = outputTimeFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strToTime)
+                }
+
+                Log.e(TAG,"Validation   9373"
+                        +"\n"+"Customer Type        :  "+Customer_Type
+                        +"\n"+"FK_Customer          :  "+ID_Customer
+                        +"\n"+"strCustomerName      :  "+strCustomerName
+                        +"\n"+"CSRChannelID         :  "+ID_Channel
+                        +"\n"+"CSRPriority          :  "+ID_Priority
+                        +"\n"+"CSRPCategory         :  "+ID_Category
+                        +"\n"+"FK_OtherCompany      :  "+ID_Company
+                        +"\n"+"FK_ComplaintList     :  "+ID_ComplaintList
+                        +"\n"+"FK_ServiceList       :  "+ID_Services
+                        +"\n"+"CSRChannelSubID      :  "+ID_EmpMedia
+                        +"\n"+"ID_ComplaintList     :  "+ID_ComplaintList
+
+                        +"\n"+"Status               :  "+ID_Status
+                        +"\n"+"AttendedBy           :  "+ID_AttendedBy
+                        +"\n"+"CusName              :  "+strCustomerName
+                        +"\n"+"CusMobile            :  "+strMobileNo
+                        +"\n"+"CusAddress           :  "+strAddress
+                        +"\n"+"CSRContactNo         :  "+strContactNo
+                        +"\n"+"CSRLandmark          :  "+strLandMark
+
+                        +"\n"+"CSRServiceFromDate   :  "+strFromDate
+                        +"\n"+"CSRServiceToDate     :  "+strToDate
+                        +"\n"+"CSRServicefromtime   :  "+strFromTime
+                        +"\n"+"CSRServicetotime     :  "+strToTime
+
+                        +"\n"+"FK_Product           :  "+ID_Product
+                        +"\n"+"CSRODescription      :  "+strDescription
+                        +"\n"+"TicketDate           :  "+strDate)
+
+                strUserAction = "1"
+                saveOrupdate = 0
+                saveCustomerService()
+            }
+
+
+            dialogConfirm!!.show()
+            dialogConfirm!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun saveCustomerService() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                customerServiceRegisterViewModel.getcusServRegister(this,strUserAction!!,Customer_Type!!,ID_Customer!!,ID_Channel!!,ID_Priority!!,ID_Category!!,
+                    ID_Company!!,ID_ComplaintList!!,ID_Services!!,ID_EmpMedia!!,ID_Status!!,ID_AttendedBy!!,strCustomerName!!,strMobileNo!!,strAddress!!,strContactNo!!,
+                    strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (saveOrupdate == 0){
+                                    saveOrupdate++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1453   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("UpdateCustomerServiceRegister")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_service_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+                                            suceessDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                                            suceessDialog!!.setCancelable(false)
+
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                            tv_succesmsg!!.setText(jObject.getString("EXMessage"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 
@@ -1057,7 +1964,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                customersearchViewModel.getCustomer(this, strCustomer!!, SubModeSearch!!)!!.observe(
+                customerListViewModel.getCustomerList(this, strCustomer!!, ReqMode!!,SubModeSearch!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1069,8 +1976,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   105   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("CustomerDetailsList")
-                                        customerArrayList = jobjt.getJSONArray("CustomerDetails")
+
+                                        val jobjt = jObject.getJSONObject("ServiceCustomerDetails")
+                                        customerArrayList = jobjt.getJSONArray("ServiceCustomerList")
 
                                         if (customerArrayList.length() > 0) {
                                             Log.e(TAG, "msg   1052   " + msg)
@@ -1137,7 +2045,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = CustomerAdapter(this@CustomerServiceActivity, customerSort)
+            val adapter = CustomerListAdapter(this@CustomerServiceActivity, customerSort)
             recyCustomer!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
 
@@ -1156,8 +2064,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                     for (k in 0 until customerArrayList.length()) {
                         val jsonObject = customerArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("CusName").length) {
-                            if (jsonObject.getString("CusName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 customerSort.put(jsonObject)
                             }
 
@@ -1165,7 +2073,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     }
 
                     Log.e(TAG,"employeeAllSort               7103    "+customerSort)
-                    val adapter = CustomerAdapter(this@CustomerServiceActivity, customerSort)
+                    val adapter = CustomerListAdapter(this@CustomerServiceActivity, customerSort)
                     recyCustomer!!.adapter = adapter
                     adapter.setClickListener(this@CustomerServiceActivity)
                 }
@@ -1608,8 +2516,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                if (categoryDet == 0){
-                                    categoryDet++
+                                if (empMediaDet == 0){
+                                    empMediaDet++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1557   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -2561,15 +3469,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     override fun onClick(position: Int, data: String) {
 
-        if (data.equals("customer")) {
+        if (data.equals("customerList")) {
             dialogCustSearch!!.dismiss()
             val jsonObject = customerSort.getJSONObject(position)
-            tie_CustomerName!!.setText(jsonObject!!.getString("CusName"))
-            ID_Customer = jsonObject.getString("ID_Customer")
-            Customer_Type = jsonObject.getString("Customer_Type")
+            tie_CustomerName!!.setText(jsonObject!!.getString("Name"))
+            ID_Customer = jsonObject.getString("Customer_ID")
+            Customer_Type = jsonObject.getString("CusMode")
 
-            tie_MobileNo!!.setText(jsonObject!!.getString("CusPhnNo"))
-            tie_Address!!.setText(jsonObject!!.getString("CusAddress1"))
+            tie_MobileNo!!.setText(jsonObject!!.getString("Mobile"))
+            tie_Address!!.setText(jsonObject!!.getString("Address"))
 
             tie_CustomerName!!.isEnabled = false
             tie_MobileNo!!.isEnabled = false
@@ -2577,49 +3485,22 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
           //  til_CustomerName!!.setEndIconDrawable(com.google.android.material.R.drawable.abc_ic_clear_material)
             til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
-//            if(SubModeSearch=="1") {
-//                edt_customer!!.setText(jsonObject!!.getString("CusName"))
-//            }
-//            else
-//            {
-//                edt_customer!!.setText(jsonObject!!.getString("CusPhnNo"))
-//            }
-//
-//            // custDetailMode = "1"
-//            LeadGenerationActivity.Customer_Mode = "1"  // SEARCH
-//            LeadGenerationActivity.ID_Customer = jsonObject.getString("ID_Customer")
-//            LeadGenerationActivity.Customer_Type = jsonObject.getString("Customer_Type")
-//            LeadGenerationActivity.Customer_Name = jsonObject.getString("CusName")
-//            LeadGenerationActivity.Customer_Mobile = jsonObject.getString("CusPhnNo")
-//            LeadGenerationActivity.Customer_Email = jsonObject.getString("CusEmail")
-//            LeadGenerationActivity.Customer_Address1 = jsonObject.getString("CusAddress1")
-//            LeadGenerationActivity.Customer_Address2 = jsonObject.getString("CusAddress2")
-//
-//            // llCustomerDetail!!.visibility = View.GONE
-//            actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
-//            edtCustname!!.setText(jsonObject.getString("CusName"))
-//            edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
-//            edtCustemail!!.setText(jsonObject.getString("CusEmail"))
-//            edtCustaddress1!!.setText(jsonObject.getString("CusAddress1"))
-//            edtCustaddress2!!.setText(jsonObject.getString("CusAddress2"))
-//            edtWhatsApp!!.setText(jsonObject.getString("CusMobileAlternate"))
-//
-//
-//
-//            LeadGenerationActivity.FK_Country = jsonObject.getString("CountryID")
-//            LeadGenerationActivity.FK_States = jsonObject.getString("StatesID")
-//            LeadGenerationActivity.FK_District = jsonObject.getString("DistrictID")
-//            LeadGenerationActivity.FK_Post = jsonObject.getString("PostID")
-//            LeadGenerationActivity.FK_Area = jsonObject.getString("FK_Area")
-//
-//            edtPincode!!.setText(jsonObject.getString("Pincode"))
-//            edtCountry!!.setText(jsonObject.getString("CntryName"))
-//            edtState!!.setText(jsonObject.getString("StName"))
-//            edtDistrict!!.setText(jsonObject.getString("DtName"))
-//            edtArea!!.setText(jsonObject.getString("Area"))
-//            edtPost!!.setText(jsonObject.getString("PostName"))
-//            edtPincode!!.setText(jsonObject.getString("Pincode"))
+            ID_Category = ""
+            ID_Company = ""
+            ID_Product = ""
+            ID_Services = ""
+            ID_ComplaintList = ""
 
+            tie_Category!!.setText("")
+            tie_Company!!.setText("")
+            tie_Product!!.setText("")
+            tie_Service!!.setText("")
+            tie_Complaint!!.setText("")
+            tie_Description!!.setText("")
+
+            til_Company!!.visibility = View.GONE
+            til_Service!!.visibility = View.GONE
+            til_Complaint!!.visibility = View.GONE
 
         }
 
@@ -2642,6 +3523,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             ID_Channel = jsonObject.getString("Code")
             tie_Channel!!.setText(jsonObject.getString("Description"))
 
+            ID_Employee = ""
+            ID_ServiceMedia = ""
+            ID_EmpMedia = ""
             tie_EmpOrMedia!!.setText("")
 
             if (ID_Channel.equals("5") || ID_Channel.equals("6")){
@@ -2665,6 +3549,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             if (employeeMode == 0){
                 ID_Employee = jsonObject.getString("ID_Employee")
+                ID_EmpMedia = jsonObject.getString("ID_Employee")
                 tie_EmpOrMedia!!.setText(jsonObject.getString("EmpName"))
             }
 
@@ -2789,10 +3674,84 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val jsonObject = serviceMediaSort.getJSONObject(position)
             Log.e(TAG,"ID_FIELD   "+jsonObject.getString("ID_FIELD"))
             ID_ServiceMedia = jsonObject.getString("ID_FIELD")
+            ID_EmpMedia = jsonObject.getString("ID_FIELD")
             tie_EmpOrMedia!!.setText(jsonObject.getString("Name"))
 
         }
 
+    }
+
+
+    var watcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            //YOUR CODE
+            val outputedText = s.toString()
+            Log.e(TAG,"28301    "+outputedText)
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            //YOUR CODE
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            Log.e(TAG,"28302    ")
+
+            when {
+                editable === tie_Date!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    til_Date!!.isErrorEnabled = false
+                }
+                editable === tie_CustomerName!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    til_CustomerName!!.isErrorEnabled = false
+                }
+                editable === tie_MobileNo!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    if (tie_MobileNo!!.text!!.length > 9 ){
+                        til_MobileNo!!.isErrorEnabled = false
+                    }
+
+                }
+                editable === tie_Address!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Address!!.isErrorEnabled = false
+                }
+                editable === tie_Priority!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Priority!!.isErrorEnabled = false
+                }
+
+
+                editable === tie_Category!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Category!!.isErrorEnabled = false
+                }
+
+
+                editable === tie_Product!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Product!!.isErrorEnabled = false
+                }
+
+                editable === tie_Service!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Service!!.isErrorEnabled = false
+                }
+                editable === tie_Complaint!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Complaint!!.isErrorEnabled = false
+                }
+
+                editable === tie_Description!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Description!!.isErrorEnabled = false
+                }
+
+
+            }
+
+        }
     }
 
 
