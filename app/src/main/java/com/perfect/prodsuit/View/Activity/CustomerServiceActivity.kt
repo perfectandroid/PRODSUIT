@@ -9,16 +9,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.libraries.places.internal.df
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
@@ -40,7 +43,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     lateinit var context: Context
 
 
-//    private var tabLayout : TabLayout? = null
+    private var tabLayout : TabLayout? = null
 //    var llMainDetail: LinearLayout? = null
 //    var llBtn: LinearLayout? = null
 
@@ -54,12 +57,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     lateinit var serviceWarrantyViewModel: ServiceWarrantyViewModel
     lateinit var serviceWarrantyArrayList : JSONArray
+    var recyServiceWarranty: RecyclerView? = null
+    var ll_history_details: LinearLayout? = null
 
-    lateinit var serviceProductViewModel: ServiceProductViewModel
-    lateinit var serviceProductArrayList : JSONArray
+    lateinit var serviceProductHistoryViewModel: ServiceProductHistoryViewModel
+    lateinit var serviceProductHistoryArrayList : JSONArray
+    var recyServiceProductHistory: RecyclerView? = null
 
     lateinit var serviceSalesViewModel: ServiceSalesViewModel
     lateinit var serviceSalesArrayList : JSONArray
+    var recyServiceSalesHistory: RecyclerView? = null
+
+    var card_details: CardView? = null
+
+    private var imDetails: ImageView? = null
 
     private var tv_customerClick: TextView? = null
     private var tv_complaintClick: TextView? = null
@@ -148,6 +159,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var followUpAction = 0
     var saveOrupdate = 0
 
+    var warrantyDet = 0
+    var productHistDet = 0
+    var salesHistDet = 0
+
     var SubModeSearch: String? = ""
     var strCustomer: String? = ""
 
@@ -194,6 +209,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var dialogCompany : Dialog? = null
     var recyCompany: RecyclerView? = null
 
+    lateinit var serviceProductViewModel: ServiceProductViewModel
     lateinit var productArrayList : JSONArray
     lateinit var productSort : JSONArray
     private var dialogProduct : Dialog? = null
@@ -275,6 +291,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         context = this@CustomerServiceActivity
 
         serviceWarrantyViewModel = ViewModelProvider(this).get(ServiceWarrantyViewModel::class.java)
+        serviceProductHistoryViewModel = ViewModelProvider(this).get(ServiceProductHistoryViewModel::class.java)
         serviceProductViewModel = ViewModelProvider(this).get(ServiceProductViewModel::class.java)
         serviceSalesViewModel = ViewModelProvider(this).get(ServiceSalesViewModel::class.java)
 
@@ -331,7 +348,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        imDetails = findViewById<ImageView>(R.id.imDetails)
         imback!!.setOnClickListener(this)
+        imDetails!!.setOnClickListener(this)
 
         //Main Header
         tv_customerClick = findViewById<TextView>(R.id.tv_customerClick)
@@ -485,213 +504,19 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //
 //    }
 //
-//    private fun getWarranty() {
-//        llBtn!!.visibility = View.GONE
-//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
-//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
-//        llMainDetail!!.addView(inflatedLayout);
-//
-//        var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
-//        recyServiceWarranty.adapter = null
-//
-//        var warranty = 0
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                serviceWarrantyViewModel.getServiceWarranty(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   182   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("WarrantyDetails")
-//                                serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
-//                                if (serviceWarrantyArrayList.length()>0){
-//                                    if (warranty == 0){
-//                                        warranty++
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
-//                                        recyServiceWarranty!!.adapter = adapter
-//                                    }
-//
-//                                }
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                            }
-//                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//
-//    }
-//
-//    private fun getProduct() {
-//        llBtn!!.visibility = View.GONE
-//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
-//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_product, null, false)
-//        llMainDetail!!.addView(inflatedLayout);
-//
-//
-//        var recyServiceProduct = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceProduct)
-//        recyServiceProduct.adapter = null
-//        var product = 0
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                serviceProductViewModel.getServiceProduct(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   262   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("ProductHistoryDetails")
-//                                serviceProductArrayList = jobjt.getJSONArray("ProductHistoryDetailsList")
-//                                if (serviceProductArrayList.length()>0){
-//                                    if (product == 0){
-//                                        product++
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceProduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceProductAdapter(this@CustomerServiceActivity, serviceProductArrayList)
-//                                        recyServiceProduct!!.adapter = adapter
-//                                    }
-//
-//                                }
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                            }
-//                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//
-//    }
-//
-//    private fun getSales() {
-//        llBtn!!.visibility = View.GONE
-//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
-//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_sales, null, false)
-//        llMainDetail!!.addView(inflatedLayout);
-//
-//        var recyServiceSales = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceSales)
-//        recyServiceSales.adapter = null
-//        var sales = 0
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                serviceSalesViewModel.getServiceSales(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   335   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("SalesHistoryDetails")
-//                                serviceSalesArrayList = jobjt.getJSONArray("SalesHistoryDetailsList")
-//                                if (serviceSalesArrayList.length()>0){
-//                                    if (sales == 0){
-//                                        sales++
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceSales!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceSalesAdapter(this@CustomerServiceActivity, serviceSalesArrayList)
-//                                        recyServiceSales!!.adapter = adapter
-//                                    }
-//
-//                                }
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                            }
-//                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//
-//    }
+
+
+
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+
+            R.id.imDetails->{
+                Config.disableClick(v)
+               detailBottomSheet()
             }
             R.id.tv_customerClick->{
 
@@ -941,6 +766,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
     }
+
+
 
     private fun dateTimevalidations() {
 
@@ -3467,6 +3294,411 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
+    private fun detailBottomSheet() {
+        try {
+
+
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.cs_detail_bottom_sheet, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCanceledOnTouchOutside(false)
+
+
+
+
+
+//            dialog1!!.setCancelable(false)
+         //   view.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+
+            tabLayout = view.findViewById(R.id.tabLayout)
+            recyServiceWarranty = view.findViewById(R.id.recyServiceWarranty)
+            recyServiceProductHistory = view.findViewById(R.id.recyServiceProductHistory)
+            recyServiceSalesHistory = view.findViewById(R.id.recyServiceSalesHistory)
+            ll_history_details = view.findViewById(R.id.ll_history_details)
+            card_details = view.findViewById(R.id.card_details)
+
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            val heightS: Int = displayMetrics.heightPixels
+          //  card_details!!.layoutParams.height = (height-50)
+//            val layoutParams = card_details!!.getLayoutParams() as LinearLayout.LayoutParams
+//            layoutParams.height = heightS.toInt()
+//            layoutParams.width = MATCH_PARENT
+//            card_details!!.setLayoutParams(layoutParams)
+
+            dialog1!!.behavior.peekHeight = heightS
+
+
+
+            recyServiceWarranty!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+            recyServiceProductHistory!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+            recyServiceSalesHistory!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+            ll_history_details!!.visibility =View.VISIBLE
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Warranty"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Product"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Sales"))
+            tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+
+            ll_history_details!!.visibility = View.VISIBLE
+            recyServiceWarranty!!.visibility = View.GONE
+            recyServiceProductHistory!!.visibility = View.GONE
+            recyServiceSalesHistory!!.visibility = View.GONE
+
+
+            if (!ID_Product.equals("") && !ID_Customer.equals("")){
+
+                ll_history_details!!.visibility = View.VISIBLE
+                recyServiceWarranty!!.visibility = View.GONE
+                recyServiceProductHistory!!.visibility = View.GONE
+                recyServiceSalesHistory!!.visibility = View.GONE
+                recyServiceWarranty!!.adapter = null
+
+                warrantyDet = 0
+                getWarranty()
+            }
+
+
+
+            tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    Log.e(TAG,"onTabSelected  113  "+tab.position)
+                    if (tab.position == 0){
+                        Log.e(TAG,"onTabSelected  1131  "+tab.position)
+
+                        ll_history_details!!.visibility = View.VISIBLE
+                        recyServiceWarranty!!.visibility = View.GONE
+                        recyServiceProductHistory!!.visibility = View.GONE
+                        recyServiceSalesHistory!!.visibility = View.GONE
+                        recyServiceWarranty!!.adapter = null
+
+                        if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                            warrantyDet = 0
+                            getWarranty()
+                        }
+
+                    }
+                    if (tab.position == 1){
+                        Log.e(TAG,"onTabSelected  1131  "+tab.position)
+                        ll_history_details!!.visibility = View.VISIBLE
+                        recyServiceWarranty!!.visibility = View.GONE
+                        recyServiceProductHistory!!.visibility = View.GONE
+                        recyServiceSalesHistory!!.visibility = View.GONE
+                        recyServiceSalesHistory!!.adapter = null
+                        if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                            productHistDet = 0
+                            getProductHistory()
+                        }
+
+                    }
+                    if (tab.position == 2){
+                        ll_history_details!!.visibility = View.VISIBLE
+                        recyServiceWarranty!!.visibility = View.GONE
+                        recyServiceProductHistory!!.visibility = View.GONE
+                        recyServiceProductHistory!!.adapter = null
+                        if (!ID_Customer.equals("")){
+                            salesHistDet = 0
+                            getSalesHistory()
+                        }
+
+
+
+                    }
+
+                }
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    Log.e(TAG,"onTabUnselected  162  "+tab.position)
+                }
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    Log.e(TAG,"onTabReselected  165  "+tab.position)
+                }
+            })
+
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+
+        }
+    }
+
+    private fun getWarranty() {
+
+//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
+//
+////        var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
+////        recyServiceWarranty.adapter = null
+
+//        var warranty = 0
+        ll_history_details!!.visibility = View.VISIBLE
+        recyServiceWarranty!!.visibility = View.GONE
+        recyServiceProductHistory!!.visibility = View.GONE
+        recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceWarranty!!.adapter = null
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceWarrantyViewModel.getServiceWarranty(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   1821   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                Log.e(TAG,"msg   1822   "+msg)
+                                val jobjt = jObject.getJSONObject("WarrantyDetails")
+                                serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
+                                Log.e(TAG,"msg   1823   "+serviceWarrantyArrayList)
+                                if (serviceWarrantyArrayList.length()>0){
+                                    if (warrantyDet == 0){
+                                        warrantyDet++
+                                        ll_history_details!!.visibility = View.GONE
+                                        recyServiceWarranty!!.visibility = View.VISIBLE
+
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
+                                        recyServiceWarranty!!.adapter = adapter
+                                    }
+
+                                }
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@CustomerServiceActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
+    private fun getProductHistory() {
+//        llBtn!!.visibility = View.GONE
+//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_product, null, false)
+//        llMainDetail!!.addView(inflatedLayout);
+
+
+//        var recyServiceProduct = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceProduct)
+//        recyServiceProduct.adapter = null
+//        var product = 0
+
+        ll_history_details!!.visibility = View.VISIBLE
+        recyServiceWarranty!!.visibility = View.GONE
+        recyServiceProductHistory!!.visibility = View.GONE
+        recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceProductHistory!!.adapter = null
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            if (productHistDet == 0){
+                                productHistDet++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   3554   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("ProductHistory")
+                                    serviceProductHistoryArrayList = jobjt.getJSONArray("ProductHistoyList")
+                                    if (serviceProductHistoryArrayList.length()>0){
+
+                                        ll_history_details!!.visibility = View.GONE
+                                        recyServiceProductHistory!!.visibility = View.VISIBLE
+
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceProductHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceProductHistoryAdapter(this@CustomerServiceActivity, serviceProductHistoryArrayList)
+                                        recyServiceProductHistory!!.adapter = adapter
+
+
+                                    }
+                                } else {
+//                                    val builder = AlertDialog.Builder(
+//                                        this@CustomerServiceActivity,
+//                                        R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
+                                }
+                            }
+
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun getSalesHistory() {
+//        llBtn!!.visibility = View.GONE
+//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_sales, null, false)
+//        llMainDetail!!.addView(inflatedLayout);
+
+//        var recyServiceSales = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceSales)
+//        recyServiceSales.adapter = null
+//        var sales = 0
+
+        ll_history_details!!.visibility = View.VISIBLE
+        recyServiceWarranty!!.visibility = View.GONE
+        recyServiceProductHistory!!.visibility = View.GONE
+        recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceSalesHistory!!.adapter = null
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceSalesViewModel.getServiceSales(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            if (salesHistDet == 0){
+                                salesHistDet++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   335   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("SalesHistory")
+                                    serviceSalesArrayList = jobjt.getJSONArray("SalesHistoryList")
+                                    if (serviceSalesArrayList.length()>0){
+                                        recyServiceSalesHistory!!.visibility = View.VISIBLE
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceSalesHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceSalesAdapter(this@CustomerServiceActivity, serviceSalesArrayList)
+                                        recyServiceSalesHistory!!.adapter = adapter
+
+
+                                    }
+                                } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@CustomerServiceActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                                }
+
+                            }
+
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
     override fun onClick(position: Int, data: String) {
 
         if (data.equals("customerList")) {
@@ -3753,6 +3985,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
     }
+
+
 
 
 

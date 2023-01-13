@@ -33,12 +33,13 @@ object LeadGenerateSaveRepository {
                            strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
                            strLeadThrough :String,ID_CollectedBy :String,strWhatsAppNo :String,ID_Category :String,ID_Product :String, strProduct :String,strProject :String,
                            strQty :String,ID_Priority :String,strFeedback :String,ID_Status :String,ID_NextAction :String,ID_ActionType :String,strFollowupdate :String,ID_Branch :String,
-                           ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,Customer_Mode : String,Customer_Type : String): MutableLiveData<LeadGenerateSaveModel> {
+                           ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
+                           Customer_Mode : String,Customer_Type : String,strExpecteddate :String): MutableLiveData<LeadGenerateSaveModel> {
         saveLeadGenerate(context, saveUpdateMode!!, ID_LeadGenerate!!, strDate, ID_Customer, ID_MediaSubMaster, CusNameTitle,
             Customer_Name, Customer_Address1, Customer_Address2, Customer_Mobile, Customer_Email, strCompanyContact, FK_Country, FK_States, FK_District, FK_Post, strPincode,
             FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, ID_CollectedBy, strWhatsAppNo, ID_Category, ID_Product, strProduct, strProject, strQty,
             ID_Priority, strFeedback, ID_Status, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch, ID_BranchType, ID_Department, ID_Employee,
-            strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type)
+            strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,strExpecteddate)
         Log.e("LeadGenerateSaveRepository"," 226666    ")
         return leadGenSaveSetterGetter
     }
@@ -48,7 +49,8 @@ object LeadGenerateSaveRepository {
                                  strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
                                  strLeadThrough :String,ID_CollectedBy :String,strWhatsAppNo :String,ID_Category :String,ID_Product :String, strProduct :String,strProject :String,
                                  strQty :String,ID_Priority :String,strFeedback :String,ID_Status :String,ID_NextAction :String,ID_ActionType :String,strFollowupdate :String,ID_Branch :String,
-                                 ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,Customer_Mode : String,Customer_Type : String) {
+                                 ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
+                                 Customer_Mode : String,Customer_Type : String,strExpecteddate :String) {
 
         Log.e("TAG","saveLeadGenerate  ")
         Log.e(TAG,"LocationValidation  64212"
@@ -268,6 +270,7 @@ object LeadGenerateSaveRepository {
 
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLatitude))
+                requestObject1.put("LgpExpectDate", ProdsuitApplication.encryptStart(strExpecteddate))
               //  requestObject1.put("LocationAddress", ProdsuitApplication.encryptStart(locAddress))
 //                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
 //                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))

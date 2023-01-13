@@ -9,8 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CustomerListModel
 import com.perfect.prodsuit.Model.CustomerSearchModel
+import com.perfect.prodsuit.Model.ServiceProductHistoryModel
 import com.perfect.prodsuit.Model.ServiceWarrantyModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -22,26 +22,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-
-object ServiceWarrantyRepository {
+object ServiceProductHistoryRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val serviceWarrantySetterGetter = MutableLiveData<ServiceWarrantyModel>()
-    val TAG: String = "ServiceWarrantyRepository"
+    val serviceProductHistSetterGetter = MutableLiveData<ServiceProductHistoryModel>()
+    val TAG: String = "ServiceProductHistoryRepository"
 
-    fun getServicesApiCall(context: Context,ID_Product : String,Customer_Type : String,ID_Customer : String): MutableLiveData<ServiceWarrantyModel> {
-        getServiceWarrantySetterGetter(context,ID_Product,Customer_Type,ID_Customer)
-        return serviceWarrantySetterGetter
+    fun getServicesApiCall(context: Context,ID_Product : String, Customer_Type: String, ID_Customer: String): MutableLiveData<ServiceProductHistoryModel> {
+        getServiceProductHistory(context, ID_Product, Customer_Type, ID_Customer)
+        return serviceProductHistSetterGetter
     }
 
-    private fun getServiceWarrantySetterGetter(context: Context,ID_Product : String,Customer_Type : String,ID_Customer : String) {
-//        serviceWarrantySetterGetter.value = ServiceWarrantyModel("")
-//        val msg  = "{\"WarrantyDetails\": {\"WarrantyDetailsList\": [{\"ID_Warranty\": \"12\",\"InvoiceNo\": \"123\",\"InvoiceDate\": \"06/06/2022\",\"Dealer\": \"\tHead Office Chalappuram 1\"},{\"ID_Warranty\": \"Product\",\"InvoiceNo\": \"124\",\"InvoiceDate\": \"07/06/2022\",\"Dealer\": \"\tHead Office Chalappuram 2\"},{\"ID_Warranty\": \"Project\",\"InvoiceNo\": \"125\",\"InvoiceDate\": \"08/06/2022\",\"Dealer\": \"\tHead Office Chalappuram 3\"},{\"ID_Warranty\": \"Product\",\"InvoiceNo\": \"126\",\"InvoiceDate\": \"09/06/2022\",\"Dealer\": \"\tHead Office Chalappuram 4\"}],\"ResponseCode\": \"0\",\"ResponseMessage\": \"Transaction Verified\"},\"StatusCode\": 0,\"EXMessage\": \"Transaction Verified\"}"
-//
-//        serviceWarrantySetterGetter.value = ServiceWarrantyModel(msg)
+    private fun getServiceProductHistory(context: Context, ID_Product: String, Customer_Type: String, ID_Customer: String) {
 
         try {
-            serviceWarrantySetterGetter.value = ServiceWarrantyModel("")
+            serviceProductHistSetterGetter.value = ServiceProductHistoryModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -72,6 +67,8 @@ object ServiceWarrantyRepository {
 //                    "FK_Product":"vJ/8asrP+O0=","FK_Customer":"07/ybAx1yS4=","FK_CustomerOther":"KZtbclVmL7w=","FK_Branch":"8Ld7pH+WkK0=",
 //                    "FK_Company":"vJ\/8asrP+O0=\n","EntrBy":"a5bTsgAqQ2o=\n"}
 
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -82,7 +79,7 @@ object ServiceWarrantyRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("71"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
 
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 if (Customer_Type.equals("0")){
@@ -112,7 +109,7 @@ object ServiceWarrantyRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getWarrantyDetails(body)
+            val call = apiService.getProductHistory(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -123,10 +120,10 @@ object ServiceWarrantyRepository {
                         progressDialog!!.dismiss()
                         Log.e(TAG,"response   911  "+response.body())
                         val jObject = JSONObject(response.body())
-                        val customer = ArrayList<ServiceWarrantyModel>()
-                        customer.add(ServiceWarrantyModel(response.body()))
+                        val customer = ArrayList<ServiceProductHistoryModel>()
+                        customer.add(ServiceProductHistoryModel(response.body()))
                         val msg = customer[0].message
-                        serviceWarrantySetterGetter.value = ServiceWarrantyModel(msg)
+                        serviceProductHistSetterGetter.value = ServiceProductHistoryModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         Log.e(TAG,"response   912  "+e.toString())

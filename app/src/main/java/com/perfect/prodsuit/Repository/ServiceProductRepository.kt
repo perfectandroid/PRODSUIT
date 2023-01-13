@@ -112,10 +112,11 @@ object ServiceProductRepository {
                 ) {
                     try {
 
+                        Log.e(TAG," 973 "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<ProductPriorityModel>()
-                        leads.add(ProductPriorityModel(response.body()))
+                        val leads = ArrayList<ServiceProductModel>()
+                        leads.add(ServiceProductModel(response.body()))
                         val msg = leads[0].message
                         serviceProductSetterGetter.value = ServiceProductModel(msg)
                     } catch (e: Exception) {

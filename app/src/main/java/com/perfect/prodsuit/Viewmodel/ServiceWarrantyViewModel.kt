@@ -11,8 +11,8 @@ class ServiceWarrantyViewModel  : ViewModel(){
 
     var serviceWarrantyData: MutableLiveData<ServiceWarrantyModel>? = null
 
-    fun getServiceWarranty(context: Context) : LiveData<ServiceWarrantyModel>? {
-        serviceWarrantyData = ServiceWarrantyRepository.getServicesApiCall(context)
+    fun getServiceWarranty(context: Context,ID_Product : String,Customer_Type : String,ID_Customer : String) : LiveData<ServiceWarrantyModel>? {
+        serviceWarrantyData = ServiceWarrantyRepository.getServicesApiCall(context,ID_Product,Customer_Type,ID_Customer)
         return serviceWarrantyData
     }
 }

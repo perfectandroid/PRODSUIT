@@ -3,7 +3,6 @@ package com.perfect.prodsuit.Helper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.util.Log
 import android.util.TypedValue
@@ -89,6 +88,9 @@ object Config {
     const val SHARED_PREF44 = "ID_User"  // FK_User
     const val SHARED_PREF45 = "BranchName"
     const val SHARED_PREF46 = "CompanyCategory"
+
+    var width = 0
+    var height = 0
 
 
 
@@ -188,6 +190,8 @@ object Config {
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackbar.show()
 
+
+
     }
 
     fun getActionTypes(): String {
@@ -239,6 +243,16 @@ object Config {
         v.postDelayed({
             v.isEnabled = true
         },3000)
+    }
+
+    fun getHeight(context: Context) : Int{
+        height = context.resources.displayMetrics.heightPixels
+        return height.toInt()
+    }
+    fun getWidth(context: Context) : Int {
+        width = context.resources.displayMetrics.widthPixels
+        return width.toInt()
+
     }
 
 
@@ -479,9 +493,8 @@ object Config {
         CompanyCategoryEditer.putString("CompanyCategory", "")
         CompanyCategoryEditer.commit()
 
-
-
     }
+
 
 
 }

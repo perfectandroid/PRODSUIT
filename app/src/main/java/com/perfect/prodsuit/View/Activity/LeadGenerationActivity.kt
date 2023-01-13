@@ -874,7 +874,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtProjectName!!.setHint("Model")
         }
         else if (CompanyCategory.equals("2")){
-            tv_ProductClick!!.setText("Project Details")
+            tv_ProductClick!!.setText("Package Details")
             edtProdproduct!!.setHint("Destination")
             edtProdqty!!.setHint("No.of Passengers")
             ll_product_qty!!.orientation = LinearLayout.VERTICAL
@@ -6931,6 +6931,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         + "\n" + "strLatitude        : " + strLatitude
                         + "\n" + "strLongitue        : " + strLongitue
                         + "\n" + "locAddress         : " + locAddress + "," + locCity + "," + locState + "," + locCountry + "," + locpostalCode
+                        + "\n" + "strExpecteddate    : " + strExpecteddate
             )
 
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -6994,7 +6995,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         encode1,
                         encode2,
                         Customer_Mode!!,
-                        Customer_Type!!
+                        Customer_Type!!,
+                        strExpecteddate
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

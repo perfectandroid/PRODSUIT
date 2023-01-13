@@ -34,14 +34,13 @@ class ServiceSalesAdapter(internal var context: Context, internal var jsonArray:
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.tv_Sale_InvNo.text        = jsonObject!!.getString("InvoiceNo")
-                holder.tv_Sale_InvDate.text      = jsonObject!!.getString("InvoiceDate")
-                holder.tv_Sale_dealer.text       = jsonObject!!.getString("Dealer")
-                holder.tv_Sale_ProdQty.text        = jsonObject!!.getString("Product")+"\n"+" / "+jsonObject!!.getString("Quatity")
+                holder.tv_InvoiceNo.text        = jsonObject!!.getString("InvoiceNo")
+                holder.tv_InvoiceDate.text      = jsonObject!!.getString("InvoiceDate")
+                holder.tv_Product.text       = jsonObject!!.getString("Product")
+                holder.tv_Quantity.text       = jsonObject!!.getString("Quantity")
+                holder.tv_Dealer.text       = jsonObject!!.getString("Dealer")
 
-                if (position%2 != 0){
-                    holder.llSales.setBackgroundColor(context.getColor(R.color.alternate_color))
-                }
+
 
 //                holder.llfollowuptype!!.setTag(position)
 //                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
@@ -68,16 +67,18 @@ class ServiceSalesAdapter(internal var context: Context, internal var jsonArray:
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var tv_Sale_InvNo    : TextView
-        internal var tv_Sale_InvDate  : TextView
-        internal var tv_Sale_dealer   : TextView
-        internal var tv_Sale_ProdQty   : TextView
+        internal var tv_InvoiceNo    : TextView
+        internal var tv_InvoiceDate  : TextView
+        internal var tv_Product   : TextView
+        internal var tv_Quantity   : TextView
+        internal var tv_Dealer   : TextView
         internal var llSales       : LinearLayout
         init {
-            tv_Sale_InvNo      = v.findViewById<View>(R.id.tv_Sale_InvNo) as TextView
-            tv_Sale_InvDate    = v.findViewById<View>(R.id.tv_Sale_InvDate) as TextView
-            tv_Sale_dealer     = v.findViewById<View>(R.id.tv_Sale_dealer) as TextView
-            tv_Sale_ProdQty     = v.findViewById<View>(R.id.tv_Sale_ProdQty) as TextView
+            tv_InvoiceNo      = v.findViewById<View>(R.id.tv_InvoiceNo) as TextView
+            tv_InvoiceDate    = v.findViewById<View>(R.id.tv_InvoiceDate) as TextView
+            tv_Product     = v.findViewById<View>(R.id.tv_Product) as TextView
+            tv_Quantity     = v.findViewById<View>(R.id.tv_Quantity) as TextView
+            tv_Dealer     = v.findViewById<View>(R.id.tv_Dealer) as TextView
             llSales         = v.findViewById<View>(R.id.llSales) as LinearLayout
         }
     }

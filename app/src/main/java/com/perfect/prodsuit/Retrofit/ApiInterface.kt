@@ -306,4 +306,13 @@ interface ApiInterface {
     @POST("Service/UpdateCustomerServiceRegister")
     fun UpdateCustomerServiceRegister(@Body body: RequestBody): Call<String>
 
+    @POST("Service/GetWarrantyDetails")
+    fun getWarrantyDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetProductHistory")
+    fun getProductHistory(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetSalesHistory")
+    fun getSalesHistory(@Body body: RequestBody): Call<String>
+
 }
