@@ -74,7 +74,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                     holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
                 }
                 else if (CompanyCategory.equals("2")){
-                    holder.tv_product.text        = "Project Name : "+jsonObject!!.getString("ProdName")
+                    holder.tv_product.text        = "Destination : "+jsonObject!!.getString("ProdName")
                 }
 
               //  holder.txtv_date.text        = date

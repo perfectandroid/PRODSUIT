@@ -1648,6 +1648,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var txtAssigned1 = findViewById<TextView>(R.id.txtInfoAssigned)
         var txtLeadNo1 = findViewById<TextView>(R.id.txtInfoLeadNo)
         var txtProject1 = findViewById<TextView>(R.id.txtInfoProject)
+        var txtInfoExpected1 = findViewById<TextView>(R.id.txtInfoExpected)
         var txtProduct1 = findViewById<TextView>(R.id.txtInfoProduct)
         var txtCategoryName1 = findViewById<TextView>(R.id.txtInfoCategoryName)
         var txtNextAction1 = findViewById<TextView>(R.id.txtInfoNextAction)
@@ -1656,6 +1657,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         var ll_projectVis = findViewById<LinearLayout>(R.id.ll_projectVis)
         var ll_productVis = findViewById<LinearLayout>(R.id.ll_productVis)
+        var ll_expectedVis = findViewById<LinearLayout>(R.id.ll_expectedVis)
 
 
         llInfoDetail.visibility = View.GONE
@@ -1700,14 +1702,27 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
                                         txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
 
-                                        if (jsonObject1.getString("ProjectName").equals("")){
+                                        val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+                                        var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+
+                                        if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+                                            ll_expectedVis.visibility = View.GONE
+                                            if (jsonObject1.getString("ProjectName").equals("")){
+                                                ll_projectVis.visibility = View.GONE
+                                                ll_productVis.visibility = View.VISIBLE
+                                            }else{
+                                                ll_projectVis.visibility = View.VISIBLE
+                                                ll_productVis.visibility = View.GONE
+                                            }
+                                        }
+                                        else if (CompanyCategory.equals("2")){
                                             ll_projectVis.visibility = View.GONE
-                                            ll_productVis.visibility = View.VISIBLE
-                                        }else{
-                                            ll_projectVis.visibility = View.VISIBLE
                                             ll_productVis.visibility = View.GONE
+                                            ll_expectedVis.visibility = View.VISIBLE
+
                                         }
 
+                                        txtInfoExpected1.setText("")
                                         txtProject1.setText(jsonObject1.getString("ProjectName"))
                                         txtProduct1.setText(jsonObject1.getString("ProdName"))
 

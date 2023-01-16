@@ -6567,8 +6567,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val ll_project = dialogConfirmPop!!.findViewById(R.id.ll_project) as LinearLayout
             val ll_prod_quantity =
                 dialogConfirmPop!!.findViewById(R.id.ll_prod_quantity) as LinearLayout
-            val ll_prod_priority =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
+            val ll_expected_date = dialogConfirmPop!!.findViewById(R.id.ll_expected_date) as LinearLayout
+            val ll_prod_priority = dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
             val ll_prod_status =
                 dialogConfirmPop!!.findViewById(R.id.ll_prod_status) as LinearLayout
             val ll_prod_feedback =
@@ -6594,10 +6594,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 dialogConfirmPop!!.findViewById(R.id.tvp_contact_number) as TextView
             val tvp_media_type = dialogConfirmPop!!.findViewById(R.id.tvp_media_type) as TextView
 
+            val tvp_label_product = dialogConfirmPop!!.findViewById(R.id.tvp_label_product) as TextView
+            val tvp_product_label = dialogConfirmPop!!.findViewById(R.id.tvp_product_label) as TextView
+            val tvp_project_label = dialogConfirmPop!!.findViewById(R.id.tvp_project_label) as TextView
+            val tvp_quantity_label = dialogConfirmPop!!.findViewById(R.id.tvp_quantity_label) as TextView
+
             val tvp_category = dialogConfirmPop!!.findViewById(R.id.tvp_category) as TextView
             val tvp_product = dialogConfirmPop!!.findViewById(R.id.tvp_product) as TextView
             val tvp_project = dialogConfirmPop!!.findViewById(R.id.tvp_project) as TextView
             val tvp_quantity = dialogConfirmPop!!.findViewById(R.id.tvp_quantity) as TextView
+            val tvp_expected_date = dialogConfirmPop!!.findViewById(R.id.tvp_expected_date) as TextView
             val tvp_priority = dialogConfirmPop!!.findViewById(R.id.tvp_priority) as TextView
             val tvp_feedback = dialogConfirmPop!!.findViewById(R.id.tvp_feedback) as TextView
             val tvp_status = dialogConfirmPop!!.findViewById(R.id.tvp_status) as TextView
@@ -6751,6 +6757,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             if (edtProdqty!!.text.toString().equals("")) {
                 ll_prod_quantity!!.visibility = View.GONE
             }
+
+            if (edtExpecteddate!!.text.toString().equals("")) {
+                ll_expected_date!!.visibility = View.GONE
+            }
             if (edtProdpriority!!.text.toString().equals("")) {
                 ll_prod_priority!!.visibility = View.GONE
             }
@@ -6836,6 +6846,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             tvp_product.text = edtProdproduct!!.text.toString()
             tvp_quantity.text = edtProdqty!!.text.toString()
             tvp_project.text = edtProjectName!!.text.toString()
+            tvp_expected_date.text = edtExpecteddate!!.text.toString()
             tvp_priority.text = edtProdpriority!!.text.toString()
             tvp_feedback.text = edtProdfeedback!!.text.toString()
             tvp_status.text = edtProdstatus!!.text.toString()
@@ -6848,6 +6859,24 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             tvp_employee.text = edtEmployee!!.text.toString()
 
             tvp_location.text = txtLocation!!.text.toString()
+
+            val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+            var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+
+            if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+                tvp_product_label.text = "Product"
+                tvp_project_label.text = "Project"
+                tvp_quantity_label.text = "Quantity"
+                tvp_label_product.text = "Project/Product"
+            }
+            else if (CompanyCategory.equals("2")){
+                tvp_product_label.text = "Destination"
+                tvp_project_label.text = "Destination"
+                tvp_quantity_label.text = "Passengers"
+                tvp_label_product.text = "Package Details"
+            }
+
+
 
             btnCancel.setOnClickListener {
                 dialogConfirmPop.dismiss()

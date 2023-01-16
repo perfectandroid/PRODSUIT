@@ -1658,6 +1658,7 @@
                     android:visibility="visible">
 
                     <TextView
+                        android:id="@+id/tvp_label_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -1749,6 +1750,7 @@
 
 
                             <TextView
+                                android:id="@+id/tvp_product_label"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -1814,6 +1816,7 @@
 
 
                             <TextView
+                                android:id="@+id/tvp_project_label"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -1879,6 +1882,7 @@
 
 
                             <TextView
+                                android:id="@+id/tvp_quantity_label"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -1908,6 +1912,71 @@
 
                             <TextView
                                 android:id="@+id/tvp_quantity"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_expected_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Expected Date"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_expected_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
