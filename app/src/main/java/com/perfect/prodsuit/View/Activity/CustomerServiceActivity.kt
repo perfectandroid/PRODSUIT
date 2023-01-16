@@ -175,11 +175,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     lateinit var customerSort : JSONArray
     var dialogCustSearch: Dialog? = null
 
-    lateinit var productPriorityViewModel: ProductPriorityViewModel
-    lateinit var prodPriorityArrayList : JSONArray
-    lateinit var prodPrioritySort : JSONArray
-    private var dialogProdPriority : Dialog? = null
-    var recyProdPriority: RecyclerView? = null
+    lateinit var servicePriorityViewModel: ServicePriorityViewModel
+    lateinit var servPriorityArrayList : JSONArray
+    lateinit var servPrioritySort : JSONArray
+    private var dialogServPriority : Dialog? = null
+    var recyServPriority: RecyclerView? = null
 
     lateinit var commonViewModel: CommonViewModel
     lateinit var channelArrayList : JSONArray
@@ -296,7 +296,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         serviceSalesViewModel = ViewModelProvider(this).get(ServiceSalesViewModel::class.java)
 
         customerListViewModel = ViewModelProvider(this).get(CustomerListViewModel::class.java)
-        productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
+        servicePriorityViewModel = ViewModelProvider(this).get(ServicePriorityViewModel::class.java)
         serviceViewModel = ViewModelProvider(this).get(ServiceViewModel::class.java)
         serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
         commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
@@ -1927,7 +1927,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productPriorityViewModel.getProductPriority(this)!!.observe(
+                servicePriorityViewModel.getServicePriority(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1940,11 +1940,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     Log.e(TAG,"msg   353   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("PriorityDetailsList")
-                                        prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
-                                        if (prodPriorityArrayList.length()>0){
+                                        val jobjt = jObject.getJSONObject("CommonPopupDetails")
+                                        servPriorityArrayList = jobjt.getJSONArray("CommonPopupList")
+                                        if (servPriorityArrayList.length()>0){
 
-                                            productPriorityPopup(prodPriorityArrayList)
+                                            productPriorityPopup(servPriorityArrayList)
 
 
                                         }
@@ -1988,31 +1988,31 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun productPriorityPopup(prodPriorityArrayList: JSONArray) {
+    private fun productPriorityPopup(servPriorityArrayList: JSONArray) {
 
         try {
 
-            dialogProdPriority = Dialog(this)
-            dialogProdPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
-            dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
-            val etsearch = dialogProdPriority!! .findViewById(R.id.etsearch) as EditText
+            dialogServPriority = Dialog(this)
+            dialogServPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogServPriority!! .setContentView(R.layout.service_priority_popup)
+            dialogServPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyServPriority = dialogServPriority!! .findViewById(R.id.recyServPriority) as RecyclerView
+            val etsearch = dialogServPriority!! .findViewById(R.id.etsearch) as EditText
 
-            prodPrioritySort = JSONArray()
-            for (k in 0 until prodPriorityArrayList.length()) {
-                val jsonObject = prodPriorityArrayList.getJSONObject(k)
+            servPrioritySort = JSONArray()
+            for (k in 0 until servPriorityArrayList.length()) {
+                val jsonObject = servPriorityArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
-                prodPrioritySort.put(jsonObject)
+                servPrioritySort.put(jsonObject)
             }
 
 
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-            recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            recyServPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
-            val adapter = ProductPriorityAdapter(this@CustomerServiceActivity, prodPrioritySort)
-            recyProdPriority!!.adapter = adapter
+            val adapter = ServicePriorityAdapter(this@CustomerServiceActivity, servPrioritySort)
+            recyServPriority!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
 
 
@@ -2027,27 +2027,27 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                     //  list_view!!.setVisibility(View.VISIBLE)
                     val textlength = etsearch!!.text.length
-                    prodPrioritySort = JSONArray()
+                    servPrioritySort = JSONArray()
 
-                    for (k in 0 until prodPriorityArrayList.length()) {
-                        val jsonObject = prodPriorityArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("PriorityName").length) {
-                            if (jsonObject.getString("PriorityName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                prodPrioritySort.put(jsonObject)
+                    for (k in 0 until servPriorityArrayList.length()) {
+                        val jsonObject = servPriorityArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Code").length) {
+                            if (jsonObject.getString("Code")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                servPrioritySort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"prodPrioritySort               7103    "+prodPrioritySort)
-                    val adapter = ProductPriorityAdapter(this@CustomerServiceActivity, prodPrioritySort)
-                    recyProdPriority!!.adapter = adapter
+                    Log.e(TAG,"servPrioritySort               7103    "+servPrioritySort)
+                    val adapter = ServicePriorityAdapter(this@CustomerServiceActivity, servPrioritySort)
+                    recyServPriority!!.adapter = adapter
                     adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
-            dialogProdPriority!!.show()
-            dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogServPriority!!.show()
+            dialogServPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -3736,13 +3736,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
 
-        if (data.equals("prodpriority")){
-            dialogProdPriority!!.dismiss()
+        if (data.equals("servpriority")){
+            dialogServPriority!!.dismiss()
 //            val jsonObject = prodPriorityArrayList.getJSONObject(position)
-            val jsonObject = prodPrioritySort.getJSONObject(position)
-            Log.e(TAG,"ID_Priority   "+jsonObject.getString("ID_Priority"))
-            ID_Priority = jsonObject.getString("ID_Priority")
-            tie_Priority!!.setText(jsonObject.getString("PriorityName"))
+            val jsonObject = servPrioritySort.getJSONObject(position)
+            Log.e(TAG,"ID_Priority   "+jsonObject.getString("Code"))
+            ID_Priority = jsonObject.getString("Code")
+            tie_Priority!!.setText(jsonObject.getString("Description"))
 
 
         }
