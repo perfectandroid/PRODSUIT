@@ -2031,8 +2031,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                     for (k in 0 until servPriorityArrayList.length()) {
                         val jsonObject = servPriorityArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Code").length) {
-                            if (jsonObject.getString("Code")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("Description").length) {
+                            if (jsonObject.getString("Description")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 servPrioritySort.put(jsonObject)
                             }
 
