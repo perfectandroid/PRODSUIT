@@ -31,8 +31,10 @@
     </string-array>
 
     <string-array name="call_status">
-        <item>Attended</item>  // 1
-        <item>Not Connected</item>  //2
+        <item>Attended</item>
+        // 1
+        <item>Not Connected</item>
+        //2
 
     </string-array>
 

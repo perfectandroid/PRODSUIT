@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.lifecycle.Observer
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,6 +39,20 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var serviceAssignArrayList : JSONArray
 
 
+    private var tv_TicketClick: TextView? = null
+    private var tv_ServiceClick: TextView? = null
+    private var tv_ProductClick: TextView? = null
+
+    private var lnrHead_Ticket: LinearLayout? = null
+    private var lnrHead_Service: LinearLayout? = null
+    private var lnrHead_Product: LinearLayout? = null
+
+
+    var ticketMode: String? = "0"
+    var serviceMode: String? = "1"
+    var productMode: String? = "1"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -49,19 +64,30 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
 
         setRegViews()
 
+        ticketMode = "0"
+        hideViews()
+
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        llNew = findViewById<LinearLayout>(R.id.llNew)
-        llOnGoing = findViewById<LinearLayout>(R.id.llOnGoing)
+       // recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
 
-        recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
+        tv_TicketClick = findViewById<TextView>(R.id.tv_TicketClick)
+        tv_ServiceClick = findViewById<TextView>(R.id.tv_ServiceClick)
+        tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
 
-        llNew!!.setOnClickListener(this)
-        llOnGoing!!.setOnClickListener(this)
+        tv_TicketClick!!.setOnClickListener(this)
+        tv_ServiceClick!!.setOnClickListener(this)
+        tv_ProductClick!!.setOnClickListener(this)
+
+        lnrHead_Ticket = findViewById<LinearLayout>(R.id.lnrHead_Ticket)
+        lnrHead_Service = findViewById<LinearLayout>(R.id.lnrHead_Service)
+        lnrHead_Product = findViewById<LinearLayout>(R.id.lnrHead_Product)
+
+
     }
 
     override fun onClick(v: View) {
@@ -69,13 +95,43 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener{
             R.id.imback->{
                 finish()
             }
-            R.id.llNew->{
-
-                getServiceAssign()
+            R.id.tv_TicketClick->{
+                ticketMode = "0"
+                serviceMode  = "1"
+                productMode = "1"
+                hideViews()
             }
-            R.id.llOnGoing->{
 
+            R.id.tv_ServiceClick->{
+                ticketMode = "1"
+                serviceMode  = "0"
+                productMode = "1"
+                hideViews()
             }
+
+            R.id.tv_ProductClick->{
+                ticketMode = "1"
+                serviceMode  = "1"
+                productMode = "0"
+                hideViews()
+            }
+
+        }
+    }
+
+    private fun hideViews() {
+        lnrHead_Ticket!!.visibility = View.VISIBLE
+        lnrHead_Service!!.visibility = View.VISIBLE
+        lnrHead_Product!!.visibility = View.VISIBLE
+
+        if (ticketMode.equals("1")) {
+            lnrHead_Ticket!!.visibility = View.GONE
+        }
+        if (serviceMode.equals("1")) {
+            lnrHead_Service!!.visibility = View.GONE
+        }
+        if (productMode.equals("1")) {
+            lnrHead_Product!!.visibility = View.GONE
         }
     }
 

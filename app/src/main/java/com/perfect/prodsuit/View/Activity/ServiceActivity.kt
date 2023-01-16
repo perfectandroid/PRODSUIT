@@ -80,7 +80,10 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
                 startActivity(i)
             }
             R.id.llServiceAssign->{
-                val i = Intent(this@ServiceActivity, ServiceAssignActivity::class.java)
+//                val i = Intent(this@ServiceActivity, ServiceAssignActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@ServiceActivity, ServiceAssignTabActivity::class.java)
                 startActivity(i)
             }
         }
