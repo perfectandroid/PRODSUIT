@@ -172,6 +172,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
+                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
@@ -188,7 +189,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:background="@color/colorbgService"
+                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -521,6 +522,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
+                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
@@ -538,7 +540,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@color/colorbgService"
+                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -801,6 +803,7 @@
                                     android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
+                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
@@ -817,7 +820,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@color/colorbgService"
+                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -937,6 +940,7 @@
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
+                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:text="Requested Visit Date and Time"
@@ -951,7 +955,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@color/colorbgService"
+                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -1141,6 +1145,7 @@
                                     android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
+                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
@@ -1157,7 +1162,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@color/colorbgService"
+                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 

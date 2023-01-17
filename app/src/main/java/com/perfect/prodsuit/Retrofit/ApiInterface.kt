@@ -315,6 +315,9 @@ interface ApiInterface {
     @POST("Service/GetSalesHistory")
     fun getSalesHistory(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceAssign/ServiceCountDetails")
+    fun getServiceCountDetails(@Body body: RequestBody): Call<String>
+
 
 
 }

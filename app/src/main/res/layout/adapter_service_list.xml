@@ -10,7 +10,9 @@
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:backgroundTint="#FFFFFF"
-    app:cardElevation="2dp">
+    android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+    android:outlineSpotShadowColor="@color/colorPrimaryDark"
+    app:cardElevation="5dp">
     <!--    app:cardUseCompatPadding="true"-->
 <!--    android:backgroundTint="@color/white"-->
 

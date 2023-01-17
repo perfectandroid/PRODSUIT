@@ -146,7 +146,7 @@
 
     <color name="boxStrokeColor">#979797</color>
     <color name="textColor">#979797</color>
-    <color name="hintTextColor">#979797</color>
+    <color name="hintTextColor">#838282</color>
 
     <color name="ColorCold">#1ca4fc</color>
     <color name="ColorWarm">#f5a732</color>

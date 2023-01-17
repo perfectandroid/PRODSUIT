@@ -178,6 +178,8 @@
     </style>
 
 
+
+
     <style name="DatePickerDialogTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/myfont</item>
