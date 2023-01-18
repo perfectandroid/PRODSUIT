@@ -332,7 +332,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/svg_invoce_no"
+                        android:src="@drawable/icon_svg_attendedby"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
