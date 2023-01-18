@@ -1163,7 +1163,7 @@
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/shape_bottom_rounded"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat

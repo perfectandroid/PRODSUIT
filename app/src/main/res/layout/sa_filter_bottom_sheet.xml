@@ -65,6 +65,13 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_service_list"
+            android:orientation="vertical">
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -455,6 +462,10 @@
 
                 </LinearLayout>
             </ScrollView>
+
+        </LinearLayout>
+
+
 
 
 
