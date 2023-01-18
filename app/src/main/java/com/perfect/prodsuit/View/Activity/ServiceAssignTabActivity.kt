@@ -181,7 +181,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                 startActivity(i)
             }
             R.id.card_ongoing->{
-                val i = Intent(this@ServiceAssignTabActivity, ServiceAssignListActivity::class.java)
+                val i = Intent(this@ServiceAssignTabActivity, ServiceOngoingListActivityActivity::class.java)
                 i.putExtra("SubMode","3")
                 i.putExtra("ID_Branch",ID_Branch)
                 i.putExtra("FK_Area",FK_Area)

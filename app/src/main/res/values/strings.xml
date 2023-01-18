@@ -59,5 +59,7 @@
         <item>Fr. </item>
         <item>Sr. </item>
     </string-array>
+    <string name="title_activity_service_assign_ongoing_list">ServiceAssignOngoingListActivity
+    </string>
 
 </resources>

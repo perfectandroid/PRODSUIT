@@ -10,12 +10,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceListAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class ServiceListAdapter (internal var context: Context, internal var jsonArray: JSONArray,internal var SubMode :String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ServiceListAdapter"
@@ -38,6 +39,8 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
+
+
 
                 holder.tv_TicketNo.text        = jsonObject!!.getString("TicketNo")
                 holder.tv_TicketDate.text        = jsonObject!!.getString("TicketDate")
@@ -77,12 +80,24 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
                 }
 
-//                if (position % 2 == 0){
-//                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llprodcategory!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
+                if (SubMode.equals("3")){
+                    holder.ll_status!!.visibility = View.VISIBLE
+                    holder.ll_employee!!.visibility = View.VISIBLE
+                    if (jsonObject!!.getString("Status").equals("On-Hold")){
+                        holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_hold))
+                    }
+                    if (jsonObject!!.getString("Status").equals("Pending")){
+                        holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_pending))
+                    }
+
+                }
+
+                holder.im_edit!!.setTag(position)
+                holder.im_edit!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    clickListener!!.onClick(position, "ServiceEdit")
+                })
+
                 holder.llServiceList!!.setTag(position)
                 holder.llServiceList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "ServiceList")
@@ -117,7 +132,11 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
         internal var tv_TimeDue          : TextView
         internal var im_Channel          : ImageView
         internal var im_Priority          : ImageView
+        internal var im_Status          : ImageView
+        internal var im_edit          : ImageView
 //        internal var txtsino          : TextView
+        internal var ll_employee    : LinearLayout
+        internal var ll_status    : LinearLayout
         internal var llServiceList    : LinearLayout
         init {
             tv_TicketNo        = v.findViewById<View>(R.id.tv_TicketNo) as TextView
@@ -131,7 +150,11 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
 
             im_Channel        = v.findViewById<View>(R.id.im_Channel) as ImageView
             im_Priority        = v.findViewById<View>(R.id.im_Priority) as ImageView
+            im_Status        = v.findViewById<View>(R.id.im_Status) as ImageView
+            im_edit        = v.findViewById<View>(R.id.im_edit) as ImageView
 //            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
+            ll_employee       = v.findViewById<View>(R.id.ll_employee) as LinearLayout
+            ll_status       = v.findViewById<View>(R.id.ll_status) as LinearLayout
             llServiceList       = v.findViewById<View>(R.id.llServiceList) as LinearLayout
         }
     }

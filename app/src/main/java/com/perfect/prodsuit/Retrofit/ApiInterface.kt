@@ -321,6 +321,9 @@ interface ApiInterface {
     @POST("ServiceAssign/ServiceAssignNewDetails")
     fun getServiceAssignNewDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceAssign/ServiceAssignOnGoingDetails")
+    fun getServiceAssignOnGoingDetails(@Body body: RequestBody): Call<String>
+
 
 
 }

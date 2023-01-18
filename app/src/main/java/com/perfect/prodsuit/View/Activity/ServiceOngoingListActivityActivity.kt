@@ -12,30 +12,31 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.R
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
 import com.perfect.prodsuit.Viewmodel.ServiceListViewModel
+import com.perfect.prodsuit.Viewmodel.ServiceOnGoingListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
+class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickListener,
+    ItemClickListener {
 
-    var TAG  ="ServiceAssignListActivity"
+    var TAG  ="ServiceOngoingListActivityActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
 
-    lateinit var serviceListViewModel: ServiceListViewModel
+    lateinit var serviceOnGoingListViewModel: ServiceOnGoingListViewModel
     lateinit var serviceListArrayList: JSONArray
     var recyServiceList: RecyclerView? = null
 
     var serviceList = 0
-
     var SubMode : String?= ""
     var ID_Branch : String?= ""
     var FK_Area : String?= ""
@@ -52,9 +53,10 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_service_assign_list)
-        context = this@ServiceAssignListActivity
-        serviceListViewModel = ViewModelProvider(this).get(ServiceListViewModel::class.java)
+        setContentView(R.layout.activity_service_assign_ongoing_list_activity)
+        context = this@ServiceOngoingListActivityActivity
+
+        serviceOnGoingListViewModel = ViewModelProvider(this).get(ServiceOnGoingListViewModel::class.java)
 
         setRegViews()
 
@@ -71,11 +73,9 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
 
         serviceList = 0
-        getServiceNewList()
+        getServiceOnGoingList()
 
     }
-
-
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -95,7 +95,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         }
     }
 
-    private fun getServiceNewList() {
+    private fun getServiceOnGoingList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -104,7 +104,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceListViewModel.getServiceList(this,SubMode!!,ID_Branch!!,FK_Area!!,ID_Employee!!,strFromDate!!,strToDate!!,strCustomer!!,strMobile!!,strTicketNo!!,strDueDays!!)!!.observe(
+                serviceOnGoingListViewModel.getServiceOngoingList(this,SubMode!!,ID_Branch!!,FK_Area!!,ID_Employee!!,strFromDate!!,strToDate!!,strCustomer!!,strMobile!!,strTicketNo!!,strDueDays!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -117,20 +117,20 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   82   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
-                                        serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
+                                        val jobjt = jObject.getJSONObject("ServiceAssignOnGoingDetails")
+                                        serviceListArrayList = jobjt.getJSONArray("ServiceAssignOnGoingList")
                                         if (serviceListArrayList.length() > 0) {
 
-                                            val lLayout = GridLayoutManager(this@ServiceAssignListActivity, 1)
+                                            val lLayout = GridLayoutManager(this@ServiceOngoingListActivityActivity, 1)
                                             recyServiceList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ServiceListAdapter(this@ServiceOngoingListActivityActivity, serviceListArrayList,SubMode!!)
                                             recyServiceList!!.adapter = adapter
-                                            adapter.setClickListener(this@ServiceAssignListActivity)
+                                            adapter.setClickListener(this@ServiceOngoingListActivityActivity)
 
                                         }
                                     } else {
                                         val builder = AlertDialog.Builder(
-                                            this@ServiceAssignListActivity,
+                                            this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -167,13 +167,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         }
     }
 
-
-
     override fun onClick(position: Int, data: String) {
 
         if (data.equals("ServiceList")) {
 
-            val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
+            val i = Intent(this@ServiceOngoingListActivityActivity, ServiceAssignActivity::class.java)
             startActivity(i)
         }
         if (data.equals("ServiceEdit")) {
@@ -181,8 +179,6 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 //            val i = Intent(this@ServiceOngoingListActivityActivity, ServiceAssignActivity::class.java)
 //            startActivity(i)
         }
-
-
 
     }
 }

@@ -152,6 +152,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/im_edit"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_edit"
@@ -422,6 +423,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_employee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -567,6 +569,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.3"
@@ -587,12 +590,12 @@
 
             <ImageView
                 android:id="@+id/im_Status"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dot_svg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
-                android:visibility="visible"
-                app:tint="@color/red" />
+                android:visibility="visible" />
+<!--            android:src="@drawable/dot_svg"-->
+<!--            app:tint="@color/red"-->
 
         </LinearLayout>
 
