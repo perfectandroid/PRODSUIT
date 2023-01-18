@@ -90,7 +90,7 @@ object ServiceCountRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(strFromDate))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(strToDate))
-                requestObject1.put("CSRTickno", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("CSRTickno", ProdsuitApplication.encryptStart(strTicketNo))
                 requestObject1.put("CusName", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
 

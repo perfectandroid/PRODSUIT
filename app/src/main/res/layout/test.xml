@@ -246,7 +246,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/leadno"
+                        android:src="@drawable/lead_datecolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -314,7 +314,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/leadno"
+                        android:src="@drawable/lead_sourcecolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -383,7 +383,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/leadno"
+                        android:src="@drawable/lead_fromcolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -582,7 +582,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/next_action"
+                        android:src="@drawable/lead_actioncolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -732,7 +732,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/addresics"
+                        android:src="@drawable/lead_addresscolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -809,7 +809,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/smartphone"
+                        android:src="@drawable/lead_mobilecolor"
                         android:visibility="visible"/>
 
                     <LinearLayout
@@ -887,7 +887,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/icemail"
+                        android:src="@drawable/lead_emailcolor"
                         android:visibility="visible"/>
 
 
@@ -980,7 +980,7 @@
                         android:layout_height="30dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
-                        android:src="@drawable/icemail"
+                        android:src="@drawable/lead_collectedbycolor"
                         android:visibility="visible"/>
 
 
