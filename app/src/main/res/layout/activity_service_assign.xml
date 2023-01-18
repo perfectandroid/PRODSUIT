@@ -777,7 +777,7 @@
                                             android:background="@drawable/shape_bottom_rounded"
                                             android:orientation="vertical"
                                             android:paddingBottom="10dp"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
 <!--                                            android:background="@color/colorbgService"-->
 

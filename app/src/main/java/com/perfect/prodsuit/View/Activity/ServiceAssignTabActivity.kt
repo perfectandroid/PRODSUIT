@@ -168,10 +168,31 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
             R.id.card_new->{
                 val i = Intent(this@ServiceAssignTabActivity, ServiceAssignListActivity::class.java)
+                i.putExtra("SubMode","2")
+                i.putExtra("ID_Branch",ID_Branch)
+                i.putExtra("FK_Area",FK_Area)
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("strFromDate",strFromDate)
+                i.putExtra("strToDate",strToDate)
+                i.putExtra("strCustomer",strCustomer)
+                i.putExtra("strMobile",strMobile)
+                i.putExtra("strTicketNo",strTicketNo)
+                i.putExtra("strDueDays",strDueDays)
                 startActivity(i)
             }
             R.id.card_ongoing->{
-
+                val i = Intent(this@ServiceAssignTabActivity, ServiceAssignListActivity::class.java)
+                i.putExtra("SubMode","3")
+                i.putExtra("ID_Branch",ID_Branch)
+                i.putExtra("FK_Area",FK_Area)
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("strFromDate",strFromDate)
+                i.putExtra("strToDate",strToDate)
+                i.putExtra("strCustomer",strCustomer)
+                i.putExtra("strMobile",strMobile)
+                i.putExtra("strTicketNo",strTicketNo)
+                i.putExtra("strDueDays",strDueDays)
+                startActivity(i)
             }
 
             R.id.imgv_filter->{

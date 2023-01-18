@@ -36,6 +36,18 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
     var serviceList = 0
 
+    var SubMode : String?= ""
+    var ID_Branch : String?= ""
+    var FK_Area : String?= ""
+    var ID_Employee : String?= ""
+    var strFromDate : String?= ""
+    var strToDate : String?= ""
+    var strCustomer : String?= ""
+    var strMobile : String?= ""
+    var strTicketNo : String?= ""
+    var strDueDays : String?= ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -46,8 +58,21 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         setRegViews()
 
+        SubMode   = intent.getStringExtra("SubMode")
+        ID_Branch   = intent.getStringExtra("ID_Branch")
+        FK_Area     = intent.getStringExtra("FK_Area")
+        ID_Employee = intent.getStringExtra("ID_Employee")
+        strFromDate = intent.getStringExtra("strFromDate")
+        strToDate   = intent.getStringExtra("strToDate")
+        strCustomer = intent.getStringExtra("strCustomer")
+        strMobile   = intent.getStringExtra("strMobile")
+        strTicketNo = intent.getStringExtra("strTicketNo")
+        strDueDays  = intent.getStringExtra("strDueDays")
+
+
         serviceList = 0
-        getServiceList()
+        getServiceNewList()
+
     }
 
 
@@ -70,7 +95,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         }
     }
 
-    private fun getServiceList() {
+    private fun getServiceNewList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -79,7 +104,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceListViewModel.getServiceList(this)!!.observe(
+                serviceListViewModel.getServiceList(this,SubMode!!,ID_Branch!!,FK_Area!!,ID_Employee!!,strFromDate!!,strToDate!!,strCustomer!!,strMobile!!,strTicketNo!!,strDueDays!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -92,8 +117,80 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   82   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
-                                        serviceListArrayList = jobjt.getJSONArray("CategoryList")
+                                        val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
+                                        serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
+                                        if (serviceListArrayList.length() > 0) {
+
+                                            val lLayout = GridLayoutManager(this@ServiceAssignListActivity, 1)
+                                            recyServiceList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList)
+                                            recyServiceList!!.adapter = adapter
+                                            adapter.setClickListener(this@ServiceAssignListActivity)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceAssignListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getServiceOnGoingList() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceListViewModel.getServiceList(this,SubMode!!,ID_Branch!!,FK_Area!!,ID_Employee!!,strFromDate!!,strToDate!!,strCustomer!!,strMobile!!,strTicketNo!!,strDueDays!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (serviceList == 0) {
+                                    serviceList++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ServiceAssignOnGoingDetails")
+                                        serviceListArrayList = jobjt.getJSONArray("ServiceAssignOnGoingList")
                                         if (serviceListArrayList.length() > 0) {
 
                                             val lLayout = GridLayoutManager(this@ServiceAssignListActivity, 1)
