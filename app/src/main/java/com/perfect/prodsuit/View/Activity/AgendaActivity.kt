@@ -635,74 +635,74 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
         }
     }
 
-    private fun getAgendaCounts() {
-        var countAgenda = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-
-                agendaCountViewModel.getAgendaCount(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-
-
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   167   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("PendingCountDetails")
-                                tv_count_pending!!.setText(jobjt.getString("Pending"))
-                                tv_count_upcoming!!.setText(jobjt.getString("Upcoming"))
-                                tv_count_complete!!.setText(jobjt.getString("Completed"))
-
-                                tv_today_comp!!.setText(jobjt.getString("TodayCompletedCount"))
-                                tv_today_count!!.setText("out of " +jobjt.getString("TodayCount")+ " activity completed today")
+//    private fun getAgendaCounts() {
+//        var countAgenda = 0
+//        when (Config.ConnectivityUtils.isConnected(this)) {
+//            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
 //
-//                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
-//                                if (leadFromArrayList.length()>0){
-//                                    if (countLeadFrom == 0){
-//                                        countLeadFrom++
-//                                        leadFromPopup(leadFromArrayList)
-//                                    }
+//                agendaCountViewModel.getAgendaCount(this)!!.observe(
+//                    this,
+//                    Observer { serviceSetterGetter ->
+//                        val msg = serviceSetterGetter.message
+//                        if (msg!!.length > 0) {
 //
+//
+//                            val jObject = JSONObject(msg)
+//                            Log.e(TAG,"msg   167   "+msg)
+//                            if (jObject.getString("StatusCode") == "0") {
+//                                val jobjt = jObject.getJSONObject("PendingCountDetails")
+//                                tv_count_pending!!.setText(jobjt.getString("Pending"))
+//                                tv_count_upcoming!!.setText(jobjt.getString("Upcoming"))
+//                                tv_count_complete!!.setText(jobjt.getString("Completed"))
+//
+//                                tv_today_comp!!.setText(jobjt.getString("TodayCompletedCount"))
+//                                tv_today_count!!.setText("out of " +jobjt.getString("TodayCount")+ " activity completed today")
+////
+////                                leadFromArrayList = jobjt.getJSONArray("LeadFromDetails")
+////                                if (leadFromArrayList.length()>0){
+////                                    if (countLeadFrom == 0){
+////                                        countLeadFrom++
+////                                        leadFromPopup(leadFromArrayList)
+////                                    }
+////
+////                                }
+//
+//                            } else {
+//
+//                                val builder = AlertDialog.Builder(
+//                                    this@AgendaActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
 //                                }
-
-                            } else {
-
-                                val builder = AlertDialog.Builder(
-                                    this@AgendaActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-                            }
-                        } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-        }
-    }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+//                            }
+//                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }
+//                    })
+//                progressDialog!!.dismiss()
+//            }
+//            false -> {
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
+//            }
+//
+//        }
+//    }
 
     private fun getActionTypes(Id_Agenda : String) {
 //        if (progressDialog != null && progressDialog!!.isShowing()) {

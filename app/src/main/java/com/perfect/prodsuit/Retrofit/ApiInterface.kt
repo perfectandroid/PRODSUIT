@@ -97,13 +97,13 @@ interface ApiInterface {
     @POST("UserValidations/LeadGenerateReport")
     fun getGeneralReport(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/LeadInfoetails")
+    @POST("UserValidations/LeadInfoDetails")
     fun getLeadInfoetails(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/LeadImageDetails")
     fun getLocationdetails(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/LeadInfoetails")
+    @POST("UserValidations/LeadInfoDetails")
     fun getInfoetails(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/LeadHistoryDetails")
@@ -271,6 +271,9 @@ interface ApiInterface {
     @POST("UserValidations/ToDoListLeadDetails")
     fun getToDoListLeadDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/EmployeeAllDetails")
+    fun getEmployeeAllDetails(@Body body: RequestBody): Call<String>
+
     @POST("AppDetails/GetAppType")
     fun getCommonAppData(@Body body: RequestBody): Call<String>
 
@@ -279,5 +282,51 @@ interface ApiInterface {
 
     @POST("UserValidations/CompanyLogDetails")
     fun getCompanyLogo(@Body body: RequestBody): Call<String>
+
+//    CHANEL   ReqMode =66  SubMode =22
+//    CATEGORY   ReqMode =66  SubMode =20
+//    COMPANY   ReqMode =66  SubMode =
+    @POST("Service/GetCommonPopup")
+    fun getCommonPopup(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetServiceProductDetails")
+    fun getServiceProductDetails(@Body body: RequestBody): Call<String>
+
+    // Service ReqMode  69
+    @POST("Service/GetServiceDetails")
+    fun getServiceDetails(@Body body: RequestBody): Call<String>
+
+    // Complaint  ReqMode 70
+    @POST("Service/GetComplaints")
+    fun getComplaints(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetMedia")
+    fun getServiceMedia(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetCustomerList")
+    fun getCustomerList(@Body body: RequestBody): Call<String>
+
+    @POST("Service/UpdateCustomerServiceRegister")
+    fun UpdateCustomerServiceRegister(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetWarrantyDetails")
+    fun getWarrantyDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetProductHistory")
+    fun getProductHistory(@Body body: RequestBody): Call<String>
+
+    @POST("Service/GetSalesHistory")
+    fun getSalesHistory(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceAssign/ServiceCountDetails")
+    fun getServiceCountDetails(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceAssign/ServiceAssignNewDetails")
+    fun getServiceAssignNewDetails(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceAssign/ServiceAssignOnGoingDetails")
+    fun getServiceAssignOnGoingDetails(@Body body: RequestBody): Call<String>
+
+
 
 }

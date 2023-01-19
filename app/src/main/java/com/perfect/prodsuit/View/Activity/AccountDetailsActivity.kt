@@ -291,6 +291,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         rltv_Info!!.visibility = View.VISIBLE
+
         getInfoetails()
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -1578,23 +1579,23 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   724   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("LeadInfoetails")
-                                    leadInfoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                    val jobjt = jObject.getJSONObject("LeadInfoDetails")
+                                    leadInfoArrayList = jobjt.getJSONArray("LeadInfoDetailsList")
                                     if (leadInfoArrayList.length()>0){
                                         if (leadInfo == 0){
                                             leadInfo++
                                             val jObjectLeadInfo = leadInfoArrayList.getJSONObject(0)
-                                            txtName!!.setText(""+jObjectLeadInfo.getString("LgCusName"))
-                                            txtAddress!!.setText(""+jObjectLeadInfo.getString("LgCusAddress"))
-                                            txtPhone!!.setText(""+jObjectLeadInfo.getString("LgCusMobile"))
-                                            txtEmail!!.setText(""+jObjectLeadInfo.getString("LgCusEmail"))
-                                            txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LgLeadNo"))
-                                            txtCategory!!.setText(""+jObjectLeadInfo.getString("CatName"))
-                                            txtProduct!!.setText(""+jObjectLeadInfo.getString("ProdName"))
-                                            txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
-                                            txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
-                                            LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
-                                            LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
+                                            txtName!!.setText(""+jObjectLeadInfo.getString("Customer"))
+                                            txtAddress!!.setText(""+jObjectLeadInfo.getString("Address"))
+                                            txtPhone!!.setText(""+jObjectLeadInfo.getString("MobileNumber"))
+                                            txtEmail!!.setText(""+jObjectLeadInfo.getString("Email"))
+                                            txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LeadNo"))
+                                            txtCategory!!.setText(""+jObjectLeadInfo.getString("Category"))
+                                            txtProduct!!.setText(""+jObjectLeadInfo.getString("Product"))
+//                                            txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
+//                                            txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
+//                                            LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
+//                                            LgCusEmail = jObjectLeadInfo.getString("LgCusEmail")
                                         }
                                     }
                                 } else {
@@ -1628,34 +1629,34 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         var llInfoDetail = findViewById<LinearLayout>(R.id.llInfoDetail)
 
-//        var txtName1 = inflatedLayout.findViewById<TextView>(R.id.txtName)
-//        var txtAddress1 = inflatedLayout.findViewById<TextView>(R.id.txtAddress)
-//        var txtMobile1 = inflatedLayout.findViewById<TextView>(R.id.txtMobile)
-//        var txtEmail1 = inflatedLayout.findViewById<TextView>(R.id.txtEmail)
-//        var txtAssigned1 = inflatedLayout.findViewById<TextView>(R.id.txtAssigned)
-//        var txtLeadNo1 = inflatedLayout.findViewById<TextView>(R.id.txtLeadNo)
-//        var txtProject1 = inflatedLayout.findViewById<TextView>(R.id.txtProject)
-//        var txtProduct1 = inflatedLayout.findViewById<TextView>(R.id.txtProduct)
-//        var txtCategoryName1 = inflatedLayout.findViewById<TextView>(R.id.txtCategoryName)
-//        var txtNextAction1 = inflatedLayout.findViewById<TextView>(R.id.txtNextAction)
-//        var txtNextActionDate1 = inflatedLayout.findViewById<TextView>(R.id.txtNextActionDate)
-//        var txtActionType1 = inflatedLayout.findViewById<TextView>(R.id.txtActionType)
+        var txtInfoProductlabel = findViewById<TextView>(R.id.txtInfoProductlabel)
 
-        var txtName1 = findViewById<TextView>(R.id.txtInfoName)
-        var txtAddress1 = findViewById<TextView>(R.id.txtInfoAddress)
-        var txtMobile1 = findViewById<TextView>(R.id.txtInfoMobile)
-        var txtEmail1 = findViewById<TextView>(R.id.txtInfoEmail)
-        var txtAssigned1 = findViewById<TextView>(R.id.txtInfoAssigned)
-        var txtLeadNo1 = findViewById<TextView>(R.id.txtInfoLeadNo)
-        var txtProject1 = findViewById<TextView>(R.id.txtInfoProject)
-        var txtProduct1 = findViewById<TextView>(R.id.txtInfoProduct)
-        var txtCategoryName1 = findViewById<TextView>(R.id.txtInfoCategoryName)
-        var txtNextAction1 = findViewById<TextView>(R.id.txtInfoNextAction)
-        var txtNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
-        var txtActionType1 = findViewById<TextView>(R.id.txtInfoActionType)
+        var txtInfoLeadNo1 = findViewById<TextView>(R.id.txtInfoLeadNo)
+        var txtInfoLeadDate1 = findViewById<TextView>(R.id.txtInfoLeadDate)
+        var txtInfoLeadSource1 = findViewById<TextView>(R.id.txtInfoLeadSource)
+        var txtInfoLeadFrom1 = findViewById<TextView>(R.id.txtInfoLeadFrom)
+        var txtInfoCategoryName1 = findViewById<TextView>(R.id.txtInfoCategoryName)
+        var txtInfoProduct1 = findViewById<TextView>(R.id.txtInfoProduct)
+        var txtInfoNextAction1 = findViewById<TextView>(R.id.txtInfoNextAction)
+        var txtInfoName1 = findViewById<TextView>(R.id.txtInfoName)
+        var txtInfoAddress1 = findViewById<TextView>(R.id.txtInfoAddress)
+        var txtInfoMobile1 = findViewById<TextView>(R.id.txtInfoMobile)
+        var txtInfoEmail1 = findViewById<TextView>(R.id.txtInfoEmail)
+        var txtInfoCollectedBy1 = findViewById<TextView>(R.id.txtInfoCollectedBy)
+        var txtInfoAssigned1 = findViewById<TextView>(R.id.txtInfoAssigned)
+        var txtInfoNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
 
-        var ll_projectVis = findViewById<LinearLayout>(R.id.ll_projectVis)
-        var ll_productVis = findViewById<LinearLayout>(R.id.ll_productVis)
+//        var txtProject1 = findViewById<TextView>(R.id.txtInfoProject)
+//        var txtInfoExpected1 = findViewById<TextView>(R.id.txtInfoExpected)
+//        var txtProduct1 = findViewById<TextView>(R.id.txtInfoProduct)
+//        var txtCategoryName1 = findViewById<TextView>(R.id.txtInfoCategoryName)
+//        var txtNextAction1 = findViewById<TextView>(R.id.txtInfoNextAction)
+//        var txtNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
+//        var txtActionType1 = findViewById<TextView>(R.id.txtInfoActionType)
+//
+//        var ll_projectVis = findViewById<LinearLayout>(R.id.ll_projectVis)
+//        var ll_productVis = findViewById<LinearLayout>(R.id.ll_productVis)
+//        var ll_expectedVis = findViewById<LinearLayout>(R.id.ll_expectedVis)
 
 
         llInfoDetail.visibility = View.GONE
@@ -1676,8 +1677,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                             if (jObject.getString("StatusCode") == "0") {
                                 imInfoLoading.visibility = View.GONE
                                 llInfoDetail.visibility = View.VISIBLE
-                                val jobjt = jObject.getJSONObject("LeadInfoetails")
-                                infoArrayList = jobjt.getJSONArray("LeadInfoetailsList")
+                                val jobjt = jObject.getJSONObject("LeadInfoDetails")
+                                infoArrayList = jobjt.getJSONArray("LeadInfoDetailsList")
                                 if (infoArrayList.length()>0){
                                     if (Info == 0){
                                         Info++
@@ -1689,27 +1690,60 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //                                        recySubInfo!!.adapter = adapter
 
                                         val jsonObject1 = infoArrayList.getJSONObject(0)
-                                        txtName1.setText(jsonObject1.getString("LgCusName"))
-                                        txtAddress1.setText(jsonObject1.getString("LgCusAddress"))
-                                        txtMobile1.setText(jsonObject1.getString("LgCusMobile"))
-                                        txtEmail1.setText(jsonObject1.getString("LgCusEmail"))
-                                        txtAssigned1.setText(jsonObject1.getString("AssignedTo"))
-                                        txtLeadNo1.setText(jsonObject1.getString("LgLeadNo"))
-                                        txtCategoryName1.setText(jsonObject1.getString("CatName"))
-                                        txtNextAction1.setText(jsonObject1.getString("NxtActnName"))
-                                        txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
-                                        txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
 
-                                        if (jsonObject1.getString("ProjectName").equals("")){
-                                            ll_projectVis.visibility = View.GONE
-                                            ll_productVis.visibility = View.VISIBLE
-                                        }else{
-                                            ll_projectVis.visibility = View.VISIBLE
-                                            ll_productVis.visibility = View.GONE
+                                        txtInfoLeadNo1.setText(jsonObject1.getString("LeadNo"))
+                                        txtInfoLeadDate1.setText(jsonObject1.getString("LeadDate"))
+                                        txtInfoLeadSource1.setText(jsonObject1.getString("LeadSource"))
+                                        txtInfoLeadFrom1.setText(jsonObject1.getString("LeadFrom"))
+                                        txtInfoCategoryName1.setText(jsonObject1.getString("Category"))
+                                        txtInfoProduct1.setText(jsonObject1.getString("Product"))
+                                        txtInfoNextAction1.setText(jsonObject1.getString("Action"))
+                                        txtInfoName1.setText(jsonObject1.getString("Customer"))
+                                        txtInfoAddress1.setText(jsonObject1.getString("Address"))
+                                        txtInfoMobile1.setText(jsonObject1.getString("MobileNumber"))
+                                        txtInfoEmail1.setText(jsonObject1.getString("Email"))
+                                        txtInfoCollectedBy1.setText(jsonObject1.getString("CollectedBy"))
+                                        txtInfoAssigned1.setText(jsonObject1.getString("AssignedTo"))
+                                        txtInfoNextActionDate1.setText(jsonObject1.getString("TargetDate"))
+
+
+
+//                                        txtName1.setText(jsonObject1.getString("LgCusName"))
+//                                        txtAddress1.setText(jsonObject1.getString("LgCusAddress"))
+//                                        txtMobile1.setText(jsonObject1.getString("LgCusMobile"))
+//                                        txtEmail1.setText(jsonObject1.getString("LgCusEmail"))
+//                                        txtAssigned1.setText(jsonObject1.getString("AssignedTo"))
+//                                        txtLeadNo1.setText(jsonObject1.getString("LgLeadNo"))
+//                                        txtCategoryName1.setText(jsonObject1.getString("CatName"))
+//                                        txtNextAction1.setText(jsonObject1.getString("NxtActnName"))
+//                                        txtNextActionDate1.setText(jsonObject1.getString("NextActionDate"))
+//                                        txtActionType1.setText(jsonObject1.getString("ActnTypeName"))
+//
+                                        val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+                                        var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+//
+                                        if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+//                                            ll_expectedVis.visibility = View.GONE
+//                                            if (jsonObject1.getString("ProjectName").equals("")){
+//                                                ll_projectVis.visibility = View.GONE
+//                                                ll_productVis.visibility = View.VISIBLE
+//                                            }else{
+//                                                ll_projectVis.visibility = View.VISIBLE
+//                                                ll_productVis.visibility = View.GONE
+//                                            }
+                                            txtInfoProductlabel.setText(jsonObject1.getString("Product"))
                                         }
+                                        else if (CompanyCategory.equals("2")){
+//                                            ll_projectVis.visibility = View.GONE
+//                                            ll_productVis.visibility = View.GONE
+//                                            ll_expectedVis.visibility = View.VISIBLE
+                                            txtInfoProductlabel.setText(jsonObject1.getString("Destination"))
 
-                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
-                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
+                                        }
+//
+//                                        txtInfoExpected1.setText("")
+//                                        txtProject1.setText(jsonObject1.getString("ProjectName"))
+//                                        txtProduct1.setText(jsonObject1.getString("ProdName"))
 
                                     }
                                 }

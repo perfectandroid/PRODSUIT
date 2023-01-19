@@ -856,12 +856,12 @@
                                                             android:orientation="horizontal">
 
                                                             <ImageView
-                                                                android:layout_width="30dp"
+                                                                android:layout_width="24dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
+                                                                android:src="@drawable/lead_nocolor"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/leadno"
-                                                                android:visibility="visible"/>
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -873,7 +873,7 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Lead Number"
+                                                                    android:text="Lead No"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
@@ -910,6 +910,7 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
                                                         android:background="@color/grey"/>
+
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -927,7 +928,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/ic_student"
+                                                                android:src="@drawable/lead_datecolor"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -940,7 +941,411 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Name"
+                                                                    android:text="Lead Date"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoLeadDate"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_sourcecolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Lead Source"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoLeadSource"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_fromcolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Lead From"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoLeadFrom"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_categorycolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Category"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoCategoryName"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_productVis"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_productcolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoProductlabel"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Product"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoProduct"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_actioncolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Action"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold"
+                                                                    android:fontFamily="@font/myfont" />
+
+                                                                <TextView
+                                                                    android:id="@+id/txtInfoNextAction"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text=""
+                                                                    android:textSize="15dp"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:textColor="@color/greydark"
+                                                                    android:textStyle="normal"
+                                                                    android:fontFamily="@font/myfont" />
+
+
+                                                            </LinearLayout>
+
+
+
+                                                        </LinearLayout>
+
+
+
+
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+
+
+
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:textStyle="bold"
+                                                                android:textSize="20dp"
+                                                                android:src="@drawable/lead_customercolor"
+                                                                android:visibility="visible"/>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:text="Customer"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
@@ -1006,7 +1411,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/addresics"
+                                                                android:src="@drawable/lead_addresscolor"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -1083,7 +1488,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/smartphone"
+                                                                android:src="@drawable/lead_mobilecolor"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -1161,7 +1566,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/icemail"
+                                                                android:src="@drawable/lead_emailcolor"
                                                                 android:visibility="visible"/>
 
 
@@ -1236,6 +1641,7 @@
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
+
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1253,8 +1659,9 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/category_icon"
+                                                                android:src="@drawable/lead_collectedbycolor"
                                                                 android:visibility="visible"/>
+
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1266,14 +1673,14 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Category Name"
+                                                                    android:text="Collected By"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
                                                                     android:fontFamily="@font/myfont" />
 
                                                                 <TextView
-                                                                    android:id="@+id/txtInfoCategoryName"
+                                                                    android:id="@+id/txtInfoCollectedBy"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:gravity="center_vertical"
@@ -1284,13 +1691,13 @@
                                                                     android:textStyle="normal"
                                                                     android:fontFamily="@font/myfont" />
 
+
+
                                                             </LinearLayout>
 
 
 
-
                                                         </LinearLayout>
-
 
 
 
@@ -1307,7 +1714,8 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
-                                                        android:orientation="vertical">
+                                                        android:orientation="vertical"
+                                                        android:visibility="gone">
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
@@ -1378,71 +1786,7 @@
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
-                                                    <LinearLayout
-                                                        android:id="@+id/ll_productVis"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:orientation="vertical">
 
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:gravity="center"
-                                                            android:orientation="horizontal">
-
-                                                            <ImageView
-                                                                android:layout_width="30dp"
-                                                                android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
-                                                                android:src="@drawable/product_icon"
-                                                                android:visibility="visible"/>
-
-                                                            <LinearLayout
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:orientation="vertical">
-
-                                                                <TextView
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:layout_marginLeft="10dp"
-                                                                    android:gravity="center_vertical"
-                                                                    android:text="Product"
-                                                                    android:textColor="@color/black"
-                                                                    android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
-
-                                                                <TextView
-                                                                    android:id="@+id/txtInfoProduct"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:gravity="center_vertical"
-                                                                    android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
-                                                                    android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
-
-                                                            </LinearLayout>
-
-
-
-
-                                                        </LinearLayout>
-
-
-
-
-                                                        <View
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="1dp"
-                                                            android:background="@color/grey"/>
-
-                                                    </LinearLayout>
 
 
 
@@ -1471,6 +1815,7 @@
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
                                                     <LinearLayout
+                                                        android:id="@+id/ll_expectedVis"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
@@ -1487,7 +1832,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/next_action"
+                                                                android:src="@drawable/lead_assignedcolor"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -1500,14 +1845,14 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Next Action"
+                                                                    android:text="Assigned To"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
                                                                     android:fontFamily="@font/myfont" />
 
                                                                 <TextView
-                                                                    android:id="@+id/txtInfoNextAction"
+                                                                    android:id="@+id/txtInfoAssigned"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:gravity="center_vertical"
@@ -1518,8 +1863,8 @@
                                                                     android:textStyle="normal"
                                                                     android:fontFamily="@font/myfont" />
 
-
                                                             </LinearLayout>
+
 
 
 
@@ -1531,6 +1876,7 @@
 
 
                                                     </LinearLayout>
+
 
                                                     <View
                                                         android:layout_width="match_parent"
@@ -1565,7 +1911,7 @@
                                                                 android:layout_height="30dp"
                                                                 android:textStyle="bold"
                                                                 android:textSize="20dp"
-                                                                android:src="@drawable/fromdate"
+                                                                android:src="@drawable/lead_targetdatecolor"
                                                                 android:visibility="visible"/>
 
                                                             <LinearLayout
@@ -1578,7 +1924,7 @@
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Next Action Date"
+                                                                    android:text="Target Date"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold"
@@ -1629,7 +1975,8 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
-                                                        android:orientation="vertical">
+                                                        android:orientation="vertical"
+                                                        android:visibility="gone">
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
@@ -1689,7 +2036,8 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey"
+                                                        android:visibility="gone"/>
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1706,7 +2054,8 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_margin="5dp"
-                                                        android:orientation="vertical">
+                                                        android:orientation="vertical"
+                                                        android:visibility="gone">
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
@@ -1739,7 +2088,7 @@
                                                                     android:fontFamily="@font/myfont" />
 
                                                                 <TextView
-                                                                    android:id="@+id/txtInfoAssigned"
+                                                                    android:id="@+id/txtInfoAssigned1"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:gravity="center_vertical"

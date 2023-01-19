@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -66,12 +67,22 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
              //   internal var impreference    : ImageView
 
+                val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+                var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+
+                if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+                    holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
+                }
+                else if (CompanyCategory.equals("2")){
+                    holder.tv_product.text        = "Destination : "+jsonObject!!.getString("ProdName")
+                }
+
               //  holder.txtv_date.text        = date
                 holder.txtv_date.text        = jsonObject!!.getString("LgLeadDate")
                 holder.tv_custmr.text        = jsonObject!!.getString("LgCusName")
                 holder.tv_address.text        = jsonObject!!.getString("CusAddress")
                 holder.tv_mobile.text        = jsonObject!!.getString("LgCusMobile")
-                holder.tv_product.text        = "Product Name : "+jsonObject!!.getString("ProdName")
+
                 holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_preference.text        = jsonObject!!.getString("Preference")
                 holder.tv_nextaction.text        = "Next Action  : "+jsonObject!!.getString("Action")

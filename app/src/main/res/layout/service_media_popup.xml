@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:background="@drawable/shape_gradient_pop"
+        android:fontFamily="@font/myfont"
+        android:padding="10dp"
+        android:text="Media"/>
+
+    <LinearLayout
+        android:id="@+id/llsearch"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/shape_gradient_pop"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <!--                android:background="#e97a7a"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/searchbg"
+            android:layout_weight="0.2">
+            <EditText
+                android:id="@+id/etsearch"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="Search..."
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
+                android:inputType="text"
+                android:textColorHint="@color/grey"
+                android:paddingLeft="10dp"
+                android:background="@drawable/searchbg"
+                android:drawableLeft="@drawable/ic_search"
+                android:fontFamily="@font/myfont"
+                android:drawableTint="@color/grey"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/grey"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyServiceMedia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+</LinearLayout>

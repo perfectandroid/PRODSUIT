@@ -26,12 +26,12 @@ object FollowUpActionRepository {
     val followupactionSetterGetter = MutableLiveData<FollowUpActionModel>()
     val TAG: String = "FollowUpActionRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<FollowUpActionModel> {
-        getFollowUpAction(context)
+    fun getServicesApiCall(context: Context,SubMode : String): MutableLiveData<FollowUpActionModel> {
+        getFollowUpAction(context,SubMode)
         return followupactionSetterGetter
     }
 
-    private fun getFollowUpAction(context: Context) {
+    private fun getFollowUpAction(context: Context,SubMode : String) {
         try {
             followupactionSetterGetter.value = FollowUpActionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -64,6 +64,7 @@ object FollowUpActionRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("17"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))

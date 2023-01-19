@@ -27,12 +27,12 @@ object AgendaCountRepository {
     val agendaCountSetterGetter = MutableLiveData<AgendaCountModel>()
     val TAG: String = "AgendaCountRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<AgendaCountModel> {
-        getAgendaCount(context)
+    fun getServicesApiCall(context: Context,ID_Employee: String): MutableLiveData<AgendaCountModel> {
+        getAgendaCount(context,ID_Employee)
         return agendaCountSetterGetter
     }
 
-    private fun getAgendaCount(context: Context) {
+    private fun getAgendaCount(context: Context,ID_Employee: String) {
         try {
             agendaCountSetterGetter.value = AgendaCountModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -40,8 +40,7 @@ object AgendaCountRepository {
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
             progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                R.drawable.progress))
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
             progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -75,10 +74,12 @@ object AgendaCountRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("42"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FK_Employee",ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 Log.e(TAG,"requestObject1   7711   "+requestObject1)
+                Log.e(TAG,"requestObject1   5555555  "+ID_Employee)
                 Log.e(TAG,"requestObject1   7711   "+ProdsuitApplication.encryptStart("42"))
 
             } catch (e: Exception) {

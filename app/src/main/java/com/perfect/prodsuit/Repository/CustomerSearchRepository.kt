@@ -88,7 +88,9 @@ object CustomerSearchRepository {
                     Response<String>
                 ) {
                     try {
+
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"response   911  "+response.body())
                         val jObject = JSONObject(response.body())
                         val customer = ArrayList<CustomerSearchModel>()
                         customer.add(CustomerSearchModel(response.body()))
@@ -96,12 +98,14 @@ object CustomerSearchRepository {
                         customerSetterGetter.value = CustomerSearchModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Log.e(TAG,"response   912  "+e.toString())
                         Toast.makeText(context, ""+e.toString(), Toast.LENGTH_LONG)
                             .show()
                         progressDialog!!.dismiss()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    Log.e(TAG,"response   913  "+t.message)
                     progressDialog!!.dismiss()
                     Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG)
                         .show()
@@ -109,6 +113,7 @@ object CustomerSearchRepository {
             })
         }catch (e : Exception){
             e.printStackTrace()
+            Log.e(TAG,"response   914  "+e.toString())
             Toast.makeText(context, ""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG)
                 .show()
             progressDialog!!.dismiss()

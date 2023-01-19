@@ -32,6 +32,145 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:maxLines="2"
+                android:fontFamily="@font/myfont"
+                android:background="@color/list_si"
+                android:text="14"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:id="@+id/txtsino" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/list_data"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="15dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/myfont"
+                        android:text="Name"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+                    <!--            android:drawableRight="@drawable/svg_right_arrow"-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
+                        android:layout_gravity="center"
+                        android:textSize="15dp"
+                        android:gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/myfont"
+                        android:text=":"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:background="@color/list_data"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/myfont"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+                    <!--            android:drawableRight="@drawable/svg_right_arrow"-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="15dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/myfont"
+                        android:text="Address"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+                    <!--            android:drawableRight="@drawable/svg_right_arrow"-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/myfont"
+                        android:text=":"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/txtAddress"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:background="@color/list_data"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/myfont"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <!--            android:drawableRight="@drawable/svg_right_arrow"-->
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/llleftlay"
                 android:layout_width="match_parent"
@@ -39,7 +178,8 @@
                 android:orientation="horizontal"
                 android:background="@color/list_sii"
                 android:gravity="center"
-                android:layout_weight="4">
+                android:layout_weight="4"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txtFirst"
@@ -63,7 +203,8 @@
                 android:gravity="center"
                 android:background="@color/list_data"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,7 +230,7 @@
 
 
                     <TextView
-                        android:id="@+id/txtName"
+                        android:id="@+id/txtName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/green"
@@ -101,7 +242,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtAddress"
+                        android:id="@+id/txtAddress1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/location_svg"

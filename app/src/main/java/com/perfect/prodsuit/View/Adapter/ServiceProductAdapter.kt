@@ -34,21 +34,22 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.tv_prod_tktno.text        = jsonObject!!.getString("TicketNo")
-                holder.tv_prod_regOn.text      = jsonObject!!.getString("RegOn")
-                holder.tv_prod_Complaint.text       = jsonObject!!.getString("Complaint")
-                holder.tv_prod_Status.text        = jsonObject!!.getString("Status")
-                holder.tv_prod_AttendBy.text      = jsonObject!!.getString("AttendedBy")
-                holder.tv_prod_EmpNote.text       = jsonObject!!.getString("Employee")
+                holder.txtsino.text        = pos.toString()
+                holder.txtProduct.text        = jsonObject!!.getString("ProductName")
+//                holder.tv_prod_regOn.text      = jsonObject!!.getString("RegOn")
+//                holder.tv_prod_Complaint.text       = jsonObject!!.getString("Complaint")
+//                holder.tv_prod_Status.text        = jsonObject!!.getString("Status")
+//                holder.tv_prod_AttendBy.text      = jsonObject!!.getString("AttendedBy")
+//                holder.tv_prod_EmpNote.text       = jsonObject!!.getString("Employee")
+//
+//                if (position%2 != 0){
+//                    holder.llProduct.setBackgroundColor(context.getColor(R.color.alternate_color))
+//                }
 
-                if (position%2 != 0){
-                    holder.llProduct.setBackgroundColor(context.getColor(R.color.alternate_color))
-                }
-
-//                holder.llfollowuptype!!.setTag(position)
-//                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "followuptype")
-//                })
+                holder.llProduct!!.setTag(position)
+                holder.llProduct!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "serviceProduct")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -70,20 +71,12 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var tv_prod_tktno    : TextView
-        internal var tv_prod_regOn  : TextView
-        internal var tv_prod_Complaint   : TextView
-        internal var tv_prod_Status   : TextView
-        internal var tv_prod_AttendBy   : TextView
-        internal var tv_prod_EmpNote   : TextView
+        internal var txtsino    : TextView
+        internal var txtProduct    : TextView
         internal var llProduct       : LinearLayout
         init {
-            tv_prod_tktno      = v.findViewById<View>(R.id.tv_prod_tktno) as TextView
-            tv_prod_regOn    = v.findViewById<View>(R.id.tv_prod_regOn) as TextView
-            tv_prod_Complaint     = v.findViewById<View>(R.id.tv_prod_Complaint) as TextView
-            tv_prod_Status     = v.findViewById<View>(R.id.tv_prod_Status) as TextView
-            tv_prod_AttendBy     = v.findViewById<View>(R.id.tv_prod_AttendBy) as TextView
-            tv_prod_EmpNote     = v.findViewById<View>(R.id.tv_prod_EmpNote) as TextView
+            txtsino      = v.findViewById<View>(R.id.txtsino) as TextView
+            txtProduct      = v.findViewById<View>(R.id.txtProduct) as TextView
             llProduct         = v.findViewById<View>(R.id.llProduct) as LinearLayout
         }
     }

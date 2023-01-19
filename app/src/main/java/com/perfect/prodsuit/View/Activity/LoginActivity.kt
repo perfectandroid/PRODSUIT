@@ -351,6 +351,13 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                                 jobj.getString("BranchName")
                                             )
                                             BranchNameEditer.commit()
+
+
+                                            val CompanyCategorySP = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
+                                            val CompanyCategoryEditer = CompanyCategorySP.edit()
+                                            CompanyCategoryEditer.putString("CompanyCategory", jobj.getString("CompanyCategory"))
+                                            CompanyCategoryEditer.commit()
+
                                             val i = Intent(this@LoginActivity, OTPActivity::class.java)
                                             startActivity(i)
                                             finish()

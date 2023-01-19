@@ -94,7 +94,8 @@
                         android:padding="10dp"
                         android:src="@drawable/ic_edit"
                         android:tint="@color/white"
-                        tools:ignore="UseAppTint" />
+                        tools:ignore="UseAppTint"
+                        android:visibility="invisible"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -400,19 +401,19 @@
                                                 android:id="@+id/txtleadthrough"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="5dp"
                                                 android:layout_marginLeft="10dp"
+                                                android:layout_marginTop="5dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_marginBottom="0dp"
                                                 android:layout_toLeftOf="@+id/img_search"
                                                 android:background="@drawable/shape_bg"
                                                 android:drawableLeft="@drawable/lead_through"
                                                 android:drawableTint="@color/greydark"
+                                                android:fontFamily="@font/myfont"
+                                                android:hint="Lead From"
+                                                android:padding="7dp"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Lead From"
-                                                android:fontFamily="@font/myfont"
-                                                android:padding="7dp"
                                                 android:singleLine="true"
                                                 android:text=""
                                                 android:textSize="15dp" />
@@ -1453,7 +1454,7 @@
                                                         android:background="@drawable/shape_bg"
                                                         android:drawableLeft="@drawable/lead_quantitys"
                                                         android:drawableTint="@color/greydark"
-                                                        android:gravity="center"
+                                                        android:gravity="center_vertical"
                                                         android:hint="Qty"
                                                         android:fontFamily="@font/myfont"
                                                         android:inputType="number"
@@ -1465,6 +1466,25 @@
 
 
                                                 </LinearLayout>
+
+                                                <EditText
+                                                    android:id="@+id/edtExpecteddate"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/shape_bg_mandatory"
+                                                    android:drawableLeft="@drawable/lead_date"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:focusableInTouchMode="false"
+                                                    android:hint="Expected date"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="7dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp" />
 
                                                 <EditText
                                                     android:id="@+id/edtProdpriority"

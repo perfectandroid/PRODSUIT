@@ -27,6 +27,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -225,6 +226,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var edtProjectName: EditText? = null
     private var edtProdqty: EditText? = null
     private var edtProdfeedback: EditText? = null
+    private var edtExpecteddate: EditText? = null
     private var edtProdpriority: EditText? = null
     private var edtProdstatus: EditText? = null
     private var edtFollowaction: EditText? = null
@@ -381,6 +383,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var strLeadThrough: String = ""
         var strFeedback: String = ""
         var strFollowupdate: String = ""
+        var strExpecteddate: String = ""
         var strNeedCheck: String = "0"
         var strWhatsAppNo: String = ""
         var strCompanyContact: String = ""
@@ -423,6 +426,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var employee = 0
     var saveLead = 0
     var saveLeadGenDet = 0
+    var CompanyCategory = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -567,6 +572,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtProjectName!!.setText("")
         edtProdqty!!.setText("")
         edtProdfeedback!!.setText("")
+        edtExpecteddate!!.setText("")
         edtProdpriority!!.setText("")
         edtProdstatus!!.setText("")
         edtFollowaction!!.setText("")
@@ -602,6 +608,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         val currentDateFormate = inputFormat.parse(currentDate)
         strDate = outputFormat.format(currentDateFormate)
         strFollowupdate = outputFormat.format(currentDateFormate)
+        strExpecteddate = ""
         //  strDate =currentDate
 
         ID_LeadFrom = ""
@@ -661,6 +668,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         hideViews()
         detailsShowing()
+        setLabelbyCompany()
 
     }
 
@@ -713,6 +721,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtProjectName = findViewById<EditText>(R.id.edtProjectName)
         edtProdqty = findViewById<EditText>(R.id.edtProdqty)
         edtProdfeedback = findViewById<EditText>(R.id.edtProdfeedback)
+        edtExpecteddate = findViewById<EditText>(R.id.edtExpecteddate)
         edtProdpriority = findViewById<EditText>(R.id.edtProdpriority)
         edtProdstatus = findViewById<EditText>(R.id.edtProdstatus)
         edtFollowaction = findViewById<EditText>(R.id.edtFollowaction)
@@ -794,6 +803,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         imgClose2!!.setOnClickListener(this)
         edtProdcategory!!.setOnClickListener(this)
         edtProdproduct!!.setOnClickListener(this)
+        edtExpecteddate!!.setOnClickListener(this)
         edtProdpriority!!.setOnClickListener(this)
         edtProdstatus!!.setOnClickListener(this)
         edtFollowaction!!.setOnClickListener(this)
@@ -845,6 +855,38 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
         date_Picker2 = findViewById<DatePicker>(R.id.date_Picker2)
         date_Picker2!!.minDate = Calendar.getInstance().timeInMillis
+
+        setLabelbyCompany()
+    }
+
+    private fun setLabelbyCompany() {
+
+        val CompanyCategorySP = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
+        CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+
+        Log.e(TAG,"CompanyCategory  857   "+CompanyCategory)
+        if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+            tv_ProductClick!!.setText("Project/Product Details")
+            edtProdproduct!!.setHint("Product")
+            edtProdqty!!.setHint("Qty")
+            ll_product_qty!!.orientation = LinearLayout.HORIZONTAL
+            edtExpecteddate!!.visibility = View.GONE
+            edtProjectName!!.setHint("Model")
+        }
+        else if (CompanyCategory.equals("2")){
+            tv_ProductClick!!.setText("Package Details")
+            edtProdproduct!!.setHint("Destination")
+            edtProdqty!!.setHint("No.of Passengers")
+            ll_product_qty!!.orientation = LinearLayout.VERTICAL
+            edtExpecteddate!!.visibility = View.VISIBLE
+            edtProjectName!!.setHint("Destination")
+
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 10, 0, 0)
+            edtProdqty!!.setLayoutParams(params)
+        }
+
+
     }
 
     override fun onClick(v: View) {
@@ -1582,6 +1624,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                }
 
                 dateSelectMode = 1
+                openBottomSheet()
+            }
+            R.id.edtExpecteddate -> {
+                dateSelectMode = 2
                 openBottomSheet()
             }
 
@@ -4758,6 +4804,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     private fun getFollowupAction() {
 //         var followUpAction = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4766,7 +4813,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                followUpActionViewModel.getFollowupAction(this)!!.observe(
+                followUpActionViewModel.getFollowupAction(this,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -5055,7 +5102,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
         if (dateSelectMode == 0) {
             date_Picker1.maxDate = System.currentTimeMillis()
-        } else {
+        } else if (dateSelectMode == 1){
             date_Picker1.setMinDate(System.currentTimeMillis());
             date_Picker1.minDate = System.currentTimeMillis()
         }
@@ -5090,6 +5137,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 if (dateSelectMode == 1) {
                     edtFollowdate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                     strFollowupdate = strYear + "-" + strMonth + "-" + strDay
+                }
+
+                if (dateSelectMode == 2) {
+                    edtExpecteddate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    strExpecteddate = strYear + "-" + strMonth + "-" + strDay
                 }
 
 //                if (DateType == 0){
@@ -6258,6 +6310,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        else if (strQty.equals("")){
 //            Config.snackBars(context,v,"Enter Quantity ")
 //        }
+        else if (CompanyCategory.equals("2") && strExpecteddate.equals("")){
+            Config.snackBars(context, v, "Expected date")
+        }
+        else if (ID_Priority.equals("")) {
+            Config.snackBars(context, v, "Select Priority")
+        }
         else if (ID_Priority.equals("")) {
             Config.snackBars(context, v, "Select Priority")
         } else if (strFeedback.equals("")) {
@@ -6509,8 +6567,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val ll_project = dialogConfirmPop!!.findViewById(R.id.ll_project) as LinearLayout
             val ll_prod_quantity =
                 dialogConfirmPop!!.findViewById(R.id.ll_prod_quantity) as LinearLayout
-            val ll_prod_priority =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
+            val ll_expected_date = dialogConfirmPop!!.findViewById(R.id.ll_expected_date) as LinearLayout
+            val ll_prod_priority = dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
             val ll_prod_status =
                 dialogConfirmPop!!.findViewById(R.id.ll_prod_status) as LinearLayout
             val ll_prod_feedback =
@@ -6536,10 +6594,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 dialogConfirmPop!!.findViewById(R.id.tvp_contact_number) as TextView
             val tvp_media_type = dialogConfirmPop!!.findViewById(R.id.tvp_media_type) as TextView
 
+            val tvp_label_product = dialogConfirmPop!!.findViewById(R.id.tvp_label_product) as TextView
+            val tvp_product_label = dialogConfirmPop!!.findViewById(R.id.tvp_product_label) as TextView
+            val tvp_project_label = dialogConfirmPop!!.findViewById(R.id.tvp_project_label) as TextView
+            val tvp_quantity_label = dialogConfirmPop!!.findViewById(R.id.tvp_quantity_label) as TextView
+
             val tvp_category = dialogConfirmPop!!.findViewById(R.id.tvp_category) as TextView
             val tvp_product = dialogConfirmPop!!.findViewById(R.id.tvp_product) as TextView
             val tvp_project = dialogConfirmPop!!.findViewById(R.id.tvp_project) as TextView
             val tvp_quantity = dialogConfirmPop!!.findViewById(R.id.tvp_quantity) as TextView
+            val tvp_expected_date = dialogConfirmPop!!.findViewById(R.id.tvp_expected_date) as TextView
             val tvp_priority = dialogConfirmPop!!.findViewById(R.id.tvp_priority) as TextView
             val tvp_feedback = dialogConfirmPop!!.findViewById(R.id.tvp_feedback) as TextView
             val tvp_status = dialogConfirmPop!!.findViewById(R.id.tvp_status) as TextView
@@ -6693,6 +6757,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             if (edtProdqty!!.text.toString().equals("")) {
                 ll_prod_quantity!!.visibility = View.GONE
             }
+
+            if (edtExpecteddate!!.text.toString().equals("")) {
+                ll_expected_date!!.visibility = View.GONE
+            }
             if (edtProdpriority!!.text.toString().equals("")) {
                 ll_prod_priority!!.visibility = View.GONE
             }
@@ -6778,6 +6846,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             tvp_product.text = edtProdproduct!!.text.toString()
             tvp_quantity.text = edtProdqty!!.text.toString()
             tvp_project.text = edtProjectName!!.text.toString()
+            tvp_expected_date.text = edtExpecteddate!!.text.toString()
             tvp_priority.text = edtProdpriority!!.text.toString()
             tvp_feedback.text = edtProdfeedback!!.text.toString()
             tvp_status.text = edtProdstatus!!.text.toString()
@@ -6790,6 +6859,24 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             tvp_employee.text = edtEmployee!!.text.toString()
 
             tvp_location.text = txtLocation!!.text.toString()
+
+            val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+            var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+
+            if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+                tvp_product_label.text = "Product"
+                tvp_project_label.text = "Project"
+                tvp_quantity_label.text = "Quantity"
+                tvp_label_product.text = "Project/Product"
+            }
+            else if (CompanyCategory.equals("2")){
+                tvp_product_label.text = "Destination"
+                tvp_project_label.text = "Destination"
+                tvp_quantity_label.text = "Passengers"
+                tvp_label_product.text = "Package Details"
+            }
+
+
 
             btnCancel.setOnClickListener {
                 dialogConfirmPop.dismiss()
@@ -6873,6 +6960,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         + "\n" + "strLatitude        : " + strLatitude
                         + "\n" + "strLongitue        : " + strLongitue
                         + "\n" + "locAddress         : " + locAddress + "," + locCity + "," + locState + "," + locCountry + "," + locpostalCode
+                        + "\n" + "strExpecteddate    : " + strExpecteddate
             )
 
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -6936,7 +7024,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         encode1,
                         encode2,
                         Customer_Mode!!,
-                        Customer_Type!!
+                        Customer_Type!!,
+                        strExpecteddate
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

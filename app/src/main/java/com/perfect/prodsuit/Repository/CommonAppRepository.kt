@@ -67,7 +67,7 @@ object CommonAppRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i("Splashresposne",response.body())
+                        Log.e("Splashresposne",response.body())
                         val users = ArrayList<CommonAppModel>()
                         users.add(CommonAppModel(response.body()))
                         val msg = users[0].message

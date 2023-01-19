@@ -60,6 +60,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var rv_upcmngtasklist: RecyclerView?=null
     lateinit var upcmngtaskArrayList : JSONArray
     private var SubMode:String?=""
+    private var UserName:String? = ""
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -75,6 +76,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
     internal var sortFilter:Int = 0
+    private var ID_Employee:String? = ""
+    private var emp_name:String? = ""
 
     private var messageType = "";
     private var messageDesc = "";
@@ -89,7 +92,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var etdis: EditText? = null
 
     private var ID_Branch = "";
-    private var ID_Employee = "";
+//    private var ID_Employee = "";
     private var ID_Lead_Details = "";
     private var strLeadValue = "";
 
@@ -137,6 +140,19 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("ID_Employee")) {
+            ID_Employee = intent.getStringExtra("ID_Employee")
+            Log.e(TAG,"44444    "+ID_Employee)
+        }
+        if (getIntent().hasExtra("EmpName")) {
+            emp_name = intent.getStringExtra("EmpName")
+            Log.e(TAG,"7777777    "+emp_name)
+        }
+        if (getIntent().hasExtra("UserName")) {
+            UserName = intent.getStringExtra("UserName")
+            Log.e(TAG,"01010101    "+UserName)
+        }
+
         submode = "3"
         name = ""
         date = ""
@@ -148,7 +164,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
      //   tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
      //   tie_Employee!!.setText( UserNameSP.getString("UserName", null))
         UpcomingDet = 0
         getUpcomingtasksList()
@@ -173,6 +189,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     private fun getUpcomingtasksList() {
+        Log.v("333333    ",""+ID_Employee)
 //        var UpcomingDet = 0
         rv_upcmngtasklist!!.adapter = null
         context = this@UpcomingtaskActivity
@@ -1148,8 +1165,17 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
             tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            ID_Employee
+            Log.v("ffffff",""+ID_Employee)
+//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
+            if (emp_name.equals("")) {
+
+                tie_Employee!!.setText(UserName)
+            }else{
+
+                tie_Employee!!.setText(emp_name)
+            }
             ID_Lead_Details = ""
             tie_LeadDetails!!.setText("")
             tie_LeadValue!!.setText("")
@@ -1168,7 +1194,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             if (isAdmin.equals("1")){
                 ll_admin_staff!!.visibility  =View.VISIBLE
                 tie_Branch!!.isEnabled  = true
-                tie_Employee!!.isEnabled  = true
+                tie_Employee!!.isEnabled  = false
             }else{
                 ll_admin_staff!!.visibility  =View.GONE
                 tie_Branch!!.isEnabled  = false

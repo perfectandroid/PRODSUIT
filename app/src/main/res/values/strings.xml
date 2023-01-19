@@ -31,8 +31,10 @@
     </string-array>
 
     <string-array name="call_status">
-        <item>Attended</item>  // 1
-        <item>Not Connected</item>  //2
+        <item>Attended</item>
+        // 1
+        <item>Not Connected</item>
+        //2
 
     </string-array>
 
@@ -57,5 +59,7 @@
         <item>Fr. </item>
         <item>Sr. </item>
     </string-array>
+    <string name="title_activity_service_assign_ongoing_list">ServiceAssignOngoingListActivity
+    </string>
 
 </resources>

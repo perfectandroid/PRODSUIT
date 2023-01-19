@@ -40,9 +40,9 @@ class ServiceWarrantyAdapter(internal var context: Context, internal var jsonArr
                 holder.tv_warr_invdate.text      = jsonObject!!.getString("InvoiceDate")
                 holder.tv_warr_dealer.text       = jsonObject!!.getString("Dealer")
 
-                if (position%2 != 0){
-                    holder.llWarranty.setBackgroundColor(context.getColor(R.color.alternate_color))
-                }
+//                if (position%2 != 0){
+//                    holder.llWarranty.setBackgroundColor(context.getColor(R.color.alternate_color))
+//                }
 
 
 //                holder.llfollowuptype!!.setTag(position)

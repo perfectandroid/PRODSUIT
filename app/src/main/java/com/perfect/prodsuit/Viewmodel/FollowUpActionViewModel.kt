@@ -10,8 +10,8 @@ import com.perfect.prodsuit.Repository.FollowUpActionRepository
 class FollowUpActionViewModel: ViewModel()  {
 
     var followupactionData: MutableLiveData<FollowUpActionModel>? = null
-    fun getFollowupAction(context: Context) : LiveData<FollowUpActionModel>? {
-        followupactionData = FollowUpActionRepository.getServicesApiCall(context)
+    fun getFollowupAction(context: Context,SubMode : String) : LiveData<FollowUpActionModel>? {
+        followupactionData = FollowUpActionRepository.getServicesApiCall(context,SubMode)
         return followupactionData
     }
 
