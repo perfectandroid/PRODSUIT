@@ -277,4 +277,7 @@ interface ApiInterface {
     @POST("AppDetails/GetCompanyCode")
     fun getCompanyCode(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CompanyLogDetails")
+    fun getCompanyLogo(@Body body: RequestBody): Call<String>
+
 }

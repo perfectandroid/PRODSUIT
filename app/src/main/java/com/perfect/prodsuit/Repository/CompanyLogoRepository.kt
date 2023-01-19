@@ -1,14 +1,21 @@
 package com.perfect.prodsuit.Repository
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BannerModel
+import com.perfect.prodsuit.Model.ActionListTicketReportModel
+import com.perfect.prodsuit.Model.AddQuotationModel
+import com.perfect.prodsuit.Model.CompanyCodeModel
+import com.perfect.prodsuit.Model.CompanyLogomodel
+import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
+import com.perfect.prodsuit.View.Activity.AddQuotationActivity
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -16,21 +23,26 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.*
+import java.io.File
+import java.util.ArrayList
 
-object BannersRepository {
+object CompanyLogoRepository {
 
-    var TAG = "BannersRepository"
-    val bannerSetterGetter = MutableLiveData<BannerModel>()
-
-    fun getServicesApiCall(context: Context): MutableLiveData<BannerModel> {
-        getBanners(context)
-        return bannerSetterGetter
+    val addcompanylogoSetterGetter = MutableLiveData<CompanyLogomodel>()
+    private var progressDialog: ProgressDialog? = null
+    private var fileimg: File? = null
+    fun getServicesApiCall(context: Context): MutableLiveData<CompanyLogomodel> {
+     /*   var s = AddQuotationActivity.imgpth
+        fileimg = File(s)
+        Log.i("Fileimg", fileimg.toString())*/
+        getAddCompanyLogo(context)
+        return addcompanylogoSetterGetter
     }
 
-    private fun getBanners(context: Context) {
+
+    private fun getAddCompanyLogo(context: Context) {
         try {
-            bannerSetterGetter.value = BannerModel("")
+            CompanyCodeRepository.companyCodeSetterGetter.value = CompanyCodeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
@@ -49,10 +61,14 @@ object BannersRepository {
             val requestObject1 = JSONObject()
             try {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+                val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("72"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("12"))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
+                Log.e(CompanyCodeRepository.TAG,"requestObject companycode   "+requestObject1)
 
-                Log.e(TAG,"requestObject1   54   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -60,7 +76,7 @@ object BannersRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getBannerDetails(body)
+            val call = apiService.getCompanyLogo(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -68,26 +84,29 @@ object BannersRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i(TAG,"banner response"+response.body())
-                        val users = ArrayList<BannerModel>()
-                        users.add(BannerModel(response.body()))
-                        val msg = users[0].message
-                        bannerSetterGetter.value = BannerModel(msg)
+                        Log.i("companylogo response",response.body())
+
+                        val logos = ArrayList<CompanyLogomodel>()
+                        logos.add(CompanyLogomodel(response.body()))
+                        val msg = logos[0].message
+                        CompanyLogoRepository.addcompanylogoSetterGetter.value = CompanyLogomodel(msg)
+
+                     /*
+                        val jsonObj: JSONObject = jObject.getJSONObject("CompanyLogDetails")
+                        var logo = jsonObj.getString("CompanyLogo"); //
+                        Log.i("TAG","Checking"+logo);*/
+                      //  Log.i("TAG","LOGO"+logo);
                     } catch (e: Exception) {
                         e.printStackTrace()
-                       // Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                   // Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
-         }
+        }
         catch (e: Exception) {
             e.printStackTrace()
-          //  Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 
 }
-
