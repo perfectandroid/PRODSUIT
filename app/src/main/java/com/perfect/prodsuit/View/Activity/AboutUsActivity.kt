@@ -134,7 +134,6 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
                                 var count =jobjt.getString("CompanyLogo")
                                 var type =jobjt.getString("DisplayType")
-                                type="1"
                                 var companyname =jobjt.getString("CompanyName")
 
                                 logo = jobjt!!.getString("CompanyLogo")
