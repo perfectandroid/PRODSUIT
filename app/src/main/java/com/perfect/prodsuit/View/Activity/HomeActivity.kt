@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Address
@@ -20,6 +22,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.CalendarContract
 import android.provider.Settings
+import android.util.Base64
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -30,9 +33,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
@@ -40,10 +42,11 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
-import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,11 +58,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     lateinit var context: Context
     lateinit var changempinViewModel: ChangeMpinViewModel
     lateinit var bannerListViewModel: BannerListViewModel
+    lateinit var companyLogoViewModel: CompanyLogoViewModel
+    lateinit var company: BannerListViewModel
     private var progressDialog: ProgressDialog? = null
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
     private var imgAttendance: ImageView? = null
+    private var imgv_logo: ImageView? = null
     private var llservice: LinearLayout? = null
     private var rlnotification: RelativeLayout? = null
     private var ll_dashboard: LinearLayout? = null
@@ -98,6 +104,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     val callbackId = 42
     val CALENDAR_PROJECTION=3
     val PERMISSION_ID = 42
+    var logo: String?=""
     lateinit var notificationViewModel: NotificationViewModel
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     var addresses: List<Address>? = null
@@ -129,6 +136,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setRegViews()
         bottombarnav()
         getBannerlist()
+        getCompanyLogo()
 //        getNotfCount()
         getCalendarId(context)
         SubMode = "2"
@@ -258,7 +266,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_dashboard = findViewById(R.id.ll_dashboard)
         ll_agenda = findViewById(R.id.ll_agenda)
         imgAttendance = findViewById(R.id.imgAttendance)
-        tv_Name = findViewById(R.id.tv_Name)
+      //  imgv_logo = findViewById(R.id.imgv_logo)
+     //   tv_Name = findViewById(R.id.tv_Name)
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
@@ -651,52 +660,52 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 bannerListViewModel.getBannerlist(this)!!.observe(
-                        this,
-                        Observer { serviceSetterGetter ->
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                if (jObject.getString("StatusCode") == "0") {
-                                    val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
 
-                                    val jresult = jsonObj.getJSONArray("BannerDetailsList")
-                                    if (jresult.length() > 0) {
-                                        if (bannerDetail == 0) {
-                                            bannerDetail++
+                                val jresult = jsonObj.getJSONArray("BannerDetailsList")
+                                if (jresult.length() > 0) {
+                                    if (bannerDetail == 0) {
+                                        bannerDetail++
 
-                                            for (i in 0 until jresult!!.length()) {
-                                                try {
-                                                    val json = jresult!!.getJSONObject(i)
-                                                    var s = "" + json.getString("ImagePath")
+                                        for (i in 0 until jresult!!.length()) {
+                                            try {
+                                                val json = jresult!!.getJSONObject(i)
+                                                var s = "" + json.getString("ImagePath")
 
-                                                    XMENArray!!.add(s)
-                                                    mPager!!.adapter = BannerAdapter(
-                                                            this@HomeActivity,
-                                                            XMENArray
-                                                    )
-                                                    indicator!!.setViewPager(mPager)
+                                                XMENArray!!.add(s)
+                                                mPager!!.adapter = BannerAdapter(
+                                                    this@HomeActivity,
+                                                    XMENArray
+                                                )
+                                                indicator!!.setViewPager(mPager)
 
 
-                                                } catch (e: Exception) {
-
-                                                }
-                                            }
-                                            //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
-                                            val handler = Handler()
-                                            val Update = Runnable {
-                                                //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-                                                if (currentPage == jresult!!.length()) {
-                                                    currentPage = 0
-                                                }
-                                                mPager!!.setCurrentItem(currentPage++, true)
+                                            } catch (e: Exception) {
 
                                             }
-                                            val swipeTimer = Timer()
-                                            swipeTimer.schedule(object : TimerTask() {
-                                                override fun run() {
-                                                    handler.post(Update)
-                                                }
-                                            }, 3000, 3000)
+                                        }
+                                        //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
+                                        val handler = Handler()
+                                        val Update = Runnable {
+                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                            if (currentPage == jresult!!.length()) {
+                                                currentPage = 0
+                                            }
+                                            mPager!!.setCurrentItem(currentPage++, true)
+
+                                        }
+                                        val swipeTimer = Timer()
+                                        swipeTimer.schedule(object : TimerTask() {
+                                            override fun run() {
+                                                handler.post(Update)
+                                            }
+                                        }, 3000, 3000)
 
 
 //                                        for (i in 0 until jresult!!.length()) {
@@ -730,8 +739,179 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                                            }
 //
 //                                        }
+                                    }
+                                }
+
+                            } else {
+//                                    val builder = AlertDialog.Builder(
+//                                            this@HomeActivity,
+//                                            R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
+                            }
+                        } else {
+//                                Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun getCompanyLogo() {
+        var bannerDetail = 0
+        context = this@HomeActivity
+        companyLogoViewModel = ViewModelProvider(this).get(CompanyLogoViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                companyLogoViewModel.getCompanylogoType(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   bytearray   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("CompanyLogDetails")
+
+
+                                    var count =jobjt.getString("CompanyLogo")
+                                    var type =jobjt.getString("DisplayType")
+                                    var companyname =jobjt.getString("CompanyName")
+
+
+                                    logo = jobjt!!.getString("CompanyLogo")
+                                    Log.i("DIL", count)
+                                  //  Log.i("Byte","Checking"+logo);
+                                    if(type.equals("0"))
+                                    {
+                                        tv_Status!!.visibility=View.GONE;
+                                        if(!logo.equals(""))
+                                        {
+
+                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
+                                            ByteArrayToBitmap(decodedString)
+                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                            val stream = ByteArrayOutputStream()
+                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
+
+
                                         }
                                     }
+                                    else
+                                    {
+                                        if(!logo.equals(""))
+                                        {
+
+                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
+                                            ByteArrayToBitmap(decodedString)
+                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                            val stream = ByteArrayOutputStream()
+                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
+
+
+                                        }
+                                        tv_Status!!.visibility=View.VISIBLE;
+                                        tv_Status!!.text=companyname
+                                    }
+
+
+
+                                    /*       val jresult = jsonObj.getJSONArray("BannerDetailsList")
+                                       if (jresult.length() > 0) {
+                                           if (bannerDetail == 0) {
+                                               bannerDetail++
+
+                                               for (i in 0 until jresult!!.length()) {
+                                                   try {
+                                                       val json = jresult!!.getJSONObject(i)
+                                                       var s = "" + json.getString("ImagePath")
+
+                                                       XMENArray!!.add(s)
+                                                       mPager!!.adapter = BannerAdapter(
+                                                               this@HomeActivity,
+                                                               XMENArray
+                                                       )
+                                                       indicator!!.setViewPager(mPager)
+
+
+                                                   } catch (e: Exception) {
+
+                                                   }
+                                               }
+                                               //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
+                                               val handler = Handler()
+                                               val Update = Runnable {
+                                                   //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                                   if (currentPage == jresult!!.length()) {
+                                                       currentPage = 0
+                                                   }
+                                                   mPager!!.setCurrentItem(currentPage++, true)
+
+                                               }
+                                               val swipeTimer = Timer()
+                                               swipeTimer.schedule(object : TimerTask() {
+                                                   override fun run() {
+                                                       handler.post(Update)
+                                                   }
+                                               }, 3000, 3000)
+
+
+   //                                        for (i in 0 until jresult!!.length()) {
+   //                                            try {
+   //                                                val json = jresult!!.getJSONObject(i)
+   //
+   //                                                var s = ""+ json.getString("ImagePath")
+   //
+   //                                                XMENArray!!.add(s)
+   //                                                mPager!!.adapter = BannerAdapter(
+   //                                                    this@HomeActivity,
+   //                                                    XMENArray
+   //                                                )
+   //                                                indicator!!.setViewPager(mPager)
+   //                                                val handler = Handler()
+   //                                                val Update = Runnable {
+   //                                                    Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+   //                                                    if (currentPage == jresult!!.length()) {
+   //                                                        currentPage = 0
+   //                                                    }
+   //                                                    mPager!!.setCurrentItem(currentPage++, true)
+   //                                                }
+   //                                                val swipeTimer = Timer()
+   //                                                swipeTimer.schedule(object : TimerTask() {
+   //                                                    override fun run() {
+   //                                                        handler.post(Update)
+   //                                                    }
+   //                                                }, 3000, 3000)
+   //                                            } catch (e: JSONException) {
+   //                                                e.printStackTrace()
+   //                                            }
+   //
+   //                                        }
+                                           }
+                                       }*/
 
                                 } else {
 //                                    val builder = AlertDialog.Builder(
@@ -1173,13 +1353,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     private fun AddAttendanceApi(strLatitude: String, strLongitue: String, address: String) {
-
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
-        tv_Name!!.text = UserNameSP.getString("UserName", "")
-        tv_navName!!.text = UserNameSP.getString("UserName", "")
-        tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
-        tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+//        tv_Name!!.text = UserNameSP.getString("UserName", "")
+     //   tv_navName!!.text = UserNameSP.getString("UserName", "")
+      //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+     //   tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
 //        var addAttendan = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {
@@ -1316,7 +1495,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        }
 
     }
-
+    fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        val arrayInputStream = ByteArrayInputStream(byteArray)
+        return BitmapFactory.decodeStream(arrayInputStream)
+    }
 }
 
 
