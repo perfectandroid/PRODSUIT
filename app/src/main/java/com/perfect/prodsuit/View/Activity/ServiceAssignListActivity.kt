@@ -43,6 +43,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     lateinit var serviceListViewModel: ServiceListViewModel
     lateinit var serviceListArrayList: JSONArray
     var recyServiceList: RecyclerView? = null
+    private var tv_listCount: TextView? = null
 
     var serviceList = 0
 
@@ -69,6 +70,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     private var tv_Complaint: TextView? = null
     private var txtReset: TextView? = null
     private var txtUpdate: TextView? = null
+
 
     var statusCount = 0
     lateinit var followUpActionViewModel: FollowUpActionViewModel
@@ -125,6 +127,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         imback!!.setOnClickListener(this)
 
         recyServiceList = findViewById<RecyclerView>(R.id.recyServiceList)
+        recyServiceList!!.adapter = null
+        tv_listCount = findViewById<TextView>(R.id.tv_listCount)
 
     }
 
@@ -151,6 +155,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     }
 
     private fun getServiceNewList() {
+        recyServiceList!!.adapter = null
+        tv_listCount!!.setText("0")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -176,6 +182,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
                                         if (serviceListArrayList.length() > 0) {
 
+                                            tv_listCount!!.setText(""+serviceListArrayList.length())
                                             val lLayout = GridLayoutManager(this@ServiceAssignListActivity, 1)
                                             recyServiceList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)

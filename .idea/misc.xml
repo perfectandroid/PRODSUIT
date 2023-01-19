@@ -49,10 +49,6 @@
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/welcome_slide2.xml" value="0.3546875" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/layout/welcome_slide3.xml" value="0.22" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/menu/main_drawer.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/jan 6 2023/app/src/main/res/layout/activity_about_us.xml" value="0.25" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/jan 6 2023/app/src/main/res/layout/activity_home.xml" value="0.1765625" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/jan 6 2023/app/src/main/res/layout/activity_homemain.xml" value="0.22" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/jan 6 2023/app/src/main/res/menu/main_drawer.xml" value="0.3546875" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
@@ -77,6 +73,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/fab_text_bg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/from_date_svg.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_circle.xml" value="0.2615" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_attendedby.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/laed_address.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/layers.xml" value="0.1695" />
@@ -96,14 +93,20 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/selector_reminder.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shadow_border.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shadow_border1.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shadow_border2.xml" value="0.2445" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shadow_border_new.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shadow_inner.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg1.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_gr.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_mandatory.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_rounded.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_circle_white.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_confirm.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_green.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_grey.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_new.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_ongoing.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_pop.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_service_list.xml" value="0.193" />
@@ -111,6 +114,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_top_rounded.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_action_type.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_arrow_right.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_atc_desc.xml" value="0.279" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ch_call.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ch_direct.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ch_email.xml" value="0.193" />
@@ -141,6 +145,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sms_mobile.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_subject.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tap_finger.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_white_circle.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_color_selector.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_selector.xml" value="0.169" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/todolistbg_svg.xml" value="0.1695" />
@@ -302,7 +307,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

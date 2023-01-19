@@ -47,6 +47,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
     private var card_new: CardView? = null
     private var card_ongoing: CardView? = null
+    private var ll_onGoing: LinearLayout? = null
+    private var ll_new: LinearLayout? = null
     private var tv_newCount: TextView? = null
     private var tv_OnGoingCount: TextView? = null
 
@@ -148,6 +150,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
         card_new = findViewById<CardView>(R.id.card_new)
         card_ongoing = findViewById<CardView>(R.id.card_ongoing)
+        ll_new = findViewById<LinearLayout>(R.id.ll_new)
+        ll_onGoing = findViewById<LinearLayout>(R.id.ll_onGoing)
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
 
         tv_newCount = findViewById<TextView>(R.id.tv_newCount)
@@ -155,6 +159,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
         card_new!!.setOnClickListener(this)
         card_ongoing!!.setOnClickListener(this)
+        ll_new!!.setOnClickListener(this)
+        ll_onGoing!!.setOnClickListener(this)
         imgv_filter!!.setOnClickListener(this)
 
 
@@ -194,6 +200,36 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                 i.putExtra("strDueDays",strDueDays)
                 startActivity(i)
             }
+
+            R.id.ll_new->{
+                val i = Intent(this@ServiceAssignTabActivity, ServiceAssignListActivity::class.java)
+                i.putExtra("SubMode","2")
+                i.putExtra("ID_Branch",ID_Branch)
+                i.putExtra("FK_Area",FK_Area)
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("strFromDate",strFromDate)
+                i.putExtra("strToDate",strToDate)
+                i.putExtra("strCustomer",strCustomer)
+                i.putExtra("strMobile",strMobile)
+                i.putExtra("strTicketNo",strTicketNo)
+                i.putExtra("strDueDays",strDueDays)
+                startActivity(i)
+            }
+            R.id.ll_onGoing->{
+                val i = Intent(this@ServiceAssignTabActivity, ServiceOngoingListActivityActivity::class.java)
+                i.putExtra("SubMode","3")
+                i.putExtra("ID_Branch",ID_Branch)
+                i.putExtra("FK_Area",FK_Area)
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("strFromDate",strFromDate)
+                i.putExtra("strToDate",strToDate)
+                i.putExtra("strCustomer",strCustomer)
+                i.putExtra("strMobile",strMobile)
+                i.putExtra("strTicketNo",strTicketNo)
+                i.putExtra("strDueDays",strDueDays)
+                startActivity(i)
+            }
+
 
             R.id.imgv_filter->{
                 Config.disableClick(v)

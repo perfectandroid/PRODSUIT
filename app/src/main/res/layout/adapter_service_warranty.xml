@@ -163,7 +163,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:padding="2dp"
-                android:src="@drawable/svg_dealer"
+                android:src="@drawable/icon_svg_employee"
                 app:tint="@color/colorPrimary" />
 
             <TextView
