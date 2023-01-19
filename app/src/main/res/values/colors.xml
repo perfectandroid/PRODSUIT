@@ -338,6 +338,7 @@
     <color name="color_confirm_list">#F3F3F3</color>
 
     <color name="color_cs_listnew">#687CB1</color>
+    <color name="service_head">#D3EEEDED</color>
 
 
 </resources>

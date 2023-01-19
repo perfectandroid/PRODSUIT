@@ -164,15 +164,21 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:gravity="center_vertical"
+                                android:padding="1dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_customerClick"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/colorService"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/service_head"
                                     android:fontFamily="@font/myfont"
-                                    android:drawableRight="@drawable/down_arrows_white"
+                                    android:layout_margin="1dp"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawableLeft="@drawable/png_customer_detail"
+                                    android:drawablePadding="5dp"
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
@@ -180,8 +186,8 @@
                                     android:paddingBottom="10dp"
                                     android:text="customer details"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -189,7 +195,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -210,6 +215,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/svg_tap_finger"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -218,18 +225,15 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:paddingLeft="10dp"
                                                 android:paddingTop="1dp"
                                                 android:paddingBottom="1dp"
-                                                android:drawableLeft="@drawable/svg_report"
-                                                android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:focusableInTouchMode="false"
                                                 android:editable="false"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -245,6 +249,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_customer"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/search_24"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -264,7 +270,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -280,6 +286,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_mobile"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             style="@style/Widget.App.TextInputLayout">
 <!--                                            app:endIconDrawable="@drawable/search_24"-->
 
@@ -301,7 +309,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal" />
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -354,6 +362,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_address"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
@@ -371,7 +381,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -387,6 +397,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_priority"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -406,7 +418,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -422,6 +434,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_channal"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -441,7 +455,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -458,6 +472,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout"
                                             android:visibility="gone">
@@ -478,7 +494,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -514,15 +530,20 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:gravity="center_vertical"
+                                android:padding="1dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_complaintClick"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
-                                    android:drawableRight="@drawable/down_arrows_white"
+                                    android:background="@color/service_head"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawableLeft="@drawable/png_complaint"
+                                    android:drawablePadding="5dp"
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
@@ -530,8 +551,8 @@
                                     android:paddingBottom="10dp"
                                     android:text="complaint"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -540,7 +561,6 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -560,6 +580,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_category"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -579,7 +601,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -595,6 +617,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_company"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout"
                                             android:visibility="gone">
@@ -631,6 +655,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_product"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -650,7 +676,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -666,6 +692,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_services"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout"
                                             android:visibility="gone">
@@ -686,7 +714,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -702,6 +730,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_complaint"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout"
                                             android:visibility="gone">
@@ -722,7 +752,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -740,6 +770,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_description"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
@@ -757,7 +789,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -794,24 +826,28 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:padding="1dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_contactClick"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
+                                    android:background="@color/service_head"
                                     android:gravity="left"
-                                    android:drawableRight="@drawable/down_arrows_white"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawableLeft="@drawable/png_contact_detail"
+                                    android:drawablePadding="5dp"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:text="CONTACT DETAILS"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -820,7 +856,6 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -842,6 +877,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_contactno"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
@@ -861,7 +898,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -877,6 +914,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_landmark"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             style="@style/Widget.App.TextInputLayout">
 
                                             <com.google.android.material.textfield.TextInputEditText
@@ -894,7 +933,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -929,24 +968,28 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:padding="1dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_requestedClick"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/colorService"
                                     android:fontFamily="@font/myfont"
+                                    android:background="@color/service_head"
                                     android:gravity="left"
                                     android:paddingLeft="20dp"
                                     android:paddingRight="10dp"
-                                    android:drawableRight="@drawable/down_arrows_white"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawableLeft="@drawable/png_date_time"
+                                    android:drawablePadding="5dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:text="Requested Visit Date and Time"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -955,7 +998,6 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@drawable/shape_bottom_rounded"
                                     android:visibility="gone">
 
 
@@ -977,6 +1019,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -996,7 +1040,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -1012,6 +1056,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_todate"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -1031,7 +1077,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -1047,6 +1093,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_fromtime"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -1066,7 +1114,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -1082,6 +1130,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_totime"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -1101,7 +1151,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -1136,24 +1186,28 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:padding="1dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_attendedClick"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/colorService"
+                                    android:background="@color/service_head"
+                                    android:drawableLeft="@drawable/png_service_information"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawablePadding="5dp"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="left"
-                                    android:drawableRight="@drawable/down_arrows_white"
                                     android:paddingLeft="20dp"
-                                    android:paddingRight="10dp"
                                     android:paddingTop="10dp"
+                                    android:paddingRight="10dp"
                                     android:paddingBottom="10dp"
                                     android:text="ATTENDED DETAILS"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
-                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -1162,8 +1216,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:background="@drawable/shape_bottom_rounded"
-                                    android:visibility="visible">
+                                    android:visibility="gone">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -1184,6 +1237,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_status"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -1203,7 +1258,7 @@
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -1219,6 +1274,8 @@
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
                                             app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/icon_svg_attendedby"
+                                            app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
                                             style="@style/Widget.App.TextInputLayout">
 
@@ -1227,18 +1284,19 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center_vertical"
-                                                android:paddingLeft="10dp"
+                                                android:paddingLeft="0dp"
                                                 android:paddingTop="1dp"
                                                 android:paddingBottom="1dp"
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
+                                                android:text=""
                                                 android:focusableInTouchMode="false"
                                                 android:editable="false"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
-                                                android:drawablePadding="10dp"
+                                                android:drawablePadding="0dp"
                                                 android:textStyle="normal"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>

@@ -101,6 +101,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_gr.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_mandatory.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_rounded.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_rounded1.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_circle_white.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_confirm.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_green.xml" value="0.271" />
@@ -153,6 +154,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded_white.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/upcoming_svg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/upcomingtaskbg_svg.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/user_color.xml" value="0.3045" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.27025641025641023" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2520833333333333" />

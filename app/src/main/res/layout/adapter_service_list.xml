@@ -211,7 +211,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/svg_invoce_no"
+                        android:src="@drawable/icon_svg_branch"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
@@ -268,7 +268,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/svg_invoce_date"
+                        android:src="@drawable/icon_svg_customer"
                         app:tint="@color/colorPrimary" />
 
 
@@ -332,7 +332,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/icon_svg_attendedby"
+                        android:src="@drawable/icon_svg_mobile"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
@@ -389,7 +389,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/svg_invoce_date"
+                        android:src="@drawable/icon_svg_area"
                         app:tint="@color/colorPrimary" />
 
 
@@ -455,7 +455,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:padding="2dp"
-                        android:src="@drawable/svg_invoce_no"
+                        android:src="@drawable/icon_svg_attendedby"
                         app:tint="@color/colorPrimary" />
 
                     <TextView

@@ -3763,6 +3763,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             if (ID_Channel.equals("5") || ID_Channel.equals("6")){
                 til_EmpOrMedia!!.visibility  = View.VISIBLE
                 til_EmpOrMedia!!.setHint(jsonObject.getString("Description"))
+
+                if (ID_Channel.equals("5")){
+                    til_EmpOrMedia!!.setStartIconDrawable(context.resources.getDrawable(R.drawable.icon_svg_employee));
+                }
+                if (ID_Channel.equals("6")){
+                    til_EmpOrMedia!!.setStartIconDrawable(context.resources.getDrawable(R.drawable.icon_svg_media));
+                }
+
             }
             else{
                 til_EmpOrMedia!!.visibility  = View.GONE

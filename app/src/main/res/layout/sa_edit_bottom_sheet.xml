@@ -131,7 +131,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:padding="2dp"
-                                        android:src="@drawable/svg_invoce_no"
+                                        android:src="@drawable/icon_svg_ticketno"
                                         app:tint="@color/colorPrimary" />
 
                                     <TextView
@@ -195,7 +195,7 @@
                                             android:layout_width="20dp"
                                             android:layout_height="20dp"
                                             android:padding="2dp"
-                                            android:src="@drawable/svg_invoce_date"
+                                            android:src="@drawable/icon_svg_fromdate"
                                             app:tint="@color/colorPrimary" />
 
 
@@ -286,7 +286,7 @@
                                             android:layout_width="20dp"
                                             android:layout_height="20dp"
                                             android:padding="2dp"
-                                            android:src="@drawable/svg_invoce_date"
+                                            android:src="@drawable/icon_svg_customer"
                                             app:tint="@color/colorPrimary" />
 
 
@@ -343,7 +343,7 @@
                                         android:layout_width="20dp"
                                         android:layout_height="20dp"
                                         android:padding="2dp"
-                                        android:src="@drawable/svg_invoce_no"
+                                        android:src="@drawable/icon_svg_complaint"
                                         app:tint="@color/colorPrimary" />
 
                                     <TextView
@@ -385,6 +385,8 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             app:endIconMode="custom"
+                            app:startIconDrawable="@drawable/icon_svg_status"
+                            app:startIconTint="@color/colorPrimaryDark"
                             app:endIconDrawable="@drawable/arrow_down"
                             style="@style/Widget.App.TextInputLayout">
 
@@ -404,7 +406,7 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="10dp"
+                                android:drawablePadding="0dp"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -418,6 +420,8 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             app:endIconMode="custom"
+                            app:startIconDrawable="@drawable/icon_svg_attendedby"
+                            app:startIconTint="@color/colorPrimaryDark"
                             app:endIconDrawable="@drawable/arrow_down"
                             style="@style/Widget.App.TextInputLayout">
 
@@ -437,7 +441,7 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="10dp"
+                                android:drawablePadding="0dp"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>

@@ -189,7 +189,7 @@
                                                             android:layout_width="20dp"
                                                             android:layout_height="20dp"
                                                             android:padding="2dp"
-                                                            android:src="@drawable/svg_invoce_no"
+                                                            android:src="@drawable/icon_svg_ticketno"
                                                             app:tint="@color/colorPrimary" />
 
                                                         <TextView
@@ -252,7 +252,7 @@
                                                                 android:layout_width="20dp"
                                                                 android:layout_height="20dp"
                                                                 android:padding="2dp"
-                                                                android:src="@drawable/svg_invoce_date"
+                                                                android:src="@drawable/icon_svg_landmark"
                                                                 app:tint="@color/colorPrimary" />
 
 
@@ -318,7 +318,7 @@
                                                             android:layout_width="20dp"
                                                             android:layout_height="20dp"
                                                             android:padding="2dp"
-                                                            android:src="@drawable/svg_invoce_no"
+                                                            android:src="@drawable/icon_svg_customer"
                                                             app:tint="@color/colorPrimary" />
 
                                                         <TextView
@@ -381,7 +381,7 @@
                                                                 android:layout_width="20dp"
                                                                 android:layout_height="20dp"
                                                                 android:padding="2dp"
-                                                                android:src="@drawable/svg_invoce_date"
+                                                                android:src="@drawable/icon_svg_contactno"
                                                                 app:tint="@color/colorPrimary" />
 
 
@@ -447,7 +447,7 @@
                                                             android:layout_width="20dp"
                                                             android:layout_height="20dp"
                                                             android:padding="2dp"
-                                                            android:src="@drawable/svg_invoce_no"
+                                                            android:src="@drawable/icon_svg_address"
                                                             app:tint="@color/colorPrimary" />
 
                                                         <TextView
@@ -510,7 +510,7 @@
                                                                 android:layout_width="20dp"
                                                                 android:layout_height="20dp"
                                                                 android:padding="2dp"
-                                                                android:src="@drawable/svg_invoce_date"
+                                                                android:src="@drawable/icon_svg_mobile"
                                                                 app:tint="@color/colorPrimary" />
 
 
@@ -631,7 +631,7 @@
                                                             android:layout_width="20dp"
                                                             android:layout_height="20dp"
                                                             android:padding="2dp"
-                                                            android:src="@drawable/svg_invoce_no"
+                                                            android:src="@drawable/icon_svg_fromdate"
                                                             app:tint="@color/colorPrimary" />
 
                                                         <TextView
@@ -694,7 +694,7 @@
                                                                 android:layout_width="20dp"
                                                                 android:layout_height="20dp"
                                                                 android:padding="2dp"
-                                                                android:src="@drawable/svg_invoce_date"
+                                                                android:src="@drawable/icon_svg_fromtime"
                                                                 app:tint="@color/colorPrimary" />
 
 
@@ -777,7 +777,7 @@
                                             android:background="@drawable/shape_bottom_rounded"
                                             android:orientation="vertical"
                                             android:paddingBottom="10dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
 <!--                                            android:background="@color/colorbgService"-->
 
@@ -817,7 +817,7 @@
                                                             android:layout_width="20dp"
                                                             android:layout_height="20dp"
                                                             android:padding="2dp"
-                                                            android:src="@drawable/svg_invoce_no"
+                                                            android:src="@drawable/icon_svg_product"
                                                             app:tint="@color/colorPrimary" />
 
                                                         <TextView
@@ -880,7 +880,7 @@
                                                                 android:layout_width="20dp"
                                                                 android:layout_height="20dp"
                                                                 android:padding="2dp"
-                                                                android:src="@drawable/svg_invoce_date"
+                                                                android:src="@drawable/icon_svg_complaint"
                                                                 app:tint="@color/colorPrimary" />
 
 
@@ -942,7 +942,7 @@
                                                         android:layout_width="20dp"
                                                         android:layout_height="20dp"
                                                         android:padding="2dp"
-                                                        android:src="@drawable/svg_invoce_no"
+                                                        android:src="@drawable/icon_svg_description"
                                                         app:tint="@color/colorPrimary" />
 
                                                     <TextView
@@ -991,6 +991,8 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Visit Date"
+                                                    app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom">
 
@@ -1006,7 +1008,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1026,6 +1028,8 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Visit Time"
+                                                    app:startIconDrawable="@drawable/icon_svg_totime"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom">
 
@@ -1041,7 +1045,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1061,6 +1065,8 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Priority"
+                                                    app:startIconDrawable="@drawable/icon_svg_priority"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom">
 
@@ -1076,7 +1082,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1096,6 +1102,8 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Remarks  "
+                                                    app:startIconDrawable="@drawable/icon_svg_remark"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconMode="custom">
 
                                                     <com.google.android.material.textfield.TextInputEditText
@@ -1110,7 +1118,7 @@
                                                         android:focusableInTouchMode="true"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1131,6 +1139,8 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Department"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:startIconDrawable="@drawable/icon_svg_department"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconMode="custom">
 
                                                     <com.google.android.material.textfield.TextInputEditText
@@ -1145,7 +1155,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1166,6 +1176,8 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Employee"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconMode="custom">
 
                                                     <com.google.android.material.textfield.TextInputEditText
@@ -1180,7 +1192,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
@@ -1201,6 +1213,8 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Role"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:startIconDrawable="@drawable/icon_svg_role"
+                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconMode="custom">
 
                                                     <com.google.android.material.textfield.TextInputEditText
@@ -1215,7 +1229,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
+                                                        android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
                                                         android:textColor="@color/greydarks"
