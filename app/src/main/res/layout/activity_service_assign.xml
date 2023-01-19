@@ -95,7 +95,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/color_background1"
                         android:orientation="vertical">
 
 
@@ -126,16 +125,19 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/shape_bottom_rounded"
-                                        android:orientation="vertical">
+                                        android:background="@drawable/shape_bottom_rounded1"
+                                        android:orientation="vertical"
+                                        android:padding="1dp">
 
                                         <TextView
                                             android:id="@+id/tv_TicketClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/colorService"
+                                            android:background="@color/service_head"
+                                            android:drawableLeft="@drawable/png_date_time"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:drawablePadding="5dp"
                                             android:fontFamily="@font/myfont"
-                                            android:drawableRight="@drawable/down_arrows_white"
                                             android:gravity="left"
                                             android:paddingLeft="20dp"
                                             android:paddingTop="10dp"
@@ -143,17 +145,17 @@
                                             android:paddingBottom="10dp"
                                             android:text="Ticket Information"
                                             android:textAllCaps="true"
-                                            android:textColor="@color/white"
-                                            android:textSize="16dp"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:id="@+id/lnrHead_Ticket"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginRight="15dp"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginTop="15dp"
+                                            android:layout_marginRight="15dp"
                                             android:orientation="vertical"
                                             android:visibility="gone">
 
@@ -566,15 +568,19 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
+                                        android:background="@drawable/shape_bottom_rounded1"
+                                        android:orientation="vertical"
+                                        android:padding="1dp">
 
                                         <TextView
                                             android:id="@+id/tv_ServiceClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/colorService"
+                                            android:background="@color/service_head"
+                                            android:drawableLeft="@drawable/png_service_information"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:drawablePadding="5dp"
                                             android:fontFamily="@font/myfont"
-                                            android:drawableRight="@drawable/down_arrows_white"
                                             android:gravity="left"
                                             android:paddingLeft="20dp"
                                             android:paddingTop="10dp"
@@ -582,15 +588,14 @@
                                             android:paddingBottom="10dp"
                                             android:text="Service Information"
                                             android:textAllCaps="true"
-                                            android:textColor="@color/white"
-                                            android:textSize="16dp"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:id="@+id/lnrHead_Service"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/shape_bottom_rounded"
                                             android:orientation="vertical"
                                             android:paddingBottom="10dp"
                                             android:visibility="gone">
@@ -599,10 +604,10 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:background="@android:color/transparent"
-                                                android:layout_marginRight="15dp"
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginTop="15dp"
+                                                android:layout_marginRight="15dp"
+                                                android:background="@android:color/transparent"
                                                 android:orientation="horizontal">
 
                                                 <LinearLayout
@@ -750,15 +755,19 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
+                                        android:background="@drawable/shape_bottom_rounded1"
+                                        android:orientation="vertical"
+                                        android:padding="1dp">
 
                                         <TextView
                                             android:id="@+id/tv_ProductClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/colorService"
+                                            android:background="@color/service_head"
+                                            android:drawableLeft="@drawable/png_service_information"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:drawablePadding="5dp"
                                             android:fontFamily="@font/myfont"
-                                            android:drawableRight="@drawable/down_arrows_white"
                                             android:gravity="left"
                                             android:paddingLeft="20dp"
                                             android:paddingTop="10dp"
@@ -766,29 +775,28 @@
                                             android:paddingBottom="10dp"
                                             android:text="Product Details"
                                             android:textAllCaps="true"
-                                            android:textColor="@color/white"
-                                            android:textSize="16dp"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:id="@+id/lnrHead_Product"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/shape_bottom_rounded"
                                             android:orientation="vertical"
                                             android:paddingBottom="10dp"
                                             android:visibility="gone">
 
-<!--                                            android:background="@color/colorbgService"-->
+                                            <!--                                            android:background="@color/colorbgService"-->
 
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:background="@android:color/transparent"
-                                                android:layout_marginRight="15dp"
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginTop="15dp"
+                                                android:layout_marginRight="15dp"
+                                                android:background="@android:color/transparent"
                                                 android:orientation="horizontal">
 
                                                 <LinearLayout
@@ -917,9 +925,9 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_weight="1"
-                                                android:layout_marginRight="15dp"
                                                 android:layout_marginLeft="15dp"
+                                                android:layout_marginRight="15dp"
+                                                android:layout_weight="1"
                                                 android:orientation="vertical">
 
                                                 <TextView
@@ -974,10 +982,10 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:background="@drawable/shadow_border1"
-                                                android:layout_marginRight="15dp"
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginTop="20dp"
+                                                android:layout_marginRight="15dp"
+                                                android:background="@drawable/shadow_border1"
                                                 android:orientation="vertical">
 
                                                 <com.google.android.material.textfield.TextInputLayout
@@ -991,10 +999,10 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Visit Date"
-                                                    app:startIconDrawable="@drawable/icon_svg_fromdate"
-                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
-                                                    app:endIconMode="custom">
+                                                    app:endIconMode="custom"
+                                                    app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_VisitDate"
@@ -1028,10 +1036,10 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Visit Time"
-                                                    app:startIconDrawable="@drawable/icon_svg_totime"
-                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
-                                                    app:endIconMode="custom">
+                                                    app:endIconMode="custom"
+                                                    app:startIconDrawable="@drawable/icon_svg_totime"
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_VisitTime"
@@ -1065,10 +1073,10 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Priority"
-                                                    app:startIconDrawable="@drawable/icon_svg_priority"
-                                                    app:startIconTint="@color/colorPrimaryDark"
                                                     app:endIconDrawable="@drawable/arrow_down"
-                                                    app:endIconMode="custom">
+                                                    app:endIconMode="custom"
+                                                    app:startIconDrawable="@drawable/icon_svg_priority"
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_Priority"
@@ -1102,9 +1110,9 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Remarks  "
+                                                    app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_remark"
-                                                    app:startIconTint="@color/colorPrimaryDark"
-                                                    app:endIconMode="custom">
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_Remarks"
@@ -1139,9 +1147,9 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Department"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_department"
-                                                    app:startIconTint="@color/colorPrimaryDark"
-                                                    app:endIconMode="custom">
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_Department"
@@ -1176,9 +1184,9 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Employee"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_customer"
-                                                    app:startIconTint="@color/colorPrimaryDark"
-                                                    app:endIconMode="custom">
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_Employee"
@@ -1213,9 +1221,9 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Role"
                                                     app:endIconDrawable="@drawable/arrow_down"
+                                                    app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_role"
-                                                    app:startIconTint="@color/colorPrimaryDark"
-                                                    app:endIconMode="custom">
+                                                    app:startIconTint="@color/colorPrimaryDark">
 
                                                     <com.google.android.material.textfield.TextInputEditText
                                                         android:id="@+id/tie_Role"
@@ -1330,11 +1338,6 @@
                             </LinearLayout>
 
                         </ScrollView>
-
-
-
-
-
 
 
                     </LinearLayout>
