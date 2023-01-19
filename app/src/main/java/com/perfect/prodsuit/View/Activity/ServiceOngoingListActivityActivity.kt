@@ -42,6 +42,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
     lateinit var serviceOnGoingListViewModel: ServiceOnGoingListViewModel
     lateinit var serviceListArrayList: JSONArray
     var recyServiceList: RecyclerView? = null
+    private var tv_listCount: TextView? = null
 
     var serviceList = 0
     var SubMode : String?= ""
@@ -123,6 +124,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
         imback!!.setOnClickListener(this)
 
         recyServiceList = findViewById<RecyclerView>(R.id.recyServiceList)
+        recyServiceList!!.adapter = null
+        tv_listCount = findViewById<TextView>(R.id.tv_listCount)
 
     }
 
@@ -152,6 +155,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 
 
     private fun getServiceOnGoingList() {
+        recyServiceList!!.adapter = null
+        tv_listCount!!.setText("0")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -177,6 +182,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignOnGoingList")
                                         if (serviceListArrayList.length() > 0) {
 
+                                            tv_listCount!!.setText(""+serviceListArrayList.length())
                                             val lLayout = GridLayoutManager(this@ServiceOngoingListActivityActivity, 1)
                                             recyServiceList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = ServiceListAdapter(this@ServiceOngoingListActivityActivity, serviceListArrayList,SubMode!!)
