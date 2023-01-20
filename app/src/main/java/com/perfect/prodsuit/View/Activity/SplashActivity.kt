@@ -58,6 +58,12 @@ class SplashActivity : AppCompatActivity() {
 //    val IMAGE_URL = "https://103.50.212.195/PerfectWebERPAPI/"
 //    val BANK_KEY = "-101"
 
+    ////    Spectum Live 20.01.2023
+//    val CERT_NAME = "spectrumlive.pem"
+//    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
+//    val BANK_KEY = "-101"
+
 
 
     var TAG = "SplashActivity"
