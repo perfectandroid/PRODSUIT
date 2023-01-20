@@ -4,35 +4,33 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.JsonArray
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceAssignAdapter
-import com.perfect.prodsuit.View.Adapter.ServicePriorityAdapter
-import com.perfect.prodsuit.Viewmodel.DepartmentViewModel
-import com.perfect.prodsuit.Viewmodel.EmployeeViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceAssignViewModel
-import com.perfect.prodsuit.Viewmodel.ServicePriorityViewModel
+import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
@@ -43,6 +41,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     internal var llNew: LinearLayout? = null
     internal var llOnGoing: LinearLayout? = null
 
+    internal var card_details: CardView? = null
     internal var recyServiceAssign: RecyclerView? = null
 
     lateinit var serviceAssignViewModel: ServiceAssignViewModel
@@ -83,6 +82,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tie_Employee: TextInputEditText? = null
     private var tie_Role: TextInputEditText? = null
 
+    private var til_VisitDate: TextInputLayout? = null
+    private var til_VisitTime: TextInputLayout? = null
+    private var til_Priority: TextInputLayout? = null
+    private var til_Department: TextInputLayout? = null
+    private var til_Employee: TextInputLayout? = null
+    private var til_Role: TextInputLayout? = null
+
     private var btnClear: Button? = null
     private var btnAdd: Button? = null
 
@@ -104,23 +110,38 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var dialogEmployee : Dialog? = null
     var recyEmployee: RecyclerView? = null
 
+    var serRoleCount = 0
+    lateinit var serviceRoleViewModel: ServiceRoleViewModel
+    lateinit var serviceRoleArrayList : JSONArray
+    lateinit var serviceRoleSort : JSONArray
+    private var dialogServiceRole : Dialog? = null
+    var recyServiceRole: RecyclerView? = null
+
     var dateMode = 0
     var timeMode = 0
     var priorityMode = 0
     var department = 0
     var employee = 0
+   
 
     var ID_Priority : String?= ""
     var ID_Department : String?= ""
     var ID_Employee : String?= ""
+    var ID_Role : String?= ""
 
     var strVisitDate : String?= ""
     var strVisitTime : String?= ""
+    var strRemark : String?= ""
 
     var ticketMode: String? = "0"
     var serviceMode: String? = "1"
     var productMode: String? = "1"
 
+    var arrSaveUpdate: String? = "0"
+    var arrIndexUpdate: Int? = 0
+
+    var arrProducts = JSONArray()
+    var adapterService : ServiceAssignListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,11 +153,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         servicePriorityViewModel = ViewModelProvider(this).get(ServicePriorityViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        serviceRoleViewModel = ViewModelProvider(this).get(ServiceRoleViewModel::class.java)
 
         serviceAssignViewModel = ViewModelProvider(this).get(ServiceAssignViewModel::class.java)
 
         setRegViews()
-
         ticketMode = "0"
         hideViews()
 
@@ -145,8 +166,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        arrProducts = JSONArray()
 
-       // recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
+        recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
+        card_details = findViewById<CardView>(R.id.card_details)
 
         tv_TicketClick = findViewById<TextView>(R.id.tv_TicketClick)
         tv_ServiceClick = findViewById<TextView>(R.id.tv_ServiceClick)
@@ -188,6 +211,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         tie_Employee = findViewById<TextInputEditText>(R.id.tie_Employee)
         tie_Role = findViewById<TextInputEditText>(R.id.tie_Role)
 
+        til_VisitDate = findViewById<TextInputLayout>(R.id.til_VisitDate)
+        til_VisitTime = findViewById<TextInputLayout>(R.id.til_VisitTime)
+        til_Priority = findViewById<TextInputLayout>(R.id.til_Priority)
+        til_Department = findViewById<TextInputLayout>(R.id.til_Department)
+        til_Employee = findViewById<TextInputLayout>(R.id.til_Employee)
+        til_Role = findViewById<TextInputLayout>(R.id.til_Role)
+
         tie_VisitDate!!.setOnClickListener(this)
         tie_VisitTime!!.setOnClickListener(this)
         tie_Priority!!.setOnClickListener(this)
@@ -195,11 +225,21 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         tie_Employee!!.setOnClickListener(this)
         tie_Role!!.setOnClickListener(this)
 
+        tie_VisitDate!!.addTextChangedListener(watcher);
+        tie_VisitTime!!.addTextChangedListener(watcher);
+        tie_Priority!!.addTextChangedListener(watcher);
+        tie_Department!!.addTextChangedListener(watcher);
+        tie_Employee!!.addTextChangedListener(watcher);
+        tie_Role!!.addTextChangedListener(watcher);
+
         btnClear = findViewById<Button>(R.id.btnClear)
         btnAdd = findViewById<Button>(R.id.btnAdd)
 
         btnClear!!.setOnClickListener(this)
         btnAdd!!.setOnClickListener(this)
+
+        arrSaveUpdate ="0"
+        btnAdd!!.setText("Add")
 
     }
 
@@ -260,22 +300,163 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 }
             }
             R.id.tie_Role->{
-
+                Config.disableClick(v)
+                serRoleCount = 0
+                getServiceRoles()
             }
 
             R.id.btnAdd->{
-
+                Config.disableClick(v)
                 validations()
+            }
+            R.id.btnClear->{
+
+                resetData()
             }
 
 
         }
     }
 
+   
 
+    private fun resetData() {
+        tie_VisitDate!!.setText("")
+        tie_VisitTime!!.setText("")
+        tie_Priority!!.setText("")
+        tie_Remarks!!.setText("")
+        tie_Department!!.setText("")
+        tie_Employee!!.setText("")
+        tie_Role!!.setText("")
+
+        ID_Priority = ""
+        ID_Department = ""
+        ID_Employee = ""
+        ID_Role = ""
+        arrSaveUpdate ="0"
+        btnAdd!!.setText("Add")
+
+    }
 
     private fun validations() {
-        TODO("Not yet implemented")
+        strVisitDate = tie_VisitDate!!.text.toString()
+        strVisitTime = tie_VisitTime!!.text.toString()
+        strRemark = tie_Remarks!!.text.toString()
+
+        if (strVisitDate.equals("")){
+            til_VisitDate!!.setError("Select Visit Date");
+            til_VisitDate!!.setErrorIconDrawable(null)
+        }
+        else if (strVisitTime.equals("")){
+            til_VisitTime!!.setError("Select Visit Time");
+            til_VisitTime!!.setErrorIconDrawable(null)
+        }
+        else if (ID_Priority.equals("")){
+            til_Priority!!.setError("Select Priority");
+            til_Priority!!.setErrorIconDrawable(null)
+        }
+
+        else if (ID_Department.equals("")){
+            til_Department!!.setError("Select Department");
+            til_Department!!.setErrorIconDrawable(null)
+        }
+        else if (ID_Employee.equals("")){
+            til_Employee!!.setError("Select Employee");
+            til_Employee!!.setErrorIconDrawable(null)
+        }
+        else if (ID_Role.equals("")){
+            til_Role!!.setError("Select Role");
+            til_Role!!.setErrorIconDrawable(null)
+        }
+        else{
+
+            val jObject = JSONObject()
+            jObject.put("visit_date", strVisitDate)
+            jObject.put("visit_time", strVisitTime)
+            jObject.put("id_priority",ID_Priority )
+            jObject.put("priority",tie_Priority!!.text.toString() )
+            jObject.put("remark", strRemark)
+            jObject.put("id_department",ID_Department )
+            jObject.put("department",tie_Department!!.text.toString() )
+            jObject.put("id_employee", ID_Employee)
+            jObject.put("employee", tie_Employee!!.text.toString())
+            jObject.put("id_role", ID_Role)
+            jObject.put("role", tie_Role!!.text.toString())
+
+            if (arrSaveUpdate.equals("0")){
+                var hasId = hasEmployee(arrProducts,"id_employee",ID_Employee!!)
+                Log.e(TAG,"367122    "+hasId)
+                if (hasId == true){
+                    card_details!!.visibility = View.VISIBLE
+                    arrProducts.put(jObject)
+                    viewList(arrProducts)
+                     resetData()
+                }else{
+                    til_Employee!!.setError(" Employee already exists.");
+                    til_Employee!!.setErrorIconDrawable(null)
+                }
+            }
+            if (arrSaveUpdate.equals("1")){
+                card_details!!.visibility = View.VISIBLE
+                arrProducts.remove(arrIndexUpdate!!)
+                arrProducts.put(arrIndexUpdate!!,jObject)
+                viewList(arrProducts)
+                resetData()
+            }
+
+            Log.e(TAG,"  3671221     "+arrProducts)
+        }
+    }
+
+    fun hasEmployee(json: JSONArray, key: String, value: String): Boolean {
+        for (i in 0 until json.length()) {  // iterate through the JsonArray
+            // first I get the 'i' JsonElement as a JsonObject, then I get the key as a string and I compare it with the value
+            if (json.getJSONObject(i).getString(key) == value) return false
+        }
+        return true
+    }
+
+    private fun addToArray(jObject: JSONObject,ID_Employee : String) {
+
+        if (arrProducts.length() == 0){
+            arrProducts.put(jObject)
+            Log.e(TAG,"  3671     "+arrProducts)
+            viewList(arrProducts)
+        }else{
+            Log.e(TAG,"  3672     "+arrProducts.length())
+            Log.e(TAG,"  3673     "+arrProducts)
+            for (i in 0 until arrProducts.length()) {
+                Log.e(TAG,"3674   "+i)
+                var jsonObject = arrProducts.getJSONObject(i)
+                Log.e(TAG,"  36731     "+jsonObject.getString("id_employee")+"  :   "+ID_Employee)
+
+
+//                if (jsonObject.getString("id_employee").toString().equals(ID_Employee)){
+//                    Log.e(TAG,"3675   "+jsonObject.getString("id_employee"))
+//                    til_Employee!!.setError(" Employee already exists.");
+//                    til_Employee!!.setErrorIconDrawable(null)
+//                }
+//                else{
+//                    Log.e(TAG,"3676   "+jsonObject.getString("id_employee"))
+//                    arrProducts.put(jObject)
+//                    viewList(arrProducts)
+//                }
+
+            }
+        }
+
+
+    }
+
+    private fun viewList(arrProducts: JSONArray) {
+
+        val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
+        recyServiceAssign!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+        adapterService = ServiceAssignListAdapter(this@ServiceAssignActivity, arrProducts)
+        recyServiceAssign!!.adapter = adapterService
+        adapterService!!.setClickListener(this@ServiceAssignActivity)
+
+
     }
 
     private fun openBottomDate() {
@@ -804,6 +985,138 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
     }
 
+    private fun getServiceRoles() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceRoleViewModel.getServiceRole(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (serRoleCount == 0){
+                                    serRoleCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        
+                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                        serviceRoleArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        if (serviceRoleArrayList.length()>0){
+
+                                            serviceRolePopup(serviceRoleArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceAssignActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun serviceRolePopup(serviceRoleArrayList: JSONArray) {
+        try {
+
+            dialogServiceRole = Dialog(this)
+            dialogServiceRole!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogServiceRole!! .setContentView(R.layout.service_role_popup)
+            dialogServiceRole!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyServiceRole = dialogServiceRole!! .findViewById(R.id.recyServiceRole) as RecyclerView
+          //  val etsearch = dialogServiceRole!! .findViewById(R.id.etsearch) as EditText
+
+            serviceRoleSort = JSONArray()
+            for (k in 0 until serviceRoleArrayList.length()) {
+                val jsonObject = serviceRoleArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                serviceRoleSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
+            recyServiceRole!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = DepartmentAdapter(this@FollowUpActivity, serviceRoleArrayList)
+            val adapter = ServiceRoleAdapter(this@ServiceAssignActivity, serviceRoleSort)
+            recyServiceRole!!.adapter = adapter
+            adapter.setClickListener(this@ServiceAssignActivity)
+
+//            etsearch!!.addTextChangedListener(object : TextWatcher {
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
+//
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                    //  list_view!!.setVisibility(View.VISIBLE)
+//                    val textlength = etsearch!!.text.length
+//                    departmentSort = JSONArray()
+//
+//                    for (k in 0 until serviceRoleArrayList.length()) {
+//                        val jsonObject = serviceRoleArrayList.getJSONObject(k)
+//                        if (textlength <= jsonObject.getString("DeptName").length) {
+//                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+//                                departmentSort.put(jsonObject)
+//                            }
+//
+//                        }
+//                    }
+//
+//                    Log.e(TAG,"departmentSort               7103    "+departmentSort)
+//                    val adapter = DepartmentAdapter(this@ServiceAssignActivity, departmentSort)
+//                    recyDeaprtment!!.adapter = adapter
+//                    adapter.setClickListener(this@ServiceAssignActivity)
+//                }
+//            })
+
+            dialogServiceRole!!.show()
+            dialogServiceRole!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun hideViews() {
         lnrHead_Ticket!!.visibility = View.VISIBLE
         lnrHead_Service!!.visibility = View.VISIBLE
@@ -858,5 +1171,97 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
         }
+
+        if (data.equals("serviceRole")){
+            dialogServiceRole!!.dismiss()
+//            val jsonObject = employeeArrayList.getJSONObject(position)
+            val jsonObject = serviceRoleSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Department"))
+            ID_Role = jsonObject.getString("ID_Department")
+            tie_Role!!.setText(jsonObject.getString("DeptName"))
+
+
+        }
+
+        if (data.equals("deleteArrayList")){
+           // val jsonObject = arrProducts.getJSONObject(position)
+            arrProducts.remove(position)
+            adapterService!!.notifyItemRemoved(position)
+
+        }
+        if (data.equals("editArrayList")){
+             val jsonObject = arrProducts.getJSONObject(position)
+//            arrProducts.remove(position)
+//            adapterService!!.notifyItemRemoved(position)
+            arrSaveUpdate = "1"
+            arrIndexUpdate = position
+            btnAdd!!.setText("Update")
+
+            ID_Priority = jsonObject.getString("id_priority")
+            ID_Department = jsonObject.getString("id_department")
+            ID_Employee = jsonObject.getString("id_employee")
+            ID_Role= jsonObject.getString("id_role")
+
+            tie_VisitDate!!.setText(""+jsonObject.getString("visit_date"))
+            tie_VisitTime!!.setText(""+jsonObject.getString("visit_time"))
+            tie_Priority!!.setText(""+jsonObject.getString("priority"))
+            tie_Remarks!!.setText(""+jsonObject.getString("remark"))
+            tie_Department!!.setText(""+jsonObject.getString("department"))
+            tie_Employee!!.setText(""+jsonObject.getString("employee"))
+            tie_Role!!.setText(""+jsonObject.getString("role"))
+
+        }
+
+
     }
+
+    var watcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            //YOUR CODE
+            val outputedText = s.toString()
+            Log.e(TAG,"28301    "+outputedText)
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            //YOUR CODE
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            Log.e(TAG,"28302    ")
+
+            when {
+                editable === tie_VisitDate!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    til_VisitDate!!.isErrorEnabled = false
+                }
+                editable === tie_VisitTime!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    til_VisitTime!!.isErrorEnabled = false
+                }
+                editable === tie_Department!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Department!!.isErrorEnabled = false
+
+                }
+                editable === tie_Employee!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Employee!!.isErrorEnabled = false
+                }
+                editable === tie_Priority!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Priority!!.isErrorEnabled = false
+                }
+
+                editable === tie_Role!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    til_Role!!.isErrorEnabled = false
+                }
+
+
+            }
+
+        }
+    }
+
 }

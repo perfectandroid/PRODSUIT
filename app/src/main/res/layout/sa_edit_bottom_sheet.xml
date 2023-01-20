@@ -406,7 +406,8 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="0dp"
+                                android:drawablePadding="-10dp"
+                                android:singleLine="true"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -441,7 +442,8 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="0dp"
+                                android:drawablePadding="-10dp"
+                                android:singleLine="true"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>

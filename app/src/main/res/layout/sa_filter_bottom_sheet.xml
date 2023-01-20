@@ -120,7 +120,7 @@
                                 android:editable="false"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="0dp"
+                                android:drawablePadding="-10dp"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -157,7 +157,7 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:textColor="@color/greydarks"
-                                android:drawablePadding="0dp"
+                                android:drawablePadding="-10dp"
                                 android:textStyle="normal"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -195,7 +195,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +221,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
+                            android:paddingLeft="0dp"
                             android:paddingTop="1dp"
                             android:paddingBottom="1dp"
                             android:drawableLeft="@drawable/svg_report"
@@ -232,7 +232,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -269,7 +269,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -305,7 +305,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -343,7 +343,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -380,7 +380,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -419,7 +419,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
-                            android:drawablePadding="0dp"
+                            android:drawablePadding="-10dp"
                             android:textStyle="normal"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
