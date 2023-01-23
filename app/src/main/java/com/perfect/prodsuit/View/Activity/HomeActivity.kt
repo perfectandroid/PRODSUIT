@@ -334,7 +334,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private fun setLicensing() {
         var iLead = 1
         var iService = 1
-        var iCollection = 0
+        var iCollection = 1
 
         if (iLead == 1 && iService == 1 && iCollection == 1){
             ll_leads!!.visibility = View.VISIBLE
@@ -437,8 +437,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.ll_collection -> {
-//                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, EmiActivity::class.java)
+                startActivity(i)
             }
 
             R.id.llservice -> {
