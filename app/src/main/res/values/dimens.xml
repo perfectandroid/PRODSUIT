@@ -2,4 +2,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="header_text">15dp</dimen>
+    <dimen name="licence_font">20dp</dimen>
 </resources>

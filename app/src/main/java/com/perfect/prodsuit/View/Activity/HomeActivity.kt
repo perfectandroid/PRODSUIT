@@ -24,6 +24,7 @@ import android.provider.CalendarContract
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -123,6 +124,21 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
     val UPDATE_INTERVAL = 1500L
     private val updateWidgetHandler = Handler()
+
+    // Licencing
+
+    private var ll_leads: LinearLayout? = null
+    private var ll_service: LinearLayout? = null
+    private var ll_collection: LinearLayout? = null
+
+    private var im_leads: ImageView? = null
+    private var im_service: ImageView? = null
+    private var im_collection: ImageView? = null
+
+    private var tv_leads: TextView? = null
+    private var tv_service: TextView? = null
+    private var tv_collection: TextView? = null
+
 
 
 
@@ -293,6 +309,102 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         rlnotification!!.setOnClickListener(this)
         imgAttendance!!.setOnClickListener(this)
       //  txtv_notfcount!!.setOnClickListener(this)
+
+        ll_leads = findViewById(R.id.ll_leads)
+        ll_service = findViewById(R.id.ll_service)
+        ll_collection = findViewById(R.id.ll_collection)
+
+        im_leads = findViewById(R.id.im_leads)
+        im_service = findViewById(R.id.im_service)
+        im_collection = findViewById(R.id.im_collection)
+
+        tv_leads = findViewById(R.id.tv_leads)
+        tv_service = findViewById(R.id.tv_service)
+        tv_collection = findViewById(R.id.tv_collection)
+
+        ll_leads!!.setOnClickListener(this)
+        ll_service!!.setOnClickListener(this)
+        ll_collection!!.setOnClickListener(this)
+
+
+        setLicensing()
+
+    }
+
+    private fun setLicensing() {
+        var iLead = 1
+        var iService = 1
+        var iCollection = 0
+
+        if (iLead == 1 && iService == 1 && iCollection == 1){
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.VISIBLE
+            ll_collection!!.visibility = View.VISIBLE
+
+            ll_leads!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_left)
+            ll_service!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_no)
+            ll_collection!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_right)
+        }
+        else if(iLead == 1 && iService == 1){
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.VISIBLE
+            ll_collection!!.visibility = View.GONE
+
+            ll_leads!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_left)
+            ll_service!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_right)
+
+        }
+        else if(iService == 1 && iCollection == 1){
+            ll_leads!!.visibility = View.GONE
+            ll_service!!.visibility = View.VISIBLE
+            ll_collection!!.visibility = View.VISIBLE
+
+            ll_service!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_left)
+            ll_collection!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_right)
+        }
+        else if(iLead == 1 && iCollection == 1){
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.GONE
+            ll_collection!!.visibility = View.VISIBLE
+
+            ll_leads!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_left)
+            ll_collection!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_right)
+        }
+        else if(iLead == 1 ){
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.GONE
+            ll_collection!!.visibility = View.GONE
+            ll_leads!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_lnr)
+            ll_leads!!.orientation = LinearLayout.HORIZONTAL
+            tv_leads!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.licence_font))
+            tv_leads!!.setPadding(25, 0, 0, 0);
+            im_leads!!.getLayoutParams().height = 80
+            im_leads!!.getLayoutParams().width = 80
+        }
+        else if(iService == 1 ){
+            ll_leads!!.visibility = View.GONE
+            ll_service!!.visibility = View.VISIBLE
+            ll_collection!!.visibility = View.GONE
+            ll_service!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_lnr)
+            ll_service!!.orientation = LinearLayout.HORIZONTAL
+            tv_service!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.licence_font))
+            tv_service!!.setPadding(25, 0, 0, 0)
+            im_service!!.getLayoutParams().height = 80
+            im_service!!.getLayoutParams().width = 80
+        }
+        else if(iCollection == 1 ){
+            ll_leads!!.visibility = View.GONE
+            ll_service!!.visibility = View.GONE
+            ll_collection!!.visibility = View.VISIBLE
+            ll_collection!!.background = applicationContext.resources.getDrawable(R.drawable.border_corner_lnr)
+            ll_collection!!.orientation = LinearLayout.HORIZONTAL
+            tv_collection!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.licence_font))
+            tv_collection!!.setPadding(25, 0, 0, 0)
+            im_collection!!.getLayoutParams().height = 80
+            im_collection!!.getLayoutParams().width = 80
+        }
+
+
     }
 
     override fun onClick(v: View?) {
@@ -314,6 +426,21 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                    attendancConfirmPopup(v)
                }
             }
+
+            R.id.ll_leads -> {
+                val i = Intent(this@HomeActivity, LeadActivity::class.java)
+                startActivity(i)
+            }
+
+            R.id.ll_service -> {
+                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
+                startActivity(i)
+            }
+            R.id.ll_collection -> {
+//                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
+//                startActivity(i)
+            }
+
             R.id.llservice -> {
                 val i = Intent(this@HomeActivity, ServiceActivity::class.java)
                 startActivity(i)
