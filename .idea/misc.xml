@@ -113,6 +113,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottm_left_3.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_rounded.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_rounded1.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_circle_1.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_circle_white.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_confirm.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_emi_main.xml" value="0.271" />
@@ -292,7 +293,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/channel_popup.xml" value="0.21770833333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_popup.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.22604166666666667" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.31875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.35052083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dialog_company.xml" value="0.315625" />

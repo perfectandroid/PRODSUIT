@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
@@ -141,6 +142,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var contDetailMode: String? = "1"
     var requestedMode: String? = "1"
     var attDetailMode: String? = "1"
+
+    var warrantyMode: String? = "1"
+    var prodHistMode: String? = "1"
+    var saleHistMode: String? = "1"
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
@@ -280,6 +285,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var strAttendedBy: String? = ""
 
     var strUserAction: String? = ""
+
+    private var dialogDetailSheet : Dialog? = null
+
+    private var lnrHead_warranty_main : LinearLayout? = null
+    private var lnrHead_warranty_sub : LinearLayout? = null
+    private var lnrHead_product_main : LinearLayout? = null
+    private var lnrHead_product_sub : LinearLayout? = null
+    private var lnrHead_sales_main : LinearLayout? = null
+    private var lnrHead_sales_sub : LinearLayout? = null
+
+    private var tv_warranty_count : TextView? = null
+    private var tv_product_count : TextView? = null
+    private var tv_sales_count : TextView? = null
+
 
 
 
@@ -516,7 +535,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             R.id.imDetails->{
                 Config.disableClick(v)
-               detailBottomSheet()
+              // detailBottomSheet()
+               detailPopupSheet()
             }
             R.id.tv_customerClick->{
 
@@ -766,6 +786,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
     }
+
 
 
 
@@ -3294,8 +3315,111 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
+    private fun detailPopupSheet() {
+        try {
+
+            warrantyMode = "1"
+            prodHistMode = "1"
+            saleHistMode = "1"
+
+            dialogDetailSheet = Dialog(this)
+            dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDetailSheet!! .setContentView(R.layout.cs_detail_bottom_sheet)
+            dialogDetailSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+        //    recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+
+            lnrHead_warranty_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_warranty_main) as LinearLayout
+            lnrHead_warranty_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_warranty_sub) as LinearLayout
+            lnrHead_product_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_product_main) as LinearLayout
+            lnrHead_product_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_product_sub) as LinearLayout
+            lnrHead_sales_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_sales_main) as LinearLayout
+            lnrHead_sales_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_sales_sub) as LinearLayout
+
+            tv_warranty_count = dialogDetailSheet!! .findViewById(R.id.tv_warranty_count) as TextView
+            tv_product_count = dialogDetailSheet!! .findViewById(R.id.tv_product_count) as TextView
+            tv_sales_count = dialogDetailSheet!! .findViewById(R.id.tv_sales_count) as TextView
+
+            recyServiceWarranty = dialogDetailSheet!! .findViewById(R.id.recyServiceWarranty)
+            recyServiceProductHistory = dialogDetailSheet!! .findViewById(R.id.recyServiceProductHistory)
+            recyServiceSalesHistory = dialogDetailSheet!! .findViewById(R.id.recyServiceSalesHistory)
+
+            val window: Window? = dialogDetailSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
+            recyServiceWarranty!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+            recyServiceProductHistory!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+            recyServiceSalesHistory!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
+
+            lnrHead_warranty_main!!.setOnClickListener {
+                warrantyMode = "0"
+                prodHistMode = "1"
+                saleHistMode = "1"
+
+                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                    warrantyDet = 0
+                    getWarranty()
+                }
+
+            }
+            lnrHead_product_main!!.setOnClickListener {
+                warrantyMode = "1"
+                prodHistMode = "0"
+                saleHistMode = "1"
+
+                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                    productHistDet = 0
+                    getProductHistory()
+                }
+
+            }
+            lnrHead_sales_main!!.setOnClickListener {
+                warrantyMode = "1"
+                prodHistMode = "1"
+                saleHistMode = "0"
+
+                if (!ID_Customer.equals("")){
+                    salesHistDet = 0
+                    getSalesHistory()
+                }
+
+            }
+
+            dialogDetailSheet!!.show()
+           // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun detailBottomSheet() {
         try {
+
+            warrantyMode = "1"
+            prodHistMode = "1"
+            saleHistMode = "1"
 
 
             val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
@@ -3303,10 +3427,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             val window: Window? = dialog1.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
-            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            window!!.setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT)
             dialog1!!.setCanceledOnTouchOutside(false)
 
-
+//            dialog1!!.behavior.isFitToContents=true
+//            dialog1!!.behavior.state= BottomSheetBehavior.SAVE_FIT_TO_CONTENTS
 
 
 
@@ -3321,16 +3446,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             ll_history_details = view.findViewById(R.id.ll_history_details)
             card_details = view.findViewById(R.id.card_details)
 
-            val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics)
-            val heightS: Int = displayMetrics.heightPixels
-          //  card_details!!.layoutParams.height = (height-50)
-//            val layoutParams = card_details!!.getLayoutParams() as LinearLayout.LayoutParams
-//            layoutParams.height = heightS.toInt()
-//            layoutParams.width = MATCH_PARENT
-//            card_details!!.setLayoutParams(layoutParams)
+//            val displayMetrics = DisplayMetrics()
+//            windowManager.defaultDisplay.getMetrics(displayMetrics)
+//            val heightS: Int = displayMetrics.heightPixels
+//          //  card_details!!.layoutParams.height = (height-50)
+////            val layoutParams = card_details!!.getLayoutParams() as LinearLayout.LayoutParams
+////            layoutParams.height = heightS.toInt()
+////            layoutParams.width = MATCH_PARENT
+////            card_details!!.setLayoutParams(layoutParams)
+//
+//            dialog1!!.behavior.peekHeight = heightS
 
-            dialog1!!.behavior.peekHeight = heightS
 
 
 
@@ -3457,7 +3583,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 ////        recyServiceWarranty.adapter = null
 
 //        var warranty = 0
-        ll_history_details!!.visibility = View.VISIBLE
+      //  ll_history_details!!.visibility = View.VISIBLE
+        lnrHead_warranty_sub!!.visibility = View.VISIBLE
+        lnrHead_product_sub!!.visibility = View.GONE
+        lnrHead_sales_sub!!.visibility = View.GONE
+
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
@@ -3487,7 +3617,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 if (serviceWarrantyArrayList.length()>0){
                                     if (warrantyDet == 0){
                                         warrantyDet++
-                                        ll_history_details!!.visibility = View.GONE
+                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
+                                      //  ll_history_details!!.visibility = View.GONE
                                         recyServiceWarranty!!.visibility = View.VISIBLE
 
                                         val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
@@ -3541,7 +3672,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //        recyServiceProduct.adapter = null
 //        var product = 0
 
-        ll_history_details!!.visibility = View.VISIBLE
+    //    ll_history_details!!.visibility = View.VISIBLE
+        lnrHead_warranty_sub!!.visibility = View.GONE
+        lnrHead_product_sub!!.visibility = View.VISIBLE
+        lnrHead_sales_sub!!.visibility = View.GONE
+
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
@@ -3571,8 +3706,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     val jobjt = jObject.getJSONObject("ProductHistory")
                                     serviceProductHistoryArrayList = jobjt.getJSONArray("ProductHistoyList")
                                     if (serviceProductHistoryArrayList.length()>0){
-
-                                        ll_history_details!!.visibility = View.GONE
+                                        tv_product_count!!.setText(""+serviceProductHistoryArrayList.length())
+                                   //     ll_history_details!!.visibility = View.GONE
                                         recyServiceProductHistory!!.visibility = View.VISIBLE
 
                                         val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
@@ -3625,7 +3760,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //        recyServiceSales.adapter = null
 //        var sales = 0
 
-        ll_history_details!!.visibility = View.VISIBLE
+       // ll_history_details!!.visibility = View.VISIBLE
+
+
+        lnrHead_warranty_sub!!.visibility = View.GONE
+        lnrHead_product_sub!!.visibility = View.GONE
+        lnrHead_sales_sub!!.visibility = View.VISIBLE
+
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
@@ -3656,6 +3797,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     val jobjt = jObject.getJSONObject("SalesHistory")
                                     serviceSalesArrayList = jobjt.getJSONArray("SalesHistoryList")
                                     if (serviceSalesArrayList.length()>0){
+                                        tv_sales_count!!.setText(""+serviceSalesArrayList.length())
                                         recyServiceSalesHistory!!.visibility = View.VISIBLE
                                         val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
                                         recyServiceSalesHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?

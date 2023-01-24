@@ -45,6 +45,7 @@ class CustomerListAdapter (internal var context: Context, internal var jsonArray
 
                 holder.txtName.text      = jsonObject!!.getString("Name")
                 holder.txtAddress.text      = jsonObject!!.getString("Address")
+                holder.txtMobile.text      = jsonObject!!.getString("Mobile")
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "customerList")
@@ -72,12 +73,14 @@ class CustomerListAdapter (internal var context: Context, internal var jsonArray
         internal var txtsino         : TextView
         internal var txtName          : TextView
         internal var txtAddress       : TextView
+        internal var txtMobile       : TextView
         internal var lladpcustomer    : LinearLayout
 
         init {
             txtsino       = v.findViewById<View>(R.id.txtsino) as TextView
             txtName        = v.findViewById<View>(R.id.txtName) as TextView
             txtAddress     = v.findViewById<View>(R.id.txtAddress) as TextView
+            txtMobile     = v.findViewById<View>(R.id.txtMobile) as TextView
             lladpcustomer  = v.findViewById<View>(R.id.lladpcustomer) as LinearLayout
 
         }
