@@ -118,6 +118,67 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp"
+                            android:background="@drawable/svg_rectangle1"
+                            android:padding="2dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+                                    android:text="100000"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp"
+                                    android:fontFamily="@font/myfont" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/svg_left_arrow"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:text="New"
+                                    android:textStyle="bold"
+                                    android:textColor="#1784bb"
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/myfont" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/ll_new"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
@@ -126,7 +187,7 @@
                             android:layout_marginTop="25dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
-                            android:background="@drawable/shadow_border2"
+                            android:background="@drawable/svg_rectangle1"
                             android:padding="2dp"
                             android:orientation="horizontal">
 
@@ -134,8 +195,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2.5"
-                                android:orientation="horizontal"
-                                android:background="@drawable/shape_gradient_new">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/tv_newCount"
@@ -160,7 +220,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
-                                android:background="@color/white">
+                                android:background="@drawable/svg_left_arrow">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -190,16 +250,18 @@
                             android:layout_marginTop="25dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
-                            android:background="@drawable/shadow_border2"
                             android:padding="2dp"
+                            android:background="@drawable/svg_rectangle1"
                             android:orientation="horizontal">
+<!--                            android:background="@drawable/shadow_border2-->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2.5"
-                                android:orientation="horizontal"
-                                android:background="@drawable/shape_gradient_new">
+                                android:orientation="horizontal">
+
+<!--                                android:background="@drawable/shape_gradient_new"-->
 
                                 <TextView
                                     android:id="@+id/tv_OnGoingCount"
@@ -224,7 +286,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
-                                android:background="@color/white">
+                                android:background="@drawable/svg_left_arrow">
 
                                 <TextView
                                     android:layout_width="match_parent"

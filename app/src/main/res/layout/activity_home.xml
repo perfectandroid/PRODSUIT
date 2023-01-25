@@ -322,6 +322,8 @@
                         android:orientation="vertical"
                         android:visibility="visible">
 
+<!--                        border_corner_no-->
+
                         <ImageView
                             android:id="@+id/im_service"
                             android:layout_width="30dp"

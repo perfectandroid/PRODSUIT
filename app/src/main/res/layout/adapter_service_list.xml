@@ -23,8 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/border_shadow"
         android:orientation="vertical">
+
+<!--        android:background="@android:color/transparent"-->
 
 
         <LinearLayout

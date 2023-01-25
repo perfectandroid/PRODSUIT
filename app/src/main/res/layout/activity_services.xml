@@ -106,8 +106,8 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="50dp"
-                            android:src="@drawable/svg_service_banner"/>
+                            android:layout_margin="25dp"
+                            android:src="@drawable/cs_service"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -120,7 +120,6 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/service1"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
                             android:layout_marginTop="15dp"
@@ -133,6 +132,7 @@
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:background="@drawable/svg_cs_main"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
@@ -157,7 +157,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:background="@drawable/svg_service_customer"
+                                    android:background="@drawable/svg_cs_sub"
                                     android:layout_marginBottom="5dp"
                                     android:orientation="vertical">
 
@@ -170,7 +170,7 @@
                                         android:layout_marginBottom="10dp"
                                         android:text="Customer Service"
                                         android:textStyle="bold"
-                                        android:textColor="@color/service1"
+                                        android:textColor="@color/service11"
                                         android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
@@ -188,12 +188,13 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/service2"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp">
+
+<!--                            android:backgroundTint="@color/service2"-->
 
                             <LinearLayout
                                 android:id="@+id/llServiceAssign"
@@ -201,6 +202,7 @@
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:background="@drawable/svg_csa_main"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
@@ -225,9 +227,10 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:background="@drawable/svg_service_assign"
+                                    android:background="@drawable/svg_csa_sub"
                                     android:layout_marginBottom="5dp"
                                     android:orientation="vertical">
+<!--                                    android:background="@drawable/svg_service_assign"-->
 
 
                                     <TextView
@@ -239,7 +242,7 @@
                                         android:layout_marginBottom="10dp"
                                         android:text="Service Assign"
                                         android:textStyle="bold"
-                                        android:textColor="@color/service2"
+                                        android:textColor="@color/service21"
                                         android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
@@ -256,13 +259,13 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/service3"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp">
                             <!--                        app:cardUseCompatPadding="true"-->
+<!--                            android:backgroundTint="@color/service3"-->
 
 
                             <LinearLayout
@@ -271,6 +274,7 @@
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:background="@drawable/svg_csf_main"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
@@ -295,9 +299,10 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:background="@drawable/svg_service_followup"
+                                    android:background="@drawable/svg_csf_sub"
                                     android:layout_marginBottom="5dp"
                                     android:orientation="vertical">
+<!--                                    android:background="@drawable/svg_service_followup"-->
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -308,7 +313,7 @@
                                         android:layout_marginBottom="10dp"
                                         android:text="Service Follow up"
                                         android:textStyle="bold"
-                                        android:textColor="@color/service3"
+                                        android:textColor="@color/service31"
                                         android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
