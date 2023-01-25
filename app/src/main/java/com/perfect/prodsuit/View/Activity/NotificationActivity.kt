@@ -34,7 +34,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var notificationReadStatusViewModel: NotificationReadStatusViewModel
     private var rv_notificationlist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
-    lateinit var notifreadArrayList : JSONArray
+    lateinit var todoNewArrayList : JSONArray
     var adapter: NotificationAdapter? = null
     var notificationDet = 0
     var notificationStart = 0
@@ -70,9 +70,9 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         run {
             //Update UI
             // Re-run it after the update interval
-//            notificationDet = 0
-//            getNotificationList()
-//            getNotificationList1()
+            notificationDet = 0
+ //           getNotificationList()
+            getNotificationList1()
             updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
         }
 
@@ -213,7 +213,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("NotificationDetails")
-                                        todoArrayList = jobjt.getJSONArray("NotificationInfo")
+                                        todoNewArrayList = jobjt.getJSONArray("NotificationInfo")
                                         notificationCount = 0
                                         count = todoArrayList.length().toString();
                                         txtv_notfcount!!.text=count
@@ -221,7 +221,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                                         // var jobj = jObject.getJSONObject("UserLoginDetails")
 
-                                        adapter!!.notifyDataSetChanged()
+                                    //    adapter!!.notifyDataSetChanged()
 
 
 

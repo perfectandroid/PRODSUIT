@@ -488,7 +488,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
                 }else{
                     Config.disableClick(v)
-                    employee = 0
+                    employee1 = 0
                     getEmployee()
                 }
 

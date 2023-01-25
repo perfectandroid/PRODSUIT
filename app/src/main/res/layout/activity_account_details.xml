@@ -2398,7 +2398,8 @@
                             android:padding="10dp"
                             android:text="Delete Lead"
                             android:textSize="18dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/fabdlteLead"
@@ -2412,7 +2413,8 @@
                             android:backgroundTint="@color/color_fab1"
                             android:tint="@color/black"
                             app:fabCustomSize="50dp"
-                            app:srcCompat="@drawable/white_delete" />
+                            app:srcCompat="@drawable/white_delete"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/txtAddQuotation"

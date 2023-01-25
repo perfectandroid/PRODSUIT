@@ -411,8 +411,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         } else {
 
-            fabdlteLead!!.visibility = View.VISIBLE
-            txtEditLead!!.visibility = View.VISIBLE
+            fabdlteLead!!.visibility = View.GONE
+            txtEditLead!!.visibility = View.GONE
             fabAddActivities!!.visibility = View.VISIBLE
             txtAddActivities!!.visibility = View.VISIBLE
             fabAddNote!!.visibility = View.VISIBLE
