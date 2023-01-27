@@ -25,6 +25,7 @@
         android:padding="5dp"
         android:background="@drawable/border_shadow"
         android:orientation="vertical">
+<!--        android:background="@drawable/border_shadow"-->
 
 <!--        android:background="@android:color/transparent"-->
 

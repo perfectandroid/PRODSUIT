@@ -20,6 +20,7 @@
                 tools:ignore="MissingConstraints">
 
                 <ImageView
+                    android:id="@+id/im_app_logo"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:layout_gravity="center"

@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -23,7 +25,7 @@ import com.perfect.prodsuit.Viewmodel.MaintanceMessageViewModel
 import com.perfect.prodsuit.Viewmodel.SplashresellerActivityViewModel
 import org.json.JSONObject
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
 
@@ -75,6 +77,7 @@ class SplashActivity : AppCompatActivity() {
 
     var checkCommonApp =0
     var checkCompanyApp =0
+    var animBlink: Animation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,6 +152,12 @@ class SplashActivity : AppCompatActivity() {
 //
 //        }
 //        showMaintanace()
+
+        var im_app_logo = findViewById<ImageView>(R.id.im_app_logo)
+        animBlink = AnimationUtils.loadAnimation(this, R.anim.blink);
+        animBlink!!.setAnimationListener(this);
+        im_app_logo.startAnimation(animBlink);
+
 
         val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
         var chkstatus =commonAppSP.getString("commonApp","")
@@ -842,6 +851,18 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         background.start()
+    }
+
+    override fun onAnimationStart(animation: Animation?) {
+
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+
+    }
+
+    override fun onAnimationRepeat(animation: Animation?) {
+
     }
 
 }
