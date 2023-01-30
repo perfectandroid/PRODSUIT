@@ -1009,8 +1009,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                     Log.e(TAG,"msg   1224   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        serviceRoleArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("RoleDetails")
+                                        serviceRoleArrayList = jobjt.getJSONArray("RoleDetailsList")
                                         if (serviceRoleArrayList.length()>0){
 
                                             serviceRolePopup(serviceRoleArrayList)
@@ -1176,9 +1176,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             dialogServiceRole!!.dismiss()
 //            val jsonObject = employeeArrayList.getJSONObject(position)
             val jsonObject = serviceRoleSort.getJSONObject(position)
-            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Department"))
-            ID_Role = jsonObject.getString("ID_Department")
-            tie_Role!!.setText(jsonObject.getString("DeptName"))
+            Log.e(TAG,"ID_Role   "+jsonObject.getString("ID_Role"))
+            ID_Role = jsonObject.getString("ID_Role")
+            tie_Role!!.setText(jsonObject.getString("RoleName"))
 
 
         }

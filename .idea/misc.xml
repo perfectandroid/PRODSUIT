@@ -168,7 +168,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lead_gen_sub.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lead_man_main.xml" value="0.2525" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_left_arrow.xml" value="0.218" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lm_overdue_sub.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lm_todo_main.xml" value="0.2525" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lm_todo_sub.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lm_upcoming_main.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lm_upcoming_sub.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_mail.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_message.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_mobile.xml" value="0.1695" />
