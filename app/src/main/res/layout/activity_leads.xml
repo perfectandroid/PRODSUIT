@@ -111,62 +111,171 @@
                             <LinearLayout
                                 android:id="@+id/llleadgeneration"
                                 android:layout_width="match_parent"
-                                android:layout_height="100dp"
+                                android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
-                                android:background="@drawable/leadgen1"
+                                android:background="@drawable/svg_lead_gen_main"
                                 android:orientation="horizontal">
 
+                                <LinearLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="left"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:layout_marginLeft="80dp"
-                                    android:layout_marginRight="20dp"
-                                    android:text="Lead Generation"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/svg_lead_gen_sub"
+                                    android:orientation="vertical">
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="Lead Generation"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/white"
+                                        android:textSize="18dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:visibility="visible"/>
+
+
+                                </LinearLayout>
+
+
+
                             </LinearLayout>
 
 
                             <LinearLayout
                                 android:id="@+id/llleadmanagement"
                                 android:layout_width="match_parent"
-                                android:layout_height="100dp"
+                                android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:layout_marginBottom="20dp"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
-                                android:background="@drawable/leadgen2"
+                                android:background="@drawable/svg_lead_man_main"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="left"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:layout_marginLeft="80dp"
-                                    android:layout_marginRight="10dp"
-                                    android:text="Lead Management"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
+                                <LinearLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/svg_lead_man_sub"
+                                    android:orientation="vertical">
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="Lead Management"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/white"
+                                        android:textSize="18dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:visibility="visible"/>
+
+
+                                </LinearLayout>
                             </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llleadgeneration1"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/leadgen1"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="left"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginLeft="80dp"
+                                android:layout_marginRight="20dp"
+                                android:text="Lead Generation"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:fontFamily="@font/myfont" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llleadmanagement1"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/leadgen2"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="left"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginLeft="80dp"
+                                android:layout_marginRight="10dp"
+                                android:text="Lead Management"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:fontFamily="@font/myfont" />
+                        </LinearLayout>
 
                     </LinearLayout>
             </LinearLayout>
