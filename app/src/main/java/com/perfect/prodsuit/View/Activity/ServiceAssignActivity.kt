@@ -51,10 +51,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tv_TicketClick: TextView? = null
     private var tv_ServiceClick: TextView? = null
     private var tv_ProductClick: TextView? = null
+    private var tv_ListClick: TextView? = null
 
+    private var rltv_allViews: RelativeLayout? = null
     private var lnrHead_Ticket: LinearLayout? = null
     private var lnrHead_Service: LinearLayout? = null
     private var lnrHead_Product: LinearLayout? = null
+    private var lnrHead_List: LinearLayout? = null
 
 
    // Ticket Information
@@ -74,6 +77,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tv_ProductComplaint: TextView? = null
     private var tv_Description: TextView? = null
 
+    private var tv_no_record: TextView? = null
+
     private var tie_VisitDate: TextInputEditText? = null
     private var tie_VisitTime: TextInputEditText? = null
     private var tie_Priority: TextInputEditText? = null
@@ -91,6 +96,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     private var btnClear: Button? = null
     private var btnAdd: Button? = null
+
+    var serAssignCount = 0
+    lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
+   // lateinit var saDetailArrayList : JSONArray
 
     lateinit var servicePriorityViewModel: ServicePriorityViewModel
     lateinit var servPriorityArrayList : JSONArray
@@ -136,12 +145,14 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var ticketMode: String? = "0"
     var serviceMode: String? = "1"
     var productMode: String? = "1"
+    var listMode: String? = "1"
 
     var arrSaveUpdate: String? = "0"
     var arrIndexUpdate: Int? = 0
 
     var arrProducts = JSONArray()
     var adapterService : ServiceAssignListAdapter? = null
+    var ID_CustomerServiceRegister: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,6 +161,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         setContentView(R.layout.activity_service_assign)
         context = this@ServiceAssignActivity
 
+        serviceAssignDetailViewModel = ViewModelProvider(this).get(ServiceAssignDetailsViewModel::class.java)
         servicePriorityViewModel = ViewModelProvider(this).get(ServicePriorityViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
@@ -158,10 +170,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         serviceAssignViewModel = ViewModelProvider(this).get(ServiceAssignViewModel::class.java)
 
         setRegViews()
-        ticketMode = "0"
-        hideViews()
+        ID_CustomerServiceRegister = intent.getStringExtra("ID_CustomerServiceRegister")
+        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister)
+//        ticketMode = "0"
+//        hideViews()
+
+        getServiceAssignDetails()
+
+
 
     }
+
+
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -174,14 +194,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         tv_TicketClick = findViewById<TextView>(R.id.tv_TicketClick)
         tv_ServiceClick = findViewById<TextView>(R.id.tv_ServiceClick)
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
+        tv_ListClick = findViewById<TextView>(R.id.tv_ListClick)
 
         tv_TicketClick!!.setOnClickListener(this)
         tv_ServiceClick!!.setOnClickListener(this)
         tv_ProductClick!!.setOnClickListener(this)
+        tv_ListClick!!.setOnClickListener(this)
 
+        rltv_allViews = findViewById<RelativeLayout>(R.id.rltv_allViews)
         lnrHead_Ticket = findViewById<LinearLayout>(R.id.lnrHead_Ticket)
         lnrHead_Service = findViewById<LinearLayout>(R.id.lnrHead_Service)
         lnrHead_Product = findViewById<LinearLayout>(R.id.lnrHead_Product)
+        lnrHead_List = findViewById<LinearLayout>(R.id.lnrHead_List)
 
         // Ticket Information
 
@@ -201,6 +225,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         tv_ProductName = findViewById<TextView>(R.id.tv_ProductName)
         tv_ProductComplaint = findViewById<TextView>(R.id.tv_ProductComplaint)
         tv_Description = findViewById<TextView>(R.id.tv_Description)
+
+        tv_no_record = findViewById<TextView>(R.id.tv_no_record)
 
 
         tie_VisitDate = findViewById<TextInputEditText>(R.id.tie_VisitDate)
@@ -243,6 +269,162 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
+    private fun getServiceAssignDetails() {
+        var ReqMode = "76"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                Log.e(TAG,"ServiceAssignDetails  2751   "+msg)
+
+                                if (serAssignCount == 0){
+                                    serAssignCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ServiceAssignDetails")
+                                        Log.e(TAG,"FromDate  2752   "+jobjt.getString("FromDate"))
+                                        var saDetailArrayList = jobjt.getJSONArray("EmployeeRoleDetailsList")
+                                        Log.e(TAG,"saDetailArrayList  2753   "+saDetailArrayList)
+
+
+                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
+                                        tv_LandMark!!.setText(""+jobjt.getString("Landmark"))
+                                        tv_Customer!!.setText(""+jobjt.getString("Customer"))
+                                        tv_ContactNo!!.setText(""+jobjt.getString("OtherMobile"))
+                                        tv_Address!!.setText(""+jobjt.getString("Address"))
+                                        tv_Mobile!!.setText(""+jobjt.getString("Mobile"))
+
+                                        // Service Information
+
+                                        tv_RequestedDate!!.setText(""+jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate"))
+                                        tv_RequestedTime!!.setText(""+jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime"))
+
+                                        // Product Details
+                                        tv_ProductName!!.setText(""+jobjt.getString("Productname"))
+                                        tv_ProductComplaint!!.setText(""+jobjt.getString("ProductComplaint"))
+                                        tv_Description!!.setText(""+jobjt.getString("ProductDescription"))
+
+
+                                        if (saDetailArrayList.length()>0){
+
+                                            for (i in 0 until saDetailArrayList.length()) {
+
+//                                                "ID_Employee": "12",
+//                                                "EmpCode": "E11647926087",
+//                                                "Employee": "SACHIN T",
+//                                                "ID_CSAEmployeeType": "1",
+//                                                "EmployeeType": "Manager",
+//                                                "Attend": "0",
+//                                                "DepartmentID": "2",
+//                                                "Designation": "Service Manager",
+//                                                "Department": "Customer service"
+
+                                               val jsonObject = saDetailArrayList.getJSONObject(i)
+
+                                                val jObject = JSONObject()
+                                                jObject.put("DepartmentID",jsonObject.getString("DepartmentID"))
+                                                jObject.put("Department",jsonObject.getString("Department"))
+
+                                                jObject.put("ID_Employee", jsonObject.getString("ID_Employee"))
+                                                jObject.put("Employee", jsonObject.getString("Employee"))
+
+                                                jObject.put("ID_CSAEmployeeType",jsonObject.getString("ID_CSAEmployeeType")) // Role
+                                                jObject.put("EmployeeType",jsonObject.getString("EmployeeType")) // Role
+
+                                             //   jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
+
+
+                                                arrProducts.put(jObject)
+
+
+                                            }
+
+
+
+
+                                        }
+
+                                        if (arrProducts.length()>0){
+                                            card_details!!.visibility = View.VISIBLE
+                                            viewList(arrProducts)
+                                        }
+                                        rltv_allViews!!.visibility = View.VISIBLE
+                                        ticketMode = "0"
+                                        hideViews()
+
+
+//                                        employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+//                                        if (employeeArrayList.length()>0){
+//
+//                                            employeePopup(employeeArrayList)
+//
+//
+//                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceAssignActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+//                            Toast.makeText(
+//                                applicationContext,
+//                                ""+Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            val builder = AlertDialog.Builder(
+                                this@ServiceAssignActivity,
+                                R.style.MyDialogTheme
+                            )
+                            builder.setMessage(Config.PLEASE_TRY_AGAIN)
+                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                finish()
+                            }
+                            val alertDialog: AlertDialog = builder.create()
+                            alertDialog.setCancelable(false)
+                            alertDialog.show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
@@ -252,6 +434,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 ticketMode = "0"
                 serviceMode  = "1"
                 productMode = "1"
+                listMode = "1"
                 hideViews()
             }
 
@@ -259,6 +442,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 ticketMode = "1"
                 serviceMode  = "0"
                 productMode = "1"
+                listMode = "1"
                 hideViews()
             }
 
@@ -266,8 +450,19 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 ticketMode = "1"
                 serviceMode  = "1"
                 productMode = "0"
+                listMode = "1"
                 hideViews()
             }
+
+            R.id.tv_ListClick->{
+                ticketMode = "1"
+                serviceMode  = "1"
+                productMode = "1"
+                listMode = "0"
+                hideViews()
+            }
+
+
 
             R.id.tie_VisitDate->{
                 Config.disableClick(v)
@@ -311,28 +506,33 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
             R.id.btnClear->{
 
-                resetData()
+                resetData("0")
             }
 
 
         }
     }
 
-   
+    private fun resetData(mode : String) {
 
-    private fun resetData() {
-        tie_VisitDate!!.setText("")
-        tie_VisitTime!!.setText("")
-        tie_Priority!!.setText("")
-        tie_Remarks!!.setText("")
+        if (mode.equals("0")){
+            tie_VisitDate!!.setText("")
+            tie_VisitTime!!.setText("")
+            tie_Priority!!.setText("")
+            tie_Remarks!!.setText("")
+
+            ID_Priority = ""
+        }
+
+
         tie_Department!!.setText("")
         tie_Employee!!.setText("")
         tie_Role!!.setText("")
 
-        ID_Priority = ""
         ID_Department = ""
         ID_Employee = ""
         ID_Role = ""
+
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
 
@@ -371,37 +571,76 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         else{
 
             val jObject = JSONObject()
-            jObject.put("visit_date", strVisitDate)
-            jObject.put("visit_time", strVisitTime)
-            jObject.put("id_priority",ID_Priority )
-            jObject.put("priority",tie_Priority!!.text.toString() )
-            jObject.put("remark", strRemark)
-            jObject.put("id_department",ID_Department )
-            jObject.put("department",tie_Department!!.text.toString() )
-            jObject.put("id_employee", ID_Employee)
-            jObject.put("employee", tie_Employee!!.text.toString())
-            jObject.put("id_role", ID_Role)
-            jObject.put("role", tie_Role!!.text.toString())
+//            jObject.put("visit_date", strVisitDate)
+//            jObject.put("visit_time", strVisitTime)
+//            jObject.put("id_priority",ID_Priority )
+//            jObject.put("priority",tie_Priority!!.text.toString() )
+//            jObject.put("remark", strRemark)
+//            jObject.put("id_department",ID_Department )
+//            jObject.put("department",tie_Department!!.text.toString() )
+//            jObject.put("id_employee", ID_Employee)
+//            jObject.put("employee", tie_Employee!!.text.toString())
+//            jObject.put("id_role", ID_Role)
+//            jObject.put("role", tie_Role!!.text.toString())
+
+            jObject.put("DepartmentID",ID_Department)
+            jObject.put("Department",tie_Department!!.text.toString())
+
+            jObject.put("ID_Employee", ID_Employee)
+            jObject.put("Employee", tie_Employee!!.text.toString())
+
+            jObject.put("ID_CSAEmployeeType",ID_Role) // Role
+            jObject.put("EmployeeType",tie_Role!!.text.toString()) // Role
+
+
 
             if (arrSaveUpdate.equals("0")){
-                var hasId = hasEmployee(arrProducts,"id_employee",ID_Employee!!)
+             //   jObject.put("ExistType","1") // ExistType = 0 Exist ,1 = Not
+                var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
                 Log.e(TAG,"367122    "+hasId)
                 if (hasId == true){
                     card_details!!.visibility = View.VISIBLE
                     arrProducts.put(jObject)
                     viewList(arrProducts)
-                     resetData()
+                    resetData("1")
+
+                    ticketMode = "1"
+                    serviceMode  = "1"
+                    productMode = "1"
+                    listMode = "0"
+                    hideViews()
                 }else{
                     til_Employee!!.setError(" Employee already exists.");
                     til_Employee!!.setErrorIconDrawable(null)
                 }
             }
             if (arrSaveUpdate.equals("1")){
-                card_details!!.visibility = View.VISIBLE
-                arrProducts.remove(arrIndexUpdate!!)
-                arrProducts.put(arrIndexUpdate!!,jObject)
-                viewList(arrProducts)
-                resetData()
+            //    jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
+
+                var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
+                Log.e(TAG,"367122    "+hasId)
+                if (hasId == true){
+                    card_details!!.visibility = View.VISIBLE
+
+                    Log.e(TAG,"arrProducts  6091  "+arrProducts)
+                    arrProducts.remove(arrIndexUpdate!!)
+                    Log.e(TAG,"arrProducts  6092  "+arrProducts)
+                    arrProducts.put(arrIndexUpdate!!,jObject)
+                    Log.e(TAG,"arrProducts  6093  "+arrProducts)
+                    viewList(arrProducts)
+                    resetData("1")
+
+                    ticketMode = "1"
+                    serviceMode  = "1"
+                    productMode = "1"
+                    listMode = "0"
+                    hideViews()
+                }
+                else{
+                    til_Employee!!.setError(" Employee already exists.");
+                    til_Employee!!.setErrorIconDrawable(null)
+                }
+
             }
 
             Log.e(TAG,"  3671221     "+arrProducts)
@@ -428,7 +667,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             for (i in 0 until arrProducts.length()) {
                 Log.e(TAG,"3674   "+i)
                 var jsonObject = arrProducts.getJSONObject(i)
-                Log.e(TAG,"  36731     "+jsonObject.getString("id_employee")+"  :   "+ID_Employee)
+                Log.e(TAG,"  36731     "+jsonObject.getString("ID_Employee")+"  :   "+ID_Employee)
 
 
 //                if (jsonObject.getString("id_employee").toString().equals(ID_Employee)){
@@ -1121,6 +1360,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         lnrHead_Ticket!!.visibility = View.VISIBLE
         lnrHead_Service!!.visibility = View.VISIBLE
         lnrHead_Product!!.visibility = View.VISIBLE
+        lnrHead_List!!.visibility = View.VISIBLE
+
+        if (arrProducts.length() > 0){
+            tv_no_record!!.visibility =View.GONE
+        }else{
+            tv_no_record!!.visibility =View.VISIBLE
+        }
 
         if (ticketMode.equals("1")) {
             lnrHead_Ticket!!.visibility = View.GONE
@@ -1130,6 +1376,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
         if (productMode.equals("1")) {
             lnrHead_Product!!.visibility = View.GONE
+        }
+        if (listMode.equals("1")) {
+            lnrHead_List!!.visibility = View.GONE
         }
     }
 
@@ -1184,31 +1433,69 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
 
         if (data.equals("deleteArrayList")){
-           // val jsonObject = arrProducts.getJSONObject(position)
+//            val jsonObject = arrProducts.getJSONObject(position)
+//            if (jsonObject.getString("ExistType").equals("1")){
+//                arrProducts.remove(position)
+//                adapterService!!.notifyItemRemoved(position)
+//            }
+//            else{
+//
+//            }
+
             arrProducts.remove(position)
             adapterService!!.notifyItemRemoved(position)
 
+            if (arrProducts.length() > 0){
+                tv_no_record!!.visibility =View.GONE
+            }else{
+                tv_no_record!!.visibility =View.VISIBLE
+            }
+
+
         }
         if (data.equals("editArrayList")){
-             val jsonObject = arrProducts.getJSONObject(position)
+
+            try {
+                val jsonObject = arrProducts.getJSONObject(position)
 //            arrProducts.remove(position)
 //            adapterService!!.notifyItemRemoved(position)
-            arrSaveUpdate = "1"
-            arrIndexUpdate = position
-            btnAdd!!.setText("Update")
+                arrSaveUpdate = "1"
+                arrIndexUpdate = position
+                btnAdd!!.setText("Update")
 
-            ID_Priority = jsonObject.getString("id_priority")
-            ID_Department = jsonObject.getString("id_department")
-            ID_Employee = jsonObject.getString("id_employee")
-            ID_Role= jsonObject.getString("id_role")
+//            ID_Priority = jsonObject.getString("id_priority")
+//            ID_Department = jsonObject.getString("id_department")
+//            ID_Employee = jsonObject.getString("id_employee")
+//            ID_Role= jsonObject.getString("id_role")
+//
+//            tie_VisitDate!!.setText(""+jsonObject.getString("visit_date"))
+//            tie_VisitTime!!.setText(""+jsonObject.getString("visit_time"))
+//            tie_Priority!!.setText(""+jsonObject.getString("priority"))
+//            tie_Remarks!!.setText(""+jsonObject.getString("remark"))
+//            tie_Department!!.setText(""+jsonObject.getString("department"))
+//            tie_Employee!!.setText(""+jsonObject.getString("employee"))
+//            tie_Role!!.setText(""+jsonObject.getString("role"))
 
-            tie_VisitDate!!.setText(""+jsonObject.getString("visit_date"))
-            tie_VisitTime!!.setText(""+jsonObject.getString("visit_time"))
-            tie_Priority!!.setText(""+jsonObject.getString("priority"))
-            tie_Remarks!!.setText(""+jsonObject.getString("remark"))
-            tie_Department!!.setText(""+jsonObject.getString("department"))
-            tie_Employee!!.setText(""+jsonObject.getString("employee"))
-            tie_Role!!.setText(""+jsonObject.getString("role"))
+
+                ID_Department = jsonObject.getString("DepartmentID")
+                ID_Employee = jsonObject.getString("ID_Employee")
+                ID_Role= jsonObject.getString("ID_CSAEmployeeType")
+
+                tie_Department!!.setText(""+jsonObject.getString("Department"))
+                tie_Employee!!.setText(""+jsonObject.getString("Employee"))
+                tie_Role!!.setText(""+jsonObject.getString("EmployeeType"))
+
+                ticketMode = "1"
+                serviceMode  = "1"
+                productMode = "0"
+                listMode = "1"
+
+                hideViews()
+
+
+            }catch (e: Exception){
+                Log.e(TAG,"Exception  1369   "+e.toString())
+            }
 
         }
 

@@ -36,9 +36,11 @@ class ServiceAssignListAdapter (internal var context: Context, internal var json
                 val pos = position+1
 
                 holder.tv_si.text        = pos.toString()
-                holder.tv_Employee.text  = jsonObject!!.getString("employee")
-                holder.tv_Role.text      = jsonObject!!.getString("role")
+//                holder.tv_Employee.text  = jsonObject!!.getString("employee")
+//                holder.tv_Role.text      = jsonObject!!.getString("role")
 
+                holder.tv_Employee.text  = jsonObject!!.getString("Employee")
+                holder.tv_Role.text      = jsonObject!!.getString("EmployeeType") // Role
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {
@@ -49,6 +51,9 @@ class ServiceAssignListAdapter (internal var context: Context, internal var json
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "editArrayList")
                 })
+
+
+
 
             }
         } catch (e: Exception) {
@@ -76,12 +81,14 @@ class ServiceAssignListAdapter (internal var context: Context, internal var json
         internal var im_delete   : ImageView
         internal var im_edit   : ImageView
 
+
         init {
             tv_si      = v.findViewById<View>(R.id.tv_si) as TextView
             tv_Employee    = v.findViewById<View>(R.id.tv_Employee) as TextView
             tv_Role     = v.findViewById<View>(R.id.tv_Role) as TextView
             im_delete     = v.findViewById<View>(R.id.im_delete) as ImageView
             im_edit     = v.findViewById<View>(R.id.im_edit) as ImageView
+
 
         }
     }

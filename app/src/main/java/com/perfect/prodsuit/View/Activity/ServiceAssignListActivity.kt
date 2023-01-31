@@ -232,8 +232,10 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     override fun onClick(position: Int, data: String) {
 
         if (data.equals("ServiceList")) {
-
+            val jsonObject = serviceListArrayList.getJSONObject(position)
+            val ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
             val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
+            i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
             startActivity(i)
         }
         if (data.equals("ServiceEdit")) {

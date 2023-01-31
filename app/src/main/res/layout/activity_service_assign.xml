@@ -92,15 +92,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:id="@+id/rltv_allViews"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
 
                         <ScrollView
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="fill_parent"
+                            android:layout_above="@+id/ll_btn">
 
 
                             <LinearLayout
@@ -153,9 +156,7 @@
                                             android:id="@+id/lnrHead_Ticket"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="15dp"
-                                            android:layout_marginTop="15dp"
-                                            android:layout_marginRight="15dp"
+                                            android:layout_margin="15dp"
                                             android:orientation="vertical"
                                             android:visibility="gone">
 
@@ -163,7 +164,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:background="@android:color/transparent"
-                                                android:orientation="horizontal">
+                                                android:orientation="vertical">
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -202,7 +203,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="2dp"
-                                                            android:text="GGG"
+                                                            android:text=""
                                                             android:textColor="@color/black"
                                                             android:textSize="14dp"
                                                             android:textStyle="normal" />
@@ -219,6 +220,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -266,7 +272,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center_vertical"
                                                                 android:paddingLeft="2dp"
-                                                                android:text="hffh"
+                                                                android:text=""
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="normal" />
@@ -288,11 +294,16 @@
 
                                             </LinearLayout>
 
+                                            <View
+                                                android:layout_width="match_parent"
+                                                android:layout_height="1dp"
+                                                android:background="@color/color_background1" />
+
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:background="@android:color/transparent"
-                                                android:orientation="horizontal">
+                                                android:orientation="vertical">
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -331,7 +342,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="2dp"
-                                                            android:text="GGG"
+                                                            android:text=""
                                                             android:textColor="@color/black"
                                                             android:textSize="14dp"
                                                             android:textStyle="normal" />
@@ -348,6 +359,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -395,7 +411,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center_vertical"
                                                                 android:paddingLeft="2dp"
-                                                                android:text="hffh"
+                                                                android:text=""
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="normal" />
@@ -417,11 +433,16 @@
 
                                             </LinearLayout>
 
+                                            <View
+                                                android:layout_width="match_parent"
+                                                android:layout_height="1dp"
+                                                android:background="@color/color_background1" />
+
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:background="@android:color/transparent"
-                                                android:orientation="horizontal">
+                                                android:orientation="vertical">
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -460,7 +481,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="2dp"
-                                                            android:text="GGG"
+                                                            android:text=""
                                                             android:textColor="@color/black"
                                                             android:textSize="14dp"
                                                             android:textStyle="normal" />
@@ -477,6 +498,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -524,7 +550,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center_vertical"
                                                                 android:paddingLeft="2dp"
-                                                                android:text="hffh"
+                                                                android:text=""
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="normal" />
@@ -542,6 +568,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -604,11 +635,9 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginLeft="15dp"
-                                                android:layout_marginTop="15dp"
-                                                android:layout_marginRight="15dp"
+                                                android:layout_margin="15dp"
                                                 android:background="@android:color/transparent"
-                                                android:orientation="horizontal">
+                                                android:orientation="vertical">
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -647,7 +676,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="2dp"
-                                                            android:text="GGG"
+                                                            android:text=""
                                                             android:textColor="@color/black"
                                                             android:textSize="14dp"
                                                             android:textStyle="normal" />
@@ -664,6 +693,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -711,7 +745,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center_vertical"
                                                                 android:paddingLeft="2dp"
-                                                                android:text="hffh"
+                                                                android:text=""
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="normal" />
@@ -729,6 +763,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -797,7 +836,7 @@
                                                 android:layout_marginTop="15dp"
                                                 android:layout_marginRight="15dp"
                                                 android:background="@android:color/transparent"
-                                                android:orientation="horizontal">
+                                                android:orientation="vertical">
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -836,7 +875,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="2dp"
-                                                            android:text="GGG"
+                                                            android:text=""
                                                             android:textColor="@color/black"
                                                             android:textSize="14dp"
                                                             android:textStyle="normal" />
@@ -853,6 +892,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -900,7 +944,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center_vertical"
                                                                 android:paddingLeft="2dp"
-                                                                android:text="hffh"
+                                                                android:text=""
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="normal" />
@@ -918,6 +962,11 @@
 
 
                                                 </LinearLayout>
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="1dp"
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -979,6 +1028,13 @@
 
                                             </LinearLayout>
 
+                                            <View
+                                                android:layout_width="match_parent"
+                                                android:layout_height="1dp"
+                                                android:layout_marginLeft="15dp"
+                                                android:layout_marginRight="15dp"
+                                                android:background="@color/color_background1" />
+
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
@@ -1013,13 +1069,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1051,13 +1107,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1089,13 +1145,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1163,13 +1219,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1201,13 +1257,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1239,13 +1295,13 @@
                                                         android:drawablePadding="-10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:editable="false"
-                                                        android:singleLine="true"
                                                         android:focusableInTouchMode="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="0dp"
                                                         android:paddingTop="1dp"
                                                         android:paddingBottom="1dp"
+                                                        android:singleLine="true"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />
@@ -1315,7 +1371,7 @@
                                     android:layout_marginTop="4dp"
                                     android:layout_marginRight="5dp"
                                     android:backgroundTint="@color/white"
-                                    android:visibility="gone"
+                                    android:visibility="visible"
                                     app:cardCornerRadius="5dp"
                                     app:cardElevation="0dp">
 
@@ -1326,70 +1382,107 @@
                                         android:orientation="vertical"
                                         android:padding="1dp">
 
+                                        <TextView
+                                            android:id="@+id/tv_ListClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/service_head"
+                                            android:drawableLeft="@drawable/xml_assigned_list"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:drawablePadding="5dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:paddingLeft="20dp"
+                                            android:paddingTop="10dp"
+                                            android:paddingRight="10dp"
+                                            android:paddingBottom="10dp"
+                                            android:text="Assigned List"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/header_text"
+                                            android:textStyle="bold" />
+
+
                                         <LinearLayout
                                             android:id="@+id/lnrHead_List"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:padding="1dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
+
+                                            <TextView
+                                                android:id="@+id/tv_no_record"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
+                                                android:layout_weight="4"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center_vertical"
+                                                android:padding="4dp"
+                                                android:text="No Records Found"
+                                                android:textAllCaps="false"
+                                                android:textColor="@color/greydarks"
+                                                android:textSize="13dp"
+                                                android:textStyle="bold" />
+
 
                                             <LinearLayout
                                                 android:id="@+id/llSales"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:paddingTop="10dp"
-                                                android:paddingBottom="10dp"
                                                 android:background="@color/service_head"
                                                 android:orientation="horizontal"
+                                                android:paddingLeft="5dp"
+                                                android:paddingTop="10dp"
+                                                android:paddingRight="5dp"
+                                                android:paddingBottom="10dp"
                                                 android:visibility="gone">
 
                                                 <TextView
                                                     android:id="@+id/tv_si"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:layout_centerVertical="true"
                                                     android:layout_weight="4"
-                                                    android:gravity="center_vertical"
-                                                    android:textSize="13dp"
-                                                    android:paddingLeft="4dp"
-                                                    android:textStyle="bold"
-                                                    android:textAllCaps="true"
                                                     android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingLeft="4dp"
                                                     android:text="SL"
+                                                    android:textAllCaps="true"
                                                     android:textColor="@color/greydarks"
-                                                    android:layout_centerVertical="true" />
+                                                    android:textSize="13dp"
+                                                    android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/tv_Employee"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:layout_centerVertical="true"
                                                     android:layout_weight="2.5"
-                                                    android:gravity="center_vertical"
-                                                    android:textSize="13dp"
-                                                    android:paddingLeft="4dp"
-                                                    android:textStyle="bold"
-                                                    android:textAllCaps="true"
                                                     android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingLeft="4dp"
                                                     android:text="Employee"
+                                                    android:textAllCaps="true"
                                                     android:textColor="@color/greydarks"
-                                                    android:layout_centerVertical="true" />
+                                                    android:textSize="13dp"
+                                                    android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/tv_Role"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:layout_centerVertical="true"
                                                     android:layout_weight="2.5"
-                                                    android:gravity="center_vertical"
-                                                    android:textSize="13dp"
-                                                    android:paddingLeft="4dp"
-                                                    android:textStyle="bold"
-                                                    android:textAllCaps="true"
                                                     android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingLeft="4dp"
                                                     android:text="Role"
+                                                    android:textAllCaps="true"
                                                     android:textColor="@color/greydarks"
-                                                    android:layout_centerVertical="true" />
+                                                    android:textSize="13dp"
+                                                    android:textStyle="bold" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -1399,25 +1492,21 @@
                                                     android:orientation="vertical">
 
 
-
-
                                                 </LinearLayout>
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="4"
-                                                    android:gravity="center"
                                                     android:layout_marginLeft="5dp"
+                                                    android:layout_weight="4"
+                                                    android:gravity="center"
                                                     android:orientation="vertical">
 
 
                                                 </LinearLayout>
-
 
 
                                             </LinearLayout>
-
 
                                             <androidx.recyclerview.widget.RecyclerView
                                                 android:id="@+id/recyServiceAssign"
@@ -1433,13 +1522,38 @@
                                 </androidx.cardview.widget.CardView>
 
 
-
                             </LinearLayout>
 
                         </ScrollView>
 
+                        <LinearLayout
+                            android:id="@+id/ll_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <Button
+                                android:id="@+id/btnSave"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/myfont"
+                                android:background="@drawable/btn_shape_submit"
+                                android:padding="2dp"
+                                android:layout_weight="1"
+                                android:textAllCaps="true"
+                                android:text="Save"
+                                android:visibility="visible"/>
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
 
 
 

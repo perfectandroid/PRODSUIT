@@ -95,6 +95,7 @@ object Config {
 
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
+    const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
