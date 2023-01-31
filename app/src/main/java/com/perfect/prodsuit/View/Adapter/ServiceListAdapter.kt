@@ -40,6 +40,12 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
+                if (position % 2 == 0){
+                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_1))
+                }
+                else{
+                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_2))
+                }
 
 
                 holder.tv_TicketNo.text        = jsonObject!!.getString("TicketNo")

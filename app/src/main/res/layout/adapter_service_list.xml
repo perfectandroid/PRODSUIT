@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="5dp"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:backgroundTint="#FFFFFF"
     android:outlineAmbientShadowColor="@color/colorPrimaryDark"
     android:outlineSpotShadowColor="@color/colorPrimaryDark"
     app:cardElevation="2dp"
+    android:layout_marginTop="0dp"
     app:cardUseCompatPadding="true">
     <!--    app:cardUseCompatPadding="true"-->
 <!--    android:backgroundTint="@color/white"-->
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:background="@drawable/border_shadow"
+        android:background="@drawable/svg_list_1"
         android:orientation="vertical">
 <!--        android:background="@drawable/border_shadow"-->
 
@@ -50,7 +51,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Ticket No"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -63,7 +64,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/svg_invoce_no"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
                     <TextView
                         android:id="@+id/tv_TicketNo"
@@ -75,7 +76,7 @@
                         android:fontFamily="@font/myfont"
                         android:text="GGG"
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
 
@@ -114,7 +115,7 @@
                         android:paddingLeft="4dp"
                         android:fontFamily="@font/myfont"
                         android:text="Ticket Date"
-                        android:textColor="@color/greydarks"
+                        android:textColor="@color/list_label"
                         android:layout_centerVertical="true" />
 
                     <LinearLayout
@@ -127,7 +128,7 @@
                             android:layout_height="20dp"
                             android:padding="2dp"
                             android:src="@drawable/svg_invoce_date"
-                            app:tint="@color/colorPrimary" />
+                            app:tint="@color/list_icon" />
 
 
                         <TextView
@@ -140,7 +141,7 @@
                             android:fontFamily="@font/myfont"
                             android:text="hffh"
                             android:textStyle="normal"
-                            android:textColor="@color/black"
+                            android:textColor="@color/list_text"
                             android:layout_centerVertical="true" />
 
                     </LinearLayout>
@@ -160,7 +161,7 @@
                         android:layout_height="25dp"
                         android:src="@drawable/ic_edit"
                         android:layout_alignParentLeft="true"
-                        android:tint="@color/greydark"
+                        android:tint="@color/list_edit"
                         android:visibility="visible"
                         tools:ignore="UseAppTint" />
 
@@ -202,7 +203,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Branch"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -215,7 +216,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_svg_branch"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
                     <TextView
                         android:id="@+id/tv_Branch"
@@ -227,7 +228,7 @@
                         android:fontFamily="@font/myfont"
                         android:text="hfghfghfghfg"
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
 
@@ -259,7 +260,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Customer"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -272,7 +273,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_svg_customer"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
 
                     <TextView
@@ -285,7 +286,7 @@
                         android:fontFamily="@font/myfont"
                         android:text="kyuytrututr"
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
                 </LinearLayout>
@@ -323,7 +324,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Mobile"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -336,7 +337,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_svg_mobile"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
                     <TextView
                         android:id="@+id/tv_Mobile"
@@ -348,7 +349,7 @@
                         android:fontFamily="@font/myfont"
                         android:text=""
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
 
@@ -380,7 +381,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Area"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -393,7 +394,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_svg_area"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
 
                     <TextView
@@ -406,7 +407,7 @@
                         android:fontFamily="@font/myfont"
                         android:text="fdhdfhdfh"
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
                 </LinearLayout>
@@ -446,7 +447,7 @@
                     android:paddingLeft="4dp"
                     android:fontFamily="@font/myfont"
                     android:text="Employee"
-                    android:textColor="@color/greydarks"
+                    android:textColor="@color/list_label"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
@@ -459,7 +460,7 @@
                         android:layout_height="20dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_svg_attendedby"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/list_icon" />
 
                     <TextView
                         android:id="@+id/tv_Employee"
@@ -471,7 +472,7 @@
                         android:fontFamily="@font/myfont"
                         android:text=""
                         android:textStyle="normal"
-                        android:textColor="@color/black"
+                        android:textColor="@color/list_text"
                         android:layout_centerVertical="true" />
 
 
@@ -506,10 +507,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_service_list"
+        android:background="@drawable/svg_trans_list"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
+
+<!--        android:background="@drawable/shape_service_list"-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -526,7 +529,7 @@
                 android:paddingLeft="4dp"
                 android:fontFamily="@font/myfont"
                 android:text="Channel"
-                android:textColor="@color/greydark"
+                android:textColor="@color/list_label1"
                 android:layout_centerVertical="true" />
 
             <ImageView
@@ -556,7 +559,7 @@
                 android:paddingLeft="4dp"
                 android:fontFamily="@font/myfont"
                 android:text="Priority"
-                android:textColor="@color/greydark"
+                android:textColor="@color/list_label1"
                 android:layout_centerVertical="true" />
 
             <ImageView
@@ -588,7 +591,7 @@
                 android:paddingLeft="4dp"
                 android:fontFamily="@font/myfont"
                 android:text="Status"
-                android:textColor="@color/greydark"
+                android:textColor="@color/list_label1"
                 android:layout_centerVertical="true" />
 
             <ImageView
@@ -619,7 +622,7 @@
                 android:paddingLeft="4dp"
                 android:fontFamily="@font/myfont"
                 android:text="Time Due"
-                android:textColor="@color/greydark"
+                android:textColor="@color/list_label1"
                 android:layout_centerVertical="true" />
 
             <TextView

@@ -345,5 +345,11 @@
     <color name="service_head">#D3EEEDED</color>
     <color name="list_bg">#708C8E</color>
 
+    <color name="list_label">#000000</color>
+    <color name="list_label1">#373636</color>
+    <color name="list_text">#FFFFFF</color>
+    <color name="list_icon">#FFFFFF</color>
+    <color name="list_edit">#FFFFFF</color>
+
 
 </resources>

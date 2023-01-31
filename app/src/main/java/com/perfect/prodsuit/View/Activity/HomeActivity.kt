@@ -1483,9 +1483,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
 //        tv_Name!!.text = UserNameSP.getString("UserName", "")
-     //   tv_navName!!.text = UserNameSP.getString("UserName", "")
+        tv_navName!!.text = UserNameSP.getString("UserName", "")
       //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
-     //   tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+        tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
 //        var addAttendan = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {
