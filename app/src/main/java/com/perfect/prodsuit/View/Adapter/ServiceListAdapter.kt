@@ -1,7 +1,11 @@
 package com.perfect.prodsuit.View.Adapter
 
+import android.animation.AnimatorInflater
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
-import android.media.Image
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +19,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+
 
 class ServiceListAdapter (internal var context: Context, internal var jsonArray: JSONArray,internal var SubMode :String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,12 +45,12 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                if (position % 2 == 0){
-                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_1))
-                }
-                else{
-                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_2))
-                }
+//                if (position % 2 == 0){
+//                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_1))
+//                }
+//                else{
+//                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_2))
+//                }
 
 
                 holder.tv_TicketNo.text        = jsonObject!!.getString("TicketNo")
@@ -55,7 +60,7 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
                 holder.tv_Area.text        = jsonObject!!.getString("Area")
                 holder.tv_Employee.text        = jsonObject!!.getString("Employee")
-                holder.tv_TimeDue.text        = jsonObject!!.getString("Due")
+                holder.tv_TimeDue.text        = "Time Due : "+jsonObject!!.getString("Due")
 
                 if (jsonObject!!.getString("Channel").equals("Portal")){
                     holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_portal))
@@ -108,6 +113,14 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 holder.llServiceList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "ServiceList")
                 })
+
+                val colorAnim: ValueAnimator = ObjectAnimator.ofInt(holder.tv_TimeDue!!, "textColor", Color.RED, Color.BLUE)
+                colorAnim.setDuration(5000)
+                colorAnim.setEvaluator(ArgbEvaluator())
+                colorAnim.setRepeatCount(ValueAnimator.INFINITE)
+                colorAnim.setRepeatMode(ValueAnimator.REVERSE)
+                colorAnim.start()
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
