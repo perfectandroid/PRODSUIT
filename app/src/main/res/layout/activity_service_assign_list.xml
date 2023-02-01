@@ -102,7 +102,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imgv_filterManage"
+                            android:id="@+id/imgv_filter"
                             android:src="@drawable/filter1"
                             android:layout_margin="10dp"
                             android:layout_gravity="right|center_vertical"
@@ -111,7 +111,7 @@
                             android:padding="10dp"
                             android:layout_weight="3"
                             android:layout_height="60dp"
-                            android:visibility="invisible"
+                            android:visibility="visible"
                             app:tint="@color/white" />
 
                     </LinearLayout>

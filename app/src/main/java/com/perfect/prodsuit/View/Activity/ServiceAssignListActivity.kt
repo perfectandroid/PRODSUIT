@@ -11,10 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
@@ -25,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
@@ -42,8 +40,10 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
     lateinit var serviceListViewModel: ServiceListViewModel
     lateinit var serviceListArrayList: JSONArray
+    lateinit var serviceListSort: JSONArray
     var recyServiceList: RecyclerView? = null
     private var tv_listCount: TextView? = null
+    private var imgv_filter: ImageView? = null
 
     var serviceList = 0
 
@@ -70,6 +70,23 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     private var tv_Complaint: TextView? = null
     private var txtReset: TextView? = null
     private var txtUpdate: TextView? = null
+
+    private var tie_TicketNumber: TextInputEditText? = null
+    private var tie_Branch: TextInputEditText? = null
+    private var tie_Customer: TextInputEditText? = null
+    private var tie_Mobile: TextInputEditText? = null
+    private var tie_Area: TextInputEditText? = null
+    private var tie_DueDays: TextInputEditText? = null
+
+    private var txtFilterReset: TextView? = null
+    private var txtFilterSearch: TextView? = null
+
+    var filterTicketNumber: String? = ""
+    var filterBranch : String? = ""
+    var filterCustomer : String? = ""
+    var filterMobile : String? = ""
+    var filterArea   : String? = ""
+    var filterDueDays : String? = ""
 
 
     var statusCount = 0
@@ -126,6 +143,9 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
+        imgv_filter!!.setOnClickListener(this)
+
         recyServiceList = findViewById<RecyclerView>(R.id.recyServiceList)
         recyServiceList!!.adapter = null
         tv_listCount = findViewById<TextView>(R.id.tv_listCount)
@@ -149,8 +169,106 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                 attendCount = 0
                 getChannelEmp()
             }
+            R.id.imgv_filter->{
+                Config.disableClick(v)
+                filterBottomSheet()
+
+            }
 
 
+        }
+    }
+
+    private fun filterBottomSheet() {
+        try {
+
+
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.sal_filter_local, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCanceledOnTouchOutside(false)
+
+            tie_TicketNumber    = view.findViewById<TextInputEditText>(R.id.tie_TicketNumber)
+            tie_Branch          = view.findViewById<TextInputEditText>(R.id.tie_Branch)
+            tie_Customer        = view.findViewById<TextInputEditText>(R.id.tie_Customer)
+            tie_Mobile          = view.findViewById<TextInputEditText>(R.id.tie_Mobile)
+            tie_Area            = view.findViewById<TextInputEditText>(R.id.tie_Area)
+            tie_DueDays         = view.findViewById<TextInputEditText>(R.id.tie_DueDays)
+
+            txtFilterReset = view.findViewById<TextView>(R.id.txtFilterReset)
+            txtFilterSearch = view.findViewById<TextView>(R.id.txtFilterSearch)
+
+            tie_TicketNumber!!.setText(""+filterTicketNumber)
+            tie_Branch!!.setText(""+filterBranch)
+            tie_Customer!!.setText(""+filterCustomer)
+            tie_Mobile!!.setText(""+filterMobile)
+            tie_Area!!.setText(""+filterArea)
+            tie_DueDays!!.setText(""+filterDueDays)
+
+            txtFilterSearch!!.setOnClickListener {
+
+                filterTicketNumber = tie_TicketNumber!!.text!!.toString().toLowerCase().trim()
+                filterBranch       = tie_Branch!!.text!!.toString().toLowerCase().trim()
+                filterCustomer     = tie_Customer!!.text!!.toString().toLowerCase().trim()
+                filterMobile       = tie_Mobile!!.text!!.toString().toLowerCase().trim()
+                filterArea         = tie_Area!!.text!!.toString().toLowerCase().trim()
+                filterDueDays      = tie_DueDays!!.text!!.toString().toLowerCase().trim()
+
+                serviceListSort = JSONArray()
+
+//                        || jsonObject.getString("Customer")!!.toLowerCase().trim().contains(strCustomer)
+//                        || jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(strMobile)
+//                        || jsonObject.getString("Area")!!.toLowerCase().trim().contains(strArea)
+//                        || jsonObject.getString("Due")!!.toLowerCase().trim().contains(strDueDays)
+                for (k in 0 until serviceListArrayList.length()) {
+                    val jsonObject = serviceListArrayList.getJSONObject(k)
+                  //  if (textlength <= jsonObject.getString("TicketNo").length) {
+                        if ((jsonObject.getString("TicketNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
+                            && (jsonObject.getString("Branch")!!.toLowerCase().trim().contains(filterBranch!!))
+                            && (jsonObject.getString("Customer")!!.toLowerCase().trim().contains(filterCustomer!!))
+                            && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
+                            && (jsonObject.getString("Area")!!.toLowerCase().trim().contains(filterArea!!))
+                            && (jsonObject.getString("Due")!!.toLowerCase().trim().contains(filterDueDays!!))){
+                         //   Log.e(TAG,"2161    "+strTicketNumber+"   "+strCustomer)
+                            serviceListSort.put(jsonObject)
+                        }else{
+                          //  Log.e(TAG,"2162    "+strTicketNumber+"   "+strCustomer)
+                        }
+
+                   // }
+                }
+                dialog1.dismiss()
+                val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListSort,SubMode!!)
+                recyServiceList!!.adapter = adapter
+                adapter.setClickListener(this@ServiceAssignListActivity)
+
+                tv_listCount!!.setText(""+serviceListSort.length())
+
+            }
+
+            txtFilterReset!!.setOnClickListener {
+                tie_TicketNumber!!.setText("")
+                tie_Branch!!.setText("")
+                tie_Customer!!.setText("")
+                tie_Mobile!!.setText("")
+                tie_Area!!.setText("")
+                tie_DueDays!!.setText("")
+            }
+
+
+
+//            ll_StafAdmin = view.findViewById<LinearLayout>(R.id.ll_StafAdmin)
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception  239   "+e.toString())
         }
     }
 
@@ -182,10 +300,19 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
                                         if (serviceListArrayList.length() > 0) {
 
-                                            tv_listCount!!.setText(""+serviceListArrayList.length())
+
+                                            serviceListSort = JSONArray()
+                                            for (k in 0 until serviceListArrayList.length()) {
+                                                val jsonObject = serviceListArrayList.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                serviceListSort.put(jsonObject)
+                                            }
+
+                                            tv_listCount!!.setText(""+serviceListSort.length())
                                             val lLayout = GridLayoutManager(this@ServiceAssignListActivity, 1)
                                             recyServiceList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                          //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListSort,SubMode!!)
                                             recyServiceList!!.adapter = adapter
                                             adapter.setClickListener(this@ServiceAssignListActivity)
 

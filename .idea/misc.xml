@@ -183,7 +183,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_rectangle1.xml" value="0.2245" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_report.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_rounded_all.xml" value="0.271" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sa_sub.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sa_sub.xml" value="0.16" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_service_attendby.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_service_customer.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_shape0.xml" value="0.218" />
@@ -355,6 +355,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.2916666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sa_edit_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sa_filter_bottom_sheet.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sal_filter_local.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.26875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_complaint_popup.xml" value="0.2786458333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_media_popup.xml" value="0.31666666666666665" />

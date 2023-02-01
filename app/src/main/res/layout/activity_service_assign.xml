@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
 
                         <ScrollView
@@ -617,11 +617,13 @@
                                             android:paddingTop="10dp"
                                             android:paddingRight="10dp"
                                             android:paddingBottom="10dp"
-                                            android:text="Service Information"
+                                            android:text="Complaint Information"
                                             android:textAllCaps="true"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
+
+                                        <!--                                        android:text="Service Information"-->
 
                                         <LinearLayout
                                             android:id="@+id/lnrHead_Service"
@@ -635,7 +637,8 @@
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_margin="15dp"
+                                                android:layout_marginLeft="15dp"
+                                                android:layout_marginRight="15dp"
                                                 android:background="@android:color/transparent"
                                                 android:orientation="vertical">
 
@@ -772,68 +775,10 @@
 
                                             </LinearLayout>
 
-
-                                        </LinearLayout>
-
-
-                                    </LinearLayout>
-
-                                </androidx.cardview.widget.CardView>
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:backgroundTint="@color/white"
-                                    android:visibility="visible"
-                                    app:cardCornerRadius="5dp"
-                                    app:cardElevation="0dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/shape_bottom_rounded1"
-                                        android:orientation="vertical"
-                                        android:padding="1dp">
-
-                                        <TextView
-                                            android:id="@+id/tv_ProductClick"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="@color/service_head"
-                                            android:drawableLeft="@drawable/xml_product_details"
-                                            android:drawableRight="@drawable/down_arrows"
-                                            android:drawablePadding="5dp"
-                                            android:fontFamily="@font/myfont"
-                                            android:gravity="left"
-                                            android:paddingLeft="20dp"
-                                            android:paddingTop="10dp"
-                                            android:paddingRight="10dp"
-                                            android:paddingBottom="10dp"
-                                            android:text="Product Details"
-                                            android:textAllCaps="true"
-                                            android:textColor="@color/black"
-                                            android:textSize="@dimen/header_text"
-                                            android:textStyle="bold" />
-
-                                        <LinearLayout
-                                            android:id="@+id/lnrHead_Product"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:paddingBottom="10dp"
-                                            android:visibility="gone">
-
-                                            <!--                                            android:background="@color/colorbgService"-->
-
-
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginLeft="15dp"
-                                                android:layout_marginTop="15dp"
                                                 android:layout_marginRight="15dp"
                                                 android:background="@android:color/transparent"
                                                 android:orientation="vertical">
@@ -1035,14 +980,72 @@
                                                 android:layout_marginRight="15dp"
                                                 android:background="@color/color_background1" />
 
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginRight="5dp"
+                                    android:backgroundTint="@color/white"
+                                    android:visibility="visible"
+                                    app:cardCornerRadius="5dp"
+                                    app:cardElevation="0dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/shape_bottom_rounded1"
+                                        android:orientation="vertical"
+                                        android:padding="1dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_ProductClick"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/service_head"
+                                            android:drawableLeft="@drawable/xml_product_details"
+                                            android:drawableRight="@drawable/down_arrows"
+                                            android:drawablePadding="5dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
+                                            android:paddingLeft="20dp"
+                                            android:paddingTop="10dp"
+                                            android:paddingRight="10dp"
+                                            android:paddingBottom="10dp"
+                                            android:text="Product Details"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/header_text"
+                                            android:textStyle="bold" />
+
+                                        <LinearLayout
+                                            android:id="@+id/lnrHead_Product"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:paddingBottom="10dp"
+                                            android:visibility="gone">
+
+                                            <!--                                            android:background="@color/colorbgService"-->
+
+
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginTop="20dp"
                                                 android:layout_marginRight="15dp"
-                                                android:background="@drawable/shadow_border1"
                                                 android:orientation="vertical">
+
+<!--                                                android:background="@drawable/shadow_border1"-->
 
                                                 <com.google.android.material.textfield.TextInputLayout
                                                     android:id="@+id/til_VisitDate"
