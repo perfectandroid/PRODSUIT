@@ -314,7 +314,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignOnGoingList")
                                         if (serviceListArrayList.length() > 0) {
 
-
+                                            imgv_filter!!.visibility  =View.VISIBLE
 
 
                                             serviceListSort = JSONArray()

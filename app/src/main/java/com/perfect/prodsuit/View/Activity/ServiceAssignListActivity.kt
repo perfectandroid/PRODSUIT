@@ -299,7 +299,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                         val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
                                         if (serviceListArrayList.length() > 0) {
-
+                                            imgv_filter!!.visibility  =View.VISIBLE
 
                                             serviceListSort = JSONArray()
                                             for (k in 0 until serviceListArrayList.length()) {
