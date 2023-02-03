@@ -3,6 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmiListAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
@@ -23,7 +25,7 @@ import com.perfect.prodsuit.Viewmodel.EmiListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener  {
+class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     val TAG: String = "EmiToDoListActivity"
     lateinit var context: Context
@@ -98,7 +100,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener  {
                                             recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListArrayList!!)
                                             recyEmiList!!.adapter = adapter
-                                          //  adapter.setClickListener(this@EmiToDoListActivity)
+                                            adapter.setClickListener(this@EmiToDoListActivity)
 
                                         }
                                     } else {
@@ -139,4 +141,17 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener  {
             }
         }
     }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("EmiList")) {
+
+            Log.e(TAG,"EmiList  148")
+//            val jsonObject = serviceListArrayList.getJSONObject(position)
+//            val ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            val i = Intent(this@EmiToDoListActivity, EmiCollectionActivity::class.java)
+            startActivity(i)
+        }
+    }
+
+
 }

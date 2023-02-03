@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -92,10 +93,10 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 //                    clickListener!!.onClick(position, "ServiceEdit")
 //                })
 //
-//                holder.llServiceList!!.setTag(position)
-//                holder.llServiceList!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "ServiceList")
-//                })
+                holder.llEmiList!!.setTag(position)
+                holder.llEmiList!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "EmiList")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -131,7 +132,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 //        //        internal var txtsino          : TextView
 //        internal var ll_employee    : LinearLayout
 //        internal var ll_status    : LinearLayout
-//        internal var llServiceList    : LinearLayout
+        internal var llEmiList    : LinearLayout
         init {
 //            tv_TicketNo        = v.findViewById<View>(R.id.tv_TicketNo) as TextView
 //            tv_TicketDate        = v.findViewById<View>(R.id.tv_TicketDate) as TextView
@@ -149,11 +150,11 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 ////            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
 //            ll_employee       = v.findViewById<View>(R.id.ll_employee) as LinearLayout
 //            ll_status       = v.findViewById<View>(R.id.ll_status) as LinearLayout
-//            llServiceList       = v.findViewById<View>(R.id.llServiceList) as LinearLayout
+            llEmiList       = v.findViewById<View>(R.id.llEmiList) as LinearLayout
         }
     }
 
-//    fun setClickListener(itemClickListener: ItemClickListener?) {
-//        clickListener = itemClickListener
-//    }
+    fun setClickListener(itemClickListener: ItemClickListener?) {
+        clickListener = itemClickListener
+    }
 }
