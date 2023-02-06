@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.gson.JsonArray
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -126,6 +125,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var dialogServiceRole : Dialog? = null
     var recyServiceRole: RecyclerView? = null
 
+    var btnSave: Button? = null
+
     var dateMode = 0
     var timeMode = 0
     var priorityMode = 0
@@ -175,12 +176,63 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //        ticketMode = "0"
 //        hideViews()
 
+        getCurrentdateTime()
         getServiceAssignDetails()
 
 
 
     }
 
+    private fun getCurrentdateTime() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+
+
+        try {
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("hh:mm",Locale.US)
+
+            tie_VisitDate!!.setText(""+sdfDate1.format(newDate))
+            strVisitDate = sdfDate2.format(newDate)
+
+            tie_VisitTime!!.setText(""+sdfTime1.format(newDate))
+            strVisitTime = sdfTime2.format(newDate)
+
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
+
+
+
+
+       // fghfg
+//        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val sdf1 = SimpleDateFormat("hh:mm:ss")
+//        val currentDate = sdf.format(Date())
+//
+//        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+//        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//        val currentDateFormate = inputFormat.parse(currentDate)
+//
+//        tie_VisitDate!!.setText(""+outputFormat.parse(currentDate))
+
+//        val inputDateFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.US)
+//        val outputDateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
+//        val date: Date = inputDateFormat.parse(input)
+//        val output = outputDateFormat.format(date)
+
+
+
+    }
 
 
     private fun setRegViews() {
@@ -244,12 +296,15 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         til_Employee = findViewById<TextInputLayout>(R.id.til_Employee)
         til_Role = findViewById<TextInputLayout>(R.id.til_Role)
 
+        btnSave = findViewById<Button>(R.id.btnSave)
+
         tie_VisitDate!!.setOnClickListener(this)
         tie_VisitTime!!.setOnClickListener(this)
         tie_Priority!!.setOnClickListener(this)
         tie_Department!!.setOnClickListener(this)
         tie_Employee!!.setOnClickListener(this)
         tie_Role!!.setOnClickListener(this)
+        btnSave!!.setOnClickListener(this)
 
         tie_VisitDate!!.addTextChangedListener(watcher);
         tie_VisitTime!!.addTextChangedListener(watcher);
@@ -266,6 +321,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
+
 
     }
 
@@ -502,16 +558,22 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             R.id.btnAdd->{
                 Config.disableClick(v)
-                validations()
+                addValidation()
             }
             R.id.btnClear->{
 
                 resetData("0")
             }
+            R.id.btnSave->{
+
+                saveValidation(v)
+            }
 
 
         }
     }
+
+
 
     private fun resetData(mode : String) {
 
@@ -538,9 +600,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun validations() {
-        strVisitDate = tie_VisitDate!!.text.toString()
-        strVisitTime = tie_VisitTime!!.text.toString()
+    private fun addValidation() {
+//        strVisitDate = tie_VisitDate!!.text.toString()
+//        strVisitTime = tie_VisitTime!!.text.toString()
         strRemark = tie_Remarks!!.text.toString()
 
         if (strVisitDate.equals("")){
@@ -733,7 +795,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     strMonth ="0"+strMonth
                 }
                 tie_VisitDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-             //   strVisitDate = ""+strYear+"-"+strMonth+"-"+strDay
+                strVisitDate = ""+strYear+"-"+strMonth+"-"+strDay
 //                if (dateMode == 0){
 //                    tie_VisitDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
 //                }
@@ -778,6 +840,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 val output = outputDateFormat.format(date)
 
                 tie_VisitTime!!.setText(output)
+                strVisitTime = input
 
 //                val sdfTime = SimpleDateFormat("h:mm a")
 //                val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
@@ -1549,6 +1612,66 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
 
         }
+    }
+
+    private fun saveValidation(v: View) {
+
+//        strVisitDate = tie_VisitDate!!.text.toString()
+//        strVisitTime = tie_VisitTime!!.text.toString()
+        strRemark = tie_Remarks!!.text.toString()
+
+        if (strVisitDate.equals("")){
+            til_VisitDate!!.setError("Select Visit Date");
+            til_VisitDate!!.setErrorIconDrawable(null)
+            ticketMode = "1"
+            serviceMode  = "1"
+            productMode = "0"
+            listMode = "1"
+            hideViews()
+        }
+        else if (strVisitTime.equals("")){
+            til_VisitTime!!.setError("Select Visit Time");
+            til_VisitTime!!.setErrorIconDrawable(null)
+            ticketMode = "1"
+            serviceMode  = "1"
+            productMode = "0"
+            listMode = "1"
+            hideViews()
+        }
+        else if (ID_Priority.equals("")){
+            til_Priority!!.setError("Select Priority");
+            til_Priority!!.setErrorIconDrawable(null)
+            ticketMode = "1"
+            serviceMode  = "1"
+            productMode = "0"
+            listMode = "1"
+            hideViews()
+        }
+        else if (arrProducts.length() == 0){
+
+            Config.snackBars(context,v,"Add Atleast One Employee Details")
+            ticketMode = "1"
+            serviceMode  = "1"
+            productMode = "0"
+            listMode = "1"
+            hideViews()
+
+        }
+        else{
+
+//            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+//            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//            val Visitdate = outputFormat.parse(strVisitDate)
+
+            Log.e(TAG,"saveValidation  1585"
+            +"\n"+"strVisitDate   "+strVisitDate
+                    +"\n"+"strVisitTime   "+strVisitTime
+                    +"\n"+"ID_Priority   "+ID_Priority
+                    +"\n"+"arrProducts   "+arrProducts)
+        }
+
+
+
     }
 
 }

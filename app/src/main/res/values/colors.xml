@@ -351,5 +351,21 @@
     <color name="list_icon">#FFFFFF</color>
     <color name="list_edit">#FFFFFF</color>
 
+<!--    Service-->
+
+    <color name="service_fill">#FFFFFF</color>
+
+    <color name="service_cs_main">#3A5461</color>
+    <color name="service_cs_strok">#D8DFE3</color>
+    <color name="service_sa_main">#44AFB5</color>
+    <color name="service_sa_strok">#D8E4E4</color>
+    <color name="service_sf_main">#FE592B</color>
+    <color name="service_sf_strok">#E2D6D4</color>
+
+
+
+
+
+
 
 </resources>

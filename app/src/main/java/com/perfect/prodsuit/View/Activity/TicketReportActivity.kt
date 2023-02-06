@@ -2599,13 +2599,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                     if (fromToDate == 0) {
                         tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
-                        FromDate=strYear + "-" + strMonth + "-" + strDay
-                        dateField!!.setText("" +strYear + "-" + strMonth + "-" + strDay)
+                        FromDate=strDay + "-" + strMonth + "-" + strYear
+                        dateField!!.setText("" +strDay + "-" + strMonth + "-" + strYear)
                     }
                     if (fromToDate == 1) {
                         tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
-                        ToDate=strYear + "-" + strMonth + "-" + strDay
-                        dateField!!.setText("" +strYear + "-" + strMonth + "-" + strDay)
+                        ToDate=strDay + "-" + strMonth + "-" + strYear
+                        dateField!!.setText("" +strDay + "-" + strMonth + "-" + strYear)
                     }
 
 
