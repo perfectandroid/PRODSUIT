@@ -36,7 +36,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
     lateinit var context: Context
     private var imback: ImageView? = null
     private var tv_ReportName: TextView? = null
-
+    private var report_date: TextView? = null
     private var ReportMode:String?=""
     private var ID_Branch:String?=""
     private var ID_Employee:String?=""
@@ -172,7 +172,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
         ll_FollowUpTicket = findViewById(R.id.ll_FollowUpTicket)
         ll_NewListTicket = findViewById(R.id.ll_NewListTicket)
         ll_StatusListTicket = findViewById(R.id.ll_StatusListTicket)
-
+        report_date= findViewById(R.id.report_date)
         recyActionListReport = findViewById(R.id.recyActionListReport)
         recyFollowUpTicketReport = findViewById(R.id.recyFollowUpTicketReport)
         recyNewListTicketReport = findViewById(R.id.recyNewListTicketReport)
@@ -293,6 +293,12 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                     if (followUpTicketReportArrayList.length()>0){
                                         Log.e(TAG,"msg   2703   "+followUpTicketReportArrayList)
                                         ll_FollowUpTicket!!.visibility = View.VISIBLE
+                                        report_date!!.visibility=View.VISIBLE
+                                        var arrayFrom=strFromdate!!.split("-")
+                                        var arrayTo=strTodate!!.split("-")
+                                        var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
+                                        var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
+                                        report_date!!.text="Report between "+fromDate+" and "+toDate
                                         try {
                                             val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
                                             recyFollowUpTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -308,6 +314,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                     }
 
                                 } else {
+                                    report_date!!.visibility=View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
                                         R.style.MyDialogTheme
@@ -324,6 +331,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
 
 
                         } else {
+                            report_date!!.visibility=View.GONE
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
@@ -374,6 +382,12 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                         if (newListTicketReportArrayList.length()>0){
                                             Log.e(TAG,"msg   3443   "+newListTicketReportArrayList)
                                             ll_NewListTicket!!.visibility = View.VISIBLE
+                                            report_date!!.visibility=View.VISIBLE
+                                            var arrayFrom=strFromdate!!.split("-")
+                                            var arrayTo=strTodate!!.split("-")
+                                            var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
+                                            var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
+                                            report_date!!.text="Report between "+fromDate+" and "+toDate
                                             try {
                                                 val lLayout = GridLayoutManager(this@TicketReportDetailActivity, 1)
                                                 recyNewListTicketReport!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -389,6 +403,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                         }
 
                                     } else {
+                                        report_date!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TicketReportDetailActivity,
                                             R.style.MyDialogTheme
@@ -403,6 +418,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                 }
 
                             } else {
+                                report_date!!.visibility=View.GONE
 //                                Toast.makeText(
 //                                    applicationContext,
 //                                    "Some Technical Issues.",
@@ -410,6 +426,7 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
 //                                ).show()
                             }
                         }catch (e : Exception){
+                            report_date!!.visibility=View.GONE
                             Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
                         }
 

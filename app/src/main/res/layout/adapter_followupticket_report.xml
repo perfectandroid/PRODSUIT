@@ -27,13 +27,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="4"
                 android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Lead No ( Date )"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -59,12 +60,10 @@
 
                 <TextView
                     android:id="@+id/txtLead"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
@@ -78,13 +77,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="4"
                 android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Customer"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -110,12 +110,10 @@
 
                 <TextView
                     android:id="@+id/txtCustomer"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
@@ -129,13 +127,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="4"
                 android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Category/Product"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -161,12 +160,10 @@
 
                 <TextView
                     android:id="@+id/txtProduct"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
@@ -180,13 +177,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="4"
                 android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Collected By"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -212,12 +210,10 @@
 
                 <TextView
                     android:id="@+id/txtCollectedBy"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
