@@ -10,8 +10,8 @@ import com.perfect.prodsuit.Repository.ServiceAssignRepository
 class ServiceAssignViewModel  : ViewModel(){
 
     var serviceAssignLiveData: MutableLiveData<ServiceAssignModel>? = null
-    fun getServiceAssign(context: Context) : LiveData<ServiceAssignModel>? {
-        serviceAssignLiveData = ServiceAssignRepository.getServicesApiCall(context)
+    fun getServiceAssign(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : String,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String) : LiveData<ServiceAssignModel>? {
+        serviceAssignLiveData = ServiceAssignRepository.getServicesApiCall(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark)
         return serviceAssignLiveData
     }
 }

@@ -1333,7 +1333,7 @@
                                                         android:background="@drawable/btn_resetbg"
                                                         android:fontFamily="@font/myfont"
                                                         android:padding="2dp"
-                                                        android:text="Clear"
+                                                        android:text="Reset"
                                                         android:textAllCaps="false"
                                                         android:textSize="15dp" />
 

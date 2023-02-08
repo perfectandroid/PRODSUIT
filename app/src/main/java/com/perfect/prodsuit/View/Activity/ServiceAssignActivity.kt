@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -155,6 +156,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var adapterService : ServiceAssignListAdapter? = null
     var ID_CustomerServiceRegister: String? = ""
 
+    var serUpdateCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -197,7 +200,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
             val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
             val sdfTime1 = SimpleDateFormat("hh:mm aa")
-            val sdfTime2 = SimpleDateFormat("hh:mm",Locale.US)
+            val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
 
             tie_VisitDate!!.setText(""+sdfDate1.format(newDate))
             strVisitDate = sdfDate2.format(newDate)
@@ -373,6 +377,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         tv_ProductName!!.setText(""+jobjt.getString("Productname"))
                                         tv_ProductComplaint!!.setText(""+jobjt.getString("ProductComplaint"))
                                         tv_Description!!.setText(""+jobjt.getString("ProductDescription"))
+
+                                        ID_Priority = jobjt.getString("Priority")
+                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
 
 
                                         if (saDetailArrayList.length()>0){
@@ -565,7 +572,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 resetData("0")
             }
             R.id.btnSave->{
-
+                Config.disableClick(v)
                 saveValidation(v)
             }
 
@@ -578,15 +585,16 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private fun resetData(mode : String) {
 
         if (mode.equals("0")){
-            tie_VisitDate!!.setText("")
-            tie_VisitTime!!.setText("")
-            tie_Priority!!.setText("")
-            tie_Remarks!!.setText("")
+//            tie_VisitDate!!.setText("")
+//            tie_VisitTime!!.setText("")
+//            tie_Priority!!.setText("")
 
-            ID_Priority = ""
+
+//            ID_Priority = ""
+            getCurrentdateTime()
         }
 
-
+        tie_Remarks!!.setText("")
         tie_Department!!.setText("")
         tie_Employee!!.setText("")
         tie_Role!!.setText("")
@@ -594,9 +602,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         ID_Department = ""
         ID_Employee = ""
         ID_Role = ""
-
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
+
 
     }
 
@@ -840,7 +848,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 val output = outputDateFormat.format(date)
 
                 tie_VisitTime!!.setText(output)
-                strVisitTime = input
+                val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+                strVisitTime = inputDateFormat.format(date)
+//                strVisitTime = input
 
 //                val sdfTime = SimpleDateFormat("h:mm a")
 //                val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
@@ -1663,15 +1673,144 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 //            val Visitdate = outputFormat.parse(strVisitDate)
 
+       //     [{"FK_Employee":"1","EmployeeType":"3"}]
+
+            var arrAssignees = JSONArray()
+            for (i in 0 until arrProducts.length()) {
+                var jsonObject = arrProducts.getJSONObject(i)
+                val jObject = JSONObject()
+                jObject.put("FK_Employee",  ProdsuitApplication.encryptStart(jsonObject.getString("ID_Employee")))
+                jObject.put("EmployeeType",  ProdsuitApplication.encryptStart(jsonObject.getString("ID_CSAEmployeeType")))
+                arrAssignees.put(jObject)
+            }
+
             Log.e(TAG,"saveValidation  1585"
             +"\n"+"strVisitDate   "+strVisitDate
                     +"\n"+"strVisitTime   "+strVisitTime
                     +"\n"+"ID_Priority   "+ID_Priority
+                    +"\n"+"arrAssignees   "+arrAssignees
                     +"\n"+"arrProducts   "+arrProducts)
+
+            serUpdateCount = 0
+            serviceassignUpdate(arrAssignees.toString())
         }
 
 
 
+    }
+
+    private fun serviceassignUpdate(strAssignees: String) {
+        var ReqMode = "0"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceAssignViewModel.getServiceAssign(this,ReqMode,ID_CustomerServiceRegister!!,strAssignees!!,strVisitDate!!,strVisitTime!!,ID_Priority!!,strRemark!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serUpdateCount == 0) {
+                                    serUpdateCount++
+                                    Log.e(TAG,"serviceAssignViewModel  1711   "+msg)
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        try {
+                                            val jobjt = jObject.getJSONObject("CustomerserviceassignUpdate")
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_service_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+                                            suceessDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                                            suceessDialog!!.setCancelable(false)
+
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+
+                                            tv_succesmsg!!.setText(jobjt.getString("Message"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                        }catch (e: Exception){
+                                            val builder = AlertDialog.Builder(
+                                                this@ServiceAssignActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(e.toString())
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
+                                    }
+                                    else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceAssignActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            onBackPressed()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+
+
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+//                            Toast.makeText(
+//                                applicationContext,
+//                                ""+Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            val builder = AlertDialog.Builder(
+                                this@ServiceAssignActivity,
+                                R.style.MyDialogTheme
+                            )
+                            builder.setMessage(Config.PLEASE_TRY_AGAIN)
+                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                finish()
+                            }
+                            val alertDialog: AlertDialog = builder.create()
+                            alertDialog.setCancelable(false)
+                            alertDialog.show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 }
