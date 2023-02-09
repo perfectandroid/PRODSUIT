@@ -109,6 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:background="@drawable/navbg"
                     android:orientation="vertical">
 <!--                    android:background="@drawable/gradient_lead"-->
 
@@ -155,9 +156,11 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="20dp"
-                                android:background="@drawable/svg_lm_todo_main"
+                                android:background="@drawable/svg_lead_man_todo"
                                 android:gravity="center"
                                 android:orientation="horizontal">
+
+<!--                                android:background="@drawable/svg_lm_todo_main"-->
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -167,10 +170,11 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="3.5"
-                                        android:background="@drawable/svg_lm_todo_sub"
+                                        android:layout_weight="4"
                                         android:gravity="center"
                                         android:orientation="horizontal">
+<!--                                        android:layout_weight="3.5"-->
+<!--                                        android:background="@drawable/svg_lm_todo_sub"-->
 
                                         <TextView
                                             android:id="@+id/tv_todo_count"
@@ -191,18 +195,32 @@
 
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginBottom="10dp"
                                         android:layout_weight="1.6"
+                                        android:layout_margin="1dp"
+                                        android:background="@drawable/shape_white"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center_vertical"
-                                        android:paddingLeft="20dp"
+                                        android:paddingLeft="25dp"
                                         android:text="To-Do List"
                                         android:textColor="#3A6F8E"
                                         android:textSize="20dp"
                                         android:textStyle="bold" />
+
+<!--                                    android:layout_marginTop="10dp"-->
+<!--                                    android:layout_marginBottom="10dp"-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="5"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+
+                                    </LinearLayout>
 
 
                                 </LinearLayout>
@@ -218,11 +236,11 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="20dp"
-                                android:background="@drawable/svg_lm_overdue_main"
+                                android:background="@drawable/svg_lead_man_overdue"
                                 android:gravity="center"
                                 android:orientation="horizontal">
+<!--                                android:background="@drawable/svg_lm_overdue_main"-->
                                 <!--                            overduelistbg-->
-
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -233,10 +251,11 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="3.5"
-                                        android:background="@drawable/svg_lm_overdue_sub"
+                                        android:layout_weight="4"
                                         android:gravity="center"
                                         android:orientation="horizontal">
+
+<!--                                        android:background="@drawable/svg_lm_overdue_sub"-->
 
                                         <TextView
                                             android:id="@+id/tv_overdue_count"
@@ -258,20 +277,46 @@
                                     </LinearLayout>
 
 
+
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginBottom="10dp"
                                         android:layout_weight="1.6"
+                                        android:layout_margin="1dp"
+                                        android:background="@drawable/shape_white"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center_vertical"
-                                        android:paddingLeft="20dp"
+                                        android:paddingLeft="25dp"
                                         android:text="Over Due"
                                         android:textColor="#6C606C"
                                         android:textSize="20dp"
                                         android:textStyle="bold" />
+<!--                                    <TextView-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:layout_marginTop="10dp"-->
+<!--                                        android:layout_marginBottom="10dp"-->
+<!--                                        android:layout_weight="1.6"-->
+<!--                                        android:fontFamily="@font/myfont"-->
+<!--                                        android:gravity="center_vertical"-->
+<!--                                        android:paddingLeft="20dp"-->
+<!--                                        android:text="Over Due"-->
+<!--                                        android:textColor="#6C606C"-->
+<!--                                        android:textSize="20dp"-->
+<!--                                        android:textStyle="bold" />-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="5"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+
+                                    </LinearLayout>
 
 
                                 </LinearLayout>
@@ -287,7 +332,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginBottom="10dp"
-                                android:background="@drawable/svg_lm_upcoming_main"
+                                android:background="@drawable/svg_lead_man_upcoming"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -299,10 +344,11 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="3.5"
+                                        android:layout_weight="4"
                                         android:gravity="center"
-                                        android:background="@drawable/svg_lm_upcoming_sub"
                                         android:orientation="horizontal">
+<!--                                        android:background="@drawable/svg_lm_upcoming_sub"-->
+<!--                                        android:layout_weight="3.5"-->
 
                                         <TextView
                                             android:id="@+id/tv_upcoming_count"
@@ -324,22 +370,46 @@
                                     </LinearLayout>
 
 
-
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginTop="10dp"
-                                        android:layout_marginBottom="10dp"
                                         android:layout_weight="1.6"
+                                        android:layout_margin="1dp"
+                                        android:background="@drawable/shape_white"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center_vertical"
-                                        android:paddingLeft="20dp"
+                                        android:paddingLeft="25dp"
                                         android:text="Upcoming Tasks"
                                         android:textColor="#FF667B7C"
                                         android:textSize="20dp"
                                         android:textStyle="bold" />
 
+<!--                                    <TextView-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:layout_marginTop="10dp"-->
+<!--                                        android:layout_marginBottom="10dp"-->
+<!--                                        android:layout_weight="1.6"-->
+<!--                                        android:fontFamily="@font/myfont"-->
+<!--                                        android:gravity="center_vertical"-->
+<!--                                        android:paddingLeft="20dp"-->
+<!--                                        android:text="Upcoming Tasks"-->
+<!--                                        android:textColor="#FF667B7C"-->
+<!--                                        android:textSize="20dp"-->
+<!--                                        android:textStyle="bold" />-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="5"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+
+                                    </LinearLayout>
 
 
 
