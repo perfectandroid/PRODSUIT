@@ -25,12 +25,11 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
-import com.perfect.prodsuit.Viewmodel.EmployeeViewModel
-import com.perfect.prodsuit.Viewmodel.FollowUpActionViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceListViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceOnGoingListViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickListener,
     ItemClickListener {
@@ -110,6 +109,23 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
     var ID_Status: String? = ""
     var ID_AttendedBy: String? = ""
 
+    var strEditTicket : String?= ""
+    var strEditProductComplaint : String?= ""
+    var strEditCustomer : String?= ""
+    var strEditProductname : String?= ""
+
+    var serAssignCount = 0
+    lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
+    var ID_CustomerServiceRegister: String? = ""
+    var ID_Priority: String? = ""
+
+    lateinit var serviceEditUpdateViewModel: ServiceEditUpdateViewModel
+    var serUpdateCount = 0
+    var strVisitDate : String?= ""
+
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,6 +138,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
         serviceOnGoingListViewModel = ViewModelProvider(this).get(ServiceOnGoingListViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
+        serviceAssignDetailViewModel = ViewModelProvider(this).get(ServiceAssignDetailsViewModel::class.java)
+        serviceEditUpdateViewModel = ViewModelProvider(this).get(ServiceEditUpdateViewModel::class.java)
 
         setRegViews()
 
@@ -287,8 +305,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
     }
 
     private fun getServiceOnGoingList() {
-        recyServiceList!!.adapter = null
-        tv_listCount!!.setText("0")
+//        recyServiceList!!.adapter = null
+//        tv_listCount!!.setText("0")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -377,7 +395,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
         if (data.equals("ServiceList")) {
 
             val jsonObject = serviceListArrayList.getJSONObject(position)
-            val ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
             val i = Intent(this@ServiceOngoingListActivityActivity, ServiceAssignActivity::class.java)
             i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
             startActivity(i)
@@ -387,7 +405,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 //            val i = Intent(this@ServiceOngoingListActivityActivity, ServiceAssignActivity::class.java)
 //            startActivity(i)
 
-            serviceEditBottom()
+            //serviceEditBottom()
+            val jsonObject = serviceListArrayList.getJSONObject(position)
+            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            serAssignCount = 0
+            getServiceAssignDetails()
         }
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
@@ -409,10 +431,122 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 
     }
 
+    private fun getServiceAssignDetails() {
+        var ReqMode = "76"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                Log.e(TAG,"ServiceAssignDetails  2751   "+msg)
+
+                                if (serAssignCount == 0){
+                                    serAssignCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ServiceAssignDetails")
+                                        Log.e(TAG,"FromDate  2752   "+jobjt.getString("FromDate"))
+                                      //  var saDetailArrayList = jobjt.getJSONArray("EmployeeRoleDetailsList")
+                                     //   Log.e(TAG,"saDetailArrayList  2753   "+saDetailArrayList)
+
+
+                                        ID_CustomerServiceRegister = jobjt.getString("ID_Customerserviceregister")
+                                        ID_Priority = jobjt.getString("Priority")
+
+                                        strEditTicket = jobjt.getString("Ticket")
+                                        strEditCustomer = jobjt.getString("Customer")
+                                        strEditProductname = jobjt.getString("Productname")
+                                        strEditProductComplaint = jobjt.getString("ProductComplaint")
+
+                                        serviceEditBottom()
+
+//                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
+//                                        tv_LandMark!!.setText(""+jobjt.getString("Landmark"))
+//                                        tv_Customer!!.setText(""+jobjt.getString("Customer"))
+//                                        tv_ContactNo!!.setText(""+jobjt.getString("OtherMobile"))
+//                                        tv_Address!!.setText(""+jobjt.getString("Address"))
+//                                        tv_Mobile!!.setText(""+jobjt.getString("Mobile"))
+//
+//                                        // Service Information
+//
+//                                        tv_RequestedDate!!.setText(""+jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate"))
+//                                        tv_RequestedTime!!.setText(""+jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime"))
+//
+//                                        // Product Details
+//                                        tv_ProductName!!.setText(""+jobjt.getString("Productname"))
+//                                        tv_ProductComplaint!!.setText(""+jobjt.getString("ProductComplaint"))
+//                                        tv_Description!!.setText(""+jobjt.getString("ProductDescription"))
+//
+//                                        ID_Priority = jobjt.getString("Priority")
+//                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceOngoingListActivityActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            //   finish()
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+//                            Toast.makeText(
+//                                applicationContext,
+//                                ""+Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            val builder = AlertDialog.Builder(
+                                this@ServiceOngoingListActivityActivity,
+                                R.style.MyDialogTheme
+                            )
+                            builder.setMessage(Config.PLEASE_TRY_AGAIN)
+                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                //finish()
+                            }
+                            val alertDialog: AlertDialog = builder.create()
+                            alertDialog.setCancelable(false)
+                            alertDialog.show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun serviceEditBottom() {
         try {
-
-
+            Log.e(TAG,"serviceEditBottom  549  ")
             val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
             val view = layoutInflater.inflate(R.layout.sa_edit_bottom_sheet, null)
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -424,7 +558,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
             tv_Ticket = view.findViewById<TextView>(R.id.tv_Ticket)
             tv_Customer = view.findViewById<TextView>(R.id.tv_Customer)
             tv_Name = view.findViewById<TextView>(R.id.tv_Name)
-            tv_Customer = view.findViewById<TextView>(R.id.tv_Customer)
+            tv_Complaint = view.findViewById<TextView>(R.id.tv_Complaint)
             txtReset = view.findViewById<TextView>(R.id.txtReset)
             txtUpdate = view.findViewById<TextView>(R.id.txtUpdate)
 
@@ -437,8 +571,14 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
             tie_Status!!.addTextChangedListener(watcher);
             tie_AttendedBy!!.addTextChangedListener(watcher);
 
+            tv_Ticket!!.setText(""+strEditTicket)
+            tv_Customer!!.setText(""+strEditCustomer)
+            tv_Name!!.setText(""+strEditProductname)
+            tv_Complaint!!.setText(""+strEditProductComplaint)
+
             tie_Status!!.setOnClickListener(this)
             tie_AttendedBy!!.setOnClickListener(this)
+
             resetEditdata()
 
             txtReset!!.setOnClickListener {
@@ -453,6 +593,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 
         }catch (e: Exception){
 
+            Log.e(TAG,"549   "+e.toString())
         }
     }
 
@@ -468,7 +609,120 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
         }
         else{
             dialog1.dismiss()
-            Toast.makeText(applicationContext, "Successs", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "Successs", Toast.LENGTH_SHORT).show()
+            try {
+                val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+                val currentDate = sdf.format(Date())
+                val newDate: Date = sdf.parse(currentDate)
+                val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+                strVisitDate = sdfDate2.format(newDate)
+                serUpdateCount = 0
+                serviceEditUpdate()
+
+            }catch (e: Exception){
+
+                Log.e(TAG,"Exception 196  "+e.toString())
+            }
+        }
+
+    }
+
+    private fun serviceEditUpdate() {
+        var ReqMode = "0"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceEditUpdateViewModel.getServiceUpdate(this,ReqMode,ID_CustomerServiceRegister!!,strVisitDate!!,ID_Priority!!,ID_AttendedBy!!,ID_Status!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serUpdateCount == 0){
+                                    serUpdateCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   82   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        try {
+                                            val jobjt = jObject.getJSONObject("CustomerserviceassignEdit")
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_service_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+                                            suceessDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                                            suceessDialog!!.setCancelable(false)
+
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+
+                                            tv_succesmsg!!.setText(jobjt.getString("Message"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                serviceList = 0
+                                                getServiceOnGoingList()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                        }catch (e: Exception){
+                                            val builder = AlertDialog.Builder(
+                                                this@ServiceOngoingListActivityActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(e.toString())
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceOngoingListActivityActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
 
     }
@@ -778,6 +1032,12 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
             }
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        serviceList = 0
+        getServiceOnGoingList()
     }
 
 }

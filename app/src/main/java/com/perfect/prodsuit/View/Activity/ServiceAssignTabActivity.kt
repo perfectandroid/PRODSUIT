@@ -79,6 +79,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
     private var strFromDate: String = ""
     private var strToDate: String = ""
     private var strCustomer: String = ""
+
+
     private var strMobile: String = ""
     private var strTicketNo: String = ""
     private var strDueDays: String = ""
@@ -1224,6 +1226,12 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         }
     }
 
+
+    override fun onRestart() {
+        super.onRestart()
+        serviceCount = 0
+        getserviceCounts()
+    }
 
 
 

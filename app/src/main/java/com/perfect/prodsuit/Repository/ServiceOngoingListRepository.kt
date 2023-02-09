@@ -24,7 +24,7 @@ object ServiceOngoingListRepository {
 
     private var progressDialog: ProgressDialog? = null
     val serviceListSetterGetter = MutableLiveData<ServiceListModel>()
-    val TAG: String = "ServiceListRepository"
+    val TAG: String = "ServiceOngoingListRepository"
 
     fun getServicesApiCall(context: Context, SubMode : String, ID_Branch : String, FK_Area : String, ID_Employee : String, strFromDate : String, strToDate : String, strCustomer : String,
                            strMobile : String, strTicketNo : String, strDueDays : String): MutableLiveData<ServiceListModel> {
@@ -35,7 +35,7 @@ object ServiceOngoingListRepository {
     private fun getServiceList(context: Context,SubMode : String,ID_Branch : String,FK_Area : String,ID_Employee : String,strFromDate : String,strToDate : String,strCustomer : String,
                                strMobile : String,strTicketNo : String,strDueDays : String) {
         try {
-            ServiceListRepository.serviceListSetterGetter.value = ServiceListModel("")
+            serviceListSetterGetter.value = ServiceListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

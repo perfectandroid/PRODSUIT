@@ -336,6 +336,9 @@ interface ApiInterface {
     @POST("ServiceAssign/CustomerserviceassignUpdate")
     fun getCustomerserviceassignUpdate(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceAssign/CustomerserviceassignEdit")
+    fun getCustomerserviceassignEdit(@Body body: RequestBody): Call<String>
+
 
 
 }

@@ -96,14 +96,15 @@
                             android:textStyle="bold"
                             android:textAllCaps="true"
                             android:textColor="@color/greydarks"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -142,7 +143,7 @@
                                         android:textSize="14dp"
                                         android:paddingLeft="2dp"
                                         android:fontFamily="@font/myfont"
-                                        android:text="GGG"
+                                        android:text=""
                                         android:textStyle="normal"
                                         android:textColor="@color/black"
                                         android:layout_centerVertical="true" />
@@ -160,6 +161,11 @@
 
 
                             </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/color_background1" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -207,7 +213,7 @@
                                             android:textSize="14dp"
                                             android:paddingLeft="2dp"
                                             android:fontFamily="@font/myfont"
-                                            android:text="hffh"
+                                            android:text=""
                                             android:textStyle="normal"
                                             android:textColor="@color/black"
                                             android:layout_centerVertical="true" />
@@ -227,6 +233,8 @@
                             </LinearLayout>
 
 
+
+
                         </LinearLayout>
 
 
@@ -243,13 +251,14 @@
                             android:textStyle="bold"
                             android:textAllCaps="true"
                             android:textColor="@color/greydarks"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
 
                             <LinearLayout
@@ -298,7 +307,7 @@
                                             android:textSize="14dp"
                                             android:paddingLeft="2dp"
                                             android:fontFamily="@font/myfont"
-                                            android:text="hffh"
+                                            android:text=""
                                             android:textStyle="normal"
                                             android:textColor="@color/black"
                                             android:layout_centerVertical="true" />
@@ -316,6 +325,11 @@
 
 
                             </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/color_background1" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -354,7 +368,7 @@
                                         android:textSize="14dp"
                                         android:paddingLeft="2dp"
                                         android:fontFamily="@font/myfont"
-                                        android:text="GGG"
+                                        android:text=""
                                         android:textStyle="normal"
                                         android:textColor="@color/black"
                                         android:layout_centerVertical="true" />
@@ -372,6 +386,11 @@
 
 
                             </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/color_background1" />
 
 
                         </LinearLayout>

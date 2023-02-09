@@ -33,9 +33,14 @@
 <!--          <item android:offset="0.744792" android:color="#349ACE"/>-->
 <!--          <item android:offset="1" android:color="#1272A3"/>-->
 
+<!--          <item android:offset="0" android:color="#15576F"/>-->
+<!--          <item android:offset="0.276042" android:color="#3491B3"/>-->
+<!--          <item android:offset="0.744792" android:color="#3491B3"/>-->
+<!--          <item android:offset="1" android:color="#15576F"/>-->
+
           <item android:offset="0" android:color="#15576F"/>
-          <item android:offset="0.276042" android:color="#3491B3"/>
-          <item android:offset="0.744792" android:color="#3491B3"/>
+          <item android:offset="0.276042" android:color="#15576F"/>
+          <item android:offset="0.744792" android:color="#15576F"/>
           <item android:offset="1" android:color="#15576F"/>
 
       </gradient>

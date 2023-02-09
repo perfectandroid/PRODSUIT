@@ -357,8 +357,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceAssignDetails")
                                         Log.e(TAG,"FromDate  2752   "+jobjt.getString("FromDate"))
-                                        var saDetailArrayList = jobjt.getJSONArray("EmployeeRoleDetailsList")
-                                        Log.e(TAG,"saDetailArrayList  2753   "+saDetailArrayList)
+                                   //     var saDetailArrayList = jobjt.getJSONArray("EmployeeRoleDetailsList")
+                                   //     Log.e(TAG,"saDetailArrayList  2753   "+saDetailArrayList)
 
 
                                         tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
@@ -382,44 +382,44 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
 
 
-                                        if (saDetailArrayList.length()>0){
-
-                                            for (i in 0 until saDetailArrayList.length()) {
-
-//                                                "ID_Employee": "12",
-//                                                "EmpCode": "E11647926087",
-//                                                "Employee": "SACHIN T",
-//                                                "ID_CSAEmployeeType": "1",
-//                                                "EmployeeType": "Manager",
-//                                                "Attend": "0",
-//                                                "DepartmentID": "2",
-//                                                "Designation": "Service Manager",
-//                                                "Department": "Customer service"
-
-                                               val jsonObject = saDetailArrayList.getJSONObject(i)
-
-                                                val jObject = JSONObject()
-                                                jObject.put("DepartmentID",jsonObject.getString("DepartmentID"))
-                                                jObject.put("Department",jsonObject.getString("Department"))
-
-                                                jObject.put("ID_Employee", jsonObject.getString("ID_Employee"))
-                                                jObject.put("Employee", jsonObject.getString("Employee"))
-
-                                                jObject.put("ID_CSAEmployeeType",jsonObject.getString("ID_CSAEmployeeType")) // Role
-                                                jObject.put("EmployeeType",jsonObject.getString("EmployeeType")) // Role
-
-                                             //   jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
-
-
-                                                arrProducts.put(jObject)
-
-
-                                            }
-
-
-
-
-                                        }
+//                                        if (saDetailArrayList.length()>0){
+//
+//                                            for (i in 0 until saDetailArrayList.length()) {
+//
+////                                                "ID_Employee": "12",
+////                                                "EmpCode": "E11647926087",
+////                                                "Employee": "SACHIN T",
+////                                                "ID_CSAEmployeeType": "1",
+////                                                "EmployeeType": "Manager",
+////                                                "Attend": "0",
+////                                                "DepartmentID": "2",
+////                                                "Designation": "Service Manager",
+////                                                "Department": "Customer service"
+//
+//                                               val jsonObject = saDetailArrayList.getJSONObject(i)
+//
+//                                                val jObject = JSONObject()
+//                                                jObject.put("DepartmentID",jsonObject.getString("DepartmentID"))
+//                                                jObject.put("Department",jsonObject.getString("Department"))
+//
+//                                                jObject.put("ID_Employee", jsonObject.getString("ID_Employee"))
+//                                                jObject.put("Employee", jsonObject.getString("Employee"))
+//
+//                                                jObject.put("ID_CSAEmployeeType",jsonObject.getString("ID_CSAEmployeeType")) // Role
+//                                                jObject.put("EmployeeType",jsonObject.getString("EmployeeType")) // Role
+//
+//                                             //   jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
+//
+//
+//                                                arrProducts.put(jObject)
+//
+//
+//                                            }
+//
+//
+//
+//
+//                                        }
 
                                         if (arrProducts.length()>0){
                                             card_details!!.visibility = View.VISIBLE

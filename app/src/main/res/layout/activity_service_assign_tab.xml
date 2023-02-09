@@ -349,9 +349,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:layout_margin="3dp"
+                                android:layout_margin="1dp"
                                 android:orientation="horizontal"
-                                android:background="@drawable/csa_sub_new">
+                                android:background="@drawable/shape_white">
+<!--                                android:layout_margin="3dp"-->
+<!--                                android:background="@drawable/csa_sub_new"-->
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -417,9 +419,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:layout_margin="3dp"
+                                android:layout_margin="1dp"
                                 android:orientation="horizontal"
-                                android:background="@drawable/csa_sub_ongoing">
+                                android:background="@drawable/shape_white">
+
+<!--                                android:layout_margin="3dp"-->
+<!--                                android:background="@drawable/csa_sub_ongoing"-->
 <!--                                svg_left_arrow-->
 
                                 <TextView

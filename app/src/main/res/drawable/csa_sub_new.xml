@@ -7,7 +7,7 @@
   <path
       android:pathData="M0,110C0,49.249 49.249,0 110,0H750V220H110C49.249,220 0,170.751 0,110V110Z">
     <aapt:attr name="android:fillColor">
-      <gradient 
+      <gradient
           android:startY="0"
           android:startX="375"
           android:endY="220"
@@ -23,9 +23,14 @@
 <!--        <item android:offset="0.807292" android:color="#A4C1CF"/>-->
 <!--        <item android:offset="1" android:color="#CEEBFA"/>-->
 
+<!--          <item android:offset="0" android:color="#F3F3F3"/>-->
+<!--          <item android:offset="0.177083" android:color="#CDCDCD"/>-->
+<!--          <item android:offset="0.807292" android:color="#CDCDCD"/>-->
+<!--          <item android:offset="1" android:color="#F3F3F3"/>-->
+
           <item android:offset="0" android:color="#F3F3F3"/>
-          <item android:offset="0.177083" android:color="#CDCDCD"/>
-          <item android:offset="0.807292" android:color="#CDCDCD"/>
+          <item android:offset="0.177083" android:color="#F3F3F3"/>
+          <item android:offset="0.807292" android:color="#F3F3F3"/>
           <item android:offset="1" android:color="#F3F3F3"/>
 
       </gradient>
