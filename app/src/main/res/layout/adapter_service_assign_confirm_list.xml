@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="0dp"
+    app:cardElevation="0dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_Conf_Employee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="start"
+                    android:padding="2dp"
+                    android:text="fdsfdgdfgdfhdfhdfhfhdfdfhdfhdfhdfhdfhdfhh"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_background1"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_Conf_Role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="start"
+                        android:padding="2dp"
+                        android:text="gfdghdfhdfhdhdghdfh fgdgdfgdfgdgdfgd"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/tv_si"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center_vertical"
+            android:textSize="12dp"
+            android:paddingLeft="4dp"
+            android:fontFamily="@font/myfont"
+            android:text=""
+            android:textColor="@color/greydarks"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
+
+
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/list_line"
+        android:visibility="visible"/>
+
+
+</androidx.cardview.widget.CardView>

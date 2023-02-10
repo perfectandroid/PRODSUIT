@@ -66,7 +66,7 @@ object InfoRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))  // Log
 
 
-                Log.e(TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"requestObject1   8211   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -82,12 +82,14 @@ object InfoRepository {
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"response   8211   "+response.body())
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<InfoModel>()
                         leads.add(InfoModel(response.body()))
                         val msg = leads[0].message
                         infoSetterGetter.value = InfoModel(msg)
                     } catch (e: Exception) {
+                        Log.e(TAG,"Exception   82112   "+e.toString())
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {

@@ -805,16 +805,61 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun showPictureDialog() {
-        val pictureDialog = AlertDialog.Builder(this)
-        pictureDialog.setTitle("Select From")
-        val pictureDialogItems = arrayOf("Gallery", "Camera")
-        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
-            when (which) {
-                0 -> choosePhotoFromGallary()
-                1 -> takePhotoFromCamera()
-            }
+//        val pictureDialog = AlertDialog.Builder(this)
+//        pictureDialog.setTitle("Select From")
+//        val pictureDialogItems = arrayOf("Gallery", "Camera")
+//        pictureDialog.setItems(pictureDialogItems   ) { dialog, which ->
+//            when (which) {
+//                0 -> choosePhotoFromGallary()
+//                1 -> takePhotoFromCamera()
+//            }
+//        }
+//        pictureDialog.show()
+
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+            if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val pictureDialog = AlertDialog.Builder(this)
+                    pictureDialog.setTitle("Select From")
+                    val pictureDialogItems = arrayOf("Gallery", "Camera")
+                    pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                        when (which) {
+                            0 -> choosePhotoFromGallary()
+                            1 -> takePhotoFromCamera()
+                        }
+                    }
+                    pictureDialog.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                CAMERA
+            )
+        } catch (e: Exception) {
+
         }
-        pictureDialog.show()
     }
 
     private fun checkCamera(): Boolean {
@@ -879,83 +924,217 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }
             }
         } else if (requestCode == CAMERA) {
-            if (data != null) {
-                try {
-                    if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+
+            try {
+                if (data != null) {
+                    try {
+                        if (ContextCompat.checkSelfPermission(
                                 this,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            )
+                            ) != PackageManager.PERMISSION_GRANTED
                         ) {
-                        } else {
-                            ActivityCompat.requestPermissions(
-                                this,
-                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                            )
-                        }
-                    }
-                    else {
-                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                        val bytes = ByteArrayOutputStream()
-                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-                        destination = File(
-                            (Environment.getExternalStorageDirectory()).toString() + "/" +
-                                    getString(R.string.app_name),
-                            "IMG_" + System.currentTimeMillis() + ".jpg"
-                        )
-                        val fo: FileOutputStream
-                        try {
-                            if (!destination!!.getParentFile().exists()) {
-                                destination!!.getParentFile().mkdirs()
-                            }
-                            if (!destination!!.exists()) {
-                                destination!!.createNewFile()
-                            }
-                            fo = FileOutputStream(destination)
-                            fo.write(bytes.toByteArray())
-                            fo.close()
-                        } catch (e: FileNotFoundException) {
-                            e.printStackTrace()
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                    this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                )
+                            ) {
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
 
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                        if (strImage.equals("1")) {
-                            image1 = destination!!.getAbsolutePath()
-                            destination = File(image1)
-                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                            val converetdImage = getResizedBitmap(myBitmap, 500)
-                            if (imgv_upload1 != null) {
+                            } else {
+                                // No explanation needed; request the permission
+                                ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                                )
+                            }
+                        } else {
+
+                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                            val bytes = ByteArrayOutputStream()
+                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                    destination = File(
+//                        (Environment.getExternalStorageDirectory()).toString() + "/" +
+//                                getString(R.string.app_name),
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+//                               "",
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    val fo: FileOutputStream
+
+                            try {
+//                        if (!destination!!.getParentFile().exists()) {
+//                            destination!!.getParentFile().mkdirs()
+//                        }
+//                        if (!destination!!.exists()) {
+//                            destination!!.createNewFile()
+//                        }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                                } else {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                }
+
+                                if (!destination!!.exists()) {
+                                    destination!!.createNewFile()
+                                }
+
+                                destination = File(
+                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                            "",
+                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                )
+                                val fo: FileOutputStream
+
+
+                                fo = FileOutputStream(destination)
+                                fo.write(bytes.toByteArray())
+                                fo.close()
+                            } catch (e: FileNotFoundException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                            }
+
+                            if (strImage.equals("1")) {
+                                image1 = destination!!.getAbsolutePath()
+                                Log.e(TAG, "image1  20522    " + image1)
+                                destination = File(image1)
+
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
+                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                                if (imgv_upload1 != null) {
+                                    imgv_upload1!!.setImageBitmap(converetdImage)
+                                }
                                 imgv_upload1!!.setImageBitmap(converetdImage)
+
+                                if (image1 != null) {
+
+                                }
                             }
-                            imgv_upload1!!.setImageBitmap(converetdImage)
-                            if (image1 != null) {
-                            }
-                        }
-                        if (strImage.equals("2")) {
-                            image2 = destination!!.getAbsolutePath()
-                            destination = File(image2)
-                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                            val converetdImage = getResizedBitmap(myBitmap, 500)
-                            if (imgv_upload2 != null) {
+                            if (strImage.equals("2")) {
+                                image2 = destination!!.getAbsolutePath()
+                                Log.e(TAG, "image2  20522    " + image2)
+                                destination = File(image2)
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
+                                //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                                if (imgv_upload2 != null) {
+                                    imgv_upload2!!.setImageBitmap(converetdImage)
+                                }
                                 imgv_upload2!!.setImageBitmap(converetdImage)
+
+                                if (image2 != null) {
+
+                                }
                             }
-                            imgv_upload2!!.setImageBitmap(converetdImage)
-                            if (image2 != null) {
-                            }
+
                         }
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
-                catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT).show()
-                }
+            } catch (e: Exception) {
+
             }
+
+
+//            if (data != null) {
+//                try {
+//                    if (ContextCompat.checkSelfPermission(
+//                            this,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                                this,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                            )
+//                        ) {
+//                        } else {
+//                            ActivityCompat.requestPermissions(
+//                                this,
+//                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                            )
+//                        }
+//                    }
+//                    else {
+//                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+//                        val bytes = ByteArrayOutputStream()
+//                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                        destination = File(
+//                            (Environment.getExternalStorageDirectory()).toString() + "/" +
+//                                    getString(R.string.app_name),
+//                            "IMG_" + System.currentTimeMillis() + ".jpg"
+//                        )
+//                        val fo: FileOutputStream
+//                        try {
+//                            if (!destination!!.getParentFile().exists()) {
+//                                destination!!.getParentFile().mkdirs()
+//                            }
+//                            if (!destination!!.exists()) {
+//                                destination!!.createNewFile()
+//                            }
+//                            fo = FileOutputStream(destination)
+//                            fo.write(bytes.toByteArray())
+//                            fo.close()
+//                        } catch (e: FileNotFoundException) {
+//                            e.printStackTrace()
+//
+//                        } catch (e: IOException) {
+//                            e.printStackTrace()
+//                        }
+//                        if (strImage.equals("1")) {
+//                            image1 = destination!!.getAbsolutePath()
+//                            destination = File(image1)
+//                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+//                            val converetdImage = getResizedBitmap(myBitmap, 500)
+//                            if (imgv_upload1 != null) {
+//                                imgv_upload1!!.setImageBitmap(converetdImage)
+//                            }
+//                            imgv_upload1!!.setImageBitmap(converetdImage)
+//                            if (image1 != null) {
+//                            }
+//                        }
+//                        if (strImage.equals("2")) {
+//                            image2 = destination!!.getAbsolutePath()
+//                            destination = File(image2)
+//                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+//                            val converetdImage = getResizedBitmap(myBitmap, 500)
+//                            if (imgv_upload2 != null) {
+//                                imgv_upload2!!.setImageBitmap(converetdImage)
+//                            }
+//                            imgv_upload2!!.setImageBitmap(converetdImage)
+//                            if (image2 != null) {
+//                            }
+//                        }
+//                    }
+//                }
+//                catch (e: IOException) {
+//                    e.printStackTrace()
+//                    Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT).show()
+//                }
+//            }
         }
     }
 

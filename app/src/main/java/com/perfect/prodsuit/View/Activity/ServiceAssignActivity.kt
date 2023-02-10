@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
@@ -155,6 +156,20 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var arrProducts = JSONArray()
     var adapterService : ServiceAssignListAdapter? = null
     var ID_CustomerServiceRegister: String? = ""
+
+    var strTicket: String? = ""
+    var strLandmark: String? = ""
+    var strCustomer: String? = ""
+    var strContactNo: String? = ""
+    var strAddress: String? = ""
+    var strMobile: String? = ""
+    var strReqDate: String? = ""
+    var strReqTime: String? = ""
+    var strProductname: String? = ""
+    var strProductComplaint: String? = ""
+    var strProductDescription: String? = ""
+    var strPriorityName: String? = ""
+//    var str: String? = ""
 
     var serUpdateCount = 0
 
@@ -360,26 +375,62 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                    //     var saDetailArrayList = jobjt.getJSONArray("EmployeeRoleDetailsList")
                                    //     Log.e(TAG,"saDetailArrayList  2753   "+saDetailArrayList)
 
+                                      //  rrrrrrrr
 
-                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
-                                        tv_LandMark!!.setText(""+jobjt.getString("Landmark"))
-                                        tv_Customer!!.setText(""+jobjt.getString("Customer"))
-                                        tv_ContactNo!!.setText(""+jobjt.getString("OtherMobile"))
-                                        tv_Address!!.setText(""+jobjt.getString("Address"))
-                                        tv_Mobile!!.setText(""+jobjt.getString("Mobile"))
+                                        strTicket = jobjt.getString("Ticket")
+                                        strLandmark = jobjt.getString("Landmark")
+                                        strCustomer = jobjt.getString("Customer")
+                                        strContactNo = jobjt.getString("OtherMobile")
+                                        strAddress = jobjt.getString("Address")
+                                        strMobile = jobjt.getString("Mobile")
+                                        strReqDate = jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate")
+                                        strReqTime = jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime")
+                                        strProductname = jobjt.getString("Productname")
+                                        strProductComplaint = jobjt.getString("ProductComplaint")
+                                        strProductDescription = jobjt.getString("ProductDescription")
+                                        strPriorityName = jobjt.getString("PriorityName")
+
+
+                                        tv_Ticket!!.setText(""+strTicket)
+                                        tv_LandMark!!.setText(""+strLandmark)
+                                        tv_Customer!!.setText(""+strCustomer)
+                                        tv_ContactNo!!.setText(""+strContactNo)
+                                        tv_Address!!.setText(""+strAddress)
+                                        tv_Mobile!!.setText(""+strMobile)
 
                                         // Service Information
 
-                                        tv_RequestedDate!!.setText(""+jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate"))
-                                        tv_RequestedTime!!.setText(""+jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime"))
+                                        tv_RequestedDate!!.setText(""+strReqDate)
+                                        tv_RequestedTime!!.setText(""+strVisitTime)
 
                                         // Product Details
-                                        tv_ProductName!!.setText(""+jobjt.getString("Productname"))
-                                        tv_ProductComplaint!!.setText(""+jobjt.getString("ProductComplaint"))
-                                        tv_Description!!.setText(""+jobjt.getString("ProductDescription"))
+                                        tv_ProductName!!.setText(""+strProductname)
+                                        tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                        tv_Description!!.setText(""+strProductDescription)
 
                                         ID_Priority = jobjt.getString("Priority")
-                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
+                                        tie_Priority!!.setText(""+strPriorityName)
+
+
+//                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
+//                                        tv_LandMark!!.setText(""+jobjt.getString("Landmark"))
+//                                        tv_Customer!!.setText(""+jobjt.getString("Customer"))
+//                                        tv_ContactNo!!.setText(""+jobjt.getString("OtherMobile"))
+//                                        tv_Address!!.setText(""+jobjt.getString("Address"))
+//                                        tv_Mobile!!.setText(""+jobjt.getString("Mobile"))
+//
+//                                        // Service Information
+//
+//                                        tv_RequestedDate!!.setText(""+jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate"))
+//                                        tv_RequestedTime!!.setText(""+jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime"))
+//
+//                                        // Product Details
+//                                        tv_ProductName!!.setText(""+jobjt.getString("Productname"))
+//                                        tv_ProductComplaint!!.setText(""+jobjt.getString("ProductComplaint"))
+//                                        tv_Description!!.setText(""+jobjt.getString("ProductDescription"))
+//
+//                                        ID_Priority = jobjt.getString("Priority")
+//                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
 
 
 //                                        if (saDetailArrayList.length()>0){
@@ -594,7 +645,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             getCurrentdateTime()
         }
 
-        tie_Remarks!!.setText("")
+      //  tie_Remarks!!.setText("")
         tie_Department!!.setText("")
         tie_Employee!!.setText("")
         tie_Role!!.setText("")
@@ -1465,6 +1516,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             Log.e(TAG,"ID_Priority   "+jsonObject.getString("Code"))
             ID_Priority = jsonObject.getString("Code")
             tie_Priority!!.setText(jsonObject.getString("Description"))
+            strPriorityName = jsonObject.getString("Description")
+
 
 
         }
@@ -1691,10 +1744,175 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     +"\n"+"arrAssignees   "+arrAssignees
                     +"\n"+"arrProducts   "+arrProducts)
 
-            serUpdateCount = 0
-            serviceassignUpdate(arrAssignees.toString())
+            serviceassignConfirm(arrAssignees.toString())
+
+//            serUpdateCount = 0
+//            serviceassignUpdate(arrAssignees.toString())
         }
 
+
+
+    }
+
+    private fun serviceassignConfirm(strAssignees: String) {
+
+        try {
+
+            val dialogConfirmPop = Dialog(this)
+            dialogConfirmPop!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogConfirmPop!!.setContentView(R.layout.service_assign_confirmation)
+            dialogConfirmPop!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+
+            ////////////////////////
+
+            val ll_Ticket = dialogConfirmPop!!.findViewById(R.id.ll_Ticket) as LinearLayout
+            val ll_LandMark = dialogConfirmPop!!.findViewById(R.id.ll_LandMark) as LinearLayout
+            val ll_Customer = dialogConfirmPop!!.findViewById(R.id.ll_Customer) as LinearLayout
+            val ll_ContactNo = dialogConfirmPop!!.findViewById(R.id.ll_ContactNo) as LinearLayout
+            val ll_Address = dialogConfirmPop!!.findViewById(R.id.ll_Address) as LinearLayout
+            val ll_Mobile = dialogConfirmPop!!.findViewById(R.id.ll_Mobile) as LinearLayout
+
+
+
+            val ll_ReqDate = dialogConfirmPop!!.findViewById(R.id.ll_ReqDate) as LinearLayout
+            val ll_ReqTime = dialogConfirmPop!!.findViewById(R.id.ll_ReqTime) as LinearLayout
+            val ll_ProductName = dialogConfirmPop!!.findViewById(R.id.ll_ProductName) as LinearLayout
+            val ll_ProductComplaint = dialogConfirmPop!!.findViewById(R.id.ll_ProductComplaint) as LinearLayout
+            val ll_Description = dialogConfirmPop!!.findViewById(R.id.ll_Description) as LinearLayout
+            val ll_VisitDate = dialogConfirmPop!!.findViewById(R.id.ll_VisitDate) as LinearLayout
+            val ll_VisitTime = dialogConfirmPop!!.findViewById(R.id.ll_VisitTime) as LinearLayout
+            val ll_Priority = dialogConfirmPop!!.findViewById(R.id.ll_Priority) as LinearLayout
+            val ll_Remark = dialogConfirmPop!!.findViewById(R.id.ll_Remark) as LinearLayout
+
+
+            ////////////////////////
+
+
+            val tvp_Ticket = dialogConfirmPop!!.findViewById(R.id.tvp_Ticket) as TextView
+            val tvp_LandMark = dialogConfirmPop!!.findViewById(R.id.tvp_LandMark) as TextView
+            val tvp_Customer = dialogConfirmPop!!.findViewById(R.id.tvp_Customer) as TextView
+            val tvp_ContactNo = dialogConfirmPop!!.findViewById(R.id.tvp_ContactNo) as TextView
+            val tvp_Address = dialogConfirmPop!!.findViewById(R.id.tvp_Address) as TextView
+            val tvp_Mobile = dialogConfirmPop!!.findViewById(R.id.tvp_Mobile) as TextView
+            val tvp_ReqDate = dialogConfirmPop!!.findViewById(R.id.tvp_ReqDate) as TextView
+            val tvp_ReqTime = dialogConfirmPop!!.findViewById(R.id.tvp_ReqTime) as TextView
+            val tvp_ProductName = dialogConfirmPop!!.findViewById(R.id.tvp_ProductName) as TextView
+            val tvp_ProductComplaint = dialogConfirmPop!!.findViewById(R.id.tvp_ProductComplaint) as TextView
+            val tvp_Description = dialogConfirmPop!!.findViewById(R.id.tvp_Description) as TextView
+            val tvp_VisitDate = dialogConfirmPop!!.findViewById(R.id.tvp_VisitDate) as TextView
+            val tvp_VisitTime = dialogConfirmPop!!.findViewById(R.id.tvp_VisitTime) as TextView
+            val tvp_Priority = dialogConfirmPop!!.findViewById(R.id.tvp_Priority) as TextView
+            val tvp_Remark = dialogConfirmPop!!.findViewById(R.id.tvp_Remark) as TextView
+
+            val recyAssignList = dialogConfirmPop!!.findViewById(R.id.recyAssignList) as FullLenghRecyclertview
+
+            Log.e(TAG,"arrProducts  1809   "+arrProducts)
+
+            val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
+            recyAssignList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            var adapterConf = ServiceAssignConfirmListAdapter(this@ServiceAssignActivity, arrProducts)
+            recyAssignList!!.adapter = adapterConf
+
+
+
+
+            ////////////////////////////
+
+            if (strTicket.equals("")) {
+                ll_Ticket!!.visibility = View.GONE
+            }
+
+            if (strLandmark.equals("")) {
+                ll_LandMark!!.visibility = View.GONE
+            }
+            if (strCustomer.equals("")) {
+                ll_Customer!!.visibility = View.GONE
+            }
+            if (strContactNo.equals("")) {
+                ll_ContactNo!!.visibility = View.GONE
+            }
+            if (strAddress.equals("")) {
+                ll_Address!!.visibility = View.GONE
+            }
+            if (strMobile.equals("")) {
+                ll_Mobile!!.visibility = View.GONE
+            }
+            if (strReqDate.equals("")) {
+                ll_ReqDate!!.visibility = View.GONE
+            }
+            if (strReqTime.equals("")) {
+                ll_ReqTime!!.visibility = View.GONE
+            }
+            if (strProductname.equals("")) {
+                ll_ProductName!!.visibility = View.GONE
+            }
+            if (strProductComplaint.equals("")) {
+                ll_ProductComplaint!!.visibility = View.GONE
+            }
+            if (strProductDescription.equals("")) {
+                ll_Description!!.visibility = View.GONE
+            }
+            if (strVisitDate.equals("")) {
+                ll_VisitDate!!.visibility = View.GONE
+            }
+            if (strVisitTime.equals("")) {
+                ll_VisitTime!!.visibility = View.GONE
+            }
+            if (strPriorityName.equals("")) {
+                ll_Priority!!.visibility = View.GONE
+            }
+            if (strRemark.equals("")) {
+                ll_Remark!!.visibility = View.GONE
+            }
+
+
+            tvp_Ticket!!.setText(strTicket)
+            tvp_LandMark!!.setText(strLandmark)
+            tvp_Customer!!.setText(strCustomer)
+            tvp_ContactNo!!.setText(strContactNo)
+            tvp_Address!!.setText(strAddress)
+            tvp_Mobile!!.setText(strMobile)
+            tvp_ReqDate!!.setText(strReqDate)
+            tvp_ReqTime!!.setText(strReqTime)
+            tvp_ProductName!!.setText(strProductname)
+            tvp_ProductComplaint!!.setText(strProductComplaint)
+            tvp_Description!!.setText(strProductDescription)
+            tvp_VisitDate!!.setText(tie_VisitDate!!.text.toString())
+            tvp_VisitTime!!.setText(tie_VisitTime!!.text.toString())
+            tvp_Priority!!.setText(strPriorityName)
+            tvp_Remark!!.setText(strRemark)
+
+
+            ///////////
+
+
+            val btnCancel = dialogConfirmPop!!.findViewById(R.id.btnCancel) as Button
+            val btnOk = dialogConfirmPop!!.findViewById(R.id.btnOk) as Button
+
+            Log.e(TAG, "")
+
+
+            btnCancel.setOnClickListener {
+                dialogConfirmPop.dismiss()
+            }
+
+            btnOk.setOnClickListener {
+                dialogConfirmPop.dismiss()
+                serUpdateCount = 0
+                serviceassignUpdate(strAssignees)
+            }
+
+
+            dialogConfirmPop!!.show()
+            dialogConfirmPop!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
 
     }

@@ -234,6 +234,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
     var imageDet = 0
     var documentDet = 0
+    var leadInfo = 0
+    var leadInfoCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -276,6 +278,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         setRegViews()
         bottombarnav()
         fabOpenClose()
+        leadInfo = 0
         getLeadInfoetails()
         getCalendarId(context)
         addTabItem()
@@ -291,7 +294,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         rltv_Info!!.visibility = View.VISIBLE
-
+        leadInfoCount = 0
         getInfoetails()
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -305,7 +308,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     ll_history!!.visibility = View.GONE
                     ll_images!!.visibility = View.GONE
                     rltv_document!!.visibility = View.GONE
-                   getInfoetails()
+
+                    leadInfoCount = 0
+                    getInfoetails()
 
                 }
                 if (tab.position == 1){
@@ -1567,7 +1572,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getLeadInfoetails() {
-        var leadInfo = 0
+       // var leadInfo = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 leadInfoViewModel.getLeadInfo(this,ID_LeadGenerateProduct!!)!!.observe(
@@ -1671,17 +1676,20 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+                        Log.e(TAG,"msg   795   "+msg)
                         if (msg!!.length > 0) {
+                            if (leadInfoCount == 0){
+                                leadInfoCount++
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   795   "+msg)
+
                             if (jObject.getString("StatusCode") == "0") {
                                 imInfoLoading.visibility = View.GONE
                                 llInfoDetail.visibility = View.VISIBLE
                                 val jobjt = jObject.getJSONObject("LeadInfoDetails")
                                 infoArrayList = jobjt.getJSONArray("LeadInfoDetailsList")
                                 if (infoArrayList.length()>0){
-                                    if (Info == 0){
-                                        Info++
+
+
 //                                        Log.e(TAG,"infoArrayList  845   "+infoArrayList)
 //                                        val lLayout = GridLayoutManager(this@AccountDetailsActivity, 1)
 //                                        recySubInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1731,13 +1739,14 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //                                                ll_projectVis.visibility = View.VISIBLE
 //                                                ll_productVis.visibility = View.GONE
 //                                            }
-                                            txtInfoProductlabel.setText(jsonObject1.getString("Product"))
+                                            txtInfoProductlabel.setText("Product")
                                         }
                                         else if (CompanyCategory.equals("2")){
 //                                            ll_projectVis.visibility = View.GONE
 //                                            ll_productVis.visibility = View.GONE
 //                                            ll_expectedVis.visibility = View.VISIBLE
-                                            txtInfoProductlabel.setText(jsonObject1.getString("Destination"))
+                                            txtInfoProductlabel.setText("Destination")
+//                                            txtInfoProductlabel.setText(jsonObject1.getString("Destination"))
 
                                         }
 //
