@@ -446,6 +446,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
 
     private fun getCategory() {
         var prodcategory = 0
+        var ReqMode = "13"
+        var SubMode = "0"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -454,7 +456,7 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productCategoryViewModel.getProductCategory(this)!!.observe(
+                productCategoryViewModel.getProductCategory(this,ReqMode!!,SubMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

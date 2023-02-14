@@ -13,10 +13,10 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CategoryAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class CompnayCategoryAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "CategoryAdapter"
+    internal val TAG : String = "CompnayCategoryAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
@@ -36,7 +36,7 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtCategory.text        = jsonObject!!.getString("CategoryName")
+                holder.txtCategory.text        = jsonObject!!.getString("Description")
 //                if (position % 2 == 0){
 //                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
 //                }
@@ -45,7 +45,7 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
 //                }
                 holder.llCategory!!.setTag(position)
                 holder.llCategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "category")
+                    clickListener!!.onClick(position, "compCategory")
                 })
             }
         } catch (e: Exception) {
@@ -81,4 +81,5 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

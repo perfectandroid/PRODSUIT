@@ -11,8 +11,8 @@ class ProductCategoryViewModel: ViewModel() {
 
     var productcategoryData: MutableLiveData<ProductCategoryModel>? = null
 
-    fun getProductCategory(context: Context) : LiveData<ProductCategoryModel>? {
-        productcategoryData = ProductCategoryRepository.getServicesApiCall(context)
+    fun getProductCategory(context: Context,ReqMode : String,SubMode : String) : LiveData<ProductCategoryModel>? {
+        productcategoryData = ProductCategoryRepository.getServicesApiCall(context,ReqMode,SubMode)
         return productcategoryData
     }
 

@@ -205,8 +205,6 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
         val currentDate = sdf.format(Date())
 
-
-
         try {
 
             Log.e(TAG,"DATE TIME  196  "+currentDate)

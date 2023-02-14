@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp"
+        android:layout_marginBottom="-20dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="0dp"
+        app:cardElevation="0dp">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@drawable/top_rounded_white">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:background="@color/color_tab"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Add Customer Details"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/header_text"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/shape_bottom_rounded1">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/ll_btn_add"
+                    android:fillViewport="true"
+                    android:fitsSystemWindows="true"
+                    android:padding="10dp"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingBottom="10dp"
+                                android:visibility="visible">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Name"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Name *"
+                                    app:endIconMode="custom"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="true"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Mobile"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Mobile *"
+                                    app:endIconMode="custom"
+                                    app:startIconDrawable="@drawable/icon_svg_mobile"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Mobile"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="true"
+                                        android:inputType="number"
+                                        android:maxLength="15"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_HouseName"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="House Name *"
+                                    app:endIconMode="custom"
+                                    app:startIconDrawable="@drawable/icon_svg_address"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_HouseName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="true"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Place"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Place"
+                                    app:endIconMode="custom"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Place"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="true"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Pincode"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Pincode"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/search_24"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Pincode"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="true"
+                                        android:inputType="number"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="true"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Country"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Country *"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/arrow_down"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Country"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="false"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="false"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_State"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="State *"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/arrow_down"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_State"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="false"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="false"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_District"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="District *"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/arrow_down"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_District"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="false"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="false"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Area"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Area"
+                                    android:importantForAutofill="no"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/arrow_down"
+                                    app:startIconDrawable="@drawable/icon_svg_area"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Area"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="false"
+                                        android:focusableInTouchMode="false"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_CN_Post"
+                                    style="@style/Widget.App.TextInputLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:hint="Post"
+                                    app:endIconMode="custom"
+                                    app:endIconDrawable="@drawable/arrow_down"
+                                    app:startIconDrawable="@drawable/icon_svg_customer"
+                                    app:startIconTint="@color/colorPrimaryDark">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/tie_CN_Post"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/greydark"
+                                        android:drawableLeft="@drawable/svg_report"
+                                        android:drawablePadding="-10dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:editable="false"
+                                        android:importantForAutofill="no"
+                                        android:focusableInTouchMode="false"
+                                        android:fontFamily="@font/myfont"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="10dp"
+                                        android:paddingTop="1dp"
+                                        android:paddingBottom="1dp"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="14dp"
+                                        android:textStyle="normal" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </ScrollView>
+
+                <LinearLayout
+                    android:id="@+id/ll_btn_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtNewUserCancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:textSize="15dp"
+                        android:textColor="@color/greydark"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_shape_reset"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:textAllCaps="false"
+                        android:text="CANCEL" />
+
+
+                    <TextView
+                        android:id="@+id/txtNewUserSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_shape_submit"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:textAllCaps="false"
+                        android:text="ADD" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyServiceWarranty1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyServiceProductHistory1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyServiceSalesHistory1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <!--                <com.perfect.prodsuit.Helper.FullLenghRecyclertview-->
+                <!--                    android:id="@+id/recyServiceProductHistory"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:visibility="gone" />-->
+
+                <LinearLayout
+                    android:id="@+id/ll_history_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <!--       </ScrollView>-->
+
+
+
+
+
+            <!--            <ScrollView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content">-->
+
+            <!--              -->
+
+
+            <!--            </ScrollView>-->
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

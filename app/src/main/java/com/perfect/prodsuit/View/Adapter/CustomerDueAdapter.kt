@@ -13,18 +13,16 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CategoryAdapter (internal var context: Context, internal var jsonArray: JSONArray):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CustomerDueAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    internal val TAG : String = "CategoryAdapter"
+    internal val TAG : String = "CustomerDueAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
-        val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_category, parent, false
-        )
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_customer_due, parent, false)
         vh = MainViewHolder(v)
         return vh
     }
@@ -35,25 +33,22 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtCategory.text        = jsonObject!!.getString("CategoryName")
-//                if (position % 2 == 0){
-//                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.greylight))
-//                }
-//                else{
-//                    holder.llprodpriority!!.setBackgroundColor(context.getColor(R.color.white))
-//                }
-                holder.llCategory!!.setTag(position)
-                holder.llCategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "category")
-                })
+
+                holder.tv_AccountDetails.text        = jsonObject!!.getString("CategoryName")
+                holder.tv_Balance.text      = jsonObject!!.getString("ID_Category")
+                holder.tv_Due.text       = jsonObject!!.getString("Project")
+
+
+//                holder.llCustomerDue!!.setTag(position)
+//                holder.llCustomerDue!!.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(position, "customerDue")
+//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
-
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -64,21 +59,23 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtCategory       : TextView
-        internal var txtsino           : TextView
-        internal var llCategory    : LinearLayout
+        internal var tv_AccountDetails    : TextView
+        internal var tv_Balance  : TextView
+        internal var tv_Due   : TextView
+        internal var llCustomerDue       : LinearLayout
         init {
-            txtCategory        = v.findViewById<View>(R.id.txtCategory) as TextView
-            txtsino            = v.findViewById<View>(R.id.txtsino) as TextView
-            llCategory     = v.findViewById<View>(R.id.llCategory) as LinearLayout
+            tv_AccountDetails      = v.findViewById<View>(R.id.tv_AccountDetails) as TextView
+            tv_Balance    = v.findViewById<View>(R.id.tv_Balance) as TextView
+            tv_Due     = v.findViewById<View>(R.id.tv_Due) as TextView
+            llCustomerDue         = v.findViewById<View>(R.id.llCustomerDue) as LinearLayout
         }
     }
 
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        clickListener = itemClickListener
-    }
+//    fun setClickListener(itemClickListener: ItemClickListener?) {
+//        clickListener = itemClickListener
+//    }
 }

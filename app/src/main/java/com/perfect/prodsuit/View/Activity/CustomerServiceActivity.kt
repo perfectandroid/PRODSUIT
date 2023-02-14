@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.icu.util.ULocale.getCountry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_Post
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -69,6 +72,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     lateinit var serviceSalesArrayList : JSONArray
     var recyServiceSalesHistory: RecyclerView? = null
 
+    lateinit var customerDueViewModel: CustomerDueViewModel
+    lateinit var customerDueArrayList : JSONArray
+    var recyServiceCustomerdue: RecyclerView? = null
+
+
+
     var card_details: CardView? = null
 
     private var imDetails: ImageView? = null
@@ -87,6 +96,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     // Customer Details
     private var tie_Date: TextInputEditText? = null
+    private var tie_Time: TextInputEditText? = null
     private var tie_CustomerName: TextInputEditText? = null
     private var tie_MobileNo: TextInputEditText? = null
     private var tie_Address: TextInputEditText? = null
@@ -94,7 +104,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_Channel: TextInputEditText? = null
     private var tie_EmpOrMedia: TextInputEditText? = null
 
+    private var img_addusrpop: ImageView? = null
+
     private var til_Date: TextInputLayout? = null
+    private var til_Time: TextInputLayout? = null
     private var til_CustomerName: TextInputLayout? = null
     private var til_MobileNo: TextInputLayout? = null
     private var til_Address: TextInputLayout? = null
@@ -105,6 +118,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     //Complaints
 
+    private var tie_CompCategory: TextInputEditText? = null
     private var tie_Category: TextInputEditText? = null
     private var tie_Company: TextInputEditText? = null
     private var tie_Product: TextInputEditText? = null
@@ -112,6 +126,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_Complaint: TextInputEditText? = null
     private var tie_Description: TextInputEditText? = null
 
+    private var til_CompCategory: TextInputLayout? = null
     private var til_Category: TextInputLayout? = null
     private var til_Company: TextInputLayout? = null
     private var til_Product: TextInputLayout? = null
@@ -137,6 +152,85 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_Attendedby: TextInputEditText? = null
 
 
+    // ADD NEW CUSTOMER
+    private var tie_CN_Name: TextInputEditText? = null
+    private var tie_CN_Mobile: TextInputEditText? = null
+    private var tie_CN_HouseName: TextInputEditText? = null
+    private var tie_CN_Place: TextInputEditText? = null
+    private var tie_CN_Pincode: TextInputEditText? = null
+    private var tie_CN_Country: TextInputEditText? = null
+    private var tie_CN_State: TextInputEditText? = null
+    private var tie_CN_District: TextInputEditText? = null
+    private var tie_CN_Area: TextInputEditText? = null
+    private var tie_CN_Post: TextInputEditText? = null
+
+    private var til_CN_Name: TextInputLayout? = null
+    private var til_CN_Mobile: TextInputLayout? = null
+    private var til_CN_HouseName: TextInputLayout? = null
+    private var til_CN_Place: TextInputLayout? = null
+    private var til_CN_Pincode: TextInputLayout? = null
+    private var til_CN_Country: TextInputLayout? = null
+    private var til_CN_State: TextInputLayout? = null
+    private var til_CN_District: TextInputLayout? = null
+    private var til_CN_Area: TextInputLayout? = null
+    private var til_CN_Post: TextInputLayout? = null
+
+    lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
+    var defaultCount = 0
+    var FK_Place = ""
+    var FK_Country = ""
+    var FK_States = ""
+    var FK_District = ""
+    var FK_Area = ""
+    var FK_Post = ""
+    var pincodeCount = 0
+    var countryCount = 0
+    var stateCount = 0
+    var districtCount = 0
+    var areaCount = 0
+    var postCount = 0
+
+    lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
+
+    lateinit var countryViewModel: CountryViewModel
+    lateinit var countryArrayList: JSONArray
+    lateinit var countrySort: JSONArray
+    private var dialogCountry: Dialog? = null
+    var recyCountry: RecyclerView? = null
+
+    lateinit var stateViewModel: StateViewModel
+    lateinit var stateArrayList: JSONArray
+    lateinit var stateSort: JSONArray
+    private var dialogState: Dialog? = null
+    var recyState: RecyclerView? = null
+
+    lateinit var districtViewModel: DistrictViewModel
+    lateinit var districtArrayList: JSONArray
+    lateinit var districtSort: JSONArray
+    private var dialogDistrict: Dialog? = null
+    var recyDistrict: RecyclerView? = null
+
+
+    lateinit var areaViewModel: AreaViewModel
+    lateinit var areaArrayList: JSONArray
+    lateinit var areaSort: JSONArray
+    private var dialogArea: Dialog? = null
+     var recycArea: RecyclerView? = null
+
+    lateinit var postViewModel: PostViewModel
+    lateinit var postArrayList: JSONArray
+    lateinit var postSort: JSONArray
+    private var dialogPost: Dialog? = null
+    var recyPost: RecyclerView? = null
+
+    var strCnName = ""
+    var strCnMobile = ""
+    var strCnHouseName  = ""
+    var strCnPlace = ""
+    var strCnPinCode = ""
+
+
+
     var custDetailMode: String? = "0"
     var complaintMode: String? = "1"
     var contDetailMode: String? = "1"
@@ -146,6 +240,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var warrantyMode: String? = "1"
     var prodHistMode: String? = "1"
     var saleHistMode: String? = "1"
+    var custDueMode: String? = "1"
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
@@ -156,6 +251,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var priorityDet = 0
     var channelDet = 0
     var empMediaDet = 0
+    var CompcategoryDet = 0
     var categoryDet = 0
     var companyDet = 0
     var productDet = 0
@@ -167,6 +263,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var warrantyDet = 0
     var productHistDet = 0
     var salesHistDet = 0
+    var cutDueDet = 0
 
     var SubModeSearch: String? = ""
     var strCustomer: String? = ""
@@ -192,6 +289,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var dialogChannel : Dialog? = null
     var recyChannel: RecyclerView? = null
 
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
+
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var employeeArrayList: JSONArray
     lateinit var employeeSort: JSONArray
@@ -203,6 +302,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     lateinit var serviceMediaSort: JSONArray
     private var dialogServiceMedia: Dialog? = null
     var recyServiceMedia: RecyclerView? = null
+
+    lateinit var compCategoryArrayList : JSONArray
+    lateinit var compCategorySort : JSONArray
+    private var dialogcompCategory : Dialog? = null
+    var recycompCategory: RecyclerView? = null
 
     lateinit var categoryArrayList : JSONArray
     lateinit var categorySort : JSONArray
@@ -240,6 +344,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     lateinit var customerServiceRegisterViewModel: CustomerServiceRegisterViewModel
 
+
+
     var Customer_Type: String? = ""
     var ID_Customer: String? = ""
     var ID_Priority: String? = ""
@@ -247,6 +353,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var ID_Employee: String? = ""
     var ID_ServiceMedia: String? = ""
     var ID_EmpMedia: String? = ""
+    var ID_CompCategory: String? = ""
     var ID_Category: String? = ""
     var ID_Company: String? = ""
     var ID_Product: String? = ""
@@ -259,6 +366,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var SubMode: String? = ""
 
     var strDate: String? = ""
+    var strTime: String? = ""
     var strCustomerName: String? = ""
     var strMobileNo: String? = ""
     var strAddress: String? = ""
@@ -287,6 +395,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var strUserAction: String? = ""
 
     private var dialogDetailSheet : Dialog? = null
+    private var dialogAddUserSheet : Dialog? = null
 
     private var lnrHead_warranty_main : LinearLayout? = null
     private var lnrHead_warranty_sub : LinearLayout? = null
@@ -294,10 +403,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var lnrHead_product_sub : LinearLayout? = null
     private var lnrHead_sales_main : LinearLayout? = null
     private var lnrHead_sales_sub : LinearLayout? = null
+    private var lnrHead_customerdue_main : LinearLayout? = null
+    private var lnrHead_customerdue_sub : LinearLayout? = null
 
     private var tv_warranty_count : TextView? = null
     private var tv_product_count : TextView? = null
     private var tv_sales_count : TextView? = null
+    private var tv_customerdue_count : TextView? = null
 
 
 
@@ -313,16 +425,27 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         serviceProductHistoryViewModel = ViewModelProvider(this).get(ServiceProductHistoryViewModel::class.java)
         serviceProductViewModel = ViewModelProvider(this).get(ServiceProductViewModel::class.java)
         serviceSalesViewModel = ViewModelProvider(this).get(ServiceSalesViewModel::class.java)
+        customerDueViewModel = ViewModelProvider(this).get(CustomerDueViewModel::class.java)
 
         customerListViewModel = ViewModelProvider(this).get(CustomerListViewModel::class.java)
         servicePriorityViewModel = ViewModelProvider(this).get(ServicePriorityViewModel::class.java)
         serviceViewModel = ViewModelProvider(this).get(ServiceViewModel::class.java)
         serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
         commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         serviceMediaViewModel = ViewModelProvider(this).get(ServiceMediaViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         customerServiceRegisterViewModel = ViewModelProvider(this).get(CustomerServiceRegisterViewModel::class.java)
+
+        leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+
+        pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+        stateViewModel = ViewModelProvider(this).get(StateViewModel::class.java)
+        districtViewModel = ViewModelProvider(this).get(DistrictViewModel::class.java)
+        areaViewModel = ViewModelProvider(this).get(AreaViewModel::class.java)
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
 
         setRegViews()
 
@@ -404,6 +527,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         // Customer Details
         tie_Date = findViewById<TextInputEditText>(R.id.tie_Date)
+        tie_Time = findViewById<TextInputEditText>(R.id.tie_Time)
         tie_CustomerName = findViewById<TextInputEditText>(R.id.tie_CustomerName)
         tie_MobileNo = findViewById<TextInputEditText>(R.id.tie_MobileNo)
         tie_Address = findViewById<TextInputEditText>(R.id.tie_Address)
@@ -411,7 +535,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Channel = findViewById<TextInputEditText>(R.id.tie_Channel)
         tie_EmpOrMedia = findViewById<TextInputEditText>(R.id.tie_EmpOrMedia)
 
+        img_addusrpop = findViewById<ImageView>(R.id.img_addusrpop)
+
         til_Date = findViewById<TextInputLayout>(R.id.til_Date)
+        til_Time = findViewById<TextInputLayout>(R.id.til_Time)
         til_CustomerName = findViewById<TextInputLayout>(R.id.til_CustomerName)
         til_MobileNo = findViewById<TextInputLayout>(R.id.til_MobileNo)
         til_Address = findViewById<TextInputLayout>(R.id.til_Address)
@@ -419,12 +546,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
         tie_Date!!.setOnClickListener(this)
+        tie_Time!!.setOnClickListener(this)
         tie_Priority!!.setOnClickListener(this)
         tie_Channel!!.setOnClickListener(this)
         tie_EmpOrMedia!!.setOnClickListener(this)
+        img_addusrpop!!.setOnClickListener(this)
 
         //Complaints
 
+        tie_CompCategory = findViewById<TextInputEditText>(R.id.tie_CompCategory)
         tie_Category = findViewById<TextInputEditText>(R.id.tie_Category)
         tie_Company = findViewById<TextInputEditText>(R.id.tie_Company)
         tie_Product = findViewById<TextInputEditText>(R.id.tie_Product)
@@ -432,6 +562,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Complaint = findViewById<TextInputEditText>(R.id.tie_Complaint)
         tie_Description = findViewById<TextInputEditText>(R.id.tie_Description)
 
+        til_CompCategory = findViewById<TextInputLayout>(R.id.til_CompCategory)
         til_Category = findViewById<TextInputLayout>(R.id.til_Category)
         til_Company = findViewById<TextInputLayout>(R.id.til_Company)
         til_Product = findViewById<TextInputLayout>(R.id.til_Product)
@@ -440,6 +571,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         til_Description = findViewById<TextInputLayout>(R.id.til_Description)
 
 
+        tie_CompCategory!!.setOnClickListener(this)
         tie_Category!!.setOnClickListener(this)
         tie_Company!!.setOnClickListener(this)
         tie_Product!!.setOnClickListener(this)
@@ -473,28 +605,77 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_Attendedby!!.setOnClickListener(this)
 
 
-        getCurrentDate()
+
+
+
+        til_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Time!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_MobileNo!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Priority!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_CompCategory!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Category!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
+        til_Complaint!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Service!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
+
         onTextChangedValues()
+        getCurrentDate()
 
     }
 
     private fun getCurrentDate() {
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val currentDate = sdf.format(Date())
+//        tie_Date!!.setText(currentDate)
+//        tie_FromDate!!.setText(currentDate)
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
         val currentDate = sdf.format(Date())
-        tie_Date!!.setText(currentDate)
-        tie_FromDate!!.setText(currentDate)
+
+        try {
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
+
+            tie_Date!!.setText(""+sdfDate1.format(newDate))
+          //  strVisitDate = sdfDate2.format(newDate)
+
+            tie_Time!!.setText(""+sdfTime1.format(newDate))
+          //  strVisitTime = sdfTime2.format(newDate)
+
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
     private fun onTextChangedValues() {
 
+       // til_Date!!.setHintTextColor(context.resources.getColor(R.color.colorPrimary))
+
+
+
         // customer Details
         tie_Date!!.addTextChangedListener(watcher);
+        tie_Time!!.addTextChangedListener(watcher);
         tie_CustomerName!!.addTextChangedListener(watcher);
         tie_MobileNo!!.addTextChangedListener(watcher);
         tie_Address!!.addTextChangedListener(watcher);
         tie_Priority!!.addTextChangedListener(watcher);
 
         //Complaint
+        tie_CompCategory!!.addTextChangedListener(watcher);
         tie_Category!!.addTextChangedListener(watcher);
         tie_Product!!.addTextChangedListener(watcher);
         tie_Service!!.addTextChangedListener(watcher);
@@ -593,6 +774,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 dateMode = 0
                 openBottomDate()
             }
+            R.id.tie_Time->{
+                Config.disableClick(v)
+                timeMode = 2
+                openBottomTime()
+            }
 
             R.id.tie_Priority->{
                 Config.disableClick(v)
@@ -624,13 +810,32 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
             }
+            R.id.img_addusrpop->{
+                Config.disableClick(v)
+                addNewUserBottom()
+            }
+
+            R.id.tie_CompCategory->{
+                Config.disableClick(v)
+                CompcategoryDet = 0
+                ReqMode = "66"
+                SubMode = "20"
+                getCompCategory(ReqMode!!,SubMode!!)
+
+            }
 
             R.id.tie_Category->{
                 Config.disableClick(v)
-                categoryDet = 0
-                ReqMode = "66"
-                SubMode = "20"
-                getCategory(ReqMode!!,SubMode!!)
+                if(ID_CompCategory.equals("")){
+                    til_CompCategory!!.setError("Select Complaint Category");
+                    til_CompCategory!!.setErrorIconDrawable(null)
+                }
+                else{
+                    categoryDet = 0
+                    ReqMode = "77"
+                    getCategory(ReqMode!!,ID_CompCategory!!)
+                }
+
 
             }
 
@@ -718,6 +923,64 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 Config.disableClick(v)
                 timeMode = 1
                 openBottomTime()
+            }
+
+            R.id.tie_CN_Country->{
+                Config.disableClick(v)
+                countryCount = 0
+                getCountry()
+
+            }
+
+            R.id.tie_CN_State->{
+                Config.disableClick(v)
+                if (FK_Country.equals("")) {
+                    til_CN_Country!!.setError("Select Country");
+                    til_CN_Country!!.setErrorIconDrawable(null)
+                }else{
+                    stateCount = 0
+                    getState()
+                }
+
+
+            }
+            R.id.tie_CN_District->{
+                Config.disableClick(v)
+                if (FK_States.equals("")) {
+                    til_CN_State!!.setError("Select State");
+                    til_CN_State!!.setErrorIconDrawable(null)
+                }else{
+                    districtCount = 0
+                    getDistrict()
+                }
+
+
+            }
+
+            R.id.tie_CN_Area->{
+                Config.disableClick(v)
+                if (FK_District.equals("")) {
+                    til_CN_District!!.setError("Select District");
+                    til_CN_District!!.setErrorIconDrawable(null)
+                } else {
+                    areaCount = 0
+                    getArea()
+                }
+
+
+            }
+
+            R.id.tie_CN_Post->{
+                Config.disableClick(v)
+                if (FK_Area.equals("")) {
+                    til_CN_Area!!.setError("Select Area");
+                    til_CN_Area!!.setErrorIconDrawable(null)
+                } else {
+                    postCount = 0
+                    getPost()
+                }
+
+
             }
 
 //            R.id.tie_Comp_FromDate->{
@@ -1075,6 +1338,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         ID_ServiceMedia = ""
 
         tie_Date!!.setText("")
+        tie_Time!!.setText("")
         tie_CustomerName!!.setText("")
         tie_MobileNo!!.setText("")
         tie_Address!!.setText("")
@@ -1089,12 +1353,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         til_EmpOrMedia!!.visibility = View.GONE
 
         // Complaint
+        ID_CompCategory = ""
         ID_Category = ""
         ID_Company = ""
         ID_Product = ""
         ID_Services = ""
         ID_ComplaintList = ""
 
+        tie_CompCategory!!.setText("")
         tie_Category!!.setText("")
         tie_Company!!.setText("")
         tie_Product!!.setText("")
@@ -1129,6 +1395,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private fun validation() {
         strDate = tie_Date!!.text.toString()
+        strTime = tie_Time!!.text.toString()
         strCustomerName = tie_CustomerName!!.text.toString()
         strMobileNo = tie_MobileNo!!.text.toString()
         strAddress = tie_Address!!.text.toString()
@@ -1148,7 +1415,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if (ID_Customer.equals("") && strCustomerName.equals("")){
+        else if(strTime.equals("")){
+            til_Time!!.setError("Select Time");
+            til_Time!!.setErrorIconDrawable(null);
+            custDetailMode = "0"
+            complaintMode  = "1"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (ID_Customer.equals("") ){
+//            && strCustomerName.equals("")
+           // til_CustomerName!!.setError("Select Customer ")
             til_CustomerName!!.setError("Enter or Select Customer ")
             til_CustomerName!!.setErrorIconDrawable(null)
             custDetailMode = "0"
@@ -1195,6 +1475,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         else{
           Log.e(TAG,"Validation   9371"
                   +"\n"+"Date           :  "+strDate
+                  +"\n"+"strTime        :  "+strTime
                   +"\n"+"Customer Name  :  "+strCustomerName
                   +"\n"+"Customer ID    :  "+ID_Customer
                   +"\n"+"Mobile Number  :  "+strMobileNo
@@ -1211,15 +1492,31 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     }
 
     private fun validation1() {
+      //  strCategory = tie_CompCategory!!.text.toString()
         strCategory = tie_Category!!.text.toString()
         strCompany = tie_Company!!.text.toString()
         strProduct = tie_Product!!.text.toString()
         strService = tie_Service!!.text.toString()
         strComplaint = tie_Complaint!!.text.toString()
         strDescription = tie_Description!!.text.toString()
-        if (ID_Category.equals("")){
 
-            til_Category!!.setError("Select category");
+
+        if (ID_CompCategory.equals("")){
+
+            til_CompCategory!!.setError("Select Complaint Category");
+            til_CompCategory!!.setErrorIconDrawable(null)
+
+            custDetailMode = "1"
+            complaintMode  = "0"
+            contDetailMode = "1"
+            requestedMode  = "1"
+            attDetailMode  = "1"
+
+            hideViews()
+        }
+        else if (ID_Category.equals("")){
+
+            til_Category!!.setError("Select Category");
             til_Category!!.setErrorIconDrawable(null)
 
             custDetailMode = "1"
@@ -1230,19 +1527,19 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if (ID_Product.equals("")){
-            til_Product!!.setError("Select Product");
-            til_Product!!.setErrorIconDrawable(null)
-
-            custDetailMode = "1"
-            complaintMode  = "0"
-            contDetailMode = "1"
-            requestedMode  = "1"
-            attDetailMode  = "1"
-
-            hideViews()
-        }
-        else if ((ID_Category.equals("1") || ID_Category.equals("2")) && ID_Services.equals("")){
+//        else if (ID_Product.equals("")){
+//            til_Product!!.setError("Select Product");
+//            til_Product!!.setErrorIconDrawable(null)
+//
+//            custDetailMode = "1"
+//            complaintMode  = "0"
+//            contDetailMode = "1"
+//            requestedMode  = "1"
+//            attDetailMode  = "1"
+//
+//            hideViews()
+//        }
+        else if ((ID_CompCategory.equals("1") || ID_CompCategory.equals("2")) && ID_Services.equals("")){
             til_Service!!.setError("Select Service");
             til_Service!!.setErrorIconDrawable(null)
 
@@ -1254,7 +1551,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if ((ID_Category.equals("3") || ID_Category.equals("4")) && ID_ComplaintList.equals("")){
+        else if ((ID_CompCategory.equals("3") || ID_CompCategory.equals("4")) && ID_ComplaintList.equals("")){
             til_Complaint!!.setError("Select Complaint");
             til_Complaint!!.setErrorIconDrawable(null)
 
@@ -1282,6 +1579,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
         else{
             Log.e(TAG,"Validation   9372"
+                    +"\n"+"ID_CompCategory   :  "+ID_CompCategory
                     +"\n"+"ID_Category       :  "+ID_Category
                     +"\n"+"ID_Company        :  "+ID_Company
                     +"\n"+"ID_Company        :  "+ID_Company
@@ -1468,6 +1766,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     date = inputFormat.parse(strDate)
                     strDate = outputFormat.format(date)
                     Log.e(TAG,"DATE   1302   "+strDate)
+                }
+
+                if (strTime!!.equals("")){
+                    strTime = "00:00"
+                }else{
+                    var date: Date? = null
+                    date = inputTimeFormat.parse(strTime)
+                    strTime = outputTimeFormat.format(date)
+                    Log.e(TAG,"DATE   1302   "+strTime)
+
                 }
 
                 if (strFromDate!!.equals("")){
@@ -1771,6 +2079,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 }
                 if (timeMode == 1){
                     tie_ToTime!!.setText(output)
+                }
+                if (timeMode == 2){
+                    tie_Time!!.setText(output)
                 }
 
 
@@ -2484,7 +2795,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun getCategory(ReqMode : String,SubMode : String) {
+    private fun getCompCategory(ReqMode : String,SubMode : String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2500,14 +2811,155 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
+                                if (CompcategoryDet == 0){
+                                    CompcategoryDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1278   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("CommonPopupDetails")
+                                        compCategoryArrayList = jobjt.getJSONArray("CommonPopupList")
+                                        if (compCategoryArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            compCategoryPopup(compCategoryArrayList)
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun compCategoryPopup(compCategoryArrayList: JSONArray) {
+
+
+        try {
+
+            dialogcompCategory = Dialog(this)
+            dialogcompCategory!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogcompCategory!! .setContentView(R.layout.comp_category_popup)
+            dialogcompCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recycompCategory = dialogcompCategory!! .findViewById(R.id.recycompCategory) as RecyclerView
+            val etsearch = dialogcompCategory!! .findViewById(R.id.etsearch) as EditText
+
+            compCategorySort = JSONArray()
+            for (k in 0 until compCategoryArrayList.length()) {
+                val jsonObject = compCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                compCategorySort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycompCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = CompnayCategoryAdapter(this@CustomerServiceActivity, compCategorySort)
+            recycompCategory!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    compCategorySort = JSONArray()
+
+                    for (k in 0 until compCategoryArrayList.length()) {
+                        val jsonObject = compCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Description").length) {
+                            if (jsonObject.getString("Description")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                compCategorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"compCategorySort               7103    "+compCategorySort)
+                    val adapter = CompnayCategoryAdapter(this@CustomerServiceActivity, compCategorySort)
+                    recyCategory!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogcompCategory!!.show()
+            dialogcompCategory!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+
+    }
+
+    private fun getCategory(ReqMode : String,ID_CompCategory : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this,ReqMode,ID_CompCategory)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
                                 if (categoryDet == 0){
                                     categoryDet++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1278   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("CommonPopupDetails")
-                                        categoryArrayList = jobjt.getJSONArray("CommonPopupList")
+                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                        categoryArrayList = jobjt.getJSONArray("CategoryList")
                                         if (categoryArrayList.length()>0){
 
                                             // productPriorityPopup(prodPriorityArrayList)
@@ -2600,8 +3052,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                     for (k in 0 until categoryArrayList.length()) {
                         val jsonObject = categoryArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Description").length) {
-                            if (jsonObject.getString("Description")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("CategoryName").length) {
+                            if (jsonObject.getString("CategoryName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 categorySort.put(jsonObject)
                             }
 
@@ -3315,12 +3767,250 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
+    private fun addNewUserBottom() {
+        try {
+
+            dialogAddUserSheet = Dialog(this)
+            dialogAddUserSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogAddUserSheet!! .setContentView(R.layout.cs_add_new_user_sheet)
+            dialogAddUserSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            val window: Window? = dialogAddUserSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
+//            // ADD NEW CUSTOME
+            tie_CN_Name = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Name)
+            tie_CN_Mobile = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Mobile)
+            tie_CN_HouseName = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_HouseName)
+            tie_CN_Place = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Place)
+            tie_CN_Pincode = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Pincode)
+            tie_CN_Country = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Country)
+            tie_CN_State = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_State)
+            tie_CN_District = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_District)
+            tie_CN_Area = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Area)
+            tie_CN_Post = dialogAddUserSheet!!.findViewById<TextInputEditText>(R.id.tie_CN_Post)
+
+            til_CN_Name = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Name)
+            til_CN_Mobile = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Mobile)
+            til_CN_HouseName = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_HouseName)
+            til_CN_Place = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Place)
+            til_CN_Pincode = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Pincode)
+            til_CN_Country = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Country)
+            til_CN_State = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_State)
+            til_CN_District = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_District)
+            til_CN_Area = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Area)
+            til_CN_Post = dialogAddUserSheet!!.findViewById<TextInputLayout>(R.id.til_CN_Post)
+
+            til_CN_Name!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_CN_Mobile!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_CN_Country!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_CN_State!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_CN_District!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
+            tie_CN_Name!!.addTextChangedListener(watcher);
+            tie_CN_Mobile!!.addTextChangedListener(watcher);
+            tie_CN_HouseName!!.addTextChangedListener(watcher);
+            tie_CN_Country!!.addTextChangedListener(watcher);
+            tie_CN_State!!.addTextChangedListener(watcher);
+            tie_CN_District!!.addTextChangedListener(watcher);
+
+            FK_Place = ""
+            FK_Country = ""
+            FK_States = ""
+            FK_District = ""
+            FK_Area = ""
+            FK_Post = ""
+
+            tie_CN_Name!!.setText("")
+            tie_CN_Mobile!!.setText("")
+            tie_CN_HouseName!!.setText("")
+            tie_CN_Place!!.setText("")
+            tie_CN_Pincode!!.setText("")
+            tie_CN_Country!!.setText("")
+            tie_CN_State!!.setText("")
+            tie_CN_District!!.setText("")
+            tie_CN_Area!!.setText("")
+            tie_CN_Post!!.setText("")
+
+            tie_CN_Country!!.setOnClickListener(this)
+            tie_CN_State!!.setOnClickListener(this)
+            tie_CN_District!!.setOnClickListener(this)
+            tie_CN_Area!!.setOnClickListener(this)
+            tie_CN_Post!!.setOnClickListener(this)
+
+            var txtNewUserCancel = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserCancel)
+            var txtNewUserSubmit = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserSubmit)
+
+            til_CN_Pincode!!.setEndIconOnClickListener {
+                try {
+                    strCnPinCode = tie_CN_Pincode!!.text.toString()
+                    if (strCnPinCode.equals("")) {
+                        til_CN_Pincode!!.setError("Enter Pincode");
+                        til_CN_Pincode!!.setErrorIconDrawable(null)
+                    } else {
+                        Config.disableClick(it)
+                        pincodeCount = 0
+                        getPinCodeSearch(strCnPinCode)
+                    }
+                } catch (e: Exception) {
+                    Log.e("TAG", "Exception  64   " + e.toString())
+                }
+            }
+
+            txtNewUserCancel!!.setOnClickListener {
+                dialogAddUserSheet!!.dismiss()
+            }
+
+            txtNewUserSubmit!!.setOnClickListener {
+              addUserValidation()
+            }
+
+
+
+            defaultCount = 0
+            getDefaultValueSettings()
+
+            dialogAddUserSheet!!.show()
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 3620   "+e.toString())
+        }
+
+    }
+
+    private fun getPinCodeSearch(strPincode: String) {
+//        var pinCodeDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                pinCodeSearchViewModel.getPincode(this, strPincode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                            Log.e(TAG, "msg   210811   " + msg)
+                            if (msg!!.length > 0) {
+                                if (pincodeCount == 0) {
+                                    pincodeCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   210812   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("PincodeDetails")
+
+                                        FK_Country = jobjt.getString("FK_Country")
+                                        FK_States = jobjt.getString("FK_States")
+                                        FK_District = jobjt.getString("FK_District")
+                                        FK_Area = jobjt.getString("FK_Area")
+                                        FK_Place = jobjt.getString("FK_Place")
+                                        FK_Post = jobjt.getString("FK_Post")
+
+                                        tie_CN_Place!!.setText(jobjt.getString("Place"))
+                                        tie_CN_Country!!.setText(jobjt.getString("Country"))
+                                        tie_CN_State!!.setText(jobjt.getString("States"))
+                                        tie_CN_District!!.setText(jobjt.getString("District"))
+                                        tie_CN_Area!!.setText("")
+                                        tie_CN_Post!!.setText(jobjt.getString("Post"))
+
+                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
+
+                                    } else {
+
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+
+                            }
+                            //  }
+
+
+                        } catch (e: Exception) {
+
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun addUserValidation() {
+
+        strCnName = tie_CN_Name!!.text.toString()
+        strMobileNo = tie_CN_Mobile!!.text.toString()
+        strCnHouseName = tie_CN_HouseName!!.text.toString()
+        strCnPlace = tie_CN_Place!!.text.toString()
+        strCnPinCode = tie_CN_Pincode!!.text.toString()
+        strMobileNo!!.length < 10
+        if (strCnName.equals("")){
+            til_CN_Name!!.setError("Enter Name");
+            til_CN_Name!!.setErrorIconDrawable(null)
+        }
+        else if(strMobileNo!!.length < 10){
+            til_CN_Mobile!!.setError("Enter Mobile");
+            til_CN_Mobile!!.setErrorIconDrawable(null)
+        }
+        else if(strCnHouseName.equals("")){
+            til_CN_HouseName!!.setError("Enter House Name");
+            til_CN_HouseName!!.setErrorIconDrawable(null)
+        }
+        else if(FK_Country.equals("")){
+            til_CN_Country!!.setError("Select Country");
+            til_CN_Country!!.setErrorIconDrawable(null)
+        }
+        else if(FK_States.equals("")){
+            til_CN_State!!.setError("Select State");
+            til_CN_State!!.setErrorIconDrawable(null)
+        }
+        else if(FK_District.equals("")){
+            til_CN_District!!.setError("Select District");
+            til_CN_District!!.setErrorIconDrawable(null)
+        }
+        else{
+            Log.e(TAG,"Success")
+        }
+    }
+
     private fun detailPopupSheet() {
         try {
 
             warrantyMode = "1"
             prodHistMode = "1"
             saleHistMode = "1"
+            custDueMode = "1"
 
             dialogDetailSheet = Dialog(this)
             dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -3334,14 +4024,18 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             lnrHead_product_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_product_sub) as LinearLayout
             lnrHead_sales_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_sales_main) as LinearLayout
             lnrHead_sales_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_sales_sub) as LinearLayout
+            lnrHead_customerdue_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_main) as LinearLayout
+            lnrHead_customerdue_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_sub) as LinearLayout
 
             tv_warranty_count = dialogDetailSheet!! .findViewById(R.id.tv_warranty_count) as TextView
             tv_product_count = dialogDetailSheet!! .findViewById(R.id.tv_product_count) as TextView
             tv_sales_count = dialogDetailSheet!! .findViewById(R.id.tv_sales_count) as TextView
+            tv_customerdue_count = dialogDetailSheet!! .findViewById(R.id.tv_customerdue_count) as TextView
 
             recyServiceWarranty = dialogDetailSheet!! .findViewById(R.id.recyServiceWarranty)
             recyServiceProductHistory = dialogDetailSheet!! .findViewById(R.id.recyServiceProductHistory)
             recyServiceSalesHistory = dialogDetailSheet!! .findViewById(R.id.recyServiceSalesHistory)
+            recyServiceCustomerdue = dialogDetailSheet!! .findViewById(R.id.recyServiceCustomerdue)
 
             val window: Window? = dialogDetailSheet!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
@@ -3372,11 +4066,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 }
             })
 
+            recyServiceCustomerdue!!.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    v.onTouchEvent(event)
+                    return true
+                }
+            })
+
 
             lnrHead_warranty_main!!.setOnClickListener {
                 warrantyMode = "0"
                 prodHistMode = "1"
                 saleHistMode = "1"
+                custDueMode = "1"
 
                 if (!ID_Product.equals("") && !ID_Customer.equals("")){
                     warrantyDet = 0
@@ -3388,6 +4091,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 warrantyMode = "1"
                 prodHistMode = "0"
                 saleHistMode = "1"
+                custDueMode = "1"
 
                 if (!ID_Product.equals("") && !ID_Customer.equals("")){
                     productHistDet = 0
@@ -3399,10 +4103,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 warrantyMode = "1"
                 prodHistMode = "1"
                 saleHistMode = "0"
+                custDueMode = "1"
 
                 if (!ID_Customer.equals("")){
                     salesHistDet = 0
                     getSalesHistory()
+                }
+
+            }
+
+            lnrHead_customerdue_main!!.setOnClickListener {
+                warrantyMode = "1"
+                prodHistMode = "1"
+                saleHistMode = "1"
+                custDueMode = "0"
+
+                if (!ID_Customer.equals("")){
+                    cutDueDet = 0
+                    Log.e(TAG,"4117  getCustomerDueDetails")
+                    try {
+                        getCustomerDueDetails()
+                    }catch (e: Exception){
+                        Log.e(TAG,"Exception 4136  "+e.toString())
+                    }
+
                 }
 
             }
@@ -3587,10 +4311,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         lnrHead_warranty_sub!!.visibility = View.VISIBLE
         lnrHead_product_sub!!.visibility = View.GONE
         lnrHead_sales_sub!!.visibility = View.GONE
+        lnrHead_customerdue_sub!!.visibility = View.GONE
 
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceCustomerdue!!.visibility = View.GONE
         recyServiceWarranty!!.adapter = null
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -3676,10 +4402,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         lnrHead_warranty_sub!!.visibility = View.GONE
         lnrHead_product_sub!!.visibility = View.VISIBLE
         lnrHead_sales_sub!!.visibility = View.GONE
+        lnrHead_customerdue_sub!!.visibility = View.GONE
 
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceCustomerdue!!.visibility = View.GONE
         recyServiceProductHistory!!.adapter = null
 
 
@@ -3766,10 +4494,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         lnrHead_warranty_sub!!.visibility = View.GONE
         lnrHead_product_sub!!.visibility = View.GONE
         lnrHead_sales_sub!!.visibility = View.VISIBLE
+        lnrHead_customerdue_sub!!.visibility = View.GONE
 
         recyServiceWarranty!!.visibility = View.GONE
         recyServiceProductHistory!!.visibility = View.GONE
         recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceCustomerdue!!.visibility = View.GONE
         recyServiceSalesHistory!!.adapter = null
 
 
@@ -3840,6 +4570,86 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
+    private fun getCustomerDueDetails() {
+
+        lnrHead_warranty_sub!!.visibility = View.GONE
+        lnrHead_product_sub!!.visibility = View.GONE
+        lnrHead_sales_sub!!.visibility = View.GONE
+        lnrHead_customerdue_sub!!.visibility = View.VISIBLE
+
+        recyServiceWarranty!!.visibility = View.GONE
+        recyServiceProductHistory!!.visibility = View.GONE
+        recyServiceSalesHistory!!.visibility = View.GONE
+        recyServiceCustomerdue!!.visibility = View.GONE
+        recyServiceCustomerdue!!.adapter = null
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                customerDueViewModel.getCustomerDue(this,ID_Customer!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            if (cutDueDet == 0){
+                                cutDueDet++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   335   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                    customerDueArrayList = jobjt.getJSONArray("CategoryList")
+                                    if (customerDueArrayList.length()>0){
+                                        tv_customerdue_count!!.setText(""+customerDueArrayList.length())
+                                        recyServiceCustomerdue!!.visibility = View.VISIBLE
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceCustomerdue!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = CustomerDueAdapter(this@CustomerServiceActivity, customerDueArrayList)
+                                        recyServiceCustomerdue!!.adapter = adapter
+
+                                    }
+                                } else {
+                                val builder = AlertDialog.Builder(
+                                    this@CustomerServiceActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                                }
+
+                            }
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
 
     override fun onClick(position: Int, data: String) {
 
@@ -3853,18 +4663,27 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tie_MobileNo!!.setText(jsonObject!!.getString("Mobile"))
             tie_Address!!.setText(jsonObject!!.getString("Address"))
 
+            if (ID_Customer.equals("")){
+                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+            }else{
+                til_CustomerName!!.isErrorEnabled = false
+                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+            }
+
             tie_CustomerName!!.isEnabled = false
             tie_MobileNo!!.isEnabled = false
             tie_Address!!.isEnabled = false
 
           //  til_CustomerName!!.setEndIconDrawable(com.google.android.material.R.drawable.abc_ic_clear_material)
             til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
+            ID_CompCategory = ""
             ID_Category = ""
             ID_Company = ""
             ID_Product = ""
             ID_Services = ""
             ID_ComplaintList = ""
 
+            tie_CompCategory!!.setText("")
             tie_Category!!.setText("")
             tie_Company!!.setText("")
             tie_Product!!.setText("")
@@ -3944,15 +4763,58 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
 
+        if (data.equals("compCategory")) {
+
+            dialogcompCategory!!.dismiss()
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = compCategorySort.getJSONObject(position)
+            Log.e(TAG,"Code   "+jsonObject.getString("Code"))
+
+            ID_CompCategory = jsonObject.getString("Code")
+            tie_CompCategory!!.setText(jsonObject.getString("Description"))
+
+            ID_Category = ""
+            tie_Category!!.setText("")
+            tie_Company!!.setText("")
+            ID_Company = ""
+            tie_Service!!.setText("")
+            ID_Services = ""
+            tie_Complaint!!.setText("")
+            ID_ComplaintList = ""
+
+            if (ID_CompCategory.equals("1")){
+                til_Company!!.visibility = View.GONE
+                til_Service!!.visibility = View.VISIBLE
+                til_Complaint!!.visibility = View.GONE
+            }
+            else if (ID_CompCategory.equals("2")){
+                til_Company!!.visibility = View.VISIBLE
+                til_Service!!.visibility = View.VISIBLE
+                til_Complaint!!.visibility = View.GONE
+            }
+            else if (ID_CompCategory.equals("3")){
+                til_Company!!.visibility = View.GONE
+                til_Service!!.visibility = View.GONE
+                til_Complaint!!.visibility = View.VISIBLE
+            }
+            else if (ID_CompCategory.equals("4")){
+                til_Company!!.visibility = View.VISIBLE
+                til_Service!!.visibility = View.GONE
+                til_Complaint!!.visibility = View.VISIBLE
+            }
+
+
+        }
+
         if (data.equals("category")) {
 
             dialogCategory!!.dismiss()
 //            val jsonObject = prodPriorityArrayList.getJSONObject(position)
             val jsonObject = categorySort.getJSONObject(position)
-            Log.e(TAG,"Code   "+jsonObject.getString("Code"))
+            Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
 
-            ID_Category = jsonObject.getString("Code")
-            tie_Category!!.setText(jsonObject.getString("Description"))
+            ID_Category = jsonObject.getString("ID_Category")
+            tie_Category!!.setText(jsonObject.getString("CategoryName"))
 
             tie_Company!!.setText("")
             ID_Company = ""
@@ -3961,26 +4823,26 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tie_Complaint!!.setText("")
             ID_ComplaintList = ""
 
-            if (ID_Category.equals("1")){
-                til_Company!!.visibility = View.GONE
-                til_Service!!.visibility = View.VISIBLE
-                til_Complaint!!.visibility = View.GONE
-            }
-            else if (ID_Category.equals("2")){
-                til_Company!!.visibility = View.VISIBLE
-                til_Service!!.visibility = View.VISIBLE
-                til_Complaint!!.visibility = View.GONE
-            }
-            else if (ID_Category.equals("3")){
-                til_Company!!.visibility = View.GONE
-                til_Service!!.visibility = View.GONE
-                til_Complaint!!.visibility = View.VISIBLE
-            }
-            else if (ID_Category.equals("4")){
-                til_Company!!.visibility = View.VISIBLE
-                til_Service!!.visibility = View.GONE
-                til_Complaint!!.visibility = View.VISIBLE
-            }
+//            if (ID_Category.equals("1")){
+//                til_Company!!.visibility = View.GONE
+//                til_Service!!.visibility = View.VISIBLE
+//                til_Complaint!!.visibility = View.GONE
+//            }
+//            else if (ID_Category.equals("2")){
+//                til_Company!!.visibility = View.VISIBLE
+//                til_Service!!.visibility = View.VISIBLE
+//                til_Complaint!!.visibility = View.GONE
+//            }
+//            else if (ID_Category.equals("3")){
+//                til_Company!!.visibility = View.GONE
+//                til_Service!!.visibility = View.GONE
+//                til_Complaint!!.visibility = View.VISIBLE
+//            }
+//            else if (ID_Category.equals("4")){
+//                til_Company!!.visibility = View.VISIBLE
+//                til_Service!!.visibility = View.GONE
+//                til_Complaint!!.visibility = View.VISIBLE
+//            }
 
 
 
@@ -4061,8 +4923,867 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
 
+        if (data.equals("countrydetail")) {
+            dialogCountry!!.dismiss()
+            val jsonObject = countrySort.getJSONObject(position)
+            Log.e(TAG, "FK_Country   " + jsonObject.getString("FK_Country"))
+            FK_Country = jsonObject.getString("FK_Country")
+            tie_CN_Country!!.setText(jsonObject.getString("Country"))
+
+
+            FK_States = ""
+            FK_District = ""
+            FK_Area = ""
+            FK_Post = ""
+
+            tie_CN_State!!.setText("")
+            tie_CN_District!!.setText("")
+            tie_CN_Area!!.setText("")
+            tie_CN_Post!!.setText("")
+            tie_CN_Place!!.setText("")
+
+
+
+        }
+
+        if (data.equals("statedetail")) {
+            dialogState!!.dismiss()
+            val jsonObject = stateSort.getJSONObject(position)
+            Log.e(TAG, "FK_States   " + jsonObject.getString("FK_States"))
+            FK_States = jsonObject.getString("FK_States")
+            tie_CN_State!!.setText(jsonObject.getString("States"))
+
+            FK_District = ""
+            FK_Area = ""
+            FK_Post = ""
+
+            tie_CN_District!!.setText("")
+            tie_CN_Area!!.setText("")
+            tie_CN_Post!!.setText("")
+            tie_CN_Place!!.setText("")
+
+
+        }
+
+        if (data.equals("districtdetail")) {
+            dialogDistrict!!.dismiss()
+
+            val jsonObject = districtSort.getJSONObject(position)
+            Log.e(TAG, "FK_District   " + jsonObject.getString("FK_District"))
+            FK_District = jsonObject.getString("FK_District")
+            tie_CN_District!!.setText(jsonObject.getString("District"))
+
+
+            FK_Area = ""
+            FK_Post = ""
+
+            tie_CN_Area!!.setText("")
+            tie_CN_Post!!.setText("")
+            tie_CN_Place!!.setText("")
+
+        }
+
+        if (data.equals("areadetail")) {
+            dialogArea!!.dismiss()
+            val jsonObject = areaSort.getJSONObject(position)
+            Log.e(TAG, "jsonObject  5465    " + jsonObject)
+
+
+            FK_Area = jsonObject.getString("FK_Area")
+            tie_CN_Area!!.setText(jsonObject.getString("Area"))
+            FK_Post = ""
+
+            tie_CN_Post!!.setText("")
+            tie_CN_Place!!.setText("")
+
+
+        }
+
+        if (data.equals("postdetail")) {
+            dialogPost!!.dismiss()
+            val jsonObject = postSort.getJSONObject(position)
+            Log.e(TAG, "FK_Post  3672    " + jsonObject.getString("FK_Post"))
+            Log.e(TAG, "PinCode  3672    " + jsonObject.getString("PinCode"))
+            FK_Post = jsonObject.getString("FK_Post")
+            tie_CN_Post!!.setText(jsonObject.getString("PostName"))
+            tie_CN_Pincode!!.setText(jsonObject.getString("PinCode"))
+
+        }
+
     }
 
+//    ADD NEE CUSTOMER
+
+    private fun getDefaultValueSettings() {
+
+    when (Config.ConnectivityUtils.isConnected(this)) {
+        true -> {
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+            progressDialog!!.show()
+
+            leadGenerateDefaultvalueViewModel.getLeadGenerationDefaultvalue(this)!!.observe(
+                this,
+                Observer { serviceSetterGetter ->
+                    val msg = serviceSetterGetter.message
+                    Log.v("hkhkhkjjj", "in")
+                    if (msg!!.length > 0) {
+
+                        val jObject = JSONObject(msg)
+                        Log.e(TAG, "msg   14781   " + msg.length)
+                        Log.e(TAG, "msg   14782   " + msg)
+                        if (jObject.getString("StatusCode") == "0") {
+
+
+                            val jobjt = jObject.getJSONObject("LeadGenerationDefaultvalueSettings")
+                            FK_Country = jobjt.getString("FK_Country")
+                            FK_States = jobjt.getString("FK_States")
+                            FK_District = jobjt.getString("FK_District")
+
+                            tie_CN_Country!!.setText(jobjt.getString("Country"))
+                            tie_CN_State!!.setText(jobjt.getString("StateName"))
+                            tie_CN_District!!.setText(jobjt.getString("DistrictName"))
+
+
+                        } else {
+//                            val builder = AlertDialog.Builder(
+//                                this@CustomerServiceActivity,
+//                                R.style.MyDialogTheme
+//                            )
+//                            builder.setMessage(jObject.getString("EXMessage"))
+//                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                            }
+//                            val alertDialog: AlertDialog = builder.create()
+//                            alertDialog.setCancelable(false)
+//                            alertDialog.show()
+                        }
+                    } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                    }
+                })
+            progressDialog!!.dismiss()
+        }
+        false -> {
+            Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                .show()
+        }
+
+    }
+}
+
+    private fun getCountry() {
+//        var countryDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                countryViewModel.getCountry(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (countryCount == 0) {
+                                    countryCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   2252   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("CountryDetails")
+                                        countryArrayList = jobjt.getJSONArray("CountryDetailsList")
+
+                                        if (countryArrayList.length() > 0) {
+//                                            if (countryDet == 0){
+//                                                countryDet++
+                                            countryListPopup(countryArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                                }
+                            }
+
+
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun countryListPopup(countryArrayList: JSONArray) {
+        try {
+
+            dialogCountry = Dialog(this)
+            dialogCountry!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCountry!!.setContentView(R.layout.country_list_popup)
+            dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycCountry = dialogCountry!!.findViewById(R.id.recycCountry) as RecyclerView
+            val etsearch = dialogCountry!!.findViewById(R.id.etsearch) as EditText
+
+            countrySort = JSONArray()
+            for (k in 0 until countryArrayList.length()) {
+                val jsonObject = countryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                countrySort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
+            recycCountry!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    countrySort = JSONArray()
+
+                    for (k in 0 until countryArrayList.length()) {
+                        val jsonObject = countryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Country").length) {
+                            if (jsonObject.getString("Country")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                countrySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "countrySort               7103    " + countrySort)
+                    val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
+                    recycCountry!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogCountry!!.show()
+            dialogCountry!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialogCountry!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getState() {
+
+//        var stateDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                stateViewModel.getState(this, FK_Country!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            Log.e(TAG, "msg   2338   " + msg)
+                            if (msg!!.length > 0) {
+                                if (stateCount == 0) {
+                                    stateCount++
+                                    val jObject = JSONObject(msg)
+
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("StatesDetails")
+                                        stateArrayList = jobjt.getJSONArray("StatesDetailsList")
+
+                                        if (stateArrayList.length() > 0) {
+//                                            if (stateDet == 0){
+//                                                stateDet++
+                                            stateDetailPopup(stateArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun stateDetailPopup(stateArrayList: JSONArray) {
+
+        try {
+
+            dialogState = Dialog(this)
+            dialogState!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogState!!.setContentView(R.layout.state_list_popup)
+            dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycState = dialogState!!.findViewById(R.id.recycState) as RecyclerView
+            val etsearch = dialogState!!.findViewById(R.id.etsearch) as EditText
+
+            stateSort = JSONArray()
+            for (k in 0 until stateArrayList.length()) {
+                val jsonObject = stateArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                stateSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+            val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
+            recycState!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    stateSort = JSONArray()
+
+                    for (k in 0 until stateArrayList.length()) {
+                        val jsonObject = stateArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("States").length) {
+                            if (jsonObject.getString("States")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                stateSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "stateSort               7103    " + stateSort)
+                    val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
+                    recycState!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogState!!.show()
+            dialogState!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialogState!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getDistrict() {
+//        var distDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                districtViewModel.getDistrict(this, FK_States)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (districtCount == 0) {
+                                    districtCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   2286   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("DistrictDetails")
+                                        districtArrayList =
+                                            jobjt.getJSONArray("DistrictDetailsList")
+
+                                        if (districtArrayList.length() > 0) {
+//                                            if (distDet == 0){
+//                                                distDet++
+                                            districtDetailPopup(districtArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun districtDetailPopup(districtArrayList: JSONArray) {
+
+        try {
+
+            dialogDistrict = Dialog(this)
+            dialogDistrict!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDistrict!!.setContentView(R.layout.district_list_popup)
+            dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycDistrict = dialogDistrict!!.findViewById(R.id.recycDistrict) as RecyclerView
+            val etsearch = dialogDistrict!!.findViewById(R.id.etsearch) as EditText
+
+            districtSort = JSONArray()
+            for (k in 0 until districtArrayList.length()) {
+                val jsonObject = districtArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                districtSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+            val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
+            recycDistrict!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    districtSort = JSONArray()
+
+                    for (k in 0 until districtArrayList.length()) {
+                        val jsonObject = districtArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("District").length) {
+                            if (jsonObject.getString("District")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                districtSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "districtSort               7103    " + districtSort)
+                    val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
+                    recycDistrict!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogDistrict!!.show()
+            dialogDistrict!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialogDistrict!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getArea() {
+//        var areaDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                areaViewModel.getArea(this, FK_District)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (areaCount == 0) {
+                                    areaCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   2353   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("AreaDetails")
+                                        areaArrayList = jobjt.getJSONArray("AreaDetailsList")
+
+                                        if (areaArrayList.length() > 0) {
+//                                            if (postDet == 0){
+//                                                postDet++
+                                            areaDetailPopup(areaArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun areaDetailPopup(areaArrayList: JSONArray) {
+
+        try {
+
+            dialogArea = Dialog(this)
+            dialogArea!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogArea!!.setContentView(R.layout.area_list_popup)
+            dialogArea!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recycArea = dialogArea!!.findViewById(R.id.recycArea) as RecyclerView
+            val etsearch = dialogArea!!.findViewById(R.id.etsearch) as EditText
+
+            areaSort = JSONArray()
+            for (k in 0 until areaArrayList.length()) {
+                val jsonObject = areaArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                areaSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycArea!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, areaArrayList)
+            val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
+            recycArea!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    areaSort = JSONArray()
+
+                    for (k in 0 until areaArrayList.length()) {
+                        val jsonObject = areaArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Area").length) {
+                            if (jsonObject.getString("Area")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                areaSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "areaSort               7103    " + areaSort)
+                    val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
+                    recycArea!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogArea!!.show()
+            dialogArea!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialogArea!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getPost() {
+//        var postDet = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                postViewModel.getPost(this, FK_Area)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (postCount == 0) {
+                                    postCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   2353   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("PostDetails")
+                                        postArrayList = jobjt.getJSONArray("PostDetailsList")
+
+                                        if (postArrayList.length() > 0) {
+//                                            if (postDet == 0){
+//                                                postDet++
+                                            postDetailPopup(postArrayList)
+//                                            }
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun postDetailPopup(postArrayList: JSONArray) {
+
+        try {
+
+            dialogPost = Dialog(this)
+            dialogPost!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPost!!.setContentView(R.layout.post_list_popup)
+            dialogPost!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycPost = dialogPost!!.findViewById(R.id.recycPost) as RecyclerView
+            val etsearch = dialogPost!!.findViewById(R.id.etsearch) as EditText
+
+            postSort = JSONArray()
+            for (k in 0 until postArrayList.length()) {
+                val jsonObject = postArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                postSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recycPost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+            val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
+            recycPost!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    postSort = JSONArray()
+
+                    for (k in 0 until postArrayList.length()) {
+                        val jsonObject = postArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("PostName").length) {
+                            if (jsonObject.getString("PostName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                postSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "postSort               7103    " + postSort)
+                    val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
+                    recycPost!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogPost!!.show()
+            dialogPost!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialogPost!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 
     var watcher: TextWatcher = object : TextWatcher {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -4082,56 +5803,218 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             when {
                 editable === tie_Date!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    til_Date!!.isErrorEnabled = false
+                    if (tie_Date!!.text.toString().equals("")){
+                        til_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Date!!.isErrorEnabled = false
+                        til_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+                editable === tie_Time!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Time!!.text.toString().equals("")){
+                        til_Time!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Time!!.isErrorEnabled = false
+                        til_Time!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
                 }
                 editable === tie_CustomerName!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    til_CustomerName!!.isErrorEnabled = false
+//                    if (tie_CustomerName!!.text.toString().equals("")){
+                    if (ID_Customer.equals("")){
+                        til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CustomerName!!.isErrorEnabled = false
+                        til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
                 }
                 editable === tie_MobileNo!!.editableText -> {
                     Log.e(TAG,"283022    ")
                     if (tie_MobileNo!!.text!!.length > 9 ){
                         til_MobileNo!!.isErrorEnabled = false
+                        til_MobileNo!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
+                    else{
+                        til_MobileNo!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }
+
 
                 }
                 editable === tie_Address!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Address!!.isErrorEnabled = false
+                    if (tie_Address!!.text.toString().equals("")){
+                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Address!!.isErrorEnabled = false
+                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
                 editable === tie_Priority!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Priority!!.isErrorEnabled = false
+                    if (tie_Priority!!.text.toString().equals("")){
+                        til_Priority!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Priority!!.isErrorEnabled = false
+                        til_Priority!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
 
+                editable === tie_CompCategory!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                  //  til_CompCategory!!.isErrorEnabled = false
+                    if (tie_CompCategory!!.text.toString().equals("")){
+                        til_CompCategory!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CompCategory!!.isErrorEnabled = false
+                        til_CompCategory!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
 
                 editable === tie_Category!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Category!!.isErrorEnabled = false
+                   // til_Category!!.isErrorEnabled = false
+                    if (tie_Category!!.text.toString().equals("")){
+                        til_Category!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Category!!.isErrorEnabled = false
+                        til_Category!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
 
 
                 editable === tie_Product!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Product!!.isErrorEnabled = false
+                  //  til_Product!!.isErrorEnabled = false
                 }
 
                 editable === tie_Service!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Service!!.isErrorEnabled = false
+                    //til_Service!!.isErrorEnabled = false
+                    if (tie_Service!!.text.toString().equals("")){
+                        til_Service!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Service!!.isErrorEnabled = false
+                        til_Service!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
                 editable === tie_Complaint!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Complaint!!.isErrorEnabled = false
+                   // til_Complaint!!.isErrorEnabled = false
+                    if (tie_Complaint!!.text.toString().equals("")){
+                        til_Complaint!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Complaint!!.isErrorEnabled = false
+                        til_Complaint!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
 
                 editable === tie_Description!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    til_Description!!.isErrorEnabled = false
+                   // til_Description!!.isErrorEnabled = false
+                    if (tie_Description!!.text.toString().equals("")){
+                        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Description!!.isErrorEnabled = false
+                        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
                 }
 
 
+                editable === tie_CN_Name!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_Name!!.text.toString().equals("")){
+                        til_CN_Name!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_Name!!.isErrorEnabled = false
+                        til_CN_Name!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_Mobile!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_Mobile!!.text.toString().length < 10){
+                        til_CN_Mobile!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_Mobile!!.isErrorEnabled = false
+                        til_CN_Mobile!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_HouseName!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_HouseName!!.text.toString().equals("")){
+                        til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_HouseName!!.isErrorEnabled = false
+                        til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_Pincode!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_Pincode!!.text.toString().equals("")){
+                        til_CN_Pincode!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_Pincode!!.isErrorEnabled = false
+                        til_CN_Pincode!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_Country!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_Country!!.text.toString().equals("")){
+                        til_CN_Country!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_Country!!.isErrorEnabled = false
+                        til_CN_Country!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_State!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_State!!.text.toString().equals("")){
+                        til_CN_State!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_State!!.isErrorEnabled = false
+                        til_CN_State!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_District!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_District!!.text.toString().equals("")){
+                        til_CN_District!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_District!!.isErrorEnabled = false
+                        til_CN_District!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_CN_Area!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    // til_Description!!.isErrorEnabled = false
+                    if (tie_CN_Area!!.text.toString().equals("")){
+                        til_CN_Area!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CN_Area!!.isErrorEnabled = false
+                        til_CN_Area!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
             }
+
+
 
         }
     }
