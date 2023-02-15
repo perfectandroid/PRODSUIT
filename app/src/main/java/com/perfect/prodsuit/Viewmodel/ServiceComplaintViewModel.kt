@@ -11,8 +11,8 @@ class ServiceComplaintViewModel : ViewModel(){
 
     var serviceComplaintData: MutableLiveData<ServiceComplaintModel>? = null
 
-    fun getserviceComplaintData(context: Context, ReqMode : String, SubMode: String, ID_Product: String) : LiveData<ServiceComplaintModel>? {
-        serviceComplaintData = ServiceComplaintRepository.getServicesApiCall(context,ReqMode,SubMode,ID_Product)
+    fun getserviceComplaintData(context: Context, ReqMode : String, SubMode: String,ID_Category : String) : LiveData<ServiceComplaintModel>? {
+        serviceComplaintData = ServiceComplaintRepository.getServicesApiCall(context,ReqMode,SubMode,ID_Category)
         return serviceComplaintData
     }
 }

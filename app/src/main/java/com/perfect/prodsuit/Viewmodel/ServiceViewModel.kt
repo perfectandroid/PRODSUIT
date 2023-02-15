@@ -11,8 +11,8 @@ class ServiceViewModel   : ViewModel(){
 
     var serviceData: MutableLiveData<ServiceModel>? = null
 
-    fun getServices(context: Context,ReqMode : String, SubMode: String, ID_Product: String) : LiveData<ServiceModel>? {
-        serviceData = ServiceRepository.getServicesApiCall(context,ReqMode,SubMode,ID_Product)
+    fun getServices(context: Context,ReqMode : String, SubMode: String, ID_Product: String,ID_Category : String) : LiveData<ServiceModel>? {
+        serviceData = ServiceRepository.getServicesApiCall(context,ReqMode,SubMode,ID_Product,ID_Category)
         return serviceData
     }
 }

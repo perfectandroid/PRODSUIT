@@ -28,12 +28,12 @@ object ServiceRepository {
     val serviceSetterGetter = MutableLiveData<ServiceModel>()
     val TAG: String = "ServiceRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String, SubMode: String, ID_Product: String): MutableLiveData<ServiceModel> {
-        getServiceSetterGetter(context,ReqMode,SubMode,ID_Product)
+    fun getServicesApiCall(context: Context,ReqMode : String, SubMode: String, ID_Product: String,ID_Category : String): MutableLiveData<ServiceModel> {
+        getServiceSetterGetter(context,ReqMode,SubMode,ID_Product,ID_Category)
         return serviceSetterGetter
     }
 
-    private fun getServiceSetterGetter(context: Context,ReqMode : String, SubMode: String, ID_Product: String) {
+    private fun getServiceSetterGetter(context: Context,ReqMode : String, SubMode: String, ID_Product: String,ID_Category : String) {
 
         try {
             serviceSetterGetter.value = ServiceModel("")
@@ -79,7 +79,8 @@ object ServiceRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
+               // requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
 
 
                 Log.e(TAG,"requestObject1   971   "+requestObject1)

@@ -28,12 +28,12 @@ object ServiceComplaintRepository {
     val serviceCompSetterGetter = MutableLiveData<ServiceComplaintModel>()
     val TAG: String = "ServiceComplaintRepository"
 
-    fun getServicesApiCall(context: Context, ReqMode : String, SubMode: String, ID_Product: String): MutableLiveData<ServiceComplaintModel> {
-        getServiceSetterGetter(context, ReqMode, SubMode, ID_Product)
+    fun getServicesApiCall(context: Context, ReqMode : String, SubMode: String, ID_Category: String): MutableLiveData<ServiceComplaintModel> {
+        getServiceSetterGetter(context, ReqMode, SubMode, ID_Category)
         return serviceCompSetterGetter
     }
 
-    private fun getServiceSetterGetter(context: Context, ReqMode: String, subMode: String, ID_Product: String) {
+    private fun getServiceSetterGetter(context: Context, ReqMode: String, subMode: String, ID_Category: String) {
         try {
             serviceCompSetterGetter.value = ServiceComplaintModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -76,11 +76,11 @@ object ServiceComplaintRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
 
 
                 Log.e(TAG,"requestObject1   971   "+requestObject1)
-                Log.e(TAG,"requestObject1   972   ReqMode  :  "+ReqMode+"   ID_Product  :  "+ID_Product)
+                Log.e(TAG,"requestObject1   972   ReqMode  :  "+ReqMode+"   FK_Category  :  "+ID_Category)
 
             } catch (e: Exception) {
                 e.printStackTrace()

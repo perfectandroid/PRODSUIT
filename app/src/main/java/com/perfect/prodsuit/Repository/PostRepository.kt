@@ -28,7 +28,7 @@ object PostRepository {
     val TAG: String = "PostRepository"
 
     fun getServicesApiCall(context: Context,FK_Area :String): MutableLiveData<PostModel> {
-        getPost(context, LeadGenerationActivity.FK_Area)
+        getPost(context, FK_Area)
         return postSetterGetter
     }
 

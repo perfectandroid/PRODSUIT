@@ -29,12 +29,12 @@ object ServiceProductRepository {
     val serviceProductSetterGetter = MutableLiveData<ServiceProductModel>()
     val TAG: String = "ServiceProductRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode: String, SubMode: String,Customer_Type: String,ID_Customer: String): MutableLiveData<ServiceProductModel> {
-        getServiceProductSetterGetter(context,ReqMode,SubMode,Customer_Type,ID_Customer)
+    fun getServicesApiCall(context: Context,ReqMode: String, SubMode: String,Customer_Type: String,ID_Customer: String,ID_Category : String): MutableLiveData<ServiceProductModel> {
+        getServiceProductSetterGetter(context,ReqMode,SubMode,Customer_Type,ID_Customer,ID_Category)
         return serviceProductSetterGetter
     }
 
-    private fun getServiceProductSetterGetter(context: Context,ReqMode: String, SubMode: String,Customer_Type: String,ID_Customer: String) {
+    private fun getServiceProductSetterGetter(context: Context,ReqMode: String, SubMode: String,Customer_Type: String,ID_Customer: String,ID_Category : String) {
 
         try {
             serviceProductSetterGetter.value = ServiceProductModel("")
@@ -79,6 +79,7 @@ object ServiceProductRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
                // requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                 if (Customer_Type.equals("0")){
                     Log.e(LeadGenerateSaveRepository.TAG,"642121   "+ID_Customer)

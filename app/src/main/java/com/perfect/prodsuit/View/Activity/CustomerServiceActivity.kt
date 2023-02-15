@@ -648,6 +648,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
             tie_Date!!.setText(""+sdfDate1.format(newDate))
+            tie_FromDate!!.setText(""+sdfDate1.format(newDate))
           //  strVisitDate = sdfDate2.format(newDate)
 
             tie_Time!!.setText(""+sdfTime1.format(newDate))
@@ -850,10 +851,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             R.id.tie_Product->{
                 Config.disableClick(v)
-                productDet = 0
-                ReqMode = "68"
-                SubMode = ""
-                getProduct(ReqMode!!,SubMode!!)
+
+                if (ID_Category.equals("")){
+                    til_Category!!.setError("Select Category");
+                    til_Category!!.setErrorIconDrawable(null)
+                }else{
+                    productDet = 0
+                    ReqMode = "68"
+                    SubMode = ""
+                    getProduct(ReqMode!!,SubMode!!)
+                }
+
 
             }
 
@@ -862,12 +870,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 serviceDet = 0
                 ReqMode = "69"
                 SubMode = ""
-                if (!ID_Product.equals("")){
+                if (!ID_Category.equals("")){
                     getServices(ReqMode!!,SubMode!!)
                 }else{
                   //  Config.snackBars(context,v,"Select Product")
-                    til_Product!!.setError("Select Product");
-                    til_Product!!.setErrorIconDrawable(null)
+                    til_Category!!.setError("Select Category");
+                    til_Category!!.setErrorIconDrawable(null)
                 }
             }
 
@@ -876,12 +884,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 complaintDet = 0
                 ReqMode = "70"
                 SubMode = ""
-                if (!ID_Product.equals("")){
+                if (!ID_Category.equals("")){
                     getComplaints(ReqMode!!,SubMode!!)
                 }else{
                    // Config.snackBars(context,v,"Select Product")
-                    til_Product!!.setError("Select Product");
-                    til_Product!!.setErrorIconDrawable(null)
+                    til_Category!!.setError("Select Category");
+                    til_Category!!.setErrorIconDrawable(null)
                 }
             }
 
@@ -1451,7 +1459,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             hideViews()
         }
         else if (strAddress.equals("")){
-            til_Address!!.setError("Enter Address");
+            til_Address!!.setError("Enter House Name");
             til_Address!!.setErrorIconDrawable(null)
             custDetailMode = "0"
             complaintMode  = "1"
@@ -1617,6 +1625,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             // Customer Details
             val tv_conf_date = dialogConfirm!!.findViewById(R.id.tv_conf_date) as TextView
+            val tv_conf_time = dialogConfirm!!.findViewById(R.id.tv_conf_time) as TextView
             val tv_conf_name = dialogConfirm!!.findViewById(R.id.tv_conf_name) as TextView
             val tv_conf_mobile = dialogConfirm!!.findViewById(R.id.tv_conf_mobile) as TextView
             val tv_conf_address = dialogConfirm!!.findViewById(R.id.tv_conf_address) as TextView
@@ -1632,6 +1641,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             // Customer Details
 
             tv_conf_date!!.setText(""+strDate)
+            tv_conf_time!!.setText(""+strTime)
             tv_conf_name!!.setText(""+strCustomerName)
             tv_conf_mobile!!.setText(""+strMobileNo)
             tv_conf_address!!.setText(""+strAddress)
@@ -1660,6 +1670,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val tv_comp_desc = dialogConfirm!!.findViewById(R.id.tv_comp_desc) as TextView
 
             val ll_comp_company = dialogConfirm!!.findViewById(R.id.ll_comp_company) as LinearLayout
+            val ll_comp_product = dialogConfirm!!.findViewById(R.id.ll_comp_product) as LinearLayout
             val ll_comp_service = dialogConfirm!!.findViewById(R.id.ll_comp_service) as LinearLayout
             val ll_comp_complaint = dialogConfirm!!.findViewById(R.id.ll_comp_complaint) as LinearLayout
 
@@ -1673,6 +1684,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             if (ID_Company!!.equals("")){
                 ll_comp_company!!.visibility = View.GONE
+            }
+            if (ID_Product!!.equals("")){
+                ll_comp_product!!.visibility = View.GONE
             }
             if (ID_Services!!.equals("")){
                 ll_comp_service!!.visibility = View.GONE
@@ -3225,7 +3239,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceProductViewModel.getServiceProduct(this,ReqMode,SubMode,Customer_Type!!,ID_Customer!!)!!.observe(
+                serviceProductViewModel.getServiceProduct(this,ReqMode,SubMode,Customer_Type!!,ID_Customer!!,ID_Category!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -3368,7 +3382,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceViewModel.getServices(this,ReqMode!!,SubMode!!,ID_Product!!)!!.observe(
+                serviceViewModel.getServices(this,ReqMode!!,SubMode!!,ID_Product!!,ID_Category!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -3505,7 +3519,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,ID_Product!!)!!.observe(
+                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,ID_Category!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4775,6 +4789,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             ID_Category = ""
             tie_Category!!.setText("")
+            tie_Product!!.setText("")
+            ID_Product = ""
             tie_Company!!.setText("")
             ID_Company = ""
             tie_Service!!.setText("")
@@ -4816,6 +4832,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             ID_Category = jsonObject.getString("ID_Category")
             tie_Category!!.setText(jsonObject.getString("CategoryName"))
 
+            tie_Product!!.setText("")
+            ID_Product = ""
             tie_Company!!.setText("")
             ID_Company = ""
             tie_Service!!.setText("")
