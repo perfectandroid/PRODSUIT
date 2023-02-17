@@ -49,10 +49,12 @@
         android:icon="@drawable/applogo"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:exported="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
+        android:grantUriPermissions="true"
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.perfect.prodsuit.View.Activity.EmiCollectionActivity"

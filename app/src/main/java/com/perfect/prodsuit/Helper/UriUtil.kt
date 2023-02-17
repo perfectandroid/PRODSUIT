@@ -26,20 +26,31 @@ object UriUtil {
         var selection: String? = null
         var selectionArgs: Array<String>? = null
         // DocumentProvider
+        Log.e("TAG","1191   ")
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            Log.e("TAG","1192   ")
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
-                val docId = DocumentsContract.getDocumentId(uri)
-                val split = docId.split(":").toTypedArray()
-                val type = split[0]
-                val fullPath: String = getPathFromExtSD(split)
-                return if (fullPath !== "") {
-                    fullPath
-                } else {
-                    null
+                try {
+                    Log.e("TAG","1193   "+uri)
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split = docId.split(":").toTypedArray()
+                    val type = split[0]
+                    val fullPath: String = getPathFromExtSD(split)
+                    Log.e("TAG","11931   "+fullPath)
+                    return if (fullPath !== "") {
+                        fullPath
+                    } else {
+                        null
+                    }
+                }catch (e : Exception){
+                    Log.e("TAG","11932   "+e.toString())
                 }
+
             } else if (isDownloadsDocument(uri)) {
+                Log.e("TAG","1194   ")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Log.e("TAG","11941   ")
                     val id: String
                     var cursor: Cursor? = null
                     try {
@@ -50,15 +61,26 @@ object UriUtil {
                             null,
                             null
                         )
+                        Log.e("TAG","119411   ")
+
                         if (cursor != null && cursor.moveToFirst()) {
                             val fileName = cursor.getString(0)
-                            val path = Environment.getExternalStorageDirectory()
-                                .toString() + "/Download/" + fileName
-                            if (!TextUtils.isEmpty(path)) {
-                                return path
+                            Log.e("TAG","1194111  fileName    "+fileName)
+                            val path = Environment.getExternalStorageDirectory().toString() + "/Download/" + fileName
+                            Log.e("TAG","1194112  path    "+path)
+//                            if (!TextUtils.isEmpty(path)) {
+//                                return path
+//                            }
+                            return if (path !== "") {
+                                path
+                            } else {
+                                null
                             }
                         }
-                    } finally {
+                        Log.e("TAG","119412   ")
+
+                    }
+                    finally {
                         cursor?.close()
                     }
                     id = DocumentsContract.getDocumentId(uri)
@@ -85,14 +107,16 @@ object UriUtil {
                                     null,
                                     null
                                 )
-                            } catch (e: NumberFormatException) {
+                            } catch (e: Exception) {
                                 //In Android 8 and Android P the id is not a number
+                                Log.e("TAG","1194   "+e.toString())
                                 uri.path!!.replaceFirst("^/document/raw:".toRegex(), "")
                                     .replaceFirst("^raw:".toRegex(), "")
                             }
                         }
                     }
                 } else {
+                    Log.e("TAG","1195   ")
                     val id = DocumentsContract.getDocumentId(uri)
                     val isOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                     if (id.startsWith("raw:")) {
@@ -116,9 +140,11 @@ object UriUtil {
                     }
                 }
             } else if (isMediaDocument(uri)) {
+                Log.e("TAG","1196   ")
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
+                Log.e("TAG","11961   "+type+"  :  "+split+"  :  "+docId+"  :  "+uri)
                 var contentUri: Uri? = null
                 if ("image" == type) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -127,6 +153,11 @@ object UriUtil {
                 } else if ("audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                 }
+                else if ("document".equals(type)) {
+                    Log.e("TAG","11962   ")
+                    contentUri = MediaStore.Files.getContentUri("external");
+                }
+                Log.e("TAG","11963   "+contentUri)
                 selection = "_id=?"
                 selectionArgs = arrayOf(split[1])
                 return getDataColumn(
@@ -137,6 +168,7 @@ object UriUtil {
                 return getDriveFilePath(uri, context)
             }
         } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            Log.e("TAG","1197   ")
             if (isGooglePhotosUri(uri)) {
                 return uri.lastPathSegment
             }
@@ -169,6 +201,7 @@ object UriUtil {
         context: Context, uri: Uri,
         selection: String?, selectionArgs: Array<String>?
     ): String? {
+        Log.e("TAG","1198   ")
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
@@ -199,6 +232,7 @@ object UriUtil {
     }
 
     private fun getDriveFilePath(uri: Uri, context: Context): String? {
+        Log.e("TAG","1199   ")
         val returnCursor = context.contentResolver.query(uri, null, null, null, null)
         /*
          * Get the column indexes of the data in the Cursor,
@@ -236,6 +270,7 @@ object UriUtil {
     }
 
     private fun getMediaFilePathForN(uri: Uri, context: Context): String? {
+        Log.e("TAG","11910   ")
         val returnCursor = context.contentResolver.query(uri, null, null, null, null)
         /*
          * Get the column indexes of the data in the Cursor,
@@ -278,6 +313,7 @@ object UriUtil {
     }
 
     private fun getPathFromExtSD(pathData: Array<String>): String {
+        Log.e("TAG","11911   ")
         val type = pathData[0]
         val relativePath = "/" + pathData[1]
         var fullPath = ""
@@ -288,7 +324,9 @@ object UriUtil {
         //
         // so no "primary" type, but let the check here for other devices
         if ("primary".equals(type, ignoreCase = true)) {
+
             fullPath = Environment.getExternalStorageDirectory().toString() + relativePath
+            Log.e("TAG","119111   "+fullPath)
             if (fileExists(fullPath)) {
                 return fullPath
             }

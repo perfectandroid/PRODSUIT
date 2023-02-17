@@ -5,6 +5,7 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -58,10 +59,7 @@ import com.perfect.prodsuit.Viewmodel.*
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -197,6 +195,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var cbMessage = "0";
 
     private var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
+    private var MY_PERMISSIONS_READ_EXTERNAL_STORAGE = 2
     var ID_LeadDocumentDetails : String = ""
     var DocumentImageFormat : String = ""
     private var destination: File? = null
@@ -1200,29 +1199,17 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         if (data.equals("Documents")) {
 
+
             try {
-
-                Log.e(TAG, "Documents   162")
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) !== PackageManager.PERMISSION_GRANTED
-                ) {
-                    // Permission is not granted
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                    ) {
-                    } else {
-                        ActivityCompat.requestPermissions(
-                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                        )
-                    }
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
                 }
-                else{
+                else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),101)
+                }
+                else {
 
+                    Log.e(TAG,"1212  Permission Granted")
                     val jsonObject = documentDetailArrayList.getJSONObject(position)
                     ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
                     DocumentImageFormat = jsonObject.getString("DocumentImageFormat")
@@ -1236,11 +1223,55 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
                 }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this@AccountDetailsActivity, "Failed!", Toast.LENGTH_SHORT)
+                    .show()
             }
-            catch (e : Exception){
 
-                Log.e(TAG,"1065     "+e.toString())
-            }
+            /////////
+
+//            try {
+//
+//                Log.e(TAG, "Documents   162")
+//                if (ContextCompat.checkSelfPermission(
+//                        this,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    ) !== PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    // Permission is not granted
+//                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                            this,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                        )
+//                    ) {
+//                    } else {
+//                        ActivityCompat.requestPermissions(
+//                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                        )
+//                    }
+//                }
+//                else{
+//
+//                    val jsonObject = documentDetailArrayList.getJSONObject(position)
+//                    ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
+//                    DocumentImageFormat = jsonObject.getString("DocumentImageFormat")
+//
+//
+//                    if (DocumentImageFormat.equals("")){
+//                        Toast.makeText(applicationContext,"Document not found",Toast.LENGTH_SHORT).show()
+//                    }else{
+//                        getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
+//                    }
+
+//
+//                }
+//            }
+//            catch (e : Exception){
+//
+//                Log.e(TAG,"1065     "+e.toString())
+//            }
 
 
 
@@ -1266,6 +1297,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getDocumentView(ID_LeadGenerate: String, ID_LeadGenerateProduct: String, ID_LeadDocumentDetails: String) {
+
 
         var typeAgenda = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -1300,45 +1332,170 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                             typeAgenda++
                                             val jobjt = jObject.getJSONObject("DocumentImageDetails")
                                             val DocumentImage = jobjt.getString("DocumentImage")
+                                         //   val DocumentImage = "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"
+
+
                                             val decodedString = Base64.decode(DocumentImage, Base64.DEFAULT)
+                                          //  val myBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
                                             //  val mediaData: ByteArray = Base64.decode(decodedString, 0)
                                             //  val bytes = decodedString.toByteArray()
                                             val sdf = SimpleDateFormat("ddMMyyyyHHmmss")
                                             val datetime = sdf.format(Date())
                                          //   destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+System.currentTimeMillis() + DocumentImageFormat)
-                                            destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ""+System.currentTimeMillis() + DocumentImageFormat)
+                                          //  destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ""+System.currentTimeMillis() + DocumentImageFormat)
 //                                    destination = File(Environment.getExternalStorageDirectory().toString() + "/" + getString(R.string.app_name), ""+datetime + DocumentImageFormat)
                                             val fo: FileOutputStream
+//                                            try {
+//
+//
+//
+//                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                                                    destination = File(
+//                                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath,
+//                                                        ""
+//                                                    )
+//                                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+//                                                } else {
+//                                                    destination = File(
+//                                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath,
+//                                                        ""
+//                                                    )
+//                                                }
+//
+//                                                if (!destination!!.exists()) {
+//                                                    destination!!.createNewFile()
+//                                                }
+//
+//                                                destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)).absolutePath + "/" + "", ""+System.currentTimeMillis() + DocumentImageFormat)
+//
+//                                                fo = FileOutputStream(destination)
+//                                                fo.write(decodedString)
+//                                                fo.close()
+//
+//                                                Log.e(TAG,"Success   1230    ")
+//
+//                                                val file: File = File(destination,"")
+//                                                Log.e(TAG,"Success   12301    "+System.currentTimeMillis() + DocumentImageFormat)
+//                                                Log.e(TAG,"Success   12301    "+file)
+//                                                val map: MimeTypeMap = MimeTypeMap.getSingleton()
+//                                                val ext: String = MimeTypeMap.getFileExtensionFromUrl(file.name)
+//                                                var type: String? = map.getMimeTypeFromExtension(ext)
+//                                                if (type == null)
+//                                                    type = "*/*";
+//
+//                                                val intent = Intent(Intent.ACTION_VIEW)
+//                                                val data: Uri = Uri.fromFile(file)
+//                                                intent.setDataAndType(data, type)
+//                                                startActivity(intent)
+
+//
+//                                            } catch (e: Exception) {
+//                                                e.printStackTrace()
+//                                                Log.e(TAG,"Exception   1231    "+e.toString())
+//                                            }
+
+
                                             try {
-                                                if (!destination!!.getParentFile().exists()) {
-                                                    destination!!.getParentFile().mkdirs()
+                                                if (ContextCompat.checkSelfPermission(
+                                                        this,
+                                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                                    ) != PackageManager.PERMISSION_GRANTED
+                                                ) {
+                                                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                                            this,
+                                                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                                        )
+                                                    ) {
+                                                        // Show an explanation to the user *asynchronously* -- don't block
+                                                        // this thread waiting for the user's response! After the user
+                                                        // sees the explanation, try again to request the permission.
+
+                                                    } else {
+                                                        // No explanation needed; request the permission
+                                                        ActivityCompat.requestPermissions(
+                                                            this,
+                                                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                                                        )
+                                                    }
                                                 }
-                                                if (!destination!!.exists()) {
-                                                    destination!!.createNewFile()
+                                                else {
+
+
+                                                    try {
+
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                                            destination = File(
+                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                                                ""
+                                                            )
+                                                            // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                                                        } else {
+                                                            destination = File(
+                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                                                ""
+                                                            )
+                                                        }
+
+                                                        if (!destination!!.exists()) {
+                                                            destination!!.createNewFile()
+                                                            Log.e(TAG,"1448  Not Exist")
+                                                        }else{
+                                                            Log.e(TAG,"1448  Exist")
+                                                        }
+
+                                                        destination = File(
+                                                            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                                                    "",
+                                                            "" + System.currentTimeMillis() + DocumentImageFormat
+                                                        )
+
+                                                        Log.e(TAG,"14481  destination   "+destination)
+                                                        val fo: FileOutputStream
+
+                                                        fo = FileOutputStream(destination)
+                                                        fo.write(decodedString)
+                                                        fo.close()
+
+
+                                                        val file: File = File(destination,"")
+                                                        Log.e(TAG,"1448  destination   "+destination)
+                                                        Log.e(TAG,"Success   12301    "+System.currentTimeMillis() + DocumentImageFormat)
+                                                        Log.e(TAG,"Success   12301    "+file)
+                                                        val map: MimeTypeMap = MimeTypeMap.getSingleton()
+                                                        val ext: String = MimeTypeMap.getFileExtensionFromUrl(file.name)
+                                                        var type: String? = map.getMimeTypeFromExtension(ext)
+                                                        if (type == null)
+                                                            type = "*/*";
+
+                                                        val intent = Intent(Intent.ACTION_VIEW)
+                                                        intent.setFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                                                        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                                                        val data: Uri = Uri.fromFile(file)
+                                                        intent.setDataAndType(data, type)
+                                                        startActivity(intent)
+
+
+
+                                                    } catch (e: Exception) {
+                                                        e.printStackTrace()
+                                                        Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                                                    } catch (e: Exception) {
+                                                        e.printStackTrace()
+                                                        Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                                                    }
+
+
+
                                                 }
-                                                fo = FileOutputStream(destination)
-                                                fo.write(decodedString)
-                                                fo.close()
-
-                                                Log.e(TAG,"Success   1230    ")
-
-                                                val file: File = File(destination,"")
-                                                val map: MimeTypeMap = MimeTypeMap.getSingleton()
-                                                val ext: String = MimeTypeMap.getFileExtensionFromUrl(file.name)
-                                                var type: String? = map.getMimeTypeFromExtension(ext)
-                                                if (type == null)
-                                                    type = "*/*";
-
-                                                val intent = Intent(Intent.ACTION_VIEW)
-                                                val data: Uri = Uri.fromFile(file)
-                                                intent.setDataAndType(data, type)
-                                                startActivity(intent)
-
-
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
-                                                Log.e(TAG,"Exception   1231    "+e.toString())
+                                                Toast.makeText(this@AccountDetailsActivity, "Failed!", Toast.LENGTH_SHORT)
+                                                    .show()
                                             }
+
+
                                         }
 
                                     }catch (e: Exception){

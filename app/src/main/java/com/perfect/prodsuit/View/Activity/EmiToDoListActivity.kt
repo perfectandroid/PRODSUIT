@@ -8,14 +8,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -33,7 +39,20 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
     lateinit var emiListViewModel: EmiListViewModel
     lateinit var emiListArrayList: JSONArray
+    lateinit var emiListSort: JSONArray
     var recyEmiList: RecyclerView? = null
+
+    private var imgv_filter: ImageView? = null
+    private var txtReset: TextView? = null
+    private var txtSearch: TextView? = null
+    private var tie_Customer: TextInputEditText? = null
+    private var tie_Mobile: TextInputEditText? = null
+    private var tie_Address: TextInputEditText? = null
+
+    var strCustomer = ""
+    var strMobile = ""
+    var strAddress = ""
+
 
     var emiCount = 0
 
@@ -58,12 +77,22 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
         imback!!.setOnClickListener(this)
 
         recyEmiList = findViewById<RecyclerView>(R.id.recyEmiList)
+
+        imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
+        imgv_filter!!.setOnClickListener(this)
+
+
     }
 
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+
+            R.id.imgv_filter->{
+                Config.disableClick(v)
+                filterBottomSheet()
             }
 
         }
@@ -96,9 +125,16 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                                         emiListArrayList = jobjt.getJSONArray("CategoryList")
                                         if (emiListArrayList.length() > 0) {
 
+                                            emiListSort = JSONArray()
+                                            for (k in 0 until emiListArrayList.length()) {
+                                                val jsonObject = emiListArrayList.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                emiListSort.put(jsonObject)
+                                            }
+
                                             val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
                                             recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListArrayList!!)
+                                            val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!)
                                             recyEmiList!!.adapter = adapter
                                             adapter.setClickListener(this@EmiToDoListActivity)
 
@@ -139,6 +175,72 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun filterBottomSheet() {
+        try {
+
+
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.emi_list_filter_sheet, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCanceledOnTouchOutside(false)
+
+
+
+            txtReset = view.findViewById<TextView>(R.id.txtReset)
+            txtSearch = view.findViewById<TextView>(R.id.txtSearch)
+
+            tie_Customer = view.findViewById<TextInputEditText>(R.id.tie_Customer)
+            tie_Mobile = view.findViewById<TextInputEditText>(R.id.tie_Mobile)
+            tie_Address = view.findViewById<TextInputEditText>(R.id.tie_Address)
+
+            tie_Customer!!.setText(""+strCustomer)
+            tie_Mobile!!.setText(""+strMobile)
+            tie_Address!!.setText(""+strAddress)
+
+            txtReset!!.setOnClickListener {
+                tie_Customer!!.setText("")
+                tie_Mobile!!.setText("")
+                tie_Address!!.setText("")
+            }
+            txtSearch!!.setOnClickListener {
+
+                strCustomer = tie_Customer!!.text.toString().toLowerCase().trim()
+                strMobile = tie_Mobile!!.text.toString().toLowerCase().trim()
+                strAddress = tie_Address!!.text.toString().toLowerCase().trim()
+
+//                emiListSort = JSONArray()
+//                for (k in 0 until emiListArrayList.length()) {
+//                    val jsonObject = emiListArrayList.getJSONObject(k)
+//                    if ((jsonObject.getString("TicketNo")!!.toLowerCase().trim().contains(strCustomer!!))
+//                        && (jsonObject.getString("Branch")!!.toLowerCase().trim().contains(strMobile!!))
+//                        && (jsonObject.getString("Customer")!!.toLowerCase().trim().contains(strAddress!!))){
+//
+//                        emiListSort.put(jsonObject)
+//                    }
+//                }
+//
+                dialog1.dismiss()
+//
+//                val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
+//                recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!)
+//                recyEmiList!!.adapter = adapter
+//                adapter.setClickListener(this@EmiToDoListActivity)
+
+            }
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+
         }
     }
 

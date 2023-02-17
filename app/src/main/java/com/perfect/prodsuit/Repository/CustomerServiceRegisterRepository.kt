@@ -30,10 +30,10 @@ object CustomerServiceRegisterRepository {
                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                           strDate : String): MutableLiveData<CustomerServiceRegisterModel> {
+                           strDate : String,strTime : String): MutableLiveData<CustomerServiceRegisterModel> {
         getCustomerServiceRegister(context,strUserAction,Customer_Type,ID_Customer,ID_Channel,ID_Priority,ID_Category,
             ID_Company,ID_ComplaintList,ID_Services,ID_EmpMedia,ID_Status,ID_AttendedBy,strCustomerName,strMobileNo,strAddress,strContactNo,
-            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate)
+            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime)
         return cusServRegisterSetterGetter
     }
 
@@ -41,7 +41,7 @@ object CustomerServiceRegisterRepository {
                                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                                           strDate : String) {
+                                           strDate : String,strTime : String) {
 
 //        Log.e(TAG,"Validation   93731"
 //                +"\n"+"Customer Type        :  "+Customer_Type
@@ -140,6 +140,7 @@ object CustomerServiceRegisterRepository {
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("CSRODescription", ProdsuitApplication.encryptStart(strDescription))
                 requestObject1.put("TicketDate", ProdsuitApplication.encryptStart(strDate))
+                requestObject1.put("TicketTime", ProdsuitApplication.encryptStart(strTime))
 
                 if (Customer_Type.equals("0")){
                     Log.e(TAG,"642121   "+ID_Customer)

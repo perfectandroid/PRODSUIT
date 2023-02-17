@@ -249,7 +249,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_documents.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.25" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_to_do_list.xml" value="0.271875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_to_do_list.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_follow_up.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.3109375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.30615384615384617" />
@@ -282,6 +282,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.2760416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2791666666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_welcome.xml" value="0.22447916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_actionticket_report.xml" value="0.3328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.36666666666666664" />
@@ -361,6 +362,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dialog_company.xml" value="0.315625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dlte_lead.xml" value="0.33229166666666665" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_list_filter_sheet.xml" value="0.24270833333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/employee_popup.xml" value="0.31666666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/employeeall_popup.xml" value="0.22135416666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/error_alert.xml" value="0.23697916666666666" />
@@ -403,6 +405,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testnew.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/warnig_alert.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/welcome_slide1.xml" value="0.15364583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.30092592592592593" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/navbottom_item.xml" value="0.33177083333333335" />
       </map>

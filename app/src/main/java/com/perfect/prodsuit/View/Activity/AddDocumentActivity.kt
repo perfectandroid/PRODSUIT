@@ -69,7 +69,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     private var destination: File? = null
     private var inputStreamImg: InputStream? = null
     private var imgPath: String? = null
-    private var selectedFilePath = ""
+    private var selectedFilePath: String? = null
     private var bitmap: Bitmap? = null
 
     var fromDateMode : String?= "1"  // GONE
@@ -364,59 +364,170 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         inputStreamImg = null
         if (requestCode == PICK_IMAGE_CAMERA) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) !== PackageManager.PERMISSION_GRANTED
-            ) {
-                // Permission is not granted
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                ) {
-                } else {
-                    ActivityCompat.requestPermissions(
-                        this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                    )
-                }
-            } else {
+
+            try {
                 if (data != null) {
-                    val thumbnail = data.extras!!["data"] as Bitmap?
-                    val bytes = ByteArrayOutputStream()
-                    thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-                    destination = File(
-                        Environment.getExternalStorageDirectory().toString() + "/" +
-                                getString(R.string.app_name),
-                        "IMG_" + System.currentTimeMillis() + ".jpg"
-                    )
-                    val fo: FileOutputStream
                     try {
-                        if (!destination!!.getParentFile().exists()) {
-                            destination!!.getParentFile().mkdirs()
+                        if (ContextCompat.checkSelfPermission(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                    this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                )
+                            ) {
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
+
+                            } else {
+                                // No explanation needed; request the permission
+                                ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                                )
+                            }
+                        } else {
+
+                            Log.e(TAG,"3961   "+data)
+                            Log.e(TAG,"3962   "+data!!.getExtras()!!.get("data"))
+
+                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                            val bytes = ByteArrayOutputStream()
+                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                    destination = File(
+//                        (Environment.getExternalStorageDirectory()).toString() + "/" +
+//                                getString(R.string.app_name),
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+//                               "",
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    val fo: FileOutputStream
+
+                            try {
+//                        if (!destination!!.getParentFile().exists()) {
+//                            destination!!.getParentFile().mkdirs()
+//                        }
+//                        if (!destination!!.exists()) {
+//                            destination!!.createNewFile()
+//                        }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                                } else {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                }
+
+                                if (!destination!!.exists()) {
+                                    destination!!.createNewFile()
+                                }
+
+                                destination = File(
+                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                            "",
+                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                )
+                                val fo: FileOutputStream
+
+
+                                fo = FileOutputStream(destination)
+                                fo.write(bytes.toByteArray())
+                                fo.close()
+                            } catch (e: FileNotFoundException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                            }
+
+
+                                imgPath = destination!!.getAbsolutePath()
+                                Log.e(TAG, "imgPath  20522    " + imgPath)
+                                destination = File(imgPath)
+                                documentPath = imgPath!!
+                                txtAttachmentPath!!.setText(imgPath)
+                                tie_Attachment!!.setText(imgPath)
+
+
                         }
-                        if (!destination!!.exists()) {
-                            destination!!.createNewFile()
-                        }
-                        fo = FileOutputStream(destination)
-                        fo.write(bytes.toByteArray())
-                        fo.close()
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
                     } catch (e: IOException) {
                         e.printStackTrace()
+                        Toast.makeText(this@AddDocumentActivity, "Failed!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    imgPath = destination!!.getAbsolutePath()
-                    destination = File(imgPath)
-                    documentPath = imgPath!!
-                    txtAttachmentPath!!.setText(imgPath)
-                    tie_Attachment!!.setText(imgPath)
-                } else {
-                    Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
                 }
+            } catch (e: Exception) {
+
             }
-        } else if (requestCode == PICK_IMAGE_GALLERY) {
+
+
+//            if (ContextCompat.checkSelfPermission(
+//                    this,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                ) !== PackageManager.PERMISSION_GRANTED
+//            ) {
+//                // Permission is not granted
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                        this,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    )
+//                ) {
+//                } else {
+//                    ActivityCompat.requestPermissions(
+//                        this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                        MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                    )
+//                }
+//            } else {
+//                if (data != null) {
+//                    val thumbnail = data.extras!!["data"] as Bitmap?
+//                    val bytes = ByteArrayOutputStream()
+//                    thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                    destination = File(
+//                        Environment.getExternalStorageDirectory().toString() + "/" +
+//                                getString(R.string.app_name),
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    val fo: FileOutputStream
+//                    try {
+//                        if (!destination!!.getParentFile().exists()) {
+//                            destination!!.getParentFile().mkdirs()
+//                        }
+//                        if (!destination!!.exists()) {
+//                            destination!!.createNewFile()
+//                        }
+//                        fo = FileOutputStream(destination)
+//                        fo.write(bytes.toByteArray())
+//                        fo.close()
+//                    } catch (e: FileNotFoundException) {
+//                        e.printStackTrace()
+//                    } catch (e: IOException) {
+//                        e.printStackTrace()
+//                    }
+//                    imgPath = destination!!.getAbsolutePath()
+//                    destination = File(imgPath)
+//                    documentPath = imgPath!!
+//                    txtAttachmentPath!!.setText(imgPath)
+//                    tie_Attachment!!.setText(imgPath)
+//                } else {
+//                    Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+        }
+        else if (requestCode == PICK_IMAGE_GALLERY) {
             if (data != null) {
                 val selectedImage = data.data
                 try {
@@ -434,19 +545,34 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 Toast.makeText(this, "No image selected from gallery", Toast.LENGTH_SHORT).show()
             }
-        } else if (requestCode == PICK_DOCUMRNT_GALLERY) {
-            if (data != null) {
-                val uri = data.data
-                selectedFilePath = UriUtil.getPath(this, uri!!).toString()
-                destination = File(selectedFilePath.toString())
-                documentPath = selectedFilePath!!
-                txtAttachmentPath!!.setText(selectedFilePath)
-                tie_Attachment!!.setText(selectedFilePath)
-            } else {
-                Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
+        }
+        else if (requestCode == PICK_DOCUMRNT_GALLERY) {
+            try {
+                if (data != null) {
+                    val uri = data.data
+                    Log.e(TAG,"561  uri "+uri)
+                    Log.e(TAG,"561 data  "+data)
+                    selectedFilePath = UriUtil.getPath(this, uri!!).toString()
+                  //  selectedFilePath = getRealPathFromURI(uri)
+                    selectedFilePath = getRealPathFromURI(uri)
+                    Log.e(TAG,"561  selectedFilePath   "+selectedFilePath)
+                    destination = File(selectedFilePath.toString())
+                    Log.e(TAG,"561 destination  "+destination)
+                    documentPath = selectedFilePath!!
+                    Log.e(TAG,"561 documentPath   "+documentPath)
+                    txtAttachmentPath!!.setText(selectedFilePath)
+                    tie_Attachment!!.setText(selectedFilePath)
+                } else {
+                    Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
+                }
+            }catch (e: Exception){
+                Log.e(TAG,"561   "+e.toString())
             }
+
         }
     }
+
+
 
     fun getRealPathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Audio.Media.DATA)
