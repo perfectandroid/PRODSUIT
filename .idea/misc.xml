@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_customer_service.xml" value="0.2" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_homemain.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_services.xml" value="0.3546875" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/adapter_customer_list.xml" value="0.1765625" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.25" />
+        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/customersearch_popup.xml" value="0.1765625" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/address_svg.xml" value="0.1885" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/bottom_rounded.xml" value="0.2005" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/btn_bg.xml" value="0.356" />
@@ -411,7 +418,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

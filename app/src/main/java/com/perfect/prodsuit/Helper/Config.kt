@@ -89,6 +89,15 @@ object Config {
     const val SHARED_PREF45 = "BranchName"
     const val SHARED_PREF46 = "CompanyCategory"
 
+    const val SHARED_PREF47 = "Customerid"
+    const val SHARED_PREF48 = "CusMode"
+    const val SHARED_PREF49 = "Productid"
+
+    const val SHARED_PREF50 = "WarrantyCount"
+    const val SHARED_PREF51 = "ServiceHistoryCount"
+    const val SHARED_PREF52 = "SalesCount"
+    const val SHARED_PREF53 = "CustomerDueCount"
+
     var width = 0
     var height = 0
 
