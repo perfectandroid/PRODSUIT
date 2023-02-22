@@ -11,8 +11,8 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
-import java.io.File
-import java.io.FileOutputStream
+import android.webkit.MimeTypeMap
+import java.io.*
 import java.lang.Exception
 import java.lang.NumberFormatException
 
@@ -307,6 +307,66 @@ public class FileUtils {
         return if (fileExists(fullPath)) {
             fullPath
         } else fullPath
+    }
+
+
+    fun getFileName(context: Context, contentUri: Uri) : String?  {
+        var fileName = ""
+        try {
+            val returnCursor: Cursor? = context.contentResolver.query(contentUri, null, null, null, null)
+            val nameIndex = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            returnCursor!!.moveToFirst()
+            fileName = returnCursor!!.getString(nameIndex)
+            Log.e("TAG", "file name : $fileName")
+        }
+        catch (e : Exception){
+
+        }
+
+        return fileName
+    }
+
+    fun fileFromContentUri(context: Context, contentUri: Uri,fileName : String): File {
+        // Preparing Temp file name
+        val fileExtension = getFileExtension(context, contentUri)
+        val tempFile = File(
+            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
+                    "",
+            ""+fileName+".$fileExtension"
+        )
+        tempFile.createNewFile()
+
+        try {
+            val oStream = FileOutputStream(tempFile)
+            val inputStream = context.contentResolver.openInputStream(contentUri)
+
+            inputStream?.let {
+                copy(inputStream, oStream)
+            }
+
+            oStream.flush()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("TAG","253   "+e.toString())
+        }
+
+        return tempFile
+    }
+
+    private fun getFileExtension(context: Context, uri: Uri): String? {
+        val fileType: String? = context.contentResolver.getType(uri)
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
+
+    }
+
+    @Throws(IOException::class)
+    private fun copy(source: InputStream, target: OutputStream) {
+        val buf = ByteArray(8192)
+        var length: Int
+        while (source.read(buf).also { length = it } > 0) {
+            target.write(buf, 0, length)
+        }
     }
 
 }

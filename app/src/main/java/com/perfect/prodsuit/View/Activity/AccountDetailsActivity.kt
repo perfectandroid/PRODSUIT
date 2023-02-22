@@ -1426,13 +1426,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                                             destination = File(
-                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath,
                                                                 ""
                                                             )
                                                             // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
                                                         } else {
                                                             destination = File(
-                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath,
                                                                 ""
                                                             )
                                                         }
@@ -1445,7 +1445,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                                         }
 
                                                         destination = File(
-                                                            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                                            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
                                                                     "",
                                                             "" + System.currentTimeMillis() + DocumentImageFormat
                                                         )
@@ -1471,6 +1471,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                                         val intent = Intent(Intent.ACTION_VIEW)
                                                         intent.setFlags(FLAG_GRANT_READ_URI_PERMISSION)
                                                         intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                                                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                                         val data: Uri = Uri.fromFile(file)
                                                         intent.setDataAndType(data, type)
                                                         startActivity(intent)

@@ -12,11 +12,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.StrictMode
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,6 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.UriUtil
+import com.perfect.prodsuit.Helper.UriUtil.getDataColumn
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.SaveDocumentViewModel
 import org.json.JSONObject
@@ -34,6 +38,7 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -96,7 +101,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_add_document)
         context = this@AddDocumentActivity
-
+        val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
         saveDocumentViewModel = ViewModelProvider(this).get(SaveDocumentViewModel::class.java)
 
         setRegViews()
@@ -345,6 +351,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun browseDocuments() {
+
+
         val mimetypes = arrayOf(
             "application/*",  //"audio/*",
             "font/*",  //"image/*",
@@ -353,10 +361,14 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             "multipart/*",
             "text/*"
         )
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+     //   val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+     //   intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
         intent.type = "*/*"
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes) //Important part here
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivityForResult(intent, PICK_DOCUMRNT_GALLERY)
     }
 
@@ -408,7 +420,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 //                        "IMG_" + System.currentTimeMillis() + ".jpg"
 //                    )
 //                    val fo: FileOutputStream
-
+                            val fileName = "IMG_" + System.currentTimeMillis() + ".jpg";
                             try {
 //                        if (!destination!!.getParentFile().exists()) {
 //                            destination!!.getParentFile().mkdirs()
@@ -416,6 +428,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 //                        if (!destination!!.exists()) {
 //                            destination!!.createNewFile()
 //                        }
+
+
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                     destination = File(
                                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
@@ -433,10 +447,11 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                                     destination!!.createNewFile()
                                 }
 
+
                                 destination = File(
                                     (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
                                             "",
-                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                    fileName
                                 )
                                 val fo: FileOutputStream
 
@@ -459,7 +474,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                                 destination = File(imgPath)
                                 documentPath = imgPath!!
                                 txtAttachmentPath!!.setText(imgPath)
-                                tie_Attachment!!.setText(imgPath)
+                              //  tie_Attachment!!.setText(imgPath)
+                                tie_Attachment!!.setText(fileName)
 
 
                         }
@@ -531,6 +547,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             if (data != null) {
                 val selectedImage = data.data
                 try {
+                    val fileName = UriUtil.getFileName(this,data!!.data!!)
+                    Log.e(TAG,"561 fileName :   "+fileName)
                     bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
                     val bytes = ByteArrayOutputStream()
                     bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
@@ -538,7 +556,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     destination = File(imgPath.toString())
                     documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
-                    tie_Attachment!!.setText(imgPath)
+                 //   tie_Attachment!!.setText(imgPath)
+                    tie_Attachment!!.setText(fileName)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -552,16 +571,44 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                     val uri = data.data
                     Log.e(TAG,"561  uri "+uri)
                     Log.e(TAG,"561 data  "+data)
-                    selectedFilePath = UriUtil.getPath(this, uri!!).toString()
-                  //  selectedFilePath = getRealPathFromURI(uri)
-                    selectedFilePath = getRealPathFromURI(uri)
-                    Log.e(TAG,"561  selectedFilePath   "+selectedFilePath)
-                    destination = File(selectedFilePath.toString())
-                    Log.e(TAG,"561 destination  "+destination)
-                    documentPath = selectedFilePath!!
-                    Log.e(TAG,"561 documentPath   "+documentPath)
-                    txtAttachmentPath!!.setText(selectedFilePath)
-                    tie_Attachment!!.setText(selectedFilePath)
+
+//                    OLD
+                    //    selectedFilePath = UriUtil.fileFromContentUri(this, uri!!).toString()
+                 //   selectedFilePath = UriUtil.getPath(this, uri!!).toString()
+                 //   selectedFilePath = getRealPathFromURI(uri)
+
+
+//                    selectedFilePath = getRealPathFromURI(uri)
+////                    selectedFilePath = getRealPathUri(uri)
+//                    Log.e(TAG,"561  selectedFilePath   "+selectedFilePath)
+//                    destination = File(selectedFilePath.toString())
+//                    Log.e(TAG,"561 destination  "+destination)
+//                    documentPath = selectedFilePath!!
+//                    Log.e(TAG,"561 documentPath   "+documentPath)
+//                    txtAttachmentPath!!.setText(selectedFilePath)
+//                    tie_Attachment!!.setText(selectedFilePath)
+//
+//                    22.02.2023
+
+                    val fileName = UriUtil.getFileName(this,data!!.data!!)
+                    val filepath= UriUtil.fileFromContentUri(this,data!!.data!!,fileName!!)  // WORKING 22.02.2023
+                    tie_Attachment!!.setText(fileName)
+                    Log.e(TAG,"561 filepath :   "+filepath)
+                    documentPath = filepath.toString()
+
+//                    val map: MimeTypeMap = MimeTypeMap.getSingleton()
+//                    val ext: String = MimeTypeMap.getFileExtensionFromUrl(filepath.name)
+//                    var type: String? = map.getMimeTypeFromExtension(ext)
+//                    if (type == null)
+//                        type = "*/*";
+//
+//                    val intent = Intent(Intent.ACTION_VIEW)
+//                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    val data: Uri = Uri.fromFile(filepath)
+//                    intent.setDataAndType(data, type)
+//                    startActivity(intent)
+
                 } else {
                     Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
                 }
@@ -580,6 +627,26 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
         cursor.moveToFirst()
         return cursor.getString(column_index)
+    }
+
+
+    fun getRealPathUri(uri: Uri?): String?  {
+        val docId = DocumentsContract.getDocumentId(uri)
+        val split = docId.split(":".toRegex()).toTypedArray()
+        val type = split[0]
+        var contentUri: Uri? = null
+        if (("image" == type)) {
+            contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        } else if (("video" == type)) {
+            contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        } else if (("audio" == type)) {
+            contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        }
+        val selection = "_id=?"
+        val selectionArgs = arrayOf(
+            split[1]
+        )
+        return getDataColumn(context, contentUri, selection, selectionArgs)
     }
 
 
@@ -729,5 +796,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+
+
 
 }

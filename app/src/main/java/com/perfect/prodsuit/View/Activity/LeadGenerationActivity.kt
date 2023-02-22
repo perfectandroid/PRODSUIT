@@ -3023,7 +3023,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 }
             }
 
-        } else if (requestCode == CAMERA) {
+        }
+        else if (requestCode == CAMERA) {
 
             try {
                 if (data != null) {

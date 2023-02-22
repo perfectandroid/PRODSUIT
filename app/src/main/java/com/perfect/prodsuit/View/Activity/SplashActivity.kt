@@ -35,11 +35,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
 
-////    DEVELOPMENT 30.11.2022
-//    val CERT_NAME = "development.pem"
-//    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
-//    val BANK_KEY = "-500"
+//////    DEVELOPMENT 30.11.2022
+    val CERT_NAME = "development.pem"
+    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
+    val BANK_KEY = "-500"
 
 
     ////    DEMO 15.02.2023
@@ -55,10 +55,16 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY = "-501"
 
     ////    QA 16.12.2022
-    val CERT_NAME = "prodsuiteqa.pem"
-    val BASE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
-    val BANK_KEY = "-500"
+//    val CERT_NAME = "prodsuiteqa.pem"
+//    val BASE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
+//    val BANK_KEY = "-500"
+
+    ////    DEMO 21.02.2023
+//    val CERT_NAME = "demos.pem"
+//    val BASE_URL = "https://202.164.150.65:14271/PerfectprodsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/PerfectprodsuiteAPI/"
+//    val BANK_KEY = "-501"
 
     //// Solar Backup QA 13.01.2023
 //    val CERT_NAME = "spectruntest.pem"
