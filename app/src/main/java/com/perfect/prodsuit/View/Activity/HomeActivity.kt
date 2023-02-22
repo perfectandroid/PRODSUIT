@@ -966,98 +966,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
-                                    /*       val jresult = jsonObj.getJSONArray("BannerDetailsList")
-                                       if (jresult.length() > 0) {
-                                           if (bannerDetail == 0) {
-                                               bannerDetail++
 
-                                               for (i in 0 until jresult!!.length()) {
-                                                   try {
-                                                       val json = jresult!!.getJSONObject(i)
-                                                       var s = "" + json.getString("ImagePath")
-
-                                                       XMENArray!!.add(s)
-                                                       mPager!!.adapter = BannerAdapter(
-                                                               this@HomeActivity,
-                                                               XMENArray
-                                                       )
-                                                       indicator!!.setViewPager(mPager)
-
-
-                                                   } catch (e: Exception) {
-
-                                                   }
-                                               }
-                                               //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
-                                               val handler = Handler()
-                                               val Update = Runnable {
-                                                   //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-                                                   if (currentPage == jresult!!.length()) {
-                                                       currentPage = 0
-                                                   }
-                                                   mPager!!.setCurrentItem(currentPage++, true)
-
-                                               }
-                                               val swipeTimer = Timer()
-                                               swipeTimer.schedule(object : TimerTask() {
-                                                   override fun run() {
-                                                       handler.post(Update)
-                                                   }
-                                               }, 3000, 3000)
-
-
-   //                                        for (i in 0 until jresult!!.length()) {
-   //                                            try {
-   //                                                val json = jresult!!.getJSONObject(i)
-   //
-   //                                                var s = ""+ json.getString("ImagePath")
-   //
-   //                                                XMENArray!!.add(s)
-   //                                                mPager!!.adapter = BannerAdapter(
-   //                                                    this@HomeActivity,
-   //                                                    XMENArray
-   //                                                )
-   //                                                indicator!!.setViewPager(mPager)
-   //                                                val handler = Handler()
-   //                                                val Update = Runnable {
-   //                                                    Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-   //                                                    if (currentPage == jresult!!.length()) {
-   //                                                        currentPage = 0
-   //                                                    }
-   //                                                    mPager!!.setCurrentItem(currentPage++, true)
-   //                                                }
-   //                                                val swipeTimer = Timer()
-   //                                                swipeTimer.schedule(object : TimerTask() {
-   //                                                    override fun run() {
-   //                                                        handler.post(Update)
-   //                                                    }
-   //                                                }, 3000, 3000)
-   //                                            } catch (e: JSONException) {
-   //                                                e.printStackTrace()
-   //                                            }
-   //
-   //                                        }
-                                           }
-                                       }*/
 
                                 } else {
-//                                    val builder = AlertDialog.Builder(
-//                                            this@HomeActivity,
-//                                            R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+
                                 }
                             } else {
-//                                Toast.makeText(
-//                                        applicationContext,
-//                                        "Some Technical Issues.",
-//                                        Toast.LENGTH_LONG
-//                                ).show()
+
                             }
                         })
                 progressDialog!!.dismiss()

@@ -6,14 +6,11 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.icu.util.ULocale.getCountry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -22,7 +19,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
@@ -30,7 +26,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_Post
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -45,7 +40,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     val TAG : String = "CustomerServiceActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
-
+    lateinit var customerservicecountViewModel: CustomerservicecountViewModel
 
     private var tabLayout : TabLayout? = null
 //    var llMainDetail: LinearLayout? = null
@@ -77,7 +72,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var recyServiceCustomerdue: RecyclerView? = null
 
 
-
+    var warrantycount=""
+    var servicehistorycount=""
+    var salescount=""
+    var customerduecount=""
     var card_details: CardView? = null
 
     private var imDetails: ImageView? = null
@@ -197,7 +195,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     lateinit var countrySort: JSONArray
     private var dialogCountry: Dialog? = null
     var recyCountry: RecyclerView? = null
-
+    var FK_Cust = ""
+    var FK_OtherCustomer = ""
+    var Prodid = ""
     lateinit var stateViewModel: StateViewModel
     lateinit var stateArrayList: JSONArray
     lateinit var stateSort: JSONArray
@@ -448,6 +448,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
 
         setRegViews()
+
+        Log.i("TAG Cust","132"+tie_CustomerName!!.text.toString())
 
 
         custDetailMode = "0"
@@ -718,7 +720,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             R.id.imDetails->{
                 Config.disableClick(v)
               // detailBottomSheet()
-               detailPopupSheet()
+
+                var custname=tie_CustomerName!!.text.toString()
+                detailPopupSheet(custname)
             }
             R.id.tv_customerClick->{
 
@@ -1410,6 +1414,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         strPriority = tie_Priority!!.text.toString()
         strChannel = tie_Channel!!.text.toString()
         strChannelSub = tie_EmpOrMedia!!.text.toString()
+
+
+
 
 
         if (strDate.equals("")){
@@ -2154,9 +2161,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         customerArrayList = jobjt.getJSONArray("ServiceCustomerList")
 
                                         if (customerArrayList.length() > 0) {
-                                            Log.e(TAG, "msg   1052   " + msg)
+                                            Log.e(TAG, "msg   1052   " + msg+"\n")
 
                                             customerSearchPopup(customerArrayList)
+
 
 
                                         }
@@ -4018,7 +4026,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun detailPopupSheet() {
+    private fun detailPopupSheet(custname: String) {
+
+
         try {
 
             warrantyMode = "1"
@@ -4030,6 +4040,52 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogDetailSheet!! .setContentView(R.layout.cs_detail_bottom_sheet)
             dialogDetailSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+            if(custname.equals(""))
+            {
+
+            }
+            else
+            {
+                System.out.println("shname "+tie_CustomerName!!.text.toString())
+                val CustidSP = context.getSharedPreferences(Config.SHARED_PREF47, 0)
+                FK_Cust = CustidSP.getString("Customerid", "")!!
+
+                val OtherCustidSP = context.getSharedPreferences(Config.SHARED_PREF48, 0)
+                FK_OtherCustomer = OtherCustidSP.getString("CusMode", "")!!
+
+
+                val ProductidSP = context.getSharedPreferences(Config.SHARED_PREF49, 0)
+                Prodid = ProductidSP.getString("Productid", "")!!
+
+
+
+                System.out.println("Shared 1 "+FK_Cust)
+                System.out.println("Shared 2 "+FK_OtherCustomer)
+                System.out.println("Shared 3 "+Prodid)
+                System.out.println("CHECKVALUE "+custname)
+
+                getCustomerserviceCount(FK_Cust,FK_OtherCustomer,Prodid)
+
+
+
+            }
+
+
+            val warcountSP = context.getSharedPreferences(Config.SHARED_PREF50, 0)
+            var warcount = warcountSP.getString("WarrantyCount", "")!!
+
+            val servhistSP = context.getSharedPreferences(Config.SHARED_PREF51, 0)
+            var servhistcount = servhistSP.getString("ServiceHistoryCount", "")!!
+
+            val salecntSP = context.getSharedPreferences(Config.SHARED_PREF52, 0)
+            var salcount = salecntSP.getString("SalesCount", "")!!
+
+            val custdueSP = context.getSharedPreferences(Config.SHARED_PREF53, 0)
+            var custdue = custdueSP.getString("CustomerDueCount", "")!!
+
+            Log.i("countdetails", warcount+"\n"+servhistcount+"\n"+salcount+"\n"+custdue)
+
         //    recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
 
             lnrHead_warranty_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_warranty_main) as LinearLayout
@@ -4045,6 +4101,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tv_product_count = dialogDetailSheet!! .findViewById(R.id.tv_product_count) as TextView
             tv_sales_count = dialogDetailSheet!! .findViewById(R.id.tv_sales_count) as TextView
             tv_customerdue_count = dialogDetailSheet!! .findViewById(R.id.tv_customerdue_count) as TextView
+
+            tv_warranty_count!!.text=warcount
+            tv_product_count!!.text=servhistcount
+            tv_sales_count!!.text=salcount
+            tv_customerdue_count!!.text=custdue
+
+
 
             recyServiceWarranty = dialogDetailSheet!! .findViewById(R.id.recyServiceWarranty)
             recyServiceProductHistory = dialogDetailSheet!! .findViewById(R.id.recyServiceProductHistory)
@@ -4150,6 +4213,81 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun getCustomerserviceCount(fkCust: String, fkOthercustomer: String, Prodid: String) {
+
+            context = this@CustomerServiceActivity
+            customerservicecountViewModel = ViewModelProvider(this).get(CustomerservicecountViewModel::class.java)
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    progressDialog = ProgressDialog(this, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    customerservicecountViewModel.getCustomerserviceCount(this,fkCust,fkOthercustomer,Prodid)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   count   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("CustomerServiceRegisterCount")
+                                     warrantycount =jobjt.getString("WarrantyCount")
+                                     servicehistorycount =jobjt.getString("ServiceHistoryCount")
+                                     salescount =jobjt.getString("SalesCount")
+                                     customerduecount =jobjt.getString("CustomerDueCount")
+
+
+                                    val warcount = context.getSharedPreferences(Config.SHARED_PREF50, 0)
+                                    val warrantycountEditer = warcount.edit()
+                                    warrantycountEditer.putString("WarrantyCount", warrantycount)
+                                    warrantycountEditer.commit()
+
+
+                                    val servcount = context.getSharedPreferences(Config.SHARED_PREF51, 0)
+                                    val servcountEditer = servcount.edit()
+                                    servcountEditer.putString("ServiceHistoryCount", servicehistorycount)
+                                    servcountEditer.commit()
+
+                                    val salecount = context.getSharedPreferences(Config.SHARED_PREF52, 0)
+                                    val salecountEditer = salecount.edit()
+                                    salecountEditer.putString("SalesCount", salescount)
+                                    salecountEditer.commit()
+
+                                    val custduecount = context.getSharedPreferences(Config.SHARED_PREF53, 0)
+                                    val custduecountEditer = custduecount.edit()
+                                    custduecountEditer.putString("CustomerDueCount", customerduecount)
+                                    custduecountEditer.commit()
+
+
+
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+
+//         var custDet = 0
+
+
+
+
+
+
     }
 
     private fun detailBottomSheet() {

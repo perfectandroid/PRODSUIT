@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -49,6 +50,20 @@ class CustomerListAdapter (internal var context: Context, internal var jsonArray
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "customerList")
+                    System.out.println("FK_Customer"+jsonObject!!.getString("Customer_ID"))
+                    System.out.println("FK_CustomerOther"+jsonObject!!.getString("CusMode"))
+
+
+                    val FK_Customer = context.getSharedPreferences(Config.SHARED_PREF47, 0)
+                    val FK_CustomerEditer = FK_Customer.edit()
+                    FK_CustomerEditer.putString("Customerid", jsonObject!!.getString("Customer_ID"))
+                    FK_CustomerEditer.commit()
+
+
+                    val FK_CustomerOther = context.getSharedPreferences(Config.SHARED_PREF48, 0)
+                    val FK_CustomerOtherEditer = FK_CustomerOther.edit()
+                    FK_CustomerOtherEditer.putString("CusMode", jsonObject!!.getString("CusMode"))
+                    FK_CustomerOtherEditer.commit()
                 })
             }
         } catch (e: Exception) {

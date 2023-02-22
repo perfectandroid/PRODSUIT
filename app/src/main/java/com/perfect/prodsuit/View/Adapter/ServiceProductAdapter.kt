@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -49,6 +50,14 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
                 holder.llProduct!!.setTag(position)
                 holder.llProduct!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "serviceProduct")
+
+                    System.out.println("Productid "+jsonObject!!.getString("ID_Product"))
+
+                    val Productid = context.getSharedPreferences(Config.SHARED_PREF49, 0)
+                    val ProductidEditer = Productid.edit()
+                    ProductidEditer.putString("Productid", jsonObject!!.getString("ID_Product"))
+                    ProductidEditer.commit()
+
                 })
             }
         } catch (e: Exception) {
