@@ -746,6 +746,15 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("AddDocument")
 
+                                    val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath + "/" + "."+context.getResources().getString(R.string.app_name))
+                                    if (dir.isDirectory) {
+                                        val children = dir.list()
+                                        for (i in children.indices) {
+                                            File(dir, children[i]).delete()
+                                        }
+                                    }
+
+
                                     val builder = AlertDialog.Builder(
                                         this@AddDocumentActivity,
                                         R.style.MyDialogTheme

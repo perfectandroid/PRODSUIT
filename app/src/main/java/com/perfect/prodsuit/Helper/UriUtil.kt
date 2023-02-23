@@ -14,6 +14,7 @@ import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.annotation.Nullable
 import androidx.core.content.FileProvider
+import com.perfect.prodsuit.R
 import com.squareup.okhttp.ResponseBody
 import java.io.*
 import java.text.DecimalFormat
@@ -719,12 +720,37 @@ object UriUtil {
 //                    "",
 //            ""+fileName+".$fileExtension"
 //        )
+
+
+        val tempFile1 = File(
+            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
+                    "."+context.getResources().getString(R.string.app_name),
+            ""
+        )
+        if(!tempFile1.exists()) {
+            tempFile1.mkdirs();
+        }
         val tempFile = File(
             (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
-                    "",
+                    "."+context.getResources().getString(R.string.app_name)+"/",
             ""+fileName
         )
-        tempFile.createNewFile()
+
+
+//        val tempFile1 = File(
+//            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
+//                    ".ProdSuite",
+//            ""
+//        )
+//        if(!tempFile1.exists()) {
+//            tempFile1.mkdirs();
+//        }
+//        val tempFile = File(
+//            (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)).absolutePath + "/" +
+//                    ".ProdSuite"+"/",
+//            ""+fileName
+//        )
+//        tempFile.createNewFile()
 
         try {
             val oStream = FileOutputStream(tempFile)
