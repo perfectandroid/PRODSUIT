@@ -3,13 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_customer_service.xml" value="0.2" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_home.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_homemain.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/activity_services.xml" value="0.3546875" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/adapter_customer_list.xml" value="0.1765625" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.25" />
-        <entry key="..\:/GIT PROJECTS/PRODSUIT/17-02-2023/app/src/main/res/layout/customersearch_popup.xml" value="0.1765625" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/address_svg.xml" value="0.1885" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/bottom_rounded.xml" value="0.2005" />
         <entry key="..\:/GIT PROJECTS/PRODSUIT/Nov 23 2022/app/src/main/res/drawable/btn_bg.xml" value="0.356" />
@@ -112,6 +105,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/overduelistbg_svg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/pending_svg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/progress.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/round_border_trans.xml" value="0.2205" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/round_border_trans1.xml" value="0.239" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_24.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/selector_reminder.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/service_assign_confirmation.xml" value="0.1945" />
@@ -241,6 +236,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/xml_date_time.xml" value="0.2275" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/xml_product_details.xml" value="0.17" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/xml_service_information.xml" value="0.17" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/xml_visit_datetime.xml" value="0.239" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_about_us.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.27025641025641023" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_document.xml" value="0.2520833333333333" />
@@ -252,6 +248,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.3175925925925926" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_warranty.xml" value="0.2677083333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_delivery_assign.xml" value="0.3140625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_document_list.xml" value="0.2203125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_documents.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.5" />
@@ -288,6 +285,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.30092592592592593" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.2760416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_tracker.xml" value="0.21666666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2791666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_welcome.xml" value="0.22447916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_account_detail.xml" value="0.35104166666666664" />
@@ -331,7 +329,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign_confirm_list.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign_list.xml" value="0.27239583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_complaint.xml" value="0.2786458333333333" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_list.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_list.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_media.xml" value="0.31666666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_priority.xml" value="0.2296875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_product.xml" value="0.209375" />
@@ -343,6 +341,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_submedia.xml" value="0.3416666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.27037037037037037" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_tracker.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adpate_leadedit_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_bar_chart.xml" value="0.315625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_pie_chart.xml" value="0.18697916666666667" />
@@ -398,6 +397,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.26875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_assign_confirmation.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_complaint_popup.xml" value="0.2786458333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_delivery_confirmation.xml" value="0.278125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_media_popup.xml" value="0.31666666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_popup.xml" value="0.22552083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_priority_popup.xml" value="0.2296875" />
@@ -419,7 +419,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -399,7 +399,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         // Service Information
 
                                         tv_RequestedDate!!.setText(""+strReqDate)
-                                        tv_RequestedTime!!.setText(""+strVisitTime)
+                                        tv_RequestedTime!!.setText(""+strReqTime)
 
                                         // Product Details
                                         tv_ProductName!!.setText(""+strProductname)

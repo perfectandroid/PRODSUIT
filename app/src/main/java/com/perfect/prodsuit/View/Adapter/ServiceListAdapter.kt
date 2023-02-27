@@ -94,6 +94,7 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 if (SubMode.equals("3")){
                     holder.ll_status!!.visibility = View.VISIBLE
                     holder.ll_employee!!.visibility = View.VISIBLE
+                    holder.ll_tracker!!.visibility = View.VISIBLE
                     if (jsonObject!!.getString("Status").equals("On-Hold")){
                         holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_hold))
                     }
@@ -108,6 +109,14 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     Config.disableClick(it)
                     clickListener!!.onClick(position, "ServiceEdit")
                 })
+
+                holder.im_tracker!!.setTag(position)
+                holder.im_tracker!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    clickListener!!.onClick(position, "ServiceTracker")
+                })
+
+
 
                 holder.llServiceList!!.setTag(position)
                 holder.llServiceList!!.setOnClickListener(View.OnClickListener {
@@ -153,10 +162,12 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
         internal var im_Priority          : ImageView
         internal var im_Status          : ImageView
         internal var im_edit          : ImageView
+        internal var im_tracker          : ImageView
 //        internal var txtsino          : TextView
         internal var ll_employee    : LinearLayout
         internal var ll_status    : LinearLayout
         internal var llServiceList    : LinearLayout
+        internal var ll_tracker    : LinearLayout
         init {
             tv_TicketNo        = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_TicketDate        = v.findViewById<View>(R.id.tv_TicketDate) as TextView
@@ -171,10 +182,12 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
             im_Priority        = v.findViewById<View>(R.id.im_Priority) as ImageView
             im_Status        = v.findViewById<View>(R.id.im_Status) as ImageView
             im_edit        = v.findViewById<View>(R.id.im_edit) as ImageView
+            im_tracker        = v.findViewById<View>(R.id.im_tracker) as ImageView
 //            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
             ll_employee       = v.findViewById<View>(R.id.ll_employee) as LinearLayout
             ll_status       = v.findViewById<View>(R.id.ll_status) as LinearLayout
             llServiceList       = v.findViewById<View>(R.id.llServiceList) as LinearLayout
+            ll_tracker       = v.findViewById<View>(R.id.ll_tracker) as LinearLayout
         }
     }
 

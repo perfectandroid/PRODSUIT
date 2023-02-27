@@ -399,6 +399,15 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
             val i = Intent(this@ServiceOngoingListActivityActivity, ServiceAssignActivity::class.java)
             i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
             startActivity(i)
+
+
+//            PickDelMode => 1 = Delivery, 2 = PickUp
+//            val jsonObject = serviceListArrayList.getJSONObject(position)
+//            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+//            val i = Intent(this@ServiceOngoingListActivityActivity, DeliveryAssignActivity::class.java)
+//            i.putExtra("PickDelMode","1")
+//            i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
+//            startActivity(i)
         }
         if (data.equals("ServiceEdit")) {
 
@@ -410,6 +419,14 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
             ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
             serAssignCount = 0
             getServiceAssignDetails()
+
+
+        }
+
+        if (data.equals("ServiceTracker")) {
+
+            val i = Intent(this@ServiceOngoingListActivityActivity, TrackerActivity::class.java)
+            startActivity(i)
         }
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()

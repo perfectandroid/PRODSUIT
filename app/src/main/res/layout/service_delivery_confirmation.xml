@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:background="@drawable/shape_gradient_pop"
+        android:padding="10dp"
+        android:fontFamily="@font/myfont"
+        android:text="confirmation"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_TiketInformation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:textColor="@color/greydark"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:background="@color/color_background1"
+                        android:padding="5dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Ticket Information"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Ticket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Ticket"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="bold"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Ticket"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_LandMark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Land Mark"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_LandMark"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Customer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Customer"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Customer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ContactNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Contact No"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="bold"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_ContactNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tvp_lead_from_label"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Address"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Address"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Mobile"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_CustomerDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/tvp_Information"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:textColor="@color/greydark"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:background="@color/color_background1"
+                        android:padding="5dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Complaint Details"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ReqDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Req Date"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_ReqDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ReqTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Req Time"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_ReqTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ProductName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Prod Name"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_ProductName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_ProductComplaint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Prod Complaint"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_ProductComplaint"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Description"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Description"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_VisitDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tvp_VisitDateLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="VisitDate"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_VisitDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_VisitTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tvp_VisitTimeLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="VisitTime"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_VisitTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Priority"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Priority"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Veh Details"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Remark"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Employee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Employee"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_Employee"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal">
+
+
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/btn_resetbg"
+                        android:fontFamily="@font/myfont"
+                        android:padding="2dp"
+                        android:text="cancel"
+                        android:textAllCaps="true"
+                        android:textSize="15dp" />
+
+
+
+                    <Button
+                        android:id="@+id/btnOk"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_bgcolour"
+                        android:padding="2dp"
+                        android:layout_weight="2"
+                        android:textAllCaps="true"
+                        android:text="ok" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
