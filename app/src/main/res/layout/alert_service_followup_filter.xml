@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:paddingBottom="50dp"
+        app:cardCornerRadius="3dp">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/llfromdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="2"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    android:hint="Ticket Number">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTicket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_ticket_details"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_vertical"
+                    android:weightSum="10">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.App.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="10"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:hint="Products">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/icon_svg_product"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/textColor"
+                            android:fontFamily="@font/myfont"
+                            android:drawableRight="@drawable/ic_search"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@color/greydarks"
+                            android:textSize="14dp"
+                            android:textStyle="normal" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        style="@style/TextInputLayoutStyle">
+                        <ImageView
+                            android:id="@+id/img_search"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/search_24"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="2">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.App.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:hint="From Date">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_fromDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/icon_svg_fromdate"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/textColor"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@color/greydarks"
+                            android:textSize="14dp"
+                            android:textStyle="normal" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.App.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:hint="Status">
+                    <AutoCompleteTextView
+                        android:id="@+id/edt_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"
+                        android:dropDownWidth="200dp"
+                        android:textColorHint="@color/textColor"
+                        android:textColor="@color/textColor"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/greydark"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
+                        android:paddingLeft="15dp"
+                        android:textSize="14dp"
+                        android:visibility="visible" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.App.TextInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:hint="To Date">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_toDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/to_date_svg"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/textColor"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center_vertical"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@color/greydarks"
+                            android:textSize="14dp"
+                            android:textStyle="normal" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="2"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    android:hint="Customer">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_customer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_svg_customer"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/lin_bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:weightSum="2">
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Clear"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Submit"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

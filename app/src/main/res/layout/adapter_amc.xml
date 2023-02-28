@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    app:cardBackgroundColor="@color/color_fab1"
+    app:cardCornerRadius="3dp"
+    tools:ignore="MissingConstraints">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/lin_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:text="Warranty/AMC Type"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-6dp"
+            android:drawableTint="@color/greydark"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:text="Repl. Warranty/AMC Due Date"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_dueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-6dp"
+            android:drawableTint="@color/greydark"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:text="Serv. Warranty/AMC Renewal Date"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_renewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-6dp"
+            android:drawableTint="@color/greydark"
+            android:fontFamily="@font/myfont"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="5">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:text="Document Type"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_documentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="-6dp"
+                    android:drawableTint="@color/greydark"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_download"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/rounded_profile_bg"
+                    android:backgroundTint="@color/todolist_light_Color"
+                    android:padding="7dp"
+                    android:src="@drawable/ic__16182_download_icon"
+                    app:tint="@color/white" />
+            </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+
