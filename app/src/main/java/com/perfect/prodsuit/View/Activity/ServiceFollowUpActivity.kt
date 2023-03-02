@@ -185,18 +185,18 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     private fun loadArrays() {
         val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
         val e11 =
-            ServiceCostModelMain("Battery Check", "Battery Check2", "55555", "Paid Service","remark1", "false")
+            ServiceCostModelMain("Battery Check", "Battery Check2", "55555", "Paid Service","","","remark1", "false")
         val e21 = ServiceCostModelMain(
             "Prevention Services",
             "Prevention Services2",
             "350",
-            "Paid Service",
+            "Paid Service","","",
             "remark2",
             "false"
         )
-        val e31 = ServiceCostModelMain("Service Test3", "Service Test3", "1122","Paid Service", "remark3", "false")
-        val e41 = ServiceCostModelMain("Service Test4", "Service Test4", "7867","Paid Service", "remark3", "false")
-        val e51 = ServiceCostModelMain("Service Test5", "Service Test5", "4444","AMC Service", "remark3", "false")
+        val e31 = ServiceCostModelMain("Service Test3", "Service Test3", "1122","Paid Service","","", "remark3", "false")
+        val e41 = ServiceCostModelMain("Service Test4", "Service Test4", "7867","Paid Service","","", "remark3", "false")
+        val e51 = ServiceCostModelMain("Service Test5", "Service Test5", "4444","AMC Service","","", "remark3", "false")
         serviceCostArrayListMapped.add(e11)
         serviceCostArrayListMapped.add(e21)
         serviceCostArrayListMapped.add(e41)
@@ -214,7 +214,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "Prevention Services",
             "Prevention Services2",
             "888",
-            "AMC Service",
+            "AMC Service","","",
             "remark2",
             "false"
         )
@@ -223,7 +223,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 "Prevention Services",
                 "Prevention Services3",
                 "2553",
-                "AMC Service",
+                "AMC Service","","",
                 "remark3",
                 "false"
             )
@@ -232,7 +232,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 "Service Testing",
                 "Prevention Services6",
                 "433",
-                "AMC Service",
+                "AMC Service","","",
                 "remark3",
                 "false"
             )
@@ -241,7 +241,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 "Service Testing",
                 "Prevention Services5",
                 "7777",
-                "AMC Service",
+                "AMC Service","","",
                 "remark3",
                 "false"
             )
@@ -250,7 +250,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 "Service Testing",
                 "Prevention Services4",
                 "6766",
-                "AMC Service",
+                "AMC Service","","",
                 "remark3",
                 "false"
             )
@@ -273,6 +273,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "25",
             "PickUp",
             "120",
+            "",
             "Remark1",
             "false"
         )
@@ -282,6 +283,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "2",
             "Replace",
             "15",
+            "",
             "Remark2",
             "false"
         )
@@ -301,6 +303,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "25",
             "PickUp",
             "120",
+            "",
             "Remark1",
             "false"
         )
@@ -310,6 +313,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "2",
             "Replace",
             "15",
+            "",
             "Remark2",
             "false"
         )
@@ -319,6 +323,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             "23",
             "Replace",
             "153",
+            "",
             "Remark3",
             "false"
         )
@@ -592,6 +597,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     obj!!.getString("ServiceName"),
                     obj!!.getString("serviceCost"),
                     obj!!.getString("serviceType"),
+                    obj!!.getString("taxAmount"),
+                    obj!!.getString("netAmount"),
                     obj!!.getString("remark"),
                     obj!!.getString("isChecked")
                 )
@@ -607,6 +614,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     obj!!.getString("ServiceName"),
                     obj!!.getString("serviceCost"),
                     obj!!.getString("serviceType"),
+                    obj!!.getString("taxAmount"),
+                    obj!!.getString("netAmount"),
                     obj!!.getString("remark"),
                     obj!!.getString("isChecked")
                 )
@@ -672,6 +681,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                             obj!!.getString("ServiceName"),
                             obj!!.getString("serviceCost"),
                             obj!!.getString("serviceType"),
+                            obj!!.getString("taxAmount"),
+                            obj!!.getString("netAmount"),
                             obj!!.getString("remark"),
                             obj!!.getString("isChecked")
                         )
@@ -699,6 +710,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                             obj!!.getString("ServiceName"),
                             obj!!.getString("serviceCost"),
                             obj!!.getString("serviceType"),
+                            obj!!.getString("taxAmount"),
+                            obj!!.getString("netAmount"),
                             obj!!.getString("remark"),
                             obj!!.getString("isChecked")
                         )
@@ -850,6 +863,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     obj!!.getString("quantity"),
                     obj!!.getString("changeMode"),
                     obj!!.getString("buyBackAmount"),
+                    obj!!.getString("product"),
                     obj!!.getString("remark"),
                     obj!!.getString("isChecked")
                 )
@@ -866,6 +880,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     obj!!.getString("quantity"),
                     obj!!.getString("changeMode"),
                     obj!!.getString("buyBackAmount"),
+                    obj!!.getString("product"),
                     obj!!.getString("remark"),
                     obj!!.getString("isChecked")
                 )
@@ -935,6 +950,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                             obj!!.getString("quantity"),
                             obj!!.getString("changeMode"),
                             obj!!.getString("buyBackAmount"),
+                            obj!!.getString("product"),
                             obj!!.getString("remark"),
                             obj!!.getString("isChecked")
                         )
@@ -963,6 +979,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                             obj!!.getString("quantity"),
                             obj!!.getString("changeMode"),
                             obj!!.getString("buyBackAmount"),
+                            obj!!.getString("product"),
                             obj!!.getString("remark"),
                             obj!!.getString("isChecked")
                         )
@@ -1549,6 +1566,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                         obj!!.getString("ServiceName"),
                         obj!!.getString("serviceCost"),
                         obj!!.getString("serviceType"),
+                        obj!!.getString("taxAmount"),
+                        obj!!.getString("netAmount"),
                         obj!!.getString("remark"),
                         obj!!.getString("isChecked")
                     )
@@ -1588,6 +1607,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                         obj!!.getString("quantity"),
                         obj!!.getString("changeMode"),
                         obj!!.getString("buyBackAmount"),
+                        obj!!.getString("product"),
                         obj!!.getString("remark"),
                         obj!!.getString("isChecked")
                     )

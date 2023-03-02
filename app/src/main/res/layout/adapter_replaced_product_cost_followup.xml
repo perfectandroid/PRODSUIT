@@ -115,6 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="5dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     android:hint="Amount">
@@ -205,7 +206,7 @@
                     android:id="@+id/til_tax"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Replaced Product"
+                    android:hint="Product"
                     android:layout_weight="1"
                     android:layout_marginRight="5dp"
                     android:drawableTint="@color/textColor"
@@ -213,7 +214,7 @@
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtTaxAmount"
+                        android:id="@+id/edtproduct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/svg_amount"
@@ -234,7 +235,7 @@
                     android:id="@+id/til_net"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Replaced Quantity"
+                    android:hint="Quantity"
                     android:layout_weight="1"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
@@ -259,41 +260,36 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.App.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"                android:drawablePadding="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:drawableTint="@color/textColor"
                 android:fontFamily="@font/myfont"
-                android:gravity="left|center"
-                android:text="Change Mode"
-                android:textColor="@color/colorPrimary"
-                android:textSize="11dp"
-                android:textStyle="bold" />
-            <AutoCompleteTextView
-                android:id="@+id/edtChangeMode"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1.5"
-                android:background="@drawable/background_style"
-                android:drawableRight="@drawable/arrow_down"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/greydark"
-                android:dropDownWidth="200dp"
-                android:editable="false"
-                android:focusableInTouchMode="false"
-                android:fontFamily="@font/myfont"
-                android:hint="Status"
-                android:paddingLeft="15dp"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/textColor"
-                android:textSize="14dp"
-                android:visibility="visible" />
+                android:hint="Change Mode">
+                <AutoCompleteTextView
+                    android:id="@+id/edtChangeMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1.5"
+                    android:drawableRight="@drawable/arrow_down"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/greydark"
+                    android:dropDownWidth="200dp"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/myfont"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="14dp"
+                    android:visibility="visible" />
 
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_remarks"
                 style="@style/Widget.App.TextInputLayout"

@@ -84,6 +84,7 @@ class ReplacedProductCostAdapter(
                             holder.edt_qty.text.toString(),
                             holder.edtChangeMode.text.toString(),
                             holder.edtBuyBackAmount.text.toString(),
+                            holder.edtproduct.text.toString(),
                             holder.edtRemarks.text.toString(),
                             isChecked
                         )
@@ -140,6 +141,7 @@ class ReplacedProductCostAdapter(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                holder.edtproduct.text.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -170,6 +172,7 @@ class ReplacedProductCostAdapter(
                                 s.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                holder.edtproduct.text.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -200,6 +203,7 @@ class ReplacedProductCostAdapter(
                                 holder.edt_qty.text.toString(),
                                 s.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                holder.edtproduct.text.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -229,6 +233,38 @@ class ReplacedProductCostAdapter(
                                 holder.edtAmount.text.toString(),
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
+                                s.toString(),
+                                holder.edtproduct.text.toString(),
+                                holder.edtRemarks.text.toString(),
+                                isChecked
+                            )
+                        )
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence, start: Int,
+                        count: Int, after: Int
+                    ) {
+
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence, start: Int,
+                        before: Int, count: Int
+                    ) {
+                    }
+                })
+                holder.edtproduct.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable) {
+                        replacedProductCostArrayList.removeAt(pos)
+                        replacedProductCostArrayList.add(
+                            pos,
+                            ReplacedProductCostModel(
+                                jsonObject!!.getString("components"),
+                                holder.edtAmount.text.toString(),
+                                holder.edt_qty.text.toString(),
+                                holder.edtChangeMode.text.toString(),
+                                holder.edtBuyBackAmount.text.toString(),
                                 s.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
@@ -260,6 +296,7 @@ class ReplacedProductCostAdapter(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                holder.edtproduct.text.toString(),
                                 s.toString(),
                                 isChecked
                             )
@@ -304,6 +341,7 @@ class ReplacedProductCostAdapter(
         var edt_qty: EditText
         var edtChangeMode: AutoCompleteTextView
         var edtBuyBackAmount: EditText
+        var edtproduct: EditText
         var edtRemarks: EditText
         var checkbox: CheckBox
 
@@ -313,6 +351,7 @@ class ReplacedProductCostAdapter(
             edt_qty = v.findViewById(R.id.edt_qty) as EditText
             edtChangeMode = v.findViewById(R.id.edtChangeMode) as AutoCompleteTextView
             edtBuyBackAmount = v.findViewById(R.id.edtBuyBackAmount) as EditText
+            edtproduct = v.findViewById(R.id.edtproduct) as EditText
             edtRemarks = v.findViewById(R.id.edtRemarks) as EditText
             checkbox = v.findViewById(R.id.checkbox) as CheckBox
         }
@@ -330,6 +369,7 @@ class ReplacedProductCostAdapter(
                 var quantity = getList.quantity
                 var changeMode = getList.changeMode
                 var buyBackAmount = getList.buyBackAmount
+                var product = getList.product
                 var remark = getList.remark
                 var isChecked = getList.isChecked
                 replacedProductCostArrayListFinal.add(
@@ -339,6 +379,7 @@ class ReplacedProductCostAdapter(
                         quantity,
                         changeMode,
                         buyBackAmount,
+                        product,
                         remark,
                         isChecked
                     )

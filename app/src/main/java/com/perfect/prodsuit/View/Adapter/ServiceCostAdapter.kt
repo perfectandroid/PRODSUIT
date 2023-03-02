@@ -13,6 +13,7 @@ import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class ServiceCostAdapter(
     internal var context: Context,
@@ -43,6 +44,21 @@ class ServiceCostAdapter(
                 holder.tv_component.text = jsonObject!!.getString("Components")
                 holder.tv_service_name.text = jsonObject!!.getString("ServiceName")
                 holder.edtServiceCost.setText(jsonObject!!.getString("serviceCost"))
+                var serviceCost=holder.edtServiceCost.text
+                if(serviceCost.isEmpty())
+                {
+                    holder.edtTaxAmount.setText("")
+                    holder.edtNetAmount.setText("")
+                }
+                else
+                {
+                    val df = DecimalFormat("#.##")
+                    val serviceCostDouble:Double = serviceCost.toString().toDouble()
+                    val tax=.18*serviceCostDouble
+                    holder.edtTaxAmount.setText(df.format(tax))
+                    val net=serviceCostDouble+tax
+                    holder.edtNetAmount.setText(df.format(net))
+                }
                 holder.edtRemarks.setText(jsonObject!!.getString("remark"))
                 isChecked = "true"
                 val serviceTypeMain =
@@ -77,6 +93,8 @@ class ServiceCostAdapter(
                             jsonObject!!.getString("ServiceName"),
                             holder.edtServiceCost.text.toString(),
                             holder.edtServiceType.text.toString(),
+                            holder.edtTaxAmount.text.toString(),
+                            holder.edtNetAmount.text.toString(),
                             holder.edtRemarks.text.toString(),
                             isChecked
                         )
@@ -87,6 +105,23 @@ class ServiceCostAdapter(
                 holder.edtServiceCost.addTextChangedListener(object : TextWatcher {
 
                     override fun afterTextChanged(s: Editable) {
+                        var serviceCost=holder.edtServiceCost.text
+                        if(serviceCost.isEmpty())
+                        {
+                            holder.edtTaxAmount.setText("")
+                            holder.edtNetAmount.setText("")
+                        }
+                        else
+                        {
+                            val df = DecimalFormat("#.##")
+                            val serviceCostDouble:Double = serviceCost.toString().toDouble()
+                            val tax=.18*serviceCostDouble
+                            Log.v("dfffgdf44","tax  "+tax)
+                            holder.edtTaxAmount.setText(df.format(tax))
+                            val net=serviceCostDouble+tax
+                            holder.edtNetAmount.setText(df.format(net))
+                        }
+
                         serviceCostArrayList.removeAt(pos)
                         serviceCostArrayList.add(
                             pos,
@@ -95,6 +130,8 @@ class ServiceCostAdapter(
                                 jsonObject!!.getString("ServiceName"),
                                 holder.edtServiceCost.text.toString(),
                                 jsonObject!!.getString("serviceType"),
+                                holder.edtTaxAmount.text.toString(),
+                                holder.edtNetAmount.text.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -124,6 +161,8 @@ class ServiceCostAdapter(
                                 jsonObject!!.getString("ServiceName"),
                                 holder.edtServiceCost.text.toString(),
                                 s.toString(),
+                                holder.edtTaxAmount.text.toString(),
+                                holder.edtNetAmount.text.toString(),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -154,6 +193,8 @@ class ServiceCostAdapter(
                                 jsonObject!!.getString("ServiceName"),
                                 holder.edtServiceCost.text.toString(),
                                 jsonObject!!.getString("serviceType"),
+                                holder.edtTaxAmount.text.toString(),
+                                holder.edtNetAmount.text.toString(),
                                 s.toString(),
                                 isChecked
                             )
@@ -197,6 +238,8 @@ class ServiceCostAdapter(
         var tv_service_name: TextView
         var edtServiceCost: EditText
         var edtRemarks: EditText
+        var edtTaxAmount: EditText
+        var edtNetAmount: EditText
         var checkbox: CheckBox
         var edtServiceType: AutoCompleteTextView
 
@@ -204,6 +247,8 @@ class ServiceCostAdapter(
             tv_component = v.findViewById(R.id.tv_component) as TextView
             tv_service_name = v.findViewById(R.id.tv_service_name) as TextView
             edtServiceCost = v.findViewById(R.id.edtServiceCost) as EditText
+            edtTaxAmount = v.findViewById(R.id.edtTaxAmount) as EditText
+            edtNetAmount = v.findViewById(R.id.edtNetAmount) as EditText
             edtRemarks = v.findViewById(R.id.edtRemarks) as EditText
             edtServiceType = v.findViewById(R.id.edtServiceType) as AutoCompleteTextView
             checkbox = v.findViewById(R.id.checkbox) as CheckBox
@@ -220,6 +265,8 @@ class ServiceCostAdapter(
                 var ServiceName = getList.ServiceName
                 var serviceCost = getList.serviceCost
                 var serviceType = getList.serviceType
+                var taxAmount = getList.taxAmount
+                var netAmount = getList.netAmount
                 var remark = getList.remark
                 var isChecked = getList.isChecked
                 serviceCostArrayListFinal.add(
@@ -228,6 +275,8 @@ class ServiceCostAdapter(
                         ServiceName,
                         serviceCost,
                         serviceType,
+                        taxAmount,
+                        netAmount,
                         remark,
                         isChecked
                     )

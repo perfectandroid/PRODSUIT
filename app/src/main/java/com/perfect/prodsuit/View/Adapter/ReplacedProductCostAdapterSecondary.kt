@@ -83,6 +83,7 @@ class ReplacedProductCostAdapterSecondary(
                             holder.edt_qty.text.toString(),
                             holder.edtChangeMode.text.toString(),
                             holder.edtBuyBackAmount.text.toString(),
+                            jsonObject.getString("product"),
                             holder.edtRemarks.text.toString(),
                             isChecked
                         )
@@ -107,6 +108,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 "true"
                             )
@@ -122,6 +124,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 "false"
                             )
@@ -139,6 +142,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -169,6 +173,7 @@ class ReplacedProductCostAdapterSecondary(
                                 s.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -199,6 +204,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 s.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -229,6 +235,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 s.toString(),
+                                jsonObject.getString("product"),
                                 holder.edtRemarks.text.toString(),
                                 isChecked
                             )
@@ -259,6 +266,7 @@ class ReplacedProductCostAdapterSecondary(
                                 holder.edt_qty.text.toString(),
                                 holder.edtChangeMode.text.toString(),
                                 holder.edtBuyBackAmount.text.toString(),
+                                jsonObject.getString("product"),
                                 s.toString(),
                                 isChecked
                             )
@@ -329,6 +337,7 @@ class ReplacedProductCostAdapterSecondary(
                 var quantity = getList.quantity
                 var changeMode = getList.changeMode
                 var buyBackAmount = getList.buyBackAmount
+                var product = getList.product
                 var remark = getList.remark
                 var isChecked = getList.isChecked
                 replacedProductCostArrayListFinal.add(
@@ -338,6 +347,7 @@ class ReplacedProductCostAdapterSecondary(
                         quantity,
                         changeMode,
                         buyBackAmount,
+                        product,
                         remark,
                         isChecked
                     )

@@ -6,6 +6,8 @@ class ServiceCostModelMain{
     var serviceCost:String = ""
     var remark:String = ""
     var serviceType:String = ""
+    var taxAmount:String = ""
+    var netAmount:String = ""
     var isChecked:String = ""
 
     constructor(
@@ -13,6 +15,8 @@ class ServiceCostModelMain{
         ServiceName: String,
         serviceCost: String,
         serviceType: String,
+        taxAmount: String,
+        netAmount: String,
         remark: String,
         isChecked: String
     ) {
@@ -20,6 +24,8 @@ class ServiceCostModelMain{
         this.ServiceName = ServiceName
         this.serviceCost = serviceCost
         this.serviceType = serviceType
+        this.taxAmount = taxAmount
+        this.netAmount = netAmount
         this.remark = remark
         this.isChecked = isChecked
     }

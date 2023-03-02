@@ -64,7 +64,7 @@ class ServiceCostAdapterSecondary(
                         isChecked="true"
                         serviceCostArrayList.removeAt(pos)
                         serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("remark"),"true")
+                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),"true")
                         )
                     }
                     else
@@ -72,7 +72,7 @@ class ServiceCostAdapterSecondary(
                         isChecked="false"
                         serviceCostArrayList.removeAt(pos)
                         serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("remark"),"false")
+                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),"false")
                         )
                     }
                 })
@@ -82,7 +82,7 @@ class ServiceCostAdapterSecondary(
                         Log.v("dfasdasdsdsdss","Components "+jsonObject!!.getString("Components"))
                         serviceCostArrayList.removeAt(pos)
                         serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),s.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("remark"),isChecked)
+                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),s.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),isChecked)
                         )
                     }
 
@@ -144,9 +144,11 @@ class ServiceCostAdapterSecondary(
                 var ServiceName=getList.ServiceName
                 var serviceCost=getList.serviceCost
                 var serviceType=getList.serviceType
+                var taxAmount=getList.taxAmount
+                var netAmount=getList.netAmount
                 var remark=getList.remark
                 var isChecked=getList.isChecked
-                serviceCostArrayListFinal.add(ServiceCostModelMain(Components,ServiceName,serviceCost,serviceType,remark,isChecked)
+                serviceCostArrayListFinal.add(ServiceCostModelMain(Components,ServiceName,serviceCost,serviceType,taxAmount,netAmount,remark,isChecked)
                 )
             }
         }

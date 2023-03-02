@@ -7,6 +7,7 @@ class ReplacedProductCostModel{
     var changeMode:String = ""
     var buyBackAmount:String = ""
     var remark:String = ""
+    var product:String = ""
     var isChecked:String = ""
 
     constructor(
@@ -15,6 +16,7 @@ class ReplacedProductCostModel{
         quantity: String,
         changeMode: String,
         buyBackAmount: String,
+        product: String,
         remark: String,
         isChecked: String
     ) {
@@ -23,6 +25,7 @@ class ReplacedProductCostModel{
         this.quantity = quantity
         this.changeMode = changeMode
         this.buyBackAmount = buyBackAmount
+        this.product = product
         this.remark = remark
         this.isChecked = isChecked
     }

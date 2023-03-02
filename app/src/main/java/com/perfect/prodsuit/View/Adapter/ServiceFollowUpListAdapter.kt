@@ -118,7 +118,7 @@ class ServiceFollowUpListAdapter(
 //                    }
 
                 })
-                if(jsonObject!!.getString("runningStatus")=="1")
+               /* if(jsonObject!!.getString("runningStatus")=="1")
                 {
                     holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
                     Glide.with(context)
@@ -144,7 +144,23 @@ class ServiceFollowUpListAdapter(
                         .load(R.drawable.ic_stop)
                         .into(holder.img_running);
                 }
-
+                */
+                holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
+                Glide.with(context)
+                    .load(R.drawable.clock)
+                    .into(holder.img_running);
+                val rotate = RotateAnimation(
+                    0F,
+                    360F,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f
+                )
+                rotate.setDuration(5000)
+                rotate.repeatCount=-1
+                rotate.setInterpolator(LinearInterpolator())
+                holder.img_running.startAnimation(rotate)
 
 
             }

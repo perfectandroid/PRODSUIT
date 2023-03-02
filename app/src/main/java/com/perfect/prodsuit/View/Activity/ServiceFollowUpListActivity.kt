@@ -99,7 +99,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
     var serviceFollowUpDet = 0
     var serviceFollowUpInfo = 0
-    lateinit var overdueArrayList: JSONArray
+    lateinit var serviceFollowUpArrayList: JSONArray
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -264,13 +264,13 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                         tv_nodata.visibility = View.GONE
                                         val jobjt =
                                             jObject.getJSONObject("ServiceFollowUpdetails")
-                                        overdueArrayList =
+                                        serviceFollowUpArrayList =
                                             jobjt.getJSONArray("ServiceFollowUpdetailsList")
                                         Log.v(
                                             "fsfsfds",
-                                            "overdueArrayList= " + overdueArrayList.toString()
+                                            "overdueArrayList= " + serviceFollowUpArrayList.toString()
                                         )
-                                        setServiceFollowRecycler(overdueArrayList)
+                                        setServiceFollowRecycler(serviceFollowUpArrayList)
                                     } else {
                                         swipeRefreshLayout.visibility = View.GONE
                                         swipeRefreshLayout.isRefreshing = false
@@ -349,8 +349,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             dialogCustSearch!!.dismiss()
         }
         if (data.equals("call")) {
-            val jsonObject = jsonArray.getJSONObject(position)
-            var mobile = jsonObject.getString("mobile")
+            var mobile = jsonObject.getString("Mobile")
             performCall(mobile)
         }
         if (data.equals("location")) {
@@ -756,13 +755,13 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             customer = edt_customer.text.toString()
             status = edt_status.text.toString()
             var x = 0
-            for (i in 0 until jsonArray.length()) {
-                val item = jsonArray.getJSONObject(i)
+            for (i in 0 until serviceFollowUpArrayList.length()) {
+                val item = serviceFollowUpArrayList.getJSONObject(i)
                 Log.v("fdfddefe", "i" + i)
-                if (item.getString("ticketNumber").toLowerCase().contains(ticketNumber.toLowerCase()) &&
-                    item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
-                    item.getString("customer").toLowerCase().contains(customer.toLowerCase()) &&
-                    item.getString("status").toLowerCase().contains(status.toLowerCase())
+                if (item.getString("Ticket").toLowerCase().contains(ticketNumber.toLowerCase()) &&
+                    //item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
+                    item.getString("Customer").toLowerCase().contains(customer.toLowerCase()) &&
+                    item.getString("CurrentStatus").toLowerCase().contains(status.toLowerCase())
                 ) {
                     jsonArrayFilterd.put(item)
                 }
