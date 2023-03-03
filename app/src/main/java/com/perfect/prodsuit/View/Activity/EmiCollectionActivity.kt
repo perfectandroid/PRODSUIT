@@ -28,8 +28,8 @@ import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
+import com.perfect.prodsuit.View.Adapter.PayMethodAdapter
 import com.perfect.prodsuit.View.Adapter.PaymentListAdapter
-import com.perfect.prodsuit.View.Adapter.PaymentMethodAdapter
 import com.perfect.prodsuit.Viewmodel.EmployeeViewModel
 import com.perfect.prodsuit.Viewmodel.PaymentMethodViewModel
 import org.json.JSONArray
@@ -952,7 +952,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                         paymentMethodeArrayList = jobjt.getJSONArray("CategoryList")
                                         if (paymentMethodeArrayList.length() > 0) {
 
-                                        //    payMethodPopup(paymentMethodeArrayList)
+                                            payMethodPopup(paymentMethodeArrayList)
 
                                         }
                                     } else {
@@ -1007,9 +1007,9 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             recyPaymentMethod!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
-            val adapter = PaymentMethodAdapter(this@EmiCollectionActivity, paymentMethodeArrayList)
+            val adapter = PayMethodAdapter(this@EmiCollectionActivity, paymentMethodeArrayList)
             recyPaymentMethod!!.adapter = adapter
-      //      adapter.setClickListener(this@EmiCollectionActivity)
+            adapter.setClickListener(this@EmiCollectionActivity)
 
 
 
