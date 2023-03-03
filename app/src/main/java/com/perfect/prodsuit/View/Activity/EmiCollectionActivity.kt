@@ -952,7 +952,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                         paymentMethodeArrayList = jobjt.getJSONArray("CategoryList")
                                         if (paymentMethodeArrayList.length() > 0) {
 
-                                            payMethodPopup(paymentMethodeArrayList)
+                                        //    payMethodPopup(paymentMethodeArrayList)
 
                                         }
                                     } else {
@@ -1009,7 +1009,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 //             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
             val adapter = PaymentMethodAdapter(this@EmiCollectionActivity, paymentMethodeArrayList)
             recyPaymentMethod!!.adapter = adapter
-            adapter.setClickListener(this@EmiCollectionActivity)
+      //      adapter.setClickListener(this@EmiCollectionActivity)
 
 
 

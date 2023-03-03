@@ -9,8 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Model.PayMethodModel
 import com.perfect.prodsuit.Model.PaymentMethodModel
-import com.perfect.prodsuit.Model.ProductCategoryModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -24,10 +24,10 @@ import java.util.ArrayList
 object PaymentMethodRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val payMethodSetterGetter = MutableLiveData<PaymentMethodModel>()
+    val payMethodSetterGetter = MutableLiveData<PayMethodModel>()
     val TAG: String = "PaymentMethodRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<PaymentMethodModel> {
+    fun getServicesApiCall(context: Context): MutableLiveData<PayMethodModel> {
        getPayMethod(context)
         return payMethodSetterGetter
     }
@@ -35,7 +35,7 @@ object PaymentMethodRepository {
     private fun getPayMethod(context: Context) {
 
         try {
-            payMethodSetterGetter.value = PaymentMethodModel("")
+            payMethodSetterGetter.value = PayMethodModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -90,10 +90,10 @@ object PaymentMethodRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<PaymentMethodModel>()
-                        leads.add(PaymentMethodModel(response.body()))
+                        val leads = ArrayList<PayMethodModel>()
+                        leads.add(PayMethodModel(response.body()))
                         val msg = leads[0].message
-                        payMethodSetterGetter.value = PaymentMethodModel(msg)
+                        payMethodSetterGetter.value = PayMethodModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
