@@ -123,6 +123,39 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpListActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PRODSUIT.NoActionBar"/>
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpAmcActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PRODSUIT.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpHistory"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PRODSUIT.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpAmcListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PRODSUIT.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpSummary"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PRODSUIT.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.LocationActivity2"
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationPickersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

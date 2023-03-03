@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/history"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="Service History"
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/colorPrimary"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />
+
+    <item
+        android:id="@+id/amc"
+        android:icon="@drawable/ic_baseline_home_repair_service_24"
+        android:title="Warranty/AMC Details"
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/colorPrimary"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark" />
+
+   </menu>

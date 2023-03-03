@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ReplacedProductCostModel
+import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -19,6 +28,12 @@ class PaymentMethodAdapter (internal var context: Context, internal var jsonArra
     internal val TAG : String = "PaymentMethodAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
+class PaymentMethodAdapter(
+    internal var context: Context,
+    internal var jsonArray: JSONArray
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var mItemClickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -46,6 +61,7 @@ class PaymentMethodAdapter (internal var context: Context, internal var jsonArra
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
+            Log.v("sadsdsssss", "e  " + e)
         }
     }
 
@@ -74,6 +90,23 @@ class PaymentMethodAdapter (internal var context: Context, internal var jsonArra
 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
+        lateinit var txt_method: TextView
+        lateinit var txt_reff: TextView
+        lateinit var txt_amount: TextView
+        lateinit var img_delete: ImageView
+        lateinit var img_edit: ImageView
+
+        init {
+            txt_method = v.findViewById(R.id.txt_method) as TextView
+            txt_reff = v.findViewById(R.id.txt_reff) as TextView
+            txt_amount = v.findViewById(R.id.txt_amount) as TextView
+            img_delete = v.findViewById(R.id.img_delete) as ImageView
+            img_edit = v.findViewById(R.id.img_edit) as ImageView
+        }
+    }
+
+    fun addItemClickListener(listener: ItemClickListener) {
+        mItemClickListener = listener
     }
 
 }
