@@ -170,11 +170,11 @@
         <item name="boxStrokeWidth">0.2dp</item>
         <item name="boxStrokeWidthFocused">0.2dp</item>
         <item name="fontFamily">@font/myfont</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name="hintTextColor">@color/hintTextColor</item>
-        <item name="android:textColorHint">@color/grey_dark</item>
-        <item name="drawableTint">@color/textColor</item>
-        <item name="android:drawableTint">@color/textColor</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="drawableTint">@color/black</item>
+        <item name="android:drawableTint">@color/black</item>
 
     </style>
 

@@ -204,6 +204,28 @@ object Config {
 
     }
 
+    fun snackBarWarning(context: Context, view: View, message: String) {
+//        val snackbar: Snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_LONG)
+//        snackbar.setActionTextColor(Color.WHITE)
+//        snackbar.setBackgroundTint(context.resources.getColor(R.color.black))
+//        snackbar.show()
+
+
+        val snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_SHORT)
+        val sbView = snackbar.view
+        sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        val typeface = ResourcesCompat.getFont(context, R.font.myfont)
+        textView.setTypeface(typeface)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
+        textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        snackbar.show()
+
+
+
+    }
+
     fun getActionTypes(): String {
 
         var result =""
