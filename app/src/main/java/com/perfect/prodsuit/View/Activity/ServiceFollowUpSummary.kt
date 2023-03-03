@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.*
@@ -63,6 +65,11 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
     var editPosition:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         setContentView(R.layout.activity_service_follow_up_summary)
         val intent: Intent = intent
         val arrayServiceCost: String? = intent.getStringExtra("jsonArrayServiceCost")
