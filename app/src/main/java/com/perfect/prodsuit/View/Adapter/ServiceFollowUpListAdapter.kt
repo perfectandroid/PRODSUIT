@@ -96,6 +96,11 @@ class ServiceFollowUpListAdapter(
                         mItemClickListener!!.onClick(position, "location", jsonObject!!);
                     }
                 })
+                holder.im_tracker.setOnClickListener(View.OnClickListener {
+                    if (mItemClickListener != null) {
+                        mItemClickListener!!.onClick(position, "tracking", jsonObject!!);
+                    }
+                })
                 holder.lin_time.setOnClickListener(View.OnClickListener {
                    // Toast.makeText(context, "ServiceFollowUpListAdapter ln100", Toast.LENGTH_SHORT).show()
 //                    if(jsonObject!!.getString("runningStatus")=="0")
@@ -197,6 +202,7 @@ class ServiceFollowUpListAdapter(
         var img_info: ImageView
         var img_running: ImageView
         var imgPriority: ImageView
+        var im_tracker: ImageView
         var lin_time: LinearLayout
 
 
@@ -216,6 +222,7 @@ class ServiceFollowUpListAdapter(
             img_info = v.findViewById(R.id.img_info) as ImageView
             img_running = v.findViewById(R.id.img_running) as ImageView
             imgPriority = v.findViewById(R.id.imgPriority) as ImageView
+            im_tracker = v.findViewById(R.id.im_tracker) as ImageView
         }
     }
 

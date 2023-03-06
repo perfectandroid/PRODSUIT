@@ -236,6 +236,10 @@
     <color name="upcomung_Color">#CE748E8E</color>
     <color name="upcomung_light_Color">#CEC2D8D8</color>
 
+    <color name="mylead_round">#BC7B84</color>
+    <color name="mylead_Color">#B8868D</color>
+    <color name="mylead_light_Color">#FFB8868D</color>
+
 
     <color name="right_Color">#E6E5E5</color>
     <color name="pop_gradient1">#972839</color>

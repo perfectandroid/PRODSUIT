@@ -378,6 +378,10 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 confirmBottomSheet(2)
             }
         }
+        if (data.equals("tracking")) {
+            val i = Intent(this, TrackerActivity::class.java)
+            startActivity(i)
+        }
     }
 
     private fun loadInfo(customerServiceRegister: String) {

@@ -218,6 +218,7 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/llside_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2.2"
@@ -240,7 +241,6 @@
                     android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginBottom="15dp"
                     android:src="@drawable/messageicon"
                     android:layout_gravity="center"
                     android:gravity="center"/>
@@ -250,6 +250,7 @@
                     android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:button="@drawable/selector_reminder"
                     android:visibility="visible"/>

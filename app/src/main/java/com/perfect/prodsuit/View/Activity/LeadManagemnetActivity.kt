@@ -63,6 +63,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var lltodolist: LinearLayout? = null
     private var lloverdue: LinearLayout? = null
     private var lloverUpcoming: LinearLayout? = null
+    private var llmyLead: LinearLayout? = null
     private var tie_Employee: TextInputEditText? = null
     lateinit var employeeArrayList : JSONArray
     private var dialogEmployeeAllDetails : Dialog? = null
@@ -112,6 +113,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         lltodolist = findViewById(R.id.lltodolist)
         lloverdue = findViewById(R.id.lloverdue)
         lloverUpcoming = findViewById(R.id.lloverUpcoming)
+        llmyLead = findViewById(R.id.llmyLead)
         imgv_filterManage = findViewById(R.id.imgv_filterManage)
 
         tv_todo_count = findViewById(R.id.tv_todo_count)
@@ -121,6 +123,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
         lloverUpcoming!!.setOnClickListener(this)
+        llmyLead!!.setOnClickListener(this)
         imgv_filterManage!!.setOnClickListener(this)
     }
 
@@ -152,6 +155,15 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             }
             R.id.lloverUpcoming->{
                 val i = Intent(this@LeadManagemnetActivity, UpcomingtaskActivity::class.java)
+                i.putExtra("SubMode","3")
+                i.putExtra("ID_Employee",ID_Employee)
+                i.putExtra("EmpName",emp_name)
+                i.putExtra("UserName",UserName)
+                Log.e(TAG,"88552233    "+emp_name)
+                startActivity(i)
+            }
+            R.id.llmyLead->{
+                val i = Intent(this@LeadManagemnetActivity, MyLeadActivity::class.java)
                 i.putExtra("SubMode","3")
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
