@@ -152,19 +152,22 @@
 
 
                                             <LinearLayout
-                                                android:layout_width="50dp"
-                                                android:layout_height="50dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
                                                 android:orientation="vertical"
-                                                android:gravity="center"
-                                                android:background="@drawable/svg_sa_transparent">
+                                                android:gravity="center">
+
+<!--                                                android:background="@drawable/svg_sa_transparent"-->
 
                                                 <ImageView
                                                     android:id="@+id/im_Channel"
-                                                    android:layout_width="40dp"
-                                                    android:layout_height="40dp"
-                                                    android:src="@drawable/communication_color"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
                                                     android:layout_alignParentLeft="true"
+                                                    android:scaleType="fitXY"
+                                                    android:src="@drawable/xml_bussinessman"
                                                     android:visibility="visible" />
+                                                <!--                                                android:src="@drawable/communication_color"-->
 
                                             </LinearLayout>
 
@@ -572,6 +575,7 @@
                                             app:tint="@color/colorPrimary" />
 
                                         <ImageView
+                                            android:id="@+id/img_location"
                                             android:layout_width="40dp"
                                             android:layout_height="40dp"
                                             android:padding="10dp"

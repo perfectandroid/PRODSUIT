@@ -61,6 +61,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var txt_bal_Amount: TextView? = null
 
     private var img_call: ImageView? = null
+    private var img_location: ImageView? = null
     private var img_payment: ImageView? = null
 
     private var edtTransDate: EditText? = null
@@ -160,6 +161,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         img_payment = findViewById<ImageView>(R.id.img_payment)
         img_call = findViewById<ImageView>(R.id.img_call)
+        img_location = findViewById<ImageView>(R.id.img_location)
 
         edtInsAmount = findViewById<EditText>(R.id.edtInsAmount)
         edtFine = findViewById<EditText>(R.id.edtFine)
@@ -187,6 +189,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         edtCollectedBy!!.setOnClickListener(this)
         img_payment!!.setOnClickListener(this)
         img_call!!.setOnClickListener(this)
+        img_location!!.setOnClickListener(this)
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -197,9 +200,6 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         getDefaultValueSettings()
 
     }
-
-
-
 
     private fun setValues() {
         tv_Customer!!.text = "Ranjith"
@@ -378,6 +378,12 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             R.id.img_call->{
                 callFunction(v)
             }
+            R.id.img_location->{
+
+                checkLocationPermission(v)
+//                val i = Intent(this@EmiCollectionActivity, LocationCollectionActivity::class.java)
+//                startActivity(i)
+            }
             R.id.edtTransDate->{
                 dateMode = 0
                 openBottomDate()
@@ -404,6 +410,30 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 }
 
             }
+
+        }
+    }
+
+    private fun checkLocationPermission(v: View) {
+        val ALL_PERMISSIONS = 102
+
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
+        if (ContextCompat.checkSelfPermission(
+                this@EmiCollectionActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) + ContextCompat.checkSelfPermission(
+                this@EmiCollectionActivity,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
+        } else {
+            val i = Intent(this@EmiCollectionActivity, LocationCollectionActivity::class.java)
+            startActivity(i)
 
         }
     }

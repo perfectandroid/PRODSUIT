@@ -9,11 +9,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ImageModel
-import com.perfect.prodsuit.Model.LocationModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
-import com.perfect.prodsuit.View.Activity.ImageActivity
-import com.perfect.prodsuit.View.Activity.LocationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
