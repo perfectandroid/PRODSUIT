@@ -368,6 +368,15 @@
 
     <color name="color_mandatory">#FA6464</color>
 
+<!--    <color name="color_pickup">#4D7878</color>-->
+<!--    <color name="color_delivery">#849675</color>-->
+
+<!--    <color name="color_pickup">#4D7878</color>-->
+<!--    <color name="color_delivery">#212443</color>-->
+
+    <color name="color_pickup">#4D7878</color>
+    <color name="color_delivery">#789479</color>
+
 
 
 

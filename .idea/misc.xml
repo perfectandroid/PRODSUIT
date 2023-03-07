@@ -71,6 +71,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/circle_overdue.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/circle_todo.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/circle_upcoming.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/countmain_delivery.xml" value="0.21" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/countmain_pickup.xml" value="0.21" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/cs_service.xml" value="0.3095" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/csa_main_new.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/csa_main_ongoing.xml" value="0.271" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/hexa.xml" value="0.262" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_circle.xml" value="0.2615" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_edit.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_main_delivery.xml" value="0.21" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_attendedby.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_category.xml" value="0.2165" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/laed_address.xml" value="0.193" />
@@ -103,6 +106,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_name.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_phones.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_posts.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/main_pickup.xml" value="0.21" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/overduelistbg_svg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/pending_svg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/progress.xml" value="0.1945" />
@@ -225,6 +229,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_white_circle.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_color_selector.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_selector.xml" value="0.169" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/textmain_delivery.xml" value="0.21" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/textmain_pickup.xml" value="0.21" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/todolistbg_svg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded_white.xml" value="0.193" />
@@ -274,6 +280,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_mpin.xml" value="0.2453125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.26614583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.2791666666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_pick_up_and_delivery.xml" value="0.752927400468384" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_report.xml" value="0.27037037037037037" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_reportviewdetails.xml" value="0.2125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign.xml" value="0.25677083333333334" />
