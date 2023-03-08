@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_homeGrid"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/svg_home_grid">
+
+        <RelativeLayout
+            android:id="@+id/rlnotification"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:src="@drawable/ic_notifications">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/svg_service_customer_icon" />
+
+
+
+            <TextView
+                android:id="@+id/txtGridNotification"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/ic_circle"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="7dp"
+                android:textStyle="normal"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            android:src="@drawable/svg_service_customer_icon"
+            android:scaleType="fitXY"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txtGridName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Lead"
+            android:fontFamily="@font/myfont"
+            android:textColor="@color/colorPrimary"
+            android:justificationMode="inter_word"
+            android:textSize="13dp"
+            android:drawableTint="@color/colorPrimary"
+            android:textStyle="bold"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+</LinearLayout>

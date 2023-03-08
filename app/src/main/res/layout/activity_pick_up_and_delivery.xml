@@ -118,23 +118,30 @@
                         android:orientation="vertical">
 
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3.1"/>
 
                         <LinearLayout
                             android:id="@+id/ll_new"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.6"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_marginTop="25dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
                             android:background="@drawable/main_pickup"
                             android:padding="1dp"
                             android:orientation="horizontal">
 
+
+
                             <LinearLayout
-                                android:layout_width="80dp"
-                                android:layout_height="70dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2.8"
                                 android:gravity="center"
                                 android:background="@drawable/countmain_pickup"
                                 android:orientation="vertical">
@@ -165,8 +172,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="10dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="3.6"
                                 android:orientation="vertical">
 
 
@@ -176,6 +184,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:background="@drawable/textmain_pickup"
                                 android:orientation="horizontal">
@@ -208,15 +217,21 @@
 
 
 
+
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.9"/>
 
                         <LinearLayout
                             android:id="@+id/ll_new1"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.6"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_marginTop="45dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
                             android:background="@drawable/main_delivery"
@@ -224,8 +239,9 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="80dp"
-                                android:layout_height="70dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2.8"
                                 android:gravity="center"
                                 android:background="@drawable/countmain_delivery"
                                 android:orientation="vertical">
@@ -256,8 +272,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="10dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="3.6"
                                 android:orientation="vertical">
 
 
@@ -267,6 +284,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:background="@drawable/textmain_delivery"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
@@ -303,6 +321,10 @@
 
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.5"/>
 
 
                         <androidx.cardview.widget.CardView

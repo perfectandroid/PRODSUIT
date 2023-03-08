@@ -34,6 +34,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
@@ -41,10 +43,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
+import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -53,7 +58,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+    ItemClickListener {
 
     var TAG = "HomeActivity"
     lateinit var context: Context
@@ -139,6 +145,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var tv_service: TextView? = null
     private var tv_collection: TextView? = null
 
+    private var recyHomegrid: RecyclerView? = null
+    lateinit var homeArrayList: JSONArray
+    lateinit var homeArraySort: JSONArray
+    var notificationCount : String = "0"
+    lateinit var adapterHome : HomeGridAdapter
 
 
 
@@ -206,11 +217,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 var count =jobjt.getString("count")
                                 Log.i("Array size", count)
                                 txtv_notfcount!!.text=count
+                                if (adapterHome != null){
+                                    Log.e(TAG,"adapterHome  2211  ")
+                                    notificationCount = count
+                                    val jsonObject = homeArraySort.getJSONObject(2)
+                                    jsonObject.put("count",notificationCount)
+                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
+
+//                                    adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
+//                                    recyHomegrid!!.adapter!!.notifyDataSetChanged()
+
+
+                                }
 
 
                             } else {
                                 Log.e(TAG,"187777   "+jObject.getString("StatusCode"))
                                 txtv_notfcount!!.text="0"
+                                if (adapterHome != null){
+                                    Log.e(TAG,"adapterHome  2212  ")
+                                    notificationCount = "0"
+                                    val jsonObject = homeArraySort.getJSONObject(2)
+                                    jsonObject.put("count",notificationCount)
+                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
+                                }
 //                                val builder = AlertDialog.Builder(
 //                                    this@HomeActivity,
 //                                    R.style.MyDialogTheme
@@ -322,6 +352,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_service = findViewById(R.id.tv_service)
         tv_collection = findViewById(R.id.tv_collection)
 
+        recyHomegrid = findViewById(R.id.recyHomegrid)
+
         ll_leads!!.setOnClickListener(this)
         ll_service!!.setOnClickListener(this)
         ll_collection!!.setOnClickListener(this)
@@ -335,6 +367,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         var iLead = 1
         var iService = 1
         var iCollection = 1
+
+
 
         if (iLead == 1 && iService == 1 && iCollection == 1){
             ll_leads!!.visibility = View.VISIBLE
@@ -404,6 +438,36 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             im_collection!!.getLayoutParams().width = 80
         }
 
+        gridList()
+
+
+    }
+
+    private fun gridList() {
+        var gridList = Config.getHomeGrid(this@HomeActivity)
+        Log.e(TAG,"ActionType   44  "+gridList)
+        val jObject = JSONObject(gridList)
+        val jobjt = jObject.getJSONObject("homeGridType")
+        homeArrayList = jobjt.getJSONArray("homeGridDetails")
+
+        Log.e(TAG,"426  :  "+homeArrayList)
+        homeArraySort = JSONArray()
+        for (k in 0 until homeArrayList.length()) {
+            val jsonObject = homeArrayList.getJSONObject(k)
+            if (homeArraySort.length()!=9){
+                homeArraySort.put(jsonObject)
+            }
+        }
+
+        if (homeArraySort.length()>0){
+            val lLayout = GridLayoutManager(this@HomeActivity, 3)
+            recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
+            recyHomegrid!!.adapter = adapterHome
+            adapterHome.setClickListener(this@HomeActivity)
+        }
+
+
 
     }
 
@@ -418,13 +482,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.imgAttendance -> {
                 Log.e("HomeActivity","imgAttendance    161  ")
-               if (checkAndRequestPermissions()){
-                   Log.e("HomeActivity","imgAttendance   Granted  161  ")
-                   mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-                 //  getLocation()
-
-                   attendancConfirmPopup(v)
-               }
+//               if (checkAndRequestPermissions()){
+//                   Log.e("HomeActivity","imgAttendance   Granted  161  ")
+//                   mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+//                 //  getLocation()
+//
+//                   attendancConfirmPopup(v)
+//               }
             }
 
             R.id.ll_leads -> {
@@ -552,6 +616,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         dialog.show()
     }
+
     private fun QuitBottomSheet() {
         // BottomSheet
 
@@ -1540,6 +1605,58 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("homeGrid")) {
+            val jsonObject = homeArraySort.getJSONObject(position)
+            var grid_id = jsonObject.getString("grid_id")
+
+
+            if (grid_id.equals("1")){
+                val i = Intent(this@HomeActivity, AgendaActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("2")){
+                val i = Intent(this@HomeActivity, DashBoardActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("3")){
+                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("4")){
+                val i = Intent(this@HomeActivity, LeadActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("5")){
+                val i = Intent(this@HomeActivity, ServiceActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("6")){
+                val i = Intent(this@HomeActivity, EmiActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("7")){
+                val i = Intent(this@HomeActivity, PickUpAndDeliveryActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("8")){
+                setReminder()
+            }
+            if (grid_id.equals("9")){
+                val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("10")){
+                val i = Intent(this@HomeActivity, ProfileActivity::class.java)
+                startActivity(i)
+            }
+            if (grid_id.equals("11")){
+                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
+                startActivity(i)
+            }
+        }
     }
 }
 

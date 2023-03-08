@@ -527,7 +527,130 @@ object Config {
 
     }
 
+    fun getHomeGrid(context : Context): String {
 
+        var result =""
+        try {
+
+            var iLead = 1
+            var iService = 1
+            var iCollection = 1
+            var iPickUp = 1
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+            var obj = JSONObject()
+            obj.put("grid_id", "1")
+            obj.put("grid_name", "Agenda")
+          //  obj.put("image",context.resources.getDrawable(R.drawable.addrs) )
+            obj.put("image","home_agenda")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "2")
+            obj.put("grid_name", "DashBoard")
+         //   obj.put("image",context.resources.getDrawable(R.drawable.agenda) )
+            obj.put("image","home_dashboard")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "3")
+            obj.put("grid_name", "Notification")
+           // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
+            obj.put("image","home_notification")
+            obj.put("count","0")
+            array.put(obj)
+
+            if(iLead == 1 ){
+                obj = JSONObject()
+                obj.put("grid_id", "4")
+                obj.put("grid_name", "Leads")
+                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+                obj.put("image","home_leads")
+                obj.put("count","0")
+                array.put(obj)
+            }
+
+            if(iService == 1 ){
+                obj = JSONObject()
+                obj.put("grid_id", "5")
+                obj.put("grid_name", "Services")
+                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+                obj.put("image","home_service")
+                obj.put("count","0")
+                array.put(obj)
+            }
+
+            if(iCollection == 1 ){
+                obj = JSONObject()
+                obj.put("grid_id", "6")
+                obj.put("grid_name", "Collection")
+                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+                obj.put("image","home_collection")
+                obj.put("count","0")
+                array.put(obj)
+            }
+
+            if(iPickUp == 1 ){
+
+                obj = JSONObject()
+                obj.put("grid_id", "7")
+                obj.put("grid_name", "Pickup Delivery")
+                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+                obj.put("image","home_pickupdelivery")
+                obj.put("count","0")
+                array.put(obj)
+            }
+
+            obj = JSONObject()
+            obj.put("grid_id", "8")
+            obj.put("grid_name", "Reminder")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_reminder")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "9")
+            obj.put("grid_name", "Report")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_report")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "10")
+            obj.put("grid_name", "Profile")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_profile")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "11")
+            obj.put("grid_name", "Expense")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_expense")
+            obj.put("count","0")
+            array.put(obj)
+
+
+
+            jsonObject.put("homeGridDetails", array)
+            jsonObject1.put("homeGridType", jsonObject)
+            Log.e("JsonObject", jsonObject.toString())
+            result = jsonObject1.toString()
+
+
+        }catch (e : Exception){
+            result = ""
+        }
+        return result
+    }
 
 
 
