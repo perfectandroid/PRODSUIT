@@ -22,11 +22,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_service_name"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:fontFamily="@font/myfont"
+                android:visibility="gone"
                 android:textColor="@color/grey_dark"
                 android:textSize="13dp" />
 
@@ -67,7 +68,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_service_cost"
+                        android:id="@+id/tv_service_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"

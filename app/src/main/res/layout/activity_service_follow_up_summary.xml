@@ -97,6 +97,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -196,6 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:weightSum="2">
 
                     <LinearLayout
@@ -523,7 +525,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:minHeight="80dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     android:hint="Customer Note">
@@ -532,6 +533,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawablePadding="5dp"
+                        android:minHeight="80dp"
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
                         android:gravity="center_vertical"
@@ -548,7 +550,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:minHeight="80dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     android:hint="Employee Note">
@@ -560,6 +561,7 @@
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
                         android:gravity="center_vertical"
+                        android:minHeight="80dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -612,6 +614,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     android:hint="Discount Amount">
@@ -742,7 +745,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/myfont"
                             android:singleLine="true"
-                            android:text="Net Amount"
+                            android:text="Security Amount"
                             android:textColor="@color/colorPrimary"
                             android:textColorHint="@color/grey_dark"
                             android:textSize="12dp" />
@@ -771,6 +774,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:layout_marginRight="5dp"
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
@@ -796,7 +800,7 @@
                     <TextView
                         android:id="@+id/text_payment_method"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"

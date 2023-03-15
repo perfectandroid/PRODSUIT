@@ -88,7 +88,7 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
         var name=""
         for (k in 0 until jsonArrayAttendance!!.length()) {
             val jsonObject = jsonArrayAttendance!!.getJSONObject(k)
-            val name1 = jsonObject.getString("name")
+            val name1 = jsonObject.getString("EmployeeName")
             name+=","+name1
         }
         tv_attended!!.setText(name.substring(1,name.length))
@@ -122,8 +122,8 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
         }
         tv_productAmount?.text = "\u20b9" + df.format(amountSum)
         netAmount = (serviceCostSum + amountSum) - buyBackAmountSum
-        tv_netAmount?.text = "\u20b9" + df.format(netAmount)
-        tv_totalAmount?.text = df.format(netAmount)
+        tv_netAmount?.text = "\u20b9" + df.format(buyBackAmountSum)
+        tv_totalAmount?.text = df.format(buyBackAmountSum)
     }
 
     private fun setId() {

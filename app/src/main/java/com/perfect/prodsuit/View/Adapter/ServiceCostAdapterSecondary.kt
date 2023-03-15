@@ -18,6 +18,7 @@ import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class ServiceCostAdapterSecondary(
     internal var context: Context,
@@ -25,6 +26,7 @@ class ServiceCostAdapterSecondary(
     val serviceCostArrayList: ArrayList<ServiceCostModelMain>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     internal val TAG: String = "HistoryActMeetingAdapter"
 
@@ -40,66 +42,124 @@ class ServiceCostAdapterSecondary(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             var jsonObject = jsonArray.getJSONObject(position)
+            var getList = serviceCostArrayList.get(position)
             if (holder is MainViewHolder) {
-                var isChecked=""
-                Log.e(TAG, "onBindViewHolder   1051   ")
+                var isChecked = ""
                 val pos = position
-                holder.tv_component.text = jsonObject!!.getString("Components")
-                holder.tv_service_name.text = jsonObject!!.getString("ServiceName")
-                holder.edtServiceCost.setText(jsonObject!!.getString("serviceCost"))
-                holder.tv_service_cost.text = "\u20B9"+jsonObject!!.getString("serviceCost")
-                if(jsonObject!!.getString("isChecked").equals("true"))
-                {
-                    holder.checkbox.isChecked=true
-                    isChecked="true"
+//                holder.tv_component.text = jsonObject!!.getString("Components")
+                holder.tv_service_name.text = jsonObject!!.getString("Service")
+                //holder.edtServiceCost.setText(jsonObject!!.getString("ServiceCost"))
+                var df = DecimalFormat("0.00")
+                try {
+                    holder.tv_service_cost.text =
+                        "\u20B9" + df.format(jsonObject!!.getString("ServiceCost").toFloat())
+                } catch (e: Exception) {
+                    holder.tv_service_cost.text = "\u20B90.0"
                 }
-                else
-                {
-                    holder.checkbox.isChecked=false
-                    isChecked="false"
+                try {
+                    if (getList.isChecked.equals("true")) {
+                        holder.checkbox.isChecked = true
+                        isChecked = "true"
+                    } else {
+                        holder.checkbox.isChecked = false
+                        isChecked = "false"
+                    }
+                } catch (e: Exception) {
+                    holder.checkbox.isChecked = false
+                    isChecked = "false"
                 }
+//                try {
+//                    if (jsonObject!!.getString("isChecked").equals("true")) {
+//                        holder.checkbox.isChecked = true
+//                        isChecked = "true"
+//                    } else {
+//                        holder.checkbox.isChecked = false
+//                        isChecked = "false"
+//                    }
+//                } catch (e: Exception) {
+//                    holder.checkbox.isChecked = false
+//                    isChecked = "false"
+//                }
                 holder.checkbox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-                    if(b)
-                    {
-                        isChecked="true"
-                        serviceCostArrayList.removeAt(pos)
-                        serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),"true")
-                        )
-                    }
-                    else
-                    {
-                        isChecked="false"
-                        serviceCostArrayList.removeAt(pos)
-                        serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),holder.edtServiceCost.text.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),"false")
-                        )
+                    if (compoundButton.isPressed()) {
+                        if (b) {
+                            isChecked = "true"
+                            serviceCostArrayList.removeAt(pos)
+                            serviceCostArrayList.add(
+                                pos,
+                                ServiceCostModelMain(
+                                    "",
+                                    jsonObject!!.getString("ID_ProductWiseServiceDetails"),
+                                    jsonObject!!.getString("SubProduct"),
+                                    jsonObject!!.getString("ID_Product"),
+                                    jsonObject!!.getString("ID_Services"),
+                                    jsonObject!!.getString("Service"),
+                                    jsonObject!!.getString("ServiceCost"),
+                                    jsonObject!!.getString("ServiceTaxAmount"),
+                                    jsonObject!!.getString("ServiceNetAmount"),
+                                    jsonObject!!.getString("Remarks"),
+                                    "true",
+                                    ""
+                                )
+                            )
+                        } else {
+                            isChecked = "false"
+                            serviceCostArrayList.removeAt(pos)
+                            serviceCostArrayList.add(
+                                pos,
+                                ServiceCostModelMain(
+                                    "",
+                                    jsonObject!!.getString("ID_ProductWiseServiceDetails"),
+                                    jsonObject!!.getString("SubProduct"),
+                                    jsonObject!!.getString("ID_Product"),
+                                    jsonObject!!.getString("ID_Services"),
+                                    jsonObject!!.getString("Service"),
+                                    jsonObject!!.getString("ServiceCost"),
+                                    jsonObject!!.getString("ServiceTaxAmount"),
+                                    jsonObject!!.getString("ServiceNetAmount"),
+                                    jsonObject!!.getString("Remarks"),
+                                    "false",
+                                    ""
+                                )
+                            )
+                        }
                     }
                 })
-                holder.edtServiceCost.addTextChangedListener(object : TextWatcher {
-
-                    override fun afterTextChanged(s: Editable) {
-                        Log.v("dfasdasdsdsdss","Components "+jsonObject!!.getString("Components"))
-                        serviceCostArrayList.removeAt(pos)
-                        serviceCostArrayList.add(pos,
-                            ServiceCostModelMain(jsonObject!!.getString("Components"),jsonObject!!.getString("ServiceName"),s.toString(),jsonObject!!.getString("serviceType"),jsonObject!!.getString("taxAmount"),jsonObject!!.getString("netAmount"),jsonObject!!.getString("remark"),isChecked)
-                        )
-                    }
-
-                    override fun beforeTextChanged(s: CharSequence, start: Int,
-                                                   count: Int, after: Int) {
-
-                    }
-
-                    override fun onTextChanged(s: CharSequence, start: Int,
-                                               before: Int, count: Int) {
-                    }
-                })
+//                holder.edtServiceCost.addTextChangedListener(object : TextWatcher {
+//
+//                    override fun afterTextChanged(s: Editable) {
+//                        Log.v("dfasdasdsdsdss","Components "+jsonObject!!.getString("Components"))
+//                        serviceCostArrayList.removeAt(pos)
+//                        serviceCostArrayList.add(pos,
+//                            ServiceCostModelMain("",
+//                                jsonObject!!.getString("ID_ProductWiseServiceDetails"),
+//                                jsonObject!!.getString("SubProduct"),
+//                                jsonObject!!.getString("ID_Product"),
+//                                jsonObject!!.getString("ID_Services"),
+//                                jsonObject!!.getString("Service"),
+//                                s.toString(),
+//                                jsonObject!!.getString("ServiceTaxAmount"),
+//                                jsonObject!!.getString("ServiceNetAmount"),
+//                                jsonObject!!.getString("Remarks"),
+//                                jsonObject!!.getString("isChecked"),
+//                                "")
+//                        )
+//                    }
+//
+//                    override fun beforeTextChanged(s: CharSequence, start: Int,
+//                                                   count: Int, after: Int) {
+//
+//                    }
+//
+//                    override fun onTextChanged(s: CharSequence, start: Int,
+//                                               before: Int, count: Int) {
+//                    }
+//                })
 
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.v("sadsdsssss", "e  "+e)
+            Log.v("sadsdsssss", "e  " + e)
         }
     }
 
@@ -133,22 +193,26 @@ class ServiceCostAdapterSecondary(
 
     fun getServiceCost(): ArrayList<ServiceCostModelMain> {
         val serviceCostArrayListFinal = ArrayList<ServiceCostModelMain>()
-        for(i in 0..serviceCostArrayList.size-1)
-        {
-            var getList:ServiceCostModelMain=serviceCostArrayList.get(i)
-            Log.v("dsad33ffdf","isChecked "+getList.isChecked)
-            Log.v("dsad33ffdf","ServiceName "+getList.ServiceName)
-            if(getList.isChecked.equals("true"))
-            {
-                var Components=getList.Components
-                var ServiceName=getList.ServiceName
-                var serviceCost=getList.serviceCost
-                var serviceType=getList.serviceType
-                var taxAmount=getList.taxAmount
-                var netAmount=getList.netAmount
-                var remark=getList.remark
-                var isChecked=getList.isChecked
-                serviceCostArrayListFinal.add(ServiceCostModelMain(Components,ServiceName,serviceCost,serviceType,taxAmount,netAmount,remark,isChecked)
+        for (i in 0..serviceCostArrayList.size - 1) {
+            var getList: ServiceCostModelMain = serviceCostArrayList.get(i)
+            Log.v("dsfsdf33fff", "isChecked " + getList.isChecked)
+            Log.v("dsfsdf33fff", "ServiceName " + getList.Service)
+            if (getList.isChecked.equals("true")) {
+                serviceCostArrayListFinal.add(
+                    ServiceCostModelMain(
+                        getList.Components,
+                        getList.ID_ProductWiseServiceDetails,
+                        getList.SubProduct,
+                        getList.ID_Product,
+                        getList.ID_Services,
+                        getList.Service,
+                        getList.ServiceCost,
+                        getList.ServiceTaxAmount,
+                        getList.ServiceNetAmount,
+                        getList.Remarks,
+                        getList.isChecked,
+                        getList.serviceType
+                    )
                 )
             }
         }

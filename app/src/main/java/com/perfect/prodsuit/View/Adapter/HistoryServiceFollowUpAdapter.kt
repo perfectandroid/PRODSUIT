@@ -40,12 +40,12 @@ class HistoryServiceFollowUpAdapter(
         try {
             var jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                holder.tv_ticketNumber.text = jsonObject!!.getString("ticketNo")
-                holder.tv_service.text = jsonObject!!.getString("service")
-                holder.tv_complaint.text = jsonObject!!.getString("complaint")
-                holder.tv_status.text = jsonObject!!.getString("status")
-                holder.tv_closedDate.text = jsonObject!!.getString("closedDate")
-                holder.tv_employeeNote.text = jsonObject!!.getString("employeeNote")
+                holder.tv_ticketNumber.text = jsonObject!!.getString("TicketNo")
+                holder.tv_service.text = jsonObject!!.getString("Service")
+                holder.tv_complaint.text = jsonObject!!.getString("Complaint")
+                holder.tv_status.text = jsonObject!!.getString("CurrentStatus")
+                holder.tv_closedDate.text = jsonObject!!.getString("ClosedDate")
+                holder.tv_employeeNote.text = jsonObject!!.getString("EmployeeNotes")
 
             }
         } catch (e: Exception) {
