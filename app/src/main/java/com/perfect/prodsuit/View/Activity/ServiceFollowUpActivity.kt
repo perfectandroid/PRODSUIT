@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,6 +19,8 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +32,9 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -64,13 +70,17 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     var journeyType: Int = 0
     var productMode: String? = "1"
     var runningStatus: String? = ""
+    var FK_Customer: String = ""
+    var FK_CustomerOthers: String = ""
+    var FK_Product: String = ""
+    var customer_service_register: String = ""
     private var tabLayout: TabLayout? = null
-    lateinit var jsonArray: JSONArray
-    lateinit var jsonArray2: JSONArray
-    lateinit var jsonArrayMappedServiceCost: JSONArray
-    lateinit var jsonArrayMoreServiceCost: JSONArray
-    lateinit var jsonArrayReplacedProductMap: JSONArray
-    lateinit var jsonArrayReplacedProductMore: JSONArray
+    var jsonArray2: JSONArray = JSONArray()
+    var jsonArrayMappedServiceAttended: JSONArray = JSONArray()
+    var jsonArrayMoreServiceAttended: JSONArray = JSONArray()
+    var jsonArrayServiceType: JSONArray = JSONArray()
+    var jsonArrayReplacedProductMap: JSONArray = JSONArray()
+    var jsonArrayReplacedProductMore: JSONArray = JSONArray()
     var adapter: ServiceCostAdapter? = null
     var adapterReplacedProductCost: ReplacedProductCostAdapter? = null
     var adapterAttendanceServiceFollowUp: AttendanceServiceFollowUpAdapter? = null
@@ -88,6 +98,20 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     var isReplaceDataSet: Boolean = false
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
     private val START_LOCATION = 100
+    lateinit var serviceFollowUpAttendanceListViewModel: ServiceFollowUpAttendanceListViewModel
+    lateinit var serviceFollowUpMappedServiceViewModel: ServiceFollowUpMappedServiceViewModel
+    lateinit var serviceFollowUpMoreServiceViewModel: ServiceFollowUpMoreServiceViewModel
+    lateinit var serviceFollowUpServiceTypeViewModel: ServiceFollowUpServiceTypeViewModel
+    lateinit var serviceFollowUpInfoViewModel: ServiceFollowUpInfoViewModel
+    private var progressDialog: ProgressDialog? = null
+    private var ID_Branch = "";
+    private var ID_Employee: String = ""
+    lateinit var serviceFollowUpAttendanceArrayList: JSONArray
+    var serviceFollowUpAttendance = 0
+    var serviceFollowUpMappedService = 0
+    var serviceFollowUpMoreService = 0
+    var serviceFollowUpServiceType = 0
+    var serviceFollowUpInfo = 0
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,27 +127,32 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
         getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.back_arro);
-        getSupportActionBar()?.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.shape_header))
+        getSupportActionBar()?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.shape_header
+            )
+        )
         getSupportActionBar()?.setCustomView(R.layout.toolbar)
         getSupportActionBar()?.setDisplayShowCustomEnabled(true)
-        runningStatus=intent.getStringExtra("runningStatus")
-        if(runningStatus.equals("0"))
-        {
-            card_start?.visibility=View.VISIBLE
-            card_stop?.visibility=View.GONE
-            card_restart?.visibility=View.GONE
-        }
-        else if(runningStatus.equals("1"))
-        {
-            card_start?.visibility=View.GONE
-            card_stop?.visibility=View.VISIBLE
-            card_restart?.visibility=View.GONE
-        }
-        else
-        {
-            card_start?.visibility=View.GONE
-            card_stop?.visibility=View.GONE
-            card_restart?.visibility=View.VISIBLE
+        runningStatus = intent.getStringExtra("runningStatus")
+        customer_service_register = intent.getStringExtra("customer_service_register").toString()
+        val FK_BranchCodeUserSP = this.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val FK_EmployeeSP = this.getSharedPreferences(Config.SHARED_PREF1, 0)
+        ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        if (runningStatus.equals("0")) {
+            card_start?.visibility = View.VISIBLE
+            card_stop?.visibility = View.GONE
+            card_restart?.visibility = View.GONE
+        } else if (runningStatus.equals("1")) {
+            card_start?.visibility = View.GONE
+            card_stop?.visibility = View.VISIBLE
+            card_restart?.visibility = View.GONE
+        } else {
+            card_start?.visibility = View.GONE
+            card_stop?.visibility = View.GONE
+            card_restart?.visibility = View.VISIBLE
         }
         card_start!!.setOnClickListener(this)
         card_stop!!.setOnClickListener(this)
@@ -147,23 +176,33 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         //loadServiceCost()
         //loadReplacedProductCost()
         loadAttendance()
+        loadMappedeServiceAttended()
+        loadMoreServiceAttended()
+        loadServiceType()
+        loadInfo(customer_service_register)
         // loadHistory()
-        adapter = ServiceCostAdapter(this, jsonArray, serviceCostArrayList)
+        adapter = ServiceCostAdapter(this, jsonArray2, serviceCostArrayList, jsonArrayServiceType)
         recycler_service_cost!!.adapter = adapter
         adapterReplacedProductCost =
-            ReplacedProductCostAdapter(this, jsonArray, replacedProductCostArrayList)
+            ReplacedProductCostAdapter(this, jsonArray2, replacedProductCostArrayList)
         recycleView_replaceproduct!!.adapter = adapterReplacedProductCost
         adapterAttendanceServiceFollowUp =
-            AttendanceServiceFollowUpAdapter(this, jsonArray, attendanceFollowUpArrayList)
+            AttendanceServiceFollowUpAdapter(this, jsonArray2, attendanceFollowUpArrayList)
         recyclerAttendance!!.adapter = adapterAttendanceServiceFollowUp
 
+
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() === android.R.id.home) {
             finish()
         }
         if (item.getItemId() === R.id.history) {
             val intent = Intent(this, ServiceFollowUpHistory::class.java)
+            intent.putExtra("customer_service_register", customer_service_register)
+            intent.putExtra("FK_Customer", FK_Customer)
+            intent.putExtra("FK_CustomerOthers", FK_CustomerOthers)
+            intent.putExtra("FK_Product", FK_Product)
             startActivity(intent)
         }
         if (item.getItemId() === R.id.amc) {
@@ -172,6 +211,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         }
         return super.onOptionsItemSelected(item)
     }
+
     @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -182,89 +222,126 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         }
         return true
     }
-    private fun loadArrays() {
-        val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
-        val e11 =
-            ServiceCostModelMain("Battery Check", "Battery Check2", "55555", "Paid Service","","","remark1", "false")
-        val e21 = ServiceCostModelMain(
-            "Prevention Services",
-            "Prevention Services2",
-            "350",
-            "Paid Service","","",
-            "remark2",
-            "false"
-        )
-        val e31 = ServiceCostModelMain("Service Test3", "Service Test3", "1122","Paid Service","","", "remark3", "false")
-        val e41 = ServiceCostModelMain("Service Test4", "Service Test4", "7867","Paid Service","","", "remark3", "false")
-        val e51 = ServiceCostModelMain("Service Test5", "Service Test5", "4444","AMC Service","","", "remark3", "false")
-        serviceCostArrayListMapped.add(e11)
-        serviceCostArrayListMapped.add(e21)
-        serviceCostArrayListMapped.add(e41)
-        serviceCostArrayListMapped.add(e31)
-        serviceCostArrayListMapped.add(e51)
-        val gson1 = Gson()
-        val listString1 = gson1.toJson(
-            serviceCostArrayListMapped,
-            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
-        )
-        jsonArrayMappedServiceCost = JSONArray(listString1)
 
-        val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
-        val e2 = ServiceCostModelMain(
-            "Prevention Services",
-            "Prevention Services2",
-            "888",
-            "AMC Service","","",
-            "remark2",
-            "false"
-        )
-        val e3 =
-            ServiceCostModelMain(
-                "Prevention Services",
-                "Prevention Services3",
-                "2553",
-                "AMC Service","","",
-                "remark3",
-                "false"
-            )
-        val e4 =
-            ServiceCostModelMain(
-                "Service Testing",
-                "Prevention Services6",
-                "433",
-                "AMC Service","","",
-                "remark3",
-                "false"
-            )
-        val e5 =
-            ServiceCostModelMain(
-                "Service Testing",
-                "Prevention Services5",
-                "7777",
-                "AMC Service","","",
-                "remark3",
-                "false"
-            )
-        val e6 =
-            ServiceCostModelMain(
-                "Service Testing",
-                "Prevention Services4",
-                "6766",
-                "AMC Service","","",
-                "remark3",
-                "false"
-            )
-        serviceCostArrayListMore.add(e2)
-        serviceCostArrayListMore.add(e3)
-        serviceCostArrayListMore.add(e4)
-        serviceCostArrayListMore.add(e5)
-        serviceCostArrayListMore.add(e6)
-        val gson = Gson()
-        val listString = gson.toJson(
-            serviceCostArrayListMore,
-            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
-        )
-        jsonArrayMoreServiceCost = JSONArray(listString)
+    private fun loadArrays() {
+//        val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
+//        val e11 =
+//            ServiceCostModelMain(
+//                "Battery Check",
+//                "Battery Check2",
+//                "55555",
+//                "Paid Service",
+//                "",
+//                "",
+//                "remark1",
+//                "false"
+//            )
+//        val e21 = ServiceCostModelMain(
+//            "Prevention Services",
+//            "Prevention Services2",
+//            "350",
+//            "Paid Service", "", "",
+//            "remark2",
+//            "false"
+//        )
+//        val e31 = ServiceCostModelMain(
+//            "Service Test3",
+//            "Service Test3",
+//            "1122",
+//            "Paid Service",
+//            "",
+//            "",
+//            "remark3",
+//            "false"
+//        )
+//        val e41 = ServiceCostModelMain(
+//            "Service Test4",
+//            "Service Test4",
+//            "7867",
+//            "Paid Service",
+//            "",
+//            "",
+//            "remark3",
+//            "false"
+//        )
+//        val e51 = ServiceCostModelMain(
+//            "Service Test5",
+//            "Service Test5",
+//            "4444",
+//            "AMC Service",
+//            "",
+//            "",
+//            "remark3",
+//            "false"
+//        )
+//        serviceCostArrayListMapped.add(e11)
+//        serviceCostArrayListMapped.add(e21)
+//        serviceCostArrayListMapped.add(e41)
+//        serviceCostArrayListMapped.add(e31)
+//        serviceCostArrayListMapped.add(e51)
+//        val gson1 = Gson()
+//        val listString1 = gson1.toJson(
+//            serviceCostArrayListMapped,
+//            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
+//        )
+//        jsonArrayMappedServiceCostAttended = JSONArray(listString1)
+
+//        val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
+//        val e2 = ServiceCostModelMain(
+//            "Prevention Services",
+//            "Prevention Services2",
+//            "888",
+//            "AMC Service", "", "",
+//            "remark2",
+//            "false"
+//        )
+//        val e3 =
+//            ServiceCostModelMain(
+//                "Prevention Services",
+//                "Prevention Services3",
+//                "2553",
+//                "AMC Service", "", "",
+//                "remark3",
+//                "false"
+//            )
+//        val e4 =
+//            ServiceCostModelMain(
+//                "Service Testing",
+//                "Prevention Services6",
+//                "433",
+//                "AMC Service", "", "",
+//                "remark3",
+//                "false"
+//            )
+//        val e5 =
+//            ServiceCostModelMain(
+//                "Service Testing",
+//                "Prevention Services5",
+//                "7777",
+//                "AMC Service", "", "",
+//                "remark3",
+//                "false"
+//            )
+//        val e6 =
+//            ServiceCostModelMain(
+//                "Service Testing",
+//                "Prevention Services4",
+//                "6766",
+//                "AMC Service", "", "",
+//                "remark3",
+//                "false"
+//            )
+//        serviceCostArrayListMore.add(e2)
+//        serviceCostArrayListMore.add(e3)
+//        serviceCostArrayListMore.add(e4)
+//        serviceCostArrayListMore.add(e5)
+//        serviceCostArrayListMore.add(e6)
+//        val gson = Gson()
+//        val listString = gson.toJson(
+//            serviceCostArrayListMore,
+//            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
+//        )
+//        jsonArrayMoreServiceCost = JSONArray(listString)
 
         val replacedProductCostArrayList = ArrayList<ReplacedProductCostModel>()
         val e122 = ReplacedProductCostModel(
@@ -490,14 +567,16 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.lin_add_service -> {
                 openAlertDialogForMoreServices(
-                    jsonArrayMappedServiceCost,
-                    jsonArrayMoreServiceCost
+                    jsonArrayMappedServiceAttended,
+                    jsonArrayMoreServiceAttended
                 )
             }
             R.id.tv_moreServices -> {
+                Log.v("sdfsdfdsfdfdfddd","jsonArrayMappedServiceAttended "+jsonArrayMappedServiceAttended)
+                Log.v("sdfsdfdsfdfdfddd","jsonArrayMoreServiceAttended "+jsonArrayMoreServiceAttended)
                 openAlertDialogForMoreServices(
-                    jsonArrayMappedServiceCost,
-                    jsonArrayMoreServiceCost
+                    jsonArrayMappedServiceAttended,
+                    jsonArrayMoreServiceAttended
                 )
             }
             R.id.lin_add_replaced_product -> {
@@ -590,34 +669,54 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
         for (i in 0 until jsonArrayMapped.length()) {
             val obj = jsonArrayMapped.getJSONObject(i)
+            var isChecked=""
+            try {
+                isChecked=obj!!.getString("isChecked")
+            } catch (e: Exception) {
+                isChecked="false"
+            }
             serviceCostArrayListMapped.add(
                 i,
                 ServiceCostModelMain(
-                    obj!!.getString("Components"),
-                    obj!!.getString("ServiceName"),
-                    obj!!.getString("serviceCost"),
-                    obj!!.getString("serviceType"),
-                    obj!!.getString("taxAmount"),
-                    obj!!.getString("netAmount"),
-                    obj!!.getString("remark"),
-                    obj!!.getString("isChecked")
+                    "",
+                    obj!!.getString("ID_ProductWiseServiceDetails"),
+                    obj!!.getString("SubProduct"),
+                    obj!!.getString("ID_Product"),
+                    obj!!.getString("ID_Services"),
+                    obj!!.getString("Service"),
+                    obj!!.getString("ServiceCost"),
+                    obj!!.getString("ServiceTaxAmount"),
+                    obj!!.getString("ServiceNetAmount"),
+                    obj!!.getString("Remarks"),
+                    isChecked,
+                    ""
                 )
             )
         }
         val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
         for (i in 0 until jsonArrayMore.length()) {
             val obj = jsonArrayMore.getJSONObject(i)
+            var isChecked=""
+            try {
+                isChecked=obj!!.getString("isChecked")
+            } catch (e: Exception) {
+                isChecked="false"
+            }
             serviceCostArrayListMore.add(
                 i,
                 ServiceCostModelMain(
-                    obj!!.getString("Components"),
-                    obj!!.getString("ServiceName"),
-                    obj!!.getString("serviceCost"),
-                    obj!!.getString("serviceType"),
-                    obj!!.getString("taxAmount"),
-                    obj!!.getString("netAmount"),
-                    obj!!.getString("remark"),
-                    obj!!.getString("isChecked")
+                    "",
+                    "",
+                    "",
+                    "",
+                    obj!!.getString("ID_Services"),
+                    obj!!.getString("Service"),
+                    "",
+                    "",
+                    "",
+                    "",
+                    isChecked,
+                    "",
                 )
             )
         }
@@ -662,8 +761,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 val textlength = edt_product!!.text.length
                 for (k in 0 until jsonArrayMapped.length()) {
                     val jsonObject = jsonArrayMapped.getJSONObject(k)
-                    if (textlength <= jsonObject.getString("ServiceName").length) {
-                        if (jsonObject.getString("ServiceName")!!.toLowerCase().trim().contains(
+                    if (textlength <= jsonObject.getString("Service").length) {
+                        if (jsonObject.getString("Service")!!.toLowerCase().trim().contains(
                                 edt_product!!.text.toString().toLowerCase().trim()
                             )
                         ) {
@@ -677,22 +776,26 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     serviceCostArrayListMapped2.add(
                         i,
                         ServiceCostModelMain(
-                            obj!!.getString("Components"),
-                            obj!!.getString("ServiceName"),
-                            obj!!.getString("serviceCost"),
-                            obj!!.getString("serviceType"),
-                            obj!!.getString("taxAmount"),
-                            obj!!.getString("netAmount"),
-                            obj!!.getString("remark"),
-                            obj!!.getString("isChecked")
+                            "",
+                            obj!!.getString("ID_ProductWiseServiceDetails"),
+                            obj!!.getString("SubProduct"),
+                            obj!!.getString("ID_Product"),
+                            obj!!.getString("ID_Services"),
+                            obj!!.getString("Service"),
+                            obj!!.getString("ServiceCost"),
+                            obj!!.getString("ServiceTaxAmount"),
+                            obj!!.getString("ServiceNetAmount"),
+                            obj!!.getString("Remarks"),
+                            "",
+                            ""
                         )
                     )
                 }
 
                 for (k in 0 until jsonArrayMore.length()) {
                     val jsonObject = jsonArrayMore.getJSONObject(k)
-                    if (textlength <= jsonObject.getString("ServiceName").length) {
-                        if (jsonObject.getString("ServiceName")!!.toLowerCase().trim().contains(
+                    if (textlength <= jsonObject.getString("Service").length) {
+                        if (jsonObject.getString("Service")!!.toLowerCase().trim().contains(
                                 edt_product!!.text.toString().toLowerCase().trim()
                             )
                         ) {
@@ -706,14 +809,18 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     serviceCostArrayListMore.add(
                         i,
                         ServiceCostModelMain(
-                            obj!!.getString("Components"),
-                            obj!!.getString("ServiceName"),
-                            obj!!.getString("serviceCost"),
-                            obj!!.getString("serviceType"),
-                            obj!!.getString("taxAmount"),
-                            obj!!.getString("netAmount"),
-                            obj!!.getString("remark"),
-                            obj!!.getString("isChecked")
+                            "",
+                            "",
+                            "",
+                            "",
+                            obj!!.getString("ID_Services"),
+                            obj!!.getString("Service"),
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
                         )
                     )
                 }
@@ -749,17 +856,19 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 //                Config.snackBars(this, it, "Please check any service from list")
 //            } else {
             lin_moreservice.visibility = View.GONE
-            jsonArrayMappedServiceCost = adapter!!.getServiceCostJson()
-            jsonArrayMoreServiceCost = adapter2!!.getServiceCostJson()
+            jsonArrayMappedServiceAttended = adapter!!.getServiceCostJson()
+            jsonArrayMoreServiceAttended = adapter2!!.getServiceCostJson()
+            Log.v("adadasd3r3ffffdfd", "jsonArrayMappedServiceAttended " + jsonArrayMappedServiceAttended.toString())
+            Log.v("adadasd3r3ffffdfd", "jsonArrayMoreServiceAttended " + jsonArrayMoreServiceAttended.toString())
             serviceCostArrayList.clear()
             for (item in serviceCostArrayListFinal) {
                 var i = 0
                 var i2 = 0
                 var present = 0
-                var value = item.ServiceName;
+                var value = item.ID_ProductWiseServiceDetails;
                 Log.v("Check_Duplicate_values", "value " + value)
                 for (item2 in serviceCostArrayList) {
-                    var value2 = item2.ServiceName;
+                    var value2 = item2.ID_ProductWiseServiceDetails;
                     Log.v("Check_Duplicate_values", "value2 " + value2)
                     if (value == value2) {
                         present = 1
@@ -787,10 +896,10 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 var i = 0
                 var i2 = 0
                 var present = 0
-                var value = item.ServiceName;
+                var value = item.ID_Services;
                 Log.v("Check_Duplicate_values", "value " + value)
                 for (item2 in serviceCostArrayList) {
-                    var value2 = item2.ServiceName;
+                    var value2 = item2.ID_Services;
                     Log.v("Check_Duplicate_values", "value2 " + value2)
                     if (value == value2) {
                         present = 1
@@ -1537,22 +1646,22 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 
     }*/
 
-    private fun loadAttendance() {
-        val attendanceFollowUpArrayList = ArrayList<AttendanceFollowUpModel>()
-        val e1 = AttendanceFollowUpModel("David", "Customer service ", "Employee", "false")
-        val e2 = AttendanceFollowUpModel("John", "Development", "Manager", "false")
-        val e3 = AttendanceFollowUpModel("Kiran", "Customer service ", "Employee", "false")
-        attendanceFollowUpArrayList.add(e1)
-        attendanceFollowUpArrayList.add(e2)
-        attendanceFollowUpArrayList.add(e3)
-        val gson = Gson()
-        val listString = gson.toJson(
-            attendanceFollowUpArrayList,
-            object : TypeToken<ArrayList<AttendanceFollowUpModel?>?>() {}.type
-        )
-        jsonArray = JSONArray(listString)
-        setAttendancetRecycler(jsonArray)
-    }
+//    private fun loadAttendance() {
+//        val attendanceFollowUpArrayList = ArrayList<AttendanceFollowUpModel>()
+//        val e1 = AttendanceFollowUpModel("David", "Customer service ", "Employee", "false")
+//        val e2 = AttendanceFollowUpModel("John", "Development", "Manager", "false")
+//        val e3 = AttendanceFollowUpModel("Kiran", "Customer service ", "Employee", "false")
+//        attendanceFollowUpArrayList.add(e1)
+//        attendanceFollowUpArrayList.add(e2)
+//        attendanceFollowUpArrayList.add(e3)
+//        val gson = Gson()
+//        val listString = gson.toJson(
+//            attendanceFollowUpArrayList,
+//            object : TypeToken<ArrayList<AttendanceFollowUpModel?>?>() {}.type
+//        )
+//        jsonArray = JSONArray(listString)
+//        setAttendancetRecycler(jsonArray)
+//    }
 
     private fun setServiceCostRecycler(jsonArray: JSONArray) {
         if (jsonArray.length() > 0) {
@@ -1563,13 +1672,17 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     i,
                     ServiceCostModelMain(
                         obj!!.getString("Components"),
-                        obj!!.getString("ServiceName"),
-                        obj!!.getString("serviceCost"),
-                        obj!!.getString("serviceType"),
-                        obj!!.getString("taxAmount"),
-                        obj!!.getString("netAmount"),
-                        obj!!.getString("remark"),
-                        obj!!.getString("isChecked")
+                        obj!!.getString("ID_ProductWiseServiceDetails"),
+                        obj!!.getString("SubProduct"),
+                        obj!!.getString("ID_Product"),
+                        obj!!.getString("ID_Services"),
+                        obj!!.getString("Service"),
+                        obj!!.getString("ServiceCost"),
+                        obj!!.getString("ServiceTaxAmount"),
+                        obj!!.getString("ServiceNetAmount"),
+                        obj!!.getString("Remarks"),
+                        obj!!.getString("isChecked"),
+                        obj!!.getString("serviceType")
                     )
                 )
             }
@@ -1584,7 +1697,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     false
                 )
             )
-            adapter = ServiceCostAdapter(this, jsonArray, serviceCostArrayList)
+            adapter = ServiceCostAdapter(this, jsonArray, serviceCostArrayList,jsonArrayServiceType)
             recycler_service_cost!!.adapter = adapter
         } else {
             isServiceDataSet = false
@@ -1642,10 +1755,15 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             attendanceFollowUpArrayList.add(
                 i,
                 AttendanceFollowUpModel(
-                    obj!!.getString("name"),
-                    obj!!.getString("department"),
-                    obj!!.getString("role"),
-                    obj!!.getString("isChecked")
+                    obj!!.getString("ID_Employee"),
+                    obj!!.getString("EmployeeName"),
+                    obj!!.getString("ID_CSAEmployeeType"),
+                    obj!!.getString("Attend"),
+                    obj!!.getString("DepartmentID"),
+                    obj!!.getString("Department"),
+                    obj!!.getString("Role"),
+                    obj!!.getString("Designation"),
+                    "false"
                 )
             )
         }
@@ -1654,6 +1772,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         adapterAttendanceServiceFollowUp =
             AttendanceServiceFollowUpAdapter(this, jsonArray, attendanceFollowUpArrayList)
         recyclerAttendance!!.adapter = adapterAttendanceServiceFollowUp
+
     }
 
     fun slideUp(view: View) {
@@ -1807,6 +1926,334 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         dialog!!.setContentView(view)
 
         dialog.show()
+    }
+
+    private fun loadAttendance() {
+        recyclerAttendance!!.adapter = null
+        serviceFollowUpAttendanceListViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpAttendanceListViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpAttendanceListViewModel.getServiceFollowUpAttendance(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpAttendance == 0) {
+                                    serviceFollowUpAttendance++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("Attendancedetails")
+                                        serviceFollowUpAttendanceArrayList =
+                                            jobjt.getJSONArray("AttendancedetailsList")
+                                        setAttendancetRecycler(serviceFollowUpAttendanceArrayList)
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+                                //swipeRefreshLayout.isRefreshing = false
+                            }
+                        } catch (e: Exception) {
+//                            swipeRefreshLayout.visibility = View.GONE
+//                            swipeRefreshLayout.isRefreshing = false
+//                            tv_nodata.visibility = View.VISIBLE
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadMappedeServiceAttended() {
+        //recyclerAttendance!!.adapter = null
+        serviceFollowUpMappedServiceViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpMappedServiceViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpMappedServiceViewModel.getServiceFollowUpMappedService(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                Log.v("sdadasd3rffdfd", "msg")
+                                if (serviceFollowUpMappedService == 0) {
+                                    serviceFollowUpMappedService++
+                                    Log.v("sdadasd3rffdfd", "det")
+                                    val jObject = JSONObject(msg)
+                                    Log.v(
+                                        "sdadasd3rffdfd",
+                                        "st code " + jObject.getString("StatusCode")
+                                    )
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ServiceAttendedDetails")
+                                        jsonArrayMappedServiceAttended =
+                                            jobjt.getJSONArray("ServiceAttendedDetailsList")
+                                        Log.v(
+                                            "sdadasd3rffdfd",
+                                            "AttendancedetailsList= " + jsonArrayMappedServiceAttended.toString()
+                                        )
+                                        // setAttendancetRecycler(jsonArrayMappedServiceCostAttended)
+                                    } else {
+//                                        val builder = AlertDialog.Builder(
+//                                            this,
+//                                            R.style.MyDialogTheme
+//                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+                                //swipeRefreshLayout.isRefreshing = false
+                            }
+                        } catch (e: Exception) {
+//                            swipeRefreshLayout.visibility = View.GONE
+//                            swipeRefreshLayout.isRefreshing = false
+//                            tv_nodata.visibility = View.VISIBLE
+                            Log.v("sdadasd3rffdfd", "ex3 " + e)
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadMoreServiceAttended() {
+        //recyclerAttendance!!.adapter = null
+        serviceFollowUpMoreServiceViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpMoreServiceViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpMoreServiceViewModel.getServiceFollowUpMoreService(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpMoreService == 0) {
+                                    serviceFollowUpMoreService++
+                                    val jObject = JSONObject(msg)
+                                    Log.v(
+                                        "dfdsf33fff",
+                                        "st code " + jObject.getString("StatusCode")
+                                    )
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("AddedService")
+                                        jsonArrayMoreServiceAttended =
+                                            jobjt.getJSONArray("AddedServiceList")
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadServiceType() {
+        //recyclerAttendance!!.adapter = null
+        serviceFollowUpServiceTypeViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpServiceTypeViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpServiceTypeViewModel.getServiceFollowUpServiceType(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpServiceType == 0) {
+                                    serviceFollowUpServiceType++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ServiceType")
+                                        jsonArrayServiceType =
+                                            jobjt.getJSONArray("ServiceTypeList")
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadInfo(customerServiceRegister: String) {
+        serviceFollowUpInfoViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpInfoViewModel.getServiceFollowUpInfo(
+                    this, customerServiceRegister,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                Log.v("fsfsfds", "msg")
+                                if (serviceFollowUpInfo == 0) {
+                                    serviceFollowUpInfo++
+                                    Log.v("fsfsfds", "det")
+                                    val jObject = JSONObject(msg)
+                                    Log.v("dfsfrffff", "st code " + jObject.getString("StatusCode"))
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("EmployeeWiseTicketSelect")
+                                        FK_CustomerOthers=jobjt.getString("FK_CustomerOthers")
+                                        FK_Customer=jobjt.getString("FK_Customer")
+                                        FK_Product=jobjt.getString("FK_Product")
+                                        Log.v("dfsfsdfsdfd","FK_CustomerOthers "+FK_CustomerOthers);
+                                        Log.v("dfsfsdfsdfd","FK_Customer "+FK_Customer);
+                                    } else {
+
+                                    }
+
+                                }
+
+
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 }

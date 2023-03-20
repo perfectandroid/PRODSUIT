@@ -48,26 +48,70 @@ class ReplacedProductCostAdapterSecondary(
                 holder.edt_qty.setText(jsonObject!!.getString("quantity"))
                 holder.edtBuyBackAmount.setText(jsonObject!!.getString("buyBackAmount"))
                 holder.edtRemarks.setText(jsonObject!!.getString("remark"))
-                val searchTypeMain =
-                    arrayOf<String>("BuyBack", "StandBy", "PickUp", "Replace")
-                var searchType = Array<String>(4){""}
-                searchType[0]=jsonObject!!.getString("changeMode")
-                Log.v("dfdfddddd","searchType[0]  "+searchType[0])
-                var i=1;
-                for (x in searchTypeMain) {
-                    Log.v("dfdfddddd","value  "+x)
-                    if(searchType.contains(x))
-                    {
-                        Log.v("dfdfddddd","yes  ")
+
+                if (jsonObject!!.getString("isChecked").equals("true")) {
+                    holder.checkbox.isChecked = true
+                    isChecked = "true"
+                } else {
+                    holder.checkbox.isChecked = false
+                    isChecked = "false"
+                }
+                holder.checkbox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+                    if (compoundButton.isPressed()) {
+                        if (b) {
+                            isChecked = "true"
+                            replacedProductCostArrayList.removeAt(pos)
+                            replacedProductCostArrayList.add(
+                                pos,
+                                ReplacedProductCostModel(
+                                    jsonObject!!.getString("components"),
+                                    holder.edtAmount.text.toString(),
+                                    holder.edt_qty.text.toString(),
+                                    holder.edtChangeMode.text.toString(),
+                                    holder.edtBuyBackAmount.text.toString(),
+                                    jsonObject.getString("product"),
+                                    holder.edtRemarks.text.toString(),
+                                    "true"
+                                )
+                            )
+                        } else {
+                            isChecked = "false"
+                            replacedProductCostArrayList.removeAt(pos)
+                            replacedProductCostArrayList.add(
+                                pos,
+                                ReplacedProductCostModel(
+                                    jsonObject!!.getString("components"),
+                                    holder.edtAmount.text.toString(),
+                                    holder.edt_qty.text.toString(),
+                                    holder.edtChangeMode.text.toString(),
+                                    holder.edtBuyBackAmount.text.toString(),
+                                    jsonObject.getString("product"),
+                                    holder.edtRemarks.text.toString(),
+                                    "false"
+                                )
+                            )
+                        }
                     }
-                    else
-                    {
-                        Log.v("dfdfddddd","no  ")
-                        searchType[i]=x
-                        i=i+1
+                })
+                /*
+               val searchTypeMain =
+                    arrayOf<String>("BuyBack", "StandBy", "PickUp", "Replace")
+                var searchType = Array<String>(4) { "" }
+                searchType[0] = jsonObject!!.getString("changeMode")
+                Log.v("dfdfddddd", "searchType[0]  " + searchType[0])
+                var i = 1;
+                for (x in searchTypeMain) {
+                    Log.v("dfdfddddd", "value  " + x)
+                    if (searchType.contains(x)) {
+                        Log.v("dfdfddddd", "yes  ")
+                    } else {
+                        Log.v("dfdfddddd", "no  ")
+                        searchType[i] = x
+                        i = i + 1
                     }
                 }
-                val adapter =ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
+                val adapter =
+                    ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
                 holder.edtChangeMode!!.setAdapter(adapter)
                 holder.edtChangeMode!!.setText(searchType.get(0), false)
                 holder.edtChangeMode!!.setOnClickListener {
@@ -89,48 +133,6 @@ class ReplacedProductCostAdapterSecondary(
                         )
                     )
                 }
-                if (jsonObject!!.getString("isChecked").equals("true")) {
-                    holder.checkbox.isChecked = true
-                    isChecked = "true"
-                } else {
-                    holder.checkbox.isChecked = false
-                    isChecked = "false"
-                }
-                holder.checkbox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-                    if (b) {
-                        isChecked = "true"
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                "true"
-                            )
-                        )
-                    } else {
-                        isChecked = "false"
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                "false"
-                            )
-                        )
-                    }
-                })
                 holder.edtAmount.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable) {
                         replacedProductCostArrayList.removeAt(pos)
@@ -286,6 +288,7 @@ class ReplacedProductCostAdapterSecondary(
                     ) {
                     }
                 })
+            */
             }
         } catch (e: Exception) {
             e.printStackTrace()

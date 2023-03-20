@@ -1,20 +1,35 @@
 package com.perfect.prodsuit.Model
 
 class AttendanceFollowUpModel{
-    var name:String = ""
-    var department:String = ""
-    var role:String = ""
+    var ID_Employee:String = ""
+    var EmployeeName:String = ""
+    var ID_CSAEmployeeType:String = ""
+    var Attend:String = ""
+    var DepartmentID:String = ""
+    var Department:String = ""
+    var Role:String = ""
+    var Designation:String = ""
     var isChecked:String = ""
 
     constructor(
-        name: String,
-        department: String,
-        role: String,
+        ID_Employee: String,
+        EmployeeName: String,
+        ID_CSAEmployeeType: String,
+        Attend: String,
+        DepartmentID: String,
+        Department: String,
+        Role: String,
+        Designation: String,
         isChecked: String
     ) {
-        this.name = name
-        this.department = department
-        this.role = role
+        this.ID_Employee = ID_Employee
+        this.EmployeeName = EmployeeName
+        this.ID_CSAEmployeeType = ID_CSAEmployeeType
+        this.Attend = Attend
+        this.DepartmentID = DepartmentID
+        this.Department = Department
+        this.Role = Role
+        this.Designation = Designation
         this.isChecked = isChecked
     }
 }
