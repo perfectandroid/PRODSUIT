@@ -569,8 +569,9 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_marginBottom="8dp"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp">
+
                                     <androidx.cardview.widget.CardView
                                         android:id="@+id/card_start"
                                         android:layout_width="wrap_content"
@@ -588,18 +589,20 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
+
                                             <ImageView
                                                 android:layout_width="40dp"
-                                                android:padding="10dp"
                                                 android:layout_height="40dp"
-                                                android:src="@drawable/hourglass"/>
+                                                android:padding="10dp"
+                                                android:src="@drawable/hourglass" />
+
                                             <TextView
                                                 android:layout_width="match_parent"
-                                                android:gravity="center"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/myfont"
-                                                android:paddingRight="10dp"
+                                                android:gravity="center"
                                                 android:paddingLeft="10dp"
+                                                android:paddingRight="10dp"
                                                 android:text="Start"
                                                 android:textColor="@color/greydarks"
                                                 android:textSize="16dp" />
@@ -608,6 +611,7 @@
 
 
                                     </androidx.cardview.widget.CardView>
+
                                     <androidx.cardview.widget.CardView
                                         android:id="@+id/card_stop"
                                         android:layout_width="wrap_content"
@@ -625,23 +629,26 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
+
                                             <ImageView
                                                 android:layout_width="40dp"
-                                                android:padding="8dp"
                                                 android:layout_height="40dp"
-                                                android:src="@drawable/ic_stop"/>
+                                                android:padding="8dp"
+                                                android:src="@drawable/ic_stop" />
+
                                             <TextView
                                                 android:layout_width="match_parent"
-                                                android:gravity="center"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/myfont"
-                                                android:paddingRight="10dp"
+                                                android:gravity="center"
                                                 android:paddingLeft="10dp"
+                                                android:paddingRight="10dp"
                                                 android:text="Stop"
                                                 android:textColor="@color/greydarks"
                                                 android:textSize="16dp" />
                                         </LinearLayout>
                                     </androidx.cardview.widget.CardView>
+
                                     <androidx.cardview.widget.CardView
                                         android:id="@+id/card_restart"
                                         android:layout_width="wrap_content"
@@ -659,18 +666,20 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
+
                                             <ImageView
                                                 android:layout_width="40dp"
-                                                android:padding="8dp"
                                                 android:layout_height="40dp"
-                                                android:src="@drawable/restart"/>
+                                                android:padding="8dp"
+                                                android:src="@drawable/restart" />
+
                                             <TextView
                                                 android:layout_width="match_parent"
-                                                android:gravity="center"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/myfont"
-                                                android:paddingRight="10dp"
+                                                android:gravity="center"
                                                 android:paddingLeft="10dp"
+                                                android:paddingRight="10dp"
                                                 android:text="Restart"
                                                 android:textColor="@color/greydarks"
                                                 android:textSize="16dp" />
@@ -1001,7 +1010,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1015,12 +1023,10 @@
                 android:textColor="@color/white"
                 android:textSize="17dp"
                 android:textStyle="bold" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1045,7 +1051,6 @@
 
 
             </LinearLayout>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1084,7 +1089,7 @@
                         android:layout_marginTop="3dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:paddingBottom="10dp"
+                        android:paddingBottom="80dp"
                         android:visibility="gone" />
 
 
@@ -1092,7 +1097,6 @@
 
 
             </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1121,7 +1125,7 @@
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/myfont"
                         android:padding="7dp"
-                        android:text="More services"
+                        android:text="More services attended"
                         android:textColor="@color/greydarks"
                         android:textSize="16dp" />
 
@@ -1132,66 +1136,64 @@
                         android:layout_marginTop="3dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:paddingBottom="10dp"
+                        android:paddingBottom="80dp"
                         android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom">
-
-                <LinearLayout
-                    android:id="@+id/lin_bottom_menu2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="8dp"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:weightSum="2">
-
-
-                    <TextView
-                        android:id="@+id/tv_cancel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/btn_shape_submit"
-                        android:fontFamily="@font/myfont"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="Cancel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:visibility="visible" />
-
-
-                    <TextView
-                        android:id="@+id/tv_submit2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/btn_shape_submit"
-                        android:fontFamily="@font/myfont"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="Submit"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:visibility="visible" />
-                </LinearLayout>
-            </LinearLayout>
-
-
         </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:id="@+id/lin_bottom_menu2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:weightSum="2">
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tv_submit2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Submit"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

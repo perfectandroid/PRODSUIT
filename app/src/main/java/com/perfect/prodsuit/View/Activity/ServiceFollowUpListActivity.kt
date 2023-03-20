@@ -60,8 +60,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
-    View.OnClickListener,
-    OnMapReadyCallback {
+    View.OnClickListener,OnMapReadyCallback {
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
@@ -333,9 +332,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
         if (data.equals("followUp")) {
+            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
             val intent = Intent(this, ServiceFollowUpActivity::class.java)
             val runningStatus = 0
             intent.putExtra("runningStatus", runningStatus)
+            intent.putExtra("customer_service_register", customer_service_register)
             startActivity(intent)
         }
         if (data.equals("info")) {
@@ -547,33 +548,40 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     }
 
     private fun loadLocation() {
-
+        Log.v("fsdfsdds","location")
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
             this@ServiceFollowUpListActivity
         )
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION
+        Log.v("fsdfsdds","location1")
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION
             ) !=
             PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION
             ) !=
             PackageManager.PERMISSION_GRANTED
         ) {
+            Log.v("fsdfsdds","2")
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE
             )
             return
         }
+        Log.v("fsdfsdds","2.5")
         val task = fusedLocationProviderClient.lastLocation
         task.addOnSuccessListener { location ->
+            Log.v("fsdfsdds","2.7")
             if (location != null) {
+                Log.v("fsdfsdds","3")
                 currentLocation = location
 
                 val supportMapFragment =
                     (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
                 supportMapFragment!!.getMapAsync(this)
             }
+            val supportMapFragment =
+                (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
+            supportMapFragment!!.getMapAsync(this)
         }
     }
 
@@ -758,6 +766,10 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             date = edt_fromDate.text.toString()
             customer = edt_customer.text.toString()
             status = edt_status.text.toString()
+            if (status.equals("Choose"))
+            {
+                status=""
+            }
             var x = 0
             for (i in 0 until serviceFollowUpArrayList.length()) {
                 val item = serviceFollowUpArrayList.getJSONObject(i)
@@ -780,7 +792,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     private fun detailsShowingStatus(edt_status: AutoCompleteTextView) {
         val searchType =
-            arrayOf<String>("New", "Pending", "On-Hold", "Completed")
+            arrayOf<String>("Choose","New", "Pending", "On-Hold", "Completed")
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchType)
         edt_status!!.setAdapter(adapter)
         edt_status!!.setText(searchType.get(0), false)

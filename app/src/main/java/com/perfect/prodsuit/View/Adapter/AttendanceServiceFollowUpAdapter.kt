@@ -27,6 +27,7 @@ class AttendanceServiceFollowUpAdapter(
     val attendanceFollowUpArrayList: ArrayList<AttendanceFollowUpModel>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
@@ -38,24 +39,30 @@ class AttendanceServiceFollowUpAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            var jsonObject = jsonArray.getJSONObject(position)
+            var obj = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 val pos = position
-                holder.tv_name.text = jsonObject!!.getString("name")
-                holder.tv_department.text = jsonObject!!.getString("department")
-                holder.tv_role.text = jsonObject!!.getString("role")
-                if (jsonObject!!.getString("isChecked").equals("true")) {
-                    holder.checkbox.isChecked = true
-                } else {
-                    holder.checkbox.isChecked = false
-                }
+                holder.tv_name.text = obj!!.getString("EmployeeName")
+                holder.tv_department.text = obj!!.getString("Department")
+                holder.tv_role.text = obj!!.getString("Role")
+//                if (jsonObject!!.getString("isChecked").equals("true")) {
+//                    holder.checkbox.isChecked = true
+//                } else {
+//                    holder.checkbox.isChecked = false
+//                }
                 holder.checkbox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+                    Log.v("sadsdsssss", "b  " + b)
                     attendanceFollowUpArrayList.removeAt(pos)
                     attendanceFollowUpArrayList.add(pos,
                         AttendanceFollowUpModel(
-                            jsonObject!!.getString("name"),
-                            jsonObject!!.getString("department"),
-                            jsonObject!!.getString("role"),
+                            obj!!.getString("ID_Employee"),
+                            obj!!.getString("EmployeeName"),
+                            obj!!.getString("ID_CSAEmployeeType"),
+                            obj!!.getString("Attend"),
+                            obj!!.getString("DepartmentID"),
+                            obj!!.getString("Department"),
+                            obj!!.getString("Role"),
+                            obj!!.getString("Designation"),
                             "" + b
                         )
                     )
@@ -95,21 +102,23 @@ class AttendanceServiceFollowUpAdapter(
 
     fun getAttendance(): ArrayList<AttendanceFollowUpModel> {
         val attendanceFollowUpArrayListFinal = ArrayList<AttendanceFollowUpModel>()
+        Log.v("dsad33ffdf","attendanceFollowUpArrayList "+attendanceFollowUpArrayList.toString())
         for(i in 0..attendanceFollowUpArrayList.size-1)
         {
             var getList:AttendanceFollowUpModel=attendanceFollowUpArrayList.get(i)
             Log.v("dsad33ffdf","isChecked "+getList.isChecked)
             if(getList.isChecked.equals("true"))
             {
-                var name=getList.name
-                var department=getList.department
-                var role=getList.role
-                var isChecked=getList.isChecked
                 attendanceFollowUpArrayListFinal.add(AttendanceFollowUpModel(
-                    name,
-                    department,
-                    role,
-                    isChecked
+                    getList.ID_Employee,
+                    getList.EmployeeName,
+                    getList.ID_CSAEmployeeType,
+                    getList.Attend,
+                    getList.DepartmentID,
+                    getList.Department,
+                    getList.Role,
+                    getList.Designation,
+                    getList.isChecked
                     )
                 )
             }
