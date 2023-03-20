@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_header">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text=""
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:tint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/myfont" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgv_filter"
+                            android:src="@drawable/filter1"
+                            android:layout_margin="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_alignParentLeft="true"
+                            android:layout_width="60dp"
+                            android:padding="10dp"
+                            android:layout_weight="3"
+                            android:layout_height="60dp"
+                            android:visibility="invisible"
+                            app:tint="@color/white" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/llHeader"
+                        android:orientation="vertical">
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="5dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardCornerRadius="0dp"
+                                        app:cardElevation="2dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="1dp"
+                                        app:cardMaxElevation="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/tv_TicketDetailsClick"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="5dp"
+                                                android:drawableRight="@drawable/down_arrows"
+                                                android:padding="7dp"
+                                                android:text="Ticket Details"
+                                                android:fontFamily="@font/myfont"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/greydarks"
+                                                android:drawableLeft="@drawable/leadfrom_color"
+                                                android:drawablePadding="10dp"
+                                                android:textSize="16dp"/>
+
+                                            <LinearLayout
+                                                android:id="@+id/llTicketDetails"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="0.5dp"
+                                                    android:background="@color/grey"
+                                                    android:visibility="visible"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="10dp"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Ticket Number"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_TicketNumber"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="TKT-0046"
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:visibility="visible"/>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Registered On"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_RegisteredOn"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Feb 8 2023 4:11PM"
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:layout_marginLeft="15dp"
+                                                        android:layout_marginRight="1dp"
+                                                        android:visibility="gone"/>
+
+
+                                                </LinearLayout>
+
+
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+                                        </LinearLayout>
+
+
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardCornerRadius="0dp"
+                                        app:cardElevation="2dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="1dp"
+                                        app:cardMaxElevation="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/tv_CustomerDetailsClick"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="5dp"
+                                                android:drawableRight="@drawable/down_arrows"
+                                                android:padding="7dp"
+                                                android:text="Customer Details"
+                                                android:fontFamily="@font/myfont"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/greydarks"
+                                                android:drawableLeft="@drawable/user_color"
+                                                android:drawablePadding="10dp"
+                                                android:textSize="16dp"/>
+
+                                            <LinearLayout
+                                                android:id="@+id/llCustomerDetails"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="0.5dp"
+                                                    android:background="@color/grey"
+                                                    android:visibility="visible"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="10dp"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Customer Name"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_CustomerName"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Anuraj"
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:visibility="visible"/>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Address"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_Address"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="P House NADUVANNUR Perambra KOZHIKODE KERALA "
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:layout_marginLeft="15dp"
+                                                        android:layout_marginRight="1dp"
+                                                        android:visibility="gone"/>
+
+
+                                                </LinearLayout>
+
+
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+                                        </LinearLayout>
+
+
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardCornerRadius="0dp"
+                                        app:cardElevation="2dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="1dp"
+                                        app:cardMaxElevation="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/tv_ProductDetailsClick"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="5dp"
+                                                android:drawableRight="@drawable/down_arrows"
+                                                android:padding="7dp"
+                                                android:text="Product Details"
+                                                android:fontFamily="@font/myfont"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/greydarks"
+                                                android:drawableLeft="@drawable/product_color"
+                                                android:drawablePadding="10dp"
+                                                android:textSize="16dp"/>
+
+                                            <LinearLayout
+                                                android:id="@+id/llProductDetails"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="0.5dp"
+                                                    android:background="@color/grey"
+                                                    android:visibility="visible"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="10dp"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Product"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_Product"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Bulb/845483 "
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:visibility="visible"/>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Category"
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_Category"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Home Lighting System "
+                                                            android:textColor="@color/black" />
+
+
+                                                    </LinearLayout>
+                                                    <View
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="0.5dp"
+                                                        android:background="@color/grey"
+                                                        android:layout_marginLeft="15dp"
+                                                        android:layout_marginRight="1dp"
+                                                        android:visibility="gone"/>
+
+
+                                                </LinearLayout>
+
+
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+                                        </LinearLayout>
+
+
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardCornerRadius="0dp"
+                                        app:cardElevation="2dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="1dp"
+                                        app:cardMaxElevation="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/tv_PickDeliveryInformationClick"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="5dp"
+                                                android:drawableRight="@drawable/down_arrows"
+                                                android:padding="7dp"
+                                                android:text="Product Details"
+                                                android:fontFamily="@font/myfont"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/greydarks"
+                                                android:drawableLeft="@drawable/product_color"
+                                                android:drawablePadding="10dp"
+                                                android:textSize="16dp"/>
+
+                                            <LinearLayout
+                                                android:id="@+id/llPickDeliveryInformation"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="0.5dp"
+                                                    android:background="@color/grey"
+                                                    android:visibility="visible"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="10dp"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical">
+
+                                                        <com.google.android.material.textfield.TextInputLayout
+                                                            android:id="@+id/til_PickDeliveryDate"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:hint=""
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            app:endIconMode="custom"
+                                                            app:startIconDrawable="@drawable/icon_svg_fromdate"
+                                                            app:startIconTint="@color/colorPrimaryDark"
+                                                            app:endIconDrawable="@drawable/arrow_down"
+                                                            style="@style/Widget.App.TextInputLayout">
+
+                                                            <com.google.android.material.textfield.TextInputEditText
+                                                                android:id="@+id/tie_PickDeliveryDate"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:paddingTop="1dp"
+                                                                android:paddingBottom="1dp"
+                                                                android:textSize="14dp"
+                                                                android:focusableInTouchMode="false"
+                                                                android:editable="false"
+                                                                android:drawableTint="@color/textColor"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textColor="@color/greydarks"
+                                                                android:drawablePadding="-10dp"
+                                                                android:textStyle="normal"/>
+
+                                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                                        <com.google.android.material.textfield.TextInputLayout
+                                                            android:id="@+id/til_PickDeliveryTime"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:hint=""
+                                                            android:layout_marginTop="5dp"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            app:endIconMode="custom"
+                                                            app:startIconDrawable="@drawable/icon_svg_duedays"
+                                                            app:startIconTint="@color/colorPrimaryDark"
+                                                            app:endIconDrawable="@drawable/arrow_down"
+                                                            style="@style/Widget.App.TextInputLayout">
+
+                                                            <com.google.android.material.textfield.TextInputEditText
+                                                                android:id="@+id/tie_PickDeliveryTime"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:paddingTop="1dp"
+                                                                android:paddingBottom="1dp"
+                                                                android:textSize="14dp"
+                                                                android:focusableInTouchMode="false"
+                                                                android:editable="false"
+                                                                android:drawableTint="@color/textColor"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textColor="@color/greydarks"
+                                                                android:drawablePadding="-10dp"
+                                                                android:textStyle="normal"/>
+
+                                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                                        <com.google.android.material.textfield.TextInputLayout
+                                                            android:id="@+id/til_Remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:hint="Remark"
+                                                            android:layout_marginTop="5dp"
+                                                            android:drawableTint="@color/textColor"
+                                                            android:fontFamily="@font/myfont"
+                                                            app:endIconMode="custom"
+                                                            app:startIconDrawable="@drawable/icon_svg_ticketno"
+                                                            app:startIconTint="@color/colorPrimaryDark"
+                                                            style="@style/Widget.App.TextInputLayout">
+
+                                                            <com.google.android.material.textfield.TextInputEditText
+                                                                android:id="@+id/tie_Remark"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:paddingLeft="0dp"
+                                                                android:paddingTop="1dp"
+                                                                android:paddingBottom="1dp"
+                                                                android:drawableLeft="@drawable/svg_report"
+                                                                android:backgroundTint="@color/greydark"
+                                                                android:textSize="14dp"
+                                                                android:editable="true"
+                                                                android:drawableTint="@color/textColor"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textColor="@color/greydarks"
+                                                                android:drawablePadding="-10dp"
+                                                                android:textStyle="normal"/>
+
+                                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                                                    </LinearLayout>
+
+
+
+                                                </LinearLayout>
+
+
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+                                        </LinearLayout>
+
+
+
+                                    </androidx.cardview.widget.CardView>
+
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardCornerRadius="0dp"
+                                        app:cardElevation="2dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="1dp"
+                                        app:cardMaxElevation="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/tv_ProductInformationClick"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="5dp"
+                                                android:drawableLeft="@drawable/product_color"
+                                                android:drawableRight="@drawable/down_arrows"
+                                                android:drawablePadding="10dp"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="7dp"
+                                                android:text="Product Information"
+                                                android:textColor="@color/greydarks"
+                                                android:textSize="16dp"
+                                                android:textStyle="bold" />
+
+
+                                        </LinearLayout>
+
+
+
+                                    </androidx.cardview.widget.CardView>
+
+
+
+
+                                </LinearLayout>
+
+
+
+
+
+
+                            </LinearLayout>
+                        </ScrollView>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

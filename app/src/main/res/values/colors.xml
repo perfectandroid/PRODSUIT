@@ -378,10 +378,11 @@
 <!--    <color name="color_delivery">#789479</color>-->
 
     <color name="color_pickup">#739898</color>
-    <color name="color_delivery">#92A693</color>
+<!--    <color name="color_delivery">#92A693</color>-->
 
 
-
+<!--    <color name="color_pickup">#15576F</color>-->
+    <color name="color_delivery">#457F81</color>
 
 
 

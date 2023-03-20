@@ -124,7 +124,7 @@
                             android:layout_weight="3.1"/>
 
                         <LinearLayout
-                            android:id="@+id/ll_new"
+                            android:id="@+id/ll_pickup"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2.6"
@@ -157,14 +157,14 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
+                                        android:fontFamily="@font/myfont"
                                         android:gravity="center"
                                         android:text="155429"
-                                        android:tint="@color/white"
+                                        android:textAllCaps="true"
                                         android:textColor="@color/white"
                                         android:textSize="12dp"
                                         android:textStyle="bold"
-                                        android:textAllCaps="true"
-                                        android:fontFamily="@font/myfont" />
+                                        android:tint="@color/white" />
 
                                 </LinearLayout>
 
@@ -226,7 +226,7 @@
                             android:layout_weight="2.9"/>
 
                         <LinearLayout
-                            android:id="@+id/ll_new1"
+                            android:id="@+id/ll_delivery"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2.6"

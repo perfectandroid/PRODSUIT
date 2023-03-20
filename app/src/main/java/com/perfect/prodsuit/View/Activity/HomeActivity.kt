@@ -1632,29 +1632,37 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             if (grid_id.equals("5")){
                 val i = Intent(this@HomeActivity, ServiceActivity::class.java)
                 startActivity(i)
+               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+
             }
             if (grid_id.equals("6")){
                 val i = Intent(this@HomeActivity, EmiActivity::class.java)
                 startActivity(i)
+               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("7")){
                 val i = Intent(this@HomeActivity, PickUpAndDeliveryActivity::class.java)
                 startActivity(i)
+               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("8")){
                 setReminder()
+              //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("9")){
                 val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
                 startActivity(i)
+               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("10")){
                 val i = Intent(this@HomeActivity, ProfileActivity::class.java)
                 startActivity(i)
+               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("11")){
                 val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
                 startActivity(i)
+              //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
         }
     }

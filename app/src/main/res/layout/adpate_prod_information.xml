@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/border_shadow2"
+        tools:ignore="MissingConstraints">
+<!--        shadow_border1-->
+<!--        android:background="@drawable/border_shadow1"-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="top"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/checkbox"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:theme="@style/checkBoxStyle"
+                            android:gravity="start"
+                            android:layout_gravity="start"
+                            android:visibility="visible" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:textSize="13dp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/myfont"
+                            android:text="Product Name"
+                            android:textColor="@color/black"
+                            android:visibility="visible"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_ProductName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:textSize="13dp"
+                            android:layout_marginTop="-3dp"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/myfont"
+                            android:text="TKT-0046"
+                            android:textColor="@color/black" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
+                        android:text="Provide Standby"
+                        android:textColor="@color/black"
+                        android:visibility="visible"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/swOnOff"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        app:showText="false"
+                        android:textSize="12dp"
+                        android:layout_marginLeft="2dp"
+                        android:fontFamily="@font/myfont"
+                        app:track="@drawable/custom_track"
+                        android:thumb="@drawable/custom_thumb"
+                        android:layout_height="15dp"/>
+
+
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Quantity"
+                    android:layout_marginRight="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:inputType="number"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_StandByProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="StandBy Product"
+                    android:layout_marginLeft="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_StandByProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="false"
+                        android:editable="false"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_StandByQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="StandBy Quantity"
+                    android:layout_marginRight="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_StandByQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:inputType="number"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_StandByAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="StandBy Amount"
+                    android:layout_marginLeft="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_StandByAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:inputType="numberDecimal"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Remarks"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Remarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#478781"
+        android:visibility="gone"/>
+
+
+</LinearLayout>
