@@ -21,17 +21,21 @@ import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.google.android.material.tabs.TabLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalRemover
 import com.perfect.prodsuit.Model.ScoreBar
 import com.perfect.prodsuit.Model.ScorePie
+import com.perfect.prodsuit.Model.ScorePieService
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BarChartAdapter
+import com.perfect.prodsuit.View.Adapter.BarChartServiceAdapter
 import com.perfect.prodsuit.View.Adapter.LineChartAdapter
 import com.perfect.prodsuit.View.Adapter.PieChartAdapter
 import com.perfect.prodsuit.Viewmodel.LeadDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStagesDashViewModel
 import com.perfect.prodsuit.Viewmodel.LeadStatusDashViewModel
+import com.perfect.prodsuit.Viewmodel.ServiceStatusDashViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -76,11 +80,17 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var leadStagesDashArrayList: JSONArray
 
 
-    //    PiChart
+    //  Lead  PiChart
     private lateinit var pieChart: PieChart
     private var scoreListPie = ArrayList<ScorePie>()
     lateinit var leadStatusDashViewModel: LeadStatusDashViewModel
     lateinit var leadStatusDashArrayList: JSONArray
+
+    //  Service  PiChart
+    private lateinit var pieChartService: PieChart
+    private var scoreListPieService = ArrayList<ScorePieService>()
+    lateinit var serviceStatusDashViewModel: ServiceStatusDashViewModel
+    lateinit var serviceStatusDashArrayList: JSONArray
 
     //    PiChartLead
     private lateinit var pieChartLead: PieChart
@@ -91,6 +101,17 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
     var tv_leadTotal: TextView? = null
     var tv_leadStatusTotal: TextView? = null
     var tv_leadStageTotal: TextView? = null
+
+    var tabLayout : TabLayout? = null
+    var ll_leads: LinearLayout? = null
+    var ll_service: LinearLayout? = null
+    var ll_collection: LinearLayout? = null
+
+    var recycLineChart: RecyclerView? = null
+    var recycBarChart: RecyclerView? = null
+    var recycPieChart: RecyclerView? = null
+
+    var recycBarChartProject: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,18 +127,131 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         leadStatusDashViewModel = ViewModelProvider(this).get(LeadStatusDashViewModel::class.java)
         leadStagesDashViewModel = ViewModelProvider(this).get(LeadStagesDashViewModel::class.java)
 
+        serviceStatusDashViewModel = ViewModelProvider(this).get(ServiceStatusDashViewModel::class.java)
+
         setRegViews()
         //  bottombarnav()
+        addTabItem()
 
-        getLeadsDashBoard()
-        getLeadStatusDashBoard()
-        getLeadStagesDashBoard()
+
 
 //        setLineChart()
 //        setBarchart()  //working
 //        setPieChart()
 
     }
+
+
+
+
+
+    private fun setRegViews() {
+        val imback = findViewById<ImageView>(R.id.imback)
+        imback!!.setOnClickListener(this)
+        // lineChart = findViewById<LineChart>(R.id.chart1);
+
+        tabLayout = findViewById<TabLayout>(R.id.tabLayout);
+        ll_leads = findViewById<LinearLayout>(R.id.ll_leads);
+        ll_service = findViewById<LinearLayout>(R.id.ll_service);
+        ll_collection = findViewById<LinearLayout>(R.id.ll_collection);
+
+
+        barChart = findViewById<BarChart>(R.id.barChart);
+        pieChart = findViewById<PieChart>(R.id.pieChart);
+        pieChartLead = findViewById<PieChart>(R.id.pieChartLeads);
+
+        recycLineChart = findViewById<RecyclerView>(R.id.recycLineChart)
+        recycBarChart = findViewById<RecyclerView>(R.id.recycBarChart)
+        recycPieChart = findViewById<RecyclerView>(R.id.recycPieChart)
+
+        pieChartService = findViewById<PieChart>(R.id.pieChartService);
+        recycBarChartProject = findViewById<RecyclerView>(R.id.recycBarChartProject)
+
+
+        tv_leadTotal = findViewById<TextView>(R.id.tv_leadTotal)
+        tv_leadStatusTotal = findViewById<TextView>(R.id.tv_leadStatusTotal)
+        tv_leadStageTotal = findViewById<TextView>(R.id.tv_leadStageTotal)
+
+
+    }
+
+    private fun addTabItem() {
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Collection"))
+        tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+
+        barChart!!.clear()
+        pieChart!!.clear()
+        pieChartLead!!.clear()
+
+        recycLineChart!!.adapter  =null
+        recycBarChart!!.adapter  =null
+        recycPieChart!!.adapter  =null
+
+        pieChartService!!.clear()
+        recycBarChartProject!!.adapter  =null
+
+        ll_leads!!.visibility = View.VISIBLE
+        ll_service!!.visibility = View.GONE
+        ll_collection!!.visibility = View.GONE
+
+
+
+        getLeadsDashBoard()
+        getLeadStatusDashBoard()
+        getLeadStagesDashBoard()
+
+        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabSelected  389  "+tab.position)
+                if (tab.position == 0){
+                    Log.e(TAG,"onTabSelected  3891  "+tab.position)
+
+                    barChart!!.clear()
+                    pieChart!!.clear()
+                    pieChartLead!!.clear()
+
+                    recycLineChart!!.adapter  =null
+                    recycBarChart!!.adapter  =null
+                    recycPieChart!!.adapter  =null
+
+                    ll_leads!!.visibility = View.VISIBLE
+                    ll_service!!.visibility = View.GONE
+                    ll_collection!!.visibility = View.GONE
+                    getLeadsDashBoard()
+                    getLeadStatusDashBoard()
+                    getLeadStagesDashBoard()
+
+                }
+                if (tab.position == 1){
+                    Log.e(TAG,"onTabSelected  3892  "+tab.position)
+
+                    ll_leads!!.visibility = View.GONE
+                    ll_service!!.visibility = View.VISIBLE
+                    ll_collection!!.visibility = View.GONE
+
+                    getServiceStatusDashBoard()
+
+                }
+                if (tab.position == 2){
+                    Log.e(TAG,"onTabSelected  3893  "+tab.position)
+                    ll_leads!!.visibility = View.GONE
+                    ll_service!!.visibility = View.GONE
+                    ll_collection!!.visibility = View.VISIBLE
+
+                }
+
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabUnselected  162  "+tab.position)
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                Log.e(TAG,"onTabReselected  165  "+tab.position)
+            }
+        })
+    }
+
 
 
     private fun getLeadsDashBoard() {
@@ -154,8 +288,8 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
                                     // setLineChart()
                                     setPieChartLead()
-                                    val recycLineChart =
-                                        findViewById(R.id.recycLineChart) as RecyclerView
+//                                    val recycLineChart =
+//                                        findViewById(R.id.recycLineChart) as RecyclerView
                                     val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
                                     recycLineChart!!.layoutManager =
                                         lLayout as RecyclerView.LayoutManager?
@@ -231,8 +365,8 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG, "array  125   " + leadStatusDashArrayList)
 
                                     setPieChart()
-                                    val recycBarChart =
-                                        findViewById(R.id.recycBarChart) as RecyclerView
+//                                    val recycBarChart =
+//                                        findViewById(R.id.recycBarChart) as RecyclerView
                                     val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
                                     recycBarChart!!.layoutManager =
                                         lLayout as RecyclerView.LayoutManager?
@@ -313,8 +447,8 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
                                     // setPieChart()
                                     setBarchart()
-                                    val recycPieChart =
-                                        findViewById(R.id.recycPieChart) as RecyclerView
+//                                    val recycPieChart =
+//                                        findViewById(R.id.recycPieChart) as RecyclerView
                                     val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
                                     recycPieChart!!.layoutManager =
                                         lLayout as RecyclerView.LayoutManager?
@@ -358,20 +492,74 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun setRegViews() {
-        val imback = findViewById<ImageView>(R.id.imback)
-        imback!!.setOnClickListener(this)
-        // lineChart = findViewById<LineChart>(R.id.chart1);
-        barChart = findViewById<BarChart>(R.id.barChart);
-        pieChart = findViewById<PieChart>(R.id.pieChart);
-        pieChartLead = findViewById<PieChart>(R.id.pieChartLeads);
+    private fun getServiceStatusDashBoard() {
+        var leadStatusDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceStatusDashViewModel.getServiceStatusDashboard(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   503   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-        tv_leadTotal = findViewById<TextView>(R.id.tv_leadTotal)
-        tv_leadStatusTotal = findViewById<TextView>(R.id.tv_leadStatusTotal)
-        tv_leadStageTotal = findViewById<TextView>(R.id.tv_leadStageTotal)
+                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                    serviceStatusDashArrayList =
+                                        jobjt.getJSONArray("LeadsDashBoardDetailsList")
+//                                    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
+                                    Log.e(TAG, "array  5032   " + serviceStatusDashArrayList)
+//
+                                    setPieChartService()
+////                                    val recycBarChart =
+////                                        findViewById(R.id.recycBarChart) as RecyclerView
+                                    val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+                                    recycBarChartProject!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter = BarChartServiceAdapter(this@DashBoardActivity, serviceStatusDashArrayList)
+                                    recycBarChartProject!!.adapter = adapter
 
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@DashBoardActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show()
+                        }
 
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
+
+
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -940,5 +1128,72 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         return scoreListPieLead
     }
 
+
+
+    //SERVICE
+
+    private fun setPieChartService() {
+        scoreListPieService.clear()
+        scoreListPieService = getScoreListService2()
+        val pieEntries: ArrayList<PieEntry> = ArrayList()
+        val label = "%"
+        pieChartService.setUsePercentValues(false)
+        pieChartService.description.text = ""
+        pieChartService.isDrawHoleEnabled = true
+        pieChartService.setTouchEnabled(false)
+        pieChartService.setDrawEntryLabels(false)
+
+        pieChartService.isRotationEnabled = true
+        pieChartService.setRotationAngle(0f)
+        pieChartService.animateY(1400, Easing.EaseInOutQuad)
+        pieChartService.setDrawEntryLabels(false)
+        pieChartService.legend.orientation = Legend.LegendOrientation.VERTICAL
+        pieChartService.legend.isWordWrapEnabled = true
+        val typeAmountMap: MutableMap<String, Int> = HashMap()
+        for (i in 0 until scoreListPieService.size) {
+            val score = scoreListPieService[i]
+            Log.v("dfsdererer", "values " + score.Piescore)
+            Log.e(TAG, "Piescore  594   " + score.Piescore.toFloat())
+            //typeAmountMap[""] = score.Piescore
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), "%"))
+
+        }
+
+        val colorsStage: ArrayList<Int> = ArrayList()
+        colorsStage.add(resources.getColor(R.color.leadstatus_color1))
+        colorsStage.add(resources.getColor(R.color.leadstatus_color2))
+        colorsStage.add(resources.getColor(R.color.leadstatus_color3))
+
+        val pieDataSet = PieDataSet(pieEntries, label)
+        pieDataSet.setValueFormatter(DecimalRemover())
+        pieDataSet.valueTextSize = 12f
+        pieDataSet.setColors(colorsStage)
+        val pieData = PieData(pieDataSet)
+        // pieData.setValueFormatter(PercentFormatter())
+        //    pieData.setValueFormatter(DecimalRemover(DecimalFormat("########")))
+        pieData.setDrawValues(true)
+
+        val l: Legend = pieChartService.getLegend()
+        l.isEnabled = false
+
+        pieChartService.data = pieData
+        pieChartService.setOnClickListener(View.OnClickListener {
+           // ShowEnalargeGraph(pieEntries, 2)
+        })
+
+
+        pieChartService.invalidate()
+    }
+
+    private fun getScoreListService2(): ArrayList<ScorePieService> {
+        for (i in 0 until serviceStatusDashArrayList.length()) {
+            //apply your logic
+            var jsonObject = serviceStatusDashArrayList.getJSONObject(i)
+            Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
+            scoreListPieService.add(ScorePieService("", jsonObject.getString("Count").toFloat()))
+        }
+
+        return scoreListPieService
+    }
 
 }

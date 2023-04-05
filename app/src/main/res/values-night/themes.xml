@@ -179,6 +179,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="customfontstyle2" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/myfont</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="textAllCaps">true</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/colorPrimary</item>
         <item name="boxStrokeWidth">1dp</item>
