@@ -79,6 +79,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     var jsonArrayMappedServiceAttended: JSONArray = JSONArray()
     var jsonArrayMoreServiceAttended: JSONArray = JSONArray()
     var jsonArrayServiceType: JSONArray = JSONArray()
+    var jsonArrayChangeMode: JSONArray = JSONArray()
     var jsonArrayReplacedProductMap: JSONArray = JSONArray()
     var jsonArrayReplacedProductMore: JSONArray = JSONArray()
     var adapter: ServiceCostAdapter? = null
@@ -88,6 +89,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     var img_record: ImageView? = null
     val serviceCostArrayList = ArrayList<ServiceCostModelMain>()
     val replacedProductCostArrayList = ArrayList<ReplacedProductCostModel>()
+    val replacedProductCostArrayListFinal = ArrayList<ReplacedProductCostModelFinal>()
     val attendanceFollowUpArrayList = ArrayList<AttendanceFollowUpModel>()
     var actv_action: AutoCompleteTextView? = null
     var isMapPressed: Boolean = false
@@ -100,8 +102,11 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     private val START_LOCATION = 100
     lateinit var serviceFollowUpAttendanceListViewModel: ServiceFollowUpAttendanceListViewModel
     lateinit var serviceFollowUpMappedServiceViewModel: ServiceFollowUpMappedServiceViewModel
+    lateinit var serviceFollowUpMappedReplacedProductViewModel: ServiceFollowUpMappedReplacedProductViewModel
     lateinit var serviceFollowUpMoreServiceViewModel: ServiceFollowUpMoreServiceViewModel
     lateinit var serviceFollowUpServiceTypeViewModel: ServiceFollowUpServiceTypeViewModel
+    lateinit var serviceFollowUpChangeModeViewModel: ServiceFollowUpChangeModeViewModel
+    lateinit var serviceFollowUpMoreReplacedProductsViewModel: ServiceFollowUpMoreReplacedProductsViewModel
     lateinit var serviceFollowUpInfoViewModel: ServiceFollowUpInfoViewModel
     private var progressDialog: ProgressDialog? = null
     private var ID_Branch = "";
@@ -109,9 +114,12 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var serviceFollowUpAttendanceArrayList: JSONArray
     var serviceFollowUpAttendance = 0
     var serviceFollowUpMappedService = 0
+    var serviceFollowUpMappedReplacedProduct = 0
     var serviceFollowUpMoreService = 0
     var serviceFollowUpServiceType = 0
+    var serviceFollowUpChangeMmode = 0
     var serviceFollowUpInfo = 0
+    var serviceFollowUpMoreReplacedProduct = 0
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,19 +180,26 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         tv_attendance!!.setOnClickListener(this)
         hideViews()
         // addTabItem()
-        loadArrays()
         //loadServiceCost()
         //loadReplacedProductCost()
         loadAttendance()
         loadMappedeServiceAttended()
         loadMoreServiceAttended()
+        loadMappedReplacedProducts()
+        loadMoreReplacedProducts()
         loadServiceType()
+        loadChangeMode();
         loadInfo(customer_service_register)
         // loadHistory()
         adapter = ServiceCostAdapter(this, jsonArray2, serviceCostArrayList, jsonArrayServiceType)
         recycler_service_cost!!.adapter = adapter
         adapterReplacedProductCost =
-            ReplacedProductCostAdapter(this, jsonArray2, replacedProductCostArrayList)
+            ReplacedProductCostAdapter(
+                this,
+                jsonArray2,
+                replacedProductCostArrayListFinal,
+                jsonArrayChangeMode
+            )
         recycleView_replaceproduct!!.adapter = adapterReplacedProductCost
         adapterAttendanceServiceFollowUp =
             AttendanceServiceFollowUpAdapter(this, jsonArray2, attendanceFollowUpArrayList)
@@ -224,195 +239,81 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun loadArrays() {
-//        val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
-//        val e11 =
-//            ServiceCostModelMain(
-//                "Battery Check",
-//                "Battery Check2",
-//                "55555",
-//                "Paid Service",
-//                "",
-//                "",
-//                "remark1",
-//                "false"
-//            )
-//        val e21 = ServiceCostModelMain(
-//            "Prevention Services",
-//            "Prevention Services2",
-//            "350",
-//            "Paid Service", "", "",
-//            "remark2",
-//            "false"
-//        )
-//        val e31 = ServiceCostModelMain(
-//            "Service Test3",
-//            "Service Test3",
-//            "1122",
-//            "Paid Service",
-//            "",
-//            "",
-//            "remark3",
-//            "false"
-//        )
-//        val e41 = ServiceCostModelMain(
-//            "Service Test4",
-//            "Service Test4",
-//            "7867",
-//            "Paid Service",
-//            "",
-//            "",
-//            "remark3",
-//            "false"
-//        )
-//        val e51 = ServiceCostModelMain(
-//            "Service Test5",
-//            "Service Test5",
-//            "4444",
-//            "AMC Service",
-//            "",
-//            "",
-//            "remark3",
-//            "false"
-//        )
-//        serviceCostArrayListMapped.add(e11)
-//        serviceCostArrayListMapped.add(e21)
-//        serviceCostArrayListMapped.add(e41)
-//        serviceCostArrayListMapped.add(e31)
-//        serviceCostArrayListMapped.add(e51)
-//        val gson1 = Gson()
-//        val listString1 = gson1.toJson(
-//            serviceCostArrayListMapped,
-//            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
-//        )
-//        jsonArrayMappedServiceCostAttended = JSONArray(listString1)
+//
 
-//        val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
-//        val e2 = ServiceCostModelMain(
-//            "Prevention Services",
-//            "Prevention Services2",
-//            "888",
-//            "AMC Service", "", "",
-//            "remark2",
+//        val replacedProductCostArrayList = ArrayList<ReplacedProductCostModel>()
+//        val e122 = ReplacedProductCostModel(
+//            "Solar Light",
+//            "250",
+//            "25",
+//            "PickUp",
+//            "120",
+//            "",
+//            "Remark1",
 //            "false"
 //        )
-//        val e3 =
-//            ServiceCostModelMain(
-//                "Prevention Services",
-//                "Prevention Services3",
-//                "2553",
-//                "AMC Service", "", "",
-//                "remark3",
-//                "false"
-//            )
-//        val e4 =
-//            ServiceCostModelMain(
-//                "Service Testing",
-//                "Prevention Services6",
-//                "433",
-//                "AMC Service", "", "",
-//                "remark3",
-//                "false"
-//            )
-//        val e5 =
-//            ServiceCostModelMain(
-//                "Service Testing",
-//                "Prevention Services5",
-//                "7777",
-//                "AMC Service", "", "",
-//                "remark3",
-//                "false"
-//            )
-//        val e6 =
-//            ServiceCostModelMain(
-//                "Service Testing",
-//                "Prevention Services4",
-//                "6766",
-//                "AMC Service", "", "",
-//                "remark3",
-//                "false"
-//            )
-//        serviceCostArrayListMore.add(e2)
-//        serviceCostArrayListMore.add(e3)
-//        serviceCostArrayListMore.add(e4)
-//        serviceCostArrayListMore.add(e5)
-//        serviceCostArrayListMore.add(e6)
-//        val gson = Gson()
-//        val listString = gson.toJson(
-//            serviceCostArrayListMore,
-//            object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
+//        val e222 = ReplacedProductCostModel(
+//            "UPSS - 600 VA",
+//            "315",
+//            "2",
+//            "Replace",
+//            "15",
+//            "",
+//            "Remark2",
+//            "false"
 //        )
-//        jsonArrayMoreServiceCost = JSONArray(listString)
+//        replacedProductCostArrayList.add(e122)
+//        replacedProductCostArrayList.add(e222)
+//        val gson22 = Gson()
+//        val listString22 = gson22.toJson(
+//            replacedProductCostArrayList,
+//            object : TypeToken<ArrayList<ReplacedProductCostModel?>?>() {}.type
+//        )
+//        jsonArrayReplacedProductMap = JSONArray(listString22)
 
-        val replacedProductCostArrayList = ArrayList<ReplacedProductCostModel>()
-        val e122 = ReplacedProductCostModel(
-            "Solar Light",
-            "250",
-            "25",
-            "PickUp",
-            "120",
-            "",
-            "Remark1",
-            "false"
-        )
-        val e222 = ReplacedProductCostModel(
-            "UPSS - 600 VA",
-            "315",
-            "2",
-            "Replace",
-            "15",
-            "",
-            "Remark2",
-            "false"
-        )
-        replacedProductCostArrayList.add(e122)
-        replacedProductCostArrayList.add(e222)
-        val gson22 = Gson()
-        val listString22 = gson22.toJson(
-            replacedProductCostArrayList,
-            object : TypeToken<ArrayList<ReplacedProductCostModel?>?>() {}.type
-        )
-        jsonArrayReplacedProductMap = JSONArray(listString22)
-
-        val replacedProductCostArrayList22 = ArrayList<ReplacedProductCostModel>()
-        val e133 = ReplacedProductCostModel(
-            "Solar Light",
-            "250",
-            "25",
-            "PickUp",
-            "120",
-            "",
-            "Remark1",
-            "false"
-        )
-        val e233 = ReplacedProductCostModel(
-            "UPS - 600 VA",
-            "315",
-            "2",
-            "Replace",
-            "15",
-            "",
-            "Remark2",
-            "false"
-        )
-        val e333 = ReplacedProductCostModel(
-            "UPBS - 600 VA",
-            "5454",
-            "23",
-            "Replace",
-            "153",
-            "",
-            "Remark3",
-            "false"
-        )
-        replacedProductCostArrayList22.add(e133)
-        replacedProductCostArrayList22.add(e233)
-        replacedProductCostArrayList22.add(e333)
-        val gson33 = Gson()
-        val listString33 = gson33.toJson(
-            replacedProductCostArrayList22,
-            object : TypeToken<ArrayList<ReplacedProductCostModel?>?>() {}.type
-        )
-        jsonArrayReplacedProductMore = JSONArray(listString33)
+//        val replacedProductCostArrayList22 = ArrayList<ReplacedProductCostModel>()
+//        val e133 = ReplacedProductCostModel(
+//            "Solar Light",
+//            "250",
+//            "25",
+//            "PickUp",
+//            "120",
+//            "",
+//            "Remark1",
+//            "false",
+//            ""
+//        )
+//        val e233 = ReplacedProductCostModel(
+//            "UPS - 600 VA",
+//            "315",
+//            "2",
+//            "Replace",
+//            "15",
+//            "",
+//            "Remark2",
+//            "false",
+//            ""
+//        )
+//        val e333 = ReplacedProductCostModel(
+//            "UPBS - 600 VA",
+//            "5454",
+//            "23",
+//            "Replace",
+//            "153",
+//            "",
+//            "Remark3",
+//            "false",
+//            ""
+//        )
+//        replacedProductCostArrayList22.add(e133)
+//        replacedProductCostArrayList22.add(e233)
+//        replacedProductCostArrayList22.add(e333)
+//        val gson33 = Gson()
+//        val listString33 = gson33.toJson(
+//            replacedProductCostArrayList22,
+//            object : TypeToken<ArrayList<ReplacedProductCostModel?>?>() {}.type
+//        )
+//        jsonArrayReplacedProductMore = JSONArray(listString33)
 
     }
 
@@ -572,8 +473,14 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
             R.id.tv_moreServices -> {
-                Log.v("sdfsdfdsfdfdfddd","jsonArrayMappedServiceAttended "+jsonArrayMappedServiceAttended)
-                Log.v("sdfsdfdsfdfdfddd","jsonArrayMoreServiceAttended "+jsonArrayMoreServiceAttended)
+                Log.v(
+                    "sdfsdfdsfdfdfddd",
+                    "jsonArrayMappedServiceAttended " + jsonArrayMappedServiceAttended
+                )
+                Log.v(
+                    "sdfsdfdsfdfdfddd",
+                    "jsonArrayMoreServiceAttended " + jsonArrayMoreServiceAttended
+                )
                 openAlertDialogForMoreServices(
                     jsonArrayMappedServiceAttended,
                     jsonArrayMoreServiceAttended
@@ -607,7 +514,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
         )
         var jsonArrayServiceCost = JSONArray(listString)
-        var replacedProductCostArrayList: ArrayList<ReplacedProductCostModel> =
+        var replacedProductCostArrayList: ArrayList<ReplacedProductCostModel>? =
             adapterReplacedProductCost!!.getReplaceProductCost()
         val gson1 = Gson()
         val listString1 = gson1.toJson(
@@ -669,11 +576,11 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
         for (i in 0 until jsonArrayMapped.length()) {
             val obj = jsonArrayMapped.getJSONObject(i)
-            var isChecked=""
+            var isChecked = ""
             try {
-                isChecked=obj!!.getString("isChecked")
+                isChecked = obj!!.getString("isChecked")
             } catch (e: Exception) {
-                isChecked="false"
+                isChecked = "false"
             }
             serviceCostArrayListMapped.add(
                 i,
@@ -696,11 +603,11 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
         for (i in 0 until jsonArrayMore.length()) {
             val obj = jsonArrayMore.getJSONObject(i)
-            var isChecked=""
+            var isChecked = ""
             try {
-                isChecked=obj!!.getString("isChecked")
+                isChecked = obj!!.getString("isChecked")
             } catch (e: Exception) {
-                isChecked="false"
+                isChecked = "false"
             }
             serviceCostArrayListMore.add(
                 i,
@@ -858,8 +765,14 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             lin_moreservice.visibility = View.GONE
             jsonArrayMappedServiceAttended = adapter!!.getServiceCostJson()
             jsonArrayMoreServiceAttended = adapter2!!.getServiceCostJson()
-            Log.v("adadasd3r3ffffdfd", "jsonArrayMappedServiceAttended " + jsonArrayMappedServiceAttended.toString())
-            Log.v("adadasd3r3ffffdfd", "jsonArrayMoreServiceAttended " + jsonArrayMoreServiceAttended.toString())
+            Log.v(
+                "adadasd3r3ffffdfd",
+                "jsonArrayMappedServiceAttended " + jsonArrayMappedServiceAttended.toString()
+            )
+            Log.v(
+                "adadasd3r3ffffdfd",
+                "jsonArrayMoreServiceAttended " + jsonArrayMoreServiceAttended.toString()
+            )
             serviceCostArrayList.clear()
             for (item in serviceCostArrayListFinal) {
                 var i = 0
@@ -964,34 +877,53 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         var replacedProductCostArrayList1 = ArrayList<ReplacedProductCostModel>()
         for (i in 0 until jsonArrayMapped.length()) {
             val obj = jsonArrayMapped.getJSONObject(i)
+            var isChecked = ""
+            try {
+                isChecked = obj!!.getString("isChecked")
+            } catch (e: Exception) {
+                isChecked = "false"
+            }
             replacedProductCostArrayList1.add(
                 i,
                 ReplacedProductCostModel(
-                    obj!!.getString("components"),
-                    obj!!.getString("amount"),
-                    obj!!.getString("quantity"),
-                    obj!!.getString("changeMode"),
-                    obj!!.getString("buyBackAmount"),
-                    obj!!.getString("product"),
-                    obj!!.getString("remark"),
-                    obj!!.getString("isChecked")
+                    obj!!.getString("ID_OLD_Product"),
+                    obj!!.getString("OLD_Product"),
+                    obj!!.getString("SPDOldQuantity"),
+                    obj!!.getString("Amount"),
+                    obj!!.getString("ReplaceAmount"),
+                    obj!!.getString("Remarks"),
+                    obj!!.getString("ID_Product"),
+                    obj!!.getString("Product"),
+                    isChecked
                 )
             )
+
         }
-        var replacedProductCostArrayList2 = ArrayList<ReplacedProductCostModel>()
+        var replacedProductCostArrayList2 = ArrayList<MoreReplacedProductCostModel>()
         for (i in 0 until jsonArrayMore.length()) {
             val obj = jsonArrayMore.getJSONObject(i)
+            var isChecked = ""
+            try {
+                isChecked = obj!!.getString("isChecked")
+            } catch (e: Exception) {
+                isChecked = "false"
+            }
             replacedProductCostArrayList2.add(
                 i,
-                ReplacedProductCostModel(
-                    obj!!.getString("components"),
-                    obj!!.getString("amount"),
-                    obj!!.getString("quantity"),
-                    obj!!.getString("changeMode"),
-                    obj!!.getString("buyBackAmount"),
-                    obj!!.getString("product"),
-                    obj!!.getString("remark"),
-                    obj!!.getString("isChecked")
+                MoreReplacedProductCostModel(
+                    obj!!.getString("ID_Product"),
+                    obj!!.getString("Code"),
+                    obj!!.getString("Name"),
+                    obj!!.getString("MRPs"),
+                    obj!!.getString("MRP1R"),
+                    obj!!.getString("SalesPrice1R"),
+                    obj!!.getString("SalePrice"),
+                    obj!!.getString("CurrentStock1R"),
+                    obj!!.getString("StockId"),
+                    obj!!.getString("TaxAmount"),
+                    obj!!.getString("StandbyStock"),
+                    obj!!.getString("TotalCount"),
+                    isChecked
                 )
             )
         }
@@ -1039,8 +971,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 val textlength = edt_replace_product!!.text.length
                 for (k in 0 until jsonArrayMapped.length()) {
                     val jsonObject = jsonArrayMapped.getJSONObject(k)
-                    if (textlength <= jsonObject.getString("components").length) {
-                        if (jsonObject.getString("components")!!.toLowerCase().trim().contains(
+                    if (textlength <= jsonObject.getString("ID_OLD_Product").length) {
+                        if (jsonObject.getString("ID_OLD_Product")!!.toLowerCase().trim().contains(
                                 edt_replace_product!!.text.toString().toLowerCase().trim()
                             )
                         ) {
@@ -1054,22 +986,23 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     replacedProductCostArrayList23.add(
                         i,
                         ReplacedProductCostModel(
-                            obj!!.getString("components"),
-                            obj!!.getString("amount"),
-                            obj!!.getString("quantity"),
-                            obj!!.getString("changeMode"),
-                            obj!!.getString("buyBackAmount"),
-                            obj!!.getString("product"),
-                            obj!!.getString("remark"),
-                            obj!!.getString("isChecked")
+                            obj!!.getString("ID_OLD_Product"),
+                            obj!!.getString("OLD_Product"),
+                            obj!!.getString("SPDOldQuantity"),
+                            obj!!.getString("Amount"),
+                            obj!!.getString("ReplaceAmount"),
+                            obj!!.getString("Remarks"),
+                            obj!!.getString("ID_Product"),
+                            obj!!.getString("Product"),
+                            ""
                         )
                     )
                 }
 
                 for (k in 0 until jsonArrayMore.length()) {
                     val jsonObject = jsonArrayMore.getJSONObject(k)
-                    if (textlength <= jsonObject.getString("components").length) {
-                        if (jsonObject.getString("components")!!.toLowerCase().trim().contains(
+                    if (textlength <= jsonObject.getString("ID_Product").length) {
+                        if (jsonObject.getString("ID_Product")!!.toLowerCase().trim().contains(
                                 edt_replace_product!!.text.toString().toLowerCase().trim()
                             )
                         ) {
@@ -1077,20 +1010,25 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
-                var replacedProductCostArrayList24 = ArrayList<ReplacedProductCostModel>()
+                var replacedProductCostArrayList24 = ArrayList<MoreReplacedProductCostModel>()
                 for (i in 0 until replaceMoreSort.length()) {
                     val obj = replaceMoreSort.getJSONObject(i)
                     replacedProductCostArrayList24.add(
                         i,
-                        ReplacedProductCostModel(
-                            obj!!.getString("components"),
-                            obj!!.getString("amount"),
-                            obj!!.getString("quantity"),
-                            obj!!.getString("changeMode"),
-                            obj!!.getString("buyBackAmount"),
-                            obj!!.getString("product"),
-                            obj!!.getString("remark"),
-                            obj!!.getString("isChecked")
+                        MoreReplacedProductCostModel(
+                            obj!!.getString("ID_Product"),
+                            obj!!.getString("Code"),
+                            obj!!.getString("Name"),
+                            obj!!.getString("MRPs"),
+                            obj!!.getString("MRP1R"),
+                            obj!!.getString("SalesPrice1R"),
+                            obj!!.getString("SalePrice"),
+                            obj!!.getString("CurrentStock1R"),
+                            obj!!.getString("StockId"),
+                            obj!!.getString("TaxAmount"),
+                            obj!!.getString("StandbyStock"),
+                            obj!!.getString("TotalCount"),
+                            ""
                         )
                     )
                 }
@@ -1119,26 +1057,24 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 
             var replacedProductCostArrayListFinal1: ArrayList<ReplacedProductCostModel> =
                 adapter1!!.getReplaceProductCost()
-            var replacedProductCostArrayListFinal2: ArrayList<ReplacedProductCostModel> =
+            var replacedProductCostArrayListFinal2: ArrayList<MoreReplacedProductCostModel> =
                 adapter2!!.getReplaceProductCost()
             var sumOfArray =
                 replacedProductCostArrayListFinal1.size + replacedProductCostArrayListFinal2.size
-//            if (sumOfArray == 0) {
-//                Config.snackBars(this, it, "Please check any component from list")
-//            } else {
             jsonArrayReplacedProductMap = adapter1!!.getReplaceProductCostJson()
             jsonArrayReplacedProductMore = adapter2!!.getReplaceProductCostJson()
             replacedProductCostArrayList.clear()
             Log.v("adadaad3333", "s1 " + replacedProductCostArrayListFinal1.size)
             Log.v("adadaad3333", "s2 " + replacedProductCostArrayListFinal2.size)
+            replacedProductCostArrayListFinal.clear()
             for (item in replacedProductCostArrayListFinal1) {
                 var i = 0
                 var i2 = 0
                 var present = 0
-                var value = item.components;
+                var value = item.ID_OLD_Product;
                 Log.v("dsfsdf333rfff", "value " + value)
-                for (item2 in replacedProductCostArrayList) {
-                    var value2 = item2.components;
+                for (item2 in replacedProductCostArrayListFinal) {
+                    var value2 = item2.id;
                     Log.v("dsfsdf333rfff", "value2 " + value2)
                     if (value == value2) {
                         present = 1
@@ -1147,30 +1083,53 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         present = 0
                     }
-
                     Log.v("dsfsdf333rfff", "i " + i)
                     i = i + 1
                 }
                 if (present == 1) {
-                    Log.v("dsfsdf333rfff", "pres " + i)
-                    replacedProductCostArrayList.removeAt(i2)
-                    replacedProductCostArrayList.add(item)
+                    replacedProductCostArrayListFinal.removeAt(i2)
+                    var replacedProductCostModelFinal = ReplacedProductCostModelFinal(
+                        item.ID_OLD_Product,
+                        item.OLD_Product,
+                        item.SPDOldQuantity,
+                        "",
+                        "",
+                        item.Product,
+                        "",
+                        item.ReplaceAmount,
+                        "",
+                        ""
+                    )
+                    replacedProductCostArrayListFinal.add(replacedProductCostModelFinal)
+//                    replacedProductCostArrayList.removeAt(i2)
+//                    replacedProductCostArrayList.add(item)
                 } else {
-                    Log.v("dsfsdf333rfff", "abs")
-                    replacedProductCostArrayList.add(item)
+                    var replacedProductCostModelFinal = ReplacedProductCostModelFinal(
+                        item.ID_OLD_Product,
+                        item.OLD_Product,
+                        item.SPDOldQuantity,
+                        "",
+                        "",
+                        item.Product,
+                        "",
+                        item.ReplaceAmount,
+                        "",
+                        ""
+                    )
+                    replacedProductCostArrayListFinal.add(replacedProductCostModelFinal)
+//                    replacedProductCostArrayList.add(item)
                 }
-
             }
-            Log.v("dsfsdf333rfff", "s1 " + replacedProductCostArrayList.size)
             for (item in replacedProductCostArrayListFinal2) {
                 var i = 0
                 var i2 = 0
                 var present = 0
-                var value = item.components;
-                Log.v("dfgdfg444rr", "value " + value)
-                for (item2 in replacedProductCostArrayList) {
-                    var value2 = item2.components;
-                    Log.v("dfgdfg444rr", "value2 " + value2)
+                var value = item.ID_Product;
+                Log.v("sdasd3ertggfgf", "value " + value)
+//                Log.v("dfsdfdsfdeee","checked "+item.isChecked);
+                for (item2 in replacedProductCostArrayListFinal) {
+                    var value2 = item2.id;
+                    Log.v("sdasd3ertggfgf", "value2 " + value2)
                     if (value == value2) {
                         present = 1
                         i2 = i
@@ -1178,27 +1137,47 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         present = 0
                     }
-
-                    Log.v("dfgdfg444rr", "i " + i)
                     i = i + 1
                 }
                 if (present == 1) {
-                    Log.v("dfgdfg444rr", "pres " + i)
-                    replacedProductCostArrayList.removeAt(i2)
-                    replacedProductCostArrayList.add(item)
+                    replacedProductCostArrayListFinal.removeAt(i2)
+                    var replacedProductCostModelFinal = ReplacedProductCostModelFinal(
+                        item.ID_Product,
+                        item.Name,
+                        item.TotalCount,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        item.isChecked
+                    )
+                    replacedProductCostArrayListFinal.add(replacedProductCostModelFinal)
+
+//                    replacedProductCostArrayList.removeAt(i2)
+//                    replacedProductCostArrayList.add(item)
                 } else {
-                    Log.v("dfgdfg444rr", "abs")
-                    replacedProductCostArrayList.add(item)
+                    var replacedProductCostModelFinal = ReplacedProductCostModelFinal(
+                        item.ID_Product,
+                        item.Name,
+                        item.TotalCount,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        item.isChecked
+                    )
+                    replacedProductCostArrayListFinal.add(replacedProductCostModelFinal)
                 }
 
             }
-
-            Log.v("dfgdfg444rr", "siZe--" + replacedProductCostArrayList.size)
-            // serviceCostArrayList1= (serviceCostArrayList+serviceCostArrayListFinal) as ArrayList<ServiceCostModelMain>
             val gson = Gson()
             val listString = gson.toJson(
-                replacedProductCostArrayList,
-                object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
+                replacedProductCostArrayListFinal,
+                object : TypeToken<ArrayList<ReplacedProductCostModelFinal?>?>() {}.type
             )
             var jsonArray = JSONArray(listString)
             lin_moreReplaced.visibility = View.GONE
@@ -1208,294 +1187,6 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 
         })
     }
-
-    /*  private fun openAlertDialogForMoreServices(
-          jsonArrayMapped: JSONArray,
-          jsonArrayMore: JSONArray
-      ) {
-          val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-          val inflater = this.layoutInflater
-          val dialogView: View = inflater.inflate(R.layout.alert_more_services, null)
-          dialogBuilder.setView(dialogView)
-          val alertDialog = dialogBuilder.create()
-          var tv_addServices: TextView = dialogView.findViewById<TextView>(R.id.tv_addServices)
-          var tv_mapServices: TextView = dialogView.findViewById<TextView>(R.id.tv_mapServices)
-          var tv_cancel: TextView = dialogView.findViewById<TextView>(R.id.tv_cancel)
-          var tv_submit: TextView = dialogView.findViewById<TextView>(R.id.tv_submit)
-          var recycleView: RecyclerView = dialogView.findViewById(R.id.recycleView)
-          var recycleView2: RecyclerView = dialogView.findViewById(R.id.recycleView2)
-          recycleView!!.setLayoutManager(
-              LinearLayoutManager(
-                  this,
-                  LinearLayoutManager.VERTICAL,
-                  false
-              )
-          )
-          recycleView2!!.setLayoutManager(
-              LinearLayoutManager(
-                  this,
-                  LinearLayoutManager.VERTICAL,
-                  false
-              )
-          )
-          val serviceCostArrayListMapped = ArrayList<ServiceCostModelMain>()
-          for (i in 0 until jsonArrayMapped.length()) {
-              val obj = jsonArrayMapped.getJSONObject(i)
-              serviceCostArrayListMapped.add(
-                  i,
-                  ServiceCostModelMain(
-                      obj!!.getString("Components"),
-                      obj!!.getString("ServiceName"),
-                      obj!!.getString("serviceCost"),
-                      obj!!.getString("remark"),
-                      obj!!.getString("isChecked")
-                  )
-              )
-          }
-          val serviceCostArrayListMore = ArrayList<ServiceCostModelMain>()
-          for (i in 0 until jsonArrayMore.length()) {
-              val obj = jsonArrayMore.getJSONObject(i)
-              serviceCostArrayListMore.add(
-                  i,
-                  ServiceCostModelMain(
-                      obj!!.getString("Components"),
-                      obj!!.getString("ServiceName"),
-                      obj!!.getString("serviceCost"),
-                      obj!!.getString("remark"),
-                      obj!!.getString("isChecked")
-                  )
-              )
-          }
-          var adapter: ServiceCostAdapterSecondary =
-              ServiceCostAdapterSecondary(this, jsonArrayMapped, serviceCostArrayListMapped)
-          recycleView!!.adapter = adapter
-          var adapter2: ServiceCostAdapterThird =
-              ServiceCostAdapterThird(this, jsonArrayMore, serviceCostArrayListMore)
-          recycleView2!!.adapter = adapter2
-          tv_mapServices.setOnClickListener(View.OnClickListener {
-              if(isMapPressed) {
-                  isMapPressed=false
-                  recycleView.visibility = View.GONE
-              }
-              else
-              {
-                  isMapPressed=true
-                  recycleView.visibility = View.VISIBLE
-                  recycleView2.visibility = View.GONE
-              }
-          })
-          tv_addServices.setOnClickListener(View.OnClickListener {
-              if(isMoreClicked) {
-                  isMoreClicked=false
-                  recycleView2.visibility = View.GONE
-              }
-              else
-              {
-                  isMoreClicked=true
-                  recycleView2.visibility = View.VISIBLE
-                  recycleView.visibility = View.GONE
-              }
-          })
-          tv_cancel.setOnClickListener(View.OnClickListener {
-              alertDialog.dismiss()
-          })
-          tv_submit.setOnClickListener(View.OnClickListener {
-              var serviceCostArrayListFinal: ArrayList<ServiceCostModelMain> =
-                  adapter!!.getServiceCost()
-              var serviceCostArrayListFinal2: ArrayList<ServiceCostModelMain> =
-                  adapter2!!.getServiceCost()
-              var sumOfArray = serviceCostArrayListFinal.size + serviceCostArrayListFinal2.size
-              if (sumOfArray == 0) {
-                  Config.snackBars(this, dialogView, "Please check any service from list")
-              } else {
-                  jsonArrayMappedServiceCost=adapter!!.getServiceCostJson()
-                  jsonArrayMoreServiceCost=adapter2!!.getServiceCostJson()
-                  serviceCostArrayList.clear()
-                  for (item in serviceCostArrayListFinal) {
-                      var i = 0
-                      var i2 = 0
-                      var present = 0
-                      var value = item.ServiceName;
-                      Log.v("Check_Duplicate_values", "value " + value)
-                      for (item2 in serviceCostArrayList) {
-                          var value2 = item2.ServiceName;
-                          Log.v("Check_Duplicate_values", "value2 " + value2)
-                          if (value == value2) {
-                              present = 1
-                              i2 = i
-                              break
-                          } else {
-                              present = 0
-                          }
-
-                          Log.v("Check_Duplicate_values", "i " + i)
-                          i = i + 1
-                      }
-                      if (present == 1) {
-                          Log.v("Check_Duplicate_values", "pres " + i)
-                          serviceCostArrayList.removeAt(i2)
-                          serviceCostArrayList.add(item)
-                      } else {
-                          Log.v("Check_Duplicate_values", "abs")
-                          serviceCostArrayList.add(item)
-                      }
-
-                  }
-
-                  for (item in serviceCostArrayListFinal2) {
-                      var i = 0
-                      var i2 = 0
-                      var present = 0
-                      var value = item.ServiceName;
-                      Log.v("Check_Duplicate_values", "value " + value)
-                      for (item2 in serviceCostArrayList) {
-                          var value2 = item2.ServiceName;
-                          Log.v("Check_Duplicate_values", "value2 " + value2)
-                          if (value == value2) {
-                              present = 1
-                              i2 = i
-                              break
-                          } else {
-                              present = 0
-                          }
-
-                          Log.v("Check_Duplicate_values", "i " + i)
-                          i = i + 1
-                      }
-                      if (present == 1) {
-                          Log.v("Check_Duplicate_values", "pres " + i)
-                          serviceCostArrayList.removeAt(i2)
-                          serviceCostArrayList.add(item)
-                      } else {
-                          Log.v("Check_Duplicate_values", "abs")
-                          serviceCostArrayList.add(item)
-                      }
-                  }
-                  val gson = Gson()
-                  val listString = gson.toJson(
-                      serviceCostArrayList,
-                      object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
-                  )
-                  var jsonArray = JSONArray(listString)
-                  setServiceCostRecycler(jsonArray)
-                  alertDialog.dismiss()
-              }
-
-          })
-          val window: Window? = alertDialog.window
-          window?.setBackgroundDrawableResource(android.R.color.transparent)
-          alertDialog.setCancelable(false)
-          alertDialog.show()
-          window?.setLayout(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-      }*/
-
-    /* private fun openAlertDialogForMoreComponents(jsonArray: JSONArray) {
-         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-         val inflater = this.layoutInflater
-         val dialogView: View = inflater.inflate(R.layout.alert_more_components, null)
-         dialogBuilder.setView(dialogView)
-         val alertDialog = dialogBuilder.create()
-         var tv_cancel: TextView = dialogView.findViewById<TextView>(R.id.tv_cancel)
-         var tv_submit: TextView = dialogView.findViewById<TextView>(R.id.tv_submit)
-         var recycleView: RecyclerView = dialogView.findViewById(R.id.recycleView)
-         recycleView!!.setLayoutManager(
-             LinearLayoutManager(
-                 this,
-                 LinearLayoutManager.VERTICAL,
-                 false
-             )
-         )
-         var replacedProductCostArrayList1 = ArrayList<ReplacedProductCostModel>()
-         for (i in 0 until jsonArray.length()) {
-             val obj = jsonArray.getJSONObject(i)
-             replacedProductCostArrayList1.add(
-                 i,
-                 ReplacedProductCostModel(
-                     obj!!.getString("components"),
-                     obj!!.getString("amount"),
-                     obj!!.getString("quantity"),
-                     obj!!.getString("changeMode"),
-                     obj!!.getString("buyBackAmount"),
-                     obj!!.getString("remark"),
-                     obj!!.getString("isChecked")
-                 )
-             )
-         }
-         var adapter: ReplacedProductCostAdapterSecondary =
-             ReplacedProductCostAdapterSecondary(this, jsonArray, replacedProductCostArrayList1)
-         recycleView!!.adapter = adapter
-
-         tv_cancel.setOnClickListener(View.OnClickListener {
-             alertDialog.dismiss()
-         })
-
-         tv_submit.setOnClickListener(View.OnClickListener {
-
-             var replacedProductCostArrayListFinal: ArrayList<ReplacedProductCostModel> =
-                 adapter!!.getReplaceProductCost()
-             if (replacedProductCostArrayListFinal.size == 0) {
- //                Toast.makeText(this, "Please check any component from list", Toast.LENGTH_SHORT)
- //                    .show()
-                 Config.snackBars(this, dialogView, "Please check any component from list")
-             } else {
- //            for (item in replacedProductCostArrayListFinal) {
- //                Log.v("dfasdasdsdsdss", "components " + item.components)
- //                Log.v("dfasdasdsdsdss", "amount " + item.amount)
- //                Log.v("dfasdasdsdsdss", "quantity " + item.quantity)
- //                Log.v("dfasdasdsdsdss", "changeMode " + item.changeMode)
- //                Log.v("dfasdasdsdsdss", "buyBackAmount " + item.buyBackAmount)
- //                Log.v("dfasdasdsdsdss", "remark " + item.remark)
- //                Log.v("dfasdasdsdsdss", "isChecked " + item.isChecked)
- //            }
-                 for (item in replacedProductCostArrayListFinal) {
-                     var i = 0
-                     var i2 = 0
-                     var present = 0
-                     var value = item.components;
-                     Log.v("Check_Duplicate_values", "value " + value)
-                     for (item2 in replacedProductCostArrayList) {
-                         var value2 = item2.components;
-                         Log.v("Check_Duplicate_values", "value2 " + value2)
-                         if (value == value2) {
-                             present = 1
-                             i2 = i
-                             break
-                         } else {
-                             present = 0
-                         }
-
-                         Log.v("Check_Duplicate_values", "i " + i)
-                         i = i + 1
-                     }
-                     if (present == 1) {
-                         Log.v("Check_Duplicate_values", "pres " + i)
-                         replacedProductCostArrayList.removeAt(i2)
-                         replacedProductCostArrayList.add(item)
-                     } else {
-                         Log.v("Check_Duplicate_values", "abs")
-                         replacedProductCostArrayList.add(item)
-                     }
-
-                 }
-
-                 Log.v("Check_Duplicate_values", "siZe--" + serviceCostArrayList.size)
-                 // serviceCostArrayList1= (serviceCostArrayList+serviceCostArrayListFinal) as ArrayList<ServiceCostModelMain>
-                 val gson = Gson()
-                 val listString = gson.toJson(
-                     replacedProductCostArrayList,
-                     object : TypeToken<ArrayList<ServiceCostModelMain?>?>() {}.type
-                 )
-                 var jsonArray = JSONArray(listString)
-                 setreplacedProductCostRecycler(jsonArray)
-                 alertDialog.dismiss()
-             }
-
-         })
-
-         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-         alertDialog.setCancelable(false)
-         alertDialog.show()
-     }*/
 
     private fun hideViews() {
 
@@ -1697,7 +1388,8 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                     false
                 )
             )
-            adapter = ServiceCostAdapter(this, jsonArray, serviceCostArrayList,jsonArrayServiceType)
+            adapter =
+                ServiceCostAdapter(this, jsonArray, serviceCostArrayList, jsonArrayServiceType)
             recycler_service_cost!!.adapter = adapter
         } else {
             isServiceDataSet = false
@@ -1709,20 +1401,22 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setreplacedProductCostRecycler(jsonArray: JSONArray) {
         if (jsonArray.length() > 0) {
-            replacedProductCostArrayList.clear()
+            replacedProductCostArrayListFinal.clear()
             for (i in 0 until jsonArray.length()) {
                 val obj = jsonArray.getJSONObject(i)
-                replacedProductCostArrayList.add(
+                replacedProductCostArrayListFinal.add(
                     i,
-                    ReplacedProductCostModel(
-                        obj!!.getString("components"),
-                        obj!!.getString("amount"),
-                        obj!!.getString("quantity"),
+                    ReplacedProductCostModelFinal(
+                        obj!!.getString("id"),
+                        obj!!.getString("Component"),
+                        obj!!.getString("Quantity"),
                         obj!!.getString("changeMode"),
                         obj!!.getString("buyBackAmount"),
-                        obj!!.getString("product"),
-                        obj!!.getString("remark"),
-                        obj!!.getString("isChecked")
+                        obj!!.getString("replacedProduct"),
+                        obj!!.getString("replacedQuantity"),
+                        obj!!.getString("remarks"),
+                        obj!!.getString("replacedAmount"),
+                        ""
                     )
                 )
             }
@@ -1738,7 +1432,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 )
             )
             adapterReplacedProductCost =
-                ReplacedProductCostAdapter(this, jsonArray, replacedProductCostArrayList)
+                ReplacedProductCostAdapter(this, jsonArray, replacedProductCostArrayListFinal,jsonArrayChangeMode)
             recycleView_replaceproduct!!.adapter = adapterReplacedProductCost
         } else {
             isReplaceDataSet = false
@@ -2007,12 +1701,6 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
             ViewModelProvider(this).get(ServiceFollowUpMappedServiceViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
                 serviceFollowUpMappedServiceViewModel.getServiceFollowUpMappedService(
                     this,
                     customer_service_register,
@@ -2042,31 +1730,16 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                                             "sdadasd3rffdfd",
                                             "AttendancedetailsList= " + jsonArrayMappedServiceAttended.toString()
                                         )
-                                        // setAttendancetRecycler(jsonArrayMappedServiceCostAttended)
                                     } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
 //
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
                                     }
 
                                 }
 
 
                             } else {
-                                //swipeRefreshLayout.isRefreshing = false
                             }
                         } catch (e: Exception) {
-//                            swipeRefreshLayout.visibility = View.GONE
-//                            swipeRefreshLayout.isRefreshing = false
-//                            tv_nodata.visibility = View.VISIBLE
                             Log.v("sdadasd3rffdfd", "ex3 " + e)
                             Toast.makeText(
                                 applicationContext,
@@ -2077,6 +1750,50 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
 
                     })
                 progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadMappedReplacedProducts() {
+        serviceFollowUpMappedReplacedProductViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpMappedReplacedProductViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                serviceFollowUpMappedReplacedProductViewModel.getServiceFollowUpMappedService(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpMappedReplacedProduct == 0) {
+                                    serviceFollowUpMappedReplacedProduct++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ReplaceProductdetails")
+                                        jsonArrayReplacedProductMap =
+                                            jobjt.getJSONArray("ReplaceProductdetailsList")
+                                    }
+                                }
+                            } else {
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -2197,6 +1914,114 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun loadChangeMode() {
+        //recyclerAttendance!!.adapter = null
+        serviceFollowUpChangeModeViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpChangeModeViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpChangeModeViewModel.getServiceFollowUpChangeMode(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpChangeMmode == 0) {
+                                    serviceFollowUpChangeMmode++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ChangemodeDetails")
+                                        jsonArrayChangeMode =
+                                            jobjt.getJSONArray("ChangemodeDetailsList")
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadMoreReplacedProducts() {
+        //recyclerAttendance!!.adapter = null
+        serviceFollowUpMoreReplacedProductsViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpMoreReplacedProductsViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpMoreReplacedProductsViewModel.getServiceFollowUpMoreReplacedProduct(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpMoreReplacedProduct == 0) {
+                                    serviceFollowUpMoreReplacedProduct++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("PopUpProductdetails")
+                                        jsonArrayReplacedProductMore =
+                                            jobjt.getJSONArray("PopUpProductdetailsList")
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun loadInfo(customerServiceRegister: String) {
         serviceFollowUpInfoViewModel =
             ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
@@ -2227,11 +2052,14 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt =
                                             jObject.getJSONObject("EmployeeWiseTicketSelect")
-                                        FK_CustomerOthers=jobjt.getString("FK_CustomerOthers")
-                                        FK_Customer=jobjt.getString("FK_Customer")
-                                        FK_Product=jobjt.getString("FK_Product")
-                                        Log.v("dfsfsdfsdfd","FK_CustomerOthers "+FK_CustomerOthers);
-                                        Log.v("dfsfsdfsdfd","FK_Customer "+FK_Customer);
+                                        FK_CustomerOthers = jobjt.getString("FK_CustomerOthers")
+                                        FK_Customer = jobjt.getString("FK_Customer")
+                                        FK_Product = jobjt.getString("FK_Product")
+                                        Log.v(
+                                            "dfsfsdfsdfd",
+                                            "FK_CustomerOthers " + FK_CustomerOthers
+                                        );
+                                        Log.v("dfsfsdfsdfd", "FK_Customer " + FK_Customer);
                                     } else {
 
                                     }
