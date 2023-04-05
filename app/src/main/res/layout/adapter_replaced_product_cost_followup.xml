@@ -79,7 +79,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:weightSum="3">
+                android:weightSum="2">
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.App.TextInputLayout"
@@ -109,35 +109,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_amount"
-                    style="@style/Widget.App.TextInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="5dp"
-                    android:drawableTint="@color/textColor"
-                    android:fontFamily="@font/myfont"
-                    android:hint="Amount">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtAmount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/svg_amount"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/textColor"
-                        android:fontFamily="@font/myfont"
-                        android:gravity="center_vertical"
-                        android:inputType="numberDecimal"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:textColor="@color/greydarks"
-                        android:textSize="14dp"
-                        android:textStyle="normal" />
-
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.App.TextInputLayout"
@@ -242,7 +214,7 @@
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtNetAmount"
+                        android:id="@+id/edtReplaceQuantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/svg_amount"
@@ -260,36 +232,72 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.App.TextInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTint="@color/textColor"
-                android:fontFamily="@font/myfont"
-                android:hint="Change Mode">
-                <AutoCompleteTextView
-                    android:id="@+id/edtChangeMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
+                android:weightSum="2">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Replaced Amount"
+                    android:layout_weight="1"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1.5"
-                    android:drawableRight="@drawable/arrow_down"
-                    android:drawablePadding="5dp"
-                    android:drawableTint="@color/greydark"
-                    android:dropDownWidth="200dp"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
+                    android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
-                    android:paddingLeft="15dp"
-                    android:textColor="@color/textColor"
-                    android:textColorHint="@color/textColor"
-                    android:textSize="14dp"
-                    android:visibility="visible" />
+                    style="@style/Widget.App.TextInputLayout">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtreplaceamount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/svg_amount"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:inputType="numberDecimal"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    android:hint="Change Mode">
+                    <AutoCompleteTextView
+                        android:id="@+id/edtChangeMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1.5"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/greydark"
+                        android:dropDownWidth="200dp"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/textColor"
+                        android:textSize="14dp"
+                        android:visibility="visible" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_remarks"
                 style="@style/Widget.App.TextInputLayout"

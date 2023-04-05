@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.perfect.prodsuit.Model.MoreReplacedProductCostModel
 import com.perfect.prodsuit.Model.ReplacedProductCostModel
 import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.R
@@ -20,13 +21,11 @@ import org.json.JSONObject
 class ReplacedProductCostAdapterThird(
     internal var context: Context,
     internal var jsonArray: JSONArray,
-    val replacedProductCostArrayList: ArrayList<ReplacedProductCostModel>
+    val replacedProductCostArrayList: ArrayList<MoreReplacedProductCostModel>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG: String = "HistoryActMeetingAdapter"
-//    internal var jsonObject: JSONObject? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
@@ -39,60 +38,23 @@ class ReplacedProductCostAdapterThird(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             var jsonObject = jsonArray.getJSONObject(position)
+            var getList = replacedProductCostArrayList.get(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG, "onBindViewHolder   1051   ")
                 var isChecked = ""
                 val pos = position
-                holder.tv_component.text = jsonObject!!.getString("components")
-                holder.edtAmount.setText(jsonObject!!.getString("amount"))
-                holder.edt_qty.setText(jsonObject!!.getString("quantity"))
-                holder.edtBuyBackAmount.setText(jsonObject!!.getString("buyBackAmount"))
-                holder.edtRemarks.setText(jsonObject!!.getString("remark"))
-                val searchTypeMain =
-                    arrayOf<String>("BuyBack", "StandBy", "PickUp", "Replace")
-                var searchType = Array<String>(4){""}
-                searchType[0]=jsonObject!!.getString("changeMode")
-                Log.v("dfdfddddd","searchType[0]  "+searchType[0])
-                var i=1;
-                for (x in searchTypeMain) {
-                    Log.v("dfdfddddd","value  "+x)
-                    if(searchType.contains(x))
-                    {
-                        Log.v("dfdfddddd","yes  ")
+                holder.tv_component.text = jsonObject!!.getString("Name")
+                holder.edtAmount.setText(jsonObject!!.getString("MRPs"))
+                holder.edtBuyBackAmount.setText(jsonObject!!.getString("MRP1R"))
+                try {
+                    if (getList.isChecked.equals("true")) {
+                        holder.checkbox.isChecked = true
+                        isChecked = "true"
+                    } else {
+                        holder.checkbox.isChecked = false
+                        isChecked = "false"
                     }
-                    else
-                    {
-                        Log.v("dfdfddddd","no  ")
-                        searchType[i]=x
-                        i=i+1
-                    }
-                }
-                val adapter =ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
-                holder.edtChangeMode!!.setAdapter(adapter)
-                holder.edtChangeMode!!.setText(searchType.get(0), false)
-                holder.edtChangeMode!!.setOnClickListener {
-                    holder.edtChangeMode!!.showDropDown()
-                }
-                holder.edtChangeMode!!.setOnItemClickListener { parent, view, position, id ->
-                    replacedProductCostArrayList.removeAt(pos)
-                    replacedProductCostArrayList.add(
-                        pos,
-                        ReplacedProductCostModel(
-                            jsonObject!!.getString("components"),
-                            holder.edtAmount.text.toString(),
-                            holder.edt_qty.text.toString(),
-                            holder.edtChangeMode.text.toString(),
-                            holder.edtBuyBackAmount.text.toString(),
-                            jsonObject.getString("product"),
-                            holder.edtRemarks.text.toString(),
-                            isChecked
-                        )
-                    )
-                }
-                if (jsonObject!!.getString("isChecked").equals("true")) {
-                    holder.checkbox.isChecked = true
-                    isChecked = "true"
-                } else {
+                } catch (e: Exception) {
                     holder.checkbox.isChecked = false
                     isChecked = "false"
                 }
@@ -102,14 +64,19 @@ class ReplacedProductCostAdapterThird(
                         replacedProductCostArrayList.removeAt(pos)
                         replacedProductCostArrayList.add(
                             pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
+                            MoreReplacedProductCostModel(
+                                jsonObject!!.getString("ID_Product"),
+                                jsonObject!!.getString("Code"),
+                                jsonObject!!.getString("Name"),
+                                jsonObject!!.getString("MRPs"),
+                                jsonObject!!.getString("MRP1R"),
+                                jsonObject!!.getString("SalesPrice1R"),
+                                jsonObject!!.getString("SalePrice"),
+                                jsonObject!!.getString("CurrentStock1R"),
+                                jsonObject!!.getString("StockId"),
+                                jsonObject!!.getString("TaxAmount"),
+                                jsonObject!!.getString("StandbyStock"),
+                                jsonObject!!.getString("TotalCount"),
                                 "true"
                             )
                         )
@@ -118,172 +85,22 @@ class ReplacedProductCostAdapterThird(
                         replacedProductCostArrayList.removeAt(pos)
                         replacedProductCostArrayList.add(
                             pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
+                            MoreReplacedProductCostModel(
+                                jsonObject!!.getString("ID_Product"),
+                                jsonObject!!.getString("Code"),
+                                jsonObject!!.getString("Name"),
+                                jsonObject!!.getString("MRPs"),
+                                jsonObject!!.getString("MRP1R"),
+                                jsonObject!!.getString("SalesPrice1R"),
+                                jsonObject!!.getString("SalePrice"),
+                                jsonObject!!.getString("CurrentStock1R"),
+                                jsonObject!!.getString("StockId"),
+                                jsonObject!!.getString("TaxAmount"),
+                                jsonObject!!.getString("StandbyStock"),
+                                jsonObject!!.getString("TotalCount"),
                                 "false"
                             )
                         )
-                    }
-                })
-                holder.edtAmount.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                s.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                isChecked
-                            )
-                        )
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence, start: Int,
-                        count: Int, after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence, start: Int,
-                        before: Int, count: Int
-                    ) {
-                    }
-                })
-                holder.edt_qty.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                s.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                isChecked
-                            )
-                        )
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence, start: Int,
-                        count: Int, after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence, start: Int,
-                        before: Int, count: Int
-                    ) {
-                    }
-                })
-                holder.edtChangeMode.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                s.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                isChecked
-                            )
-                        )
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence, start: Int,
-                        count: Int, after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence, start: Int,
-                        before: Int, count: Int
-                    ) {
-                    }
-                })
-                holder.edtBuyBackAmount.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                s.toString(),
-                                jsonObject.getString("product"),
-                                holder.edtRemarks.text.toString(),
-                                isChecked
-                            )
-                        )
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence, start: Int,
-                        count: Int, after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence, start: Int,
-                        before: Int, count: Int
-                    ) {
-                    }
-                })
-                holder.edtRemarks.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable) {
-                        replacedProductCostArrayList.removeAt(pos)
-                        replacedProductCostArrayList.add(
-                            pos,
-                            ReplacedProductCostModel(
-                                jsonObject!!.getString("components"),
-                                holder.edtAmount.text.toString(),
-                                holder.edt_qty.text.toString(),
-                                holder.edtChangeMode.text.toString(),
-                                holder.edtBuyBackAmount.text.toString(),
-                                jsonObject.getString("product"),
-                                s.toString(),
-                                isChecked
-                            )
-                        )
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence, start: Int,
-                        count: Int, after: Int
-                    ) {
-
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence, start: Int,
-                        before: Int, count: Int
-                    ) {
                     }
                 })
             }
@@ -325,30 +142,40 @@ class ReplacedProductCostAdapterThird(
         }
     }
 
-    fun getReplaceProductCost(): ArrayList<ReplacedProductCostModel> {
+    fun getReplaceProductCost(): ArrayList<MoreReplacedProductCostModel> {
 
-        val replacedProductCostArrayListFinal = ArrayList<ReplacedProductCostModel>()
+        val replacedProductCostArrayListFinal = ArrayList<MoreReplacedProductCostModel>()
         for (i in 0..replacedProductCostArrayList.size - 1) {
-            var getList: ReplacedProductCostModel = replacedProductCostArrayList.get(i)
-            Log.v("dsad33ffdf", "isChecked " + getList.isChecked)
+            var getList: MoreReplacedProductCostModel = replacedProductCostArrayList.get(i)
+            Log.v("adasdse333fggg", "isChecked " + getList.isChecked)
             if (getList.isChecked.equals("true")) {
-                var Components = getList.components
-                var amount = getList.amount
-                var quantity = getList.quantity
-                var changeMode = getList.changeMode
-                var buyBackAmount = getList.buyBackAmount
-                var product = getList.product
-                var remark = getList.remark
+                var ID_Product = getList.ID_Product
+                var Code = getList.Code
+                var Name = getList.Name
+                var MRPs = getList.MRPs
+                var MRP1R = getList.MRP1R
+                var SalesPrice1R = getList.SalesPrice1R
+                var SalePrice = getList.SalePrice
+                var CurrentStock1R = getList.CurrentStock1R
+                var StockId = getList.StockId
+                var TaxAmount = getList.TaxAmount
+                var StandbyStock = getList.StandbyStock
+                var TotalCount = getList.TotalCount
                 var isChecked = getList.isChecked
                 replacedProductCostArrayListFinal.add(
-                    ReplacedProductCostModel(
-                        Components,
-                        amount,
-                        quantity,
-                        changeMode,
-                        buyBackAmount,
-                        product,
-                        remark,
+                    MoreReplacedProductCostModel(
+                        ID_Product,
+                        Code,
+                        Name,
+                        MRPs,
+                        MRP1R,
+                        SalesPrice1R,
+                        SalePrice,
+                        CurrentStock1R,
+                        StockId,
+                        TaxAmount,
+                        StandbyStock,
+                        TotalCount,
                         isChecked
                     )
                 )

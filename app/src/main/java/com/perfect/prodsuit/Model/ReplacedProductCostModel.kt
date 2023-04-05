@@ -1,32 +1,35 @@
 package com.perfect.prodsuit.Model
 
 class ReplacedProductCostModel{
-    var components:String = ""
-    var amount:String = ""
-    var quantity:String = ""
-    var changeMode:String = ""
-    var buyBackAmount:String = ""
-    var remark:String = ""
-    var product:String = ""
+    var ID_OLD_Product:String = ""
+    var OLD_Product:String = ""
+    var SPDOldQuantity:String = ""
+    var Amount:String = ""
+    var ReplaceAmount:String = ""
+    var Remarks:String = ""
+    var ID_Product:String = ""
+    var Product:String = ""
     var isChecked:String = ""
 
     constructor(
-        components: String,
-        amount: String,
-        quantity: String,
-        changeMode: String,
-        buyBackAmount: String,
-        product: String,
-        remark: String,
+        ID_OLD_Product: String,
+        OLD_Product: String,
+        SPDOldQuantity: String,
+        Amount: String,
+        ReplaceAmount: String,
+        Remarks: String,
+        ID_Product: String,
+        Product: String,
         isChecked: String
     ) {
-        this.components = components
-        this.amount = amount
-        this.quantity = quantity
-        this.changeMode = changeMode
-        this.buyBackAmount = buyBackAmount
-        this.product = product
-        this.remark = remark
+        this.ID_OLD_Product = ID_OLD_Product
+        this.OLD_Product = OLD_Product
+        this.SPDOldQuantity = SPDOldQuantity
+        this.Amount = Amount
+        this.ReplaceAmount = ReplaceAmount
+        this.Remarks = Remarks
+        this.ID_Product = ID_Product
+        this.Product = Product
         this.isChecked = isChecked
     }
 }

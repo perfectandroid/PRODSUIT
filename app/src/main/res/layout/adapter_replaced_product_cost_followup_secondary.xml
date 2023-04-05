@@ -187,6 +187,7 @@
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/svg_amount"
                         android:gravity="center_vertical"
                         android:clickable="false"
                         android:cursorVisible="false"

@@ -224,11 +224,18 @@ interface ApiInterface {
     @POST("ServiceFollowUp/ServiceAttendedDetails")
     fun getServiceFollowUpMappedServiceAttendedList(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/ReplaceProductdetails")
+    fun getServiceFollowUpMappedReplacedProductList(@Body body: RequestBody): Call<String>
+
     @POST("ServiceFollowUp/AddedService")
     fun getServiceFollowUpMoreServiceAttendedList(@Body body: RequestBody): Call<String>
 
     @POST("ServiceFollowUp/ServiceType")
     fun getServiceFollowUpServiceType(@Body body: RequestBody): Call<String>
+    @POST("ServiceFollowUp/ChangemodeDetailse")
+    fun getServiceFollowUpChangeMode(@Body body: RequestBody): Call<String>
+    @POST("ServiceFollowUp/PopUpProductdetails")
+    fun getServiceFollowUpMoreRepalcedProduct(@Body body: RequestBody): Call<String>
 
     @POST("ServiceFollowUp/EmployeeWiseTicketSelect")
     fun getServiceFollowUpInfo(@Body body: RequestBody): Call<String>
