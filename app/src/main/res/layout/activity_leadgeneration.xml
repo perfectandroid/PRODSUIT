@@ -737,7 +737,7 @@
                                                     android:padding="7dp"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
-                                                    android:inputType="phone"
+                                                    android:inputType="number"
                                                     android:maxLength="15"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
@@ -760,7 +760,7 @@
                                                     android:maxLength="15"
                                                     android:textSize="15dp"
                                                     android:singleLine="true"
-                                                    android:inputType="phone"
+                                                    android:inputType="number"
                                                     android:background="@drawable/shape_bg"
                                                     android:text="" />
 
@@ -3106,7 +3106,6 @@
 
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/llBtn"

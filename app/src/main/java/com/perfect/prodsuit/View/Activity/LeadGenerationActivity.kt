@@ -6773,7 +6773,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ll_prod_feedback!!.visibility = View.GONE
             }
 
-            if (edtProdstatus!!.text.toString().equals("")) {
+            if (edtProdstatus!!.text.toString().equals("") ) {
                 ll_prod_status!!.visibility = View.GONE
             }
 
@@ -6783,6 +6783,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ll_followup_type!!.visibility = View.GONE
                 ll_followup_date!!.visibility = View.GONE
                 ll_employee!!.visibility = View.GONE
+                ll_prod_status!!.visibility = View.GONE
             }
 
 
