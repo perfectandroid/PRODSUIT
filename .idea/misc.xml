@@ -275,6 +275,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tog_mob.xml" value="0.2165" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_trans_list.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_white_circle.xml" value="0.271" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_background_selected.xml" value="0.241" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_background_unselected.xml" value="0.241" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_color_selector.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_selector.xml" value="0.169" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/tab_selector_dash.xml" value="0.1955" />

@@ -91,6 +91,8 @@
                 app:tabIndicator="@android:color/transparent"
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabBackground="@drawable/tab_selector_dash"
+                app:tabPaddingEnd="15dp"
+                app:tabPaddingStart="15dp"
                 app:tabTextAppearance="@style/customfontstyle2"/>
 
 
@@ -1085,7 +1087,7 @@
                                         android:orientation="vertical">
 
                                         <com.github.mikephil.charting.charts.PieChart
-                                            android:id="@+id/pieChartService"
+                                            android:id="@+id/pieChartProject"
                                             android:layout_width="match_parent"
                                             android:layout_height="150dp"
                                             android:layout_alignParentTop="true"
@@ -1101,7 +1103,7 @@
                                             android:orientation="vertical">
 
                                             <androidx.recyclerview.widget.RecyclerView
-                                                android:id="@+id/recycBarChartProject"
+                                                android:id="@+id/recycPieChartProject"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
