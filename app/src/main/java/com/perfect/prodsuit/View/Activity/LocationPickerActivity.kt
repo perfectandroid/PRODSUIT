@@ -81,6 +81,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_location_picker)
         context = this@LocationPickerActivity
+        Log.e(TAG,"841")
         //getLocationPermission()
         lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (checkLocationEnabled()){
@@ -225,6 +226,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val coarsePermision =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+
 
 //        val backgroundPermision =
 //            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
@@ -389,6 +392,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
+
+        Log.e(TAG,"Exception   2382   "+p0.toString())
     }
 
 }
