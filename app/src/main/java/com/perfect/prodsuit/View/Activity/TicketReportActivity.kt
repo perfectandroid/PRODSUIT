@@ -705,6 +705,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun getReportName() {
         var reportName = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -713,7 +714,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                reportNameViewModel.getReportName(this)!!.observe(
+                reportNameViewModel.getReportName(this,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
