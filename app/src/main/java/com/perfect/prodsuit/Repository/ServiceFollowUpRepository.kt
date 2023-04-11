@@ -82,6 +82,7 @@ object ServiceFollowUpRepository {
 
                 Log.v("dfsdfsdfdf","requestObject1 "+requestObject1)
                 Log.v("dfsdfsdfdf","requestObject2 "+requestObject1.toString())
+                Log.i("response123456","body="+requestObject1)
 
 
             } catch (e: Exception) {

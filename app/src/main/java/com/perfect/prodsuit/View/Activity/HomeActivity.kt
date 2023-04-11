@@ -1650,7 +1650,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
               //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("9")){
-                val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
+//                val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ReportMainActivity::class.java)
                 startActivity(i)
                // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }

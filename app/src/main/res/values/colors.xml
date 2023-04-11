@@ -384,7 +384,10 @@
 <!--    <color name="color_pickup">#15576F</color>-->
     <color name="color_delivery">#457F81</color>
 
-
+    <color name="lead_report">#3A5461</color>
+    <color name="service_report">#447B7E</color>
+    <color name="collection_report">#3A523C</color>
+    <color name="pickup_report">#836D43</color>
 
 
 

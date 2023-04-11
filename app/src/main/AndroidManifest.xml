@@ -59,6 +59,18 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true"
         android:foregroundServiceType="location">
+
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ReportMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ProductInformationActivity"
             android:screenOrientation="portrait"

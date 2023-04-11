@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight=".75"
-                    android:background="@drawable/shape_gradient_follow_up"
+                    android:background="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -74,8 +74,8 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
-                        android:src="@drawable/ic_baseline_rotate_right_24"
-                        app:tint="@color/leadstages_color9" />
+                        android:src="@drawable/ic_baseline_rotate_right"
+                        app:tint="@color/white" />
 
                     <TextView
                         android:layout_width="match_parent"
