@@ -188,6 +188,12 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Collection"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
 
+//        tabLayout!!.getTabAt(0)?.orCreateBadge?.number = 5
+//        tabLayout!!.getTabAt(1)?.orCreateBadge?.number = 8
+//        tabLayout!!.getTabAt(2)?.orCreateBadge?.number = 10
+
+
+
         barChart!!.clear()
         pieChart!!.clear()
         pieChartLead!!.clear()
@@ -264,7 +270,6 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun getLeadsDashBoard() {
-
         var leadDash = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
