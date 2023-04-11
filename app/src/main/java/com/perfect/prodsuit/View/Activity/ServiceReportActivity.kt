@@ -227,7 +227,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
             recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ReportNameAdapter(this@ServiceReportActivity, reportNamesort)
+            val adapter = ReportNameAdapter(this@ServiceReportActivity, reportNamesort,"Service")
             recyReportName!!.adapter = adapter
             adapter.setClickListener(this@ServiceReportActivity)
 
@@ -257,7 +257,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                     }
 
                     Log.e(TAG, "reportNamesort               7103    " + reportNamesort)
-                    val adapter = ReportNameAdapter(this@ServiceReportActivity, reportNamesort)
+                    val adapter = ReportNameAdapter(this@ServiceReportActivity, reportNamesort,"Service")
                     recyReportName!!.adapter = adapter
                     adapter.setClickListener(this@ServiceReportActivity)
                 }
