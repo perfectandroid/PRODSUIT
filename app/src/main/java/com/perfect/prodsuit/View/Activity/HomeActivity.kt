@@ -1660,9 +1660,18 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("11")){
-                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
+//                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
                 startActivity(i)
               //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+            }
+
+            if (grid_id.equals("12")){
+                val i = Intent(this@HomeActivity, AboutUsActivity::class.java)
+                startActivity(i)
+                //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
         }
     }

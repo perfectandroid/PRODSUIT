@@ -630,6 +630,11 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     CompanyCategoryEditer.putString("CompanyCategory", jobj.getString("CompanyCategory"))
                                     CompanyCategoryEditer.commit()
 
+                                    val ModuleListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF54, 0)
+                                    val ModuleListEditer = ModuleListSP.edit()
+                                    ModuleListEditer.putString("ModuleList", jobj.getString("ModuleList"))
+                                    ModuleListEditer.commit()
+
                                     val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                     startActivity(i)
                                     finish()

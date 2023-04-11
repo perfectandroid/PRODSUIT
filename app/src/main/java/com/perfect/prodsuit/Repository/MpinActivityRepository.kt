@@ -68,7 +68,7 @@ object MpinActivityRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("5"))
                 requestObject1.put("MPIN", ProdsuitApplication.encryptStart(strMPIN))
 
-                Log.e(TAG,"requestObject1  71   "+requestObject1)
+                Log.e(TAG,"requestObject1  7111   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
