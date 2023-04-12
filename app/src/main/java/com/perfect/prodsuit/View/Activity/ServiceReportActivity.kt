@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -20,15 +21,14 @@ import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.BranchAdapter
-import com.perfect.prodsuit.View.Adapter.ComplaintServiceAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
-import com.perfect.prodsuit.View.Adapter.ReportNameAdapter
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.BranchViewModel
 import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
 import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
+import com.perfect.prodsuit.Viewmodel.ServiceComplaintViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,10 +70,18 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var dialogCompService: Dialog? = null
     var recyCompService: RecyclerView? = null
 
+    lateinit var serviceComplaintViewModel: ServiceComplaintViewModel
+    lateinit var complaintArrayList : JSONArray
+    lateinit var complaintSort : JSONArray
+    private var dialogComplaint : Dialog? = null
+    var recyComplaint: RecyclerView? = null
+
     var btnSubmit: Button? = null
     var btnReset: Button? = null
 
-
+    var complaintDet = 0
+    var ReqMode: String? = ""
+    var SubMode: String? = ""
 
     private var fromToDate: Int = 0
     private var ReportMode: String = ""
@@ -81,6 +89,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var ID_Employee: String = ""
 
     private var ID_CompService: String = ""
+    private var ID_ComplaintList: String = ""
 
     var FromDate: String = ""
     var ToDate: String = ""
@@ -96,6 +105,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
+        serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
 
         setRegViews()
 
@@ -185,8 +195,18 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 getReportNameComplaintService()
             }
 
+            R.id.tie_ComplaintType -> {
+                Config.disableClick(v)
+                complaintDet = 0
+                ReqMode = "70"
+                SubMode = ""
+
+                getComplaints(ReqMode!!,SubMode!!)
+
+            }
+
             R.id.btnSubmit -> {
-              //  validateData(v)
+                validateData(v)
             }
             R.id.btnReset -> {
 
@@ -212,12 +232,65 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         ReportMode = ""
         ID_Branch = ""
         ID_CompService = ""
+        ID_ComplaintList = ""
 //        ID_CompService = ""
-//        ID_CompService = ""
+
 
 
         loadLoginEmpDetails()
 
+    }
+
+
+    private fun validateData(v: View) {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val fromDa = sdf.parse(tie_FromDate!!.text.toString());
+        val toDa = sdf.parse(tie_ToDate!!.text.toString());
+
+        if (ReportMode.equals("")) {
+            Config.snackBars(context, v, "Select Report Name")
+        } else if (ID_Branch.equals("")) {
+            Config.snackBars(context, v, "Select Branch")
+        }
+        else if (ID_Employee.equals("")) {
+            Config.snackBars(context, v, "Select Employee")
+        }else if (tie_FromDate!!.text.toString().equals("")) {
+            Config.snackBars(context, v, "Select From Date")
+        } else if (tie_ToDate!!.text.toString().equals("")) {
+            Config.snackBars(context, v, "Select To Date")
+        } else if (fromDa.after(toDa)) {
+            Config.snackBars(context, v, "Check Selected Date Range")
+        } else {
+            PassData()
+        }
+
+    }
+
+    private fun PassData() {
+
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+        val strFromDate = outputFormat.format(dateFrom)
+        val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
+        val strToDate = outputFormat.format(dateTo)
+
+        Log.e(TAG, "strFromDate   " + strFromDate + "    " + strToDate)
+
+
+        intent = Intent(applicationContext, ServiceReportDetailActivity::class.java)
+        intent.putExtra("ReportName", tie_ReportName!!.text.toString())
+        intent.putExtra("ReportMode", ReportMode)
+        intent.putExtra("ID_Branch", ID_Branch)
+        intent.putExtra("ID_Employee", ID_Employee)
+        intent.putExtra("Fromdate", strFromDate)
+        intent.putExtra("Todate", strToDate)
+    //    intent.putExtra("ID_Product", ID_Product)
+        intent.putExtra("ID_CompService", ID_CompService)
+        intent.putExtra("ID_ComplaintList", ID_ComplaintList)
+
+        startActivity(intent)
     }
 
 
@@ -914,6 +987,143 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         }
     }
 
+    private fun getComplaints(ReqMode: String, SubMode: String) {
+        val ID_Category ="0"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,ID_Category!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (complaintDet == 0){
+                                    complaintDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1920   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("ComplaintsDetails")
+                                        complaintArrayList = jobjt.getJSONArray("ComplaintDetailsList")
+                                        if (complaintArrayList.length()>0){
+
+                                            complaintPopup(complaintArrayList)
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceReportActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun complaintPopup(complaintArrayList: JSONArray) {
+
+        try {
+
+            dialogComplaint = Dialog(this)
+            dialogComplaint!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogComplaint!! .setContentView(R.layout.service_complaint_popup)
+            dialogComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyComplaint = dialogComplaint!! .findViewById(R.id.recyComplaint) as RecyclerView
+            val etsearch = dialogComplaint!! .findViewById(R.id.etsearch) as EditText
+
+            complaintSort = JSONArray()
+            for (k in 0 until complaintArrayList.length()) {
+                val jsonObject = complaintArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                complaintSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
+            recyComplaint!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = ServiceComplaintAdapter(this@ServiceReportActivity, complaintSort)
+            recyComplaint!!.adapter = adapter
+            adapter.setClickListener(this@ServiceReportActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    complaintSort = JSONArray()
+
+                    for (k in 0 until complaintArrayList.length()) {
+                        val jsonObject = complaintArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ComplaintName").length) {
+                            if (jsonObject.getString("ComplaintName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                complaintSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"complaintSort               2203    "+complaintSort)
+                    val adapter = ServiceComplaintAdapter(this@ServiceReportActivity, complaintSort)
+                    recyComplaint!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceReportActivity)
+                }
+            })
+
+            dialogComplaint!!.show()
+            dialogComplaint!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+    }
+
     override fun onClick(position: Int, data: String) {
         if (data.equals("reportname")) {
            // resetData()
@@ -976,6 +1186,17 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             ID_CompService = jsonObject.getString("compService_id")
             tie_ComplaintService!!.setText(jsonObject.getString("compService_name"))
+
+        }
+        if (data.equals("compalint")) {
+
+            dialogComplaint!!.dismiss()
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = complaintSort.getJSONObject(position)
+            Log.e(TAG,"ID_ComplaintList   "+jsonObject.getString("ID_ComplaintList"))
+
+            ID_ComplaintList = jsonObject.getString("ID_ComplaintList")
+            tie_ComplaintType!!.setText(jsonObject.getString("ComplaintName"))
 
         }
 
