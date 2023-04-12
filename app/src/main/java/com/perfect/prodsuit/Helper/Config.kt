@@ -689,6 +689,35 @@ object Config {
         return result
     }
 
+    fun getCompliantOrService(context : Context): String {
+        var result =""
+        try {
+
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+            var obj = JSONObject()
+            obj.put("compService_id", "1")
+            obj.put("compService_name", "Complaint")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("compService_id", "2")
+            obj.put("compService_name", "Service")
+            array.put(obj)
+
+            jsonObject.put("compServiceDetails", array)
+            jsonObject1.put("compServiceType", jsonObject)
+            result = jsonObject1.toString()
+
+        }catch (e : Exception){
+            result = ""
+        }
+        return result
+    }
+
 
 
 }

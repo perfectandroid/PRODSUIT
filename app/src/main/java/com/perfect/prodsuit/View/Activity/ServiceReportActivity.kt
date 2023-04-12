@@ -21,8 +21,11 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
+import com.perfect.prodsuit.View.Adapter.ComplaintServiceAdapter
+import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
 import com.perfect.prodsuit.View.Adapter.ReportNameAdapter
 import com.perfect.prodsuit.Viewmodel.BranchViewModel
+import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
 import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -56,10 +59,28 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var dialogBranch: Dialog? = null
     var recyBranch: RecyclerView? = null
 
+    var empUseBranch = 0
+    lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var employeeAllArrayList : JSONArray
+    lateinit var employeeAllSort : JSONArray
+    private var dialogEmployeeAll : Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
+
+    lateinit var compServiceArrayList: JSONArray
+    private var dialogCompService: Dialog? = null
+    var recyCompService: RecyclerView? = null
+
+    var btnSubmit: Button? = null
+    var btnReset: Button? = null
+
+
+
     private var fromToDate: Int = 0
     private var ReportMode: String = ""
     private var ID_Branch: String = ""
     private var ID_Employee: String = ""
+
+    private var ID_CompService: String = ""
 
     var FromDate: String = ""
     var ToDate: String = ""
@@ -74,6 +95,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
 
         setRegViews()
 
@@ -94,8 +116,11 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         tie_Product = findViewById(R.id.tie_Product)
         tie_ComplaintService = findViewById(R.id.tie_ComplaintService)
         tie_ComplaintType = findViewById(R.id.tie_ComplaintType)
+        btnSubmit = findViewById(R.id.btnSubmit)
+        btnReset = findViewById(R.id.btnReset)
 
         imback!!.setOnClickListener(this)
+
 
         tie_ReportName!!.setOnClickListener(this)
         tie_Branch!!.setOnClickListener(this)
@@ -105,9 +130,18 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         tie_Product!!.setOnClickListener(this)
         tie_ComplaintService!!.setOnClickListener(this)
         tie_ComplaintType!!.setOnClickListener(this)
+
+        btnSubmit!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
     }
 
     private fun loadLoginEmpDetails() {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
 
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
@@ -133,6 +167,11 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 getBranch()
             }
 
+            R.id.tie_EmployeeName -> {
+                empUseBranch = 0
+                getEmpByBranch()
+            }
+
             R.id.tie_FromDate -> {
 
                 openBottomSheet(tie_FromDate,tie_ToDate)
@@ -142,8 +181,45 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 openBottomSheet(tie_FromDate,tie_ToDate)
             }
 
+            R.id.tie_ComplaintService -> {
+                getReportNameComplaintService()
+            }
+
+            R.id.btnSubmit -> {
+              //  validateData(v)
+            }
+            R.id.btnReset -> {
+
+                resetData()
+
+            }
+
         }
     }
+
+    private fun resetData() {
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        tie_FromDate!!.setText(currentDate)
+        tie_ToDate!!.setText(currentDate)
+
+        tie_ReportName!!.setText("")
+        tie_Branch!!.setText("")
+        tie_Product!!.setText("")
+        tie_ComplaintService!!.setText("")
+        tie_ComplaintType!!.setText("")
+
+        ReportMode = ""
+        ID_Branch = ""
+        ID_CompService = ""
+//        ID_CompService = ""
+//        ID_CompService = ""
+
+
+        loadLoginEmpDetails()
+
+    }
+
 
     private fun getReportName() {
         var reportName = 0
@@ -360,7 +436,6 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            //  val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
             val adapter = BranchAdapter(this@ServiceReportActivity, branchsort)
             recyBranch!!.adapter = adapter
             adapter.setClickListener(this@ServiceReportActivity)
@@ -405,6 +480,138 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG, "Exception  1132   " + e.toString())
+        }
+    }
+
+    private fun getEmpByBranch() {
+//         var branch = 0
+        Log.v("sfsdfsdfdf","branch"+ID_Branch)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (empUseBranch == 0){
+                                    empUseBranch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length()>0){
+
+                                            employeeAllPopup(employeeAllArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceReportActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeAllSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
+            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+            val adapter = EmployeeAllAdapter(this@ServiceReportActivity, employeeAllSort)
+            recyEmployeeAll!!.adapter = adapter
+            adapter.setClickListener(this@ServiceReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeAllSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                employeeAllSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
+                    val adapter = EmployeeAllAdapter(this@ServiceReportActivity, employeeAllSort)
+                    recyEmployeeAll!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceReportActivity)
+                }
+            })
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -665,6 +872,48 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     }
 
+    private fun getReportNameComplaintService() {
+
+        var compServiceList = Config.getCompliantOrService(this@ServiceReportActivity)
+        Log.e(TAG,"compServiceList   680  "+compServiceList)
+        compServiceArrayList  = JSONArray()
+        val jObject = JSONObject(compServiceList)
+        val jobjt = jObject.getJSONObject("compServiceType")
+        compServiceArrayList = jobjt.getJSONArray("compServiceDetails")
+        Log.e(TAG,"compServiceArrayList   6801  "+compServiceArrayList)
+
+        compServicePopup(compServiceArrayList)
+    }
+
+    private fun compServicePopup(compServiceArrayList: JSONArray) {
+
+        try {
+
+            dialogCompService = Dialog(this)
+            dialogCompService!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCompService!!.setContentView(R.layout.complaint_service_popup)
+            dialogCompService!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCompService = dialogCompService!!.findViewById(R.id.recyCompService) as RecyclerView
+
+
+
+            val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
+            recyCompService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ComplaintServiceAdapter(this@ServiceReportActivity, compServiceArrayList)
+            recyCompService!!.adapter = adapter
+            adapter.setClickListener(this@ServiceReportActivity)
+
+            dialogCompService!!.show()
+            dialogCompService!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, "Exception  1132   " + e.toString())
+        }
+    }
+
     override fun onClick(position: Int, data: String) {
         if (data.equals("reportname")) {
            // resetData()
@@ -710,8 +959,28 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         }
 
-    }
+        if (data.equals("employeeAll")){
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            tie_EmployeeName!!.setText(jsonObject.getString("EmpName"))
 
+
+        }
+
+        if (data.equals("CompService")) {
+            dialogCompService!!.dismiss()
+            val jsonObject = compServiceArrayList.getJSONObject(position)
+
+            ID_CompService = jsonObject.getString("compService_id")
+            tie_ComplaintService!!.setText(jsonObject.getString("compService_name"))
+
+        }
+
+
+    }
 
 
 }

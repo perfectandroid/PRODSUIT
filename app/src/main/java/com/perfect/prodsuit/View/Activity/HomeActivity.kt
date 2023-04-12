@@ -1654,7 +1654,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                 val i = Intent(this@HomeActivity, ReportMainActivity::class.java)
                 startActivity(i)
-                Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("10")){
                 val i = Intent(this@HomeActivity, ProfileActivity::class.java)

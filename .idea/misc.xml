@@ -374,6 +374,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_category.xml" value="0.2390625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_channel.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_company.xml" value="0.24583333333333332" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_complaint_service.xml" value="0.4601873536299766" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_country_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.2712962962962963" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_customer_due.xml" value="0.38189533239038187" />
@@ -439,12 +440,14 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report.xml" value="0.32864583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report_followup.xml" value="0.32864583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.34322916666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.4601873536299766" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/call_status_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.2916666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/category_popup.xml" value="0.2390625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/channel_popup.xml" value="0.21770833333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/comp_category_popup.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_popup.xml" value="0.24583333333333332" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/complaint_service_popup.xml" value="0.4601873536299766" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.22604166666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_add_new_user_sheet.xml" value="0.2630208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.25" />
@@ -509,7 +512,6 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
