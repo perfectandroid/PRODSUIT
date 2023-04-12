@@ -13,7 +13,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceNewListReportAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class ServiceNewListReportAdapter (internal var context: Context, internal var jsonArray: JSONArray,internal var ReportMode: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ServiceNewListReportAdapter"
@@ -44,7 +44,19 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
                 holder.txtComplaint.text      = jsonObject!!.getString("Complaint")
                 holder.txtCurrentStatus.text      = jsonObject!!.getString("CurrentStatus")
 
-                holder.ll_newList!!.setBackgroundColor(context.getColor(R.color.grey))
+                holder.ll_newList!!.setBackgroundColor(context.getColor(R.color.greylight))
+
+//                if (ReportMode.equals("1")){
+//                    holder.ll_TicketNo!!.visibility = View.GONE
+//                }
+//
+//                if (ReportMode.equals("3")){
+//                    holder.ll_TicketDate!!.visibility = View.GONE
+//                }
+//
+//                if (ReportMode.equals("6")){
+//                    holder.ll_CurrentStatus!!.visibility = View.GONE
+//                }
 
 //                holder.ll_newList!!.setTag(position)
 //                holder.ll_newList!!.setOnClickListener(View.OnClickListener {
@@ -82,6 +94,14 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
         internal var txtCurrentStatus   : TextView
 
         internal var ll_newList          : LinearLayout
+
+        internal var ll_TicketNo         : LinearLayout
+        internal var ll_TicketDate       : LinearLayout
+        internal var ll_Customer         : LinearLayout
+        internal var ll_Product          : LinearLayout
+        internal var ll_Complaint        : LinearLayout
+        internal var ll_CurrentStatus    : LinearLayout
+
         init {
 
             txtTicketNo        = v.findViewById<View>(R.id.txtTicketNo) as TextView
@@ -90,6 +110,13 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
             txtProduct         = v.findViewById<View>(R.id.txtProduct) as TextView
             txtComplaint       = v.findViewById<View>(R.id.txtComplaint) as TextView
             txtCurrentStatus   = v.findViewById<View>(R.id.txtCurrentStatus) as TextView
+
+            ll_TicketNo        = v.findViewById<View>(R.id.ll_TicketNo) as LinearLayout
+            ll_TicketDate      = v.findViewById<View>(R.id.ll_TicketDate) as LinearLayout
+            ll_Customer        = v.findViewById<View>(R.id.ll_Customer) as LinearLayout
+            ll_Product         = v.findViewById<View>(R.id.ll_Product) as LinearLayout
+            ll_Complaint       = v.findViewById<View>(R.id.ll_Complaint) as LinearLayout
+            ll_CurrentStatus   = v.findViewById<View>(R.id.ll_CurrentStatus) as LinearLayout
 
             ll_newList         = v.findViewById<View>(R.id.ll_newList) as LinearLayout
 

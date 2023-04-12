@@ -25,6 +25,7 @@ import com.perfect.prodsuit.View.Adapter.ServiceNewListReportAdapter
 import com.perfect.prodsuit.Viewmodel.EmiListViewModel
 import com.perfect.prodsuit.Viewmodel.FollowUpTicketReportViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceNewListReportViewModel
+import com.perfect.prodsuit.Viewmodel.ServiceOutstandingListReportViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -58,6 +59,10 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var newListReportArrayList : JSONArray
     var recyNewList  : RecyclerView? = null
 
+    lateinit var serviceOutstandingListReportViewModel: ServiceOutstandingListReportViewModel
+    lateinit var outstandingListReportArrayList : JSONArray
+    var recyOutStanding  : RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -66,6 +71,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         context = this@ServiceReportDetailActivity
 
         serviceNewListReportViewModel = ViewModelProvider(this).get(ServiceNewListReportViewModel::class.java)
+        serviceOutstandingListReportViewModel = ViewModelProvider(this).get(ServiceOutstandingListReportViewModel::class.java)
 
         setRegViews()
 
@@ -105,10 +111,12 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         if (ReportMode.equals("3")){
             //Outstanding
             outstandingList = 0
+            getOutstandingListReport(ReportMode!!,ID_Branch!!,ID_Employee!!,strFromdate!!,strTodate!!,ID_Product!!,ID_CompService!!,ID_ComplaintList!!)
         }
         if (ReportMode.equals("6")){
             //Service List
             serviceList = 0
+            getServiceListReport(ReportMode!!,ID_Branch!!,ID_Employee!!,strFromdate!!,strTodate!!,ID_Product!!,ID_CompService!!,ID_ComplaintList!!)
         }
 
     }
@@ -125,6 +133,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         ll_Service = findViewById(R.id.ll_Service)
 
         recyNewList = findViewById(R.id.recyNewList)
+        recyOutStanding = findViewById(R.id.recyOutStanding)
 
     }
 
@@ -169,7 +178,365 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
                                             val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
                                             recyNewList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             // recyLeadGenReport!!.setHasFixedSize(true)
-                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, newListReportArrayList)
+                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, newListReportArrayList,ReportMode)
+                                            recyNewList!!.adapter = adapter1
+                                            // adapter1.setClickListener(this@ServiceReportDetailActivity)
+
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   3444   "+e.toString())
+                                        }
+                                    }
+                                    else {
+                                        report_date!!.visibility=View.GONE
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceReportDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+//        var strNewlist ="{\n" +
+//                "  \"NewListDetails\": {\n" +
+//                "    \"NewListDetailsList\": [\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0551\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0552\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0553\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0554\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0555\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0556\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0557\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0558\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      }\n" +
+//                "    ],\n" +
+//                "    \"ResponseCode\": \"0\",\n" +
+//                "    \"ResponseMessage\": \"Transaction Verified\"\n" +
+//                "  },\n" +
+//                "  \"StatusCode\": 0,\n" +
+//                "  \"EXMessage\": \"Transaction Verified\"\n" +
+//                "}"
+//
+//
+//        Log.e(TAG,"NEW LIST  155   "+strNewlist)
+
+
+
+    }
+
+    private fun getOutstandingListReport(ReportMode: String, ID_Branch: String, ID_Employee: String, strFromdate: String, strTodate: String, ID_Product: String,
+                                 ID_CompService: String, ID_ComplaintList: String) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceOutstandingListReportViewModel.getserviceOutstandingList(this,ReportMode, ID_Branch, ID_Employee, strFromdate, strTodate, ID_Product, ID_CompService, ID_ComplaintList)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (newList == 0){
+                                    newList++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   2702   "+msg.length)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        report_date!!.visibility = View.VISIBLE
+                                        ll_OutStanding!!.visibility = View.VISIBLE
+                                        var arrayFrom=strFromdate!!.split("-")
+                                        var arrayTo=strTodate!!.split("-")
+                                        var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
+                                        var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
+                                        report_date!!.text="Report between "+fromDate+" and "+toDate
+
+                                        val jobjt = jObject.getJSONObject("NewListDetails")
+                                        outstandingListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
+
+                                        Log.e(TAG,"NEW LIST  1553   "+outstandingListReportArrayList)
+                                        try {
+                                            val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
+                                            recyOutStanding!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, outstandingListReportArrayList,ReportMode)
+                                            recyOutStanding!!.adapter = adapter1
+                                            // adapter1.setClickListener(this@ServiceReportDetailActivity)
+
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   3444   "+e.toString())
+                                        }
+                                    }
+                                    else {
+                                        report_date!!.visibility=View.GONE
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceReportDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+//        var strNewlist ="{\n" +
+//                "  \"NewListDetails\": {\n" +
+//                "    \"NewListDetailsList\": [\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0551\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0552\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0553\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0554\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0555\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0556\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0557\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0558\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      }\n" +
+//                "    ],\n" +
+//                "    \"ResponseCode\": \"0\",\n" +
+//                "    \"ResponseMessage\": \"Transaction Verified\"\n" +
+//                "  },\n" +
+//                "  \"StatusCode\": 0,\n" +
+//                "  \"EXMessage\": \"Transaction Verified\"\n" +
+//                "}"
+//
+//
+//        Log.e(TAG,"NEW LIST  155   "+strNewlist)
+
+
+
+    }
+
+    private fun getServiceListReport(ReportMode: String, ID_Branch: String, ID_Employee: String, strFromdate: String, strTodate: String, ID_Product: String,
+                                         ID_CompService: String, ID_ComplaintList: String) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceNewListReportViewModel.getserviceNewList(this,ReportMode, ID_Branch, ID_Employee, strFromdate, strTodate, ID_Product, ID_CompService, ID_ComplaintList)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (newList == 0){
+                                    newList++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   2702   "+msg.length)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        report_date!!.visibility = View.VISIBLE
+                                        ll_NewList!!.visibility = View.VISIBLE
+                                        var arrayFrom=strFromdate!!.split("-")
+                                        var arrayTo=strTodate!!.split("-")
+                                        var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
+                                        var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
+                                        report_date!!.text="Report between "+fromDate+" and "+toDate
+
+                                        val jobjt = jObject.getJSONObject("NewListDetails")
+                                        newListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
+
+                                        Log.e(TAG,"NEW LIST  1553   "+newListReportArrayList)
+                                        try {
+                                            val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
+                                            recyNewList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, newListReportArrayList,ReportMode)
                                             recyNewList!!.adapter = adapter1
                                             // adapter1.setClickListener(this@ServiceReportDetailActivity)
 

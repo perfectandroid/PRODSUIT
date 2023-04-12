@@ -24,6 +24,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_TicketNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -75,6 +76,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_TicketDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -126,6 +128,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_Customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -177,6 +180,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_Product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -228,6 +232,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_Complaint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -279,6 +284,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_CurrentStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
