@@ -44,6 +44,8 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
                 holder.txtComplaint.text      = jsonObject!!.getString("Complaint")
                 holder.txtCurrentStatus.text      = jsonObject!!.getString("CurrentStatus")
 
+                holder.ll_newList!!.setBackgroundColor(context.getColor(R.color.grey))
+
 //                holder.ll_newList!!.setTag(position)
 //                holder.ll_newList!!.setOnClickListener(View.OnClickListener {
 //                    Log.e(TAG,"newListClick   5091")
@@ -79,7 +81,7 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
         internal var txtComplaint       : TextView
         internal var txtCurrentStatus   : TextView
 
-      //  internal var ll_newList          : LinearLayout
+        internal var ll_newList          : LinearLayout
         init {
 
             txtTicketNo        = v.findViewById<View>(R.id.txtTicketNo) as TextView
@@ -89,7 +91,7 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
             txtComplaint       = v.findViewById<View>(R.id.txtComplaint) as TextView
             txtCurrentStatus   = v.findViewById<View>(R.id.txtCurrentStatus) as TextView
 
-          //  ll_newList         = v.findViewById<View>(R.id.ll_newList) as LinearLayout
+            ll_newList         = v.findViewById<View>(R.id.ll_newList) as LinearLayout
 
         }
     }

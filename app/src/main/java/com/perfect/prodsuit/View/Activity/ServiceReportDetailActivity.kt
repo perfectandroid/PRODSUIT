@@ -12,12 +12,19 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.EmiListAdapter
 import com.perfect.prodsuit.View.Adapter.NewListTicketReportAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceNewListReportAdapter
+import com.perfect.prodsuit.Viewmodel.EmiListViewModel
 import com.perfect.prodsuit.Viewmodel.FollowUpTicketReportViewModel
+import com.perfect.prodsuit.Viewmodel.ServiceNewListReportViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -47,7 +54,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
     internal var ll_OutStanding: LinearLayout? = null
     internal var ll_Service: LinearLayout? = null
 
-  //  lateinit var followUpTicketReportViewModel: FollowUpTicketReportViewModel
+    lateinit var serviceNewListReportViewModel: ServiceNewListReportViewModel
     lateinit var newListReportArrayList : JSONArray
     var recyNewList  : RecyclerView? = null
 
@@ -57,6 +64,8 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_service_report_detail)
         context = this@ServiceReportDetailActivity
+
+        serviceNewListReportViewModel = ViewModelProvider(this).get(ServiceNewListReportViewModel::class.java)
 
         setRegViews()
 
@@ -119,140 +128,182 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     }
 
-    private fun getNewListReport(ReportMode: String, ID_Branch: String, ID_Employee: String, strFromdate: String, strTodate: String, ID_Product: String?,
+    private fun getNewListReport(ReportMode: String, ID_Branch: String, ID_Employee: String, strFromdate: String, strTodate: String, ID_Product: String,
                                  ID_CompService: String, ID_ComplaintList: String) {
 
-        var strNewlist ="{\n" +
-                "  \"NewListDetails\": {\n" +
-                "    \"NewListDetailsList\": [\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0551\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0552\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0553\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0554\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0555\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0556\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0557\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"TicketNo\": \"TKT-0558\",\n" +
-                "        \"TicketDate\": \"04/04/2023\",\n" +
-                "        \"Customer\": \"Mallika\",\n" +
-                "        \"Product\": \"Solar Panel\",\n" +
-                "        \"Complaint\": \"Server Issue\",\n" +
-                "        \"CurrentStatus\": \"Pending\",\n" +
-                "        \"Description\": \"\"\n" +
-                "      }\n" +
-                "    ],\n" +
-                "    \"ResponseCode\": \"0\",\n" +
-                "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-                "  },\n" +
-                "  \"StatusCode\": 0,\n" +
-                "  \"EXMessage\": \"Transaction Verified\"\n" +
-                "}"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceNewListReportViewModel.getserviceNewList(this,ReportMode, ID_Branch, ID_Employee, strFromdate, strTodate, ID_Product, ID_CompService, ID_ComplaintList)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
 
-        Log.e(TAG,"NEW LIST  155   "+strNewlist)
+                                if (newList == 0){
+                                    newList++
 
-        if (newList == 0){
-            newList++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   2702   "+msg.length)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        report_date!!.visibility = View.VISIBLE
+                                        ll_NewList!!.visibility = View.VISIBLE
+                                        var arrayFrom=strFromdate!!.split("-")
+                                        var arrayTo=strTodate!!.split("-")
+                                        var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
+                                        var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
+                                        report_date!!.text="Report between "+fromDate+" and "+toDate
 
-            val jObject = JSONObject(strNewlist)
-            Log.e(TAG,"msg   2702   "+strNewlist.length)
-            if (jObject.getString("StatusCode") == "0") {
-                report_date!!.visibility = View.VISIBLE
-                ll_NewList!!.visibility = View.VISIBLE
-                var arrayFrom=strFromdate!!.split("-")
-                var arrayTo=strTodate!!.split("-")
-                var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
-                var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
-                report_date!!.text="Report between "+fromDate+" and "+toDate
+                                        val jobjt = jObject.getJSONObject("NewListDetails")
+                                        newListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
 
-                val jobjt = jObject.getJSONObject("NewListDetails")
-                newListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
+                                        Log.e(TAG,"NEW LIST  1553   "+newListReportArrayList)
+                                        try {
+                                            val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
+                                            recyNewList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            // recyLeadGenReport!!.setHasFixedSize(true)
+                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, newListReportArrayList)
+                                            recyNewList!!.adapter = adapter1
+                                            // adapter1.setClickListener(this@ServiceReportDetailActivity)
 
-                Log.e(TAG,"NEW LIST  1553   "+newListReportArrayList)
-                try {
-                    val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
-                    recyNewList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                    // recyLeadGenReport!!.setHasFixedSize(true)
-                    val adapter1 = ServiceNewListReportAdapter(applicationContext, newListReportArrayList)
-                    recyNewList!!.adapter = adapter1
-                   // adapter1.setClickListener(this@ServiceReportDetailActivity)
+                                        }catch (e: Exception){
+                                            Log.e(TAG,"msg   3444   "+e.toString())
+                                        }
+                                    }
+                                    else {
+                                        report_date!!.visibility=View.GONE
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceReportDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
 
-                }catch (e: Exception){
-                    Log.e(TAG,"msg   3444   "+e.toString())
-                }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
             }
-            else {
-                report_date!!.visibility=View.GONE
-                val builder = AlertDialog.Builder(
-                    this@ServiceReportDetailActivity,
-                    R.style.MyDialogTheme
-                )
-                builder.setMessage(jObject.getString("EXMessage"))
-                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                }
-                val alertDialog: AlertDialog = builder.create()
-                alertDialog.setCancelable(false)
-                alertDialog.show()
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
-
         }
+
+//        var strNewlist ="{\n" +
+//                "  \"NewListDetails\": {\n" +
+//                "    \"NewListDetailsList\": [\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0551\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0552\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0553\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0554\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0555\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0556\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0557\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      },\n" +
+//                "      {\n" +
+//                "        \"TicketNo\": \"TKT-0558\",\n" +
+//                "        \"TicketDate\": \"04/04/2023\",\n" +
+//                "        \"Customer\": \"Mallika\",\n" +
+//                "        \"Product\": \"Solar Panel\",\n" +
+//                "        \"Complaint\": \"Server Issue\",\n" +
+//                "        \"CurrentStatus\": \"Pending\",\n" +
+//                "        \"Description\": \"\"\n" +
+//                "      }\n" +
+//                "    ],\n" +
+//                "    \"ResponseCode\": \"0\",\n" +
+//                "    \"ResponseMessage\": \"Transaction Verified\"\n" +
+//                "  },\n" +
+//                "  \"StatusCode\": 0,\n" +
+//                "  \"EXMessage\": \"Transaction Verified\"\n" +
+//                "}"
+//
+//
+//        Log.e(TAG,"NEW LIST  155   "+strNewlist)
+
+
 
     }
 
