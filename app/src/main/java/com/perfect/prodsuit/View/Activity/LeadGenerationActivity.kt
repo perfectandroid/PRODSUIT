@@ -27,7 +27,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -151,6 +150,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var leadThroughSort: JSONArray
     lateinit var leadSubMediaArrayList: JSONArray
     lateinit var leadSubMediaSort: JSONArray
+    lateinit var leadRequestArrayList: JSONArray
     lateinit var leadByArrayList: JSONArray
     lateinit var leadBySort: JSONArray
     lateinit var mediaTypeArrayList: JSONArray
@@ -249,6 +249,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
+    lateinit var leadRequestViewModel: LeadRequestViewModel
 
     lateinit var prodCategoryArrayList: JSONArray
     lateinit var prodCategorySort: JSONArray
@@ -448,6 +449,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         setContentView(R.layout.activity_leadgeneration)
         window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
         context = this@LeadGenerationActivity
+        leadRequestViewModel = ViewModelProvider(this).get(LeadRequestViewModel::class.java)
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
         leadSubMediaViewModel = ViewModelProvider(this).get(LeadSubMediaViewModel::class.java)
@@ -455,8 +457,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
-        leadGenerateSaveViewModel =
-            ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+        leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
         leadEditListViewModel = ViewModelProvider(this).get(LeadEditListViewModel::class.java)
         leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
@@ -475,8 +476,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
-        leadGenerateDefaultvalueViewModel =
-            ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+        leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
 
 
         setRegViews()
@@ -1967,6 +1967,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     private fun getRequestDetails(v: View) {
 //        var countLeadBy = 0
+        recyRequest!!.adapter = null
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1976,23 +1977,37 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                leadByViewModel.getLeadBy(this)!!.observe(
+                leadRequestViewModel.getLeadRequest(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
 
                             val jObject = JSONObject(msg)
-                            Log.e(TAG, "msg   228   " + msg.length)
-                            Log.e(TAG, "msg   228   " + msg)
+                            Log.e(TAG, "msg   19871   " + msg.length)
+                            Log.e(TAG, "msg   19872   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
-
                                 val jobjt = jObject.getJSONObject("CollectedByUsersList")
-                                leadByArrayList = jobjt.getJSONArray("CollectedByUsers")
-                                if (leadByArrayList.length() > 0) {
-                                    if (countLeadBy == 0) {
-                                        countLeadBy++
-                                        leadByPopup(leadByArrayList)
+                                leadRequestArrayList = jobjt.getJSONArray("CollectedByUsers")
+                                if (leadRequestArrayList.length() > 0) {
+                                    if (countRequestCount == 0) {
+                                        countRequestCount++
+                                        Log.e(TAG, "msg   19873   ")
+
+                                        if (leadRequestArrayList.length() > 4){
+                                            val params: ViewGroup.LayoutParams = recyRequest!!.getLayoutParams()
+                                            params.height = 500
+                                            recyRequest!!.setLayoutParams(params)
+                                        }
+
+
+                                        val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+                                        recyRequest!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = LeadRequestAdapter(this@LeadGenerationActivity, leadRequestArrayList)
+                                        recyRequest!!.adapter = adapter
+                                        adapter.setClickListener(this@LeadGenerationActivity)
+
+                                      //  leadByPopup(leadByArrayList)
                                     }
 
                                 }
@@ -6245,6 +6260,29 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //             edtProdproduct!!.setText(jsonObject.getString("product"))
 
             getLeadEditDetail(ID_LeadGenerate, ID_LeadGenerateProduct)
+
+
+        }
+
+        if (data.equals("LeadrequestClick")) {
+            Log.e(TAG,"6266  LeadrequestClick")
+
+                llCustomerDetail!!.visibility = View.VISIBLE
+
+                custDetailMode = "0"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
 
 
         }

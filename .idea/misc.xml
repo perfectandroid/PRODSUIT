@@ -152,10 +152,12 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_name.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_phones.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_posts.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/leadfrom_color.xml" value="0.181" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/main_pickup.xml" value="0.21" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/overduelistbg_svg.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/pending_svg.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/progress.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/requested_color.xml" value="0.181" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/round_border_trans.xml" value="0.2205" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/round_border_trans1.xml" value="0.239" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_24.xml" value="0.193" />
@@ -389,7 +391,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followupticket_report.xml" value="0.296875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.31354166666666666" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_history.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_history.xml" value="0.67" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_request.xml" value="0.43559718969555034" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_through.xml" value="0.3416666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_leaddetail.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_newlistticket_report.xml" value="0.3328125" />
@@ -421,6 +424,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_role.xml" value="0.309375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_sales.xml" value="0.27395833333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_warranty.xml" value="0.2859375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_statusticket_report.xml" value="0.5608899297423887" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_submedia.xml" value="0.3416666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.27037037037037037" />
