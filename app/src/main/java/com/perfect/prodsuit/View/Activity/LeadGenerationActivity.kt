@@ -76,6 +76,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var llCompanyName: LinearLayout? = null
     private var rltvPinCode: RelativeLayout? = null
     private var llProdDetail: LinearLayout? = null
+    private var llLeadRequest: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
@@ -294,17 +295,21 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var recyEmployee: RecyclerView? = null
     var recyLeadDetail: RecyclerView? = null
 
+
     private var tv_CustClick: TextView? = null
     private var tv_CompanyNameClick: TextView? = null
     private var tv_ProductClick: TextView? = null
     private var tv_LocationClick: TextView? = null
     private var tv_DateClick: TextView? = null
+    private var tv_LeadRequestClick: TextView? = null
     private var tv_LeadFromClick: TextView? = null
     private var tv_LeadThroughClick: TextView? = null
     private var tv_LeadByClick: TextView? = null
     private var tv_MediaTypeClick: TextView? = null
     private var tv_UploadImage: TextView? = null
     private var tv_MoreCommInfoClick: TextView? = null
+
+    var recyRequest: RecyclerView? = null
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
@@ -360,6 +365,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var dateFollowMode: String? = "1"  // GONE
         var custProdlMode: String? = "1" // GONE
         var locationMode: String? = "1" // GONE
+        var leadRequestMode: String? = "1" // GONE
         var leadfromMode: String? = "1" // GONE
         var leadThroughMode: String? = "1" // GONE
         var leadByMode: String? = "1" // GONE
@@ -398,6 +404,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
     }
+
+    var countRequestCount = 0
 
     var countLeadFrom = 0
     var countLeadThrough = 0
@@ -647,6 +655,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         custProdlMode = "1"
         locationMode = "1"
         dateMode = "1"
+        leadRequestMode = "1"
         leadfromMode = "1"
         leadThroughMode = "1"
         leadByMode = "1"
@@ -688,6 +697,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         llCompanyName = findViewById<LinearLayout>(R.id.llCompanyName)
         rltvPinCode = findViewById<RelativeLayout>(R.id.rltvPinCode)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
+        llLeadRequest = findViewById<LinearLayout>(R.id.llLeadRequest)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
@@ -762,12 +772,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
         tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
         tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
+        tv_LeadRequestClick = findViewById<TextView>(R.id.tv_LeadRequestClick)
         tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
         tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
         tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
         tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
         tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
         tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
+
+
+        recyRequest = findViewById<RecyclerView>(R.id.recyRequest)
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
@@ -785,6 +799,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         txtok1!!.setOnClickListener(this)
         txtok2!!.setOnClickListener(this)
         // llCustomer!!.setOnClickListener(this)
+        llLeadRequest!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
@@ -818,6 +833,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         tv_ProductClick!!.setOnClickListener(this)
         tv_LocationClick!!.setOnClickListener(this)
         tv_DateClick!!.setOnClickListener(this)
+        tv_LeadRequestClick!!.setOnClickListener(this)
         tv_LeadFromClick!!.setOnClickListener(this)
         tv_LeadThroughClick!!.setOnClickListener(this)
         tv_LeadByClick!!.setOnClickListener(this)
@@ -923,6 +939,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -951,6 +968,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -975,6 +993,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1190,6 +1209,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "0"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1216,6 +1236,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "0"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1259,6 +1280,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "0"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1271,6 +1293,34 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 // datePickerPopup()
                 dateSelectMode = 0
                 openBottomSheet()
+            }
+
+            R.id.tv_LeadRequestClick -> {
+              //  rrrr
+                if (leadRequestMode.equals("0")) {
+                    llLeadRequest!!.visibility = View.GONE
+                    leadRequestMode = "1"
+                } else {
+                    llLeadRequest!!.visibility = View.VISIBLE
+                    //leadfromMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "0"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+                    hideViews()
+
+                    countRequestCount = 0
+                    getRequestDetails(v)
+                }
             }
 
             R.id.tv_LeadFromClick -> {
@@ -1287,6 +1337,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "0"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1317,6 +1368,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "0"
                     leadByMode = "1"
@@ -1376,6 +1428,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "0"
@@ -1405,6 +1458,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1433,6 +1487,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     custProdlMode = "1"
                     locationMode = "1"
                     dateMode = "1"
+                    leadRequestMode = "1"
                     leadfromMode = "1"
                     leadThroughMode = "1"
                     leadByMode = "1"
@@ -1836,6 +1891,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         if (dateMode.equals("1")) {
             ll_Todate!!.visibility = View.GONE
         }
+        if (leadRequestMode.equals("1")) {
+            llLeadRequest!!.visibility = View.GONE
+        }
         if (leadfromMode.equals("1")) {
             llLeadFrom!!.visibility = View.GONE
         }
@@ -1905,6 +1963,69 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun getRequestDetails(v: View) {
+//        var countLeadBy = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                leadByViewModel.getLeadBy(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG, "msg   228   " + msg.length)
+                            Log.e(TAG, "msg   228   " + msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("CollectedByUsersList")
+                                leadByArrayList = jobjt.getJSONArray("CollectedByUsers")
+                                if (leadByArrayList.length() > 0) {
+                                    if (countLeadBy == 0) {
+                                        countLeadBy++
+                                        leadByPopup(leadByArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
     }
 
 

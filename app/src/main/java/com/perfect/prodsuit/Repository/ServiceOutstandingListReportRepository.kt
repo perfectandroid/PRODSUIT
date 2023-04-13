@@ -32,6 +32,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -41,6 +44,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -50,6 +56,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -59,6 +68,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -68,6 +80,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -77,6 +92,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -86,6 +104,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      },\n" +
@@ -95,15 +116,9 @@ object ServiceOutstandingListReportRepository {
                     "        \"Customer\": \"Mallika\",\n" +
                     "        \"Product\": \"Solar Panel\",\n" +
                     "        \"Complaint\": \"Server Issue\",\n" +
-                    "        \"CurrentStatus\": \"Pending\",\n" +
-                    "        \"Description\": \"\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"TicketNo\": \"TKT-0559\",\n" +
-                    "        \"TicketDate\": \"04/04/2023\",\n" +
-                    "        \"Customer\": \"Mallika\",\n" +
-                    "        \"Product\": \"Solar Panel\",\n" +
-                    "        \"Complaint\": \"Server Issue\",\n" +
+                    "        \"Mobile\": \"98797987987\",\n" +
+                    "        \"Area\": \"NADUVANNUR\",\n" +
+                    "        \"Due\": \"69\",\n" +
                     "        \"CurrentStatus\": \"Pending\",\n" +
                     "        \"Description\": \"\"\n" +
                     "      }\n" +
