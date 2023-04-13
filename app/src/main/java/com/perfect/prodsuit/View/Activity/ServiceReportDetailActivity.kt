@@ -713,65 +713,85 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
         var jsonObject = jsonArray.getJSONObject(position)
 
-//        val ll_NewDisable = view.findViewById<LinearLayout>(R.id.ll_NewDisable)
-//        val ll_followDisable = view.findViewById<LinearLayout>(R.id.ll_followDisable)
-//
-//        val imgClose = view.findViewById<ImageView>(R.id.imgClose)
-//        val txtLeadNo = view.findViewById<TextView>(R.id.txtLeadNo)
-//        val txtLeadDate = view.findViewById<TextView>(R.id.txtLeadDate)
-//        val txtCustomer = view.findViewById<TextView>(R.id.txtCustomer)
-//        val txtProduct = view.findViewById<TextView>(R.id.txtProduct)
-//
-//        val txtAction = view.findViewById<TextView>(R.id.txtAction)
-//        val txtActionType = view.findViewById<TextView>(R.id.txtActionType)
-//        val txtCommitedDate = view.findViewById<TextView>(R.id.txtCommitedDate)
-//        val txtAssignee = view.findViewById<TextView>(R.id.txtAssignee)
-//        val txtCompletedDate = view.findViewById<TextView>(R.id.txtCompletedDate)
-//        val txtDueDays = view.findViewById<TextView>(R.id.txtDueDays)
-//
-//        val txtPriority = view.findViewById<TextView>(R.id.txtPriority)
-//        val txtLeadFrom = view.findViewById<TextView>(R.id.txtLeadFrom)
-//        val txtLeadSource = view.findViewById<TextView>(R.id.txtLeadSource)
-//        val txtCollectedBy = view.findViewById<TextView>(R.id.txtCollectedBy)
-//        val txtCurrentAssignee = view.findViewById<TextView>(R.id.txtCurrentAssignee)
-//        val txtStatus = view.findViewById<TextView>(R.id.txtStatus)
-//
-//        val txtRemarks = view.findViewById<TextView>(R.id.txtRemarks)
-//
-//        txtLeadNo!!.setText(jsonObject.getString("LeadNo"))
-//        txtLeadDate!!.setText(jsonObject.getString("LeadDate"))
-//        txtCustomer!!.setText(jsonObject.getString("Customer"))
-//        txtProduct!!.setText(jsonObject.getString("Product"))
-//
-//        if (ReportMode.equals("2")){
-//            ll_NewDisable.visibility = View.GONE
-//            ll_followDisable.visibility = View.VISIBLE
-//            txtAction!!.setText(jsonObject.getString("NextAction"))
-//            txtActionType!!.setText(jsonObject.getString("FollowUpMethod"))
-//            txtCommitedDate!!.setText(jsonObject.getString("LeadDate"))
-//            txtAssignee!!.setText(jsonObject.getString("AssignedTo"))
-//            txtCompletedDate!!.setText(jsonObject.getString("CompletedDate"))
-//            txtDueDays!!.setText(jsonObject.getString("DueDays"))
-//        }
-//        else if (ReportMode.equals("5")){
-//            ll_NewDisable.visibility = View.VISIBLE
-//            ll_followDisable.visibility = View.GONE
-//
-//            txtPriority!!.setText(jsonObject.getString("Priority"))
-//            txtLeadFrom!!.setText(jsonObject.getString("LeadFrom"))
-//            txtLeadSource!!.setText(jsonObject.getString("LeadByName"))
-//            txtCollectedBy!!.setText(jsonObject.getString("CollectedBy"))
-//            txtCurrentAssignee!!.setText(jsonObject.getString("AssignedTo"))
-//            txtStatus!!.setText(jsonObject.getString("CurrentStatus"))
-//        }
-//
-//
-//
-//        txtRemarks!!.setText(jsonObject.getString("Remarks"))
-//
-//        imgClose.setOnClickListener {
-//            dialog.dismiss()
-//        }
+        val ll_Product = view.findViewById<LinearLayout>(R.id.ll_Product)
+        val ll_Complaint = view.findViewById<LinearLayout>(R.id.ll_Complaint)
+        val ll_Services = view.findViewById<LinearLayout>(R.id.ll_Services)
+        val ll_Mobile = view.findViewById<LinearLayout>(R.id.ll_Mobile)
+        val ll_Area = view.findViewById<LinearLayout>(R.id.ll_Area)
+        val ll_CurrentStatus = view.findViewById<LinearLayout>(R.id.ll_CurrentStatus)
+        val ll_Due = view.findViewById<LinearLayout>(R.id.ll_Due)
+        val ll_Description = view.findViewById<LinearLayout>(R.id.ll_Description)
+        val ll_Employee = view.findViewById<LinearLayout>(R.id.ll_Employee)
+        val ll_ServiceCost = view.findViewById<LinearLayout>(R.id.ll_ServiceCost)
+        val ll_TaxAmount = view.findViewById<LinearLayout>(R.id.ll_TaxAmount)
+        val ll_TotalAmount = view.findViewById<LinearLayout>(R.id.ll_TotalAmount)
+
+        val txtTicketNo = view.findViewById<TextView>(R.id.txtTicketNo)
+        val txtTicketDate = view.findViewById<TextView>(R.id.txtTicketDate)
+        val txtCustomer = view.findViewById<TextView>(R.id.txtCustomer)
+        val txtProduct = view.findViewById<TextView>(R.id.txtProduct)
+        val txtComplaint = view.findViewById<TextView>(R.id.txtComplaint)
+        val txtServices = view.findViewById<TextView>(R.id.txtServices)
+        val txtMobile = view.findViewById<TextView>(R.id.txtMobile)
+        val txtArea = view.findViewById<TextView>(R.id.txtArea)
+        val txtCurrentStatus = view.findViewById<TextView>(R.id.txtCurrentStatus)
+        val txtDue = view.findViewById<TextView>(R.id.txtDue)
+        val txtDescription = view.findViewById<TextView>(R.id.txtDescription)
+        val txtEmployee = view.findViewById<TextView>(R.id.txtEmployee)
+        val txtServiceCost = view.findViewById<TextView>(R.id.txtServiceCost)
+        val txtTaxAmount = view.findViewById<TextView>(R.id.txtTaxAmount)
+        val txtTotalAmount = view.findViewById<TextView>(R.id.txtTotalAmount)
+
+        val imgClose = view.findViewById<ImageView>(R.id.imgClose)
+
+        txtTicketNo!!.setText(jsonObject.getString("TicketNo"))
+        txtTicketDate!!.setText(jsonObject.getString("TicketDate"))
+        txtCustomer!!.setText(jsonObject.getString("Customer"))
+
+        if (ReportMode.equals("1")){
+            ll_Product.visibility = View.VISIBLE
+            ll_Complaint.visibility = View.VISIBLE
+            ll_CurrentStatus.visibility = View.VISIBLE
+            ll_Description.visibility = View.VISIBLE
+
+            txtProduct!!.setText(jsonObject.getString("Product"))
+            txtComplaint!!.setText(jsonObject.getString("Complaint"))
+            txtCurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
+            txtDescription!!.setText(jsonObject.getString("Description"))
+        }
+        else if (ReportMode.equals("3")){
+            ll_Product.visibility = View.VISIBLE
+            ll_Complaint.visibility = View.VISIBLE
+            ll_Mobile.visibility = View.VISIBLE
+            ll_Area.visibility = View.VISIBLE
+            ll_CurrentStatus.visibility = View.VISIBLE
+            ll_Due.visibility = View.VISIBLE
+
+            txtProduct!!.setText(jsonObject.getString("Product"))
+            txtComplaint!!.setText(jsonObject.getString("Complaint"))
+            txtMobile!!.setText(jsonObject.getString("Mobile"))
+            txtArea!!.setText(jsonObject.getString("Area"))
+            txtCurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
+            txtDue!!.setText(jsonObject.getString("Due"))
+        }
+        else if (ReportMode.equals("6")){
+            ll_Services.visibility = View.VISIBLE
+            ll_Employee.visibility = View.VISIBLE
+            ll_ServiceCost.visibility = View.VISIBLE
+            ll_TaxAmount.visibility = View.VISIBLE
+            ll_TotalAmount.visibility = View.VISIBLE
+
+            txtServices!!.setText(jsonObject.getString("Services"))
+            txtEmployee!!.setText(jsonObject.getString("Employees"))
+            txtServiceCost!!.setText(jsonObject.getString("ServiceCost"))
+            txtTaxAmount!!.setText(jsonObject.getString("TaxAmount"))
+            txtTotalAmount!!.setText(jsonObject.getString("TotalAmount"))
+        }
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.setCancelable(false)
         dialog!!.setContentView(view)
 

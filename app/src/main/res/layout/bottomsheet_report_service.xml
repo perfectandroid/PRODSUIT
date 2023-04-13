@@ -27,7 +27,7 @@
                 android:src="@drawable/svg_closered"/>
 
             <LinearLayout
-                android:id="@+id/ll_LeadNo"
+                android:id="@+id/ll_TicketNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.2"
-                    android:text="Lead No"
+                    android:text="Ticket No"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
                     android:justificationMode="inter_word"
@@ -61,7 +61,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtLeadNo"
+                    android:id="@+id/txtTicketNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -79,7 +79,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_LeadDate"
+                android:id="@+id/ll_TicketDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.2"
-                    android:text="Lead Date"
+                    android:text="Ticket Date"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
                     android:justificationMode="inter_word"
@@ -113,7 +113,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtLeadDate"
+                    android:id="@+id/txtTicketDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -186,7 +186,8 @@
                 android:id="@+id/ll_Product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
 
                 <TextView
@@ -245,7 +246,8 @@
                     android:id="@+id/ll_Complaint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -297,7 +299,8 @@
                     android:id="@+id/ll_Services"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -346,9 +349,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -397,9 +402,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -447,61 +454,14 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Completed Date"
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" : "
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txtCompletedDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="normal" />
-
-
-                </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_CurrentStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -560,9 +520,11 @@
                 android:visibility="visible">
 
                 <LinearLayout
+                    android:id="@+id/ll_Due"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -611,9 +573,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -662,9 +626,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_Employee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -713,9 +679,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_ServiceCost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -764,9 +732,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_TaxAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -815,9 +785,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_TotalAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
