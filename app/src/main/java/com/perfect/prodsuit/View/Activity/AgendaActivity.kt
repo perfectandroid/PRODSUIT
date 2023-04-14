@@ -106,6 +106,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
     var ID_ActionType : String?= ""
     var SubMode : String?= "1"
     internal var sortFilter:Int = 0
+    var selectedPos:Int = 0
 
     lateinit var agendaTypeViewModel: AgendaTypeViewModel
     lateinit var sortAgendaViewModel: SortAgendaViewModel
@@ -474,7 +475,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                    // val lLayout = GridLayoutManager(this@AgendaActivity, 1)
                                     recyAgendaType!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                    // recyAgendaType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    val adapter = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
+                                    val adapter = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList,selectedPos)
                                     recyAgendaType!!.adapter = adapter
                                     adapter.setClickListener(this@AgendaActivity)
 
@@ -560,7 +561,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                             val msg = todolistSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                Log.e(TAG,"getTodoList   524   "+msg)
+                                Log.e(TAG,"getTodoList   52412   "+msg)
                                 Log.e(TAG,"getTodoList   524   "+toDoDet)
                                 if (toDoDet == 0){
                                     toDoDet++
@@ -573,6 +574,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                         todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
+                                        Log.e(TAG,"todoArrayList   5243   "+todoArrayList)
                                         val lLayout = GridLayoutManager(this@AgendaActivity, 1)
                                         rv_todolist!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
@@ -587,7 +589,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
                                        var jsonObject = agendaTypeArrayList.getJSONObject(0)
                                         jsonObject.put("Count",todoArrayList.length())
                                         Log.e(TAG,"agendaTypeArrayList   553   "+agendaTypeArrayList)
-                                        val adapter1 = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList)
+                                        val adapter1 = AgendaTypeAdapter(this@AgendaActivity, agendaTypeArrayList,selectedPos)
                                         recyAgendaType!!.adapter = adapter1
                                         adapter1.setClickListener(this@AgendaActivity)
 
@@ -1029,6 +1031,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             agendaTypeClick = "0"
         //    getActionTypes(Id_Agenda)
 
+            selectedPos = position
             if (Id_Agenda.equals("1")){
 
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
@@ -1048,6 +1051,21 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             }
             else if (Id_Agenda.equals("2")){
                 rv_todolist!!.visibility  =View.GONE
+
+//                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+//                val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+//                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//
+//                ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+//                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//                ID_Lead_Details = ""
+//                strLeadValue = ""
+//
+//                rv_todolist!!.visibility  =View.VISIBLE
+//                rv_todolist!!.adapter = null
+//                toDoDet = 0
+//                getTodoList()
             }
 
 

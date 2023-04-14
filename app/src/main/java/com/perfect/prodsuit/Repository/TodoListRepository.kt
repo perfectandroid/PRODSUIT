@@ -105,7 +105,7 @@ object TodoListRepository {
                 requestObject1.put("ID_TodoListLeadDetails", ProdsuitApplication.encryptStart(ID_Lead_Details))
 
                 Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
-                Log.e("TAG","requestObject1   7412     "+requestObject1)
+                Log.e("TAG123","requestObject1   7412     "+requestObject1)
                 Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
                 Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
 
@@ -125,7 +125,7 @@ object TodoListRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e("TodoList Respose",response.body())
+                        Log.e("TodoList Respose  123   ",response.body())
                         val jObject = JSONObject(response.body())
 
                         val users = ArrayList<TodoListModel>()

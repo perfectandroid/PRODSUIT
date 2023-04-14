@@ -192,8 +192,12 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_new.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_ongoing.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient_pop.xml" value="0.1945" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradients.xml" value="0.259" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_left_arrow.xml" value="0.218" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_oval_border.xml" value="0.208" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_pending.xml" value="0.208" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle_border.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_service_list.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_shadow.xml" value="0.157" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_top_rounded.xml" value="0.1695" />
@@ -272,6 +276,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_side_menu.xml" value="0.271" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sms_mobile.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_subject.xml" value="0.1695" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tab.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tap_finger.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tog_cus.xml" value="0.2165" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_tog_mob.xml" value="0.2165" />
@@ -308,7 +313,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_note.xml" value="0.29025641025641025" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_remark.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_add_remark_multiple.xml" value="0.25846153846153846" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_agenda.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_call_remark.xml" value="0.8243559718969555" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_contact_us.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.3175925925925926" />
@@ -370,7 +375,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_actionticket_report.xml" value="0.3328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_activity_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_agenda_detail.xml" value="0.2203125" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_agenda_type.xml" value="0.2515625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_agenda_type.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_area_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_bar_chart.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2625" />
