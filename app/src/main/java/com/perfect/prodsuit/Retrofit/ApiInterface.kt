@@ -369,6 +369,9 @@ interface ApiInterface {
     @POST("Service/CustomerServiceRegisterCount")
     fun getCustomerserviceregisterCount(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/FollowUpPaymentMethod")
+    fun getFollowUpPaymentMethod(@Body body: RequestBody): Call<String>
+
 
 
 

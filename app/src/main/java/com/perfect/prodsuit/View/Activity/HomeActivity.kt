@@ -1007,7 +1007,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                             decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
                                             Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
 
-
                                         }
                                     }
                                     else

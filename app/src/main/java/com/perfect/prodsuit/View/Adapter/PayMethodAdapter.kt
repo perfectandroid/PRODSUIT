@@ -36,7 +36,7 @@ class PayMethodAdapter (internal var context: Context, internal var jsonArray: J
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtPayMethod.text        = jsonObject!!.getString("CategoryName")
+                holder.txtPayMethod.text        = jsonObject!!.getString("PaymentName")
 
                 holder.llPaymentMethod!!.setTag(position)
                 holder.llPaymentMethod!!.setOnClickListener(View.OnClickListener {

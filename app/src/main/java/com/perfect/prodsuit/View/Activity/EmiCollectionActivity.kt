@@ -817,8 +817,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         if (data.equals("paymentMethod")){
             dialogPaymentMethod!!.dismiss()
             val jsonObject = paymentMethodeArrayList.getJSONObject(position)
-            ID_PaymentMethod= jsonObject.getString("ID_Category")
-            edtPayMethod!!.setText(jsonObject.getString("CategoryName"))
+            ID_PaymentMethod= jsonObject.getString("ID_PaymentMethod")
+            edtPayMethod!!.setText(jsonObject.getString("PaymentName"))
         }
     }
 
@@ -978,8 +978,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1224   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
-                                        paymentMethodeArrayList = jobjt.getJSONArray("CategoryList")
+                                        val jobjt = jObject.getJSONObject("FollowUpPaymentMethod")
+                                        paymentMethodeArrayList = jobjt.getJSONArray("FollowUpPaymentMethodList")
                                         if (paymentMethodeArrayList.length() > 0) {
 
                                             payMethodPopup(paymentMethodeArrayList)
