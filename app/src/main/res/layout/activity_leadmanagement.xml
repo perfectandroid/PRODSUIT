@@ -429,7 +429,8 @@
                                 android:background="@drawable/svg_lead_man_upcoming"
                                 android:backgroundTint="@color/mylead_Color"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"

@@ -560,7 +560,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                        val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             if (cMpin == 0) {
-                                Log.v("dsfsdfdsddddd", "in1")
+                                Log.e("dsfsdfdsddddd", "in1")
                                 cMpin++
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
