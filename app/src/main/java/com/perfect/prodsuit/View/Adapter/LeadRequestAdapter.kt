@@ -37,8 +37,10 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtName.text         = jsonObject!!.getString("Name")
-                holder.txtDepartment.text         = jsonObject!!.getString("DepartmentName")
+                holder.txtName.text         = jsonObject!!.getString("Customer")
+                holder.txtDepartment.text         = jsonObject!!.getString("Mobile")
+                holder.txtDescription.text         = jsonObject!!.getString("DESCRIPTION")
+                holder.txtAssignedDate.text         = jsonObject!!.getString("AssignedDate")
 
 
                 holder.llRequest!!.setTag(position)
@@ -72,10 +74,14 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var txtName         : TextView
         internal var txtDepartment        : TextView
+        internal var txtDescription        : TextView
+        internal var txtAssignedDate        : TextView
         internal var llRequest    : LinearLayout
         init {
             txtName         = v.findViewById<View>(R.id.txtName) as TextView
             txtDepartment        = v.findViewById<View>(R.id.txtDepartment) as TextView
+            txtDescription        = v.findViewById<View>(R.id.txtDescription) as TextView
+            txtAssignedDate        = v.findViewById<View>(R.id.txtAssignedDate) as TextView
             llRequest    = v.findViewById<View>(R.id.llRequest) as LinearLayout
         }
     }

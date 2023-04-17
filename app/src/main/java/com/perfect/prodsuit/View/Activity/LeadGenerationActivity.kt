@@ -25,6 +25,7 @@ import android.util.Patterns
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -67,6 +68,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var mMinute: Int = 0
     val TAG: String = "LeadGenerationActivity"
     lateinit var context: Context
+
+    private var cardLeadRequest: CardView? = null
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
@@ -250,6 +253,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
     lateinit var leadRequestViewModel: LeadRequestViewModel
+    lateinit var getGenralSettingsViewModel: GetGenralSettingsViewModel
 
     lateinit var prodCategoryArrayList: JSONArray
     lateinit var prodCategorySort: JSONArray
@@ -326,6 +330,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
         var HasSubMedia: String? = ""   //  0-None ,  1-Has
 
+        var ID_CustomerAssignment: String? = ""
         var ID_LeadFrom: String? = ""
         var ID_LeadThrough: String? = ""
         var ID_MediaSubMaster: String? = ""
@@ -407,6 +412,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     }
 
     var countRequestCount = 0
+    var requestLicenceCount = 0
 
     var countLeadFrom = 0
     var countLeadThrough = 0
@@ -449,6 +455,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         setContentView(R.layout.activity_leadgeneration)
         window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
         context = this@LeadGenerationActivity
+        getGenralSettingsViewModel = ViewModelProvider(this).get(GetGenralSettingsViewModel::class.java)
         leadRequestViewModel = ViewModelProvider(this).get(LeadRequestViewModel::class.java)
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
@@ -487,6 +494,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         // getCalendarId(context)
 
         clearData()
+        getLeadRequestLicences()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -511,6 +519,73 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         // getDefaultValueSettings()
     }
 
+    private fun getLeadRequestLicences() {
+
+        var nameKey = "LFLR"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                getGenralSettingsViewModel.getRequestLicence(this,nameKey)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+
+                            Log.e(TAG, "msg   5291   " + msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("GenralSettingsDetails")
+                                var strGsValue = jobjt.getString("GsValue")
+                                Log.e(TAG, "strGsValue   5292   " + strGsValue)
+                                if (strGsValue.equals("true")){
+                                    Log.e(TAG, "strGsValue   52921   " + strGsValue)
+                                    cardLeadRequest!!.visibility = View.VISIBLE
+                                }else{
+                                    Log.e(TAG, "strGsValue   52922   " + strGsValue)
+                                    cardLeadRequest!!.visibility = View.GONE
+                                }
+//                                leadRequestArrayList = jobjt.getJSONArray("CollectedByUsers")
+//                                if (leadRequestArrayList.length() > 0) {
+//                                    if (requestLicenceCount == 0) {
+//                                        requestLicenceCount++
+//                                        Log.e(TAG, "msg   19873   ")
+//
+//
+//                                        //  leadByPopup(leadByArrayList)
+//                                    }
+//
+//                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+    }
+
 
     private fun clearData() {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -518,6 +593,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         strLeadFromHint = "Lead From"
 
         Customer_Mode = "0"
+        ID_CustomerAssignment = ""
         ID_Customer = ""
         Customer_Type = ""
         Customer_Name = ""
@@ -684,6 +760,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
+        cardLeadRequest = findViewById<CardView>(R.id.cardLeadRequest)
         actv_nammob = findViewById<AutoCompleteTextView>(R.id.actv_nammob)
         actv_namTitle = findViewById<AutoCompleteTextView>(R.id.actv_namTitle)
         img_search = findViewById<ImageView>(R.id.img_search)
@@ -1297,6 +1374,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             R.id.tv_LeadRequestClick -> {
               //  rrrr
+                Config.disableClick(v)
                 if (leadRequestMode.equals("0")) {
                     llLeadRequest!!.visibility = View.GONE
                     leadRequestMode = "1"
@@ -1987,8 +2065,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                             Log.e(TAG, "msg   19871   " + msg.length)
                             Log.e(TAG, "msg   19872   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("CollectedByUsersList")
-                                leadRequestArrayList = jobjt.getJSONArray("CollectedByUsers")
+                                val jobjt = jObject.getJSONObject("WalkingCustomerDetailsList")
+                                leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
                                 if (leadRequestArrayList.length() > 0) {
                                     if (countRequestCount == 0) {
                                         countRequestCount++
@@ -2013,6 +2091,21 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 }
 
                             } else {
+
+                                custDetailMode = "1"
+                                companyNameMode = "1"
+                                moreCommInfoMode = "1"
+                                custProdlMode = "1"
+                                locationMode = "1"
+                                dateMode = "1"
+                                leadRequestMode = "1"
+                                leadfromMode = "1"
+                                leadThroughMode = "1"
+                                leadByMode = "1"
+                                mediaTypeMode = "1"
+                                uploadImageMode = "1"
+                                hideViews()
+
                                 val builder = AlertDialog.Builder(
                                     this@LeadGenerationActivity,
                                     R.style.MyDialogTheme
@@ -2030,11 +2123,25 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+
                         }
                     })
                 progressDialog!!.dismiss()
             }
             false -> {
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+                hideViews()
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
@@ -5956,6 +6063,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             // custDetailMode = "1"
+            ID_CustomerAssignment = ""
             Customer_Mode = "1"  // SEARCH
             ID_Customer = jsonObject.getString("ID_Customer")
             Customer_Type = jsonObject.getString("Customer_Type")
@@ -6267,7 +6375,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         if (data.equals("LeadrequestClick")) {
             Log.e(TAG,"6266  LeadrequestClick")
 
+            val jsonObject = leadRequestArrayList.getJSONObject(position)
+
                 llCustomerDetail!!.visibility = View.VISIBLE
+                ID_Customer = ""
+                edt_customer!!.setText("")
+                ID_CustomerAssignment = jsonObject.getString("ID_CustomerAssignment")
+                edtCustname!!.setText(jsonObject.getString("Customer"))
+                edtCustphone!!.setText(jsonObject.getString("Mobile"))
 
                 custDetailMode = "0"
                 companyNameMode = "1"
@@ -6292,6 +6407,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     private fun LeadValidations(v: View) {
         Log.e(TAG, "LeadValidations  3732   " + ID_Customer + "  " + ID_Customer!!.length)
+        Log.e(TAG, "LeadValidations  3732   " + ID_CustomerAssignment + "  " + ID_CustomerAssignment!!.length)
         strComapnyName = edtCompanyName!!.text.toString()
         strContactPerson = edtContactPerson!!.text.toString()
         strContactNumber = edtContactNumber!!.text.toString()
@@ -6320,7 +6436,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        }
         else if (ID_CollectedBy.equals("")) {
             Config.snackBars(context, v, "Select Attended By")
-        } else if (ID_Customer!!.equals("")) {
+        } else if (ID_Customer!!.equals("") && ID_CustomerAssignment!!.equals("")) {
             Customer_Mode = "0"
             CusNameTitle = actv_namTitle!!.text.toString()
             Customer_Name = edtCustname!!.text.toString()
@@ -6414,6 +6530,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     + "\n" + "Customer_Address1  : " + Customer_Address1
                     + "\n" + "Customer_Address2  : " + Customer_Address2
                     + "\n" + "Address 3  : " + FK_Area
+                    + "\n" + "ID_CustomerAssignment : " + ID_CustomerAssignment
         )
 
 
@@ -6543,6 +6660,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     + "\n" + "ID_BranchType      : " + ID_BranchType
                     + "\n" + "ID_Department      : " + ID_Department
                     + "\n" + "ID_Employee        : " + ID_Employee
+                    + "\n" + "ID_CustomerAssignment        : " + ID_CustomerAssignment
         )
 
 //        if (strLatitude.equals("") && strLongitue.equals("")){
@@ -7089,6 +7207,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         + "\n" + "CusNameTitle       : " + CusNameTitle + "@"
                         + "\n" + "CusNameTitle       : " + CusNameTitle!!.length
                         + "\n" + "ID_Customer        : " + ID_Customer
+                        + "\n" + "ID_CustomerAssignment        : " + ID_CustomerAssignment
                         + "\n" + "Customer_Name      : " + Customer_Name
                         + "\n" + "Customer_Mobile    : " + Customer_Mobile
                         + "\n" + "WhatsApp No        : " + strWhatsAppNo
@@ -7189,7 +7308,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         encode2,
                         Customer_Mode!!,
                         Customer_Type!!,
-                        strExpecteddate
+                        strExpecteddate,
+                        ID_CustomerAssignment!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

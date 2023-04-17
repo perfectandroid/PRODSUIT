@@ -198,6 +198,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_oval_border.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_pending.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle_border.xml" value="0.208" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rounded_corner_grey.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_service_list.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_shadow.xml" value="0.157" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_top_rounded.xml" value="0.1695" />
@@ -466,7 +467,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.35052083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.23489583333333333" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dialog_company.xml" value="0.315625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dialog_company.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dlte_lead.xml" value="0.33229166666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_count_filter_sheet.xml" value="0.5644028103044496" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_list_filter_sheet.xml" value="0.67" />

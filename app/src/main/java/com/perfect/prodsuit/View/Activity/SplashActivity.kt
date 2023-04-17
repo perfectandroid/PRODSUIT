@@ -314,11 +314,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             dialog1 .setContentView(R.layout.dialog_company)
             val window: Window? = dialog1.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
-            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
             val tie_CompanyCode = dialog1 .findViewById(R.id.tie_CompanyCode) as TextInputEditText
             val txt_valid_code = dialog1 .findViewById(R.id.txt_valid_code) as TextView
             val img_Code = dialog1 .findViewById(R.id.img_Code) as ImageView
+            val btnGo = dialog1 .findViewById(R.id.btnGo) as Button
             val txt_closed = dialog1 .findViewById(R.id.txt_closed) as TextView
 
             img_Code.setOnClickListener {
@@ -333,6 +334,20 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                     txt_valid_code!!.visibility = View.VISIBLE
                 }
             }
+
+            btnGo.setOnClickListener {
+                Config.disableClick(it)
+                if (tie_CompanyCode.text.toString().length>0){
+                    dialog1.dismiss()
+                    txt_valid_code!!.visibility = View.GONE
+                    checkCompanyApp = 0
+                    checkCompanyCode(tie_CompanyCode.text.toString(),Mode)
+
+                }else{
+                    txt_valid_code!!.visibility = View.VISIBLE
+                }
+            }
+
 
             txt_closed.setOnClickListener {
                 finishAffinity()

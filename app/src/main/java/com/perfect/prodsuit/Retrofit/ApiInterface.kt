@@ -372,6 +372,12 @@ interface ApiInterface {
     @POST("ServiceFollowUp/FollowUpPaymentMethod")
     fun getFollowUpPaymentMethod(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/GetGenralSettings")
+    fun getGenralSettings(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/WalkingCustomerDetailsList")
+    fun getWalkingCustomerDetailsList(@Body body: RequestBody): Call<String>
+
 
 
 

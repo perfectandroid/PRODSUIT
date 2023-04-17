@@ -184,8 +184,8 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun addTabItem() {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Collection"))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Collection"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
 
 //        tabLayout!!.getTabAt(0)?.orCreateBadge?.number = 5

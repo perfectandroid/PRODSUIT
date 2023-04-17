@@ -50,6 +50,13 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                   //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
                     holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
                 }
+                if (position == 1){
+                    //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
+                    holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+                    holder.ll_type!!.visibility = View.GONE
+                }
+
+
 
                 val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
                 Log.e(TAG,"IMAGE_URL 43   "+IMAGE_URLSP.getString("IMAGE_URL", null))
