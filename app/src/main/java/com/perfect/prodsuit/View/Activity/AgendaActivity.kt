@@ -864,6 +864,7 @@ class AgendaActivity : AppCompatActivity() , View.OnClickListener  , ItemClickLi
             val jsonObject = todoArrayList.getJSONObject(position)
             val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("SubMode", submode)
             startActivity(i)
         }
 

@@ -76,6 +76,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var tv_todo_count: TextView? = null
     private var tv_overdue_count: TextView? = null
     private var tv_upcoming_count: TextView? = null
+    private var tv_my_leadCount: TextView? = null
     private var imgv_filterManage: ImageView? = null
 
     lateinit var context: Context
@@ -119,6 +120,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         tv_todo_count = findViewById(R.id.tv_todo_count)
         tv_overdue_count = findViewById(R.id.tv_overdue_count)
         tv_upcoming_count = findViewById(R.id.tv_upcoming_count)
+        tv_my_leadCount = findViewById(R.id.tv_my_leadCount)
 
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
@@ -164,7 +166,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             }
             R.id.llmyLead->{
                 val i = Intent(this@LeadManagemnetActivity, MyLeadActivity::class.java)
-                i.putExtra("SubMode","3")
+                i.putExtra("SubMode","4")
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
                 i.putExtra("UserName",UserName)
@@ -614,6 +616,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 tv_todo_count!!.setText(jobjt.getString("Todolist"))
                                 tv_overdue_count!!.setText(jobjt.getString("OverDue"))
                                 tv_upcoming_count!!.setText(jobjt.getString("UpComingWorks"))
+                                tv_my_leadCount!!.setText(jobjt.getString("MyLeads"))
 
                             } else {
                                 val builder = AlertDialog.Builder(

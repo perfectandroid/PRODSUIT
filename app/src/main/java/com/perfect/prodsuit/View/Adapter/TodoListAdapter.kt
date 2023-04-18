@@ -115,9 +115,9 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
-                    if (!SubMode.equals("4")){
+                 //   if (!SubMode.equals("4")){
                         clickListener!!.onClick(position, "todolist")
-                    }
+                 //   }
 
                 })
 

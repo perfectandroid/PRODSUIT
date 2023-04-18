@@ -765,6 +765,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val jsonObject = overdueArrayList.getJSONObject(position)
             val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("SubMode", submode)
             startActivity(i)
         }
         if (data.equals("todocall")){

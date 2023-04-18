@@ -3622,21 +3622,53 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("PincodeDetails")
+                                        pinCodeArrayList = jobjt.getJSONArray("PincodeDetailsList")
+                                       // rrrrrrr
+//                                        val jobjt = jObject.getJSONObject("PincodeDetails")
 
-                                        FK_Country = jobjt.getString("FK_Country")
-                                        FK_States = jobjt.getString("FK_States")
-                                        FK_District = jobjt.getString("FK_District")
-                                        FK_Area = jobjt.getString("FK_Area")
-                                        FK_Place = jobjt.getString("FK_Place")
-                                        FK_Post = jobjt.getString("FK_Post")
+                                        if (pinCodeArrayList.length() == 1){
 
-                                        edtCountry!!.setText(jobjt.getString("Country"))
-                                        edtState!!.setText(jobjt.getString("States"))
-                                        edtDistrict!!.setText(jobjt.getString("District"))
-                                        edtArea!!.setText("")
-                                        edtPost!!.setText(jobjt.getString("Post"))
+                                            val jsonObject = pinCodeArrayList.getJSONObject(0)
 
-                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
+                                            FK_Country = jsonObject.getString("FK_Country")
+                                            FK_States = jsonObject.getString("FK_States")
+                                            FK_District = jsonObject.getString("FK_District")
+                                            FK_Area = jsonObject.getString("FK_Area")
+                                            FK_Place = jsonObject.getString("FK_Place")
+                                            FK_Post = jsonObject.getString("FK_Post")
+                                            FK_Area = jsonObject.getString("FK_Area")
+
+                                            edtCountry!!.setText(jsonObject.getString("Country"))
+                                            edtState!!.setText(jsonObject.getString("States"))
+                                            edtDistrict!!.setText(jsonObject.getString("District"))
+                                            edtArea!!.setText(jsonObject.getString("Area"))
+                                            edtPost!!.setText(jsonObject.getString("Post"))
+
+                                            Log.e(TAG, "Post  21082   " + jsonObject.getString("Post"))
+
+
+//                                            FK_Country = jobjt.getString("FK_Country")
+//                                            FK_States = jobjt.getString("FK_States")
+//                                            FK_District = jobjt.getString("FK_District")
+//                                            FK_Area = jobjt.getString("FK_Area")
+//                                            FK_Place = jobjt.getString("FK_Place")
+//                                            FK_Post = jobjt.getString("FK_Post")
+//                                            FK_Area = jobjt.getString("FK_Area")
+//
+//                                            edtCountry!!.setText(jobjt.getString("Country"))
+//                                            edtState!!.setText(jobjt.getString("States"))
+//                                            edtDistrict!!.setText(jobjt.getString("District"))
+//                                            edtArea!!.setText(jobjt.getString("Area"))
+//                                            edtPost!!.setText(jobjt.getString("Post"))
+//
+//                                            Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
+                                        }
+                                        else{
+                                            Log.e(TAG, "Post  210823   "+pinCodeArrayList )
+                                            pincodeDetailPopup(pinCodeArrayList)
+                                        }
+
+
 
                                     } else {
 
@@ -3682,6 +3714,30 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
     }
 
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+            dialogPinCode = Dialog(this)
+            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = PicodeDetailAdapter(this@LeadGenerationActivity, pinCodeArrayList)
+            recyPincodeDetails!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            dialogPinCode!!.show()
+            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun clearCommunicationInfo() {
         FK_Country = ""
         FK_States = ""
@@ -3699,29 +3755,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtCompanyContact!!.setText("")
     }
 
-    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
-        try {
 
-//            dialogPinCode = Dialog(this)
-//            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
-//            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-//            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
-//
-//            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
-//            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-////            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = PicodeDetailAdapter(this@LeadGenerationActivity, pinCodeArrayList)
-//            recyPincodeDetails!!.adapter = adapter
-//            adapter.setClickListener(this@LeadGenerationActivity)
-//
-//            dialogPinCode!!.show()
-//            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     private fun getCountry(v: View) {
 //        var countryDet = 0
@@ -6250,13 +6284,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             FK_States = ""
             FK_District = ""
-            //    FK_Area = ""
+            FK_Area = ""
             FK_Place = ""
             FK_Post = ""
 
             edtState!!.setText("")
             edtDistrict!!.setText("")
-            //    edtArea!!.setText("")
+            edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
 //             edtWhatsApp!!.setText("")
@@ -6274,12 +6308,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtState!!.setText(jsonObject.getString("States"))
 
             FK_District = ""
-            //    FK_Area = ""
+            FK_Area = ""
             FK_Place = ""
             FK_Post = ""
 
             edtDistrict!!.setText("")
-            //   edtArea!!.setText("")
+            edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
 //             edtWhatsApp!!.setText("")
@@ -6296,11 +6330,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             FK_District = jsonObject.getString("FK_District")
             edtDistrict!!.setText(jsonObject.getString("District"))
 
-            //  FK_Area = ""
+            FK_Area = ""
             FK_Place = ""
             FK_Post = ""
 
-            //   edtArea!!.setText("")
+            edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
 //             edtWhatsApp!!.setText("")
@@ -6339,6 +6373,28 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //             edtWhatsApp!!.setText("")
 //             edtCompanyContact!!.setText("")
 
+
+        }
+
+        if (data.equals("pincodedetails")) {
+
+
+            dialogPinCode!!.dismiss()
+            val jsonObject = pinCodeArrayList.getJSONObject(position)
+
+            FK_Country = jsonObject.getString("FK_Country")
+            FK_States = jsonObject.getString("FK_States")
+            FK_District = jsonObject.getString("FK_District")
+            FK_Area = jsonObject.getString("FK_Area")
+            FK_Place = jsonObject.getString("FK_Place")
+            FK_Post = jsonObject.getString("FK_Post")
+            FK_Area = jsonObject.getString("FK_Area")
+
+            edtCountry!!.setText(jsonObject.getString("Country"))
+            edtState!!.setText(jsonObject.getString("States"))
+            edtDistrict!!.setText(jsonObject.getString("District"))
+            edtArea!!.setText(jsonObject.getString("Area"))
+            edtPost!!.setText(jsonObject.getString("Post"))
 
         }
 

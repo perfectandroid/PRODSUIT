@@ -53,7 +53,7 @@ object LeadGenerateSaveRepository {
                                  Customer_Mode : String,Customer_Type : String,strExpecteddate :String,ID_CustomerAssignment : String) {
 
         Log.e("TAG","saveLeadGenerate  ")
-        Log.e(TAG,"LocationValidation  64212"
+        Log.e(TAG,"LocationValidation  6421232"
                 +"\n"+"ID_LeadGenerate    : "+ ID_LeadGenerate
                 +"\n"+"Enquiry date       : "+ strDate
                 +"\n"+"Attended by        : "+ ID_CollectedBy
