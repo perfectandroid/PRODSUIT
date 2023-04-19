@@ -342,6 +342,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_login.xml" value="0.21822916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_maps_agenda.xml" value="0.26145833333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_mpin.xml" value="0.2453125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_mylead.xml" value="0.550351288056206" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.26614583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.2791666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_pick_up_and_delivery.xml" value="0.752927400468384" />
@@ -445,7 +446,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_pie_chart.xml" value="0.18697916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/area_list_popup.xml" value="0.2989583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bannerslides.xml" value="0.5199063231850117" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_company_code.xml" value="0.17708333333333334" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_company_code.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_deletelead.xml" value="0.33229166666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_description.xml" value="0.27291666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_leadfilter.xml" value="0.3333333333333333" />
@@ -478,7 +479,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/employeeall_popup.xml" value="0.22135416666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/error_alert.xml" value="0.23697916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_manage.xml" value="0.5644028103044496" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_popup.xml" value="0.2375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_popup.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_editdetail_popup.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_generation_confirmation_popup.xml" value="0.5" />

@@ -555,7 +555,7 @@ object Config {
 
             var iLead = jsonObj!!.getString("LEAD")
             var iService = jsonObj!!.getString("SERVICE")
-            var iCollection = jsonObj!!.getString("INVENTORY")
+            var iCollection = jsonObj!!.getString("ACCOUNTS")
             var iPickUp = jsonObj!!.getString("DELIVERY")
 
             val jsonObject1 = JSONObject()
