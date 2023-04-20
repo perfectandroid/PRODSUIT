@@ -53,7 +53,6 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //    var tie_Comp_ToTime: TextInputEditText? = null
 
 
-
     lateinit var serviceWarrantyViewModel: ServiceWarrantyViewModel
     lateinit var serviceWarrantyArrayList : JSONArray
     var recyServiceWarranty: RecyclerView? = null
@@ -189,6 +188,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var postCount = 0
 
     lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
+    lateinit var pinCodeArrayList: JSONArray
+    private var dialogPinCode: Dialog? = null
+    var recyPinCode: RecyclerView? = null
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList: JSONArray
@@ -3865,6 +3867,23 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             var txtNewUserCancel = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserCancel)
             var txtNewUserSubmit = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserSubmit)
 
+            tie_CN_Pincode!!.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+                    tie_CN_Area!!.setText("")
+                    tie_CN_Post!!.setText("")
+                    FK_Area = ""
+                    FK_Post = ""
+                }
+
+                override fun afterTextChanged(editable: Editable) {
+
+                }
+            })
+
+
             til_CN_Pincode!!.setEndIconOnClickListener {
                 try {
                     strCnPinCode = tie_CN_Pincode!!.text.toString()
@@ -3930,22 +3949,53 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("PincodeDetails")
+                                        pinCodeArrayList = jobjt.getJSONArray("PincodeDetailsList")
+//                                        val jobjt = jObject.getJSONObject("PincodeDetails")
+//
+//                                        FK_Country = jobjt.getString("FK_Country")
+//                                        FK_States = jobjt.getString("FK_States")
+//                                        FK_District = jobjt.getString("FK_District")
+//                                        FK_Area = jobjt.getString("FK_Area")
+//                                        FK_Place = jobjt.getString("FK_Place")
+//                                        FK_Post = jobjt.getString("FK_Post")
+//
+//                                        tie_CN_Place!!.setText(jobjt.getString("Place"))
+//                                        tie_CN_Country!!.setText(jobjt.getString("Country"))
+//                                        tie_CN_State!!.setText(jobjt.getString("States"))
+//                                        tie_CN_District!!.setText(jobjt.getString("District"))
+//                                        tie_CN_Area!!.setText("")
+//                                        tie_CN_Post!!.setText(jobjt.getString("Post"))
+//
+//                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
 
-                                        FK_Country = jobjt.getString("FK_Country")
-                                        FK_States = jobjt.getString("FK_States")
-                                        FK_District = jobjt.getString("FK_District")
-                                        FK_Area = jobjt.getString("FK_Area")
-                                        FK_Place = jobjt.getString("FK_Place")
-                                        FK_Post = jobjt.getString("FK_Post")
+                                        if (pinCodeArrayList.length() == 1){
 
-                                        tie_CN_Place!!.setText(jobjt.getString("Place"))
-                                        tie_CN_Country!!.setText(jobjt.getString("Country"))
-                                        tie_CN_State!!.setText(jobjt.getString("States"))
-                                        tie_CN_District!!.setText(jobjt.getString("District"))
-                                        tie_CN_Area!!.setText("")
-                                        tie_CN_Post!!.setText(jobjt.getString("Post"))
+                                            val jsonObject = pinCodeArrayList.getJSONObject(0)
 
-                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
+                                            FK_Country = jsonObject.getString("FK_Country")
+                                            FK_States = jsonObject.getString("FK_States")
+                                            FK_District = jsonObject.getString("FK_District")
+                                            FK_Area = jsonObject.getString("FK_Area")
+                                            FK_Place = jsonObject.getString("FK_Place")
+                                            FK_Post = jsonObject.getString("FK_Post")
+                                            FK_Area = jsonObject.getString("FK_Area")
+
+                                            tie_CN_Place!!.setText(jsonObject.getString("Place"))
+                                            tie_CN_Country!!.setText(jsonObject.getString("Country"))
+                                            tie_CN_State!!.setText(jsonObject.getString("States"))
+                                            tie_CN_District!!.setText(jsonObject.getString("District"))
+                                            tie_CN_Area!!.setText(jsonObject.getString("Area"))
+                                            tie_CN_Post!!.setText(jsonObject.getString("Post"))
+
+                                            Log.e(TAG, "Post  21082   " + jsonObject.getString("Post"))
+
+
+                                        }
+                                        else{
+                                            Log.e(TAG, "Post  210823   "+pinCodeArrayList )
+                                            pincodeDetailPopup(pinCodeArrayList)
+                                        }
+
 
                                     } else {
 
@@ -3986,6 +4036,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+            dialogPinCode = Dialog(this)
+            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = PicodeDetailAdapter(this@CustomerServiceActivity, pinCodeArrayList)
+            recyPincodeDetails!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            dialogPinCode!!.show()
+            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -4912,6 +4986,29 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             }
 
 
+
+        }
+
+        if (data.equals("pincodedetails")) {
+
+
+            dialogPinCode!!.dismiss()
+            val jsonObject = pinCodeArrayList.getJSONObject(position)
+
+            FK_Country = jsonObject.getString("FK_Country")
+            FK_States = jsonObject.getString("FK_States")
+            FK_District = jsonObject.getString("FK_District")
+            FK_Area = jsonObject.getString("FK_Area")
+            FK_Place = jsonObject.getString("FK_Place")
+            FK_Post = jsonObject.getString("FK_Post")
+            FK_Area = jsonObject.getString("FK_Area")
+
+            tie_CN_Place!!.setText(jsonObject.getString("Place"))
+            tie_CN_Country!!.setText(jsonObject.getString("Country"))
+            tie_CN_State!!.setText(jsonObject.getString("States"))
+            tie_CN_District!!.setText(jsonObject.getString("District"))
+            tie_CN_Area!!.setText(jsonObject.getString("Area"))
+            tie_CN_Post!!.setText(jsonObject.getString("Post"))
 
         }
 
@@ -6122,6 +6219,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         til_CN_Pincode!!.isErrorEnabled = false
                         til_CN_Pincode!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
+
                 }
 
                 editable === tie_CN_Country!!.editableText -> {

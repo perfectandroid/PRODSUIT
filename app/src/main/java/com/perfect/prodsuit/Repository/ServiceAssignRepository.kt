@@ -92,7 +92,7 @@ object ServiceAssignRepository {
                 requestObject1.put("Assignees", strAssignees)
 
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
+                Log.e(TAG,"requestObject1   7812   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
