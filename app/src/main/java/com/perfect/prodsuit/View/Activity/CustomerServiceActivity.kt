@@ -468,7 +468,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 ReqMode = "73"
                 SubModeSearch = "1"
                 strCustomer = tie_CustomerName!!.text.toString()
-                getCustomerSearch()
+                if (strCustomer!!.length > 2){
+                    getCustomerSearch()
+                }else{
+                    til_CustomerName!!.setError("Enter at least three characters to search")
+                    til_CustomerName!!.setErrorIconDrawable(null)
+                    custDetailMode = "0"
+                    complaintMode  = "1"
+                    contDetailMode = "1"
+                    requestedMode  = "1"
+                    attDetailMode  = "1"
+
+                    hideViews()
+                }
+
             }else{
                 custNameMode = 0
                 til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.search_24))
@@ -1443,7 +1456,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if (ID_Customer.equals("") ){
+        else if (ID_Customer.equals("") && strCustomerName.equals("")){
 //            && strCustomerName.equals("")
            // til_CustomerName!!.setError("Select Customer ")
             til_CustomerName!!.setError("Enter or Select Customer ")
@@ -1888,6 +1901,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private fun saveCustomerService() {
 
+//        FK_Place = ""
+//        FK_Country = ""
+//        FK_States = ""
+//        FK_District = ""
+//        FK_Area = ""
+//        FK_Post = ""
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1898,7 +1917,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.show()
                 customerServiceRegisterViewModel.getcusServRegister(this,strUserAction!!,Customer_Type!!,ID_Customer!!,ID_Channel!!,ID_Priority!!,ID_Category!!,
                     ID_Company!!,ID_ComplaintList!!,ID_Services!!,ID_EmpMedia!!,ID_Status!!,ID_AttendedBy!!,strCustomerName!!,strMobileNo!!,strAddress!!,strContactNo!!,
-                    strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!)!!.observe(
+                    strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!,
+                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4097,6 +4117,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
         else{
             Log.e(TAG,"Success")
+
+            tie_CustomerName!!.setText(tie_CN_Name!!.text.toString())
+            tie_MobileNo!!.setText(tie_CN_Mobile!!.text.toString())
+            tie_Address!!.setText(tie_CN_HouseName!!.text.toString())
+
+            dialogAddUserSheet!!.dismiss()
         }
     }
 
@@ -6077,7 +6103,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 editable === tie_CustomerName!!.editableText -> {
                     Log.e(TAG,"283021    ")
 //                    if (tie_CustomerName!!.text.toString().equals("")){
-                    if (ID_Customer.equals("")){
+                    if (ID_Customer.equals("") && (tie_CustomerName!!.text.toString()).equals("")){
                         til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
                         til_CustomerName!!.isErrorEnabled = false

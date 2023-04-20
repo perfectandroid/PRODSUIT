@@ -1296,7 +1296,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             app:cardElevation="0dp"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
