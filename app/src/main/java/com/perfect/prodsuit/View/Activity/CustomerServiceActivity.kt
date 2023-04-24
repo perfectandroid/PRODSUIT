@@ -246,6 +246,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+    private var btnMore: Button? = null
 
     var dateMode = 0 // 0 = RegDate , 1 = Req FromDate , 2 = Req To date
     var timeMode = 0 // 0 = Req FromTime , 1 = Req ToTime
@@ -408,6 +409,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var lnrHead_customerdue_main : LinearLayout? = null
     private var lnrHead_customerdue_sub : LinearLayout? = null
 
+    private var ll_tab_warranty : LinearLayout? = null
+    private var ll_tab_production : LinearLayout? = null
+    private var ll_tab_sales : LinearLayout? = null
+    private var ll_tab_customerdue : LinearLayout? = null
+
+    private var horizontalScroll : HorizontalScrollView? = null
+
+    private var card_warranty : CardView? = null
+    private var card_production : CardView? = null
+    private var card_sales : CardView? = null
+    private var card_customerdue : CardView? = null
+
+    private var txtNext : TextView? = null
+
     private var tv_warranty_count : TextView? = null
     private var tv_product_count : TextView? = null
     private var tv_sales_count : TextView? = null
@@ -530,6 +545,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        btnMore = findViewById<Button>(R.id.btnMore)
 
 
         tv_customerClick!!.setOnClickListener(this)
@@ -540,6 +556,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+        btnMore!!.setOnClickListener(this)
 
 
         // Customer Details
@@ -1073,6 +1090,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 resetData()
             }
 
+            R.id.btnMore->{
+                Config.disableClick(v)
+                // detailBottomSheet()
+                var custname=tie_CustomerName!!.text.toString()
+                detailPopupSheet(custname)
+            }
 
         }
     }
@@ -4128,7 +4151,6 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private fun detailPopupSheet(custname: String) {
 
-
         try {
 
             warrantyMode = "1"
@@ -4197,6 +4219,21 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             lnrHead_customerdue_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_main) as LinearLayout
             lnrHead_customerdue_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_sub) as LinearLayout
 
+            horizontalScroll = dialogDetailSheet!! .findViewById(R.id.horizontalScroll) as HorizontalScrollView
+
+            ll_tab_warranty = dialogDetailSheet!! .findViewById(R.id.ll_tab_warranty) as LinearLayout
+            ll_tab_production = dialogDetailSheet!! .findViewById(R.id.ll_tab_production) as LinearLayout
+            ll_tab_sales = dialogDetailSheet!! .findViewById(R.id.ll_tab_sales) as LinearLayout
+            ll_tab_customerdue = dialogDetailSheet!! .findViewById(R.id.ll_tab_customerdue) as LinearLayout
+
+            card_warranty = dialogDetailSheet!! .findViewById(R.id.card_warranty) as CardView
+            card_production = dialogDetailSheet!! .findViewById(R.id.card_production) as CardView
+            card_sales = dialogDetailSheet!! .findViewById(R.id.card_sales) as CardView
+            card_customerdue = dialogDetailSheet!! .findViewById(R.id.card_customerdue) as CardView
+
+
+            txtNext = dialogDetailSheet!! .findViewById(R.id.txtNext) as TextView
+
             tv_warranty_count = dialogDetailSheet!! .findViewById(R.id.tv_warranty_count) as TextView
             tv_product_count = dialogDetailSheet!! .findViewById(R.id.tv_product_count) as TextView
             tv_sales_count = dialogDetailSheet!! .findViewById(R.id.tv_sales_count) as TextView
@@ -4206,6 +4243,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tv_product_count!!.text=servhistcount
             tv_sales_count!!.text=salcount
             tv_customerdue_count!!.text=custdue
+
+            warrantyMode = "0"
+            prodHistMode = "1"
+            saleHistMode = "1"
+            custDueMode = "1"
+            hideMoreViews()
 
 
 
@@ -4252,67 +4295,240 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             })
 
 
-            lnrHead_warranty_main!!.setOnClickListener {
+//            lnrHead_warranty_main!!.setOnClickListener {
+//                warrantyMode = "0"
+//                prodHistMode = "1"
+//                saleHistMode = "1"
+//                custDueMode = "1"
+//
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    warrantyDet = 0
+//                    getWarranty()
+//                }
+//
+//            }
+//            lnrHead_product_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "0"
+//                saleHistMode = "1"
+//                custDueMode = "1"
+//
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    productHistDet = 0
+//                    getProductHistory()
+//                }
+//
+//            }
+//            lnrHead_sales_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "1"
+//                saleHistMode = "0"
+//                custDueMode = "1"
+//
+//                if (!ID_Customer.equals("")){
+//                    salesHistDet = 0
+//                    getSalesHistory()
+//                }
+//
+//            }
+//
+//            lnrHead_customerdue_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "1"
+//                saleHistMode = "1"
+//                custDueMode = "0"
+//
+//                if (!ID_Customer.equals("")){
+//                    cutDueDet = 0
+//                    Log.e(TAG,"4117  getCustomerDueDetails")
+//                    try {
+//                        getCustomerDueDetails()
+//                    }catch (e: Exception){
+//                        Log.e(TAG,"Exception 4136  "+e.toString())
+//                    }
+//
+//                }
+//
+//            }
+
+
+            ll_tab_warranty!!.setOnClickListener {
                 warrantyMode = "0"
                 prodHistMode = "1"
                 saleHistMode = "1"
                 custDueMode = "1"
 
-                if (!ID_Product.equals("") && !ID_Customer.equals("")){
-                    warrantyDet = 0
-                    getWarranty()
-                }
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    warrantyDet = 0
+//                    getWarranty()
+//                }
+
+                hideMoreViews()
+
 
             }
-            lnrHead_product_main!!.setOnClickListener {
+            ll_tab_production!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "0"
                 saleHistMode = "1"
                 custDueMode = "1"
 
-                if (!ID_Product.equals("") && !ID_Customer.equals("")){
-                    productHistDet = 0
-                    getProductHistory()
-                }
-
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    productHistDet = 0
+//                    getProductHistory()
+//                }
+                hideMoreViews()
             }
-            lnrHead_sales_main!!.setOnClickListener {
+            ll_tab_sales!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "1"
                 saleHistMode = "0"
                 custDueMode = "1"
-
-                if (!ID_Customer.equals("")){
-                    salesHistDet = 0
-                    getSalesHistory()
-                }
-
+//
+//                if (!ID_Customer.equals("")){
+//                    salesHistDet = 0
+//                    getSalesHistory()
+//                }
+                hideMoreViews()
             }
 
-            lnrHead_customerdue_main!!.setOnClickListener {
+            ll_tab_customerdue!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "1"
                 saleHistMode = "1"
                 custDueMode = "0"
 
-                if (!ID_Customer.equals("")){
-                    cutDueDet = 0
-                    Log.e(TAG,"4117  getCustomerDueDetails")
-                    try {
-                        getCustomerDueDetails()
-                    }catch (e: Exception){
-                        Log.e(TAG,"Exception 4136  "+e.toString())
-                    }
+//                if (!ID_Customer.equals("")){
+//                    cutDueDet = 0
+//                    Log.e(TAG,"4117  getCustomerDueDetails")
+//                    try {
+//                        getCustomerDueDetails()
+//                    }catch (e: Exception){
+//                        Log.e(TAG,"Exception 4136  "+e.toString())
+//                    }
+//
+//                }
 
-                }
+                hideMoreViews()
 
             }
+
+//            txtNext!!.setOnClickListener {
+//
+//                if (warrantyMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "0"
+//                    saleHistMode = "1"
+//                    custDueMode = "1"
+//                }
+//                else if (prodHistMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "1"
+//                    saleHistMode = "0"
+//                    custDueMode = "1"
+//                }
+//                else if (saleHistMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "1"
+//                    saleHistMode = "1"
+//                    custDueMode = "0"
+//                }
+//                else if (custDueMode.equals("0")){
+//
+//                }
+//
+//
+//                hideMoreViews()
+//
+//
+//            }
 
             dialogDetailSheet!!.show()
            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun hideMoreViews() {
+
+//        ll_tab_warranty!!.visibility = View.VISIBLE
+//        ll_tab_production!!.visibility = View.VISIBLE
+//        ll_tab_sales!!.visibility = View.VISIBLE
+//        ll_tab_customerdue!!.visibility = View.VISIBLE
+
+        card_warranty!!.visibility = View.GONE
+        card_production!!.visibility = View.GONE
+        card_sales!!.visibility = View.GONE
+        card_customerdue!!.visibility = View.GONE
+
+       Log.e(TAG,"COUNTS   4465   "+ horizontalScroll!!.childCount)
+
+        ll_tab_warranty!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_sales!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_customerdue!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+
+        if (warrantyMode.equals("0")){
+            ll_tab_warranty!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+         //   card_warranty!!.requestFocus()
+           // horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+         //   horizontalScroll!!.scrollTo(ll_tab_warranty!!.getRight(), ll_tab_warranty!!.getTop())
+          //  horizontalScroll!!.smoothScrollTo(0, ll_tab_warranty!!.getBottom())
+            card_warranty!!.visibility = View.VISIBLE
+            if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                warrantyDet = 0
+                getWarranty()
+            }
+
+        }
+
+        if (prodHistMode.equals("0")){
+            ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+
+            card_production!!.visibility = View.VISIBLE
+         //   horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+          //  horizontalScroll!!.scrollTo(ll_tab_production!!.getRight(), ll_tab_production!!.getTop())
+         //   horizontalScroll!!.smoothScrollTo(1, ll_tab_production!!.getBottom())
+          //  card_production!!.requestFocus()
+            if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                productHistDet = 0
+                getProductHistory()
+            }
+        }
+
+        if (saleHistMode.equals("0")){
+            ll_tab_sales!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+            card_sales!!.visibility = View.VISIBLE
+         //   card_sales!!.requestFocus()
+           // horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+           // horizontalScroll!!.scrollTo(ll_tab_sales!!.getRight(), ll_tab_sales!!.getTop())
+          //  horizontalScroll!!.smoothScrollTo(2, ll_tab_sales!!.getBottom())
+            if (!ID_Customer.equals("")){
+                salesHistDet = 0
+                getSalesHistory()
+            }
+        }
+
+        if (custDueMode.equals("0")){
+            ll_tab_customerdue!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+            card_customerdue!!.visibility = View.VISIBLE
+         //   card_customerdue!!.requestFocus()
+            //horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
+          //  horizontalScroll!!.smoothScrollTo(3, ll_tab_customerdue!!.getBottom())
+           // horizontalScroll!!.scrollTo(ll_tab_customerdue!!.getRight(), ll_tab_customerdue!!.getTop())
+            if (!ID_Customer.equals("")){
+                cutDueDet = 0
+                Log.e(TAG,"4117  getCustomerDueDetails")
+                try {
+                    getCustomerDueDetails()
+                }catch (e: Exception){
+                    Log.e(TAG,"Exception 4136  "+e.toString())
+                }
+
+            }
+        }
+
     }
 
     private fun getCustomerserviceCount(fkCust: String, fkOthercustomer: String, Prodid: String) {
