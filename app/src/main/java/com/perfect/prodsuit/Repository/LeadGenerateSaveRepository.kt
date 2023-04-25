@@ -232,7 +232,7 @@ object LeadGenerateSaveRepository {
 
 
                 requestObject1.put("FK_Country", ProdsuitApplication.encryptStart(FK_Country))
-                requestObject1.put("FK_State", ProdsuitApplication.encryptStart(FK_States))
+                requestObject1.put("FK_States", ProdsuitApplication.encryptStart(FK_States))
                 requestObject1.put("FK_District", ProdsuitApplication.encryptStart(FK_District))
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area))
                 requestObject1.put("FK_Post", ProdsuitApplication.encryptStart(FK_Post))

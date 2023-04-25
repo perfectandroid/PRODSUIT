@@ -34,9 +34,9 @@ class CustomerDueAdapter (internal var context: Context, internal var jsonArray:
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.tv_AccountDetails.text        = jsonObject!!.getString("CategoryName")
-                holder.tv_Balance.text      = jsonObject!!.getString("ID_Category")
-                holder.tv_Due.text       = jsonObject!!.getString("Project")
+                holder.tv_AccountDetails.text        = jsonObject!!.getString("AccountDetails")
+                holder.tv_Balance.text      = jsonObject!!.getString("Balance")
+                holder.tv_Due.text       = jsonObject!!.getString("Due")
 
 
 //                holder.llCustomerDue!!.setTag(position)

@@ -76,8 +76,8 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="More information"
-                    android:textAllCaps="true"
+                    android:text="More Information"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -114,7 +114,8 @@
                                 android:layout_marginLeft="5dp"
                                 android:gravity="center"
                                 android:background="@drawable/shape_rectangle_border_with_bg"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="match_parent"

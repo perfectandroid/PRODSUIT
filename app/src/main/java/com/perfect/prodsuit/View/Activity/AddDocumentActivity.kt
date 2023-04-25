@@ -213,6 +213,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnSubmit->{
                 Config.Utils.hideSoftKeyBoard(context,v)
+                Config.disableClick(v)
                 Validations(v)
             }
         }

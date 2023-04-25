@@ -47,6 +47,7 @@ class PhoneStatReceiver : BroadcastReceiver() {
                    var ID_LeadGenerateProduct = BroadCallSP.getString("ID_LeadGenerateProduct","")
                    var FK_Employee = BroadCallSP.getString("FK_Employee","")
                    var AssignedTo = BroadCallSP.getString("AssignedTo","")
+                   var CallRedirection = BroadCallSP.getString("CallRedirection","")
 
 //                   Log.e(TAG,"4871     "+ID_LeadGenerate)
 //                   Log.e(TAG,"4872     "+ID_LeadGenerateProduct)
@@ -58,6 +59,7 @@ class PhoneStatReceiver : BroadcastReceiver() {
                    BroadCallEditer.putString("ID_LeadGenerateProduct", "")
                    BroadCallEditer.putString("FK_Employee", "")
                    BroadCallEditer.putString("AssignedTo", "")
+                   BroadCallEditer.putString("CallRedirection", "")
                    BroadCallEditer.commit()
 
 //                   val intent = Intent(context, AddRemarkActivity::class.java)
@@ -66,14 +68,18 @@ class PhoneStatReceiver : BroadcastReceiver() {
 //                   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                   context.startActivity(intent)
 
-                   val intent = Intent(context, FollowUpActivity::class.java)
-                   intent.putExtra("ID_LeadGenerate",ID_LeadGenerate)
-                   intent.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
-                   intent.putExtra("FK_Employee",FK_Employee)
-                   intent.putExtra("AssignedTo",AssignedTo)
-                   intent.putExtra("ActionMode","1")
-                   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                   context.startActivity(intent)
+                   if (!CallRedirection.equals("Yes")){
+                       val intent = Intent(context, FollowUpActivity::class.java)
+                       intent.putExtra("ID_LeadGenerate",ID_LeadGenerate)
+                       intent.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
+                       intent.putExtra("FK_Employee",FK_Employee)
+                       intent.putExtra("AssignedTo",AssignedTo)
+                       intent.putExtra("ActionMode","1")
+                       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                       context.startActivity(intent)
+                   }
+
+
 
                }
 

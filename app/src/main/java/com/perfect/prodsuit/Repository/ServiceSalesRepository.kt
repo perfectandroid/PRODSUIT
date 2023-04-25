@@ -104,7 +104,7 @@ object ServiceSalesRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
 
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                Log.e(TAG,"requestObject1   1071   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

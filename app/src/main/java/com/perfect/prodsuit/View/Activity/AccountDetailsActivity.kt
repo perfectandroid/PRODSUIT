@@ -985,6 +985,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
             BroadCallEditer.putString("FK_Employee", AssignedToID)
             BroadCallEditer.putString("AssignedTo", AssignedTo)
+            if (SubMode.equals("4")){
+                BroadCallEditer.putString("CallRedirection", "Yes")
+            }
             BroadCallEditer.commit()
 
             var mobileno = txtPhone!!.text.toString()
