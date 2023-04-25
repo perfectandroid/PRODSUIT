@@ -4,5 +4,5 @@ import android.view.View
 
 interface ClickListener {
 
-    fun onClick(position: Int,data: String,view : View)
+    fun onClick(position: Int,data: String,Stringview : View)
 }

@@ -9,6 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Model.AreaListModel
+import com.perfect.prodsuit.Model.EmployeeListModel
 import com.perfect.prodsuit.Model.LeadAllDetailsModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -20,21 +22,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadAllDetailsRepository {
+object EmployeeListRepository {
 
-    val LeadAllDetailsSetterGetter = MutableLiveData<LeadAllDetailsModel>()
+    val employeelistSetterGetter = MutableLiveData<EmployeeListModel>()
     var progressDialog: ProgressDialog? = null
-    val TAG: String = "LeadAllDetailsRepository"
+    val TAG: String = "EmployeeListRepository"
 
+    fun getServicesApiCall(context: Context, ID_Employee: String): MutableLiveData<EmployeeListModel> {
+        getEmployeeList(context, ID_Employee)
+        return employeelistSetterGetter
+    }
 
-    fun getServicesApiCall(context: Context,ID_Employee: String): MutableLiveData<LeadAllDetailsModel> {
-        getEmployeeAllDetails(context,ID_Employee)
-        return LeadAllDetailsSetterGetter
-        }
-
-    private fun getEmployeeAllDetails(context: Context,ID_Employee: String){
+    private fun getEmployeeList(context: Context,ID_Employee: String){
         try {
-            LeadAllDetailsSetterGetter.value = LeadAllDetailsModel("")
+            employeelistSetterGetter.value = EmployeeListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -77,18 +78,18 @@ object LeadAllDetailsRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("65"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Employee",ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
 //                Log.e(AgendaActionRepository.TAG,"Id_Agenda        8222   ")
-                Log.e(TAG,"requestObject1   222221   "+ID_Employee)
-                Log.e(TAG,"requestObject1   0001   "+requestObject1)
-                Log.e(TAG,"requestObject1   0002   "+TokenSP.getString("Token", null))
-                Log.e(TAG,"requestObject1   0003   "+BankKeySP.getString("BANK_KEY", null))
-                Log.e(TAG,"requestObject1   0004   "+FK_CompanySP.getString("FK_Company", null))
-                Log.e(TAG,"requestObject1   0005   "+UserCodeSP.getString("UserCode", null))
+                Log.e(TAG,"requestObject1   010101   "+ID_Employee)
+                Log.e(TAG,"requestObject1   02020   "+requestObject1)
+                Log.e(TAG,"requestObject1   03030   "+TokenSP.getString("Token", null))
+                Log.e(TAG,"requestObject1   04040   "+BankKeySP.getString("BANK_KEY", null))
+                Log.e(TAG,"requestObject1   05050   "+FK_CompanySP.getString("FK_Company", null))
+                Log.e(TAG,"requestObject1   06060   "+UserCodeSP.getString("UserCode", null))
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -105,26 +106,26 @@ object LeadAllDetailsRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"1111 response   "+response.body())
+                        Log.e(TAG,"3333 response   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadAllDetailsModel>()
-                        leads.add(LeadAllDetailsModel(response.body()))
+                        val leads = ArrayList<EmployeeListModel>()
+                        leads.add(EmployeeListModel(response.body()))
                         val msg = leads[0].message
-                        LeadAllDetailsSetterGetter.value = LeadAllDetailsModel(msg)
+                        employeelistSetterGetter.value = EmployeeListModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        progressDialog!!.dismiss()
-                        Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                        AreaListRepository.progressDialog!!.dismiss()
+                        Toast.makeText(context, Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            Toast.makeText(context,Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
             progressDialog!!.dismiss()
         }
     }

@@ -153,13 +153,14 @@
                                     android:background="@drawable/countsub_pickup">
 
                                     <TextView
+                                        android:id="@+id/pick_up_count"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/myfont"
                                         android:gravity="center"
-                                        android:text="155429"
+                                        android:text=""
                                         android:textAllCaps="true"
                                         android:textColor="@color/white"
                                         android:textSize="12dp"
@@ -253,12 +254,13 @@
                                     android:background="@drawable/countsub_pickup">
 
                                     <TextView
+                                        android:id="@+id/delivery_count"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="15"
+                                        android:text=""
                                         android:tint="@color/white"
                                         android:textColor="@color/white"
                                         android:textSize="12dp"
