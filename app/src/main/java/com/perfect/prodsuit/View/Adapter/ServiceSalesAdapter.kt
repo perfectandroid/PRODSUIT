@@ -42,10 +42,10 @@ class ServiceSalesAdapter(internal var context: Context, internal var jsonArray:
 
 
 
-//                holder.llfollowuptype!!.setTag(position)
-//                holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "followuptype")
-//                })
+                holder.llSales!!.setTag(position)
+                holder.llSales!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "salesHistoryClick")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()

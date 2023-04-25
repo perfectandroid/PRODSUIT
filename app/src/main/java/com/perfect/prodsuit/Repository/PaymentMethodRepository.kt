@@ -64,14 +64,33 @@ object PaymentMethodRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+
+//                {
+//                    "BankKey": "\/mXqmq3ZMvs=\n",
+//                    "Token": "d6wocTwbPGsKM0kIC2NrQiwRM1MeW1RbUYb6xqOw4wQJXMm7f5HApA==\n",
+//                    "ReqMode": "ZhNnS5SRcks=",
+//                    "FK_Company": "vJ\/8asrP+O0=\n",
+//                    "FK_BranchCodeUser": "vJ/8asrP+O0=",
+//                    "EntrBy": "Ua9c/VfdCVs="
+//                }
 
                 //  requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("13"))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("77"))
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("77"))
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("92"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
             } catch (e: Exception) {
@@ -81,7 +100,8 @@ object PaymentMethodRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductcategory(body)
+           // val call = apiService.getProductcategory(body)
+            val call = apiService.getFollowUpPaymentMethod(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

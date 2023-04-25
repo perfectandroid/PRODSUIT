@@ -11,8 +11,8 @@ class ReportNameViewModel : ViewModel() {
 
     var reportNameData: MutableLiveData<ReportNameModel>? = null
 
-    fun getReportName(context: Context) : LiveData<ReportNameModel>? {
-        reportNameData = ReportNameRepository.getServicesApiCall(context)
+    fun getReportName(context: Context,SubMode : String) : LiveData<ReportNameModel>? {
+        reportNameData = ReportNameRepository.getServicesApiCall(context,SubMode)
         return reportNameData
     }
 }

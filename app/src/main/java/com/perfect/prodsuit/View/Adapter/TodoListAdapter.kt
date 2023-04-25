@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 class TodoListAdapter(internal var context: Context, internal var jsonArray: JSONArray,SubMode : String):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "TodoListAdapter"
+    internal val TAG : String = ""
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
     private var SubMode:String?=SubMode
@@ -53,7 +53,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 //                date = spf.format(newDate)
               //  println(date)
 
-                Log.v("dfsdf33fff","submode "+SubMode)
+                Log.e("dfsdf33fff","submode "+SubMode)
                 if (SubMode.equals("1")){
                     holder.ll_leadNo!!.setBackgroundColor(context.getColor(R.color.todolist_Color));
                     holder.tv_leadno!!.getBackground().setTint(context.getColor(R.color.todolist_light_Color));
@@ -115,9 +115,9 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
-                    if (!SubMode.equals("4")){
+                 //   if (!SubMode.equals("4")){
                         clickListener!!.onClick(position, "todolist")
-                    }
+                 //   }
 
                 })
 

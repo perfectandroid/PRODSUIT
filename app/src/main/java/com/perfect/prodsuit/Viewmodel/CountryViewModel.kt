@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CountryModel
 import com.perfect.prodsuit.Repository.CountryRepository
-import com.perfect.prodsuit.Repository.PincodeSearchRepository
 
 class CountryViewModel : ViewModel() {
 

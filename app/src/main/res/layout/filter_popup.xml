@@ -132,6 +132,7 @@
                             android:drawableTint="@color/textColor"
                             android:focusableInTouchMode="false"
                             android:textSize="14dp"
+                            android:singleLine="true"
                             android:editable="false"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/greydarks"
@@ -167,6 +168,7 @@
                         android:drawableTint="@color/textColor"
                         android:focusableInTouchMode="false"
                         android:textSize="14dp"
+                        android:singleLine="true"
                         android:editable="false"
                         android:fontFamily="@font/myfont"
                         android:textColor="@color/greydarks"
@@ -198,6 +200,7 @@
                         android:drawableTint="@color/textColor"
                         android:textSize="14dp"
                         android:editable="true"
+                        android:singleLine="true"
                         android:fontFamily="@font/myfont"
                         android:textColor="@color/greydarks"
                         android:textStyle="normal"/>

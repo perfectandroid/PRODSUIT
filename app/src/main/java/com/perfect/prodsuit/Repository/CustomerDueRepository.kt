@@ -63,11 +63,13 @@ object CustomerDueRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                {"ReqMode":"445q+g40Nfs=","BankKey":"\/mXqmq3ZMvs=\n","Token":"R1+qLb1l9CrjrvoATU5QEw8o64+20c4sms4dhOjNZYuBYl8+NOw0hQ==","SubMode":"vJ/8asrP+O0=",
-//                    "FK_Product":"vJ/8asrP+O0=","FK_Customer":"07/ybAx1yS4=","FK_CustomerOther":"KZtbclVmL7w=","FK_Branch":"8Ld7pH+WkK0=",
-//                    "FK_Company":"vJ\/8asrP+O0=\n","EntrBy":"a5bTsgAqQ2o=\n"}
 
 
+//                49 NEW IP
+
+
+//                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n"
+//                    ,ReqMode:"80","FK_Company":"vJ/8asrP+O0="","FK_Customer":"IZW4nDnOAqM=","EntrBy":"a5bTsgAqQ2o="}
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -75,17 +77,17 @@ object CustomerDueRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-                //  requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("13"))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("77"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("0"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("80"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
 
 
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                Log.e(TAG,"requestObject1   901   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -94,7 +96,7 @@ object CustomerDueRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductcategory(body)
+            val call = apiService.getCustomerDueDetils(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

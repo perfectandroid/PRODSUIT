@@ -150,7 +150,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             Log.e(TAG,"01010101    "+UserName)
         }
 
-        submode = "3"
+        submode = "4"
         name = ""
         date = ""
         criteria = ""
@@ -167,7 +167,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         getMyLead()
     }
     companion object {
-        var submode = "3"
+        var submode = "4"
         var name = ""
         var date = ""
         var criteria = ""
@@ -542,10 +542,15 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     }
 
     override fun onClick(position: Int, data: String) {
+
+        Log.e(TAG,"547  todolist")
         if (data.equals("todolist")){
+
+            Log.e(TAG,"5471  todolist")
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             val i = Intent(this@MyLeadActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("SubMode",SubMode)
             startActivity(i)
         }
         if (data.equals("todocall")){

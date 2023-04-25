@@ -237,9 +237,15 @@
     <color name="upcomung_Color">#CE748E8E</color>
     <color name="upcomung_light_Color">#CEC2D8D8</color>
 
-    <color name="mylead_round">#BC7B84</color>
-    <color name="mylead_Color">#B8868D</color>
-    <color name="mylead_light_Color">#FFB8868D</color>
+<!--    <color name="mylead_round">#BC7B84</color>-->
+<!--    <color name="mylead_Color">#B8868D</color>-->
+<!--    <color name="mylead_light_Color">#FFB8868D</color>-->
+
+    <color name="mylead_round">#395A3A</color>
+    <color name="mylead_Color">#4C754E</color>
+    <color name="mylead_light_Color">#659567</color>
+
+
 
 
     <color name="right_Color">#E6E5E5</color>
@@ -385,7 +391,10 @@
 <!--    <color name="color_pickup">#15576F</color>-->
     <color name="color_delivery">#457F81</color>
 
-
+    <color name="lead_report">#3A5461</color>
+    <color name="service_report">#447B7E</color>
+    <color name="collection_report">#3A523C</color>
+    <color name="pickup_report">#836D43</color>
 
 
 

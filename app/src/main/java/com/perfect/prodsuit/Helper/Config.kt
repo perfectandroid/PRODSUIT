@@ -98,6 +98,8 @@ object Config {
     const val SHARED_PREF52 = "SalesCount"
     const val SHARED_PREF53 = "CustomerDueCount"
 
+    const val SHARED_PREF54 = "ModuleList" // Rights
+
     var width = 0
     var height = 0
 
@@ -525,6 +527,11 @@ object Config {
         CompanyCategoryEditer.putString("CompanyCategory", "")
         CompanyCategoryEditer.commit()
 
+        val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
+        val ModuleListEditer = ModuleListSP.edit()
+        ModuleListEditer.putString("ModuleList", "")
+        ModuleListEditer.commit()
+
     }
 
     fun getHomeGrid(context : Context): String {
@@ -532,10 +539,24 @@ object Config {
         var result =""
         try {
 
-            var iLead = 1
-            var iService = 1
-            var iCollection = 1
-            var iPickUp = 1
+            val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
+
+            Log.e("TAG","537    "+loginSP.getString("loginsession",""));
+
+            val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
+            Log.e("TAG","547    "+ModuleListSP.getString("ModuleList",""));
+            val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
+            Log.e("TAG","5471    "+jsonObj!!.getString("LEAD"));
+
+//            var iLead = 1
+//            var iService = 1
+//            var iCollection = 1
+//            var iPickUp = 1
+
+            var iLead = jsonObj!!.getString("LEAD")
+            var iService = jsonObj!!.getString("SERVICE")
+            var iCollection = jsonObj!!.getString("ACCOUNTS")
+            var iPickUp = jsonObj!!.getString("DELIVERY")
 
             val jsonObject1 = JSONObject()
             val jsonObject = JSONObject()
@@ -565,7 +586,7 @@ object Config {
             obj.put("count","0")
             array.put(obj)
 
-            if(iLead == 1 ){
+            if(iLead.equals("true")){
                 obj = JSONObject()
                 obj.put("grid_id", "4")
                 obj.put("grid_name", "Leads")
@@ -575,7 +596,7 @@ object Config {
                 array.put(obj)
             }
 
-            if(iService == 1 ){
+            if(iService.equals("true")){
                 obj = JSONObject()
                 obj.put("grid_id", "5")
                 obj.put("grid_name", "Services")
@@ -585,7 +606,7 @@ object Config {
                 array.put(obj)
             }
 
-            if(iCollection == 1 ){
+            if(iCollection.equals("true")){
                 obj = JSONObject()
                 obj.put("grid_id", "6")
                 obj.put("grid_name", "Collection")
@@ -595,7 +616,7 @@ object Config {
                 array.put(obj)
             }
 
-            if(iPickUp == 1 ){
+            if(iPickUp.equals("true")){
 
                 obj = JSONObject()
                 obj.put("grid_id", "7")
@@ -630,11 +651,27 @@ object Config {
             obj.put("count","0")
             array.put(obj)
 
+//            obj = JSONObject()
+//            obj.put("grid_id", "11")
+//            obj.put("grid_name", "Expense")
+//            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+//            obj.put("image","home_expense")
+//            obj.put("count","0")
+//            array.put(obj)
+
             obj = JSONObject()
             obj.put("grid_id", "11")
-            obj.put("grid_name", "Expense")
+            obj.put("grid_name", "Contact Us")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_expense")
+            obj.put("image","home_contactus")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "12")
+            obj.put("grid_name", "About Us")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_aboutus")
             obj.put("count","0")
             array.put(obj)
 
@@ -645,6 +682,35 @@ object Config {
             Log.e("JsonObject", jsonObject.toString())
             result = jsonObject1.toString()
 
+
+        }catch (e : Exception){
+            result = ""
+        }
+        return result
+    }
+
+    fun getCompliantOrService(context : Context): String {
+        var result =""
+        try {
+
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+            var obj = JSONObject()
+            obj.put("compService_id", "1")
+            obj.put("compService_name", "Complaint")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("compService_id", "2")
+            obj.put("compService_name", "Service")
+            array.put(obj)
+
+            jsonObject.put("compServiceDetails", array)
+            jsonObject1.put("compServiceType", jsonObject)
+            result = jsonObject1.toString()
 
         }catch (e : Exception){
             result = ""

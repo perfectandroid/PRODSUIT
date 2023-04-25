@@ -70,7 +70,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:textAllCaps="false"
-                android:text="yes" />
+                android:text="Yes" />
 
 
         </LinearLayout>

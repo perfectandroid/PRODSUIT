@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ActivityListModel
 import com.perfect.prodsuit.Repository.ActivityListRepository
-import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 
 class ActivityListViewModel : ViewModel() {
 

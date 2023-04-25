@@ -3,10 +3,7 @@ package com.perfect.prodsuit.Api
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -374,11 +371,24 @@ interface ApiInterface {
     @POST("ServiceAssign/CustomerserviceassignEdit")
     fun getCustomerserviceassignEdit(@Body body: RequestBody): Call<String>
 
+
     @POST("Service/CustomerServiceRegisterCount")
     fun getCustomerserviceregisterCount(@Body body: RequestBody): Call<String>
 
     @POST("PickUpDelivery/PickupandDeliveryCount")
     fun getPickupandDeliveryCount(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/FollowUpPaymentMethod")
+    fun getFollowUpPaymentMethod(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/GetGenralSettings")
+    fun getGenralSettings(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/WalkingCustomerDetailsList")
+    fun getWalkingCustomerDetailsList(@Body body: RequestBody): Call<String>
+
+    @POST("Service/CustomerDueDetils")
+    fun getCustomerDueDetils(@Body body: RequestBody): Call<String>
 
 
 

@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: JSONArray, internal var selectedPos: Int):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "AgendaTypeAdapter"
@@ -36,7 +37,7 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   36   ")
+                Log.e(TAG,"onBindViewHolder   3611   "+selectedPos)
                 val pos = position+1
 
 
@@ -44,6 +45,18 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
 //                val IMAGE_URLEditer = IMAGE_URLSP.edit()
 //                IMAGE_URLEditer.putString("IMAGE_UR", IMAGE_URL)
 //                IMAGE_URLEditer.commit()
+
+                if (selectedPos == position){
+                  //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
+                    holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+                }
+                if (position == 1){
+                    //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
+                    holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+                    holder.ll_type!!.visibility = View.GONE
+                }
+
+
 
                 val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
                 Log.e(TAG,"IMAGE_URL 43   "+IMAGE_URLSP.getString("IMAGE_URL", null))

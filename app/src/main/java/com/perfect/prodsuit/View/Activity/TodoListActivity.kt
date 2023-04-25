@@ -594,6 +594,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             val jsonObject = todoArrayList.getJSONObject(position)
             val i = Intent(this@TodoListActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("SubMode", submode)
             startActivity(i)
         }
         if (data.equals("todocall")){

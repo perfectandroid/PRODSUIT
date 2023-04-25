@@ -13,7 +13,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ReportNameAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class ReportNameAdapter(internal var context: Context, internal var jsonArray: JSONArray,internal var report: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ReportNameAdapter"
@@ -37,9 +37,13 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
                 Log.e(TAG,"onBindViewHolder   1051   ")
 
 
-                if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5")){
+                if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5") && report.equals("Lead")){
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   10512   ")
+                }
+                else if (!jsonObject!!.getString("ReportMode").toString().equals("1") && !jsonObject!!.getString("ReportMode").toString().equals("3") && !jsonObject!!.getString("ReportMode").toString().equals("6") && report.equals("Service")){
+                    holder.llReportName!!.visibility = View.GONE
+                    Log.e(TAG,"onBindViewHolder   105123   "+jsonObject!!.getString("ReportName"))
                 }
                 else{
                     pos++

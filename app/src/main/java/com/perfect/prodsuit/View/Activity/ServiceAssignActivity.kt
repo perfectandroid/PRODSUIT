@@ -1742,7 +1742,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     +"\n"+"arrAssignees   "+arrAssignees
                     +"\n"+"arrProducts   "+arrProducts)
 
-            serviceassignConfirm(arrAssignees.toString())
+            serviceassignConfirm(arrAssignees)
 
 //            serUpdateCount = 0
 //            serviceassignUpdate(arrAssignees.toString())
@@ -1752,7 +1752,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun serviceassignConfirm(strAssignees: String) {
+    private fun serviceassignConfirm(arrAssignees: JSONArray) {
 
         try {
 
@@ -1898,7 +1898,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             btnOk.setOnClickListener {
                 dialogConfirmPop.dismiss()
                 serUpdateCount = 0
-                serviceassignUpdate(strAssignees)
+                serviceassignUpdate(arrAssignees)
             }
 
 
@@ -1915,7 +1915,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun serviceassignUpdate(strAssignees: String) {
+    private fun serviceassignUpdate(arrAssignees: JSONArray) {
         var ReqMode = "0"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1925,7 +1925,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignViewModel.getServiceAssign(this,ReqMode,ID_CustomerServiceRegister!!,strAssignees!!,strVisitDate!!,strVisitTime!!,ID_Priority!!,strRemark!!)!!.observe(
+                serviceAssignViewModel.getServiceAssign(this,ReqMode,ID_CustomerServiceRegister!!,arrAssignees!!,strVisitDate!!,strVisitTime!!,ID_Priority!!,strRemark!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

@@ -560,7 +560,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                        val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             if (cMpin == 0) {
-                                Log.v("dsfsdfdsddddd", "in1")
+                                Log.e("dsfsdfdsddddd", "in1")
                                 cMpin++
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
@@ -701,6 +701,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 val CompanyCategoryEditer = CompanyCategorySP.edit()
                                 CompanyCategoryEditer.putString("CompanyCategory", jobj.getString("CompanyCategory"))
                                 CompanyCategoryEditer.commit()
+
+                                val ModuleListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF54, 0)
+                                val ModuleListEditer = ModuleListSP.edit()
+                                ModuleListEditer.putString("ModuleList", jobj.getString("ModuleList"))
+                                ModuleListEditer.commit()
 
 
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)

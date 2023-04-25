@@ -26,12 +26,12 @@ object ReportNameRepository {
     val reportNameSetterGetter = MutableLiveData<ReportNameModel>()
     val TAG: String = "ReportNameRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ReportNameModel> {
-        getReportName(context)
+    fun getServicesApiCall(context: Context,SubMode : String): MutableLiveData<ReportNameModel> {
+        getReportName(context,SubMode)
         return reportNameSetterGetter
     }
 
-    private fun getReportName(context: Context) {
+    private fun getReportName(context: Context,SubMode : String) {
 
         try {
             reportNameSetterGetter.value = ReportNameModel("")
@@ -71,6 +71,7 @@ object ReportNameRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("51"))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))

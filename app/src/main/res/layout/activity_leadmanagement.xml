@@ -418,6 +418,7 @@
 
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/llmyLead"
                                 android:layout_width="match_parent"
@@ -429,7 +430,8 @@
                                 android:background="@drawable/svg_lead_man_upcoming"
                                 android:backgroundTint="@color/mylead_Color"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="visible">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -446,7 +448,7 @@
                                         <!--                                        android:layout_weight="3.5"-->
 
                                         <TextView
-                                            android:id="@+id/tv_my_lead"
+                                            android:id="@+id/tv_my_leadCount"
                                             android:layout_width="40dp"
                                             android:layout_height="40dp"
                                             android:layout_gravity="center"
@@ -513,6 +515,7 @@
 
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/lltodolist1"
                                 android:layout_width="match_parent"

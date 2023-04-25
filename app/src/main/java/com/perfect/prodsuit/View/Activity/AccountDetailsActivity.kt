@@ -236,6 +236,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var leadInfo = 0
     var leadInfoCount = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -267,6 +268,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         Log.e(TAG,"jsonObj  123456 "+jsonObj)
+        SubMode  = intent.getStringExtra("SubMode")
+        Log.e(TAG,"SubMode  12345678 "  +SubMode)
 
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
@@ -280,6 +283,11 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         leadInfo = 0
         getLeadInfoetails()
         getCalendarId(context)
+        if (SubMode.equals("4")){
+            ll_meet!!.visibility = View.GONE
+            ll_msg!!.visibility = View.GONE
+            fab_main!!.visibility = View.GONE
+        }
         addTabItem()
 
 
@@ -288,9 +296,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private fun addTabItem() {
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Info"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("History"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
+
+        if (!SubMode.equals("4")){
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
+        }
+
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         rltv_Info!!.visibility = View.VISIBLE
         leadInfoCount = 0
@@ -973,6 +985,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             BroadCallEditer.putString("ID_LeadGenerateProduct", ID_LeadGenerateProduct)
             BroadCallEditer.putString("FK_Employee", AssignedToID)
             BroadCallEditer.putString("AssignedTo", AssignedTo)
+            if (SubMode.equals("4")){
+                BroadCallEditer.putString("CallRedirection", "Yes")
+            }
             BroadCallEditer.commit()
 
             var mobileno = txtPhone!!.text.toString()

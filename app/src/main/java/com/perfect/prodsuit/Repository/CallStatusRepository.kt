@@ -19,7 +19,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
 
 object CallStatusRepository {
 
@@ -80,6 +79,8 @@ object CallStatusRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+          //  var headers = {'Content-Type': 'application/json', 'Authorization': token,};
+
             val call = apiService.getCallStatus(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

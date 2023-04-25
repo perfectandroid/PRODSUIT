@@ -53,7 +53,6 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //    var tie_Comp_ToTime: TextInputEditText? = null
 
 
-
     lateinit var serviceWarrantyViewModel: ServiceWarrantyViewModel
     lateinit var serviceWarrantyArrayList : JSONArray
     var recyServiceWarranty: RecyclerView? = null
@@ -189,6 +188,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var postCount = 0
 
     lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
+    lateinit var pinCodeArrayList: JSONArray
+    private var dialogPinCode: Dialog? = null
+    var recyPinCode: RecyclerView? = null
 
     lateinit var countryViewModel: CountryViewModel
     lateinit var countryArrayList: JSONArray
@@ -244,6 +246,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+    private var btnMore: Button? = null
 
     var dateMode = 0 // 0 = RegDate , 1 = Req FromDate , 2 = Req To date
     var timeMode = 0 // 0 = Req FromTime , 1 = Req ToTime
@@ -395,6 +398,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var strUserAction: String? = ""
 
     private var dialogDetailSheet : Dialog? = null
+    private var dialogWarrantySheet : Dialog? = null
     private var dialogAddUserSheet : Dialog? = null
 
     private var lnrHead_warranty_main : LinearLayout? = null
@@ -405,6 +409,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var lnrHead_sales_sub : LinearLayout? = null
     private var lnrHead_customerdue_main : LinearLayout? = null
     private var lnrHead_customerdue_sub : LinearLayout? = null
+
+    private var ll_tab_warranty : LinearLayout? = null
+    private var ll_tab_production : LinearLayout? = null
+    private var ll_tab_sales : LinearLayout? = null
+    private var ll_tab_customerdue : LinearLayout? = null
+
+    private var horizontalScroll : HorizontalScrollView? = null
+
+    private var card_warranty : CardView? = null
+    private var card_production : CardView? = null
+    private var card_sales : CardView? = null
+    private var card_customerdue : CardView? = null
+
+    private var txtNext : TextView? = null
 
     private var tv_warranty_count : TextView? = null
     private var tv_product_count : TextView? = null
@@ -466,7 +484,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 ReqMode = "73"
                 SubModeSearch = "1"
                 strCustomer = tie_CustomerName!!.text.toString()
-                getCustomerSearch()
+                if (strCustomer!!.length > 2){
+                    getCustomerSearch()
+                }else{
+                    til_CustomerName!!.setError("Enter at least three characters to search")
+                    til_CustomerName!!.setErrorIconDrawable(null)
+                    custDetailMode = "0"
+                    complaintMode  = "1"
+                    contDetailMode = "1"
+                    requestedMode  = "1"
+                    attDetailMode  = "1"
+
+                    hideViews()
+                }
+
             }else{
                 custNameMode = 0
                 til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.search_24))
@@ -515,6 +546,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        btnMore = findViewById<Button>(R.id.btnMore)
 
 
         tv_customerClick!!.setOnClickListener(this)
@@ -525,6 +557,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+        btnMore!!.setOnClickListener(this)
 
 
         // Customer Details
@@ -1058,6 +1091,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 resetData()
             }
 
+            R.id.btnMore->{
+                Config.disableClick(v)
+              //  detailBottomSheet()
+                var custname=tie_CustomerName!!.text.toString()
+                detailPopupSheet(custname)
+            }
 
         }
     }
@@ -1441,7 +1480,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if (ID_Customer.equals("") ){
+        else if (ID_Customer.equals("") && strCustomerName.equals("")){
 //            && strCustomerName.equals("")
            // til_CustomerName!!.setError("Select Customer ")
             til_CustomerName!!.setError("Enter or Select Customer ")
@@ -1886,6 +1925,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private fun saveCustomerService() {
 
+//        FK_Place = ""
+//        FK_Country = ""
+//        FK_States = ""
+//        FK_District = ""
+//        FK_Area = ""
+//        FK_Post = ""
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1896,7 +1941,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 progressDialog!!.show()
                 customerServiceRegisterViewModel.getcusServRegister(this,strUserAction!!,Customer_Type!!,ID_Customer!!,ID_Channel!!,ID_Priority!!,ID_Category!!,
                     ID_Company!!,ID_ComplaintList!!,ID_Services!!,ID_EmpMedia!!,ID_Status!!,ID_AttendedBy!!,strCustomerName!!,strMobileNo!!,strAddress!!,strContactNo!!,
-                    strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!)!!.observe(
+                    strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!,
+                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -3865,6 +3911,23 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             var txtNewUserCancel = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserCancel)
             var txtNewUserSubmit = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserSubmit)
 
+            tie_CN_Pincode!!.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+                    tie_CN_Area!!.setText("")
+                    tie_CN_Post!!.setText("")
+                    FK_Area = ""
+                    FK_Post = ""
+                }
+
+                override fun afterTextChanged(editable: Editable) {
+
+                }
+            })
+
+
             til_CN_Pincode!!.setEndIconOnClickListener {
                 try {
                     strCnPinCode = tie_CN_Pincode!!.text.toString()
@@ -3930,22 +3993,53 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("PincodeDetails")
+                                        pinCodeArrayList = jobjt.getJSONArray("PincodeDetailsList")
+//                                        val jobjt = jObject.getJSONObject("PincodeDetails")
+//
+//                                        FK_Country = jobjt.getString("FK_Country")
+//                                        FK_States = jobjt.getString("FK_States")
+//                                        FK_District = jobjt.getString("FK_District")
+//                                        FK_Area = jobjt.getString("FK_Area")
+//                                        FK_Place = jobjt.getString("FK_Place")
+//                                        FK_Post = jobjt.getString("FK_Post")
+//
+//                                        tie_CN_Place!!.setText(jobjt.getString("Place"))
+//                                        tie_CN_Country!!.setText(jobjt.getString("Country"))
+//                                        tie_CN_State!!.setText(jobjt.getString("States"))
+//                                        tie_CN_District!!.setText(jobjt.getString("District"))
+//                                        tie_CN_Area!!.setText("")
+//                                        tie_CN_Post!!.setText(jobjt.getString("Post"))
+//
+//                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
 
-                                        FK_Country = jobjt.getString("FK_Country")
-                                        FK_States = jobjt.getString("FK_States")
-                                        FK_District = jobjt.getString("FK_District")
-                                        FK_Area = jobjt.getString("FK_Area")
-                                        FK_Place = jobjt.getString("FK_Place")
-                                        FK_Post = jobjt.getString("FK_Post")
+                                        if (pinCodeArrayList.length() == 1){
 
-                                        tie_CN_Place!!.setText(jobjt.getString("Place"))
-                                        tie_CN_Country!!.setText(jobjt.getString("Country"))
-                                        tie_CN_State!!.setText(jobjt.getString("States"))
-                                        tie_CN_District!!.setText(jobjt.getString("District"))
-                                        tie_CN_Area!!.setText("")
-                                        tie_CN_Post!!.setText(jobjt.getString("Post"))
+                                            val jsonObject = pinCodeArrayList.getJSONObject(0)
 
-                                        Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
+                                            FK_Country = jsonObject.getString("FK_Country")
+                                            FK_States = jsonObject.getString("FK_States")
+                                            FK_District = jsonObject.getString("FK_District")
+                                            FK_Area = jsonObject.getString("FK_Area")
+                                            FK_Place = jsonObject.getString("FK_Place")
+                                            FK_Post = jsonObject.getString("FK_Post")
+                                            FK_Area = jsonObject.getString("FK_Area")
+
+                                            tie_CN_Place!!.setText(jsonObject.getString("Place"))
+                                            tie_CN_Country!!.setText(jsonObject.getString("Country"))
+                                            tie_CN_State!!.setText(jsonObject.getString("States"))
+                                            tie_CN_District!!.setText(jsonObject.getString("District"))
+                                            tie_CN_Area!!.setText(jsonObject.getString("Area"))
+                                            tie_CN_Post!!.setText(jsonObject.getString("Post"))
+
+                                            Log.e(TAG, "Post  21082   " + jsonObject.getString("Post"))
+
+
+                                        }
+                                        else{
+                                            Log.e(TAG, "Post  210823   "+pinCodeArrayList )
+                                            pincodeDetailPopup(pinCodeArrayList)
+                                        }
+
 
                                     } else {
 
@@ -3989,6 +4083,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
+    private fun pincodeDetailPopup(pinCodeArrayList: JSONArray) {
+        try {
+
+            dialogPinCode = Dialog(this)
+            dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+            dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = PicodeDetailAdapter(this@CustomerServiceActivity, pinCodeArrayList)
+            recyPincodeDetails!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+            dialogPinCode!!.show()
+            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun addUserValidation() {
 
         strCnName = tie_CN_Name!!.text.toString()
@@ -4023,11 +4141,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
         else{
             Log.e(TAG,"Success")
+
+            tie_CustomerName!!.setText(tie_CN_Name!!.text.toString())
+            tie_MobileNo!!.setText(tie_CN_Mobile!!.text.toString())
+            tie_Address!!.setText(tie_CN_HouseName!!.text.toString())
+
+            dialogAddUserSheet!!.dismiss()
         }
     }
 
     private fun detailPopupSheet(custname: String) {
-
 
         try {
 
@@ -4041,31 +4164,57 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogDetailSheet!! .setContentView(R.layout.cs_detail_bottom_sheet)
             dialogDetailSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
+            val warcount = context.getSharedPreferences(Config.SHARED_PREF50, 0)
+            val warrantycountEditer = warcount.edit()
+            warrantycountEditer.putString("WarrantyCount", warrantycount)
+            warrantycountEditer.commit()
+
+            val servcount = context.getSharedPreferences(Config.SHARED_PREF51, 0)
+            val servcountEditer = servcount.edit()
+            servcountEditer.putString("ServiceHistoryCount", "0")
+            servcountEditer.commit()
+
+            val salecount = context.getSharedPreferences(Config.SHARED_PREF52, 0)
+            val salecountEditer = salecount.edit()
+            salecountEditer.putString("SalesCount", "0")
+            salecountEditer.commit()
+
+            val custduecount = context.getSharedPreferences(Config.SHARED_PREF53, 0)
+            val custduecountEditer = custduecount.edit()
+            custduecountEditer.putString("CustomerDueCount", "0")
+            custduecountEditer.commit()
+
             if(custname.equals(""))
             {
 
             }
             else
             {
-                System.out.println("shname "+tie_CustomerName!!.text.toString())
-                val CustidSP = context.getSharedPreferences(Config.SHARED_PREF47, 0)
-                FK_Cust = CustidSP.getString("Customerid", "")!!
+//                System.out.println("shname "+tie_CustomerName!!.text.toString())
+//                val CustidSP = context.getSharedPreferences(Config.SHARED_PREF47, 0)
+//                FK_Cust = CustidSP.getString("Customerid", "")!!
+//
+//                val OtherCustidSP = context.getSharedPreferences(Config.SHARED_PREF48, 0)
+//                FK_OtherCustomer = OtherCustidSP.getString("CusMode", "")!!
+//
+//
+//                val ProductidSP = context.getSharedPreferences(Config.SHARED_PREF49, 0)
+//                Prodid = ProductidSP.getString("Productid", "")!!
 
-                val OtherCustidSP = context.getSharedPreferences(Config.SHARED_PREF48, 0)
-                FK_OtherCustomer = OtherCustidSP.getString("CusMode", "")!!
 
 
-                val ProductidSP = context.getSharedPreferences(Config.SHARED_PREF49, 0)
-                Prodid = ProductidSP.getString("Productid", "")!!
+//                System.out.println("Shared 1 "+FK_Cust)
+//                System.out.println("Shared 2 "+FK_OtherCustomer)
+//                System.out.println("Shared 3 "+Prodid)
+//                System.out.println("CHECKVALUE "+custname)
+
+//                Log.e(TAG,"4190  "+
+//                        "\n"+"    "+ID_Customer+
+//                        "\n"+"Customer_Type    "+Customer_Type+
+//                        "\n"+"ID_Product    "+ID_Product)
 
 
-
-                System.out.println("Shared 1 "+FK_Cust)
-                System.out.println("Shared 2 "+FK_OtherCustomer)
-                System.out.println("Shared 3 "+Prodid)
-                System.out.println("CHECKVALUE "+custname)
-
-                getCustomerserviceCount(FK_Cust,FK_OtherCustomer,Prodid)
+                getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!)
 
 
 
@@ -4073,18 +4222,18 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
             val warcountSP = context.getSharedPreferences(Config.SHARED_PREF50, 0)
-            var warcount = warcountSP.getString("WarrantyCount", "")!!
+            var warcount1 = warcountSP.getString("WarrantyCount", "")!!
 
             val servhistSP = context.getSharedPreferences(Config.SHARED_PREF51, 0)
-            var servhistcount = servhistSP.getString("ServiceHistoryCount", "")!!
+            var servhistcount1 = servhistSP.getString("ServiceHistoryCount", "")!!
 
             val salecntSP = context.getSharedPreferences(Config.SHARED_PREF52, 0)
-            var salcount = salecntSP.getString("SalesCount", "")!!
+            var salcount1 = salecntSP.getString("SalesCount", "")!!
 
             val custdueSP = context.getSharedPreferences(Config.SHARED_PREF53, 0)
-            var custdue = custdueSP.getString("CustomerDueCount", "")!!
+            var custdue1 = custdueSP.getString("CustomerDueCount", "")!!
 
-            Log.i("countdetails", warcount+"\n"+servhistcount+"\n"+salcount+"\n"+custdue)
+            Log.i("countdetails", warcount1+"\n"+servhistcount1+"\n"+salcount1+"\n"+custdue1)
 
         //    recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
 
@@ -4097,15 +4246,36 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             lnrHead_customerdue_main = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_main) as LinearLayout
             lnrHead_customerdue_sub = dialogDetailSheet!! .findViewById(R.id.lnrHead_customerdue_sub) as LinearLayout
 
+            horizontalScroll = dialogDetailSheet!! .findViewById(R.id.horizontalScroll) as HorizontalScrollView
+
+            ll_tab_warranty = dialogDetailSheet!! .findViewById(R.id.ll_tab_warranty) as LinearLayout
+            ll_tab_production = dialogDetailSheet!! .findViewById(R.id.ll_tab_production) as LinearLayout
+            ll_tab_sales = dialogDetailSheet!! .findViewById(R.id.ll_tab_sales) as LinearLayout
+            ll_tab_customerdue = dialogDetailSheet!! .findViewById(R.id.ll_tab_customerdue) as LinearLayout
+
+            card_warranty = dialogDetailSheet!! .findViewById(R.id.card_warranty) as CardView
+            card_production = dialogDetailSheet!! .findViewById(R.id.card_production) as CardView
+            card_sales = dialogDetailSheet!! .findViewById(R.id.card_sales) as CardView
+            card_customerdue = dialogDetailSheet!! .findViewById(R.id.card_customerdue) as CardView
+
+
+            txtNext = dialogDetailSheet!! .findViewById(R.id.txtNext) as TextView
+
             tv_warranty_count = dialogDetailSheet!! .findViewById(R.id.tv_warranty_count) as TextView
             tv_product_count = dialogDetailSheet!! .findViewById(R.id.tv_product_count) as TextView
             tv_sales_count = dialogDetailSheet!! .findViewById(R.id.tv_sales_count) as TextView
             tv_customerdue_count = dialogDetailSheet!! .findViewById(R.id.tv_customerdue_count) as TextView
 
-            tv_warranty_count!!.text=warcount
-            tv_product_count!!.text=servhistcount
-            tv_sales_count!!.text=salcount
-            tv_customerdue_count!!.text=custdue
+            tv_warranty_count!!.text=warcount1
+            tv_product_count!!.text=servhistcount1
+            tv_sales_count!!.text=salcount1
+            tv_customerdue_count!!.text=custdue1
+
+//            warrantyMode = "0"
+//            prodHistMode = "1"
+//            saleHistMode = "1"
+//            custDueMode = "1"
+//            hideMoreViews()
 
 
 
@@ -4152,61 +4322,153 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             })
 
 
-            lnrHead_warranty_main!!.setOnClickListener {
+//            lnrHead_warranty_main!!.setOnClickListener {
+//                warrantyMode = "0"
+//                prodHistMode = "1"
+//                saleHistMode = "1"
+//                custDueMode = "1"
+//
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    warrantyDet = 0
+//                    getWarranty()
+//                }
+//
+//            }
+//            lnrHead_product_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "0"
+//                saleHistMode = "1"
+//                custDueMode = "1"
+//
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    productHistDet = 0
+//                    getProductHistory()
+//                }
+//
+//            }
+//            lnrHead_sales_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "1"
+//                saleHistMode = "0"
+//                custDueMode = "1"
+//
+//                if (!ID_Customer.equals("")){
+//                    salesHistDet = 0
+//                    getSalesHistory()
+//                }
+//
+//            }
+//
+//            lnrHead_customerdue_main!!.setOnClickListener {
+//                warrantyMode = "1"
+//                prodHistMode = "1"
+//                saleHistMode = "1"
+//                custDueMode = "0"
+//
+//                if (!ID_Customer.equals("")){
+//                    cutDueDet = 0
+//                    Log.e(TAG,"4117  getCustomerDueDetails")
+//                    try {
+//                        getCustomerDueDetails()
+//                    }catch (e: Exception){
+//                        Log.e(TAG,"Exception 4136  "+e.toString())
+//                    }
+//
+//                }
+//
+//            }
+
+
+            ll_tab_warranty!!.setOnClickListener {
                 warrantyMode = "0"
                 prodHistMode = "1"
                 saleHistMode = "1"
                 custDueMode = "1"
 
-                if (!ID_Product.equals("") && !ID_Customer.equals("")){
-                    warrantyDet = 0
-                    getWarranty()
-                }
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    warrantyDet = 0
+//                    getWarranty()
+//                }
+
+                hideMoreViews()
+
 
             }
-            lnrHead_product_main!!.setOnClickListener {
+            ll_tab_production!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "0"
                 saleHistMode = "1"
                 custDueMode = "1"
 
-                if (!ID_Product.equals("") && !ID_Customer.equals("")){
-                    productHistDet = 0
-                    getProductHistory()
-                }
-
+//                if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                    productHistDet = 0
+//                    getProductHistory()
+//                }
+                hideMoreViews()
             }
-            lnrHead_sales_main!!.setOnClickListener {
+            ll_tab_sales!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "1"
                 saleHistMode = "0"
                 custDueMode = "1"
-
-                if (!ID_Customer.equals("")){
-                    salesHistDet = 0
-                    getSalesHistory()
-                }
-
+//
+//                if (!ID_Customer.equals("")){
+//                    salesHistDet = 0
+//                    getSalesHistory()
+//                }
+                hideMoreViews()
             }
 
-            lnrHead_customerdue_main!!.setOnClickListener {
+            ll_tab_customerdue!!.setOnClickListener {
                 warrantyMode = "1"
                 prodHistMode = "1"
                 saleHistMode = "1"
                 custDueMode = "0"
 
-                if (!ID_Customer.equals("")){
-                    cutDueDet = 0
-                    Log.e(TAG,"4117  getCustomerDueDetails")
-                    try {
-                        getCustomerDueDetails()
-                    }catch (e: Exception){
-                        Log.e(TAG,"Exception 4136  "+e.toString())
-                    }
+//                if (!ID_Customer.equals("")){
+//                    cutDueDet = 0
+//                    Log.e(TAG,"4117  getCustomerDueDetails")
+//                    try {
+//                        getCustomerDueDetails()
+//                    }catch (e: Exception){
+//                        Log.e(TAG,"Exception 4136  "+e.toString())
+//                    }
+//
+//                }
 
-                }
+                hideMoreViews()
 
             }
+
+//            txtNext!!.setOnClickListener {
+//
+//                if (warrantyMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "0"
+//                    saleHistMode = "1"
+//                    custDueMode = "1"
+//                }
+//                else if (prodHistMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "1"
+//                    saleHistMode = "0"
+//                    custDueMode = "1"
+//                }
+//                else if (saleHistMode.equals("0")){
+//                    warrantyMode = "1"
+//                    prodHistMode = "1"
+//                    saleHistMode = "1"
+//                    custDueMode = "0"
+//                }
+//                else if (custDueMode.equals("0")){
+//
+//                }
+//
+//
+//                hideMoreViews()
+//
+//
+//            }
 
             dialogDetailSheet!!.show()
            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -4215,8 +4477,99 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun getCustomerserviceCount(fkCust: String, fkOthercustomer: String, Prodid: String) {
+    private fun hideMoreViews() {
 
+//        ll_tab_warranty!!.visibility = View.VISIBLE
+//        ll_tab_production!!.visibility = View.VISIBLE
+//        ll_tab_sales!!.visibility = View.VISIBLE
+//        ll_tab_customerdue!!.visibility = View.VISIBLE
+
+        card_warranty!!.visibility = View.GONE
+        card_production!!.visibility = View.GONE
+        card_sales!!.visibility = View.GONE
+        card_customerdue!!.visibility = View.GONE
+
+       Log.e(TAG,"COUNTS   4465   "+ horizontalScroll!!.childCount)
+
+        ll_tab_warranty!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_sales!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+        ll_tab_customerdue!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+
+        if (warrantyMode.equals("0")){
+            ll_tab_warranty!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+         //   card_warranty!!.requestFocus()
+           // horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+         //   horizontalScroll!!.scrollTo(ll_tab_warranty!!.getRight(), ll_tab_warranty!!.getTop())
+          //  horizontalScroll!!.smoothScrollTo(0, ll_tab_warranty!!.getBottom())
+            card_warranty!!.visibility = View.VISIBLE
+//            if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                warrantyDet = 0
+//                getWarranty()
+//            }
+
+            if (!ID_Customer.equals("")){
+//                warrantyDet = 0
+//                getWarranty()
+            }
+
+        }
+
+        if (prodHistMode.equals("0")){
+            ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+
+            card_production!!.visibility = View.VISIBLE
+         //   horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+          //  horizontalScroll!!.scrollTo(ll_tab_production!!.getRight(), ll_tab_production!!.getTop())
+         //   horizontalScroll!!.smoothScrollTo(1, ll_tab_production!!.getBottom())
+          //  card_production!!.requestFocus()
+//            if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                productHistDet = 0
+//                getProductHistory()
+//            }
+
+            if (!ID_Customer.equals("")){
+                productHistDet = 0
+                getProductHistory()
+            }
+        }
+
+        if (saleHistMode.equals("0")){
+            ll_tab_sales!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+            card_sales!!.visibility = View.VISIBLE
+         //   card_sales!!.requestFocus()
+           // horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+           // horizontalScroll!!.scrollTo(ll_tab_sales!!.getRight(), ll_tab_sales!!.getTop())
+          //  horizontalScroll!!.smoothScrollTo(2, ll_tab_sales!!.getBottom())
+            if (!ID_Customer.equals("")){
+                salesHistDet = 0
+                getSalesHistory()
+            }
+        }
+
+        if (custDueMode.equals("0")){
+            ll_tab_customerdue!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
+            card_customerdue!!.visibility = View.VISIBLE
+         //   card_customerdue!!.requestFocus()
+            //horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
+          //  horizontalScroll!!.smoothScrollTo(3, ll_tab_customerdue!!.getBottom())
+           // horizontalScroll!!.scrollTo(ll_tab_customerdue!!.getRight(), ll_tab_customerdue!!.getTop())
+            if (!ID_Customer.equals("")){
+                cutDueDet = 0
+                Log.e(TAG,"4117  getCustomerDueDetails")
+                try {
+                    getCustomerDueDetails()
+                }catch (e: Exception){
+                    Log.e(TAG,"Exception 4136  "+e.toString())
+                }
+
+            }
+        }
+
+    }
+
+    private fun getCustomerserviceCount(ID_Customer: String, Customer_Type: String, ID_Product: String) {
+     //   ID_Customer!!,Customer_Type!!,ID_Product!!
             context = this@CustomerServiceActivity
             customerservicecountViewModel = ViewModelProvider(this).get(CustomerservicecountViewModel::class.java)
             when (Config.ConnectivityUtils.isConnected(this)) {
@@ -4227,7 +4580,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     progressDialog!!.setIndeterminate(true)
                     progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
-                    customerservicecountViewModel.getCustomerserviceCount(this,fkCust,fkOthercustomer,Prodid)!!.observe(
+                    customerservicecountViewModel.getCustomerserviceCount(this,ID_Customer,Customer_Type,ID_Product)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -4235,12 +4588,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   count   " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
+
                                     val jobjt = jObject.getJSONObject("CustomerServiceRegisterCount")
                                      warrantycount =jobjt.getString("WarrantyCount")
                                      servicehistorycount =jobjt.getString("ServiceHistoryCount")
                                      salescount =jobjt.getString("SalesCount")
                                      customerduecount =jobjt.getString("CustomerDueCount")
-
 
                                     val warcount = context.getSharedPreferences(Config.SHARED_PREF50, 0)
                                     val warrantycountEditer = warcount.edit()
@@ -4263,6 +4616,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     custduecountEditer.putString("CustomerDueCount", customerduecount)
                                     custduecountEditer.commit()
 
+
+                                    tv_warranty_count!!.text=warrantycount
+                                    tv_product_count!!.text=servicehistorycount
+                                    tv_sales_count!!.text=salescount
+                                    tv_customerdue_count!!.text=customerduecount
+
+                                    warrantyMode = "1"
+                                    prodHistMode = "0"
+                                    saleHistMode = "1"
+                                    custDueMode = "1"
+                                    hideMoreViews()
 
 
                                 } else {
@@ -4379,9 +4743,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 recyServiceProductHistory!!.visibility = View.GONE
                 recyServiceSalesHistory!!.visibility = View.GONE
                 recyServiceWarranty!!.adapter = null
-
-                warrantyDet = 0
-                getWarranty()
+//
+//                warrantyDet = 0
+//                getWarranty()
             }
 
 
@@ -4398,10 +4762,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         recyServiceSalesHistory!!.visibility = View.GONE
                         recyServiceWarranty!!.adapter = null
 
-                        if (!ID_Product.equals("") && !ID_Customer.equals("")){
-                            warrantyDet = 0
-                            getWarranty()
-                        }
+//                        if (!ID_Product.equals("") && !ID_Customer.equals("")){
+//                            warrantyDet = 0
+//                            getWarranty()
+//                        }
+
+//                        if (!ID_Customer.equals("")){
+//                            warrantyDet = 0
+//                            getWarranty()
+//                        }
 
                     }
                     if (tab.position == 1){
@@ -4450,93 +4819,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun getWarranty() {
 
-//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
-//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
-//
-////        var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
-////        recyServiceWarranty.adapter = null
-
-//        var warranty = 0
-      //  ll_history_details!!.visibility = View.VISIBLE
-        lnrHead_warranty_sub!!.visibility = View.VISIBLE
-        lnrHead_product_sub!!.visibility = View.GONE
-        lnrHead_sales_sub!!.visibility = View.GONE
-        lnrHead_customerdue_sub!!.visibility = View.GONE
-
-        recyServiceWarranty!!.visibility = View.GONE
-        recyServiceProductHistory!!.visibility = View.GONE
-        recyServiceSalesHistory!!.visibility = View.GONE
-        recyServiceCustomerdue!!.visibility = View.GONE
-        recyServiceWarranty!!.adapter = null
-
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                serviceWarrantyViewModel.getServiceWarranty(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        if (msg!!.length > 0) {
-
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   1821   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                Log.e(TAG,"msg   1822   "+msg)
-                                val jobjt = jObject.getJSONObject("WarrantyDetails")
-                                serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
-                                Log.e(TAG,"msg   1823   "+serviceWarrantyArrayList)
-                                if (serviceWarrantyArrayList.length()>0){
-                                    if (warrantyDet == 0){
-                                        warrantyDet++
-                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
-                                      //  ll_history_details!!.visibility = View.GONE
-                                        recyServiceWarranty!!.visibility = View.VISIBLE
-
-                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
-                                        recyServiceWarranty!!.adapter = adapter
-                                    }
-
-                                }
-                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-                            }
-
-
-                        } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                        }
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-
-    }
 
 
     private fun getProductHistory() {
@@ -4685,6 +4968,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         recyServiceSalesHistory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         val adapter = ServiceSalesAdapter(this@CustomerServiceActivity, serviceSalesArrayList)
                                         recyServiceSalesHistory!!.adapter = adapter
+                                        adapter.setClickListener(this@CustomerServiceActivity)
 
 
                                     }
@@ -4754,11 +5038,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 cutDueDet++
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   335   "+msg)
+                                Log.e(TAG,"msg   5109   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("CategoryDetailsList")
-                                    customerDueArrayList = jobjt.getJSONArray("CategoryList")
+                                    val jobjt = jObject.getJSONObject("CustomerDueDetils")
+                                    customerDueArrayList = jobjt.getJSONArray("CustomerDueDetilsList")
                                     if (customerDueArrayList.length()>0){
                                         tv_customerdue_count!!.setText(""+customerDueArrayList.length())
                                         recyServiceCustomerdue!!.visibility = View.VISIBLE
@@ -4912,6 +5196,29 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             }
 
 
+
+        }
+
+        if (data.equals("pincodedetails")) {
+
+
+            dialogPinCode!!.dismiss()
+            val jsonObject = pinCodeArrayList.getJSONObject(position)
+
+            FK_Country = jsonObject.getString("FK_Country")
+            FK_States = jsonObject.getString("FK_States")
+            FK_District = jsonObject.getString("FK_District")
+            FK_Area = jsonObject.getString("FK_Area")
+            FK_Place = jsonObject.getString("FK_Place")
+            FK_Post = jsonObject.getString("FK_Post")
+            FK_Area = jsonObject.getString("FK_Area")
+
+            tie_CN_Place!!.setText(jsonObject.getString("Place"))
+            tie_CN_Country!!.setText(jsonObject.getString("Country"))
+            tie_CN_State!!.setText(jsonObject.getString("States"))
+            tie_CN_District!!.setText(jsonObject.getString("District"))
+            tie_CN_Area!!.setText(jsonObject.getString("Area"))
+            tie_CN_Post!!.setText(jsonObject.getString("Post"))
 
         }
 
@@ -5164,6 +5471,131 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tie_CN_Post!!.setText(jsonObject.getString("PostName"))
             tie_CN_Pincode!!.setText(jsonObject.getString("PinCode"))
 
+        }
+
+        if (data.equals("salesHistoryClick")) {
+            val jsonObject = serviceSalesArrayList.getJSONObject(position)
+            Log.e(TAG,"InvoiceDate  5563   "+jsonObject.getString("InvoiceDate"))
+
+          //  detailPopupSheet(custname)
+            warrantyPopupSheet()
+
+        }
+
+    }
+
+    private fun warrantyPopupSheet() {
+        try {
+
+
+            dialogWarrantySheet = Dialog(this)
+            dialogWarrantySheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogWarrantySheet!! .setContentView(R.layout.cs_warranty_detail_popup)
+            dialogWarrantySheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+
+            recyServiceWarranty = dialogWarrantySheet!! .findViewById(R.id.recyServiceWarranty)
+
+            warrantyDet = 0
+            getWarranty()
+
+
+            val window: Window? = dialogWarrantySheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
+            dialogWarrantySheet!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getWarranty() {
+
+//        val inflater = LayoutInflater.from(this@CustomerServiceActivity)
+//        val inflatedLayout: View = inflater.inflate(R.layout.activity_customer_service_warranty, null, false)
+//
+////        var recyServiceWarranty = inflatedLayout.findViewById<FullLenghRecyclertview>(R.id.recyServiceWarranty)
+////        recyServiceWarranty.adapter = null
+
+//        var warranty = 0
+        //  ll_history_details!!.visibility = View.VISIBLE
+//        lnrHead_warranty_sub!!.visibility = View.VISIBLE
+//        lnrHead_product_sub!!.visibility = View.GONE
+//        lnrHead_sales_sub!!.visibility = View.GONE
+//        lnrHead_customerdue_sub!!.visibility = View.GONE
+//
+//        recyServiceWarranty!!.visibility = View.GONE
+//        recyServiceProductHistory!!.visibility = View.GONE
+//        recyServiceSalesHistory!!.visibility = View.GONE
+//        recyServiceCustomerdue!!.visibility = View.GONE
+        recyServiceWarranty!!.adapter = null
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+                serviceWarrantyViewModel.getServiceWarranty(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   55531   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                Log.e(TAG,"msg   55532   "+msg)
+                                val jobjt = jObject.getJSONObject("WarrantyDetails")
+                                serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
+                                Log.e(TAG,"msg   55533   "+serviceWarrantyArrayList)
+                                if (serviceWarrantyArrayList.length()>0){
+                                    if (warrantyDet == 0){
+                                        warrantyDet++
+                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
+                                        //  ll_history_details!!.visibility = View.GONE
+                                        recyServiceWarranty!!.visibility = View.VISIBLE
+
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
+                                        recyServiceWarranty!!.adapter = adapter
+                                    }
+
+                                }
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@CustomerServiceActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                //  progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
 
     }
@@ -5980,7 +6412,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 editable === tie_CustomerName!!.editableText -> {
                     Log.e(TAG,"283021    ")
 //                    if (tie_CustomerName!!.text.toString().equals("")){
-                    if (ID_Customer.equals("")){
+                    if (ID_Customer.equals("") && (tie_CustomerName!!.text.toString()).equals("")){
                         til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
                         til_CustomerName!!.isErrorEnabled = false
@@ -6122,6 +6554,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         til_CN_Pincode!!.isErrorEnabled = false
                         til_CN_Pincode!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
+
                 }
 
                 editable === tie_CN_Country!!.editableText -> {

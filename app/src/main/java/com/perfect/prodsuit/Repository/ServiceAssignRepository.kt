@@ -14,6 +14,7 @@ import com.perfect.prodsuit.Model.ServiceAssignModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -27,12 +28,12 @@ object ServiceAssignRepository {
     val serviceAssignSetterGetter = MutableLiveData<ServiceAssignModel>()
     val TAG: String = "ServiceAssignRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : String,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String): MutableLiveData<ServiceAssignModel> {
+    fun getServicesApiCall(context: Context, ReqMode : String, ID_CustomerServiceRegister : String, strAssignees : JSONArray, strVisitDate : String, strVisitTime : String, ID_Priority : String, strRemark : String): MutableLiveData<ServiceAssignModel> {
         getServiceAssign(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark)
         return serviceAssignSetterGetter
     }
 
-    private fun getServiceAssign(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : String,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String) {
+    private fun getServiceAssign(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : JSONArray,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String) {
 //
 //        val msg ="{\"ServiceAssignDetails\": {\"ServiceAssignDetailsList\": [{\"TicketNo\":\"TKT101\",\"TicketDate\": \"06/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543210\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Pending\",\"TimeDue\": \"1 Week Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"07/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543211\",\"Area\": \"Chalappuram\",\"Priority\": \"HIGH\",\"Status\": \"Completed\",\"TimeDue\": \"10 Days Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"08/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543212\",\"Area\": \"Chalappuram\",\"Priority\": \"MEDIUM\",\"Status\": \"Pending\",\"TimeDue\": \"1 Month Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"09/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543213\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Completed\",\"TimeDue\": \"5 Days Ago\"}],\"ResponseCode\": \"0\",\"ResponseMessage\": \"Transaction Verified\"},\"StatusCode\": 0,\"EXMessage\": \"Transaction Verified\"}"
 //        serviceAssignSetterGetter.value = ServiceAssignModel(msg)
@@ -92,7 +93,7 @@ object ServiceAssignRepository {
                 requestObject1.put("Assignees", strAssignees)
 
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
+                Log.e(TAG,"requestObject1   7812   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

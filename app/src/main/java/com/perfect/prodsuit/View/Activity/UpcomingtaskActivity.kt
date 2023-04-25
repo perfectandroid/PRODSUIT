@@ -549,6 +549,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             val i = Intent(this@UpcomingtaskActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("SubMode", submode)
             startActivity(i)
         }
         if (data.equals("todocall")){

@@ -82,7 +82,7 @@
                         android:padding="10dp"
                         android:tint="@color/white"
                         android:src="@drawable/svg_service_details"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         tools:ignore="UseAppTint" />
 <!--                    android:src="@drawable/svg_menu_dot"-->
 
@@ -196,7 +196,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:visibility="visible">
+                                    android:visibility="gone">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -637,7 +637,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -1296,7 +1296,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             app:cardElevation="0dp"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -1459,7 +1459,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:background="@drawable/btn_shape_reset"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
@@ -1484,6 +1484,22 @@
                 android:layout_weight="1"
                 android:textAllCaps="true"
                 android:text="Submit"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btnMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="2dp"
+                android:text="More"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
                 android:visibility="visible"/>
             <!--            android:background="@drawable/btn_bgcolourshadow1"-->
 

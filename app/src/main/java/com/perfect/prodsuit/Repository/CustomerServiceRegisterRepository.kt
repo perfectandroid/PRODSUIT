@@ -30,10 +30,10 @@ object CustomerServiceRegisterRepository {
                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                           strDate : String,strTime : String): MutableLiveData<CustomerServiceRegisterModel> {
+                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,FK_Place : String,ID_CompCategory :String): MutableLiveData<CustomerServiceRegisterModel> {
         getCustomerServiceRegister(context,strUserAction,Customer_Type,ID_Customer,ID_Channel,ID_Priority,ID_Category,
             ID_Company,ID_ComplaintList,ID_Services,ID_EmpMedia,ID_Status,ID_AttendedBy,strCustomerName,strMobileNo,strAddress,strContactNo,
-            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime)
+            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime,FK_Country,FK_States,FK_District,FK_Area,FK_Post,FK_Place,ID_CompCategory)
         return cusServRegisterSetterGetter
     }
 
@@ -41,7 +41,7 @@ object CustomerServiceRegisterRepository {
                                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                                           strDate : String,strTime : String) {
+                                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,FK_Place : String,ID_CompCategory :String) {
 
 //        Log.e(TAG,"Validation   93731"
 //                +"\n"+"Customer Type        :  "+Customer_Type
@@ -72,6 +72,13 @@ object CustomerServiceRegisterRepository {
 //                +"\n"+"FK_Product           :  "+ID_Product
 //                +"\n"+"CSRODescription      :  "+strDescription
 //                +"\n"+"TicketDate           :  "+strDate)
+
+        Log.e(TAG,"Validation   93731"
+                +"\n"+"FK_States        :  "+FK_States
+                +"\n"+"FK_States        :  "+FK_States
+                +"\n"+"FK_District        :  "+FK_District
+                +"\n"+"FK_Area        :  "+FK_Area
+                +"\n"+"FK_Post        :  "+FK_Post)
 
         try {
             cusServRegisterSetterGetter.value = CustomerServiceRegisterModel("")
@@ -117,7 +124,7 @@ object CustomerServiceRegisterRepository {
                 requestObject1.put("CSRCurrentStatus", ProdsuitApplication.encryptStart("0"))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart( FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("CSRPCategory", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("CSRPCategory", ProdsuitApplication.encryptStart(ID_CompCategory))
                 requestObject1.put("FK_OtherCompany", ProdsuitApplication.encryptStart(ID_Company))
                 requestObject1.put("FK_ComplaintList", ProdsuitApplication.encryptStart(ID_ComplaintList))
                 requestObject1.put("FK_ServiceList", ProdsuitApplication.encryptStart(ID_Services))
@@ -141,6 +148,15 @@ object CustomerServiceRegisterRepository {
                 requestObject1.put("CSRODescription", ProdsuitApplication.encryptStart(strDescription))
                 requestObject1.put("TicketDate", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("TicketTime", ProdsuitApplication.encryptStart(strTime))
+
+                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("FK_Country", ProdsuitApplication.encryptStart(FK_Country))
+                requestObject1.put("FK_States", ProdsuitApplication.encryptStart(FK_States))
+                requestObject1.put("FK_District", ProdsuitApplication.encryptStart(FK_District))
+                requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area))
+                requestObject1.put("FK_Post", ProdsuitApplication.encryptStart(FK_Post))
+                requestObject1.put("Address1", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("Address2", ProdsuitApplication.encryptStart(FK_Place))
 
                 if (Customer_Type.equals("0")){
                     Log.e(TAG,"642121   "+ID_Customer)

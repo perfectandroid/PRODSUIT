@@ -25,8 +25,8 @@ object CustomerservicecountRepository {
     val CustomerservicecountSetterGetter = MutableLiveData<CustomerservicecountModel>()
     val TAG: String = "CustomerservicecountRepository"
 
-    fun getServicesApiCall(context: Context, fkCust: String, fkOthercustomer: String, Prodid: String): MutableLiveData<CustomerservicecountModel> {
-        getCustomerservicecount(context,fkCust,fkOthercustomer,Prodid)
+    fun getServicesApiCall(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String): MutableLiveData<CustomerservicecountModel> {
+        getCustomerservicecount(context,ID_Customer,Customer_Type,ID_Product)
         return CustomerservicecountSetterGetter
     }
 
@@ -36,10 +36,10 @@ object CustomerservicecountRepository {
         return CustomerservicecountSetterGetter
     }*/
 
-    private fun getCustomerservicecount(context: Context, fkCust: String, fkOthercustomer: String, Prodid: String) {
-        System.out.println("Datacount 1 :"+fkCust)
-        System.out.println("Datacount 2 :"+fkOthercustomer)
-        System.out.println("Datacount 3 :"+Prodid)
+    private fun getCustomerservicecount(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String) {
+        System.out.println("Datacount 1 :"+ID_Customer)
+        System.out.println("Datacount 2 :"+Customer_Type)
+        System.out.println("Datacount 3 :"+ID_Product)
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -77,9 +77,26 @@ object CustomerservicecountRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("79"))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(Prodid))
-                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(fkCust))
-                requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(fkOthercustomer))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+
+
+//                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(fkCust))
+//                requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(fkOthercustomer))
+
+                if (Customer_Type.equals("0")){
+                    Log.e(CustomerServiceRegisterRepository.TAG,"642121   "+ID_Customer)
+                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
+                }else if (Customer_Type.equals("1")){
+                    Log.e(CustomerServiceRegisterRepository.TAG,"642122   "+ID_Customer)
+                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(ID_Customer))
+                }else{
+                    Log.e(CustomerServiceRegisterRepository.TAG,"642123   "+ID_Customer)
+                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
+                }
+
                 requestObject1.put("BranchCode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
 
