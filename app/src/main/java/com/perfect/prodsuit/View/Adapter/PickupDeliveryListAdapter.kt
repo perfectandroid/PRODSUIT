@@ -38,13 +38,12 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-
-                holder.tv_TicketNo.text        ="TKT-0022"
-                holder.tv_Customer.text        ="Ranjith"
-                holder.tv_Mobile.text        = "Mobile : 8075283549"
-                holder.tv_DeliveryDateTime.text        = "Date Time : 04/02/2023 10:08PM"
-                holder.tv_AssignedDate.text        = "Assigned Date : 1Months ago"
-                holder.tv_Employee.text        = "Employee : Geneva"
+                holder.tv_TicketNo.text            =  jsonObject!!.getString("ReferenceNo")
+                holder.tv_Customer.text            =  jsonObject!!.getString("CustomerName")
+                holder.tv_Mobile.text              =  "Mobile : "+jsonObject!!.getString("Mobile")
+                holder.tv_DeliveryDateTime.text    =  "Date Time : "+jsonObject!!.getString("PickUpTime")
+                holder.tv_AssignedDate.text        =  "Assigned Date : "+jsonObject!!.getString("AssignedOn")
+                holder.tv_Employee.text            =  "Employee : "+jsonObject!!.getString("EMPName")
 
                 if (SubMode.equals("1")){
                     holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_pickup))

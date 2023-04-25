@@ -12,7 +12,7 @@ class AreaViewModel : ViewModel() {
 
     var areaLiveData: MutableLiveData<AreaModel>? = null
 
-    fun getArea(context: Context, FK_District : String) : LiveData<AreaModel>? {
+    fun getArea(context: Context, FK_District: String) : LiveData<AreaModel>? {
         areaLiveData = AreaRepository.getServicesApiCall(context,FK_District)
         return areaLiveData
     }

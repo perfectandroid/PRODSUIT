@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -22,6 +24,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
@@ -32,19 +36,39 @@ import org.json.JSONObject
 
 class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
-    var TAG  ="PickUpAndDeliveryListActivity"
-    lateinit var context: Context
-    private var progressDialog: ProgressDialog? = null
+    var TAG                    ="PickUpAndDeliveryListActivity"
+    lateinit var context       : Context
+    private var progressDialog : ProgressDialog? = null
 
 
-    private var SubMode:String?=""
+    private var SubMode     : String?=""
+    private var tv_header   : TextView? = null
+    private var imgv_filter : ImageView? = null
+    private var tie_pDate   : TextInputEditText? = null
+    private var submode   = ""
+    private var mobile    = ""
 
-    private var tv_header: TextView? = null
 
-    var pickDeliveryCount = 0
-    lateinit var pickUpDeliveryViewModel: PickDeliveryListViewModel
-    lateinit var pickUpDeliveryArrayList: JSONArray
-    var recyPickUpDelivery: RecyclerView? = null
+    var FK_Area : String?= ""
+    var ID_Employee : String?= ""
+    var strFromDate : String?= ""
+    var strToDate : String?= ""
+    var strCustomer : String?= ""
+    var strMobile : String?= ""
+    var strProduct : String?= ""
+    var strTicketNo : String?= ""
+    var status_id : String?=""
+
+    var          pickDeliveryCount        = 0
+    lateinit var pickUpDeliveryViewModel : PickDeliveryListViewModel
+    lateinit var pickUpDeliveryArrayList : JSONArray
+    var          recyPickUpDelivery      : RecyclerView? = null
+
+    private var temp_Employee  : String = ""
+    private var temp_ToDate    : String = ""
+    private var temp_Customer  : String = ""
+    private var temp_Mobile    : String = ""
+    private var temp_TicketNo  : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,13 +82,30 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
+//            SubMode = submode
+            submode = SubMode.toString()
+            Log.e(TAG,"000111222255  "+submode)
         }
+
+
+        FK_Area     = intent.getStringExtra("FK_Area")
+        ID_Employee = intent.getStringExtra("ID_Employee")
+        strFromDate = intent.getStringExtra("strFromDate")
+        strToDate   = intent.getStringExtra("strToDate")
+        strCustomer = intent.getStringExtra("strCustomer")
+        strMobile   = intent.getStringExtra("strMobile")
+        strProduct   = intent.getStringExtra("strProduct")
+        strTicketNo  = intent.getStringExtra("strTicketNo")
+        status_id    = intent.getStringExtra("status_id")
         setRegViews()
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        imgv_filter = findViewById(R.id.imgv_filter)
         imback!!.setOnClickListener(this)
+        imgv_filter!!.setOnClickListener(this)
+
 
         tv_header = findViewById(R.id.tv_header)
         recyPickUpDelivery = findViewById(R.id.recyPickUpDelivery)
@@ -91,9 +132,127 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             R.id.imback->{
                 finish()
             }
+            R.id.imgv_filter->{
+                filterBottomData()
+            }
 
         }
     }
+
+    private fun filterBottomData() {
+
+        try {
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.pick_up_filter, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCanceledOnTouchOutside(true)
+
+//            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
+
+            val txtReset          = view.findViewById(R.id.txtReset)          as TextView
+            val txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
+            val tie_pEmployee     = view.findViewById(R.id.tie_pEmployee)     as TextInputEditText
+            val tie_pCustomer     = view.findViewById(R.id.tie_pCustomer)     as TextInputEditText
+            val tie_pTicketNumber = view.findViewById(R.id.tie_pTicketNumber) as TextInputEditText
+            val tie_pDate         = view.findViewById(R.id.tie_pDate)          as TextInputEditText
+            val tie_Mobile1       = view.findViewById(R.id.tie_Mobile1)       as TextInputEditText
+
+
+
+            val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+            val BranchNameSP        = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+            val FK_EmployeeSP       = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+            val UserNameSP          = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+
+
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin   = IsAdminSP.getString("IsAdmin", null)
+            Log.e(TAG,"isAdmin 796  "+isAdmin)
+
+
+            tie_pDate.setOnClickListener {
+                openBottomSheet()
+
+            }
+
+            txtReset.setOnClickListener {
+
+            }
+
+            txtSearch.setOnClickListener {
+                validatedata(dialog1)
+            }
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+            dialog1.show()
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+
+
+
+    }
+
+
+    private fun openBottomSheet(){
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+
+
+            try {
+                val day: Int = date_Picker!!.getDayOfMonth()
+                val mon: Int = date_Picker!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                tie_pDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(true)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+
+    }
+
+    private fun validatedata(dialog1: BottomSheetDialog){
+
+
+    }
+
     private fun getPickUpDeliveryList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -103,7 +262,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                pickUpDeliveryViewModel.getPickDeliveryList(this)!!.observe(
+                pickUpDeliveryViewModel.getPickDeliveryList(this,submode,ID_Employee!!,strCustomer!!,strFromDate!!,strToDate!!,strMobile!!,strProduct!!,strTicketNo!!,FK_Area!!,status_id!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -114,8 +273,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   104   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
-                                        pickUpDeliveryArrayList = jobjt.getJSONArray("CategoryList")
+                                        val jobjt = jObject.getJSONObject("PickUpDeliveryDetails")
+                                        pickUpDeliveryArrayList = jobjt.getJSONArray("PickUpDeliveryDetailsList")
                                         if (pickUpDeliveryArrayList.length() > 0) {
 
                                             val lLayout = GridLayoutManager(this@PickUpAndDeliveryListActivity, 1)
@@ -165,6 +324,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(position: Int, data: String, view: View) {
 
+//        Log.e(TAG, "caall   11104   " + position)
         if (data.equals("pickupDelivery")){
             Config.disableClick(view)
             val i = Intent(this@PickUpAndDeliveryListActivity, PickUpAndDeliveryUpdateActivity::class.java)
@@ -174,7 +334,10 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         if (data.equals("pickDelCall")){
             Config.disableClick(view)
-            var mobileno = "8075283549"
+//            var mobileno = "9496442442"
+             var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
+             val mobileno = jsonObject!!.getString("Mobile")
+            Log.e(TAG, "caall   11104   " + mobileno)
             if (mobileno.equals("")){
                 Config.snackBarWarning(context,view,"Invalid mobile number")
             }
@@ -192,7 +355,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
     }
 
-    private fun callFunction(mobileno : String) {
+    private fun callFunction(mobileno: String) {
         val ALL_PERMISSIONS = 101
 
         val permissions = arrayOf(
