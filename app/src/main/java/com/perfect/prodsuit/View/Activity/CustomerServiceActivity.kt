@@ -71,6 +71,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var recyServiceCustomerdue: RecyclerView? = null
 
 
+    var ID_CustomerWiseProductDetails=""
+
     var warrantycount=""
     var servicehistorycount=""
     var salescount=""
@@ -4158,6 +4160,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             prodHistMode = "1"
             saleHistMode = "1"
             custDueMode = "1"
+            ID_CustomerWiseProductDetails = ""
 
             dialogDetailSheet = Dialog(this)
             dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -5476,7 +5479,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         if (data.equals("salesHistoryClick")) {
             val jsonObject = serviceSalesArrayList.getJSONObject(position)
             Log.e(TAG,"InvoiceDate  5563   "+jsonObject.getString("InvoiceDate"))
-
+            ID_CustomerWiseProductDetails = jsonObject.getString("ID_CustomerWiseProductDetails")
           //  detailPopupSheet(custname)
             warrantyPopupSheet()
 
@@ -5541,7 +5544,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                progressDialog!!.setIndeterminate(true)
 //                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
 //                progressDialog!!.show()
-                serviceWarrantyViewModel.getServiceWarranty(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                serviceWarrantyViewModel.getServiceWarranty(this,ID_Product!!,Customer_Type!!,ID_Customer!!,ID_CustomerWiseProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -5554,20 +5557,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 val jobjt = jObject.getJSONObject("WarrantyDetails")
                                 serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
                                 Log.e(TAG,"msg   55533   "+serviceWarrantyArrayList)
-                                if (serviceWarrantyArrayList.length()>0){
-                                    if (warrantyDet == 0){
-                                        warrantyDet++
-                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
-                                        //  ll_history_details!!.visibility = View.GONE
-                                        recyServiceWarranty!!.visibility = View.VISIBLE
-
-                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
-                                        recyServiceWarranty!!.adapter = adapter
-                                    }
-
-                                }
+//                                if (serviceWarrantyArrayList.length()>0){
+//                                    if (warrantyDet == 0){
+//                                        warrantyDet++
+//                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
+//                                        //  ll_history_details!!.visibility = View.GONE
+//                                        recyServiceWarranty!!.visibility = View.VISIBLE
+//
+//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+//                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
+//                                        recyServiceWarranty!!.adapter = adapter
+//                                    }
+//
+//                                }
                             } else {
 //                                val builder = AlertDialog.Builder(
 //                                    this@CustomerServiceActivity,

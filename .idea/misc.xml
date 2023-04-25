@@ -149,6 +149,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_companys.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_date.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_from.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_landlines.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_name.xml" value="0.1945" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_phones.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_posts.xml" value="0.1945" />
@@ -334,7 +335,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.30615384615384617" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.34479166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_next_action.xml" value="0.2923076923076923" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.28541666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location.xml" value="0.24270833333333333" />
