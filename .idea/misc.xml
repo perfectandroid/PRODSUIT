@@ -434,7 +434,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_product_hitory.xml" value="0.2677083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_role.xml" value="0.309375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_sales.xml" value="0.27395833333333336" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_warranty.xml" value="0.2859375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_warranty.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_statusticket_report.xml" value="0.5608899297423887" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_sub_document.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_submedia.xml" value="0.3416666666666667" />
@@ -535,7 +535,6 @@
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/perfect/prodsuit/Repository/ServiceListReportRepository.kt" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

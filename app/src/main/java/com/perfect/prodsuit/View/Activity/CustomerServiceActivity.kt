@@ -5557,20 +5557,20 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 val jobjt = jObject.getJSONObject("WarrantyDetails")
                                 serviceWarrantyArrayList = jobjt.getJSONArray("WarrantyDetailsList")
                                 Log.e(TAG,"msg   55533   "+serviceWarrantyArrayList)
-//                                if (serviceWarrantyArrayList.length()>0){
-//                                    if (warrantyDet == 0){
-//                                        warrantyDet++
-//                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
-//                                        //  ll_history_details!!.visibility = View.GONE
-//                                        recyServiceWarranty!!.visibility = View.VISIBLE
-//
-//                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
-//                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
-//                                        recyServiceWarranty!!.adapter = adapter
-//                                    }
-//
-//                                }
+                                if (serviceWarrantyArrayList.length()>0){
+                                    if (warrantyDet == 0){
+                                        warrantyDet++
+                                        tv_warranty_count!!.setText(""+serviceWarrantyArrayList.length())
+                                        //  ll_history_details!!.visibility = View.GONE
+                                        recyServiceWarranty!!.visibility = View.VISIBLE
+
+                                        val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+                                        recyServiceWarranty!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceWarrantyAdapter(this@CustomerServiceActivity, serviceWarrantyArrayList)
+                                        recyServiceWarranty!!.adapter = adapter
+                                    }
+
+                                }
                             } else {
 //                                val builder = AlertDialog.Builder(
 //                                    this@CustomerServiceActivity,
