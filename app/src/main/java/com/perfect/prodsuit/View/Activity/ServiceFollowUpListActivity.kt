@@ -332,8 +332,15 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
         if (data.equals("followUp")) {
+//            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
+//            val intent = Intent(this, ServiceFollowUpActivity::class.java)
+//            val runningStatus = 0
+//            intent.putExtra("runningStatus", runningStatus)
+//            intent.putExtra("customer_service_register", customer_service_register)
+//            startActivity(intent)
+
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
-            val intent = Intent(this, ServiceFollowUpActivity::class.java)
+            val intent = Intent(this, ServiceFollowUpNewActivity::class.java)
             val runningStatus = 0
             intent.putExtra("runningStatus", runningStatus)
             intent.putExtra("customer_service_register", customer_service_register)

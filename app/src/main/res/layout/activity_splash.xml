@@ -41,6 +41,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:src="@drawable/companylogo"
-            android:tint="@color/white" />
+            android:tint="@color/white"
+            android:visibility="visible" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

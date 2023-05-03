@@ -52,7 +52,7 @@ object BannersRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("12"))
 
-                Log.e(TAG,"requestObject1   54   "+requestObject1)
+                Log.e(TAG,"requestObject1   545   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -68,7 +68,7 @@ object BannersRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i(TAG,"banner response"+response.body())
+                        Log.e(TAG,"banner response"+response.body())
                         val users = ArrayList<BannerModel>()
                         users.add(BannerModel(response.body()))
                         val msg = users[0].message

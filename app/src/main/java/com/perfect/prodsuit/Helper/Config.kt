@@ -279,6 +279,13 @@ object Config {
         },3000)
     }
 
+    fun disableClickOnSec(v : View) {
+        v.isEnabled = false
+        v.postDelayed({
+            v.isEnabled = true
+        },1000)
+    }
+
     fun getHeight(context: Context) : Int{
         height = context.resources.displayMetrics.heightPixels
         return height.toInt()
