@@ -403,51 +403,80 @@
                                         android:textColor="@color/greydarks"
                                         android:textSize="16dp" />
 
-                                    <LinearLayout
-                                        android:id="@+id/lin_replacePoductCost"
+                                    <ScrollView
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:minHeight="200dp"
-                                        android:orientation="vertical"
-                                        android:visibility="gone"
-                                        tools:ignore="MissingConstraints">
+                                        android:layout_height="wrap_content">
 
                                         <LinearLayout
-                                            android:id="@+id/lin_add_replaced_product"
-                                            android:layout_width="wrap_content"
+                                            android:id="@+id/lin_replacePoductCost"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:orientation="horizontal">
+                                            android:background="@color/white"
+                                            android:gravity="bottom"
+                                            android:minHeight="200dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone"
+                                            tools:ignore="MissingConstraints">
 
-                                            <ImageView
-                                                android:layout_width="30dp"
-                                                android:layout_height="30dp"
-                                                android:src="@drawable/ic_add"
-                                                app:tint="@color/textColor" />
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="match_parent"
-                                                android:drawableTint="@color/textColor"
-                                                android:fontFamily="@font/myfont"
-                                                android:gravity="center"
-                                                android:hint="Visited Date"
-                                                android:paddingLeft="5dp"
-                                                android:paddingRight="5dp"
-                                                android:singleLine="true"
-                                                android:text="Add followUp replaced product"
-                                                android:textColor="@color/grey_dark"
-                                                android:textColorHint="@color/grey_dark"
-                                                android:textSize="12dp" />
+
+
+                                            <androidx.recyclerview.widget.RecyclerView
+                                                android:id="@+id/recycleView_replaceproduct"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layoutAnimation="@anim/layout_animation"
+                                                android:visibility="visible" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="60dp"
+                                                android:layout_gravity="bottom"
+                                                android:gravity="bottom|end"
+                                                android:orientation="horizontal">
+
+                                                <LinearLayout
+                                                    android:id="@+id/lin_add_replaced_product"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="45dp"
+                                                    android:layout_margin="5dp"
+                                                    android:background="@color/colorPrimary"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal"
+                                                    android:padding="5dp">
+
+                                                    <!--                                                    android:background="@drawable/shape_rounded_corner_grey"-->
+
+                                                    <ImageView
+                                                        android:layout_width="30dp"
+                                                        android:layout_height="30dp"
+                                                        android:src="@drawable/ic_add"
+                                                        app:tint="@color/white" />
+
+                                                    <TextView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="match_parent"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:hint="Visited Date"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:singleLine="true"
+                                                        android:text="Add followUp replaced product"
+                                                        android:textColor="@color/white"
+                                                        android:textColorHint="@color/grey_dark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="normal" />
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+
                                         </LinearLayout>
 
-                                        <androidx.recyclerview.widget.RecyclerView
-                                            android:id="@+id/recycleView_replaceproduct"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:visibility="gone" />
+                                    </ScrollView>
 
-                                    </LinearLayout>
 
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>

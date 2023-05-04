@@ -82,7 +82,7 @@ object ServiceFollowUpMappedReplacedProductRepository {
                 requestObject1.put("FK_Customerserviceregister",ProdsuitApplication.encryptStart(customer_service_register)
                 )
 
-                Log.v(TAG,"requestObject1 "+requestObject1)
+                Log.e(TAG,"requestObject1 851  "+requestObject1)
                 Log.v(TAG,"requestObject2 "+requestObject1.toString())
 
 

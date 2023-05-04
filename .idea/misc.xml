@@ -421,7 +421,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_priority.xml" value="0.2296875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_productwise_report.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_reason.xml" value="0.346875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_replaced_product.xml" value="0.6943793911007026" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_replaced_product_cost_followup.xml" value="0.7868852459016393" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_replaced_product_cost_followup_secondary.xml" value="0.6943793911007026" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_replaced_product_sub.xml" value="0.6463700234192038" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_report_name.xml" value="0.23177083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign.xml" value="0.31666666666666665" />
@@ -475,6 +478,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_popup.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/complaint_service_popup.xml" value="0.4601873536299766" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.22604166666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/country_list_popup.xml" value="0.7072599531615925" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_add_new_user_sheet.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_more_service_attended_sheet.xml" value="0.45433255269320844" />
@@ -504,6 +508,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/notf_popup.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/payment_method_popup.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/pincodedetail_popup.xml" value="0.5690866510538641" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/pop_replaced_product_sub.xml" value="0.7154566744730679" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/post_list_popup.xml" value="0.2989583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/product_category_popup.xml" value="0.18333333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/product_information_sheet.xml" value="0.6264637002341921" />
@@ -526,6 +531,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_product_popup.xml" value="0.209375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_register_confirm.xml" value="0.29583333333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_role_popup.xml" value="0.309375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/simple_spinner_dropdown_item.xml" value="0.5304449648711944" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sort_popup.xml" value="0.23489583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/spinner_item.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/submedia_popup.xml" value="0.3416666666666667" />

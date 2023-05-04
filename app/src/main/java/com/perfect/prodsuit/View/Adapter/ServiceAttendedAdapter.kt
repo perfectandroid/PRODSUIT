@@ -117,8 +117,8 @@ class ServiceAttendedAdapter (internal var context: Context, internal var mList:
                         holder.edtServiceType!!.setAdapter(adapter)
                         holder.edtServiceType!!.showDropDown()
                     }
-                    holder.edtServiceType!!.setOnItemClickListener { parent, view, position, id ->
-                        jsonObject = jsonArrayServiceType.getJSONObject(position)
+                    holder.edtServiceType!!.setOnItemClickListener { parent, view, pos, id ->
+                        jsonObject = jsonArrayServiceType.getJSONObject(pos)
                         Log.e(TAG,"698   "+jsonObject!!.getString("ServiceTypeName"))
                         ItemsModel.ServiceTypeId = jsonObject!!.getString("ServiceTypeId")
                         ItemsModel.ServiceTypeName = jsonObject!!.getString("ServiceTypeName")

@@ -6,6 +6,8 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -23,16 +25,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListenerValue
-import com.perfect.prodsuit.Model.ModelMoreServices
-import com.perfect.prodsuit.Model.ModelMoreServicesTemp
-import com.perfect.prodsuit.Model.ModelServiceAttended
-import com.perfect.prodsuit.Model.ModelServiceAttendedTemp
+import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.MoreServiceAttendedAdapter
+import com.perfect.prodsuit.View.Adapter.ReplacedProductAdapter
+import com.perfect.prodsuit.View.Adapter.ReplacedProductSubAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceAttendedAdapter
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpMappedServiceViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpMoreServiceViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpServiceTypeViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
@@ -103,6 +102,27 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     val modelServiceAttended = ArrayList<ModelServiceAttended>()
     val modelServiceAttendedTemp = ArrayList<ModelServiceAttendedTemp>()
 
+    ////////////
+
+    lateinit var serviceFollowUpMappedReplacedProductViewModel: ServiceFollowUpMappedReplacedProductViewModel
+    var serviceFollowUpReplacedProduct = 0
+    var jsonArrayReplacedProductMap: JSONArray = JSONArray()
+
+    val modelReplacedProduct = ArrayList<ModelReplacedProduct>()
+    private var recycleView_replaceproduct: RecyclerView? = null
+    var adapterReplacedProduct: ReplacedProductAdapter? = null
+
+    lateinit var serviceFollowUpChangeModeViewModel: ServiceFollowUpChangeModeViewModel
+    var serviceFollowUpChangeMmode = 0
+    var jsonArrayChangeMode: JSONArray = JSONArray()
+
+    lateinit var serviceFollowUpMoreReplacedProductsViewModel: ServiceFollowUpMoreReplacedProductsViewModel
+    var serviceFollowUpMoreReplacedProduct = 0
+    var jsonArrayReplacedProductMore: JSONArray = JSONArray()
+    private var dialogRepPoduct: Dialog? = null
+
+    var replaceProductPos = 0
+
     private var tv_submit: TextView? = null
     private var tv_cancel: TextView? = null
 
@@ -115,6 +135,9 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         serviceFollowUpMappedServiceViewModel = ViewModelProvider(this).get(ServiceFollowUpMappedServiceViewModel::class.java)
         serviceFollowUpMoreServiceViewModel = ViewModelProvider(this).get(ServiceFollowUpMoreServiceViewModel::class.java)
         serviceFollowUpServiceTypeViewModel = ViewModelProvider(this).get(ServiceFollowUpServiceTypeViewModel::class.java)
+        serviceFollowUpMappedReplacedProductViewModel = ViewModelProvider(this).get(ServiceFollowUpMappedReplacedProductViewModel::class.java)
+        serviceFollowUpChangeModeViewModel = ViewModelProvider(this).get(ServiceFollowUpChangeModeViewModel::class.java)
+        serviceFollowUpMoreReplacedProductsViewModel = ViewModelProvider(this).get(ServiceFollowUpMoreReplacedProductsViewModel::class.java)
 
         setRegViews()
         getSharedPrefValues()
@@ -155,7 +178,15 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         lin_add_service = findViewById<LinearLayout>(R.id.lin_add_service)
 
         recycler_service_cost = findViewById<RecyclerView>(R.id.recycler_service_cost)
+        recycleView_replaceproduct = findViewById<RecyclerView>(R.id.recycleView_replaceproduct)
         recycler_service_cost!!.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: MotionEvent?): Boolean {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                v.onTouchEvent(event)
+                return true
+            }
+        })
+        recycleView_replaceproduct!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent?): Boolean {
                 v.parent.requestDisallowInterceptTouchEvent(true)
                 v.onTouchEvent(event)
@@ -274,6 +305,16 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                     attendanceMode = "1"
                 }
                 hideShowViews()
+                if (jsonArrayChangeMode.length() == 0){
+                    serviceFollowUpChangeMmode = 0
+                    loadChangeMode()
+                }
+
+
+                if (jsonArrayReplacedProductMap.length() == 0){
+                    serviceFollowUpReplacedProduct = 0
+                    loadMappedReplacedProducts()
+                }
             }
 
             R.id.tv_attendance -> {
@@ -292,17 +333,35 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
             R.id.tv_submit -> {
                 Config.disableClick(v)
-                for (i in 0 until modelServiceAttended.size) {
-                    val ItemsAttend = modelServiceAttended[i]
+//                for (i in 0 until modelServiceAttended.size) {
+//                    val ItemsAttend = modelServiceAttended[i]
+//                    Log.e(TAG,"297   "+i
+//                            +"\n"+"isChecked          : "+ItemsAttend.isChecked
+//                            +"\n"+"SubProduct         : "+ItemsAttend.SubProduct
+//                            +"\n"+"Service            : "+ItemsAttend.Service
+//                            +"\n"+"ServiceCost        : "+ItemsAttend.ServiceCost
+//                            +"\n"+"ServiceTypeId      : "+ItemsAttend.ServiceTypeId
+//                            +"\n"+"ServiceTypeName    : "+ItemsAttend.ServiceTypeName
+//                            +"\n"+"ServiceTaxAmount   : "+ItemsAttend.ServiceTaxAmount
+//                            +"\n"+"ServiceNetAmount   : "+ItemsAttend.ServiceNetAmount)
+//                }
+
+                for (i in 0 until modelReplacedProduct.size) {
+                    val ItemsAttend = modelReplacedProduct[i]
                     Log.e(TAG,"297   "+i
-                            +"\n"+"isChecked          : "+ItemsAttend.isChecked
-                            +"\n"+"SubProduct         : "+ItemsAttend.SubProduct
-                            +"\n"+"Service            : "+ItemsAttend.Service
-                            +"\n"+"ServiceCost        : "+ItemsAttend.ServiceCost
-                            +"\n"+"ServiceTypeId      : "+ItemsAttend.ServiceTypeId
-                            +"\n"+"ServiceTypeName    : "+ItemsAttend.ServiceTypeName
-                            +"\n"+"ServiceTaxAmount   : "+ItemsAttend.ServiceTaxAmount
-                            +"\n"+"ServiceNetAmount   : "+ItemsAttend.ServiceNetAmount)
+                            +"\n"+"isChecked       : "+ItemsAttend.isChecked
+                            +"\n"+"ID_OLD_Product  : "+ItemsAttend.ID_OLD_Product
+                            +"\n"+"OLD_Product     : "+ItemsAttend.OLD_Product
+                            +"\n"+"SPDOldQuantity  : "+ItemsAttend.SPDOldQuantity
+                            +"\n"+"Amount          : "+ItemsAttend.Amount
+                            +"\n"+"ID_Mode         : "+ItemsAttend.ID_Mode
+                            +"\n"+"ModeName        : "+ItemsAttend.ModeName
+                            +"\n"+"ID_Product      : "+ItemsAttend.ID_Product
+                            +"\n"+"Product         : "+ItemsAttend.Product
+                            +"\n"+"Replaced_Qty    : "+ItemsAttend.Replaced_Qty
+                            +"\n"+"ReplaceAmount   : "+ItemsAttend.ReplaceAmount
+                            +"\n"+"Remarks         : "+ItemsAttend.Remarks
+                            +"\n"+"isAdded         : "+ItemsAttend.isAdded)
                 }
 
 
@@ -800,7 +859,163 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+    private fun loadMappedReplacedProducts() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                serviceFollowUpMappedReplacedProductViewModel.getServiceFollowUpMappedService(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpReplacedProduct == 0) {
+                                    serviceFollowUpReplacedProduct++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ReplaceProductdetails")
+                                        jsonArrayReplacedProductMap = jobjt.getJSONArray("ReplaceProductdetailsList")
 
+                                        Log.e(TAG,"jsonArrayReplacedProductMap   837   "+jsonArrayReplacedProductMap)
+                                        modelReplacedProduct.clear()
+                                        if (jsonArrayReplacedProductMap.length()>0){
+
+                                            for (i in 0 until jsonArrayReplacedProductMap.length()) {
+                                                var jsonObject = jsonArrayReplacedProductMap.getJSONObject(i)
+
+                                                modelReplacedProduct!!.add(ModelReplacedProduct("0",jsonObject.getString("ID_OLD_Product"),jsonObject.getString("OLD_Product"),
+                                                    jsonObject.getString("SPDOldQuantity"),jsonObject.getString("Amount"),"0","",jsonObject.getString("ID_Product"),jsonObject.getString("Product"),
+                                                    "0",jsonObject.getString("ReplaceAmount"),jsonObject.getString("Remarks"),"0"))
+                                            }
+
+                                        }
+                                        Log.e(TAG,"modelReplacedProduct   8371   "+ modelReplacedProduct.size)
+                                        try {
+                                            if (modelReplacedProduct.size>0){
+                                                val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+                                                recycleView_replaceproduct!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                                                adapterReplacedProduct = ReplacedProductAdapter(this@ServiceFollowUpNewActivity, modelReplacedProduct,jsonArrayChangeMode)
+                                                recycleView_replaceproduct!!.adapter = adapterReplacedProduct
+                                                adapterReplacedProduct!!.setClickListener(this@ServiceFollowUpNewActivity)
+
+                                            }
+
+                                        }
+                                        catch (e : Exception){
+                                            Log.e(TAG,"Exception   418   "+e.toString())
+                                        }
+
+                                    }
+                                }
+                            } else {
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun loadChangeMode() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpChangeModeViewModel.getServiceFollowUpChangeMode(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpChangeMmode == 0) {
+                                    serviceFollowUpChangeMmode++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ChangemodeDetails")
+                                        jsonArrayChangeMode =
+                                            jobjt.getJSONArray("ChangemodeDetailsList")
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "" + Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun addDataServiceAttended() {
+        // modelServiceAttended
+        modelMoreServices.clear()
+        for (i in 0 until modelMoreServicesTemp.size) {
+            val ItemsModel = modelMoreServicesTemp[i]
+            Log.e(TAG,"isChecked  76401  "+ItemsModel.isChecked)
+            modelMoreServices!!.add(ModelMoreServices(ItemsModel.ID_Services,ItemsModel.Service,ItemsModel.isChecked))
+        }
+
+        // 02-05-2023
+        modelServiceAttended.clear()
+
+        for (i in 0 until modelServiceAttendedTemp.size) {
+            val ItemsAttend3 = modelServiceAttendedTemp[i]
+            Log.e(TAG,"77222  : "+ItemsAttend3.ID_Services+"  :  "+ItemsAttend3.Service+"  :  "+ItemsAttend3.isChecked)
+            if (ItemsAttend3.isCheckedAdd.equals("1")){
+                modelServiceAttended!!.add(ModelServiceAttended(ItemsAttend3.ID_ProductWiseServiceDetails,ItemsAttend3.SubProduct
+                    ,ItemsAttend3.ID_Product,ItemsAttend3.ID_Services,ItemsAttend3.Service,ItemsAttend3.ServiceCost,
+                    ItemsAttend3.ServiceTaxAmount,ItemsAttend3.ServiceNetAmount,ItemsAttend3.Remarks,ItemsAttend3.isChecked,
+                    ItemsAttend3.isDelete,ItemsAttend3.isCheckedAdd,ItemsAttend3.ServiceTypeId,ItemsAttend3.ServiceTypeName))
+            }
+
+
+        }
+        val controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation)
+        recycler_service_cost!!.layoutAnimation = controller
+        val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+        recycler_service_cost!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+        adapterServiceAttended = ServiceAttendedAdapter(this@ServiceFollowUpNewActivity, modelServiceAttended,jsonArrayServiceType)
+        recycler_service_cost!!.scheduleLayoutAnimation()
+        recycler_service_cost!!.adapter = adapterServiceAttended
+        adapterServiceAttended!!.notifyDataSetChanged()
+
+
+//        adapterServiceAttended!!.notifyDataSetChanged()
+    }
 
     override fun onClick(position: Int, data: String, value: String) {
 
@@ -922,45 +1137,161 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         }
 
+        if (data.equals("ReplaceProdClick")) {
+            try {
+                Log.e(TAG,"1132   s"+position)
 
-    }
+            }catch (e:Exception){
 
-
-    private fun addDataServiceAttended() {
-       // modelServiceAttended
-        modelMoreServices.clear()
-        for (i in 0 until modelMoreServicesTemp.size) {
-            val ItemsModel = modelMoreServicesTemp[i]
-            Log.e(TAG,"isChecked  76401  "+ItemsModel.isChecked)
-            modelMoreServices!!.add(ModelMoreServices(ItemsModel.ID_Services,ItemsModel.Service,ItemsModel.isChecked))
-        }
-
-        // 02-05-2023
-        modelServiceAttended.clear()
-
-        for (i in 0 until modelServiceAttendedTemp.size) {
-            val ItemsAttend3 = modelServiceAttendedTemp[i]
-            Log.e(TAG,"77222  : "+ItemsAttend3.ID_Services+"  :  "+ItemsAttend3.Service+"  :  "+ItemsAttend3.isChecked)
-            if (ItemsAttend3.isCheckedAdd.equals("1")){
-                modelServiceAttended!!.add(ModelServiceAttended(ItemsAttend3.ID_ProductWiseServiceDetails,ItemsAttend3.SubProduct
-                    ,ItemsAttend3.ID_Product,ItemsAttend3.ID_Services,ItemsAttend3.Service,ItemsAttend3.ServiceCost,
-                    ItemsAttend3.ServiceTaxAmount,ItemsAttend3.ServiceNetAmount,ItemsAttend3.Remarks,ItemsAttend3.isChecked,
-                    ItemsAttend3.isDelete,ItemsAttend3.isCheckedAdd,ItemsAttend3.ServiceTypeId,ItemsAttend3.ServiceTypeName))
             }
 
+        }
+
+        if (data.equals("popUpProducts")) {
+            try {
+
+                replaceProductPos = position
+                Log.e(TAG,"1142   s"+position)
+                if (jsonArrayReplacedProductMore.length() == 0){
+                    serviceFollowUpMoreReplacedProduct = 0
+                    loadMoreReplacedProducts()
+                }else{
+                    replaceProductPop(jsonArrayReplacedProductMore)
+                }
+
+
+            }catch (e:Exception){
+
+            }
 
         }
-        val controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation)
-        recycler_service_cost!!.layoutAnimation = controller
-        val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
-        recycler_service_cost!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-        adapterServiceAttended = ServiceAttendedAdapter(this@ServiceFollowUpNewActivity, modelServiceAttended,jsonArrayServiceType)
-        recycler_service_cost!!.scheduleLayoutAnimation()
-        recycler_service_cost!!.adapter = adapterServiceAttended
-        adapterServiceAttended!!.notifyDataSetChanged()
+
+        if (data.equals("popUpProductsSelect")) {
+            try {
+
+                dialogRepPoduct!!.dismiss()
+                Log.e(TAG,"11421   s"+position)
+                val ItemsModel = modelReplacedProduct[replaceProductPos]
+                val jsonObject = jsonArrayReplacedProductMore.getJSONObject(position)
+                Log.e(TAG,"114221   :  "+ItemsModel.Product)
+
+                Log.e(TAG,"11421   s"+ItemsModel.OLD_Product)
+
+                ItemsModel.ID_Product = jsonObject!!.getString("ID_Product")
+                ItemsModel.Product =  jsonObject!!.getString("Name")
+//
+//                for (k in 0 until modelReplacedProduct.size) {
+//                    val ItemsModel1 = modelReplacedProduct[k]
+//
+//                    Log.e(TAG,"114222   :  "+ItemsModel1.Product)
+//                }
+
+                adapterReplacedProduct!!.notifyItemChanged(replaceProductPos)
 
 
-//        adapterServiceAttended!!.notifyDataSetChanged()
+            }catch (e:Exception){
+
+            }
+
+        }
+
+
     }
+
+
+
+    private fun loadMoreReplacedProducts() {
+        //recyclerAttendance!!.adapter = null
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpMoreReplacedProductsViewModel.getServiceFollowUpMoreReplacedProduct(
+                    this,
+                    customer_service_register,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpMoreReplacedProduct == 0) {
+                                    serviceFollowUpMoreReplacedProduct++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("PopUpProductdetails")
+                                        jsonArrayReplacedProductMore = jobjt.getJSONArray("PopUpProductdetailsList")
+                                        Log.e(TAG,"1190   "+jsonArrayReplacedProductMore)
+
+                                        replaceProductPop(jsonArrayReplacedProductMore)
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun replaceProductPop(jsonArrayReplacedProductMore: JSONArray) {
+
+        try {
+
+            dialogRepPoduct = Dialog(context)
+            dialogRepPoduct!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogRepPoduct!!.setContentView(R.layout.pop_replaced_product_sub)
+            dialogRepPoduct!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            val recycCountry = dialogRepPoduct!!.findViewById(R.id.recycCountry) as RecyclerView
+            val etsearch = dialogRepPoduct!!.findViewById(R.id.etsearch) as EditText
+
+//            countrySort = JSONArray()
+//            for (k in 0 until modelReplacedProduct.length()) {
+//                val jsonObject = countryArrayList.getJSONObject(k)
+//                // reportNamesort.put(k,jsonObject)
+//                countrySort.put(jsonObject)
+//            }
+
+            val lLayout = GridLayoutManager(context, 1)
+            recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+            val adapter = ReplacedProductSubAdapter(context, jsonArrayReplacedProductMore)
+            recycCountry!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUpNewActivity)
+
+
+
+
+            dialogRepPoduct!!.show()
+            dialogRepPoduct!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogRepPoduct!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
 
 }
