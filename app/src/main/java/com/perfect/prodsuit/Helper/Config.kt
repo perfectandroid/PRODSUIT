@@ -627,7 +627,7 @@ object Config {
 
                 obj = JSONObject()
                 obj.put("grid_id", "7")
-                obj.put("grid_name", "Pickup Delivery")
+                obj.put("grid_name", "Pickup& Delivery")
                 //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
                 obj.put("image","home_pickupdelivery")
                 obj.put("count","0")

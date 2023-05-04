@@ -199,7 +199,7 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="TKT-0046"
+                                                            android:text=""
                                                             android:textColor="@color/black" />
 
 
@@ -240,7 +240,7 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="Feb 8 2023 4:11PM"
+                                                            android:text=""
                                                             android:textColor="@color/black" />
 
 
@@ -352,7 +352,7 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="Anuraj"
+                                                            android:text=""
                                                             android:textColor="@color/black" />
 
 
@@ -384,7 +384,7 @@
 
 
                                                         <TextView
-                                                            android:id="@+id/tv_Address"
+                                                            android:id="@+id/tv_AddressLine1"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
@@ -393,8 +393,74 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="P House NADUVANNUR Perambra KOZHIKODE KERALA "
-                                                            android:textColor="@color/black" />
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+                                                        <TextView
+                                                            android:id="@+id/tv_AddressLine2"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+                                                        <TextView
+                                                            android:id="@+id/tv_Post"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+                                                        <TextView
+                                                            android:id="@+id/tv_Area"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+                                                        <TextView
+                                                            android:id="@+id/tv_District"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
+                                                        <TextView
+                                                            android:id="@+id/tv_State"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:textSize="13dp"
+                                                            android:layout_marginTop="-3dp"
+                                                            android:textStyle="normal"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text=""
+                                                            android:textColor="@color/black"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
@@ -496,7 +562,7 @@
 
 
                                                         <TextView
-                                                            android:id="@+id/tv_Product"
+                                                            android:id="@+id/tv_tvProduct"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
@@ -505,7 +571,7 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="Bulb/845483 "
+                                                            android:text=""
                                                             android:textColor="@color/black" />
 
 
@@ -537,7 +603,7 @@
 
 
                                                         <TextView
-                                                            android:id="@+id/tv_Category"
+                                                            android:id="@+id/tv_tvCategory"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
@@ -546,7 +612,7 @@
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
-                                                            android:text="Home Lighting System "
+                                                            android:text=""
                                                             android:textColor="@color/black" />
 
 

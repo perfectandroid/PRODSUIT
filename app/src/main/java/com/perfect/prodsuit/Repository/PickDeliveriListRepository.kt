@@ -82,7 +82,7 @@ object PickDeliveriListRepository {
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
                 requestObject1.put("TicketNo", ProdsuitApplication.encryptStart(strTicketNo))
 
-                Log.e(TAG,"requestObject1   522454566   "+requestObject1)
+                Log.e(TAG,"requestObject1   000111524   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

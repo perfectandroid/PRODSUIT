@@ -91,7 +91,7 @@
                             android:layout_marginTop="-3dp"
                             android:textStyle="normal"
                             android:fontFamily="@font/myfont"
-                            android:text="TKT-0046"
+                            android:text=""
                             android:textColor="@color/black" />
 
 
@@ -195,20 +195,20 @@
                         android:id="@+id/tie_StandByProduct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:drawableRight="@drawable/arrow_down"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/textColor"
-                        android:textSize="14dp"
-                        android:focusableInTouchMode="false"
-                        android:editable="false"
-                        android:fontFamily="@font/myfont"
                         android:textColor="@color/greydarks"
-                        android:textStyle="normal"/>
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
