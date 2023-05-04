@@ -87,8 +87,8 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         imback!!.setOnClickListener(this)
         tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
         val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
-//        tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
-//        tvAboutus.setMovementMethod(ScrollingMovementMethod())
+        tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
+        tvAboutus.setMovementMethod(ScrollingMovementMethod())
     }
 
     override fun onClick(v: View) {

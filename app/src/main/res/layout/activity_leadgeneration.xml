@@ -834,7 +834,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_toLeftOf="@+id/img_search"
-                                                    android:drawableLeft="@drawable/lead_landlines"
+                                                    android:drawableLeft="@drawable/lead_companyperson"
                                                     android:drawableTint="@color/greydark"
                                                     android:hint="Company/Contact Person"
                                                     android:fontFamily="@font/myfont"
@@ -1065,7 +1065,7 @@
                                             android:layout_margin="10dp"
                                             android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -1603,6 +1603,27 @@
                                                     android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
+                                                    android:textSize="15dp"
+                                                    android:visibility="gone"/>
+
+                                                <EditText
+                                                    android:id="@+id/edtFollowaction"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/shape_bg_mandatory"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/lead_actions"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:focusableInTouchMode="false"
+                                                    android:hint="Action"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="7dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
                                                     android:textSize="15dp" />
 
 
@@ -1612,7 +1633,9 @@
                                                 android:id="@+id/llfollowup"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_margin="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_marginBottom="10dp"
                                                 android:orientation="vertical"
                                                 android:visibility="gone">
 
@@ -1626,40 +1649,20 @@
                                                     android:text="Follow Up"
                                                     android:textColor="@color/greydark"
                                                     android:textSize="18dp"
-                                                    android:textStyle="bold" />
+                                                    android:textStyle="bold"
+                                                    android:visibility="gone"/>
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:orientation="vertical">
 
-                                                    <EditText
-                                                        android:id="@+id/edtFollowaction"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
-                                                        android:layout_toLeftOf="@+id/img_search"
-                                                        android:layout_weight="1"
-                                                        android:background="@drawable/shape_bg_mandatory"
-                                                        android:drawableRight="@drawable/arrowright"
-                                                        android:drawableLeft="@drawable/lead_actions"
-                                                        android:drawableTint="@color/greydark"
-                                                        android:editable="false"
-                                                        android:focusableInTouchMode="false"
-                                                        android:hint="Action"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:padding="7dp"
-                                                        android:singleLine="true"
-                                                        android:text=""
-                                                        android:textSize="15dp" />
-
-
 
                                                     <EditText
                                                         android:id="@+id/edtFollowtype"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_marginTop="10dp"
+                                                        android:layout_marginTop="0dp"
                                                         android:layout_toLeftOf="@+id/img_search"
                                                         android:layout_weight="1"
                                                         android:background="@drawable/shape_bg_mandatory"

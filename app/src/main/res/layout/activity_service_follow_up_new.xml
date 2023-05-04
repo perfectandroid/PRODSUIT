@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/navbg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_header">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Follow up"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:tint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/myfont" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imLeadedit"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/color_activity_transparent"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_edit"
+                            android:visibility="invisible"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/lin_bottom_menu"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.tabs.TabLayout
+                                android:id="@+id/tabLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/color_tab"
+                                android:scrollbars="horizontal"
+                                android:visibility="gone"
+                                app:tabIndicatorColor="@color/colorPrimary"
+                                app:tabIndicatorGravity="bottom"
+                                app:tabIndicatorHeight="5dp"
+                                app:tabSelectedTextColor="@color/white"
+                                app:tabTextAppearance="@style/customfontstyle"
+                                app:tabTextColor="@color/colorPrimary" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/card_start"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
+                                    app:cardMaxElevation="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:padding="10dp"
+                                            android:src="@drawable/hourglass" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:paddingLeft="10dp"
+                                            android:paddingRight="10dp"
+                                            android:text="Start"
+                                            android:textColor="@color/greydarks"
+                                            android:textSize="16dp" />
+
+                                    </LinearLayout>
+
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/card_stop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
+                                    app:cardMaxElevation="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:padding="8dp"
+                                            android:src="@drawable/ic_stop" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:paddingLeft="10dp"
+                                            android:paddingRight="10dp"
+                                            android:text="Stop"
+                                            android:textColor="@color/greydarks"
+                                            android:textSize="16dp" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/card_restart"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="0dp"
+                                    app:cardElevation="2dp"
+                                    app:cardMaxElevation="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:padding="8dp"
+                                            android:src="@drawable/restart" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="center"
+                                            android:paddingLeft="10dp"
+                                            android:paddingRight="10dp"
+                                            android:text="Restart"
+                                            android:textColor="@color/greydarks"
+                                            android:textSize="16dp" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="0dp"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:id="@+id/tv_ServiceCost"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/user_color"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="7dp"
+                                        android:text="Service Attended"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <LinearLayout
+                                            android:id="@+id/lin_service_cost"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            android:gravity="bottom"
+                                            android:minHeight="200dp"
+                                            android:orientation="vertical"
+                                            android:visibility="gone"
+                                            tools:ignore="MissingConstraints">
+
+                                            <ScrollView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:visibility="gone">
+
+                                                <LinearLayout
+                                                    android:id="@+id/lin_service_view"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:background="@color/greydark"
+                                                    android:gravity="bottom"
+                                                    android:minHeight="200dp"
+                                                    android:orientation="vertical"
+                                                    android:visibility="visible"
+                                                    tools:ignore="MissingConstraints">
+
+                                                </LinearLayout>
+
+                                            </ScrollView>
+
+
+                                            <androidx.recyclerview.widget.RecyclerView
+                                                android:id="@+id/recycler_service_cost"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layoutAnimation="@anim/layout_animation"
+                                                android:visibility="visible" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="60dp"
+                                                android:layout_gravity="bottom"
+                                                android:gravity="bottom|end"
+                                                android:orientation="horizontal">
+
+                                                <LinearLayout
+                                                    android:id="@+id/lin_add_service"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="45dp"
+                                                    android:layout_margin="5dp"
+                                                    android:background="@color/colorPrimary"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal"
+                                                    android:padding="5dp">
+
+                                                    <!--                                                    android:background="@drawable/shape_rounded_corner_grey"-->
+
+                                                    <ImageView
+                                                        android:layout_width="30dp"
+                                                        android:layout_height="30dp"
+                                                        android:src="@drawable/ic_add"
+                                                        app:tint="@color/white" />
+
+                                                    <TextView
+                                                        android:id="@+id/tv_addServices"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="match_parent"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:hint="Visited Date"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingRight="5dp"
+                                                        android:singleLine="true"
+                                                        android:text="Add followUp services"
+                                                        android:textColor="@color/white"
+                                                        android:textColorHint="@color/grey_dark"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="normal" />
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                    </ScrollView>
+
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="0dp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_replaced_product_cost"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/product_color"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="7dp"
+                                        android:text="Replaced Products"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <LinearLayout
+                                        android:id="@+id/lin_replacePoductCost"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:minHeight="200dp"
+                                        android:orientation="vertical"
+                                        android:visibility="gone"
+                                        tools:ignore="MissingConstraints">
+
+                                        <LinearLayout
+                                            android:id="@+id/lin_add_replaced_product"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <ImageView
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:src="@drawable/ic_add"
+                                                app:tint="@color/textColor" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:hint="Visited Date"
+                                                android:paddingLeft="5dp"
+                                                android:paddingRight="5dp"
+                                                android:singleLine="true"
+                                                android:text="Add followUp replaced product"
+                                                android:textColor="@color/grey_dark"
+                                                android:textColorHint="@color/grey_dark"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/recycleView_replaceproduct"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:visibility="gone" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="80dp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_attendance"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/company_color"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="5dp"
+                                        android:text="Attendance"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <LinearLayout
+                                        android:id="@+id/lin_attendance"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:visibility="gone"
+                                        tools:ignore="MissingConstraints">
+
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/recyclerAttendance"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:paddingBottom="10dp" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:id="@+id/lin_bottom_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="8dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:weightSum="2">
+
+
+                        <TextView
+                            android:id="@+id/tv_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_shape_submit"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Cancel"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_submit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_shape_submit"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Submit"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

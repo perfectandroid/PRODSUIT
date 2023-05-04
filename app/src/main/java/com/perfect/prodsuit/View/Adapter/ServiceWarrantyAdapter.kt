@@ -36,9 +36,11 @@ class ServiceWarrantyAdapter(internal var context: Context, internal var jsonArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.tv_warr_invNo.text        = jsonObject!!.getString("InvoiceNo")
-                holder.tv_warr_invdate.text      = jsonObject!!.getString("InvoiceDate")
-                holder.tv_warr_dealer.text       = jsonObject!!.getString("Dealer")
+                holder.tv_warr_amc_type.text        = jsonObject!!.getString("WarrantyType")
+                holder.tv_warr_amc_duedate.text      = jsonObject!!.getString("ReplacementWarrantyExpireDate")
+                holder.tv_Status.text       = jsonObject!!.getString("ReplacementWarrantyStatus")
+                holder.tv_warr_amc_renewDate.text       = jsonObject!!.getString("ServiceWarrantyExpireDate")
+                holder.tv_service_status.text       = jsonObject!!.getString("ServiceWarrantyStatus")
 
 //                if (position%2 != 0){
 //                    holder.llWarranty.setBackgroundColor(context.getColor(R.color.alternate_color))
@@ -71,14 +73,18 @@ class ServiceWarrantyAdapter(internal var context: Context, internal var jsonArr
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var tv_warr_invNo    : TextView
-        internal var tv_warr_invdate  : TextView
-        internal var tv_warr_dealer   : TextView
+        internal var tv_warr_amc_type    : TextView
+        internal var tv_warr_amc_duedate  : TextView
+        internal var tv_Status   : TextView
+        internal var tv_warr_amc_renewDate   : TextView
+        internal var tv_service_status   : TextView
         internal var llWarranty       : LinearLayout
         init {
-            tv_warr_invNo      = v.findViewById<View>(R.id.tv_warr_invNo) as TextView
-            tv_warr_invdate    = v.findViewById<View>(R.id.tv_warr_invdate) as TextView
-            tv_warr_dealer     = v.findViewById<View>(R.id.tv_warr_dealer) as TextView
+            tv_warr_amc_type      = v.findViewById<View>(R.id.tv_warr_amc_type) as TextView
+            tv_warr_amc_duedate    = v.findViewById<View>(R.id.tv_warr_amc_duedate) as TextView
+            tv_Status     = v.findViewById<View>(R.id.tv_Status) as TextView
+            tv_warr_amc_renewDate     = v.findViewById<View>(R.id.tv_warr_amc_renewDate) as TextView
+            tv_service_status     = v.findViewById<View>(R.id.tv_service_status) as TextView
             llWarranty         = v.findViewById<View>(R.id.llWarranty) as LinearLayout
         }
     }

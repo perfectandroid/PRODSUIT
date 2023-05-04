@@ -30,7 +30,7 @@
                     android:layout_gravity="left"
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
-                    android:tint="@color/colorPrimaryDark"
+                    app:tint="@color/colorPrimaryDark"
                     android:src="@drawable/icback"/>
 
                 <LinearLayout
@@ -104,10 +104,12 @@
                     android:lineSpacingMultiplier="1"
                     android:overScrollMode="always"
                     android:padding="5dp"
+                    android:text=""
                     android:scrollbars="vertical"
-                    android:text="Mscore is the mobile app to perform all theee common banking facilities for Co-operative Banks. This Mobile Application from Perfect Software Solutions (CLT) Pvt Ltd is very well designed benefiting both Banks &amp; Customers equally. Mscore is an up-to-date app which strictly follows all the guidelines which makes Banking much Simpler &amp; Superior."
                     android:textColor="@color/greydark"
                     android:textSize="15dp" />
+
+<!--                android:text="Mscore is the mobile app to perform all theee common banking facilities for Co-operative Banks. This Mobile Application from Perfect Software Solutions (CLT) Pvt Ltd is very well designed benefiting both Banks &amp; Customers equally. Mscore is an up-to-date app which strictly follows all the guidelines which makes Banking much Simpler &amp; Superior."-->
 
 
                 <LinearLayout

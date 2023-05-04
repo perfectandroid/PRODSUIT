@@ -6171,11 +6171,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtProjectName!!.setText("")
 
             if (jsonObject.getString("Project").equals("0")) {
-                ll_product_qty!!.visibility = View.GONE
-                edtProjectName!!.visibility = View.VISIBLE
-            } else if (jsonObject.getString("Project").equals("1")) {
                 ll_product_qty!!.visibility = View.VISIBLE
                 edtProjectName!!.visibility = View.GONE
+            } else if (jsonObject.getString("Project").equals("1")) {
+                ll_product_qty!!.visibility = View.GONE
+                edtProjectName!!.visibility = View.VISIBLE
             }
         }
         if (data.equals("proddetails")) {
@@ -6237,6 +6237,19 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             ID_NextAction = jsonObject.getString("ID_NextAction")
             edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
 
+            ID_Status = jsonObject.getString("Status")
+           // edtProdstatus!!.setText(jsonObject.getString("StatusName"))
+
+
+            edtFollowtype!!.setText("")
+            ID_ActionType = ""
+
+            if (ID_Status.equals("1")) {
+                llfollowup!!.visibility  =View.VISIBLE
+            }else{
+                llfollowup!!.visibility  =View.GONE
+            }
+
 
         }
 
@@ -6247,6 +6260,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.e(TAG, "ID_ActionType   " + jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             edtFollowtype!!.setText(jsonObject.getString("ActnTypeName"))
+
+
 
 
         }
@@ -7128,18 +7143,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ll_prod_feedback!!.visibility = View.GONE
             }
 
-            if (edtProdstatus!!.text.toString().equals("") ) {
-                ll_prod_status!!.visibility = View.GONE
-            }
+//            if (edtProdstatus!!.text.toString().equals("") ) {
+//                ll_prod_status!!.visibility = View.GONE
+//            }
 
 
             if (!ID_Status.equals("1")) {
-                ll_followup_action!!.visibility = View.GONE
+               // ll_followup_action!!.visibility = View.GONE
                 ll_followup_type!!.visibility = View.GONE
                 ll_followup_date!!.visibility = View.GONE
                 ll_employee!!.visibility = View.GONE
                 ll_prod_status!!.visibility = View.GONE
             }
+
+
 
 
             if (edtbarnchtype!!.text.toString().equals("")) {

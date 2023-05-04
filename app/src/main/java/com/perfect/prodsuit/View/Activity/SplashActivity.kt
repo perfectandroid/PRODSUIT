@@ -41,6 +41,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
     val BANK_KEY = "-500"
 
+  ////   Unisoft` 26.04.2023
+//    val CERT_NAME = "unicef.pem"
+//    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
+//    val BANK_KEY = "-512"
+
 
     ////    DEMO 15.02.2023
 //    val CERT_NAME = "democert.pem"
