@@ -76,9 +76,6 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
     private var emp_name2          = ""
     private var area_name          = ""
     private var product            = ""
-    private var ID_employee2       = ""
-    private var ID_employee3       = ""
-    private var ID_employee4       = ""
     var status                     = ""
     var areaList                   = 0
     var employeeCount              = 0
@@ -86,6 +83,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
     var FK_District                = "0"
     var ID_Category                = "0"
     var getCounts                  = 0
+    var statusCount                = 0
 
 
     private var temp_ID_Branch: String = "0"
@@ -111,6 +109,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
     private var strTicketNo: String = ""
     private var strarea: String = ""
     private var strProduct: String = ""
+    private var strstatus: String = ""
     private var stProduct: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -176,6 +175,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 i.putExtra("strMobile",strMobile)
                 i.putExtra("strProduct",strProduct)
                 i.putExtra("strTicketNo",strTicketNo)
+                i.putExtra("status_id",status_id)
                 startActivity(i)
             }
             R.id.imgv_filter->{
@@ -277,7 +277,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
-                ID_Employee = temp_ID_Employee
+//                ID_Employee = temp_ID_Employee
                 tie_Selectemployee!!.setText(temp_Employee)
                 tie_Selectproduct!!.setText(temp_Product)
                 tie_Fromdate!!.setText(temp_FromDate)
@@ -329,6 +329,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             })
 
             tie_Selectstatus!!.setOnClickListener(View.OnClickListener {
+                statusCount = 0
                 showMethod(tie_Selectstatus)
                 Log.e(TAG,"785666666644  Exception   "+status_check)
             })
@@ -363,22 +364,29 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             "Complete",
         )
 
-        val adapter = ArrayAdapter(this, R.layout.filter_status_spinner, searchType)
-        tie_Selectstatus!!.setAdapter(adapter)
-     //   tie_Selectstatus!!.setText(searchType.get(0), false)
-        tie_Selectstatus!!.setOnClickListener {
-            tie_Selectstatus!!.showDropDown()
-        }
-        tie_Selectstatus!!.setOnItemClickListener { parent, view, position, id ->
-            status_check = searchType[position]
+        if (statusCount == 0) {
+            statusCount++
 
-            if (status_check.equals("Pending")){
-                status_id = "1"
-                showMethod(tie_Selectstatus)
+            val adapter = ArrayAdapter(this, R.layout.filter_status_spinner, searchType)
+            tie_Selectstatus!!.setAdapter(adapter)
+            //   tie_Selectstatus!!.setText(searchType.get(0), false)
+//            tie_Selectstatus!!.setOnClickListener {
+                statusCount = 0
+                tie_Selectstatus!!.showDropDown()
+                Log.e(TAG, "7778889999   " + statusCount)
+//            }
+            tie_Selectstatus!!.setOnItemClickListener { parent, view, position, id ->
+                status_check = searchType[position]
+
+                if (status_check.equals("Pending")) {
+                    status_id = "1"
+//                showMethod(tie_Selectstatus)
+                }
+                if (status_check.equals("Complete"))
+                    status_id = "2"
+//                showMethod(tie_Selectstatus)
+                Log.e(TAG, "5555444   " + status_id)
             }
-            if (status_check.equals("Complete"))
-                status_id = "2"
-            Log.e(TAG,"5555444   "+status_id)
         }
     }
 
@@ -387,11 +395,13 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
 
         strFromDate = tie_Fromdate!!.text.toString()
-        strToDate = tie_Todate!!.text.toString()
+        strToDate   = tie_Todate!!.text.toString()
         strCustomer = tie_Entercustomer!!.text.toString()
-        strMobile = tie_Customemobile!!.text.toString()
+        strMobile   = tie_Customemobile!!.text.toString()
         strTicketNo = tie_Ticketumber!!.text.toString()
-        strProduct = tie_Selectproduct!!.text.toString()
+        strProduct  = tie_Selectproduct!!.text.toString()
+        status_check = tie_Selectstatus!!.text.toString()
+
 //        strarea  = tie_Selectarea!!.text.toString()
 
         Log.e(TAG,"tie_Ticketumber   5241663   "+strTicketNo)
@@ -469,11 +479,11 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
         ID_Employee ="0"
         ID_Branch = "0"
+        status_id = "1"
 
 
         temp_ID_Branch = "0"
         temp_Product = ""
-        temp_ID_Employee = "0"
         temp_Employee =""
 
         if (mode.equals("1")){
@@ -980,7 +990,6 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             FK_Area = jsonObject.getString("FK_Area")
 
             temp_FK_Area =  jsonObject.getString("Area")
-//            Log.e(TAG,"iddddd "+jsonObject.getString("ID_Employee"))
             dialogareaList!!.dismiss()
         }
 

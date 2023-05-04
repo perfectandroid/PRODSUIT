@@ -30,45 +30,52 @@ import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
+import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
 import com.perfect.prodsuit.Viewmodel.PickDeliveryListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
 
-    var TAG                    ="PickUpAndDeliveryListActivity"
+    var TAG                    = "PickUpAndDeliveryListActivity"
     lateinit var context       : Context
     private var progressDialog : ProgressDialog? = null
 
 
-    private var SubMode     : String?=""
-    private var tv_header   : TextView? = null
-    private var imgv_filter : ImageView? = null
+    private var SubMode     : String?            = ""
+    private var tv_header   : TextView?          = null
+    private var imgv_filter : ImageView?         = null
     private var tie_pDate   : TextInputEditText? = null
-    private var submode   = ""
-    private var mobile    = ""
+    private var submode                          = ""
+    private var mobile                           = ""
+    lateinit var pickup_and_deliverysort      : JSONArray
+    lateinit var pickup_and_deliveryListArray : JSONArray
 
 
-    var FK_Area : String?= ""
-    var ID_Employee : String?= ""
-    var strFromDate : String?= ""
-    var strToDate : String?= ""
-    var strCustomer : String?= ""
-    var strMobile : String?= ""
-    var strProduct : String?= ""
-    var strTicketNo : String?= ""
-    var status_id : String?=""
+
+    var FK_Area            : String? = ""
+    var ID_Employee        : String? = ""
+    var strFromDate        : String? = ""
+    var strToDate          : String? = ""
+    var strCustomer        : String? = ""
+    var strMobile          : String? = ""
+    var strProduct         : String? = ""
+    var strTicketNo        : String? = ""
+    var status_id          : String? = ""
+    var ID_ProductDelivery : String? = ""
 
     var          pickDeliveryCount        = 0
     lateinit var pickUpDeliveryViewModel : PickDeliveryListViewModel
     lateinit var pickUpDeliveryArrayList : JSONArray
     var          recyPickUpDelivery      : RecyclerView? = null
 
-    private var temp_Employee  : String = ""
-    private var temp_ToDate    : String = ""
-    private var temp_Customer  : String = ""
-    private var temp_Mobile    : String = ""
-    private var temp_TicketNo  : String = ""
+    var filterTicketNumber : String? = ""
+    var filterCustomer     : String? = ""
+    var filterMobile       : String? = ""
+    var filterDate         : String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,9 +101,9 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         strToDate   = intent.getStringExtra("strToDate")
         strCustomer = intent.getStringExtra("strCustomer")
         strMobile   = intent.getStringExtra("strMobile")
-        strProduct   = intent.getStringExtra("strProduct")
-        strTicketNo  = intent.getStringExtra("strTicketNo")
-        status_id    = intent.getStringExtra("status_id")
+        strProduct  = intent.getStringExtra("strProduct")
+        strTicketNo = intent.getStringExtra("strTicketNo")
+        status_id   = intent.getStringExtra("status_id")
         setRegViews()
     }
 
@@ -150,41 +157,72 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             dialog1!!.setCanceledOnTouchOutside(true)
 
-//            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
 
-            val txtReset          = view.findViewById(R.id.txtReset)          as TextView
-            val txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
-            val tie_pEmployee     = view.findViewById(R.id.tie_pEmployee)     as TextInputEditText
-            val tie_pCustomer     = view.findViewById(R.id.tie_pCustomer)     as TextInputEditText
-            val tie_pTicketNumber = view.findViewById(R.id.tie_pTicketNumber) as TextInputEditText
-            val tie_pDate         = view.findViewById(R.id.tie_pDate)          as TextInputEditText
-            val tie_Mobile1       = view.findViewById(R.id.tie_Mobile1)       as TextInputEditText
-
+            val txtReset          = view.findViewById(R.id.txtReset)           as TextView
+            val txtSearch         = view.findViewById(R.id.txtSearch)          as TextView
+//            val tie_pEmployee     = view.findViewById(R.id.tie_pEmployee)     as TextInputEditText
+            val tie_pCustomer     = view.findViewById(R.id.tie_pCustomer)      as TextInputEditText
+            val tie_pTicketNumber = view.findViewById(R.id.tie_pTicketNumber)  as TextInputEditText
+                tie_pDate         = view.findViewById(R.id.tie_pDate)          as TextInputEditText
+            val tie_Mobile1       = view.findViewById(R.id.tie_Mobile1)        as TextInputEditText
 
 
-            val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-            val BranchNameSP        = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-            val FK_EmployeeSP       = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-            val UserNameSP          = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+            if(SubMode!!.equals("1")){
+                tie_pDate!!.setHint("Pickup Date")
+                tie_pDate!!.setHintTextColor(resources.getColor(R.color.black))
+            }
+            if(SubMode!!.equals("2")){
+                tie_pDate!!.setHint("Delivery Date")
+                tie_pDate!!.setHintTextColor(resources.getColor(R.color.black))
+            }
 
+            tie_pCustomer!!.setText(""+filterCustomer)
+            tie_Mobile1!!.setText(""+filterMobile)
+            tie_pDate!!.setText(""+filterDate)
+            tie_pTicketNumber!!.setText(""+filterTicketNumber)
 
-
-            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
-            var isAdmin   = IsAdminSP.getString("IsAdmin", null)
-            Log.e(TAG,"isAdmin 796  "+isAdmin)
-
-
-            tie_pDate.setOnClickListener {
+            tie_pDate!!.setOnClickListener {
                 openBottomSheet()
 
             }
 
             txtReset.setOnClickListener {
 
+                tie_pCustomer!!.setText("")
+                tie_pTicketNumber!!.setText("")
+                tie_pDate!!.setText("")
+                tie_Mobile1!!.setText("")
+
             }
 
             txtSearch.setOnClickListener {
-                validatedata(dialog1)
+
+                filterCustomer     = tie_pCustomer!!.text!!.toString().toLowerCase().trim()
+                filterMobile       = tie_Mobile1!!.text!!.toString().toLowerCase().trim()
+                filterDate         = tie_pDate!!.text!!.toString()
+                filterTicketNumber = tie_pTicketNumber!!.text!!.toString().toLowerCase().trim()
+
+                pickup_and_deliverysort = JSONArray()
+
+                for (k in 0 until pickUpDeliveryArrayList.length()) {
+                    val jsonObject = pickUpDeliveryArrayList.getJSONObject(k)
+                    if ((jsonObject.getString("ReferenceNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
+                        && (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(filterCustomer!!))
+                        && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
+                        && (jsonObject.getString("PickUpTime")!!.toLowerCase().trim().contains(filterDate!!))){
+                           Log.e(TAG,"8569745    "+filterDate)
+                           pickup_and_deliverysort.put(jsonObject)
+                    }else{
+                        //  Log.e(TAG,"2162    "+strTicketNumber+"   "+strCustomer)
+                    }
+
+                }
+                dialog1.dismiss()
+                val adapter = PickupDeliveryListAdapter(this@PickUpAndDeliveryListActivity, pickup_and_deliverysort,SubMode!!)
+                recyPickUpDelivery!!.adapter = adapter
+                adapter.setClickListener(this@PickUpAndDeliveryListActivity)
+
+
             }
 
 
@@ -196,6 +234,22 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             Log.e(TAG,"777  Exception   "+e.toString())
         }
 
+
+
+    }
+
+    private fun validate(dialog1: BottomSheetDialog){
+
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+                var date: Date? = null
+                date = inputFormat.parse(strFromDate)
+                strFromDate = outputFormat.format(date)
+                Log.e(TAG,"DATE   1302   "+strFromDate)
+
+
+            dialog1.dismiss()
 
 
     }
@@ -233,8 +287,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 if (strMonth.length == 1){
                     strMonth ="0"+strMonth
                 }
-
                 tie_pDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                Log.e(TAG,"tie_pDate   "+strDay+"-"+strMonth+"-"+strYear)
 
             }
             catch (e: Exception){
@@ -276,6 +330,11 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                                         val jobjt = jObject.getJSONObject("PickUpDeliveryDetails")
                                         pickUpDeliveryArrayList = jobjt.getJSONArray("PickUpDeliveryDetailsList")
                                         if (pickUpDeliveryArrayList.length() > 0) {
+                                            pickup_and_deliverysort = JSONArray()
+                                            for (k in 0 until pickUpDeliveryArrayList.length()) {
+                                                val jsonObject = pickUpDeliveryArrayList.getJSONObject(k)
+                                                pickup_and_deliverysort.put(jsonObject)
+                                            }
 
                                             val lLayout = GridLayoutManager(this@PickUpAndDeliveryListActivity, 1)
                                             recyPickUpDelivery!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -327,14 +386,17 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 //        Log.e(TAG, "caall   11104   " + position)
         if (data.equals("pickupDelivery")){
             Config.disableClick(view)
+            var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
+            ID_ProductDelivery = jsonObject!!.getString("ID_ProductDelivery")
             val i = Intent(this@PickUpAndDeliveryListActivity, PickUpAndDeliveryUpdateActivity::class.java)
             i.putExtra("SubMode",SubMode)
+            i.putExtra("ID_ProductDelivery",ID_ProductDelivery)
+            Log.e(TAG, "ID_ProductDelivery   55412222   " + ID_ProductDelivery)
             startActivity(i)
         }
 
         if (data.equals("pickDelCall")){
             Config.disableClick(view)
-//            var mobileno = "9496442442"
              var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
              val mobileno = jsonObject!!.getString("Mobile")
             Log.e(TAG, "caall   11104   " + mobileno)

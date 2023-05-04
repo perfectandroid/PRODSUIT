@@ -19,9 +19,11 @@ import org.json.JSONObject
 class PickupDeliveryListAdapter (internal var context: Context, internal var jsonArray: JSONArray, internal var SubMode: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "PickupDeliveryListAdapter"
-    internal var jsonObject: JSONObject? = null
-    private var clickListener: ClickListener? = null
+    internal val TAG               : String         = "PickupDeliveryListAdapter"
+    internal var jsonObject        : JSONObject?    = null
+    private var clickListener      : ClickListener? = null
+    private var priority           : String?        = null
+    private var ID_ProductDelivery : String?        = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -38,18 +40,45 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
+
+                priority = jsonObject!!.getString("Priority")
+                ID_ProductDelivery = jsonObject!!.getString("ID_ProductDelivery")
+                Log.e(TAG,"ID_ProductDelivery   112548566   "+ID_ProductDelivery)
+
                 holder.tv_TicketNo.text            =  jsonObject!!.getString("ReferenceNo")
                 holder.tv_Customer.text            =  jsonObject!!.getString("CustomerName")
                 holder.tv_Mobile.text              =  "Mobile : "+jsonObject!!.getString("Mobile")
-                holder.tv_DeliveryDateTime.text    =  "Date Time : "+jsonObject!!.getString("PickUpTime")
                 holder.tv_AssignedDate.text        =  "Assigned Date : "+jsonObject!!.getString("AssignedOn")
                 holder.tv_Employee.text            =  "Employee : "+jsonObject!!.getString("EMPName")
 
                 if (SubMode.equals("1")){
+
                     holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_pickup))
+                    holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
+
+                    if (priority.equals("Medium")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
+                    }
+                    if (priority.equals("Normal")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
+                    }
+                    if (priority.equals("High")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
+                    }
                 }
                 if (SubMode.equals("2")){
                     holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_delivery))
+                    holder.tv_DeliveryDateTime.text    =  "Delivery Date Time : "+jsonObject!!.getString("PickUpTime")
+
+                    if (priority.equals("Medium")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
+                    }
+                    if (priority.equals("Normal")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
+                    }
+                    if (priority.equals("High")){
+                        holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
+                    }
                 }
 
                 holder.ll_main!!.setTag(position)
@@ -96,6 +125,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var ll_main                : LinearLayout
         internal var img_call               : ImageView
         internal var img_location           : ImageView
+        internal var img_Priority           : ImageView
         init {
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
@@ -107,6 +137,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             ll_main              = v.findViewById<View>(R.id.ll_main) as LinearLayout
             img_call             = v.findViewById<View>(R.id.img_call) as ImageView
             img_location         = v.findViewById<View>(R.id.img_location) as ImageView
+            img_Priority         = v.findViewById<View>(R.id.img_Priority) as ImageView
         }
     }
 

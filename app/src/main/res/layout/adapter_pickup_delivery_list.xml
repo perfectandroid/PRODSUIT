@@ -57,7 +57,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:padding="2dp"
-                        android:src="@drawable/ic_chkboxascdsc"
+                        android:tint="@color/red"
                         android:gravity="center" />
 
 
