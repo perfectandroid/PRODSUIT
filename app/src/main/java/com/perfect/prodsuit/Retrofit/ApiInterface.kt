@@ -402,6 +402,9 @@ interface ApiInterface {
     @POST("Service/CustomerDueDetils")
     fun getCustomerDueDetils(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/MoreComponentDetails")
+    fun getMoreComponentDetails(@Body body: RequestBody): Call<String>
+
 
 
 

@@ -576,7 +576,7 @@
                                             android:background="@color/white"
                                             android:gravity="bottom"
                                             android:orientation="vertical"
-                                            android:visibility="visible"
+                                            android:visibility="gone"
                                             tools:ignore="MissingConstraints">
 
 
