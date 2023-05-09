@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CustomerServiceRegisterModel
 import com.perfect.prodsuit.Repository.CustomerServiceRegisterRepository
-import com.perfect.prodsuit.Repository.FollowUpActionRepository
 
 class CustomerServiceRegisterViewModel: ViewModel()  {
 

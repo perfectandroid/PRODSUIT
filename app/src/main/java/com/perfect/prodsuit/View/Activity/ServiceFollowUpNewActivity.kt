@@ -27,13 +27,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimelFormatters
-import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ItemClickListenerValue
+import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
+import com.perfect.prodsuit.View.ServiceBillTypeViewModel
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -41,7 +40,6 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     ItemClickListenerValue, ItemClickListener {
@@ -98,7 +96,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     var serviceFollowUpMappedService = 0
     var jsonArrayMappedServiceAttended: JSONArray = JSONArray()
     var jsonArrayServiceAttended: JSONArray = JSONArray()
-    private var recycler_service_cost: RecyclerView? = null
+    private var recycler_service_cost: FullLenghRecyclertview? = null
 
 
     var serviceFollowUpMoreService = 0
@@ -127,7 +125,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
     val modelReplacedProduct = ArrayList<ModelReplacedProduct>()
     val modelReplacedProductTemp = ArrayList<ModelReplacedProductTemp>()
-    private var recycleView_replaceproduct: RecyclerView? = null
+    private var recycleView_replaceproduct: FullLenghRecyclertview? = null
     var adapterReplacedProduct: ReplacedProductAdapter? = null
 
     lateinit var serviceFollowUpChangeModeViewModel: ServiceFollowUpChangeModeViewModel
@@ -167,6 +165,27 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private var tie_Action: TextInputEditText? = null
     private var tie_Payment_Method: TextInputEditText? = null
 
+    private var tie_Lead_Action: TextInputEditText? = null
+    private var tie_Action_Type: TextInputEditText? = null
+    private var tie_Follow_Date: TextInputEditText? = null
+    private var tie_Assigned_To: TextInputEditText? = null
+    private var tie_Bill_Type: TextInputEditText? = null
+
+    private var til_Visited_Date: TextInputLayout? = null
+    private var til_Action: TextInputLayout? = null
+    private var til_Lead_Action: TextInputLayout? = null
+    private var til_Action_Type: TextInputLayout? = null
+    private var til_Follow_Date: TextInputLayout? = null
+    private var til_Bill_Type: TextInputLayout? = null
+    private var linear_afa: LinearLayout? = null
+
+    lateinit var serviceFollowUpActionViewModel: ServiceFollowUpActionViewModel
+    lateinit var serviceFollowUpActionArrayList : JSONArray
+    lateinit var serviceFollowUpActionSort : JSONArray
+    private var dialogServiceFollowupAction : Dialog? = null
+    var recyserviceFollowupAction: RecyclerView? = null
+    var serviceFollowUpAction = 0
+
     lateinit var followUpActionViewModel: FollowUpActionViewModel
     lateinit var followUpActionArrayList : JSONArray
     lateinit var followUpActionSort : JSONArray
@@ -174,7 +193,27 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     var recyFollowupAction: RecyclerView? = null
     var followUpAction = 0
 
-    var ID_Status: String? = ""
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    lateinit var followUpTypeArrayList: JSONArray
+    lateinit var followUpTypeSort: JSONArray
+    private var dialogFollowupType: Dialog? = null
+    var recyFollowupType: RecyclerView? = null
+    var followUpType = 0
+
+    lateinit var employeeViewModel: EmployeeViewModel
+    lateinit var employeeArrayList: JSONArray
+    lateinit var employeeSort: JSONArray
+    private var dialogEmployee: Dialog? = null
+    var recyEmployee: RecyclerView? = null
+    var employeeMode = 0
+
+    var ID_Action_Status: String? = ""
+    var ID_Action: String? = ""
+
+    var ID_LeadAction_Status: String? = ""
+    var ID_LeadAction: String? = ""
+    var ID_ActionType: String? = ""
+    var ID_AssignedTo: String? = ""
 
 
     private var dialogPaymentSheet : Dialog? = null
@@ -208,12 +247,40 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private var dialogPaymentMethod: Dialog? = null
     var recyPaymentMethod: RecyclerView? = null
 
+    lateinit var serviceBillTypeViewModel: ServiceBillTypeViewModel
+    lateinit var billTypeArrayList: JSONArray
+    private var dialogBillType: Dialog? = null
+    var recyBillType: RecyclerView? = null
+    var billTypeCount = 0
+
+
+    var ID_Billtype: String? = ""
     var ID_PaymentMethod: String? = ""
+    var totRplacement = 0.0f
+    var totPayAmount = 0.0f
+
+    var dateMode = 0 // 0 = VisitedDate , 1 = FollowUpDate
+
+    private var tv_Msubmit: TextView? = null
+    private var tv_Mcancel: TextView? = null
 
 
+        // SAVE
+    var saveServiceAttendedArray = JSONArray()
+    var saveReplacedeProductArray = JSONArray()
+    var saveAttendedEmployeeArray = JSONArray()
+    var savePaymentDetailArray = JSONArray()
 
-    private var tv_submit: TextView? = null
-    private var tv_cancel: TextView? = null
+    var strCustomerNote: String? = ""
+    var strEmployeeNote: String? = ""
+    var strVisitedDate: String? = ""
+    var strFollowUpDate: String? = ""
+    var strReplacementAmount: String? = ""
+    var strTotalAmount: String? = ""
+
+    lateinit var saveServiceFollowUpViewModel: SaveServiceFollowUpViewModel
+    var saveCount = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,9 +295,14 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         serviceFollowUpChangeModeViewModel = ViewModelProvider(this).get(ServiceFollowUpChangeModeViewModel::class.java)
         serviceFollowUpMoreReplacedProductsViewModel = ViewModelProvider(this).get(ServiceFollowUpMoreReplacedProductsViewModel::class.java)
         serviceFollowUpAttendanceListViewModel = ViewModelProvider(this).get(ServiceFollowUpAttendanceListViewModel::class.java)
+        serviceFollowUpActionViewModel = ViewModelProvider(this).get(ServiceFollowUpActionViewModel::class.java)
         followUpActionViewModel = ViewModelProvider(this).get(FollowUpActionViewModel::class.java)
         paymentMethodeViewModel = ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
         serviceFollowProductListViewModel = ViewModelProvider(this).get(ServiceFollowProductListViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        serviceBillTypeViewModel = ViewModelProvider(this).get(ServiceBillTypeViewModel::class.java)
+        saveServiceFollowUpViewModel = ViewModelProvider(this).get(SaveServiceFollowUpViewModel::class.java)
 
 
         setRegViews()
@@ -245,8 +317,13 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private fun getSharedPrefValues() {
         val FK_BranchCodeUserSP = this.getSharedPreferences(Config.SHARED_PREF40, 0)
         val FK_EmployeeSP = this.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+
+        ID_AssignedTo= FK_EmployeeSP.getString("FK_Employee", null).toString()
+        tie_Assigned_To!!.setText(UserNameSP.getString("UserName", null))
+
     }
 
 
@@ -262,8 +339,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         tv_replaced_product_cost = findViewById<TextView>(R.id.tv_replaced_product_cost)
         tv_attendance = findViewById<TextView>(R.id.tv_attendance)
         tv_Action_Taken = findViewById<TextView>(R.id.tv_Action_Taken)
-        tv_submit = findViewById<TextView>(R.id.tv_submit)
-        tv_cancel = findViewById<TextView>(R.id.tv_cancel)
+        tv_Msubmit = findViewById<TextView>(R.id.tv_Msubmit)
+        tv_Mcancel = findViewById<TextView>(R.id.tv_Mcancel)
 
         lin_service_cost = findViewById<LinearLayout>(R.id.lin_service_cost)
         lin_service_view = findViewById<LinearLayout>(R.id.lin_service_view)
@@ -281,8 +358,29 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         tie_Action = findViewById<TextInputEditText>(R.id.tie_Action)
         tie_Payment_Method = findViewById<TextInputEditText>(R.id.tie_Payment_Method)
 
-        recycler_service_cost = findViewById<RecyclerView>(R.id.recycler_service_cost)
-        recycleView_replaceproduct = findViewById<RecyclerView>(R.id.recycleView_replaceproduct)
+        tie_Lead_Action = findViewById<TextInputEditText>(R.id.tie_Lead_Action)
+        tie_Action_Type = findViewById<TextInputEditText>(R.id.tie_Action_Type)
+        tie_Follow_Date = findViewById<TextInputEditText>(R.id.tie_Follow_Date)
+        tie_Assigned_To = findViewById<TextInputEditText>(R.id.tie_Assigned_To)
+        tie_Bill_Type = findViewById<TextInputEditText>(R.id.tie_Bill_Type)
+
+        til_Visited_Date = findViewById<TextInputLayout>(R.id.til_Visited_Date)
+        til_Action = findViewById<TextInputLayout>(R.id.til_Action)
+        til_Lead_Action = findViewById<TextInputLayout>(R.id.til_Lead_Action)
+        til_Action_Type = findViewById<TextInputLayout>(R.id.til_Action_Type)
+        til_Follow_Date = findViewById<TextInputLayout>(R.id.til_Follow_Date)
+        til_Bill_Type = findViewById<TextInputLayout>(R.id.til_Bill_Type)
+
+        til_Visited_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Lead_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Action_Type!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Follow_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
+        linear_afa = findViewById<LinearLayout>(R.id.linear_afa)
+
+        recycler_service_cost = findViewById<FullLenghRecyclertview>(R.id.recycler_service_cost)
+        recycleView_replaceproduct = findViewById<FullLenghRecyclertview>(R.id.recycleView_replaceproduct)
         recyclerAttendance = findViewById<RecyclerView>(R.id.recyclerAttendance)
         recycler_service_cost!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent?): Boolean {
@@ -312,6 +410,11 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         tie_Security_Amount!!.setOnClickListener(this)
         tie_Action!!.setOnClickListener(this)
         tie_Payment_Method!!.setOnClickListener(this)
+        tie_Lead_Action!!.setOnClickListener(this)
+        tie_Action_Type!!.setOnClickListener(this)
+        tie_Follow_Date!!.setOnClickListener(this)
+        tie_Assigned_To!!.setOnClickListener(this)
+        tie_Bill_Type!!.setOnClickListener(this)
 
         card_start!!.setOnClickListener(this)
         card_stop!!.setOnClickListener(this)
@@ -322,14 +425,34 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         tv_attendance!!.setOnClickListener(this)
         tv_Action_Taken!!.setOnClickListener(this)
 
-        tv_submit!!.setOnClickListener(this)
-        tv_cancel!!.setOnClickListener(this)
+        tv_Msubmit!!.setOnClickListener(this)
+        tv_Mcancel!!.setOnClickListener(this)
 
         lin_add_service!!.setOnClickListener(this)
         lin_add_replaced_product!!.setOnClickListener(this)
 
-        getCurrentDate()
+//        tie_Visited_Date!!.addTextChangedListener(watcher);
+//        tie_Action!!.addTextChangedListener(watcher);
+//        tie_Lead_Action!!.addTextChangedListener(watcher);
+//        tie_Action_Type!!.addTextChangedListener(watcher);
+//        tie_Follow_Date!!.addTextChangedListener(watcher);
 
+
+        onTextChangedValues()
+
+//        til_Lead_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+//        til_Lead_Action!!.setError("Enter or Select Customer ")
+
+    }
+
+    private fun onTextChangedValues() {
+        tie_Visited_Date!!.addTextChangedListener(watcher);
+        tie_Action!!.addTextChangedListener(watcher);
+        tie_Lead_Action!!.addTextChangedListener(watcher);
+        tie_Action_Type!!.addTextChangedListener(watcher);
+        tie_Follow_Date!!.addTextChangedListener(watcher);
+
+        getCurrentDate()
     }
 
     private fun getCurrentDate() {
@@ -349,6 +472,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
 
             tie_Visited_Date!!.setText(""+sdfDate1.format(newDate))
+            tie_Follow_Date!!.setText(""+sdfDate1.format(newDate))
 //            tie_FromDate!!.setText(""+sdfDate1.format(newDate))
 //            //  strVisitDate = sdfDate2.format(newDate)
 //
@@ -529,16 +653,47 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
             R.id.tie_Visited_Date -> {
                 Config.disableClick(v)
-              //  dateMode = 0
+                dateMode = 0
                 openBottomDate()
             }
 
             R.id.tie_Action -> {
                 Config.disableClick(v)
+                serviceFollowUpAction = 0
+                getServiceFollowupAction()
+            }
+
+            R.id.tie_Lead_Action -> {
+                Config.disableClick(v)
                 followUpAction = 0
                 ReqMode = "17"
-                SubMode = "2"
+                SubMode = "1"
                 getFollowupAction()
+            }
+
+            R.id.tie_Action_Type -> {
+                  Config.disableClick(v)
+                  followUpType = 0
+                  getFollowupType()
+            }
+
+            R.id.tie_Assigned_To -> {
+                Config.disableClick(v)
+                employeeMode = 0
+                getEmployee()
+            }
+
+            R.id.tie_Follow_Date -> {
+                Config.disableClick(v)
+                dateMode = 1
+                openBottomDate()
+            }
+
+            R.id.tie_Bill_Type -> {
+                Config.disableClick(v)
+                billTypeCount = 0
+                getBillType()
+
             }
 
             R.id.tie_Payment_Method -> {
@@ -548,7 +703,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             }
 
 
-                R.id.tv_submit -> {
+            R.id.tv_Msubmit -> {
                 Config.disableClick(v)
 //                for (i in 0 until modelServiceAttended.size) {
 //                    val ItemsAttend = modelServiceAttended[i]
@@ -563,29 +718,452 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 //                            +"\n"+"ServiceNetAmount   : "+ItemsAttend.ServiceNetAmount)
 //                }
 
+//                for (i in 0 until modelReplacedProduct.size) {
+//                    val ItemsAttend = modelReplacedProduct[i]
+//                    Log.e(TAG,"297   "+i
+//                            +"\n"+"isChecked       : "+ItemsAttend.isChecked
+//                            +"\n"+"ID_OLD_Product  : "+ItemsAttend.ID_OLD_Product
+//                            +"\n"+"OLD_Product     : "+ItemsAttend.OLD_Product
+//                            +"\n"+"SPDOldQuantity  : "+ItemsAttend.SPDOldQuantity
+//                            +"\n"+"Amount          : "+ItemsAttend.Amount
+//                            +"\n"+"ID_Mode         : "+ItemsAttend.ID_Mode
+//                            +"\n"+"ModeName        : "+ItemsAttend.ModeName
+//                            +"\n"+"ID_Product      : "+ItemsAttend.ID_Product
+//                            +"\n"+"Product         : "+ItemsAttend.Product
+//                            +"\n"+"Replaced_Qty    : "+ItemsAttend.Replaced_Qty
+//                            +"\n"+"ReplaceAmount   : "+ItemsAttend.ReplaceAmount
+//                            +"\n"+"Remarks         : "+ItemsAttend.Remarks
+//                            +"\n"+"isAdded         : "+ItemsAttend.isAdded)
+//                }
+
+              //  validatReplacedProduct(v)
+                validatServiceAttended(v)
+
+
+            }
+
+            R.id.tv_Mcancel -> {
+
+               cancelBottom()
+            }
+
+        }
+    }
+
+
+
+    private fun validatServiceAttended(v: View) {
+
+        try {
+            Log.e(TAG,"validatServiceAttended  693   ")
+            saveServiceAttendedArray =  JSONArray()
+            for (i in 0 until modelServiceAttended.size) {
+                val ItemsModel = modelServiceAttended[i]
+                if (ItemsModel.isChecked.equals("1")){
+
+                    val jsonObject1 = JSONObject()
+                    jsonObject1.put("ID_Services",ItemsModel.ID_Services)
+                    jsonObject1.put("Remarks",ItemsModel.Remarks)
+                    jsonObject1.put("ServiceCost",ItemsModel.ServiceCost)
+                    jsonObject1.put("ServiceTaxAmount",ItemsModel.ServiceTaxAmount)
+                    jsonObject1.put("ServiceNetAmount",ItemsModel.ServiceNetAmount)
+                    jsonObject1.put("ServiceType",ItemsModel.ServiceTypeId)
+                    saveServiceAttendedArray.put(jsonObject1)
+                }
+            }
+            validatReplacedProduct(v)
+
+        }catch (e:Exception){
+
+        }
+
+    }
+
+    private fun validatReplacedProduct(v: View) {
+
+        try {
+            Log.e(TAG,"validatReplacedProduct  692   ")
+            saveReplacedeProductArray =  JSONArray()
+            var isProdct: Boolean = true
+            for (i in 0 until modelReplacedProduct.size) {
+                val ItemsModel = modelReplacedProduct[i]
+                if (ItemsModel.isChecked.equals("1")){
+
+                    if (!ItemsModel.ID_Product.equals("0") && ItemsModel.Replaced_Qty.equals("0")){
+                        isProdct = false
+                    }
+                }
+            }
+            totRplacement = 0.0f
+            if (isProdct!!){
+                //  validateAttendedPerson(v)
                 for (i in 0 until modelReplacedProduct.size) {
-                    val ItemsAttend = modelReplacedProduct[i]
-                    Log.e(TAG,"297   "+i
-                            +"\n"+"isChecked       : "+ItemsAttend.isChecked
-                            +"\n"+"ID_OLD_Product  : "+ItemsAttend.ID_OLD_Product
-                            +"\n"+"OLD_Product     : "+ItemsAttend.OLD_Product
-                            +"\n"+"SPDOldQuantity  : "+ItemsAttend.SPDOldQuantity
-                            +"\n"+"Amount          : "+ItemsAttend.Amount
-                            +"\n"+"ID_Mode         : "+ItemsAttend.ID_Mode
-                            +"\n"+"ModeName        : "+ItemsAttend.ModeName
-                            +"\n"+"ID_Product      : "+ItemsAttend.ID_Product
-                            +"\n"+"Product         : "+ItemsAttend.Product
-                            +"\n"+"Replaced_Qty    : "+ItemsAttend.Replaced_Qty
-                            +"\n"+"ReplaceAmount   : "+ItemsAttend.ReplaceAmount
-                            +"\n"+"Remarks         : "+ItemsAttend.Remarks
-                            +"\n"+"isAdded         : "+ItemsAttend.isAdded)
+                    val ItemsModel = modelReplacedProduct[i]
+                    if (ItemsModel.isChecked.equals("1")){
+                        val jsonObject1 = JSONObject()
+
+                        jsonObject1.put("ID_Product",ItemsModel.ID_OLD_Product)
+                        jsonObject1.put("Quantity",ItemsModel.SPDOldQuantity)
+                        jsonObject1.put("ReplaceAmount",ItemsModel.ReplaceAmount)
+                        jsonObject1.put("RpdProductId",ItemsModel.ID_Product)
+                        jsonObject1.put("RpdProductQty",ItemsModel.Replaced_Qty)
+                        jsonObject1.put("RpdMRP",ItemsModel.MRPs)
+                        jsonObject1.put("RpdProductAmount",ItemsModel.ReplaceAmount)
+                        jsonObject1.put("Remarks",ItemsModel.Remarks)
+                        jsonObject1.put("ID_Mode",ItemsModel.ID_Mode)
+                        jsonObject1.put("RpdStockId",ItemsModel.StockId)
+                        saveReplacedeProductArray.put(jsonObject1)
+
+                        totRplacement = totRplacement+(ItemsModel.Amount).toFloat()
+                        Log.e(TAG,"saveReplacedeProductArray  9610   "+totRplacement)
+                    }
                 }
 
+                strTotalAmount = totRplacement.toString()
+                Log.e(TAG,"saveReplacedeProductArray  6923   "+saveReplacedeProductArray)
 
+                validateAttendedPerson(v)
+
+            }else{
+
+                serviceAttendedMode = "1"
+                replacedProductMode = "0"
+                attendanceMode = "1"
+                actionTakenMode = "1"
+
+                hideShowViews()
+                if (jsonArrayChangeMode.length() == 0){
+                    serviceFollowUpChangeMmode = 0
+                    loadChangeMode()
+                }
+
+                if (modelReplacedProduct.size == 0){
+                    serviceFollowUpReplacedProduct = 0
+                    loadMappedReplacedProducts()
+                }
+
+                Config.snackBars(context,v,"Please Enter Replaced Quantity")
+            }
+
+            Log.e(TAG,"isProdct  6921   "+isProdct)
+        }catch (e:Exception){
+
+        }
+
+    }
+
+    private fun validateAttendedPerson(v: View) {
+
+        try {
+            Log.e(TAG,"validateAttendedPerson  686   ")
+            saveAttendedEmployeeArray = JSONArray()
+            for (i in 0 until modelFollowUpAttendance.size) {
+                val ItemsModel = modelFollowUpAttendance[i]
+
+                if (ItemsModel.isChecked.equals("1")){
+                    val jsonObject1 = JSONObject()
+                    jsonObject1.put("ID_Employee",ItemsModel.ID_Employee)
+                    jsonObject1.put("EmployeeType",ItemsModel.EmployeeName)
+                    saveAttendedEmployeeArray.put(jsonObject1)
+                }
+            }
+
+            Log.e(TAG,"validateAttendedPerson  686   "+saveAttendedEmployeeArray)
+            if (saveAttendedEmployeeArray.length() == 0){
+                if (attendanceMode.equals("0")){
+                    serviceAttendedMode = "1"
+                    replacedProductMode = "1"
+                    attendanceMode = "1"
+                    actionTakenMode = "1"
+                }else{
+                    serviceAttendedMode = "1"
+                    replacedProductMode = "1"
+                    attendanceMode = "0"
+                    actionTakenMode = "1"
+                }
+                hideShowViews()
+                if (serviceFollowUpAttendanceArrayList.length() == 0){
+                    serviceFollowUpReplacedProduct = 0
+                    loadAttendance()
+                }
+                Config.snackBars(context,v,"Please mark Attended Person")
+            }else{
+
+
+                validatePaymentDetails(v)
+            }
+
+        }catch (e:Exception){
+
+        }
+
+
+
+    }
+
+    private fun validatePaymentDetails(v: View) {
+
+
+        try {
+            totPayAmount = 0.0f
+            savePaymentDetailArray = JSONArray()
+            for (i in 0 until arrPayment.length()) {
+               var jsonObject = arrPayment.getJSONObject(i)
+                val jsonObject1 = JSONObject()
+                jsonObject1.put("PaymentMethod",jsonObject.getString("MethodID"))
+                jsonObject1.put("PAmount",jsonObject.getString("Amount"))
+                jsonObject1.put("Refno",jsonObject.getString("RefNo"))
+
+                savePaymentDetailArray.put(jsonObject1)
+
+                totPayAmount = totPayAmount + jsonObject.getString("Amount").toFloat()
+            }
+        }catch (e: Exception){
+
+        }
+
+        validateActionTaken(v)
+
+//
+//        Log.e(TAG,"saveServiceAttendedArray    8241   :  "+saveServiceAttendedArray)
+//        Log.e(TAG,"saveReplacedeProductArray   8242   :  "+saveReplacedeProductArray)
+//        Log.e(TAG,"saveAttendedEmployeeArray   8243   :  "+saveAttendedEmployeeArray)
+//        Log.e(TAG,"savePaymentDetailArray      8244   :  "+savePaymentDetailArray)
+
+    }
+
+    private fun validateActionTaken(v: View) {
+
+        strCustomerNote = tie_Customer_Note!!.text.toString()
+        strEmployeeNote = tie_Employee_Note!!.text.toString()
+        strVisitedDate = tie_Visited_Date!!.text.toString()
+        strFollowUpDate = tie_Follow_Date!!.text.toString()
+        strReplacementAmount = tie_Security_Amount!!.text.toString()
+
+        Log.e(TAG,"ID_Action_Status    8911   :  "+ID_Action_Status)
+        Log.e(TAG,"ID_LeadAction    8911   :  "+ID_LeadAction)
+        Log.e(TAG,"ID_LeadAction_Status    8911   :  "+ID_LeadAction_Status)
+        Log.e(TAG,"ID_ActionType    8911   :  "+ID_ActionType)
+        if (strVisitedDate.equals("")){
+            Config.snackBars(context,v,"Select Visited Date")
+        }
+        else if (ID_Action.equals("")){
+        //    Config.snackBars(context,v,"Select Action")
+            til_Action!!.setError("Select Action")
+            til_Action!!.setErrorIconDrawable(null);
+        }
+        else if (!ID_Action_Status.equals("9")){
+            validatePaymentMethod(v)
+        }else{
+            if (ID_LeadAction.equals("0")){
+            //    Config.snackBars(context,v,"Select Lead Action")
+                til_Lead_Action!!.setError("Select Lead Action")
+                til_Lead_Action!!.setErrorIconDrawable(null);
+            }else{
+
+                if (ID_LeadAction_Status.equals("1")){
+                    if (ID_ActionType.equals("0")){
+                        //Config.snackBars(context,v,"Select Action Type")
+                        til_Action_Type!!.setError("Select Action Type")
+                        til_Action_Type!!.setErrorIconDrawable(null);
+                    }
+                    else if (strFollowUpDate.equals("")){
+                       // Config.snackBars(context,v,"Select Followup Date")
+                        til_Follow_Date!!.setError("Select Action Type")
+                        til_Follow_Date!!.setErrorIconDrawable(null);
+                    }else{
+                        validatePaymentMethod(v)
+                    }
+                }else{
+                    validatePaymentMethod(v)
+                }
             }
         }
     }
 
+    private fun validatePaymentMethod(v: View) {
+
+        Log.e(TAG,"totRplacement   9611   "+totRplacement)
+        Log.e(TAG,"totPayAmount    9612   "+totPayAmount)
+
+        if (totRplacement > 0){
+
+            if (ID_Billtype.equals("0")){
+                Config.snackBars(context,v,"Select Bill type")
+            }else if (totPayAmount != totRplacement){
+                Config.snackBars(context,v,"In Payment Method Balance Amt. Should be Zero")
+
+            }else{
+                confirmationPopup()
+            }
+        }else{
+            confirmationPopup()
+        }
+
+
+
+
+
+//        1.Starting date :Visited Date
+//        2.Replacement amount :security amount
+//        3.Fk_next action:Action
+//                4.Nextactionlead:Follow up Date
+//        5.fk_employeelead:Assigned To
+//        6.totalamount:replacementtotal
+
+    }
+
+    private fun confirmationPopup() {
+//        Log.e(TAG,"8241  "
+//                +"\n CustomerNotes  :  "+strCustomerNote
+//                +"\n EmployeeNote  :  "+strEmployeeNote
+//                +"\n StartingDate  :  "+strVisitedDate
+//                +"\n TotalAmount  :  "+strTotalAmount
+//                +"\n ReplaceAmount  :  "+strReplacementAmount
+//                +"\n FK_NextAction  :  "+ID_Action
+//                +"\n FK_NextActionLead  :  "+strFollowUpDate
+//                +"\n FK_NextActionLead  :  "+ID_AssignedTo
+//                +"\n FK_BillType  :  "+ID_Billtype)
+//
+//
+//
+//        Log.e(TAG,"saveServiceAttendedArray    8241   :  "+saveServiceAttendedArray)
+//        Log.e(TAG,"saveReplacedeProductArray   8242   :  "+saveReplacedeProductArray)
+//        Log.e(TAG,"saveAttendedEmployeeArray   8243   :  "+saveAttendedEmployeeArray)
+//        Log.e(TAG,"savePaymentDetailArray      8244   :  "+savePaymentDetailArray)
+//
+
+        saveCount = 0
+        saveServiceFollowUp()
+
+
+//        try {
+//
+//            var dialogConfirmSheet = Dialog(this)
+//            dialogConfirmSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialogConfirmSheet!! .setContentView(R.layout.confirm_service_followup_sheet)
+//            dialogConfirmSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+//
+//            val window: Window? = dialogConfirmSheet!!.getWindow()
+//            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+//            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+//            dialogConfirmSheet!!.setCancelable(true)
+//
+//            var ll_pop1 = dialogPaymentSheet!! .findViewById(R.id.ll_pop1) as LinearLayout
+//            var ll_pop2 = dialogPaymentSheet!! .findViewById(R.id.ll_pop2) as LinearLayout
+//            var ll_pop3 = dialogPaymentSheet!! .findViewById(R.id.ll_pop3) as LinearLayout
+//
+//            var recyc_pop1 = dialogPaymentSheet!! .findViewById(R.id.recyc_pop1) as FullLenghRecyclertview
+//            var recyc_pop2 = dialogPaymentSheet!! .findViewById(R.id.recyc_pop2) as FullLenghRecyclertview
+//            var recyc_pop3 = dialogPaymentSheet!! .findViewById(R.id.recyc_pop3) as FullLenghRecyclertview
+//
+//            if (saveServiceAttendedArray.length()>0){
+//                ll_pop1.visibility = View.VISIBLE
+//
+//
+//            }
+//            if (saveReplacedeProductArray.length()>0){
+//                ll_pop2.visibility = View.VISIBLE
+//            }
+//            if (saveAttendedEmployeeArray.length()>0){
+//                ll_pop3.visibility = View.VISIBLE
+//            }
+//
+//
+//
+//
+//
+//            dialogConfirmSheet!!.show()
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            Log.e(TAG,"801 Exception  "+e.toString())
+//        }
+
+
+
+    }
+
+    private fun saveServiceFollowUp() {
+//        customer_service_register
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                try {
+                    Log.e(TAG,"1027  ")
+                    saveServiceFollowUpViewModel.saveServiceFollowUp(
+                        this, customer_service_register,strCustomerNote!!,strEmployeeNote!!,strVisitedDate!!,strTotalAmount!!,
+                        strReplacementAmount!!,ID_Action!!,strFollowUpDate!!,ID_AssignedTo!!,ID_Billtype!!,
+                        saveServiceAttendedArray!!,saveReplacedeProductArray!!,saveAttendedEmployeeArray!!,savePaymentDetailArray!!)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            try {
+                                val msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
+                                    if (serviceFollowUpProductList == 0) {
+                                        serviceFollowUpProductList++
+                                        Log.e(TAG,"1041  "+msg)
+                                        val jObject = JSONObject(msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            try {
+                                                val jobjt = jObject.getJSONObject("UpdateServiceFollowUp")
+                                                val suceessDialog = Dialog(this)
+                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                suceessDialog!!.setCancelable(false)
+                                                suceessDialog!! .setContentView(R.layout.success_service_popup)
+                                                suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+                                                suceessDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                                                suceessDialog!!.setCancelable(false)
+
+                                                val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                                val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+
+                                                tv_succesmsg!!.setText(jobjt.getString("Message"))
+
+                                                tv_succesok!!.setOnClickListener {
+                                                    suceessDialog!!.dismiss()
+                                                    onBackPressed()
+
+                                                }
+
+                                                suceessDialog!!.show()
+                                                suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                            }catch (e: Exception){
+                                                val builder = AlertDialog.Builder(
+                                                    this@ServiceFollowUpNewActivity,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage(e.toString())
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
+                                            }
+
+                                        }
+                                    }
+                                } else {
+                                }
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "" + Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+                }catch (e : Exception){
+                    Log.e(TAG,"1027 Exception "+e.toString())
+                }
+
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
 
     private fun openBottomDate() {
@@ -597,13 +1175,13 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
-        date_Picker1.maxDate = System.currentTimeMillis()
-//        if (dateMode == 0){
-//            date_Picker1.maxDate = System.currentTimeMillis()
-//        }else if (dateMode == 1){
-//
-//            date_Picker1.minDate = System.currentTimeMillis()
-//        }
+
+        if (dateMode == 0){
+            date_Picker1.maxDate = System.currentTimeMillis()
+        }else if (dateMode == 1){
+
+            date_Picker1.minDate = System.currentTimeMillis()
+        }
 //        else if (dateMode == 2){
 //            date_Picker1.minDate = System.currentTimeMillis()
 //        }
@@ -629,14 +1207,13 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                     strMonth ="0"+strMonth
                 }
 
-                tie_Visited_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
 
-//                if (dateMode == 0){
-//                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-//                }else if (dateMode == 1){
-//
-//                    tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-//                }
+
+                if (dateMode == 0){
+                    tie_Visited_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }else if (dateMode == 1){
+                    tie_Follow_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }
 //                else if (dateMode == 2){
 //                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
 //                }
@@ -680,6 +1257,30 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
 
 
+    }
+
+    private fun cancelBottom() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_cancel, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            onBackPressed()
+
+        }
+
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
 
@@ -885,7 +1486,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                                                 val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
                                                // recycler_service_cost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                                 //            recyCustomer!!.setHasFixedSize(true)
-                                                //            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+                                                //            val adapter = CountryDetailAdapter(this@ServiceFollowUpNewActivity, countryArrayList)
                                                 recycler_service_cost!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
                                                 adapterServiceAttended = ServiceAttendedAdapter(this@ServiceFollowUpNewActivity, modelServiceAttended,jsonArrayServiceType)
                                                 recycler_service_cost!!.adapter = adapterServiceAttended
@@ -1181,7 +1782,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
                                                 modelReplacedProduct!!.add(ModelReplacedProduct("0",jsonObject.getString("ID_OLD_Product"),jsonObject.getString("OLD_Product"),
                                                     jsonObject.getString("SPDOldQuantity"),jsonObject.getString("Amount"),"0","",jsonObject.getString("ID_Product"),jsonObject.getString("Product"),
-                                                    "0",jsonObject.getString("ReplaceAmount"),jsonObject.getString("Remarks"),"1"))
+                                                    "0",jsonObject.getString("ReplaceAmount"),jsonObject.getString("Remarks"),"1",true,true,true,true,"0","0"))
                                             }
 
                                         }
@@ -1290,7 +1891,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
                                         jsonArrayServiceFollowProductList = jobjt.getJSONArray("MoreComponentDetailsList")
 
-                                        Log.e(TAG,"jsonArrayServiceFollowProductList   837   "+jsonArrayServiceFollowProductList)
+                                        Log.e(TAG,"jsonArrayServiceFollowProductList   83722   "+jsonArrayServiceFollowProductList)
                                         modelServiceFollowProductList.clear()
                                         if (jsonArrayServiceFollowProductList.length()>0){
 
@@ -1366,7 +1967,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 val ItemsServiceTemp = modelReplacedProduct[i]
                 modelReplacedProductTemp!!.add(ModelReplacedProductTemp(ItemsServiceTemp.isChecked,ItemsServiceTemp.ID_OLD_Product,ItemsServiceTemp.OLD_Product,ItemsServiceTemp.SPDOldQuantity,
                     ItemsServiceTemp.Amount,ItemsServiceTemp.ID_Mode,ItemsServiceTemp.ModeName,ItemsServiceTemp.ID_Product,ItemsServiceTemp.Product,ItemsServiceTemp.Replaced_Qty,
-                    ItemsServiceTemp.ReplaceAmount,ItemsServiceTemp.Remarks,ItemsServiceTemp.isAdded))
+                    ItemsServiceTemp.ReplaceAmount,ItemsServiceTemp.Remarks,ItemsServiceTemp.isAdded,ItemsServiceTemp.boolSecAmnt,ItemsServiceTemp.boolRepProd,
+                    ItemsServiceTemp.boolRepQty,ItemsServiceTemp.boolRepAmnt,ItemsServiceTemp.MRPs,ItemsServiceTemp.StockId))
             }
 
             Log.e(TAG,"1372   sortMoreServiceAttended   "+modelServiceFollowProductList)
@@ -1407,41 +2009,6 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             modelServiceFollowProductList!!.add(ModelServiceFollowProductList(ItemsModel.isChecked,ItemsModel.FK_Product,ItemsModel.ProductName,ItemsModel.isAdded))
         }
 
-//        for (i in 0 until modelServiceFollowProductList.size) {
-//            val ItemsModel1 = modelServiceFollowProductList[i]
-//
-//            for (k in 0 until modelReplacedProduct.size) {
-//                val ItemsModel2 = modelReplacedProduct[k]
-//
-//                if (ItemsModel1.FK_Product.equals(ItemsModel2.ID_OLD_Product) && ItemsModel1.isAdded.equals("1")){
-//                    //update
-//                    ItemsModel2.isAdded = "1"
-//                    adapterReplacedProduct!!.notifyItemChanged(k)
-//                }
-//                else if (ItemsModel1.FK_Product.equals(ItemsModel2.ID_OLD_Product) && ItemsModel1.isAdded.equals("0")){
-//                   // remove
-//                    modelReplacedProduct!!.removeAt(k)
-//                    adapterReplacedProduct!!.notifyDataSetChanged()
-//                   // adapterReplacedProduct!!.noa
-//                }
-//                else{
-//                   // add
-//                    if (ItemsModel1.isAdded.equals("1")){
-////                        modelReplacedProduct!!.add(ModelReplacedProduct("0",jsonObject.getString("ID_OLD_Product"),jsonObject.getString("OLD_Product"),
-////                            jsonObject.getString("SPDOldQuantity"),jsonObject.getString("Amount"),"0","",jsonObject.getString("ID_Product"),jsonObject.getString("Product"),
-////                            "0",jsonObject.getString("ReplaceAmount"),jsonObject.getString("Remarks"),"0"))
-//
-//                        modelReplacedProduct!!.add(modelReplacedProduct.size,ModelReplacedProduct("0",ItemsModel1.FK_Product,ItemsModel1.ProductName,
-//                            "0","0","0","","","",
-//                            "0","0","",ItemsModel1.isAdded))
-//                        adapterReplacedProduct!!.notifyItemChanged(modelReplacedProduct.size)
-//
-//                    }
-//                }
-//            }
-//        }
-
-
         Log.e(TAG,"")
 
         modelReplacedProduct.clear()
@@ -1452,12 +2019,19 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 modelReplacedProduct!!.add(ModelReplacedProduct(ItemsAttend3.isChecked,ItemsAttend3.ID_OLD_Product
                     ,ItemsAttend3.OLD_Product,ItemsAttend3.SPDOldQuantity,ItemsAttend3.Amount,ItemsAttend3.ID_Mode,
                     ItemsAttend3.ModeName,ItemsAttend3.ID_Product,ItemsAttend3.Product,ItemsAttend3.Replaced_Qty,
-                    ItemsAttend3.ReplaceAmount,ItemsAttend3.Remarks,ItemsAttend3.isAdded))
+                    ItemsAttend3.ReplaceAmount,ItemsAttend3.Remarks,ItemsAttend3.isAdded,ItemsAttend3.boolSecAmnt,
+                    ItemsAttend3.boolRepProd,ItemsAttend3.boolRepQty,ItemsAttend3.boolRepAmnt,ItemsAttend3.MRPs,ItemsAttend3.StockId))
             }
 
 
         }
 
+
+        for (i in 0 until modelReplacedProduct.size) {
+            val ItemsAttend4 = modelReplacedProduct[i]
+            Log.e(TAG,"772221  : "+ItemsAttend4.isAdded+"  :  "+ItemsAttend4.ID_OLD_Product+"  :  "+ItemsAttend4.OLD_Product)
+
+        }
 
 
 
@@ -1516,9 +2090,6 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
 //        adapterServiceAttended!!.notifyDataSetChanged()
     }
-
-
-
 
     private fun loadMoreReplacedProducts() {
         //recyclerAttendance!!.adapter = null
@@ -1595,7 +2166,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             val lLayout = GridLayoutManager(context, 1)
             recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+//            val adapter = CountryDetailAdapter(this@ServiceFollowUpNewActivity, countryArrayList)
             val adapter = ReplacedProductSubAdapter(context, jsonArrayReplacedProductMore)
             recycCountry!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUpNewActivity)
@@ -1612,7 +2183,6 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
 
     }
-
 
     private fun loadAttendance() {
 
@@ -1711,8 +2281,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun getFollowupAction() {
-//        var followUpAction = 0
+    private fun getServiceFollowupAction() {
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1721,23 +2291,23 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                followUpActionViewModel.getFollowupAction(this,SubMode!!)!!.observe(
+                serviceFollowUpActionViewModel.getServiceFollowupAction(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                if (followUpAction == 0){
-                                    followUpAction++
+                                if (serviceFollowUpAction == 0){
+                                    serviceFollowUpAction++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   82   "+msg)
+                                    Log.e(TAG,"msg   1748   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("FollowUpActionDetails")
-                                        followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
-                                        if (followUpActionArrayList.length()>0){
+                                        serviceFollowUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                        if (serviceFollowUpActionArrayList.length()>0){
 
-                                            followUpActionPopup(followUpActionArrayList)
+                                            serviceFollowUpActionPopup(serviceFollowUpActionArrayList)
 
 
                                         }
@@ -1780,13 +2350,146 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun followUpActionPopup(followUpActionArrayList: JSONArray) {
+    private fun serviceFollowUpActionPopup(serviceFollowUpActionArrayList: JSONArray) {
+        try {
+
+            dialogServiceFollowupAction = Dialog(this)
+            dialogServiceFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogServiceFollowupAction!! .setContentView(R.layout.followup_action)
+            dialogServiceFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyserviceFollowupAction = dialogServiceFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
+            val etsearch = dialogServiceFollowupAction!! .findViewById(R.id.etsearch) as EditText
+
+
+            serviceFollowUpActionSort = JSONArray()
+            for (k in 0 until serviceFollowUpActionArrayList.length()) {
+                val jsonObject = serviceFollowUpActionArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                serviceFollowUpActionSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+            recyserviceFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = FollowupActionAdapter(this@FollowUpActivity, serviceFollowUpActionArrayList)
+            val adapter = ServiceFollowupActionAdapter(this@ServiceFollowUpNewActivity, serviceFollowUpActionSort)
+            recyserviceFollowupAction!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUpNewActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    serviceFollowUpActionSort = JSONArray()
+
+                    for (k in 0 until serviceFollowUpActionArrayList.length()) {
+                        val jsonObject = serviceFollowUpActionArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("NxtActnName").length) {
+                            if (jsonObject.getString("NxtActnName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                serviceFollowUpActionSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"serviceFollowUpActionSort               7103    "+serviceFollowUpActionSort)
+                    val adapter = ServiceFollowupActionAdapter(this@ServiceFollowUpNewActivity, serviceFollowUpActionSort)
+                    recyserviceFollowupAction!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUpNewActivity)
+                }
+            })
+
+            dialogServiceFollowupAction!!.show()
+            dialogServiceFollowupAction!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getFollowupAction() {
+//        var followUpAction = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpActionViewModel.getFollowupAction(this,SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (followUpAction == 0){
+                                    followUpAction++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   82   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                        followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
+                                        if (followUpActionArrayList.length()>0){
+
+                                            followUpLeadActionPopup(followUpActionArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUpNewActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followUpLeadActionPopup(followUpActionArrayList: JSONArray) {
 
         try {
 
             dialogFollowupAction = Dialog(this)
             dialogFollowupAction!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogFollowupAction!! .setContentView(R.layout.followup_action)
+            dialogFollowupAction!! .setContentView(R.layout.followup_lead_action)
             dialogFollowupAction!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupAction = dialogFollowupAction!! .findViewById(R.id.recyFollowupAction) as RecyclerView
             val etsearch = dialogFollowupAction!! .findViewById(R.id.etsearch) as EditText
@@ -1844,6 +2547,385 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             e.printStackTrace()
         }
 
+    }
+
+    private fun getFollowupType() {
+//         var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (followUpType == 0) {
+                                    followUpType++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                        followUpTypeArrayList =
+                                            jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                        if (followUpTypeArrayList.length() > 0) {
+//                                             if (followUpType == 0){
+//                                                 followUpType++
+                                            followupTypePopup(followUpTypeArrayList)
+//                                             }
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUpNewActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!!.setContentView(R.layout.followup_type_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType = dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
+            val etsearch = dialogFollowupType!!.findViewById(R.id.etsearch) as EditText
+
+            followUpTypeSort = JSONArray()
+            for (k in 0 until followUpTypeArrayList.length()) {
+                val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                followUpTypeSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = FollowupTypeAdapter(this@ServiceFollowUpNewActivity, followUpTypeArrayList)
+            val adapter = FollowupTypeAdapter(this@ServiceFollowUpNewActivity, followUpTypeSort)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUpNewActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpTypeSort = JSONArray()
+
+                    for (k in 0 until followUpTypeArrayList.length()) {
+                        val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                            if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                followUpTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
+                    val adapter = FollowupTypeAdapter(this@ServiceFollowUpNewActivity, followUpTypeSort)
+                    recyFollowupType!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUpNewActivity)
+                }
+            })
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getBillType() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceBillTypeViewModel.getBillType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (billTypeCount == 0) {
+                                    billTypeCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("BillTyep")
+                                        billTypeArrayList = jobjt.getJSONArray("BillTyepList")
+                                        if (billTypeArrayList.length() > 0) {
+//
+                                            billTypePopup(billTypeArrayList)
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUpNewActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun billTypePopup(billTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogBillType = Dialog(this)
+            dialogBillType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBillType!!.setContentView(R.layout.bill_types_popup)
+            dialogBillType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBillType = dialogBillType!!.findViewById(R.id.recyBillType) as RecyclerView
+            val etsearch = dialogBillType!!.findViewById(R.id.etsearch) as EditText
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+            recyBillType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = EmployeeAdapter(this@ServiceFollowUpNewActivity, employeeArrayList)
+            val adapter = BillTypeAdapter(this@ServiceFollowUpNewActivity, billTypeArrayList)
+            recyBillType!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUpNewActivity)
+
+
+
+            dialogBillType!!.show()
+            dialogBillType!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getEmployee() {
+//         var employee = 0
+        val FK_DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF55, 0)
+        var ID_Department = FK_DepartmentSP.getString("FK_Department","0")
+        Log.e(TAG,"ID_Department  2394   "+ID_Department)
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                employeeViewModel.getEmployee(this, ID_Department!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (employeeMode == 0) {
+                                    employeeMode++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeArrayList =
+                                            jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeArrayList.length() > 0) {
+
+                                            employeePopup(employeeArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUpNewActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeePopup(employeeArrayList: JSONArray) {
+        try {
+
+            dialogEmployee = Dialog(this)
+            dialogEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployee!!.setContentView(R.layout.employee_popup)
+            dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployee = dialogEmployee!!.findViewById(R.id.recyEmployee) as RecyclerView
+            val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
+
+            employeeSort = JSONArray()
+            for (k in 0 until employeeArrayList.length()) {
+                val jsonObject = employeeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
+            recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = EmployeeAdapter(this@ServiceFollowUpNewActivity, employeeArrayList)
+            val adapter = EmployeeAdapter(this@ServiceFollowUpNewActivity, employeeSort)
+            recyEmployee!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUpNewActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeSort = JSONArray()
+
+                    for (k in 0 until employeeArrayList.length()) {
+                        val jsonObject = employeeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                employeeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
+                    val adapter = EmployeeAdapter(this@ServiceFollowUpNewActivity, employeeSort)
+                    recyEmployee!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUpNewActivity)
+                }
+            })
+
+            dialogEmployee!!.show()
+            dialogEmployee!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun paymentMethodPopup() {
@@ -1966,6 +3048,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             Log.e(TAG,"801 Exception  "+e.toString())
         }
     }
+
+
 
     private fun validateAddPayment(view: View) {
 
@@ -2144,7 +3228,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
             recyPaymentMethod!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+//             val adapter = EmployeeAdapter(this@ServiceFollowUpNewActivity, employeeArrayList)
             val adapter = PayMethodAdapter(this@ServiceFollowUpNewActivity, paymentMethodeArrayList)
             recyPaymentMethod!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUpNewActivity)
@@ -2177,42 +3261,100 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             Log.e(TAG,"28302    ")
 
             when {
-                editable === edtPayMethod!!.editableText -> {
+
+                editable === tie_Visited_Date!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    if (edtPayMethod!!.text.toString().equals("")){
-//                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                    if (tie_Visited_Date!!.text.toString().equals("")){
+                        til_Visited_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
                         //   til_DeliveryDate!!.isErrorEnabled = false
-                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+                        til_Visited_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.black)
                     }
 
                 }
 
-                editable === edtPayAmount!!.editableText -> {
+                editable === tie_Action!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    if (edtPayAmount!!.text.toString().equals("")){
-//                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                    if (tie_Action!!.text.toString().equals("")){
+                      //  tie_Action!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                        til_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
-                        //   til_DeliveryDate!!.isErrorEnabled = false
-                        txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+                        til_Action!!.isErrorEnabled = false
+                        til_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.black)
                     }
 
                 }
-
-                editable === txtPayBalAmount!!.editableText -> {
+                editable === tie_Lead_Action!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    val payAmnt = DecimelFormatters.set2DecimelPlace(txtPayBalAmount!!.text.toString().toFloat())
-                    if ((payAmnt.toFloat()).equals("0.00".toFloat())){
-                        Log.e(TAG,"801 payAmnt  0.00  "+payAmnt.toFloat())
-                        txt_bal_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
-                    }
-                    else{
-                        Log.e(TAG,"801 payAmnt  0.0clhghfoij    "+payAmnt.toFloat())
-                        txt_bal_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
-
+                    if (tie_Lead_Action!!.text.toString().equals("")){
+                        //  tie_Action!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                        til_Lead_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Lead_Action!!.isErrorEnabled = false
+                        til_Lead_Action!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.black)
                     }
 
                 }
+                editable === tie_Action_Type!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Action_Type!!.text.toString().equals("")){
+                        //  tie_Action!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                        til_Action_Type!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Action_Type!!.isErrorEnabled = false
+                        til_Action_Type!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.black)
+                    }
+
+                }
+
+                editable === tie_Follow_Date!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Follow_Date!!.text.toString().equals("")){
+                        //  tie_Action!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                        til_Follow_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Follow_Date!!.isErrorEnabled = false
+                        til_Follow_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.black)
+                    }
+
+                }
+
+//                editable === edtPayMethod!!.editableText -> {
+//                    Log.e(TAG,"283021    ")
+//                    if (edtPayMethod!!.text.toString().equals("")){
+////                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+//                    }else{
+//                        //   til_DeliveryDate!!.isErrorEnabled = false
+//                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+//                    }
+//
+//                }
+//
+//                editable === edtPayAmount!!.editableText -> {
+//                    Log.e(TAG,"283021    ")
+//                    if (edtPayAmount!!.text.toString().equals("")){
+////                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+//                    }else{
+//                        //   til_DeliveryDate!!.isErrorEnabled = false
+//                        txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+//                    }
+//
+//                }
+//
+//                editable === txtPayBalAmount!!.editableText -> {
+//                    Log.e(TAG,"283021    ")
+//                    val payAmnt = DecimelFormatters.set2DecimelPlace(txtPayBalAmount!!.text.toString().toFloat())
+//                    if ((payAmnt.toFloat()).equals("0.00".toFloat())){
+//                        Log.e(TAG,"801 payAmnt  0.00  "+payAmnt.toFloat())
+//                        txt_bal_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+//                    }
+//                    else{
+//                        Log.e(TAG,"801 payAmnt  0.0clhghfoij    "+payAmnt.toFloat())
+//                        txt_bal_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+//
+//                    }
+//
+//                }
 
 
 
@@ -2382,7 +3524,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                         Log.e(TAG,"23592  :  "+isTrue+"  :  "+ItemsModel.isAdded)
                         modelReplacedProductTemp!!.add(
                             ModelReplacedProductTemp("0",ItemsModel.FK_Product,
-                            ItemsModel.ProductName,"0","0","0","","0","","0","0","",ItemsModel.isAdded)
+                            ItemsModel.ProductName,"0","0","0","","0","","0","0","",
+                                ItemsModel.isAdded,true,true,true,true,"0","0")
                         )
 
                     }
@@ -2439,6 +3582,10 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
                 ItemsModel.ID_Product = jsonObject!!.getString("ID_Product")
                 ItemsModel.Product =  jsonObject!!.getString("Name")
+                ItemsModel.Replaced_Qty =  "0"
+                ItemsModel.ReplaceAmount =  jsonObject!!.getString("SalePrice")
+                ItemsModel.MRPs =  jsonObject!!.getString("MRPs")
+                ItemsModel.StockId =  jsonObject!!.getString("StockId")
 //
 //                for (k in 0 until modelReplacedProduct.size) {
 //                    val ItemsModel1 = modelReplacedProduct[k]
@@ -2456,19 +3603,117 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
 
 
+        if (data.equals("BuyBackAmountChanged")) {
+            try {
+
+                var fSecurityAmount = 0.0f
+                for (i in 0 until modelReplacedProduct.size) {
+                    val ItemsModel = modelReplacedProduct[i]
+                    Log.e(TAG,"modelReplacedProduct  2464   : "+ItemsModel.ID_Mode+" : "+ItemsModel.ModeName+" : "+ItemsModel.Amount+" : "+ItemsModel.isChecked)
+
+                    if (ItemsModel.ID_Mode.equals("2") && ItemsModel.isChecked.equals("1")){
+                        fSecurityAmount = fSecurityAmount + ItemsModel.Amount.toFloat()
+                    }
+
+                }
+                Log.e(TAG,"modelReplacedProduct  24641   : "+fSecurityAmount)
+                tie_Security_Amount!!.setText(fSecurityAmount.toString())
+                if (fSecurityAmount > 0){
+                    til_Bill_Type!!.visibility = View.VISIBLE
+                    ID_Billtype = "0"
+                    tie_Bill_Type!!.setText("")
+                }else{
+                    til_Bill_Type!!.visibility = View.INVISIBLE
+                    ID_Billtype = "0"
+                    tie_Bill_Type!!.setText("")
+                }
+
+
+
+
+            }catch (e:Exception){
+
+            }
+
+        }
+
+
     }
 
     override fun onClick(position: Int, data: String) {
         Log.e(TAG,"1740  onClick ")
 
+        if (data.equals("servicefollowupaction")){
+
+            dialogServiceFollowupAction!!.dismiss()
+            val jsonObject = serviceFollowUpActionSort.getJSONObject(position)
+            Log.e(TAG,"ID_Action   "+jsonObject.getString("ID_NextAction"))
+            ID_Action = jsonObject.getString("ID_NextAction")
+            ID_Action_Status = jsonObject.getString("Status")
+            tie_Action!!.setText(jsonObject.getString("NxtActnName"))
+
+            if (ID_Action_Status.equals("9")){
+                til_Lead_Action!!.visibility  =View.VISIBLE
+
+                IDActionStatusChanged()
+
+            }else{
+                linear_afa!!.visibility  =View.GONE
+                til_Lead_Action!!.visibility  =View.GONE
+
+                IDActionStatusChanged()
+            }
+
+
+        }
+
         if (data.equals("followupaction")){
 
             dialogFollowupAction!!.dismiss()
             val jsonObject = followUpActionSort.getJSONObject(position)
-            Log.e(TAG,"ID_NextAction   "+jsonObject.getString("ID_NextAction"))
-            ID_Status = jsonObject.getString("ID_NextAction")
-            tie_Action!!.setText(jsonObject.getString("NxtActnName"))
+            Log.e(TAG,"ID_LeadAction   "+jsonObject.getString("ID_NextAction"))
+            ID_LeadAction = jsonObject.getString("ID_NextAction")
+            ID_LeadAction_Status = jsonObject.getString("Status")
+            tie_Lead_Action!!.setText(jsonObject.getString("NxtActnName"))
+
+            if (ID_LeadAction_Status.equals("1")){
+                linear_afa!!.visibility  =View.VISIBLE
+            }else{
+                linear_afa!!.visibility  =View.GONE
+            }
+
+
         }
+
+        if (data.equals("followuptype")) {
+            dialogFollowupType!!.dismiss()
+//             val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            val jsonObject = followUpTypeSort.getJSONObject(position)
+            Log.e(TAG, "ID_ActionType   " + jsonObject.getString("ID_ActionType"))
+            ID_ActionType = jsonObject.getString("ID_ActionType")
+            tie_Action_Type!!.setText(jsonObject.getString("ActnTypeName"))
+
+        }
+
+        if (data.equals("employee")) {
+            dialogEmployee!!.dismiss()
+//             val jsonObject = employeeArrayList.getJSONObject(position)
+            val jsonObject = employeeSort.getJSONObject(position)
+            Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
+            ID_AssignedTo = jsonObject.getString("ID_Employee")
+            tie_Assigned_To!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
+
+        if (data.equals("billTypeClicks")){
+            dialogBillType!!.dismiss()
+
+            val jsonObject = billTypeArrayList.getJSONObject(position)
+            ID_Billtype= jsonObject.getString("ID_BillType")
+            tie_Bill_Type!!.setText(jsonObject.getString("BTName"))
+        }
+
 
         if (data.equals("paymentMethod")){
             dialogPaymentMethod!!.dismiss()
@@ -2477,6 +3722,35 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             edtPayMethod!!.setText(jsonObject.getString("PaymentName"))
         }
 
+    }
+
+    private fun IDActionStatusChanged() {
+        try {
+
+            ID_LeadAction = "0"
+            ID_LeadAction_Status = "0"
+            tie_Lead_Action!!.setText("")
+
+            ID_ActionType ="0"
+            tie_Action_Type!!.setText("")
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+            val currentDate = sdf.format(Date())
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+
+            tie_Follow_Date!!.setText(""+sdfDate1.format(newDate))
+
+            val FK_EmployeeSP = this.getSharedPreferences(Config.SHARED_PREF1, 0)
+            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+            ID_AssignedTo= FK_EmployeeSP.getString("FK_Employee", null).toString()
+            tie_Assigned_To!!.setText(UserNameSP.getString("UserName", null))
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
 

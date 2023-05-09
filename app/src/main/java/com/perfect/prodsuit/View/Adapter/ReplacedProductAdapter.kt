@@ -43,104 +43,7 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                 val pos = position
                 val df = DecimalFormat("#.##")
                 val ItemsModel = modelReplacedProduct[position]
-
-                holder.tv_component.text = ItemsModel.OLD_Product
-                if (ItemsModel.SPDOldQuantity.equals("")){
-                    holder.edt_qty!!.setText("0")
-                    ItemsModel.SPDOldQuantity = "0"
-                }else{
-                    holder.edt_qty!!.setText(ItemsModel.SPDOldQuantity)
-                }
-
-                if (ItemsModel.ID_Product.equals("")){
-                    ItemsModel.ID_Product = "0"
-                    holder.edtproduct!!.setText("")
-                }else{
-                    holder.edtproduct!!.setText(ItemsModel.Product)
-                }
-
-                if (ItemsModel.Amount.equals("")){
-                    holder.edtBuyBackAmount!!.setText("0")
-                    ItemsModel.Amount = "0"
-                }else{
-                    holder.edtBuyBackAmount!!.setText(ItemsModel.Amount)
-                }
-
-                if (ItemsModel.Replaced_Qty.equals("")){
-                    holder.edtReplaceQuantity!!.setText("0")
-                    ItemsModel.Replaced_Qty = "0"
-                }else{
-                    holder.edtReplaceQuantity!!.setText(ItemsModel.Replaced_Qty)
-                }
-
-                if (ItemsModel.ReplaceAmount.equals("")){
-                    holder.edtreplaceamount!!.setText("0")
-                    ItemsModel.ReplaceAmount = "0"
-                }else{
-                    holder.edtreplaceamount!!.setText(ItemsModel.ReplaceAmount)
-                }
-
-                holder.edtRemarks.setText(ItemsModel.Remarks)
-
-                var searchType = Array<String>(jsonArrayChangeMode.length()) { "" }
-                for (i in 0 until jsonArrayChangeMode.length()) {
-                    val objects: JSONObject = jsonArrayChangeMode.getJSONObject(i)
-                    searchType[i] = objects.getString("ModeName")
-                }
-
-                if (ItemsModel.ID_Mode.equals("0")){
-                    jsonObject = jsonArrayChangeMode.getJSONObject(0)
-                    holder.edtChangeMode.setText(jsonObject!!.getString("ModeName"))
-                    ItemsModel.ID_Mode = jsonObject!!.getString("ID_Mode")
-                    ItemsModel.ModeName = jsonObject!!.getString("ModeName")
-                    if (jsonObject!!.getString("ID_Mode").equals("2")){
-                        holder.edtBuyBackAmount.isEnabled = true
-                        //  holder.edtServiceCost.setText("0")
-                    }else{
-                        holder.edtBuyBackAmount.isEnabled = false
-                        //  holder.edtServiceCost.setText("0")
-                    }
-                }
-                else{
-                    holder.edtChangeMode.setText(ItemsModel.ModeName)
-                    if (ItemsModel.ID_Mode.equals("2")){
-                        holder.edtBuyBackAmount.isEnabled = true
-                        //  holder.edtServiceCost.setText("0")
-                    }else{
-                        holder.edtBuyBackAmount.isEnabled = false
-                        // holder.edtServiceCost.setText("0")
-                    }
-                }
-
-                holder.edtChangeMode.setTag(position)
-                holder.edtChangeMode.setOnClickListener {
-                    Log.e(TAG,"searchType   651   "+searchType)
-                    val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
-                    holder.edtChangeMode!!.setAdapter(adapter)
-                    holder.edtChangeMode!!.showDropDown()
-                }
-
-                holder.edtChangeMode!!.setOnItemClickListener { parent, view, pos, id ->
-                    Log.e(TAG,"searchType   651   "+searchType)
-                    jsonObject = jsonArrayChangeMode.getJSONObject(pos)
-                    ItemsModel.ID_Mode = jsonObject!!.getString("ID_Mode")
-                    ItemsModel.ModeName = jsonObject!!.getString("ModeName")
-
-                    Log.e(TAG,"ID_Mode  224   "+jsonObject!!.getString("ID_Mode"))
-
-                    if (jsonObject!!.getString("ID_Mode").equals("2")){
-                        Log.e(TAG,"ID_Mode  2241   "+jsonObject!!.getString("ID_Mode"))
-                        holder.edtBuyBackAmount.isEnabled = true
-                        holder.edtBuyBackAmount.setText("0")
-                    }else{
-                        Log.e(TAG,"ID_Mode  2242   "+jsonObject!!.getString("ID_Mode"))
-                        holder.edtBuyBackAmount.isEnabled = false
-                        holder.edtBuyBackAmount.setText("0")
-                    }
-
-
-                }
-
+                Log.e(TAG,"OLD_Product   10512   "+ItemsModel.OLD_Product)
                 holder.edt_qty.addTextChangedListener(object : TextWatcher {
 
                     override fun afterTextChanged(s: Editable) {
@@ -192,6 +95,7 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                         } else {
                             ItemsModel.Amount = str_buyback.toString()
                         }
+                        clickListener!!.onClick(position, "BuyBackAmountChanged","1")
                     }
                 })
 
@@ -249,11 +153,258 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                     }
                 })
 
+                holder.edtRemarks.addTextChangedListener(object : TextWatcher {
+
+                    override fun afterTextChanged(s: Editable) {
+
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence, start: Int,
+                        count: Int, after: Int
+                    ) {
+
+
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence, start: Int,
+                        before: Int, count: Int
+                    ) {
+                        var str_Remark = holder.edtRemarks.text
+                        ItemsModel.Remarks = str_Remark.toString()
+
+                    }
+                })
+
+                holder.tv_component.text = ItemsModel.OLD_Product
+
+                if (ItemsModel.isChecked.equals("0")){
+
+                    holder.checkbox.isChecked = false
+                }else{
+                    holder.checkbox.isChecked = true
+                }
+
+                if (ItemsModel.SPDOldQuantity.equals("")){
+                    holder.edt_qty!!.setText("0")
+                    ItemsModel.SPDOldQuantity = "0"
+                }else{
+                    holder.edt_qty!!.setText(ItemsModel.SPDOldQuantity)
+                }
+
+                if (ItemsModel.ID_Product.equals("")){
+                    ItemsModel.ID_Product = "0"
+                    holder.edtproduct!!.setText("")
+                }else{
+                    holder.edtproduct!!.setText(ItemsModel.Product)
+                }
+
+                if (ItemsModel.Amount.equals("")){
+                    ItemsModel.Amount = "0"
+                    holder.edtBuyBackAmount!!.setText("0")
+
+                }else{
+                    holder.edtBuyBackAmount!!.setText(ItemsModel.Amount)
+                }
+
+                if (ItemsModel.Replaced_Qty.equals("")){
+                    holder.edtReplaceQuantity!!.setText("0")
+                    ItemsModel.Replaced_Qty = "0"
+                }else{
+                    holder.edtReplaceQuantity!!.setText(ItemsModel.Replaced_Qty)
+                }
+
+                if (ItemsModel.ReplaceAmount.equals("")){
+                    holder.edtreplaceamount!!.setText("0")
+                    ItemsModel.ReplaceAmount = "0"
+                }else{
+                    holder.edtreplaceamount!!.setText(ItemsModel.ReplaceAmount)
+                }
+
+                holder.edtRemarks.setText(ItemsModel.Remarks)
+
+                holder.checkbox.setOnClickListener {
+
+                    if (holder.checkbox.isChecked){
+                        holder.checkbox.isChecked = true
+                        ItemsModel.isChecked  ="1"
+                    }else{
+                        holder.checkbox.isChecked = false
+                        ItemsModel.isChecked  ="0"
+                    }
+                    clickListener!!.onClick(position, "BuyBackAmountChanged","1")
+                }
+
+                var searchType = Array<String>(jsonArrayChangeMode.length()) { "" }
+                for (i in 0 until jsonArrayChangeMode.length()) {
+                    val objects: JSONObject = jsonArrayChangeMode.getJSONObject(i)
+                    searchType[i] = objects.getString("ModeName")
+                }
+
+                if (ItemsModel.ID_Mode.equals("0")){
+                    jsonObject = jsonArrayChangeMode.getJSONObject(0)
+                    holder.edtChangeMode.setText(jsonObject!!.getString("ModeName"))
+                    ItemsModel.ID_Mode = jsonObject!!.getString("ID_Mode")
+                    ItemsModel.ModeName = jsonObject!!.getString("ModeName")
+                    if (jsonObject!!.getString("ID_Mode").equals("1") || jsonObject!!.getString("ID_Mode").equals("2")){
+                        holder.edtBuyBackAmount.isEnabled = true
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                    else if (jsonObject!!.getString("ID_Mode").equals("3")){
+                        holder.edtBuyBackAmount.isEnabled = false
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = false
+                        holder.edtReplaceQuantity.isEnabled = false
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                    else if (jsonObject!!.getString("ID_Mode").equals("4") || jsonObject!!.getString("ID_Mode").equals("5")){
+                        holder.edtBuyBackAmount.isEnabled = false
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                }
+                else{
+//                    holder.edtChangeMode.setText(ItemsModel.ModeName)
+//                    if (ItemsModel.ID_Mode.equals("2")){
+//                        holder.edtBuyBackAmount.isEnabled = true
+//                        //  holder.edtServiceCost.setText("0")
+//                    }else{
+//                        holder.edtBuyBackAmount.isEnabled = false
+//                        // holder.edtServiceCost.setText("0")
+//                    }
+
+                    holder.edtChangeMode.setText(ItemsModel.ModeName)
+
+                    if (ItemsModel.ID_Mode.equals("1") || ItemsModel.ID_Mode.equals("2")){
+                        holder.edtBuyBackAmount.isEnabled = true
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                    else if (ItemsModel.ID_Mode.equals("3")){
+                        holder.edtBuyBackAmount.isEnabled = false
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = false
+                        holder.edtReplaceQuantity.isEnabled = false
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                    else if (ItemsModel.ID_Mode.equals("4") || ItemsModel.ID_Mode.equals("5")){
+                        holder.edtBuyBackAmount.isEnabled = false
+                        //  holder.edtServiceCost.setText("0")
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+                    }
+                }
+
+                holder.edtChangeMode.setTag(position)
+                holder.edtChangeMode.setOnClickListener {
+                    Log.e(TAG,"searchType   651   "+searchType)
+                    val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
+                    holder.edtChangeMode!!.setAdapter(adapter)
+                    holder.edtChangeMode!!.showDropDown()
+                }
+
+                holder.edtChangeMode!!.setOnItemClickListener { parent, view, pos, id ->
+                    Log.e(TAG,"searchType   651   "+searchType)
+                    jsonObject = jsonArrayChangeMode.getJSONObject(pos)
+                    ItemsModel.ID_Mode = jsonObject!!.getString("ID_Mode")
+                    ItemsModel.ModeName = jsonObject!!.getString("ModeName")
+
+                    Log.e(TAG,"ID_Mode  224   "+jsonObject!!.getString("ID_Mode"))
+
+                    if (jsonObject!!.getString("ID_Mode").equals("1") || jsonObject!!.getString("ID_Mode").equals("2")){
+                        Log.e(TAG,"ID_Mode  2241   "+jsonObject!!.getString("ID_Mode"))
+                        holder.edtBuyBackAmount.isEnabled = true
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+
+
+
+                      //  clickListener!!.onClick(position, "BuyBackAmountChanged","1")
+
+                    }
+                    else if(jsonObject!!.getString("ID_Mode").equals("3")){
+                        Log.e(TAG,"ID_Mode  2242   "+jsonObject!!.getString("ID_Mode"))
+                        holder.edtBuyBackAmount.isEnabled = false
+
+                        holder.edtproduct.isEnabled = false
+                        holder.edtReplaceQuantity.isEnabled = false
+                        holder.edtreplaceamount.isEnabled = false
+
+                        ItemsModel.Amount = "0"
+                        holder.edtBuyBackAmount.setText("0")
+                        holder.edtproduct.setText("")
+                        holder.edtReplaceQuantity.setText("0")
+                        holder.edtreplaceamount.setText("0")
+
+                        Log.e(TAG,"136   "+holder.edtBuyBackAmount.text)
+                        ItemsModel.ID_Product = "0"
+                        ItemsModel.Product =  ""
+                        ItemsModel.Replaced_Qty =  "0"
+                        ItemsModel.ReplaceAmount =  "0"
+                        ItemsModel.MRPs =  "0"
+                        ItemsModel.StockId =  "0"
+
+
+                    }
+
+                    else if (jsonObject!!.getString("ID_Mode").equals("4") || jsonObject!!.getString("ID_Mode").equals("5")){
+                        Log.e(TAG,"ID_Mode  2242   "+jsonObject!!.getString("ID_Mode"))
+                        holder.edtBuyBackAmount.isEnabled = false
+                        ItemsModel.Amount = "0"
+                        holder.edtBuyBackAmount.setText("0")
+
+                        holder.edtproduct.isEnabled = true
+                        holder.edtReplaceQuantity.isEnabled = true
+                        holder.edtreplaceamount.isEnabled = false
+
+                        ItemsModel.Amount = "0"
+                        holder.edtBuyBackAmount.setText("0")
+                        holder.edtproduct.setText("")
+                        holder.edtReplaceQuantity.setText("0")
+                        holder.edtreplaceamount.setText("0")
+
+                        Log.e(TAG,"136   "+holder.edtBuyBackAmount.text)
+                        ItemsModel.ID_Product = "0"
+                        ItemsModel.Product =  ""
+                        ItemsModel.Replaced_Qty =  "0"
+                        ItemsModel.ReplaceAmount =  "0"
+
+                        Log.e(TAG,"136   "+holder.edtBuyBackAmount.text)
+
+                        //clickListener!!.onClick(position, "BuyBackAmountChanged","1")
+                    }
+
+                  //  notifyItemChanged(position)
+
+
+                }
+
+
+
                 holder.edtproduct.setOnClickListener {
                     Log.e(TAG,"243")
                    // clickListener!!.onClick(position, "ReplaceProdClick","")
                   //  popUpProducts(context,position,modelReplacedProduct)
-                    clickListener!!.onClick(position, "popUpProducts","1")
+
+                    if (ItemsModel.ID_Mode.equals("3")){
+                        ItemsModel.ID_Product = "0"
+                        ItemsModel.ReplaceAmount = "0"
+                        ItemsModel.MRPs = "0"
+                        ItemsModel.StockId = "0"
+                    }else{
+                        clickListener!!.onClick(position, "popUpProducts","1")
+                    }
+
                 }
 
             }

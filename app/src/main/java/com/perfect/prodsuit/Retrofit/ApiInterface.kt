@@ -405,6 +405,15 @@ interface ApiInterface {
     @POST("ServiceFollowUp/MoreComponentDetails")
     fun getMoreComponentDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/FollowUpActionDetails")
+    fun getServiceFollowUpAction(@Body body: RequestBody): Call<String>
+
+    @POST("PickUpDelivery/BillTyep")
+    fun getServiceBillType(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/UpdateServiceFollowUp")
+    fun UpdateServiceFollowUp(@Body body: RequestBody): Call<String>
+
 
 
 

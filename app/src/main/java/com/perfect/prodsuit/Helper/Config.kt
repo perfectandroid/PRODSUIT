@@ -99,6 +99,8 @@ object Config {
     const val SHARED_PREF53 = "CustomerDueCount"
 
     const val SHARED_PREF54 = "ModuleList" // Rights
+    const val SHARED_PREF55 = "FK_Department"
+    const val SHARED_PREF56 = "Department"
 
     var width = 0
     var height = 0
