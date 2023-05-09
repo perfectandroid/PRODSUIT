@@ -88,7 +88,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'org.apache.commons:commons-lang3:3.4'
 
-
+//swipe_refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 
 }

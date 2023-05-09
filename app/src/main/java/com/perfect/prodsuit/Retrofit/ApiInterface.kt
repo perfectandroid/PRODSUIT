@@ -179,6 +179,9 @@ interface ApiInterface {
     @POST("UserValidations/LeadsDashBoardDetails")
     fun getLeadsDashBoardDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ServiceDashBoardDetails")
+    fun getServiceDashBoardDetails(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/DateWiseExpenseDetails")
     fun getExpense(@Body body: RequestBody): Call<String>
 
