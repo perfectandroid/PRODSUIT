@@ -263,6 +263,7 @@
                     android:layout_weight="1"
                     android:hint="StandBy Amount"
                     android:layout_marginLeft="5dp"
+                    android:visibility="gone"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     style="@style/Widget.App.TextInputLayout">

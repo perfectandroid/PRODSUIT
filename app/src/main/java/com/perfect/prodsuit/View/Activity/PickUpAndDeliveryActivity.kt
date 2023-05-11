@@ -202,32 +202,36 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
-                            progressDialog!!.dismiss()
 
-                            Log.e(TAG,"msg   0001122   "+strFromDate)
-                            Log.e(TAG,"msg   167   "+FK_Area)
-                            Log.e(TAG,"msg   5566248   "+strarea)
-                            Log.e(TAG,"msg   185467   "+strProduct)
+                            if (getCounts == 0) {
+                                getCounts++
+                                progressDialog!!.dismiss()
+
+                                Log.e(TAG, "msg   0001122   " + strFromDate)
+                                Log.e(TAG, "msg   167   " + FK_Area)
+                                Log.e(TAG, "msg   5566248   " + strarea)
+                                Log.e(TAG, "msg   185467   " + strProduct)
 
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   167   "+msg)
-                            if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("PickupandDeliveryCount")
-                                pick_up_count!!.setText(jobjt.getString("PickUp"))
-                                delivery_count!!.setText(jobjt.getString("Delivery"))
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   167   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("PickupandDeliveryCount")
+                                    pick_up_count!!.setText(jobjt.getString("PickUp"))
+                                    delivery_count!!.setText(jobjt.getString("Delivery"))
 
-                            } else {
-                                val builder = AlertDialog.Builder(
-                                    this@PickUpAndDeliveryActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@PickUpAndDeliveryActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
                             }
                         } else {
                             progressDialog!!.dismiss()
@@ -456,6 +460,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                     }
 
                     dialog1.dismiss()
+                    getCounts = 0
                     getCounts()
                 }
                 else{
@@ -1050,6 +1055,10 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 //        temp_DueDays = ""
 //    }
 
-
+    override fun onRestart() {
+        super.onRestart()
+        getCounts = 0
+        getCounts()
+    }
 
 }

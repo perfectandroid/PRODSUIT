@@ -48,7 +48,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 holder.tv_TicketNo.text            =  jsonObject!!.getString("ReferenceNo")
                 holder.tv_Customer.text            =  jsonObject!!.getString("CustomerName")
                 holder.tv_Mobile.text              =  "Mobile : "+jsonObject!!.getString("Mobile")
-                holder.tv_AssignedDate.text        =  "Assigned Date : "+jsonObject!!.getString("AssignedOn")
+                holder.tv_AssignedDate.text        =  "Assigned On : "+jsonObject!!.getString("AssignedOn")
                 holder.tv_Employee.text            =  "Employee : "+jsonObject!!.getString("EMPName")
 
                 if (SubMode.equals("1")){

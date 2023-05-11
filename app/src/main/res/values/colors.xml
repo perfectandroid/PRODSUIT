@@ -15,6 +15,7 @@
     <color name="greydarks">#8F8D8D</color>
     <color name="greydark">#676666</color>
     <color name="grey_dark">#A3A1A1</color>
+    <color name="colorPrimarylite">#566D70</color>
     <color name="colorPrimary">#2e666a</color>
     <color name="colorPrimaryDark">#1E4648</color>
     <color name="colorPrimaryExtraDark">#A8031D</color>
