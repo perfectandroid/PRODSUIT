@@ -182,6 +182,9 @@ interface ApiInterface {
     @POST("UserValidations/LeadsDashBoardDetails")
     fun getLeadsDashBoardDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ServiceDashBoardDetails")
+    fun getServiceDashBoardDetails(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/DateWiseExpenseDetails")
     fun getExpense(@Body body: RequestBody): Call<String>
 
@@ -408,6 +411,18 @@ interface ApiInterface {
 
     @POST("Service/CustomerDueDetils")
     fun getCustomerDueDetils(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/MoreComponentDetails")
+    fun getMoreComponentDetails(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/FollowUpActionDetails")
+    fun getServiceFollowUpAction(@Body body: RequestBody): Call<String>
+
+    @POST("PickUpDelivery/BillTyep")
+    fun getServiceBillType(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/UpdateServiceFollowUp")
+    fun UpdateServiceFollowUp(@Body body: RequestBody): Call<String>
 
 
 

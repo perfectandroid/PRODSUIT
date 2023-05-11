@@ -635,6 +635,16 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                     ModuleListEditer.putString("ModuleList", jobj.getString("ModuleList"))
                                     ModuleListEditer.commit()
 
+                                    val FK_DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF55, 0)
+                                    val FK_DepartmentEditer = FK_DepartmentSP.edit()
+                                    FK_DepartmentEditer.putString("FK_Department", jobj.getString("FK_Department"))
+                                    FK_DepartmentEditer.commit()
+
+                                    val DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF56, 0)
+                                    val DepartmentEditer = DepartmentSP.edit()
+                                    DepartmentEditer.putString("Department", jobj.getString("Department"))
+                                    DepartmentEditer.commit()
+
                                     val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                     startActivity(i)
                                     finish()

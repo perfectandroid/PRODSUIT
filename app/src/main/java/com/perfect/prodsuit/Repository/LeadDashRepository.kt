@@ -94,6 +94,8 @@ object LeadDashRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("response1122","url="+(BASE_URLSP.getString("BASE_URL", null)))
+            Log.i("response1122","body="+requestObject1.toString())
             Log.v("dsfsdd333","body "+requestObject1.toString())
             val call = apiService.getLeadsDashBoardDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {

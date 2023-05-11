@@ -201,6 +201,8 @@ class ServiceAttendedAdapter (internal var context: Context, internal var mList:
                             var serviceRemarks = holder.edtRemarks.text
                             ItemsModel.Remarks = serviceRemarks.toString()
 
+                            Log.e(TAG,"204  "+ItemsModel.Remarks+"   :  "+serviceRemarks)
+
                         }
                     })
 

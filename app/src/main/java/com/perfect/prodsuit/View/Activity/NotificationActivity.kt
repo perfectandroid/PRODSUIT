@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -43,6 +44,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var txtv_notfcount: TextView? = null
     private val updateWidgetHandler = Handler()
 
+    var swipe: SwipeRefreshLayout?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -52,6 +55,12 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         notificationDet = 0
         getNotificationList()
 
+        swipe?.setOnRefreshListener {
+            getNotificationList()
+            adapter?.notifyDataSetChanged()
+            swipe?.isRefreshing=false
+        }
+
     }
     companion object {
         var count= ""
@@ -59,6 +68,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
     }
     private fun setRegViews() {
+        swipe=findViewById(R.id.swipeRefreshLayout)
         rv_notificationlist = findViewById(R.id.rv_notificationlist)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
         val imback = findViewById<ImageView>(R.id.imback)

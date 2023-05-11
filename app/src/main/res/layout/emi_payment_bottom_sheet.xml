@@ -320,7 +320,7 @@
                                             android:textSize="13dp"
                                             android:textStyle="normal"
                                             android:fontFamily="@font/myfont"
-                                            android:text=""
+                                            android:text="0"
                                             android:textColor="@color/black"
                                             android:visibility="visible"/>
 

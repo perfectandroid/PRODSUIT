@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/top_rounded_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:background="@color/color_tab"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/img_close_details"
+                android:background="@color/color_tab"
+                android:scrollbars="horizontal"
+                app:tabGravity="center"
+                app:tabTextAppearance="@style/customfontstyle"
+                app:tabTextColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/img_close_details"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/svg_closedround_white"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_text"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_header"
+            android:layout_above="@+id/ll_apply"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+
+                <LinearLayout
+                    android:id="@+id/ll_pop1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_bottom_rounded1"
+                    android:layout_marginTop="15dp"
+                    android:padding="2dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Service Attended"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:padding="5dp"
+                        android:background="@color/grey1"/>
+
+
+                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                        android:id="@+id/recyc_pop1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:visibility="visible" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pop2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_bottom_rounded1"
+                    android:layout_marginTop="5dp"
+                    android:padding="2dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Replaced Products"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:padding="5dp"
+                        android:background="@color/grey1"/>
+
+
+                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                        android:id="@+id/recyc_pop2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:visibility="visible" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pop3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_bottom_rounded1"
+                    android:layout_marginTop="5dp"
+                    android:padding="2dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Attendance"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:padding="5dp"
+                        android:background="@color/grey1"/>
+
+
+                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                        android:id="@+id/recyc_pop3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:visibility="visible" />
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+
+            <!--                </ScrollView>-->
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_apply"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+            <Button
+                android:id="@+id/btnApply"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/btn_bgcolour"
+                android:fontFamily="@font/myfont"
+                android:padding="2dp"
+                android:text="apply"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

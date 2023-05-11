@@ -99,6 +99,41 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dashBoardEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="250dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight=".8"
+
+
+                    android:gravity="center"
+                    android:text="no data"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -110,6 +145,41 @@
                 android:layout_height="match_parent"
                 android:background="@color/greylight"
                 android:orientation="vertical">
+
+                <!--
+                <LinearLayout
+                    android:id="@+id/dashBoardEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="200dp"
+
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_weight=".8"
+
+
+                                android:gravity="center"
+                                android:text="no data"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"
+                                 />
+
+                        </LinearLayout>
+
+
+
+                </LinearLayout>
+                -->
 
                 <LinearLayout
                     android:id="@+id/ll_leads"
@@ -783,6 +853,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:orientation="vertical"
+
                     android:visibility="visible">
 
                     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -802,26 +873,50 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
 
-                            <TextView
+                            android:orientation="vertical">
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:layout_weight=".8"
                                 android:background="@color/p_green"
-                                android:fontFamily="@font/myfont"
-                                android:gravity="center"
-                                android:text="Services"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white"
-                                android:textSize="18dp"
-                                android:textStyle="bold" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight=".8"
+                                    android:background="@color/p_green"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:text="Services"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/service_count"
+                                    android:visibility="gone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:padding="5dp"
+
+
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="right"
+                                    android:text=""
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -1012,13 +1107,16 @@
                                 </LinearLayout>
 
                                 <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+
+
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:background="@color/grey" />
 
                                 <LinearLayout
+                                    android:visibility="visible"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -1038,7 +1136,7 @@
                                             android:layout_weight=".8"
                                             android:fontFamily="@font/myfont"
                                             android:gravity="center"
-                                            android:text="Projects"
+                                            android:text="Service Stages"
                                             android:textAllCaps="true"
                                             android:textColor="@color/black"
                                             android:textSize="18dp"
@@ -1210,6 +1308,7 @@
                             </LinearLayout>
 
                             <View
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginLeft="10dp"
@@ -1217,6 +1316,7 @@
                                 android:background="@color/grey" />
 
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
