@@ -343,6 +343,7 @@
     <color name="color_msg_tab">#54999E</color>
     <color name="color_bg_tab">#CEF4F4F4</color>
     <color name="color_tab">#9DB7B8</color>
+    <color name="color_tab1">#87A2A3</color>
     <color name="color_account">#45888A</color>
 
     <color name="colorService">#B2C0C2</color>
@@ -378,6 +379,7 @@
 <!--    <color name="color_pickup">#4D7878</color>-->
 <!--    <color name="color_delivery">#849675</color>-->
 
+
 <!--    <color name="color_pickup">#4D7878</color>-->
 <!--    <color name="color_delivery">#212443</color>-->
 
@@ -396,6 +398,33 @@
     <color name="collection_report">#3A523C</color>
     <color name="pickup_report">#836D43</color>
 
+<!--    EMI-->
 
+<!--    <color name="emi_todo_gardient1">#F4A741</color>-->
+<!--    <color name="emi_todo_gardient2">#F3C78E</color>-->
+<!--    <color name="emi_todo_gardient3">#A5793F</color>-->
+
+<!--    <color name="emi_overdue_gardient1">#6CA5A4</color>-->
+<!--    <color name="emi_overdue_gardient2">#62F8F6</color>-->
+<!--    <color name="emi_overdue_gardient3">#286363</color>-->
+
+<!--    <color name="emi_demand_gardient1">#4891FA</color>-->
+<!--    <color name="emi_demand_gardient2">#9BC4FF</color>-->
+<!--    <color name="emi_demand_gardient3">#395885</color>-->
+
+    <color name="emi_todo_gardient1">#667B7C</color>
+    <color name="emi_todo_gardient2">#92A9AA</color>
+    <color name="emi_todo_gardient3">#506465</color>
+
+    <color name="emi_overdue_gardient1">#7A727A</color>
+    <color name="emi_overdue_gardient2">#9A9A9A</color>
+    <color name="emi_overdue_gardient3">#514851</color>
+
+    <color name="emi_demand_gardient1">#44758C</color>
+    <color name="emi_demand_gardient2">#5F94AE</color>
+    <color name="emi_demand_gardient3">#284C5E</color>
+
+
+    5F94AE
 
 </resources>

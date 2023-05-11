@@ -414,6 +414,21 @@ interface ApiInterface {
     @POST("ServiceFollowUp/UpdateServiceFollowUp")
     fun UpdateServiceFollowUp(@Body body: RequestBody): Call<String>
 
+    @POST("EMICollection/EMICollectionReportCount")
+    fun getEMICollectionReportCount(@Body body: RequestBody): Call<String>
+
+    @POST("EMICollection/FinancePlanTypeDetails")
+    fun getFinancePlanTypeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("EMICollection/EMICollectionReport")
+    fun getEMICollectionList(@Body body: RequestBody): Call<String>
+
+    @POST("EMICollection/EMIAccountDetails")
+    fun getEMIAccountDetails(@Body body: RequestBody): Call<String>
+
+    @POST("EMICollection/UpdateEMICollection")
+    fun saveUpdateEMICollection(@Body body: RequestBody): Call<String>
+
 
 
 

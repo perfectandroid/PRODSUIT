@@ -171,7 +171,11 @@ object CustomerServiceRegisterRepository {
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart("0"))
                 }
-
+                /*  requestObject1.put("LocLatitude","11.2475779")
+                       requestObject1.put("LocLongitude","75.8342218")
+                       requestObject1.put("Address","HiLITE Business Park, 5th floor Hilite Business Park, Poovangal, Pantheeramkavu, Kerala 673014, India,Pantheeramkavu,Kerala,India,673014")
+                       requestObject1.put("LocationLandMark1","")
+                       requestObject1.put("LocationLandMark2","")*/
 
                 Log.e(TAG,"requestObject1   1601   "+requestObject1)
 

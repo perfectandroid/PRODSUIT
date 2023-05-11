@@ -165,10 +165,48 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/til_Address"
+                                android:id="@+id/til_Area"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Address"
+                                android:hint="Area"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/icon_svg_ticketno"
+                                app:startIconTint="@color/colorPrimaryDark"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:visibility="gone">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_Area"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
+                                    android:drawableLeft="@drawable/svg_report"
+                                    android:backgroundTint="@color/greydark"
+                                    android:textSize="14dp"
+                                    android:singleLine="true"
+                                    android:focusableInTouchMode="true"
+                                    android:editable="true"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="-10dp"
+                                    android:textStyle="normal"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_Due_Amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Due Amount"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
@@ -180,7 +218,7 @@
                                 style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/tie_Address"
+                                    android:id="@+id/tie_Due_Amount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
@@ -191,6 +229,7 @@
                                     android:backgroundTint="@color/greydark"
                                     android:textSize="14dp"
                                     android:singleLine="true"
+                                    android:inputType="numberDecimal"
                                     android:focusableInTouchMode="true"
                                     android:editable="true"
                                     android:drawableTint="@color/textColor"

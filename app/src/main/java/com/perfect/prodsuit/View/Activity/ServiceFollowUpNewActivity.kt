@@ -603,7 +603,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 hideShowViews()
                 if (jsonArrayChangeMode.length() == 0){
                     serviceFollowUpChangeMmode = 0
-                    loadChangeMode()
+                    loadChangeMode(0)
                 }
 
 
@@ -834,7 +834,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 hideShowViews()
                 if (jsonArrayChangeMode.length() == 0){
                     serviceFollowUpChangeMmode = 0
-                    loadChangeMode()
+                    loadChangeMode(0)
                 }
 
                 if (modelReplacedProduct.size == 0){
@@ -863,7 +863,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 if (ItemsModel.isChecked.equals("1")){
                     val jsonObject1 = JSONObject()
                     jsonObject1.put("ID_Employee",ItemsModel.ID_Employee)
-                    jsonObject1.put("EmployeeType",ItemsModel.EmployeeName)
+                    jsonObject1.put("EmployeeType",ItemsModel.ID_CSAEmployeeType)
                     saveAttendedEmployeeArray.put(jsonObject1)
                 }
             }
@@ -1091,7 +1091,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                     Log.e(TAG,"1027  ")
                     saveServiceFollowUpViewModel.saveServiceFollowUp(
                         this, customer_service_register,strCustomerNote!!,strEmployeeNote!!,strVisitedDate!!,strTotalAmount!!,
-                        strReplacementAmount!!,ID_Action!!,strFollowUpDate!!,ID_AssignedTo!!,ID_Billtype!!,
+                        strReplacementAmount!!,ID_Action!!,ID_LeadAction!!,strFollowUpDate!!,ID_AssignedTo!!,ID_Billtype!!,
                         saveServiceAttendedArray!!,saveReplacedeProductArray!!,saveAttendedEmployeeArray!!,savePaymentDetailArray!!)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
@@ -1788,14 +1788,14 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                                         }
                                         Log.e(TAG,"modelReplacedProduct   8371   "+ modelReplacedProduct.size)
                                         try {
-                                            if (modelReplacedProduct.size>0){
+                                          //  if (modelReplacedProduct.size>0){
                                                 val lLayout = GridLayoutManager(this@ServiceFollowUpNewActivity, 1)
                                                 recycleView_replaceproduct!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
                                                 adapterReplacedProduct = ReplacedProductAdapter(this@ServiceFollowUpNewActivity, modelReplacedProduct,jsonArrayChangeMode)
                                                 recycleView_replaceproduct!!.adapter = adapterReplacedProduct
                                                 adapterReplacedProduct!!.setClickListener(this@ServiceFollowUpNewActivity)
 
-                                            }
+                                           // }
 
                                         }
                                         catch (e : Exception){
@@ -1822,7 +1822,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun loadChangeMode() {
+    private fun loadChangeMode(mode : Int) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -1850,6 +1850,10 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                                             jObject.getJSONObject("ChangemodeDetails")
                                         jsonArrayChangeMode =
                                             jobjt.getJSONArray("ChangemodeDetailsList")
+                                    }
+
+                                    if (mode == 1){
+                                        adapterReplacedProduct!!.addChangeMode(jsonArrayChangeMode)
                                     }
                                 }
                             } else {
@@ -3637,6 +3641,18 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         }
 
+        if (data.equals("changeModeClick")) {
+            try {
+                Log.e(TAG,"changeModeClick")
+                serviceFollowUpChangeMmode = 0
+                loadChangeMode(1)
+
+            }catch (e:Exception){
+
+            }
+
+        }
+
 
     }
 
@@ -3752,6 +3768,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             Log.e(TAG,"Exception 196  "+e.toString())
         }
     }
+
+
 
 
 }

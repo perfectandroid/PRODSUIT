@@ -141,6 +141,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_attendedby.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_category.xml" value="0.2165" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_duedays.xml" value="0.21" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_mobile.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/laed_address.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/layers.xml" value="0.1695" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_area.xml" value="0.1695" />
@@ -198,8 +199,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_left_arrow.xml" value="0.218" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_oval_border.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_pending.xml" value="0.208" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle__bg.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle_border.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle_border_with_bg.xml" value="0.208" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rectangle_trans.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_rounded_corner_grey.xml" value="0.208" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_service_list.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_shadow.xml" value="0.157" />
@@ -328,9 +331,9 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_delivery_assign.xml" value="0.3140625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_document_list.xml" value="0.2203125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_documents.xml" value="0.30052083333333335" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.67" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_to_do_list.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_to_do_list.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_follow_up.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.8657407407407407" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.30615384615384617" />
@@ -374,7 +377,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_subinfo.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticket_report_detail.xml" value="0.30092592592592593" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.67" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_tracker.xml" value="0.21666666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2791666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_welcome.xml" value="0.22447916666666667" />
@@ -399,9 +402,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_department.xml" value="0.309375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_district_list.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_document_detail.xml" value="0.33" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_emi_list.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_emi_list.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_emi_type.xml" value="0.7798594847775175" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.2630208333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_finance_plan_type.xml" value="0.6943793911007026" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followupticket_report.xml" value="0.296875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.31354166666666666" />
@@ -506,6 +510,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/error_alert.xml" value="0.23697916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_manage.xml" value="0.5644028103044496" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_popup.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/finance_plan_type_popup.xml" value="0.18554938007695596" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/followup_action.xml" value="0.5644028103044496" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/followup_lead_action.xml" value="0.5644028103044496" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/lead_by_popup.xml" value="0.3302083333333333" />

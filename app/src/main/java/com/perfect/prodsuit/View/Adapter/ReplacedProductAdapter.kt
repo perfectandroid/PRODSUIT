@@ -268,6 +268,7 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                         holder.edtReplaceQuantity.isEnabled = true
                         holder.edtreplaceamount.isEnabled = false
                     }
+
                 }
                 else{
 //                    holder.edtChangeMode.setText(ItemsModel.ModeName)
@@ -306,6 +307,10 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
 
                 holder.edtChangeMode.setTag(position)
                 holder.edtChangeMode.setOnClickListener {
+                    Log.e(TAG,"searchType   65112   "+searchType)
+//                    if (jsonArrayChangeMode.length() == 0){
+//                        clickListener!!.onClick(position, "changeModeClick","1")
+//                    }
                     Log.e(TAG,"searchType   651   "+searchType)
                     val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
                     holder.edtChangeMode!!.setAdapter(adapter)
@@ -355,6 +360,7 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                         ItemsModel.StockId =  "0"
 
 
+
                     }
 
                     else if (jsonObject!!.getString("ID_Mode").equals("4") || jsonObject!!.getString("ID_Mode").equals("5")){
@@ -384,6 +390,7 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
                         //clickListener!!.onClick(position, "BuyBackAmountChanged","1")
                     }
 
+                    clickListener!!.onClick(position, "BuyBackAmountChanged","1")
                   //  notifyItemChanged(position)
 
 
@@ -497,6 +504,11 @@ class ReplacedProductAdapter(internal var context: Context, internal var modelRe
 
     fun setClickListener(itemClickListener: ItemClickListenerValue) {
         clickListener = itemClickListener
+    }
+
+    fun addChangeMode(jsonChangeMode: JSONArray) {
+
+        jsonArrayChangeMode  = jsonChangeMode
     }
 
 

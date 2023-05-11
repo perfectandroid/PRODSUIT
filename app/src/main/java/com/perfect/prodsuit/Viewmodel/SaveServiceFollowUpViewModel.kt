@@ -16,14 +16,14 @@ class SaveServiceFollowUpViewModel: ViewModel() {
     var saveServiceFollowUpLiveData: MutableLiveData<SaveServiceFollowUpModel>? = null
 
     fun saveServiceFollowUp(context: Context, customer_service_register : String, strCustomerNote : String, strEmployeeNote : String, strVisitedDate : String
-                            , strTotalAmount : String, strReplacementAmount : String, ID_Action : String, strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
+                            , strTotalAmount : String, strReplacementAmount : String, ID_Action : String,ID_LeadAction  : String,strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
                             saveServiceAttendedArray : JSONArray, saveReplacedeProductArray :JSONArray, saveAttendedEmployeeArray :JSONArray,
                             savePaymentDetailArray :JSONArray) : LiveData<SaveServiceFollowUpModel>? {
 
         Log.e("TAG","12522  ")
 
         saveServiceFollowUpLiveData = SaveServiceFollowUpRepository.getServicesApiCall(context,customer_service_register,strCustomerNote,strEmployeeNote,strVisitedDate,
-            strTotalAmount,strReplacementAmount,ID_Action,strFollowUpDate,ID_AssignedTo,ID_Billtype,saveServiceAttendedArray,saveReplacedeProductArray,
+            strTotalAmount,strReplacementAmount,ID_Action,ID_LeadAction,strFollowUpDate,ID_AssignedTo,ID_Billtype,saveServiceAttendedArray,saveReplacedeProductArray,
             saveAttendedEmployeeArray,savePaymentDetailArray)
         Log.e("TAG","125222  ")
         return saveServiceFollowUpLiveData

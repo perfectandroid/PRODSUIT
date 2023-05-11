@@ -28,17 +28,17 @@ object SaveServiceFollowUpRepository {
     val saveServiceFollowUpSetterGetter = MutableLiveData<SaveServiceFollowUpModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context, customer_service_register : String, strCustomerNote : String, strEmployeeNote : String, strVisitedDate : String
-                           , strTotalAmount : String, strReplacementAmount : String, ID_Action : String, strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
+                           , strTotalAmount : String, strReplacementAmount : String, ID_Action : String,ID_LeadAction  : String, strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
                            saveServiceAttendedArray : JSONArray, saveReplacedeProductArray : JSONArray, saveAttendedEmployeeArray : JSONArray,
                            savePaymentDetailArray : JSONArray): MutableLiveData<SaveServiceFollowUpModel> {
         saveServiceFollowUpData(context,customer_service_register,strCustomerNote,strEmployeeNote,strVisitedDate,
-            strTotalAmount,strReplacementAmount,ID_Action,strFollowUpDate,ID_AssignedTo,ID_Billtype,saveServiceAttendedArray,saveReplacedeProductArray,
+            strTotalAmount,strReplacementAmount,ID_Action,ID_LeadAction,strFollowUpDate,ID_AssignedTo,ID_Billtype,saveServiceAttendedArray,saveReplacedeProductArray,
             saveAttendedEmployeeArray,savePaymentDetailArray)
         return saveServiceFollowUpSetterGetter
     }
 
     private fun saveServiceFollowUpData(context: Context, customer_service_register : String, strCustomerNote : String, strEmployeeNote : String, strVisitedDate : String
-                                        , strTotalAmount : String, strReplacementAmount : String, ID_Action : String, strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
+                                        , strTotalAmount : String, strReplacementAmount : String, ID_Action : String,ID_LeadAction  : String, strFollowUpDate : String, ID_AssignedTo : String, ID_Billtype : String,
                                         saveServiceAttendedArray : JSONArray, saveReplacedeProductArray : JSONArray, saveAttendedEmployeeArray : JSONArray,
                                         savePaymentDetailArray : JSONArray) {
 
@@ -122,32 +122,40 @@ object SaveServiceFollowUpRepository {
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserNameSP.getString("UserCode", null)))
                 requestObject1.put("FK_NextAction", ProdsuitApplication.encryptStart(ID_Action))
-                requestObject1.put("FK_NextActionLead", ProdsuitApplication.encryptStart(strFollowUpDateNew))
+                requestObject1.put("FK_NextActionLead", ProdsuitApplication.encryptStart(ID_LeadAction))
+                requestObject1.put("NextActionDateLead", ProdsuitApplication.encryptStart(strFollowUpDateNew))
                 requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(ID_Billtype))
                 requestObject1.put("FK_EmployeeLead", ProdsuitApplication.encryptStart(ID_AssignedTo))
 
                 if (saveServiceAttendedArray.length() == 0){
-                    requestObject1.put("ServiceDetails",saveServiceAttendedArray)
-                }else{
                     requestObject1.put("ServiceDetails","")
+                }else{
+
+                    requestObject1.put("ServiceDetails",saveServiceAttendedArray)
                 }
 
                 if (saveReplacedeProductArray.length() == 0){
-                    requestObject1.put("PrdctDetails", saveReplacedeProductArray)
-                }else{
                     requestObject1.put("PrdctDetails", "")
+                }else{
+                    requestObject1.put("PrdctDetails", saveReplacedeProductArray)
                 }
 
                 if (saveAttendedEmployeeArray.length() == 0){
-                    requestObject1.put("AttendedEmployeeDetails",saveAttendedEmployeeArray)
-                }else{
                     requestObject1.put("AttendedEmployeeDetails","")
+                }else{
+                    requestObject1.put("AttendedEmployeeDetails",saveAttendedEmployeeArray)
                 }
                 if (savePaymentDetailArray.length() == 0){
-                    requestObject1.put("PaymentDetail",savePaymentDetailArray)
-                }else{
                     requestObject1.put("PaymentDetail","")
+                }else{
+                    requestObject1.put("PaymentDetail",savePaymentDetailArray)
                 }
+
+              /*  requestObject1.put("LocLatitude","11.2475779")
+                requestObject1.put("LocLongitude","75.8342218")
+                requestObject1.put("Address","HiLITE Business Park, 5th floor Hilite Business Park, Poovangal, Pantheeramkavu, Kerala 673014, India,Pantheeramkavu,Kerala,India,673014")
+                requestObject1.put("LocationLandMark1","")
+                requestObject1.put("LocationLandMark2","")*/
 
                 Log.e(TAG,"78  SAVE   "+requestObject1)
 

@@ -298,6 +298,19 @@ object Config {
 
     }
 
+    fun changeTwoDecimel(toString: String) : String {
+        var value = "0.00"
+        if (toString.equals("")){
+            value = "0.00"
+        }else{
+            var valu = toString.toFloat()
+            value = String.format("%.2f",valu)
+
+        }
+
+        return value
+    }
+
 
     fun logOut(context : Context) {
 
@@ -726,6 +739,7 @@ object Config {
         }
         return result
     }
+
 
 
 

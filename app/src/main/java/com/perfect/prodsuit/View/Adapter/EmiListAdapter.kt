@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class EmiListAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class EmiListAdapter (internal var context: Context, internal var jsonArray: JSONArray, internal var SubMode: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "EmiListAdapter"
@@ -35,64 +36,26 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
+                if (SubMode.equals("1")){
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_todo_gardient1));
+                }
+                if (SubMode.equals("2")){
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_overdue_gardient1));
+                }
+                if (SubMode.equals("3")){
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_demand_gardient1));
+                }
+
+                holder.tv_Customer.text        = jsonObject!!.getString("Customer")
+                holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
+                holder.tv_Product.text        = jsonObject!!.getString("Product")
+                holder.tv_Finance_Plan.text        = jsonObject!!.getString("FinancePlan")
+                holder.tv_Next_EMI.text        = jsonObject!!.getString("NextEMIDate")
+                holder.tv_Due_Date.text        = jsonObject!!.getString("DueDate")
+                holder.tv_DueAmount.text        = jsonObject!!.getString("DueAmount")
+                holder.tv_Balance.text        = jsonObject!!.getString("Balance")
 
 
-//                holder.tv_TicketNo.text        = jsonObject!!.getString("TicketNo")
-//                holder.tv_TicketDate.text        = jsonObject!!.getString("TicketDate")
-//                holder.tv_Branch.text        = jsonObject!!.getString("Branch")
-//                holder.tv_Customer.text        = jsonObject!!.getString("Customer")
-//                holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
-//                holder.tv_Area.text        = jsonObject!!.getString("Area")
-//                holder.tv_Employee.text        = jsonObject!!.getString("Employee")
-//                holder.tv_TimeDue.text        = jsonObject!!.getString("Due")
-//
-//                if (jsonObject!!.getString("Channel").equals("Portal")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_portal))
-//                }
-//                if (jsonObject!!.getString("Channel").equals("Direct")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_direct))
-//                }
-//                if (jsonObject!!.getString("Channel").equals("Call")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_call))
-//                }
-//                if (jsonObject!!.getString("Channel").equals("Email")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_email))
-//                }
-//                if (jsonObject!!.getString("Channel").equals("Employee")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_employee))
-//                }
-//                if (jsonObject!!.getString("Channel").equals("Media")){
-//                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_media))
-//                }
-//
-//                if (jsonObject!!.getString("PriorityCode").equals("1")){
-//                    holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
-//                }
-//                if (jsonObject!!.getString("PriorityCode").equals("2")){
-//                    holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
-//                }
-//                if (jsonObject!!.getString("PriorityCode").equals("3")){
-//                    holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
-//                }
-//
-//                if (SubMode.equals("3")){
-//                    holder.ll_status!!.visibility = View.VISIBLE
-//                    holder.ll_employee!!.visibility = View.VISIBLE
-//                    if (jsonObject!!.getString("Status").equals("On-Hold")){
-//                        holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_hold))
-//                    }
-//                    if (jsonObject!!.getString("Status").equals("Pending")){
-//                        holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_pending))
-//                    }
-//
-//                }
-//
-//                holder.im_edit!!.setTag(position)
-//                holder.im_edit!!.setOnClickListener(View.OnClickListener {
-//                    Config.disableClick(it)
-//                    clickListener!!.onClick(position, "ServiceEdit")
-//                })
-//
                 holder.llEmiList!!.setTag(position)
                 holder.llEmiList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "EmiList")
@@ -117,14 +80,15 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-//        internal var tv_TicketNo          : TextView
-//        internal var tv_TicketDate          : TextView
-//        internal var tv_Branch          : TextView
-//        internal var tv_Customer          : TextView
-//        internal var tv_Mobile          : TextView
-//        internal var tv_Area          : TextView
-//        internal var tv_Employee          : TextView
-//        internal var tv_TimeDue          : TextView
+        internal var tv_Customer          : TextView
+        internal var tv_Mobile          : TextView
+        internal var tv_Product          : TextView
+        internal var tv_Finance_Plan          : TextView
+        internal var tv_Next_EMI          : TextView
+        internal var tv_Due_Date          : TextView
+        internal var tv_DueAmount          : TextView
+        internal var tv_Balance          : TextView
+        internal var tv_Area          : TextView
 //        internal var im_Channel          : ImageView
 //        internal var im_Priority          : ImageView
 //        internal var im_Status          : ImageView
@@ -132,16 +96,18 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 //        //        internal var txtsino          : TextView
 //        internal var ll_employee    : LinearLayout
 //        internal var ll_status    : LinearLayout
+        internal var llEmiLeft    : LinearLayout
         internal var llEmiList    : LinearLayout
         init {
-//            tv_TicketNo        = v.findViewById<View>(R.id.tv_TicketNo) as TextView
-//            tv_TicketDate        = v.findViewById<View>(R.id.tv_TicketDate) as TextView
-//            tv_Branch        = v.findViewById<View>(R.id.tv_Branch) as TextView
-//            tv_Customer        = v.findViewById<View>(R.id.tv_Customer) as TextView
-//            tv_Mobile        = v.findViewById<View>(R.id.tv_Mobile) as TextView
-//            tv_Area        = v.findViewById<View>(R.id.tv_Area) as TextView
-//            tv_Employee        = v.findViewById<View>(R.id.tv_Employee) as TextView
-//            tv_TimeDue        = v.findViewById<View>(R.id.tv_TimeDue) as TextView
+            tv_Customer        = v.findViewById<View>(R.id.tv_Customer) as TextView
+            tv_Mobile        = v.findViewById<View>(R.id.tv_Mobile) as TextView
+            tv_Product        = v.findViewById<View>(R.id.tv_Product) as TextView
+            tv_Finance_Plan        = v.findViewById<View>(R.id.tv_Finance_Plan) as TextView
+            tv_Next_EMI        = v.findViewById<View>(R.id.tv_Next_EMI) as TextView
+            tv_Due_Date        = v.findViewById<View>(R.id.tv_Due_Date) as TextView
+            tv_DueAmount        = v.findViewById<View>(R.id.tv_DueAmount) as TextView
+            tv_Balance        = v.findViewById<View>(R.id.tv_Balance) as TextView
+            tv_Area        = v.findViewById<View>(R.id.tv_Area) as TextView
 //
 //            im_Channel        = v.findViewById<View>(R.id.im_Channel) as ImageView
 //            im_Priority        = v.findViewById<View>(R.id.im_Priority) as ImageView
@@ -150,6 +116,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 ////            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
 //            ll_employee       = v.findViewById<View>(R.id.ll_employee) as LinearLayout
 //            ll_status       = v.findViewById<View>(R.id.ll_status) as LinearLayout
+            llEmiLeft       = v.findViewById<View>(R.id.llEmiLeft) as LinearLayout
             llEmiList       = v.findViewById<View>(R.id.llEmiList) as LinearLayout
         }
     }
