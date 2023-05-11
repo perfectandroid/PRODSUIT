@@ -284,6 +284,7 @@
                                 android:paddingLeft="10dp"
                                 android:paddingTop="8dp"
                                 android:paddingBottom="8dp"
+                                android:inputType="phone"
                                 android:drawablePadding="5dp"
                                 android:drawableTint="@color/textColor"
                                 android:textSize="14dp"

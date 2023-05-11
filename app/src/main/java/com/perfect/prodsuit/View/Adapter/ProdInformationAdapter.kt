@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -49,30 +50,93 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
+
+                Log.e(TAG,"til_StandByAmount   "+jsonObject!!.getString("SubMode"))
+                if (jsonObject!!.getString("SubMode").equals("1")){
+
+                    Log.e(TAG,"til_StandByAmount   "+jsonObject!!.getString("SubMode"))
+                    holder.til_StandByAmount.visibility = View.VISIBLE
+
+                }else{
+                    Log.e(TAG,"til_StandByAmount else   "+jsonObject!!.getString("SubMode"))
+                    holder.til_StandByAmount.visibility = View.GONE
+                }
+
                 //checkbox
-//                if (jsonObject!!.getString("isSelected").equals("0")){
-//                    holder.checkbox.isChecked = false
-//                }else{
-//                    holder.checkbox.isChecked = true
-//                }
+                if (jsonObject!!.getString("isSelected").equals("0")){
+                    holder.checkbox.isChecked = false
+                }else{
+                    holder.checkbox.isChecked = true
+                }
+
+
+                Log.e(TAG,"isEnable   1051   "+jsonObject!!.getString("isEnable"))
+
+                if (jsonObject!!.getString("isEnable").equals("0")){
+                    holder.tie_StandByAmount.isEnabled = false
+                }else{
+                    holder.tie_StandByAmount.isEnabled = true
+                }
+
+                if (jsonObject!!.getString("isSelected").equals("1") && jsonObject!!.getString("ProvideStandBy").equals("1"))  {
+                    holder.tie_StandByAmount.isEnabled = true
+                }else{
+                    holder.tie_StandByAmount.isEnabled = false
+                }
+
+
+                Log.e(TAG,"isSelected  666111    "+jsonObject!!.getString("isSelected"))
+
+                holder.checkbox!!.setTag(position)
+                holder.checkbox!!.setOnClickListener(View.OnClickListener {
+                    if (holder.checkbox.isChecked){
+                        Log.e(TAG,"82 checkbox   on")
+                        holder.checkbox!!.isChecked = true
+//                        holder.tie_StandByAmount.isEnabled = false
+                        val jsonObject1 = jsonArray.getJSONObject(position)
+                        jsonObject1.put("isSelected","1")
+                        clickListener!!.onClick(position, "changeAmount")
+
+                    }else{
+                        Log.e(TAG,"82 checkbox   off")
+                        val jsonObject1 = jsonArray.getJSONObject(position)
+                        jsonObject1.put("isSelected","0")
+                        clickListener!!.onClick(position, "changeAmount")
+//                        holder.tie_StandByAmount.isEnabled = false
+                        holder.tie_Quantity.isEnabled = false
+                        holder.tie_StandByProduct.isEnabled = false
+                        holder.tie_StandByQuantity.isEnabled = false
+                        holder.tie_StandByAmount.setText("")
+                        holder.tie_StandByProduct.setText("")
+                        holder.tie_StandByQuantity.setText("")
+                    }
+                })
+
+
+
 
                 //  swOnOff
                 if (jsonObject!!.getString("ProvideStandBy").equals("0")){
                     Log.e(TAG,"standByAmount  68111    "+position)
                     holder.swOnOff.isChecked = false
-                    holder.tie_StandByAmount.isEnabled = false
-                    holder.tie_Quantity.isEnabled = false
+//                    holder.tie_StandByAmount.isEnabled = false
+//                    holder.tie_Quantity.isEnabled = false
                     holder.tie_StandByProduct.isEnabled = false
+                    holder.tie_StandByQuantity.isEnabled = false
                     holder.tie_StandByAmount.setText("")
                     holder.tie_StandByProduct.setText("")
                     holder.tie_StandByQuantity.setText("")
+                    Log.e(TAG,"standByAmount  6812    "+jsonObject!!.getString("ProvideStandBy"))
                 }else{
                     Log.e(TAG,"standByAmount  68112    "+position)
                     holder.swOnOff.isChecked = true
-                    holder.tie_StandByAmount.isEnabled = true
+                    holder.checkbox.isChecked = true
+//                    holder.tie_StandByAmount.isEnabled = true
                     holder.tie_Quantity.isEnabled = true
                     holder.tie_StandByProduct.isEnabled = true
+                    holder.tie_StandByQuantity.isEnabled = true
                     holder.tie_StandByAmount.setText("0.00")
+                    Log.e(TAG,"standByAmount  6812    "+jsonObject!!.getString("ProvideStandBy"))
                 }
 
 //                if (jsonObject!!.getString("Product").equals("")){
@@ -83,6 +147,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 //                }else{
 //                    holder.tie_StandByProduct.setOnClickListener(View.OnClickListener {
 //                }
+
 
                 Log.e(TAG,"standByAmount  6812    "+jsonObject!!.getString("SPAmount"))
 
@@ -95,12 +160,13 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 DecimelFormatters.setDecimelPlace(holder.tie_StandByAmount!!)
 
                 holder.tie_StandByProduct.setOnClickListener(View.OnClickListener {
-
                     clickListener!!.onClick(position, "ProductName")
 
 //                    Log.e(TAG,"standByAmount  ddddddd    "+jsonObject!!.getString("ProductName"))
                    // holder.tie_StandByProduct!!.setText(jsonObject!!.getString("Product"))
                 })
+
+
 
 //                var searchType = Array<String>(prodDetailsjsonArray.length()) { "" }
 //                for (i in 0 until prodDetailsjsonArray.length()) {
@@ -223,25 +289,25 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 })
 
 
-//                holder.checkbox!!.isChecked = true
-                holder.checkbox!!.setTag(position)
-                holder.checkbox!!.setOnClickListener(View.OnClickListener {
-                    if (holder.checkbox.isChecked){
-                        Log.e(TAG,"82 checkbox   on")
-                        val jsonObject1 = jsonArray.getJSONObject(position)
-                        jsonObject1.put("isSelected","1")
-                        clickListener!!.onClick(position, "changeAmount")
-
-                    }else{
-                        Log.e(TAG,"82 checkbox   off")
-                        val jsonObject1 = jsonArray.getJSONObject(position)
-                        jsonObject1.put("isSelected","0")
-                        clickListener!!.onClick(position, "changeAmount")
-                        holder.tie_StandByAmount.setText("")
-                        holder.tie_StandByProduct.setText("")
-                        holder.tie_StandByQuantity.setText("")
-                    }
-                })
+////                holder.checkbox!!.isChecked = true
+//                holder.checkbox!!.setTag(position)
+//                holder.checkbox!!.setOnClickListener(View.OnClickListener {
+//                    if (holder.checkbox.isChecked){
+//                        Log.e(TAG,"82 checkbox   on")
+//                        val jsonObject1 = jsonArray.getJSONObject(position)
+//                        jsonObject1.put("isSelected","1")
+//                        clickListener!!.onClick(position, "changeAmount")
+//
+//                    }else{
+//                        Log.e(TAG,"82 checkbox   off")
+//                        val jsonObject1 = jsonArray.getJSONObject(position)
+//                        jsonObject1.put("isSelected","0")
+//                        clickListener!!.onClick(position, "changeAmount")
+//                        holder.tie_StandByAmount.setText("")
+//                        holder.tie_StandByProduct.setText("")
+//                        holder.tie_StandByQuantity.setText("")
+//                    }
+//                })
 
 
                 holder.swOnOff!!.setTag(position)
@@ -253,15 +319,17 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                         holder.tie_StandByAmount.isEnabled = true
                         holder.tie_Quantity.isEnabled = true
                         holder.tie_StandByProduct.isEnabled = true
+                        holder.tie_StandByQuantity.isEnabled = true
                         holder.tie_StandByAmount.setText("0.00")
                         clickListener!!.onClick(position, "changeAmount")
                     }else{
                         Log.e(TAG,"82 swOnOff   off")
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("ProvideStandBy","0")
-                        holder.tie_StandByAmount.isEnabled = false
-                        holder.tie_Quantity.isEnabled = false
+//                        holder.tie_StandByAmount.isEnabled = false
+//                        holder.tie_Quantity.isEnabled = false
                         holder.tie_StandByProduct.isEnabled = false
+                        holder.tie_StandByQuantity.isEnabled = false
                         holder.tie_StandByAmount.setText("")
                         holder.tie_StandByProduct.setText("")
                         holder.tie_StandByQuantity.setText("")
@@ -293,6 +361,10 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_ProductName          : TextView
         internal var tie_Quantity            : TextInputEditText
+        internal lateinit var til_Quantity   : TextInputLayout
+        internal lateinit var til_StandByProduct    : TextInputLayout
+        internal lateinit var til_StandByQuantity   : TextInputLayout
+        internal lateinit var til_StandByAmount     : TextInputLayout
         internal var tie_StandByQuantity     : TextInputEditText
         internal var tie_StandByProduct      : TextInputEditText
         internal var tie_StandByAmount       : TextInputEditText
@@ -309,6 +381,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
             tie_StandByQuantity    = v.findViewById<View>(R.id.tie_StandByQuantity) as TextInputEditText
             tie_StandByProduct     = v.findViewById<View>(R.id.tie_StandByProduct) as TextInputEditText
             tie_StandByAmount      = v.findViewById<View>(R.id.tie_StandByAmount) as TextInputEditText
+            til_StandByAmount      = v.findViewById<View>(R.id.til_StandByAmount) as TextInputLayout
             tie_Remarks            = v.findViewById<View>(R.id.tie_Remarks) as TextInputEditText
             swOnOff                = v.findViewById<View>(R.id.swOnOff) as SwitchCompat
             checkbox                = v.findViewById<View>(R.id.checkbox) as CheckBox

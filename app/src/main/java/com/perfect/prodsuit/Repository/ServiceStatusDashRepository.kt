@@ -10,6 +10,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LeadStatusDashModel
+import com.perfect.prodsuit.Model.ServiceDashModel
 import com.perfect.prodsuit.Model.ServiceStatusDashModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -69,15 +70,25 @@ object ServiceStatusDashRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("38"))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("38"))
+//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+//                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+//                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+
+                //.....................
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("99"))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
 
                 Log.e(TAG,"requestObject1   71   "+requestObject1)
 
@@ -89,7 +100,9 @@ object ServiceStatusDashRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadsDashBoardDetails(body)
+            Log.i("response112211","body==="+requestObject1.toString())
+           // val call = apiService.getLeadsDashBoardDetails(body)
+            val call = apiService.getServiceDashBoardDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -100,8 +113,10 @@ object ServiceStatusDashRepository {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<LeadStatusDashModel>()
-                        leads.add(LeadStatusDashModel(response.body()))
-                        val msg = leads[0].message
+                        val service = ArrayList<ServiceStatusDashModel>()
+                        service.add(ServiceStatusDashModel(response.body()))
+                        val msg = service[0].message
+                        Log.i("response112211","msg==="+msg)
                         servicestatusdashSetterGetter.value = ServiceStatusDashModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()

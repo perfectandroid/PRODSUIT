@@ -55,6 +55,9 @@ interface ApiInterface {
     @POST("PickUpDelivery/PickUpDeliveryDetails")
     fun getPickupDeliveryListDetails(@Body body: RequestBody): Call<String>
 
+    @POST("PickUpDelivery/BillTyep")
+    fun getPickupDeliveryBillTyep(@Body body: RequestBody): Call<String>
+
     @POST("PickUpDelivery/PickUpDeliveryDetails")
     fun getDeliveryListDetails(@Body body: RequestBody): Call<String>
 
@@ -178,6 +181,9 @@ interface ApiInterface {
 
     @POST("UserValidations/LeadsDashBoardDetails")
     fun getLeadsDashBoardDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ServiceDashBoardDetails")
+    fun getServiceDashBoardDetails(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/DateWiseExpenseDetails")
     fun getExpense(@Body body: RequestBody): Call<String>
@@ -389,6 +395,10 @@ interface ApiInterface {
 
     @POST("PickUpDelivery/PickUPProductInformationDetails")
     fun getProductInformationDetails(@Body body: RequestBody): Call<String>
+
+    @POST("PickUpDelivery/UpdatePickUpAndDelivery")
+    fun getUpdatePickUpAndDelivery(@Body body: RequestBody): Call<String>
+
 
     @POST("ServiceFollowUp/FollowUpPaymentMethod")
     fun getFollowUpPaymentMethod(@Body body: RequestBody): Call<String>

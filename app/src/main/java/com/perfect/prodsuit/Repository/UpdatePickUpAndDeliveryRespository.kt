@@ -9,11 +9,11 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.FollowUpActionModel
-import com.perfect.prodsuit.Model.LeadDashModel
+import com.perfect.prodsuit.Model.UpdatePickUpAndDeliveryModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -21,20 +21,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadDashRepository {
+object UpdatePickUpAndDeliveryRespository {
 
     private var progressDialog: ProgressDialog? = null
-    val leaddashSetterGetter = MutableLiveData<LeadDashModel>()
-    val TAG: String = "LeadDashRepository"
+    val updatePickUpAndDeliverySetterGetter = MutableLiveData<UpdatePickUpAndDeliveryModel>()
+    val TAG: String = "UpdatePickUpAndDeliveryRespository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadDashModel> {
-        getLeadDashboard(context)
-        return leaddashSetterGetter
+    fun getServicesApiCall(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String, remark : String, FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount:String,Status: String): MutableLiveData<UpdatePickUpAndDeliveryModel> {
+        getViewDocument(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status)
+        return updatePickUpAndDeliverySetterGetter
     }
 
-    private fun getLeadDashboard(context: Context) {
+    private fun getViewDocument(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String,Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount: String,Status: String) {
+
         try {
-            leaddashSetterGetter.value = LeadDashModel("")
+            updatePickUpAndDeliverySetterGetter.value = UpdatePickUpAndDeliveryModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,32 +61,32 @@ object LeadDashRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                "ReqMode":"38",
-//                "SubMode":"1",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_Company = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val EntrBy     = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("38"))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_Company.getString("FK_Company", null)))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("StandByAmount", ProdsuitApplication.encryptStart(StandByAmount))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBy.getString("UserCode", null)))
+                requestObject1.put("FK_ProductDeliveryAssign", ProdsuitApplication.encryptStart(ID_ProductDelivery))
+                requestObject1.put("PdfDeliveryTime", ProdsuitApplication.encryptStart(PickDeliveryTime))
+                requestObject1.put("PdfDeliveryDate", ProdsuitApplication.encryptStart(PickDeliveryDate))
+                requestObject1.put("Remark", ProdsuitApplication.encryptStart(remark))
+                requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(FK_BillType))
+                requestObject1.put("Status", (Status))
+                requestObject1.put("Productdetails", (Productdetails))
+                requestObject1.put("PaymentDetail", (PaymentDetail))
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
+
+//                Log.e(TAG,"ID_LeadGenerate   84   "+ID_LeadGenerate+"  ::::  "+ID_LeadGenerateProduct+"  ::::  "+ID_LeadDocumentDetails)
+                Log.e(TAG,"requestObject1    4455   "+requestObject1)
+                // Log.e(TAG,"ID_LeadGenerateProduct   78   "+ID_LeadGenerateProduct)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -94,37 +95,36 @@ object LeadDashRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            Log.i("response1122","url="+(BASE_URLSP.getString("BASE_URL", null)))
-            Log.i("response1122","body="+requestObject1.toString())
-            Log.v("dsfsdd333","body "+requestObject1.toString())
-            val call = apiService.getLeadsDashBoardDetails(body)
+            val call = apiService.getUpdatePickUpAndDelivery(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  94   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadDashModel>()
-                        leads.add(LeadDashModel(response.body()))
+                        val leads = ArrayList<UpdatePickUpAndDeliveryModel>()
+                        leads.add(UpdatePickUpAndDeliveryModel(response.body()))
                         val msg = leads[0].message
-                        leaddashSetterGetter.value = LeadDashModel(msg)
+                        updatePickUpAndDeliverySetterGetter.value = UpdatePickUpAndDeliveryModel(msg)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
     }
+
 }
+

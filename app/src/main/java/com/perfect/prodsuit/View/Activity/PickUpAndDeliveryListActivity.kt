@@ -475,6 +475,12 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         }
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        pickDeliveryCount = 0
+        getPickUpDeliveryList()
+    }
 }
 
 

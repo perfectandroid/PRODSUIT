@@ -33,6 +33,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -100,15 +101,18 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
     private var scoreListPieProject = ArrayList<ScorePieProject>()
     lateinit var serviceStatusDashViewModel: ServiceStatusDashViewModel
     lateinit var serviceStatusDashArrayList: JSONArray
-
+    var service_count: TextView? = null
     var tv_leadTotal: TextView? = null
     var tv_leadStatusTotal: TextView? = null
     var tv_leadStageTotal: TextView? = null
 
     var tabLayout : TabLayout? = null
     var ll_leads: LinearLayout? = null
+    var lltab: LinearLayout? = null
     var ll_service: LinearLayout? = null
     var ll_collection: LinearLayout? = null
+
+    var dashBoardEmpty: LinearLayout? = null
 
     var recycLineChart: RecyclerView? = null
     var recycBarChart: RecyclerView? = null
@@ -157,9 +161,10 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
         tabLayout = findViewById<TabLayout>(R.id.tabLayout);
         ll_leads = findViewById<LinearLayout>(R.id.ll_leads);
+        lltab = findViewById<LinearLayout>(R.id.lltab);
         ll_service = findViewById<LinearLayout>(R.id.ll_service);
         ll_collection = findViewById<LinearLayout>(R.id.ll_collection);
-
+        dashBoardEmpty = findViewById<LinearLayout>(R.id.dashBoardEmpty);
 
         barChart = findViewById<BarChart>(R.id.barChart);
         pieChart = findViewById<PieChart>(R.id.pieChart);
@@ -179,11 +184,114 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         tv_leadStatusTotal = findViewById<TextView>(R.id.tv_leadStatusTotal)
         tv_leadStageTotal = findViewById<TextView>(R.id.tv_leadStageTotal)
 
+        service_count = findViewById<TextView>(R.id.service_count)
+
 
     }
 
     private fun addTabItem() {
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
+        //.........................314400
+        val DashBordMenu = context.getSharedPreferences(Config.SHARED_PREF54, 0)
+        val jsonObj = JSONObject(DashBordMenu.getString("ModuleList",""))
+        var iLead = jsonObj!!.getString("LEAD")
+        var iService = jsonObj!!.getString("SERVICE")
+
+
+        Log.i("response2211","check ====="+jsonObj.toString())
+        Log.i("response2211","check lead="+iLead)
+        Log.i("response2211","check Service="+iService)
+
+        if (iLead.equals("false") && iService.equals("false"))
+        {
+            dashBoardEmpty!!.visibility = View.VISIBLE
+
+//            Toast.makeText(applicationContext, "No Data..", Toast.LENGTH_LONG)
+//                .show()
+            ll_service!!.visibility = View.GONE
+            lltab!!.visibility=View.GONE
+        }
+
+        if (iLead.equals("true") && iService.equals("true"))
+        {
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
+
+           // tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
+
+            barChart!!.clear()
+            pieChart!!.clear()
+            pieChartLead!!.clear()
+
+            recycLineChart!!.adapter  =null
+            recycBarChart!!.adapter  =null
+            recycPieChart!!.adapter  =null
+
+            pieChartProject!!.clear()
+            recycPieChartProject!!.adapter  =null
+
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.GONE
+            ll_collection!!.visibility = View.GONE
+
+
+
+            getLeadsDashBoard()
+            getLeadStatusDashBoard()
+            getLeadStagesDashBoard()
+        }
+        else
+        {
+             if(iLead.equals("true")){
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
+
+            barChart!!.clear()
+            pieChart!!.clear()
+            pieChartLead!!.clear()
+
+            recycLineChart!!.adapter  =null
+            recycBarChart!!.adapter  =null
+            recycPieChart!!.adapter  =null
+
+            pieChartProject!!.clear()
+            recycPieChartProject!!.adapter  =null
+
+            ll_leads!!.visibility = View.VISIBLE
+            ll_service!!.visibility = View.GONE
+            ll_collection!!.visibility = View.GONE
+
+
+
+            getLeadsDashBoard()
+            getLeadStatusDashBoard()
+            getLeadStagesDashBoard()
+        }
+        else if(iService.equals("true"))
+        {
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
+
+            ll_leads!!.visibility = View.GONE
+            ll_service!!.visibility = View.VISIBLE
+            ll_collection!!.visibility = View.GONE
+//.............
+            barChart!!.clear()
+            // pieChart!!.clear()
+            // pieChartLead!!.clear()
+            pieChartServices.clear()
+            pieChartProject.clear()
+            recycLineChartServices!!.adapter =null
+            recycPieChartProject!!.adapter =null
+            //...............
+
+            getServiceDashBoard()
+            getServiceStatusDashBoard()
+        }
+        }
+
+
+
+        //................................
+
+//        tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
 //        tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
 //        tabLayout!!.addTab(tabLayout!!.newTab().setText("Collection"))
         tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
@@ -191,35 +299,45 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 //        tabLayout!!.getTabAt(0)?.orCreateBadge?.number = 5
 //        tabLayout!!.getTabAt(1)?.orCreateBadge?.number = 8
 //        tabLayout!!.getTabAt(2)?.orCreateBadge?.number = 10
+//..............
 
 
-
-        barChart!!.clear()
-        pieChart!!.clear()
-        pieChartLead!!.clear()
-
-        recycLineChart!!.adapter  =null
-        recycBarChart!!.adapter  =null
-        recycPieChart!!.adapter  =null
-
-        pieChartProject!!.clear()
-        recycPieChartProject!!.adapter  =null
-
-        ll_leads!!.visibility = View.VISIBLE
-        ll_service!!.visibility = View.GONE
-        ll_collection!!.visibility = View.GONE
-
-
-
-        getLeadsDashBoard()
-        getLeadStatusDashBoard()
-        getLeadStagesDashBoard()
+//        barChart!!.clear()
+//        pieChart!!.clear()
+//        pieChartLead!!.clear()
+//
+//        recycLineChart!!.adapter  =null
+//        recycBarChart!!.adapter  =null
+//        recycPieChart!!.adapter  =null
+//
+//        pieChartProject!!.clear()
+//        recycPieChartProject!!.adapter  =null
+//
+//        ll_leads!!.visibility = View.VISIBLE
+//        ll_service!!.visibility = View.GONE
+//        ll_collection!!.visibility = View.GONE
+//
+//
+//
+//        getLeadsDashBoard()
+//        getLeadStatusDashBoard()
+//        getLeadStagesDashBoard()
 
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabSelected  389  "+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  3891  "+tab.position)
+                    Log.i("response221122","tab pos="+tab.position)
+
+
+
+
+
+                    pieChartProject!!.clear()
+                    recycPieChartProject!!.adapter  =null
+
+
 
                     barChart!!.clear()
                     pieChart!!.clear()
@@ -239,10 +357,20 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 if (tab.position == 1){
                     Log.e(TAG,"onTabSelected  3892  "+tab.position)
+                    Log.i("response221122","tab pos="+tab.position)
 
                     ll_leads!!.visibility = View.GONE
                     ll_service!!.visibility = View.VISIBLE
                     ll_collection!!.visibility = View.GONE
+//.............
+                    barChart!!.clear()
+                   // pieChart!!.clear()
+                   // pieChartLead!!.clear()
+                    pieChartServices.clear()
+                    pieChartProject.clear()
+                    recycLineChartServices!!.adapter =null
+                    recycPieChartProject!!.adapter =null
+                    //...............
 
                     getServiceDashBoard()
                     getServiceStatusDashBoard()
@@ -250,6 +378,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 if (tab.position == 2){
                     Log.e(TAG,"onTabSelected  3893  "+tab.position)
+                    Log.i("response221122","tab pos="+tab.position)
                     ll_leads!!.visibility = View.GONE
                     ll_service!!.visibility = View.GONE
                     ll_collection!!.visibility = View.VISIBLE
@@ -524,12 +653,23 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   100   " + msg)
+                                Log.i("response1122","MSG==="+msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     Log.v("asdasdssss", "in")
-                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                    serviceDashArrayList = jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                    val jobjt = jObject.getJSONObject("ServiceDashBoardDetails")
+                                    val count=jobjt.getString("TotalCount")
+                                    Log.i("response112233","count==="+jobjt.getString("TotalCount"))
+
+                                  //  val df = DecimalFormat("#")
+                                   // println("Foobar: ${df.format(100.10)}")
+                                  //  service_count!!.setText(df.format(jobjt.getString("TotalCount").toInt()))
+
+                                    serviceDashArrayList = jobjt.getJSONArray("ServiceStages")
                                     Log.v("asdasdssss", "size  " + serviceDashArrayList.length())
                                     Log.e(TAG, "array  125   " + serviceDashArrayList)
+
+                                    Log.i("response1122","size==="+serviceDashArrayList.length())
+                                    Log.i("response1122","serviceArray==="+serviceDashArrayList)
 
 //                                    setPieChartLead()
                                     setPieChartService()
@@ -639,7 +779,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
         pieChartServices.data = pieData
         pieChartServices.setOnClickListener(View.OnClickListener {
-          //  ShowEnalargeGraph(pieEntries, 1)
+            ShowEnalargeGraph2(pieEntries, 1)
         })
 
         pieChartServices.invalidate()
@@ -652,6 +792,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             var jsonObject = serviceDashArrayList.getJSONObject(i)
             Log.v("asdasdssss", "size2  " + jsonObject.getString("Count"))
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
+            Log.i("response1122","count="+jsonObject.getString("Count"))
             scoreListPieServices.add(ScorePieSevice("", jsonObject.getString("Count").toFloat()))
         }
 
@@ -677,11 +818,12 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   503   " + msg)
+                                Log.i("response112211","MSG==="+msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
+                                    val jobjt = jObject.getJSONObject("ServiceDashBoardDetails")
                                     serviceStatusDashArrayList =
-                                        jobjt.getJSONArray("LeadsDashBoardDetailsList")
+                                        jobjt.getJSONArray("Services")
 //                                    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  5032   " + serviceStatusDashArrayList)
 //
@@ -1035,6 +1177,99 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         pieChart.invalidate()
     }
 
+    private fun ShowEnalargeGraph2(pieEntries: ArrayList<PieEntry>, graphType: Int) {
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.alert_pie_chart, null)
+        dialogBuilder.setView(dialogView)
+        var heading: TextView = dialogView.findViewById<TextView>(R.id.heading)
+        pieChart = dialogView.findViewById<PieChart>(R.id.pieChartLeads)
+        if (graphType == 1) {
+            heading.text = "SERVICE"
+            pieChart.setUsePercentValues(false)
+            pieChart.description.text = ""
+            pieChart.isDrawHoleEnabled = true
+            pieChart.isRotationEnabled=true
+            pieChart.setTouchEnabled(true)       //<-----------
+            pieChart.setDrawEntryLabels(false)
+            pieChart.setRotationAngle(0f)
+            pieChart.animateY(1400, Easing.EaseInOutQuad)
+            // enable rotation of the chart by touch
+            // enable rotation of the chart by touch
+            pieChart.setRotationEnabled(true)
+            pieChart.setHighlightPerTapEnabled(true)
+            pieChart.isRotationEnabled = true
+            pieChart.setDrawEntryLabels(false)
+            pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            pieChart.legend.isWordWrapEnabled = true
+            val colorsStage: ArrayList<Int> = ArrayList()
+            colorsStage.add(resources.getColor(R.color.line_color1))
+            colorsStage.add(resources.getColor(R.color.line_color2))
+            colorsStage.add(resources.getColor(R.color.line_color3))
+            val pieDataSet = PieDataSet(pieEntries, "")
+            pieDataSet.valueTextSize = 12f
+            pieDataSet.setValueFormatter(DecimalRemover())
+            pieDataSet.setColors(colorsStage)
+            val pieData = PieData(pieDataSet)
+            pieData.setDrawValues(true)
+            val l: Legend = pieChart.getLegend()
+            l.isEnabled = false
+            pieChart.data = pieData
+            pieChart.invalidate()
+            val recyceChart =
+                dialogView.findViewById(R.id.recycleView) as RecyclerView
+            val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+            recyceChart!!.layoutManager =
+                lLayout as RecyclerView.LayoutManager?
+            val adapter =
+                LineChartAdapter(this@DashBoardActivity, serviceDashArrayList)
+            recyceChart!!.adapter = adapter
+        }
+        else if (graphType == 2) {
+            heading.text = "SERVICE STAGES"
+            pieChart.setUsePercentValues(false)
+            pieChart.description.text = ""
+            pieChart.isDrawHoleEnabled = true
+            pieChart.setTouchEnabled(true)   //<-----------
+            pieChart.setDrawEntryLabels(false)
+            pieChart.isRotationEnabled = true
+            pieChart.setRotationAngle(0f)
+            pieChart.animateY(1400, Easing.EaseInOutQuad)
+            pieChart.setDrawEntryLabels(false)
+            pieChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+            pieChart.legend.isWordWrapEnabled = true
+            val colorsStage: ArrayList<Int> = ArrayList()
+            colorsStage.add(resources.getColor(R.color.leadstatus_color1))
+            colorsStage.add(resources.getColor(R.color.leadstatus_color2))
+            colorsStage.add(resources.getColor(R.color.leadstatus_color3))
+            colorsStage.add(resources.getColor(R.color.leadstatus_color4))
+            val pieDataSet = PieDataSet(pieEntries, "")
+            pieDataSet.valueTextSize = 12f
+            pieDataSet.setColors(colorsStage)
+            pieDataSet.setValueFormatter(DecimalRemover())
+            val pieData = PieData(pieDataSet)
+            pieData.setDrawValues(true)
+            val l: Legend = pieChart.getLegend()
+            l.isEnabled = false
+            pieChart.data = pieData
+            pieChart.invalidate()
+            val recyceChart =
+                dialogView.findViewById(R.id.recycleView) as RecyclerView
+            val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
+            recyceChart!!.layoutManager =
+                lLayout as RecyclerView.LayoutManager?
+            val adapter = BarChartAdapter(
+                this@DashBoardActivity,
+                serviceStatusDashArrayList
+            )
+            recyceChart!!.adapter = adapter
+        }
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog.show()
+    }
+
     private fun ShowEnalargeGraph(pieEntries: ArrayList<PieEntry>, graphType: Int) {
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
@@ -1048,7 +1283,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             pieChart.description.text = ""
             pieChart.isDrawHoleEnabled = true
             pieChart.isRotationEnabled=true
-            pieChart.setTouchEnabled(false)
+            pieChart.setTouchEnabled(true)
             pieChart.setDrawEntryLabels(false)
             pieChart.setRotationAngle(0f)
             pieChart.animateY(1400, Easing.EaseInOutQuad)
@@ -1087,7 +1322,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             pieChart.setUsePercentValues(false)
             pieChart.description.text = ""
             pieChart.isDrawHoleEnabled = true
-            pieChart.setTouchEnabled(false)
+            pieChart.setTouchEnabled(true)
             pieChart.setDrawEntryLabels(false)
             pieChart.isRotationEnabled = true
             pieChart.setRotationAngle(0f)
@@ -1330,6 +1565,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         colorsStage.add(resources.getColor(R.color.leadstatus_color1))
         colorsStage.add(resources.getColor(R.color.leadstatus_color2))
         colorsStage.add(resources.getColor(R.color.leadstatus_color3))
+        colorsStage.add(resources.getColor(R.color.leadstatus_color4))
 
         val pieDataSet = PieDataSet(pieEntries, label)
         pieDataSet.setValueFormatter(DecimalRemover())
@@ -1345,7 +1581,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 
         pieChartProject.data = pieData
         pieChartProject.setOnClickListener(View.OnClickListener {
-           // ShowEnalargeGraph(pieEntries, 2)
+            ShowEnalargeGraph2(pieEntries, 2)
         })
 
 

@@ -17,7 +17,7 @@ class BarChartServiceAdapter (internal var context: Context, internal var jsonAr
     internal val TAG : String = "BarChartServiceAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3)
+    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3, R.color.leadstatus_color4)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
