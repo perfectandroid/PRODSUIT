@@ -147,7 +147,7 @@
                                             android:paddingRight="10dp"
                                             android:paddingBottom="10dp"
                                             android:text="Ticket Information"
-                                            android:textAllCaps="true"
+                                            android:textAllCaps="false"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
@@ -618,7 +618,7 @@
                                             android:paddingRight="10dp"
                                             android:paddingBottom="10dp"
                                             android:text="Complaint Information"
-                                            android:textAllCaps="true"
+                                            android:textAllCaps="false"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
@@ -1021,7 +1021,7 @@
                                             android:paddingRight="10dp"
                                             android:paddingBottom="10dp"
                                             android:text="Product Details"
-                                            android:textAllCaps="true"
+                                            android:textAllCaps="false"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />
@@ -1400,7 +1400,7 @@
                                             android:paddingRight="10dp"
                                             android:paddingBottom="10dp"
                                             android:text="Assigned List"
-                                            android:textAllCaps="true"
+                                            android:textAllCaps="false"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/header_text"
                                             android:textStyle="bold" />

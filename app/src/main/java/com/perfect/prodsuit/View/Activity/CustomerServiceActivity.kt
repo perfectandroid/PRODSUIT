@@ -1,12 +1,20 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,6 +22,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +39,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +51,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var customerservicecountViewModel: CustomerservicecountViewModel
+    private var SELECT_LOCATION: Int? = 103
 
     private var tabLayout : TabLayout? = null
 //    var llMainDetail: LinearLayout? = null
@@ -86,12 +97,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tv_contactClick: TextView? = null
     private var tv_requestedClick: TextView? = null
     private var tv_attendedClick: TextView? = null
+    private var tv_locationClick: TextView? = null
 
     private var lnrHead_customer: LinearLayout? = null
     private var lnrHead_complaint: LinearLayout? = null
     private var lnrHead_contact: LinearLayout? = null
     private var lnrHead_requested: LinearLayout? = null
     private var lnrHead_attended: LinearLayout? = null
+    private var lnrHead_location: LinearLayout? = null
 
     // Customer Details
     private var tie_Date: TextInputEditText? = null
@@ -144,6 +157,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tie_ToDate: TextInputEditText? = null
     private var tie_FromTime: TextInputEditText? = null
     private var tie_ToTime: TextInputEditText? = null
+    private var tie_Location: TextInputEditText? = null
 
     // ATTENDED DETAILS
 
@@ -240,6 +254,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var contDetailMode: String? = "1"
     var requestedMode: String? = "1"
     var attDetailMode: String? = "1"
+    var locDetailMode: String? = "1"
 
     var warrantyMode: String? = "1"
     var prodHistMode: String? = "1"
@@ -431,6 +446,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var tv_sales_count : TextView? = null
     private var tv_customerdue_count : TextView? = null
 
+    var locAddress: String? = ""
+    var locCity: String? = ""
+    var locState: String? = ""
+    var locCountry: String? = ""
+    var locpostalCode: String? = ""
+    var locKnownName: String? = ""
+    var strLatitude: String? = ""
+    var strLongitue: String? = ""
+    var strLocationAddress: String? = ""
+
 
 
 
@@ -480,8 +505,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             Config.disableClick(it)
 
 
-            if (custNameMode == 0){
-                custNameMode = 1
+          //  if (custNameMode == 0){
+                custNameMode = 0
                 custDet = 0
                 ReqMode = "73"
                 SubModeSearch = "1"
@@ -490,29 +515,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     getCustomerSearch()
                 }else{
                     til_CustomerName!!.setError("Enter at least three characters to search")
-                    til_CustomerName!!.setErrorIconDrawable(null)
+                  //  til_CustomerName!!.setErrorIconDrawable(null)
                     custDetailMode = "0"
                     complaintMode  = "1"
                     contDetailMode = "1"
                     requestedMode  = "1"
                     attDetailMode  = "1"
+                    locDetailMode  = "1"
 
                     hideViews()
                 }
 
-            }else{
-                custNameMode = 0
-                til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.search_24))
-                tie_CustomerName!!.isEnabled = true
-                tie_MobileNo!!.isEnabled = true
-                tie_Address!!.isEnabled = true
-
-                ID_Customer = ""
-                Customer_Type = ""
-                tie_CustomerName!!.setText("")
-                tie_MobileNo!!.setText("")
-                tie_Address!!.setText("")
-            }
+//            }else{
+//                custNameMode = 0
+//                til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.search_24))
+//                tie_CustomerName!!.isEnabled = true
+//                tie_MobileNo!!.isEnabled = true
+//                tie_Address!!.isEnabled = true
+//
+//                ID_Customer = ""
+//                Customer_Type = ""
+//                tie_CustomerName!!.setText("")
+//                tie_MobileNo!!.setText("")
+//                tie_Address!!.setText("")
+//            }
         }
 
 
@@ -535,12 +561,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tv_contactClick = findViewById<TextView>(R.id.tv_contactClick)
         tv_requestedClick = findViewById<TextView>(R.id.tv_requestedClick)
         tv_attendedClick = findViewById<TextView>(R.id.tv_attendedClick)
+        tv_locationClick = findViewById<TextView>(R.id.tv_locationClick)
 
         lnrHead_customer = findViewById<LinearLayout>(R.id.lnrHead_customer)
         lnrHead_complaint = findViewById<LinearLayout>(R.id.lnrHead_complaint)
         lnrHead_contact = findViewById<LinearLayout>(R.id.lnrHead_contact)
         lnrHead_requested = findViewById<LinearLayout>(R.id.lnrHead_requested)
         lnrHead_attended = findViewById<LinearLayout>(R.id.lnrHead_attended)
+        lnrHead_location = findViewById<LinearLayout>(R.id.lnrHead_location)
 
         til_Address = findViewById<TextInputLayout>(R.id.til_Address)
         til_EmpOrMedia = findViewById<TextInputLayout>(R.id.til_EmpOrMedia)
@@ -556,6 +584,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tv_contactClick!!.setOnClickListener(this)
         tv_requestedClick!!.setOnClickListener(this)
         tv_attendedClick!!.setOnClickListener(this)
+        tv_locationClick!!.setOnClickListener(this)
 
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -628,11 +657,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_ToDate = findViewById<TextInputEditText>(R.id.tie_ToDate)
         tie_FromTime = findViewById<TextInputEditText>(R.id.tie_FromTime)
         tie_ToTime = findViewById<TextInputEditText>(R.id.tie_ToTime)
+        tie_Location = findViewById<TextInputEditText>(R.id.tie_ToTime)
 
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
         tie_FromTime!!.setOnClickListener(this)
         tie_ToTime!!.setOnClickListener(this)
+        tie_Location!!.setOnClickListener(this)
 
         // ATTENDED DETAILS
         tie_Status = findViewById<TextInputEditText>(R.id.tie_Status)
@@ -766,6 +797,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                  contDetailMode = "1"
                  requestedMode  = "1"
                  attDetailMode  = "1"
+                locDetailMode  = "1"
 
                 hideViews()
             }
@@ -776,6 +808,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 contDetailMode = "1"
                 requestedMode  = "1"
                 attDetailMode  = "1"
+                locDetailMode  = "1"
 
                 hideViews()
             }
@@ -786,6 +819,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 contDetailMode = "0"
                 requestedMode  = "1"
                 attDetailMode  = "1"
+                locDetailMode  = "1"
 
                 hideViews()
             }
@@ -796,6 +830,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 contDetailMode = "1"
                 requestedMode  = "0"
                 attDetailMode  = "1"
+                locDetailMode  = "1"
 
                 hideViews()
             }
@@ -805,6 +840,18 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 contDetailMode = "1"
                 requestedMode  = "1"
                 attDetailMode  = "0"
+                locDetailMode  = "0"
+
+                hideViews()
+            }
+
+            R.id.tv_locationClick->{
+                custDetailMode = "1"
+                complaintMode  = "1"
+                contDetailMode = "1"
+                requestedMode  = "1"
+                attDetailMode  = "1"
+                locDetailMode  = "0"
 
                 hideViews()
             }
@@ -976,6 +1023,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 Config.disableClick(v)
                 countryCount = 0
                 getCountry()
+
+            }
+
+            R.id.tie_Location->{
+                Config.disableClick(v)
+                val intent = Intent(this@CustomerServiceActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
 
             }
 
@@ -1506,17 +1560,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             hideViews()
         }
-        else if (strAddress.equals("")){
-            til_Address!!.setError("Enter House Name");
-            til_Address!!.setErrorIconDrawable(null)
-            custDetailMode = "0"
-            complaintMode  = "1"
-            contDetailMode = "1"
-            requestedMode  = "1"
-            attDetailMode  = "1"
-
-            hideViews()
-        }
+//        else if (strAddress.equals("")){
+//            til_Address!!.setError("Enter House Name");
+//            til_Address!!.setErrorIconDrawable(null)
+//            custDetailMode = "0"
+//            complaintMode  = "1"
+//            contDetailMode = "1"
+//            requestedMode  = "1"
+//            attDetailMode  = "1"
+//
+//            hideViews()
+//        }
         else if (ID_Priority.equals("")){
             til_Priority!!.setError("Select Priority");
             til_Priority!!.setErrorIconDrawable(null)
@@ -1944,7 +1998,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 customerServiceRegisterViewModel.getcusServRegister(this,strUserAction!!,Customer_Type!!,ID_Customer!!,ID_Channel!!,ID_Priority!!,ID_Category!!,
                     ID_Company!!,ID_ComplaintList!!,ID_Services!!,ID_EmpMedia!!,ID_Status!!,ID_AttendedBy!!,strCustomerName!!,strMobileNo!!,strAddress!!,strContactNo!!,
                     strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!,
-                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!)!!.observe(
+                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!,strLongitue!!,strLatitude!!,strLocationAddress!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -2030,6 +2084,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         lnrHead_contact!!.visibility = View.VISIBLE
         lnrHead_requested!!.visibility = View.VISIBLE
         lnrHead_attended!!.visibility = View.VISIBLE
+        lnrHead_location!!.visibility = View.VISIBLE
 
         if (custDetailMode.equals("1")) {
             lnrHead_customer!!.visibility = View.GONE
@@ -2049,6 +2104,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         if (attDetailMode.equals("1")) {
             lnrHead_attended!!.visibility = View.GONE
+        }
+
+        if (locDetailMode.equals("1")) {
+            lnrHead_location!!.visibility = View.GONE
         }
     }
 
@@ -2682,7 +2741,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+//             val adapter = EmployeeAdapter(this@CustomerServiceActivity, employeeArrayList)
             val adapter = EmployeeAdapter(this@CustomerServiceActivity, employeeSort)
             recyEmployee!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -2818,7 +2877,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recyServiceMedia!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, serviceMediaArrayList)
+//             val adapter = EmployeeAdapter(this@CustomerServiceActivity, serviceMediaArrayList)
             val adapter = ServiceMediaAdapter(this@CustomerServiceActivity, serviceMediaSort)
             recyServiceMedia!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -5109,12 +5168,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
             }
 
-            tie_CustomerName!!.isEnabled = false
+           // tie_CustomerName!!.isEnabled = false
             tie_MobileNo!!.isEnabled = false
             tie_Address!!.isEnabled = false
 
           //  til_CustomerName!!.setEndIconDrawable(com.google.android.material.R.drawable.abc_ic_clear_material)
-            til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
+       //     til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
             ID_CompCategory = ""
             ID_Category = ""
             ID_Company = ""
@@ -5761,7 +5820,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = CountryDetailAdapter(this@LeadGenerationActivity, countryArrayList)
+//            val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countryArrayList)
             val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
             recycCountry!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -5903,7 +5962,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateArrayList)
+//            val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateArrayList)
             val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
             recycState!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -6046,7 +6105,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtArrayList)
+//            val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtArrayList)
             val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
             recycDistrict!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -6186,7 +6245,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recycArea!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, areaArrayList)
+//            val adapter = PostDetailAdapter(this@CustomerServiceActivity, areaArrayList)
             val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
             recycArea!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -6327,7 +6386,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recycPost!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = PostDetailAdapter(this@LeadGenerationActivity, postArrayList)
+//            val adapter = PostDetailAdapter(this@CustomerServiceActivity, postArrayList)
             val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
             recycPost!!.adapter = adapter
             adapter.setClickListener(this@CustomerServiceActivity)
@@ -6435,15 +6494,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                 }
-                editable === tie_Address!!.editableText -> {
-                    Log.e(TAG,"283022    ")
-                    if (tie_Address!!.text.toString().equals("")){
-                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
-                    }else{
-                        til_Address!!.isErrorEnabled = false
-                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-                    }
-                }
+//                editable === tie_Address!!.editableText -> {
+//                    Log.e(TAG,"283022    ")
+//                    if (tie_Address!!.text.toString().equals("")){
+//                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+//                    }else{
+//                        til_Address!!.isErrorEnabled = false
+//                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+//                    }
+//                }
                 editable === tie_Priority!!.editableText -> {
                     Log.e(TAG,"283022    ")
                     if (tie_Priority!!.text.toString().equals("")){
@@ -6612,6 +6671,52 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     }
 
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("TAG", "onActivityResult  256   " + requestCode + "   " + resultCode + "  " + data)
+
+
+        if (requestCode == SELECT_LOCATION) {
+            if (data != null) {
+
+                try {
+                    locAddress = data.getStringExtra("address")
+                    locCity = data.getStringExtra("city")
+                    locState = data.getStringExtra("state")
+                    locCountry = data.getStringExtra("country")
+                    locpostalCode = data.getStringExtra("postalCode")
+                    locKnownName = data.getStringExtra("knownName")
+                    strLatitude = data.getStringExtra("strLatitude")
+                    strLongitue = data.getStringExtra("strLongitue")
+
+                    var strLocationAddress = ""
+                    if (!locAddress.equals("")) {
+                        strLocationAddress = locAddress!!
+                    }
+                    if (!locCity.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locCity!!
+                    }
+                    if (!locState.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locState!!
+                    }
+                    if (!locCountry.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locCountry!!
+                    }
+                    if (!locpostalCode.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locpostalCode!!
+                    }
+
+                    tie_Location!!.setText(strLocationAddress)
+                } catch (e: Exception) {
+
+                }
+
+            }
+
+        }
+
+    }
 
 
 
