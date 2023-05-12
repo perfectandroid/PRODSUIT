@@ -53,7 +53,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Customer service"
+                    android:text="Service Register"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
@@ -62,7 +62,7 @@
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:fontFamily="@font/myfont" />
 
                 <LinearLayout
@@ -185,8 +185,8 @@
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="customer details"
-                                    android:textAllCaps="true"
+                                    android:text="Customer Details"
+                                    android:textAllCaps="false"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
@@ -318,6 +318,7 @@
                                                     android:drawableLeft="@drawable/svg_report"
                                                     android:backgroundTint="@color/greydark"
                                                     android:textSize="14dp"
+                                                    android:singleLine="true"
                                                     android:editable="true"
                                                     android:focusableInTouchMode="true"
                                                     android:drawableTint="@color/textColor"
@@ -378,7 +379,7 @@
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
-                                                android:editable="true"
+                                                android:editable="false"
                                                 android:inputType="number"
                                                 android:maxLength="15"
                                                 android:focusableInTouchMode="true"
@@ -431,7 +432,7 @@
                                             android:id="@+id/til_Address"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:hint="House Name *"
+                                            android:hint="House Name"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginRight="15dp"
@@ -454,6 +455,7 @@
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:editable="true"
+                                                android:maxLines="3"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
@@ -625,8 +627,8 @@
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="complaint"
-                                    android:textAllCaps="true"
+                                    android:text="Complaint"
+                                    android:textAllCaps="false"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
@@ -637,7 +639,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -959,8 +961,8 @@
                                     android:paddingRight="10dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="CONTACT DETAILS"
-                                    android:textAllCaps="true"
+                                    android:text="Contact Details"
+                                    android:textAllCaps="false"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
@@ -1101,8 +1103,8 @@
                                     android:drawablePadding="5dp"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="Requested Visit Date and Time"
-                                    android:textAllCaps="true"
+                                    android:text="Requested Visit Date And Time"
+                                    android:textAllCaps="false"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/header_text"
                                     android:textStyle="bold" />
@@ -1286,6 +1288,101 @@
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cardElevation="0dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/shape_bottom_rounded1"
+                                android:padding="1dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_locationClick"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/myfont"
+                                    android:background="@color/service_head"
+                                    android:gravity="left"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="10dp"
+                                    android:drawableRight="@drawable/down_arrows"
+                                    android:drawableLeft="@drawable/location_color"
+                                    android:drawablePadding="5dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Location Details"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/header_text"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/lnrHead_location"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:visibility="gone">
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/til_Location"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Location"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginLeft="15dp"
+                                        android:layout_marginRight="15dp"
+                                        android:drawableTint="@color/textColor"
+                                        android:fontFamily="@font/myfont"
+                                        app:endIconMode="custom"
+                                        app:startIconDrawable="@drawable/lead_locations"
+                                        app:startIconTint="@color/colorPrimaryDark"
+                                        style="@style/Widget.App.TextInputLayout">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/tie_Location"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:paddingLeft="10dp"
+                                            android:paddingTop="1dp"
+                                            android:paddingBottom="1dp"
+                                            android:text=""
+                                            android:drawableLeft="@drawable/svg_report"
+                                            android:backgroundTint="@color/greydark"
+                                            android:textSize="14dp"
+                                            android:focusableInTouchMode="false"
+                                            android:editable="false"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            android:textColor="@color/greydarks"
+                                            android:drawablePadding="-10dp"
+                                            android:textStyle="normal"/>
+
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"

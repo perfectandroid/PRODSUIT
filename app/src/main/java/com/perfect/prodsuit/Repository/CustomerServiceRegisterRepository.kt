@@ -30,10 +30,12 @@ object CustomerServiceRegisterRepository {
                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,FK_Place : String,ID_CompCategory :String): MutableLiveData<CustomerServiceRegisterModel> {
+                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,
+                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String): MutableLiveData<CustomerServiceRegisterModel> {
         getCustomerServiceRegister(context,strUserAction,Customer_Type,ID_Customer,ID_Channel,ID_Priority,ID_Category,
             ID_Company,ID_ComplaintList,ID_Services,ID_EmpMedia,ID_Status,ID_AttendedBy,strCustomerName,strMobileNo,strAddress,strContactNo,
-            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime,FK_Country,FK_States,FK_District,FK_Area,FK_Post,FK_Place,ID_CompCategory)
+            strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime,FK_Country,FK_States,FK_District,FK_Area,FK_Post,FK_Place,ID_CompCategory,
+            strLongitue,strLatitude,strLocationAddress)
         return cusServRegisterSetterGetter
     }
 
@@ -41,7 +43,8 @@ object CustomerServiceRegisterRepository {
                                            ID_Category : String, ID_Company : String,ID_ComplaintList : String,ID_Services : String,ID_EmpMedia : String,ID_Status : String,
                                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
-                                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,FK_Place : String,ID_CompCategory :String) {
+                                           strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,
+                                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String) {
 
 //        Log.e(TAG,"Validation   93731"
 //                +"\n"+"Customer Type        :  "+Customer_Type
@@ -171,11 +174,11 @@ object CustomerServiceRegisterRepository {
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart("0"))
                 }
-                /*  requestObject1.put("LocLatitude","11.2475779")
-                       requestObject1.put("LocLongitude","75.8342218")
-                       requestObject1.put("Address","HiLITE Business Park, 5th floor Hilite Business Park, Poovangal, Pantheeramkavu, Kerala 673014, India,Pantheeramkavu,Kerala,India,673014")
-                       requestObject1.put("LocationLandMark1","")
-                       requestObject1.put("LocationLandMark2","")*/
+                  requestObject1.put("LocLatitude",strLatitude)
+                  requestObject1.put("LocLongitude",strLongitue)
+                  requestObject1.put("Address",strLocationAddress)
+                  requestObject1.put("LocationLandMark1","")
+                  requestObject1.put("LocationLandMark2","")
 
                 Log.e(TAG,"requestObject1   1601   "+requestObject1)
 
