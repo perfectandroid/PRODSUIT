@@ -161,6 +161,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var updatepickupanddeliveryCount  = 0
     var FK_EmployeeStock = ""
 
+    var tickrtmode: String? = "1"  // GONE
+    var customermode: String? = "1"  // GONE
+    var productdetailsmode: String? = "1" // GONE
+    var productinformationmode: String? = "1" // GONE
+    var productinformationmode1: String? = "1" // GONE
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -386,31 +392,37 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             }
 
             R.id.tv_TicketDetailsClick -> {
-                llTicketDetails!!.visibility = View.VISIBLE
-                TicketDetailsMode = "0"
-                CustomerDetailsMode = "1"
-                ProductDetailsMode = "1"
-                PickDeliveryInformationMode = "1"
-                ProductInformationMode = "1"
-                hideViews()
+                    llTicketDetails!!.visibility = View.VISIBLE
+                    TicketDetailsMode = "0"
+                    CustomerDetailsMode = "1"
+                    tickrtmode = "1"
+                    ProductDetailsMode = "1"
+                    PickDeliveryInformationMode = "1"
+                    ProductInformationMode = "1"
+                    hideViews()
+
             }
             R.id.tv_CustomerDetailsClick -> {
-                llCustomerDetails!!.visibility = View.VISIBLE
-                TicketDetailsMode = "1"
-                CustomerDetailsMode = "0"
-                ProductDetailsMode = "1"
-                PickDeliveryInformationMode = "1"
-                ProductInformationMode = "1"
-                hideViews()
+                    llCustomerDetails!!.visibility = View.VISIBLE
+                    TicketDetailsMode = "1"
+                    CustomerDetailsMode = "0"
+                    customermode = "1"
+                    ProductDetailsMode = "1"
+                    PickDeliveryInformationMode = "1"
+                    ProductInformationMode = "1"
+                    hideViews()
+
             }
             R.id.tv_ProductDetailsClick -> {
-                llProductDetails!!.visibility = View.VISIBLE
-                TicketDetailsMode = "1"
-                CustomerDetailsMode = "1"
-                ProductDetailsMode = "0"
-                PickDeliveryInformationMode = "1"
-                ProductInformationMode = "1"
-                hideViews()
+                    llProductDetails!!.visibility = View.VISIBLE
+                    TicketDetailsMode = "1"
+                    CustomerDetailsMode = "1"
+                    productdetailsmode = "1"
+                    ProductDetailsMode = "0"
+                    PickDeliveryInformationMode = "1"
+                    ProductInformationMode = "1"
+                    hideViews()
+
             }
             R.id.tv_PickDeliveryInformationClick -> {
                 llPickDeliveryInformation!!.visibility = View.VISIBLE
