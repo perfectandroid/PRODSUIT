@@ -61,6 +61,8 @@ import java.util.*
 
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     View.OnClickListener,OnMapReadyCallback {
+
+    var TAG = "ServiceFollowUpListActivity"
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
@@ -251,6 +253,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
+                            Log.i("response121212", "msg="+msg)
                             if (msg!!.length > 0) {
                                 Log.v("fsfsfds", "msg")
                                 if (serviceFollowUpDet == 0) {
@@ -293,7 +296,9 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                             } else {
                                 swipeRefreshLayout.isRefreshing = false
                             }
-                        } catch (e: Exception) {
+                        }
+                        catch (e: Exception)
+                        {
                             swipeRefreshLayout.visibility = View.GONE
                             swipeRefreshLayout.isRefreshing = false
                             tv_nodata.visibility = View.VISIBLE
@@ -330,7 +335,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         adapter.addItemClickListener(this)
     }
 
-    override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
+    override fun onClick(position: Int, data: String, jsonObject: JSONObject)
+    {
         if (data.equals("followUp")) {
 //            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
 //            val intent = Intent(this, ServiceFollowUpActivity::class.java)
@@ -414,7 +420,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                Log.v("fsfsfds", "msg")
+                                Log.e(TAG, "msg    "+msg)
                                 if (serviceFollowUpInfo == 0) {
                                     serviceFollowUpInfo++
                                     Log.v("fsfsfds", "det")

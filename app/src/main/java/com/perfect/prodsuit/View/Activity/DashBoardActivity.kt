@@ -326,9 +326,10 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.e(TAG,"onTabSelected  389  "+tab.position)
+                Log.i("response2211yy","tab pos="+tab.position)
                 if (tab.position == 0){
                     Log.e(TAG,"onTabSelected  3891  "+tab.position)
-                    Log.i("response221122","tab pos="+tab.position)
+                    Log.i("response2211yy","tab pos="+tab.position)
 
 
 

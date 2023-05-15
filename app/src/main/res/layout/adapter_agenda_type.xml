@@ -17,6 +17,7 @@
         android:layout_margin="0dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+
         android:orientation="vertical">
 
         <RelativeLayout

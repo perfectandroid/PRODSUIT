@@ -890,6 +890,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
             img_PayRefresh!!.setOnClickListener {
+                arrAddUpdate = "0"
                 edtPayMethod!!.setText("")
                 edtPayRefNo!!.setText("")
                 edtPayAmount!!.setText("")
