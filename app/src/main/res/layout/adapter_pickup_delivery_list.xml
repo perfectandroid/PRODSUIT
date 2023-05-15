@@ -63,6 +63,23 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tv_Priority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/svg_trans50"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
 
 
             </LinearLayout>
@@ -160,6 +177,12 @@
                     android:textColor="@color/black"/>
                 <!--                android:drawableLeft="@drawable/deadline"-->
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey_dark"
+                    android:visibility="visible"/>
                 <TextView
                     android:id="@+id/tv_Employee"
                     android:fontFamily="@font/myfont"

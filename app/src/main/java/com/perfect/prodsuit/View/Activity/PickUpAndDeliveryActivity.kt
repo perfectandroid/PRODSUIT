@@ -461,6 +461,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
                     dialog1.dismiss()
                     getCounts = 0
+                    Log.e(TAG,"111165555  ")
                     getCounts()
                 }
                 else{
@@ -473,6 +474,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
         else{
             dialog1.dismiss()
 //            serviceCount = 0
+            getCounts = 0
             getCounts()
         }
 
@@ -1054,11 +1056,5 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 //        temp_TicketNo = ""
 //        temp_DueDays = ""
 //    }
-
-    override fun onRestart() {
-        super.onRestart()
-        getCounts = 0
-        getCounts()
-    }
 
 }
