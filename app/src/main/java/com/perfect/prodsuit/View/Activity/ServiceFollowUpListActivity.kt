@@ -50,7 +50,6 @@ import com.perfect.prodsuit.Model.ServiceFollowUpListModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceFollowUpListAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceFollowUpListAdapter1
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceFollowUpListViewModel
