@@ -633,7 +633,7 @@
             </LinearLayout>
         </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.2"
@@ -643,12 +643,25 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyHomegrid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_above="@+id/img_techpartner"
             android:visibility="visible" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/img_techpartner"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dp"
+            android:background="@color/white"
+            android:src="@drawable/companylogo" />
+
+    </RelativeLayout>
     </LinearLayout>
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar

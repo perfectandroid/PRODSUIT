@@ -448,7 +448,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_cost_followup_third.xml" value="0.7868852459016393" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_follow_attendance.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_follow_up.xml" value="0.7892271662763466" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_list.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_list.xml" value="0.67" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_media.xml" value="0.31666666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_newlist_report.xml" value="0.7400468384074942" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_priority.xml" value="0.2296875" />
@@ -470,6 +470,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_bar_chart.xml" value="0.315625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_more_info.xml" value="0.7892271662763466" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_pie_chart.xml" value="0.18697916666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_service_followup_filter.xml" value="0.7892271662763466" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/area_list_popup.xml" value="0.2989583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bannerslides.xml" value="0.5199063231850117" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bill_types_popup.xml" value="0.5667447306791569" />
