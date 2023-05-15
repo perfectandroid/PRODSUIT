@@ -29,6 +29,7 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
         val v = LayoutInflater.from(parent.context).inflate(
             R.layout.adapter_agenda_type, parent, false
         )
+
         vh = MainViewHolder(v)
         return vh
     }
@@ -38,6 +39,11 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   3611   "+selectedPos)
+
+
+                Log.i("kkkkkkkkkk","selectedPos="+selectedPos)
+                Log.i("kkkkkkkkkk","position="+position)
+                Log.i("kkkkkkkkkk","jsonObject=="+jsonObject)
                 val pos = position+1
 
 
@@ -50,11 +56,11 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                   //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
                     holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
                 }
-                if (position == 1){
-                    //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
-                    holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
-                    holder.ll_type!!.visibility = View.GONE
-                }
+//                if (position == 1){
+//                    //  holder.ll_type!!.setBackgroundColor(Color.parseColor("#567845"))
+//                    holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
+//                   // holder.ll_type!!.visibility = View.GONE
+//                }
 
 
 
@@ -66,7 +72,11 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                 PicassoTrustAll.getInstance(context)!!.load(imgPath).into(holder.img_Type)
                 holder.ll_type.setTag(position)
                 holder.ll_type.setOnClickListener(View.OnClickListener {
+                    Log.i("kkkkkkkkkk","position_click="+position)
+                    Log.i("kkkkkkkkkk","position_click_selected_pos="+selectedPos)
+               //     holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
                     clickListener!!.onClick(position, "agendaType")
+
                 })
 
 

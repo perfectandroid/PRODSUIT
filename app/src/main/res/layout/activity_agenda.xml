@@ -88,6 +88,19 @@
                             android:layout_height="60dp"
                             android:visibility="visible"
                             tools:ignore="UseAppTint" />
+                        <ImageView
+                            android:id="@+id/imgv_filter1"
+                            android:src="@drawable/filter1"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_alignParentLeft="true"
+                            android:layout_width="60dp"
+                            android:layout_weight="3"
+                            android:layout_height="60dp"
+                            android:visibility="gone"
+                            tools:ignore="UseAppTint" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,6 +122,32 @@
                             android:visibility="visible"/>
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lltab"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimary">
+
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLay"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/transparent"
+                        android:scrollbars="horizontal"
+                        app:tabBackground="@drawable/tab_selector_dash"
+                        app:tabGravity="center"
+                        app:tabIndicator="@android:color/transparent"
+                        app:tabIndicatorColor="@android:color/transparent"
+                        app:tabPaddingEnd="15dp"
+                        app:tabPaddingStart="15dp"
+                        app:tabTextAppearance="@style/customfontstyle2"
+                        app:tabTextColor="@color/white" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,6 +160,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -167,6 +207,7 @@
                                 app:cardElevation="5dp">
 
                                 <LinearLayout
+
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="10dp"
@@ -360,14 +401,23 @@
 <!--                            app:cardUseCompatPadding="true"-->
 
                         </androidx.cardview.widget.CardView>
-
+                        <TextView
+                            android:id="@+id/tv_nodata1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColor"
+                            android:layout_marginTop="70dp"
+                            android:textAlignment="center"
+                            android:visibility="gone"
+                            android:fontFamily="@font/myfont"
+                            android:text="No data to show"/>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:backgroundTint="@color/white"
                             app:cardCornerRadius="3dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
                             app:cardElevation="0dp">
                             <!--                        app:cardElevation="5dp"-->
                             <!--                        app:cardUseCompatPadding="true"-->
@@ -390,6 +440,7 @@
                                     android:visibility="gone"/>
                                 <LinearLayout
                                     android:id="@+id/llMainDetail"
+
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
@@ -451,8 +502,44 @@
 
 
                                     </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/agendaEmpty"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="0dp"
+                                        android:orientation="vertical"
+                                        android:visibility="gone">
+
+                                        <LinearLayout
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="center"
+                                                android:layout_weight=".8"
+
+
+                                                android:gravity="center"
+                                                android:text="no data"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="18dp"
+                                                />
+
+                                        </LinearLayout>
+
+
+
+                                    </LinearLayout>
 
                                     <LinearLayout
+
                                         android:id="@+id/llMainLeads"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -495,11 +582,43 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:visibility="gone" />
+                                        <LinearLayout
+                                            android:id="@+id/checkId"
+                                            android:layout_marginTop="100dp"
+                                            android:gravity="center"
+                                            android:layout_gravity="center"
+
+                                            android:visibility="gone"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="vertical">
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="50dp"
+                                                android:layout_gravity="center"
+                                                android:layout_weight=".8"
+
+
+                                                android:gravity="center"
+                                                android:text="no data"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/black"
+                                                android:textSize="18dp"
+                                                />
+
+                                        </LinearLayout>
 
                                         <androidx.recyclerview.widget.RecyclerView
                                             android:id="@+id/rv_todolist"
                                             android:layout_below="@+id/layoutTop"
                                             android:layout_margin="2dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content" />
+                                        <androidx.recyclerview.widget.RecyclerView
+                                            android:id="@+id/rv_todolist1"
+                                            android:layout_below="@+id/layoutTop"
+                                            android:layout_margin="2dp"
+                                            android:visibility="gone"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content" />
 
@@ -597,6 +716,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_Reminder"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

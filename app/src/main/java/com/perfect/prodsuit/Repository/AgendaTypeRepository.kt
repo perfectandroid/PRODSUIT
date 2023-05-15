@@ -83,6 +83,7 @@ object AgendaTypeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("rrrr","body agenda=="+requestObject1)
             val call = apiService.getAgendaType(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

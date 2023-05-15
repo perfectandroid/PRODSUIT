@@ -229,12 +229,12 @@
 
                 <ImageView
                     android:id="@+id/imcall"
-                    android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginBottom="15dp"
-                    android:src="@drawable/phonecallicon"
-                    android:gravity="center"/>
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:src="@drawable/phonecallicon" />
 
                 <ImageView
                     android:id="@+id/immessage"
