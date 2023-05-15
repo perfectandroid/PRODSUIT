@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight=".75"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@color/color_pickup"
                     android:gravity="center"
                     android:orientation="vertical">
 

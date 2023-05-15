@@ -657,7 +657,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_ToDate = findViewById<TextInputEditText>(R.id.tie_ToDate)
         tie_FromTime = findViewById<TextInputEditText>(R.id.tie_FromTime)
         tie_ToTime = findViewById<TextInputEditText>(R.id.tie_ToTime)
-        tie_Location = findViewById<TextInputEditText>(R.id.tie_ToTime)
+        tie_Location = findViewById<TextInputEditText>(R.id.tie_Location)
 
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
@@ -680,7 +680,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         til_Time!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_MobileNo!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
-        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+    //    til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Priority!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_CompCategory!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Category!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -1027,6 +1027,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             }
 
             R.id.tie_Location->{
+
+                Log.e(TAG,"1031  tie_Location ")
                 Config.disableClick(v)
                 val intent = Intent(this@CustomerServiceActivity, LocationPickerActivity::class.java)
                 startActivityForResult(intent, SELECT_LOCATION!!);
@@ -1454,7 +1456,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_EmpOrMedia!!.setText("")
 
         tie_CustomerName!!.isEnabled = true
-        tie_MobileNo!!.isEnabled = true
+      //  tie_MobileNo!!.isEnabled = true
         tie_Address!!.isEnabled = true
 
         til_EmpOrMedia!!.visibility = View.GONE
@@ -3933,7 +3935,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             til_CN_Name!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
             til_CN_Mobile!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
-            til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        //    til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
             til_CN_Country!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
             til_CN_State!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
             til_CN_District!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -4184,10 +4186,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             til_CN_Mobile!!.setError("Enter Mobile");
             til_CN_Mobile!!.setErrorIconDrawable(null)
         }
-        else if(strCnHouseName.equals("")){
-            til_CN_HouseName!!.setError("Enter House Name");
-            til_CN_HouseName!!.setErrorIconDrawable(null)
-        }
+//        else if(strCnHouseName.equals("")){
+//            til_CN_HouseName!!.setError("Enter House Name");
+//            til_CN_HouseName!!.setErrorIconDrawable(null)
+//        }
         else if(FK_Country.equals("")){
             til_CN_Country!!.setError("Select Country");
             til_CN_Country!!.setErrorIconDrawable(null)
@@ -5153,7 +5155,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         if (data.equals("customerList")) {
             dialogCustSearch!!.dismiss()
+        //    {"ServiceCustomerDetails":{"ServiceCustomerList":[{"Customer_ID":"5","Name":"Youshaf A","Mobile":"04902318508","Address":"Thaif Mahal","CusMode":"0"}
             val jsonObject = customerSort.getJSONObject(position)
+
+            Log.e(TAG,"jsonObject  5161   "+jsonObject)
+
             tie_CustomerName!!.setText(jsonObject!!.getString("Name"))
             ID_Customer = jsonObject.getString("Customer_ID")
             Customer_Type = jsonObject.getString("CusMode")
@@ -5161,37 +5167,37 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tie_MobileNo!!.setText(jsonObject!!.getString("Mobile"))
             tie_Address!!.setText(jsonObject!!.getString("Address"))
 
-            if (ID_Customer.equals("")){
-                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
-            }else{
-                til_CustomerName!!.isErrorEnabled = false
-                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-            }
-
-           // tie_CustomerName!!.isEnabled = false
-            tie_MobileNo!!.isEnabled = false
-            tie_Address!!.isEnabled = false
-
-          //  til_CustomerName!!.setEndIconDrawable(com.google.android.material.R.drawable.abc_ic_clear_material)
-       //     til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
-            ID_CompCategory = ""
-            ID_Category = ""
-            ID_Company = ""
-            ID_Product = ""
-            ID_Services = ""
-            ID_ComplaintList = ""
-
-            tie_CompCategory!!.setText("")
-            tie_Category!!.setText("")
-            tie_Company!!.setText("")
-            tie_Product!!.setText("")
-            tie_Service!!.setText("")
-            tie_Complaint!!.setText("")
-            tie_Description!!.setText("")
-
-            til_Company!!.visibility = View.GONE
-            til_Service!!.visibility = View.GONE
-            til_Complaint!!.visibility = View.GONE
+//            if (ID_Customer.equals("")){
+//                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+//            }else{
+//                til_CustomerName!!.isErrorEnabled = false
+//                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+//            }
+//
+//           // tie_CustomerName!!.isEnabled = false
+//            tie_MobileNo!!.isEnabled = false
+//            tie_Address!!.isEnabled = false
+//
+//          //  til_CustomerName!!.setEndIconDrawable(com.google.android.material.R.drawable.abc_ic_clear_material)
+//       //     til_CustomerName!!.setEndIconDrawable(context.resources.getDrawable(R.drawable.svg_clear))
+//            ID_CompCategory = ""
+//            ID_Category = ""
+//            ID_Company = ""
+//            ID_Product = ""
+//            ID_Services = ""
+//            ID_ComplaintList = ""
+//
+//            tie_CompCategory!!.setText("")
+//            tie_Category!!.setText("")
+//            tie_Company!!.setText("")
+//            tie_Product!!.setText("")
+//            tie_Service!!.setText("")
+//            tie_Complaint!!.setText("")
+//            tie_Description!!.setText("")
+//
+//            til_Company!!.visibility = View.GONE
+//            til_Service!!.visibility = View.GONE
+//            til_Complaint!!.visibility = View.GONE
 
         }
 
@@ -6494,15 +6500,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                 }
-//                editable === tie_Address!!.editableText -> {
-//                    Log.e(TAG,"283022    ")
-//                    if (tie_Address!!.text.toString().equals("")){
-//                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
-//                    }else{
-//                        til_Address!!.isErrorEnabled = false
-//                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-//                    }
-//                }
+                editable === tie_Address!!.editableText -> {
+                    Log.e(TAG,"283022    ")
+                    if (tie_Address!!.text.toString().equals("")){
+                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }else{
+                        til_Address!!.isErrorEnabled = false
+                        til_Address!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
                 editable === tie_Priority!!.editableText -> {
                     Log.e(TAG,"283022    ")
                     if (tie_Priority!!.text.toString().equals("")){
@@ -6600,7 +6606,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     Log.e(TAG,"283022    ")
                     // til_Description!!.isErrorEnabled = false
                     if (tie_CN_HouseName!!.text.toString().equals("")){
-                        til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                        til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }else{
                         til_CN_HouseName!!.isErrorEnabled = false
                         til_CN_HouseName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)

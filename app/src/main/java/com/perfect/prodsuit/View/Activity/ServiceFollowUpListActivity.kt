@@ -61,6 +61,8 @@ import java.util.*
 
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     View.OnClickListener,OnMapReadyCallback {
+
+    var TAG = "ServiceFollowUpListActivity"
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
@@ -414,7 +416,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                Log.v("fsfsfds", "msg")
+                                Log.e(TAG, "msg    "+msg)
                                 if (serviceFollowUpInfo == 0) {
                                     serviceFollowUpInfo++
                                     Log.v("fsfsfds", "det")
@@ -950,39 +952,56 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     }
 
     private fun openAlertDialogForMoreInfo(jobjt: JSONObject) {
-        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val inflater = this.layoutInflater
-        val dialogView: View = inflater.inflate(R.layout.alert_more_info, null)
-        dialogBuilder.setView(dialogView)
-        val alertDialog = dialogBuilder.create()
-        var tv_cancel: TextView = dialogView.findViewById<TextView>(R.id.tv_cancel)
-        var tv_ticket: TextView = dialogView.findViewById<TextView>(R.id.tv_ticket)
-        var tv_prod_regOn: TextView = dialogView.findViewById<TextView>(R.id.tv_prod_regOn)
-        var tv_visit_on: TextView = dialogView.findViewById<TextView>(R.id.tv_visit_on)
-        var tv_CustomerName: TextView = dialogView.findViewById<TextView>(R.id.tv_CustomerName)
-        var tv_phone: TextView = dialogView.findViewById<TextView>(R.id.tv_phone)
-        var tv_location: TextView = dialogView.findViewById<TextView>(R.id.tv_location)
-        var tv_address: TextView = dialogView.findViewById<TextView>(R.id.tv_address)
-        var tv_product_name: TextView = dialogView.findViewById<TextView>(R.id.tv_product_name)
-        var tv_category: TextView = dialogView.findViewById<TextView>(R.id.tv_category)
-        var tv_service: TextView = dialogView.findViewById<TextView>(R.id.tv_service)
-        var tv_description: TextView = dialogView.findViewById<TextView>(R.id.tv_description)
-        tv_description.setMovementMethod(ScrollingMovementMethod())
-        tv_cancel.setOnClickListener(View.OnClickListener {
-            alertDialog.dismiss()
-        })
-        tv_ticket.text=jobjt.getString("Ticket")
-        tv_prod_regOn.text=jobjt.getString("RegisterdOn")
-        tv_visit_on.text=jobjt.getString("VisitOn")
-        tv_CustomerName.text=jobjt.getString("CustomerName")
-        tv_phone.text=jobjt.getString("Mobile")
-        tv_address.text=jobjt.getString("Address1")+","+jobjt.getString("Address2")+","+jobjt.getString("Address3")
-        tv_product_name.text=jobjt.getString("ProductName")
-        tv_category.text=jobjt.getString("Category")
-        tv_service.text=jobjt.getString("Service")
-        tv_description.text=jobjt.getString("Description")
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        alertDialog.show()
+//        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+//        val inflater = this.layoutInflater
+//        val dialogView: View = inflater.inflate(R.layout.alert_more_info, null)
+//        dialogBuilder.setView(dialogView)
+//        val alertDialog = dialogBuilder.create()
+
+        var dialogView = Dialog(this)
+        dialogView!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogView!! .setContentView(R.layout.alert_more_info)
+        dialogView!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+        val window: Window? = dialogView!!.getWindow()
+        window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+//        var imAdpBack: ImageView = dialogView.findViewById<ImageView>(R.id.imAdpBack)
+//        var tv_cancel: TextView = dialogView.findViewById<TextView>(R.id.tv_cancel)
+//        var tv_ticket: TextView = dialogView.findViewById<TextView>(R.id.tv_ticket)
+//        var tv_prod_regOn: TextView = dialogView.findViewById<TextView>(R.id.tv_prod_regOn)
+//        var tv_visit_on: TextView = dialogView.findViewById<TextView>(R.id.tv_visit_on)
+//        var tv_CustomerName: TextView = dialogView.findViewById<TextView>(R.id.tv_CustomerName)
+//        var tv_phone: TextView = dialogView.findViewById<TextView>(R.id.tv_phone)
+//        var tv_location: TextView = dialogView.findViewById<TextView>(R.id.tv_location)
+//        var tv_address: TextView = dialogView.findViewById<TextView>(R.id.tv_address)
+//        var tv_product_name: TextView = dialogView.findViewById<TextView>(R.id.tv_product_name)
+//        var tv_category: TextView = dialogView.findViewById<TextView>(R.id.tv_category)
+//        var tv_service: TextView = dialogView.findViewById<TextView>(R.id.tv_service)
+//        var tv_description: TextView = dialogView.findViewById<TextView>(R.id.tv_description)
+//        tv_description.setMovementMethod(ScrollingMovementMethod())
+//        tv_cancel.setOnClickListener(View.OnClickListener {
+//            dialogView.dismiss()
+//        })
+//
+//        imAdpBack.setOnClickListener(View.OnClickListener {
+//            dialogView.dismiss()
+//        })
+//        tv_ticket.text=jobjt.getString("Ticket")
+//        tv_prod_regOn.text=jobjt.getString("RegisterdOn")
+//        tv_visit_on.text=jobjt.getString("VisitOn")
+//        tv_CustomerName.text=jobjt.getString("CustomerName")
+//        tv_phone.text=jobjt.getString("Mobile")
+//        tv_address.text=jobjt.getString("Address1")+","+jobjt.getString("Address2")+","+jobjt.getString("Address3")
+//        tv_product_name.text=jobjt.getString("ProductName")
+//        tv_category.text=jobjt.getString("Category")
+//        tv_service.text=jobjt.getString("Service")
+//        tv_description.text=jobjt.getString("Description")
+
+       // dialogView.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialogView.show()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

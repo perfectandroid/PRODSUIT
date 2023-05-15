@@ -568,7 +568,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="5dp"
-                                        android:drawableLeft="@drawable/product_color"
+                                        android:drawableLeft="@drawable/svg_action_taken"
                                         android:drawableRight="@drawable/down_arrows"
                                         android:drawablePadding="10dp"
                                         android:fontFamily="@font/myfont"
