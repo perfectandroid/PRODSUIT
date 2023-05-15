@@ -111,229 +111,569 @@
                             android:src="@drawable/pickanddelivery"/>
                     </LinearLayout>
 
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:orientation="vertical">-->
+
+
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="3.1"/>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/ll_pickup"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="2.6"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_marginLeft="25dp"-->
+<!--                            android:layout_marginRight="25dp"-->
+<!--                            android:background="@drawable/service_border"-->
+<!--                            android:padding="1dp"-->
+<!--                            android:orientation="horizontal">-->
+
+
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="2.8"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="@drawable/countmain_pickup"-->
+<!--                                android:orientation="vertical">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="50dp"-->
+<!--                                    android:layout_height="50dp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:background="@drawable/countsub_pickup">-->
+
+<!--                                    <TextView-->
+<!--                                        android:id="@+id/pick_up_count"-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:fontFamily="@font/myfont"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:text=""-->
+<!--                                        android:textAllCaps="true"-->
+<!--                                        android:textColor="@color/white"-->
+<!--                                        android:textSize="12dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:tint="@color/white" />-->
+
+<!--                                </LinearLayout>-->
+
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="3.6"-->
+<!--                                android:orientation="vertical">-->
+
+
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center_vertical"-->
+<!--                                android:background="@drawable/textmain_pickup"-->
+<!--                                android:orientation="horizontal">-->
+<!--                                <TextView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:text="Pick up"-->
+<!--                                    android:tint="@color/white"-->
+<!--                                    android:layout_marginLeft="25dp"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="18dp"-->
+<!--                                    android:paddingRight="0dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textAllCaps="true"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="30dp"-->
+<!--                                    android:layout_height="30dp"-->
+<!--                                    android:layout_marginRight="20dp"-->
+<!--                                    android:padding="0dp"-->
+<!--                                    android:scaleType="fitXY"-->
+<!--                                    android:src="@drawable/svg_pickup_truck"-->
+<!--                                    app:tint="@color/white" />-->
+
+<!--                            </LinearLayout>-->
+
+
+
+
+<!--                        </LinearLayout>-->
+
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="2.9"/>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/ll_delivery"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="2.6"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_marginLeft="25dp"-->
+<!--                            android:layout_marginRight="25dp"-->
+<!--                            android:background="@drawable/main_delivery"-->
+<!--                            android:padding="1dp"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="2.8"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="@drawable/countmain_delivery"-->
+<!--                                android:orientation="vertical">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="50dp"-->
+<!--                                    android:layout_height="50dp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:background="@drawable/countsub_pickup">-->
+
+<!--                                    <TextView-->
+<!--                                        android:id="@+id/delivery_count"-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_gravity="center"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:text=""-->
+<!--                                        android:tint="@color/white"-->
+<!--                                        android:textColor="@color/white"-->
+<!--                                        android:textSize="12dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:textAllCaps="true"-->
+<!--                                        android:fontFamily="@font/myfont" />-->
+
+<!--                                </LinearLayout>-->
+
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="3.6"-->
+<!--                                android:orientation="vertical">-->
+
+
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:background="@drawable/textmain_delivery"-->
+<!--                                android:gravity="center_vertical"-->
+<!--                                android:orientation="horizontal">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:text="Delivery"-->
+<!--                                    android:tint="@color/white"-->
+<!--                                    android:layout_marginLeft="25dp"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="18dp"-->
+<!--                                    android:paddingRight="0dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textAllCaps="true"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="30dp"-->
+<!--                                    android:layout_height="30dp"-->
+<!--                                    android:layout_marginRight="20dp"-->
+<!--                                    android:padding="0dp"-->
+<!--                                    android:scaleType="fitXY"-->
+<!--                                    android:src="@drawable/svg_delivery_bike"-->
+<!--                                    app:tint="@color/white" />-->
+
+
+<!--                            </LinearLayout>-->
+
+
+
+<!--                        </LinearLayout>-->
+
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="2.5"/>-->
+
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:id="@+id/card_new"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:backgroundTint="#D5C7AC"-->
+<!--                            app:cardCornerRadius="15dp"-->
+<!--                            app:cardElevation="5dp"-->
+<!--                            android:layout_marginTop="15dp"-->
+<!--                            android:layout_marginLeft="25dp"-->
+<!--                            android:layout_marginRight="25dp"-->
+<!--                            android:visibility="gone">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="80dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:padding="10dp"-->
+<!--                                android:background="@drawable/shadow_border"-->
+<!--                                android:orientation="horizontal">-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tv_newCount1"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="2"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:layout_marginBottom="5dp"-->
+<!--                                    android:text="0"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="20dp"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+<!--                                <View-->
+<!--                                    android:layout_width="2dp"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:layout_margin="5dp"-->
+<!--                                    android:background="@color/white"/>-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:layout_marginBottom="5dp"-->
+<!--                                    android:text="New"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="20dp"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+
+<!--                            </LinearLayout>-->
+
+
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:id="@+id/card_ongoing"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:backgroundTint="#ADCCB6"-->
+<!--                            app:cardCornerRadius="15dp"-->
+<!--                            app:cardElevation="5dp"-->
+<!--                            android:layout_marginTop="25dp"-->
+<!--                            android:layout_marginLeft="25dp"-->
+<!--                            android:layout_marginRight="25dp"-->
+<!--                            android:visibility="gone">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="80dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:padding="10dp"-->
+<!--                                android:background="@drawable/shadow_border"-->
+<!--                                android:orientation="horizontal">-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tv_OnGoingCount1"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="2"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:layout_marginBottom="5dp"-->
+<!--                                    android:text="0"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="20dp"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+<!--                                <View-->
+<!--                                    android:layout_width="2dp"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:layout_margin="5dp"-->
+<!--                                    android:background="@color/white"/>-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:layout_marginBottom="5dp"-->
+<!--                                    android:text="On Going"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="20dp"-->
+<!--                                    android:fontFamily="@font/myfont" />-->
+
+
+<!--                            </LinearLayout>-->
+
+
+<!--                        </androidx.cardview.widget.CardView>-->
+
+
+
+
+
+<!--                    </LinearLayout>-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-
-                        <View
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="3.1"/>
-
-                        <LinearLayout
-                            android:id="@+id/ll_pickup"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2.6"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginRight="25dp"
-                            android:background="@drawable/main_pickup"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
                             android:padding="1dp"
-                            android:orientation="horizontal">
-
-
+                            android:layout_marginTop="15dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp">
 
                             <LinearLayout
+                                android:id="@+id/ll_pickup"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2.8"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
                                 android:gravity="center"
-                                android:background="@drawable/countmain_pickup"
-                                android:orientation="vertical">
+                                android:padding="1dp"
+                                android:background="@drawable/service_border"
+                                android:orientation="horizontal">
 
                                 <LinearLayout
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:gravity="center"
-                                    android:background="@drawable/countsub_pickup">
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/svg_ser_arrrowcs"
+                                    android:orientation="vertical">
 
-                                    <TextView
-                                        android:id="@+id/pick_up_count"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/myfont"
+                                    <LinearLayout
+                                        android:layout_width="80dp"
+                                        android:layout_height="match_parent"
                                         android:gravity="center"
-                                        android:text=""
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                        android:textSize="12dp"
-                                        android:textStyle="bold"
-                                        android:tint="@color/white" />
+                                        android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:background="@drawable/background_shape"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:src="@drawable/svg_pickup_truck"
+                                            tools:ignore="UseAppTint" />
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
 
                                 </LinearLayout>
 
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="3.6"
-                                android:orientation="vertical">
-
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:background="@drawable/textmain_pickup"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="Pick up"
-                                    android:tint="@color/white"
-                                    android:layout_marginLeft="25dp"
-                                    android:textColor="@color/white"
-                                    android:textSize="18dp"
-                                    android:paddingRight="0dp"
-                                    android:textStyle="bold"
-                                    android:textAllCaps="true"
-                                    android:fontFamily="@font/myfont" />
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="0dp"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/svg_pickup_truck"
-                                    app:tint="@color/white" />
-
-                            </LinearLayout>
-
-
-
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2.9"/>
-
-                        <LinearLayout
-                            android:id="@+id/ll_delivery"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2.6"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginRight="25dp"
-                            android:background="@drawable/main_delivery"
-                            android:padding="1dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2.8"
-                                android:gravity="center"
-                                android:background="@drawable/countmain_delivery"
-                                android:orientation="vertical">
-
                                 <LinearLayout
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2"
                                     android:gravity="center"
-                                    android:background="@drawable/countsub_pickup">
+                                    android:orientation="horizontal">
 
                                     <TextView
-                                        android:id="@+id/delivery_count"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="20dp"
+                                        android:text="PICK UP"
                                         android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:text=""
-                                        android:tint="@color/white"
-                                        android:textColor="@color/white"
-                                        android:textSize="12dp"
                                         android:textStyle="bold"
-                                        android:textAllCaps="true"
+                                        android:textColor="@color/service_cs_main"
+                                        android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="3"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/pick_up_count"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:text=""
+                                            android:gravity="center"
+                                            android:background="@drawable/counts_color1"
+                                            android:textColor="@color/white"
+                                            android:textSize="20dp"
+                                            android:fontFamily="@font/myfont" />
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
 
 
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="3.6"
-                                android:orientation="vertical">
 
 
 
                             </LinearLayout>
 
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp">
+
+                            <!--                            android:backgroundTint="@color/service2"-->
+
                             <LinearLayout
+                                android:id="@+id/ll_delivery"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@drawable/textmain_delivery"
-                                android:gravity="center_vertical"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:padding="1dp"
+                                android:background="@drawable/service_border1"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="Delivery"
-                                    android:tint="@color/white"
-                                    android:layout_marginLeft="25dp"
-                                    android:textColor="@color/white"
-                                    android:textSize="18dp"
-                                    android:paddingRight="0dp"
-                                    android:textStyle="bold"
-                                    android:textAllCaps="true"
-                                    android:fontFamily="@font/myfont" />
+                                <LinearLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/svg_ser_arrrowsa"
+                                    android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginRight="20dp"
-                                    android:padding="0dp"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/svg_delivery_bike"
-                                    app:tint="@color/white" />
+                                    <LinearLayout
+                                        android:layout_width="80dp"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:background="@drawable/background_shape"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:src="@drawable/svg_delivery_bike"
+                                            tools:ignore="UseAppTint" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <!--                                    android:background="@drawable/svg_service_assign"-->
+
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:text="DELIVERY"
+                                        android:layout_weight="1"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/service_sa_main"
+                                        android:textSize="20dp"
+                                        android:fontFamily="@font/myfont" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="3"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/delivery_count"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:text=""
+                                            android:gravity="center"
+                                            android:background="@drawable/counts_color2"
+                                            android:textColor="@color/white"
+                                            android:textSize="20dp"
+                                            android:fontFamily="@font/myfont" />
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
 
 
                             </LinearLayout>
 
-
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2.5"/>
+                        </androidx.cardview.widget.CardView>
 
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/card_new"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="#D5C7AC"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
                             android:layout_marginTop="15dp"
@@ -342,121 +682,204 @@
                             android:visibility="gone">
 
                             <LinearLayout
+                                android:id="@+id/llCustomerService1"
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:layout_margin="10dp"
-                                android:padding="10dp"
-                                android:background="@drawable/shadow_border"
+                                android:background="@drawable/svg_cs_main"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/tv_newCount1"
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:text="0"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
-
-                                <View
-                                    android:layout_width="2dp"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="5dp"
-                                    android:background="@color/white"/>
+                                    android:layout_weight="4"
+                                    android:padding="15dp"
+                                    android:orientation="vertical">
 
-                                <TextView
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/svg_icon_service_customer"
+                                        android:tint="@color/white"
+                                        tools:ignore="UseAppTint" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/svg_cs_sub"
                                     android:layout_marginBottom="5dp"
-                                    android:text="New"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:text="Customer Service"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/service11"
+                                        android:textSize="20dp"
+                                        android:fontFamily="@font/myfont" />
+
+
+                                </LinearLayout>
+
+
+
 
 
                             </LinearLayout>
-
 
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/card_ongoing"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="#ADCCB6"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
-                            android:layout_marginTop="25dp"
+                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
                             android:visibility="gone">
 
+                            <!--                            android:backgroundTint="@color/service2"-->
+
                             <LinearLayout
+                                android:id="@+id/llServiceAssign1"
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:layout_margin="10dp"
-                                android:padding="10dp"
-                                android:background="@drawable/shadow_border"
+                                android:background="@drawable/svg_csa_main"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/tv_OnGoingCount1"
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="2"
-                                    android:gravity="center"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:text="0"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
-
-                                <View
-                                    android:layout_width="2dp"
                                     android:layout_height="match_parent"
-                                    android:layout_margin="5dp"
-                                    android:background="@color/white"/>
+                                    android:layout_weight="4"
+                                    android:padding="15dp"
+                                    android:orientation="vertical">
 
-                                <TextView
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/svg_icon_service_assign"
+                                        android:tint="@color/white"
+                                        tools:ignore="UseAppTint" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/svg_csa_sub"
                                     android:layout_marginBottom="5dp"
-                                    android:text="On Going"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/white"
-                                    android:textSize="20dp"
-                                    android:fontFamily="@font/myfont" />
+                                    android:orientation="vertical">
+                                    <!--                                    android:background="@drawable/svg_service_assign"-->
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:text="Service Assign"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/service21"
+                                        android:textSize="20dp"
+                                        android:fontFamily="@font/myfont" />
+
+
+                                </LinearLayout>
+
 
 
                             </LinearLayout>
 
-
                         </androidx.cardview.widget.CardView>
 
 
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="5dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp"
+                            android:visibility="gone">
+                            <!--                        app:cardUseCompatPadding="true"-->
+                            <!--                            android:backgroundTint="@color/service3"-->
 
+
+                            <LinearLayout
+                                android:id="@+id/llServiceFollowup1"
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:background="@drawable/svg_csf_main"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="4"
+                                    android:padding="15dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/svg_icon_service_follow"
+                                        android:tint="@color/white"
+                                        tools:ignore="UseAppTint"/>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:background="@drawable/svg_csf_sub"
+                                    android:layout_marginBottom="5dp"
+                                    android:orientation="vertical">
+                                    <!--                                    android:background="@drawable/svg_service_followup"-->
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="left"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:text="Service Follow up"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/service31"
+                                        android:textSize="20dp"
+                                        android:fontFamily="@font/myfont" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
 
 
                     </LinearLayout>

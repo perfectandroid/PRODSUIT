@@ -49,6 +49,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     private var tv_header   : TextView?          = null
     private var imgv_filter : ImageView?         = null
     private var tie_pDate   : TextInputEditText? = null
+    private var tv_listCount: TextView?          = null
     private var submode                          = ""
     private var mobile                           = ""
     lateinit var pickup_and_deliverysort      : JSONArray
@@ -116,6 +117,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         tv_header = findViewById(R.id.tv_header)
         recyPickUpDelivery = findViewById(R.id.recyPickUpDelivery)
+        tv_listCount  = findViewById(R.id.tv_listCount)
         setHeader()
         pickDeliveryCount = 0
         getPickUpDeliveryList()
@@ -199,7 +201,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
                 filterCustomer     = tie_pCustomer!!.text!!.toString().toLowerCase().trim()
                 filterMobile       = tie_Mobile1!!.text!!.toString().toLowerCase().trim()
-                filterDate         = tie_pDate!!.text!!.toString()
+                filterDate         = tie_pDate!!.text!!.toString().toLowerCase().trim()
                 filterTicketNumber = tie_pTicketNumber!!.text!!.toString().toLowerCase().trim()
 
                 pickup_and_deliverysort = JSONArray()
@@ -335,6 +337,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                                                 val jsonObject = pickUpDeliveryArrayList.getJSONObject(k)
                                                 pickup_and_deliverysort.put(jsonObject)
                                             }
+
+                                            tv_listCount!!.setText(""+pickup_and_deliverysort.length())
 
                                             val lLayout = GridLayoutManager(this@PickUpAndDeliveryListActivity, 1)
                                             recyPickUpDelivery!!.layoutManager = lLayout as RecyclerView.LayoutManager?

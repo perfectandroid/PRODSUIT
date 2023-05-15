@@ -1581,10 +1581,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 //   tie_Selectstatus!!.setText(searchType.get(0), false)
 //            tie_Selectstatus!!.setOnClickListener {
                 pickupdeliStatusCount = 0
-                tie_Selectstatus!!.showDropDown()
+                tie_Selectbilltype!!.showDropDown()
                 Log.e(TAG, "7778889999   " + pickupdeliStatusCount)
 //            }
-                tie_Selectstatus!!.setOnItemClickListener { parent, view, position, id ->
+                tie_Selectbilltype!!.setOnItemClickListener { parent, view, position, id ->
                     billtype = searchType[position]
 
 //                    if (status_check.equals("Open")) {
@@ -2354,12 +2354,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        onBackPressed()
-//        updatepickupanddeliveryCount = 0
-//        saveUpdatePickUpAndDelivery()
-    }
 
 
 }
