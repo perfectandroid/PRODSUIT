@@ -968,6 +968,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             }
 
             img_PayRefresh!!.setOnClickListener {
+                arrAddUpdate = "0"
                 edtPayMethod!!.setText("")
                 edtPayRefNo!!.setText("")
                 edtPayAmount!!.setText("")

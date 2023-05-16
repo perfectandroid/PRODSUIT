@@ -484,13 +484,13 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:padding="1dp"
-                                android:background="@drawable/service_border"
+                                android:background="@drawable/border_1"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
                                     android:layout_width="100dp"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/svg_ser_arrrowcs"
+                                    android:background="@drawable/shapes_1"
                                     android:orientation="vertical">
 
                                     <LinearLayout
@@ -531,7 +531,7 @@
                                         android:text="PICK UP"
                                         android:layout_weight="1"
                                         android:textStyle="bold"
-                                        android:textColor="@color/service_cs_main"
+                                        android:textColor="@color/color_common1"
                                         android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
@@ -587,13 +587,13 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:padding="1dp"
-                                android:background="@drawable/service_border1"
+                                android:background="@drawable/border_3"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
                                     android:layout_width="100dp"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/svg_ser_arrrowsa"
+                                    android:background="@drawable/shapes_3"
                                     android:orientation="vertical">
 
                                     <LinearLayout
@@ -638,7 +638,7 @@
                                         android:text="DELIVERY"
                                         android:layout_weight="1"
                                         android:textStyle="bold"
-                                        android:textColor="@color/service_sa_main"
+                                        android:textColor="@color/color_common3"
                                         android:textSize="20dp"
                                         android:fontFamily="@font/myfont" />
 
@@ -655,7 +655,7 @@
                                             android:layout_height="40dp"
                                             android:text=""
                                             android:gravity="center"
-                                            android:background="@drawable/counts_color2"
+                                            android:background="@drawable/count_color3"
                                             android:textColor="@color/white"
                                             android:textSize="20dp"
                                             android:fontFamily="@font/myfont" />

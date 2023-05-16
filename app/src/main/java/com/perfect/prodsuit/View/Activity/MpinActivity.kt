@@ -705,6 +705,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 val ModuleListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF54, 0)
                                 val ModuleListEditer = ModuleListSP.edit()
                                 ModuleListEditer.putString("ModuleList", jobj.getString("ModuleList"))
+                                Log.i("werwrreer",ModuleListEditer.toString())
                                 ModuleListEditer.commit()
 
                                 val FK_DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF55, 0)

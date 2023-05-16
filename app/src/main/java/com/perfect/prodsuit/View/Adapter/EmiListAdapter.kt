@@ -31,19 +31,21 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
+
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
+                Log.i("responserere","onBindView   ")
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
                 if (SubMode.equals("1")){
-                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_todo_gardient1));
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.color_common1));
                 }
                 if (SubMode.equals("2")){
-                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_overdue_gardient1));
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.color_common2));
                 }
                 if (SubMode.equals("3")){
-                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.emi_demand_gardient1));
+                    holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.color_common3));
                 }
 
                 holder.tv_Customer.text        = jsonObject!!.getString("Customer")

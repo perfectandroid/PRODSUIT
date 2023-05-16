@@ -46,6 +46,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
     private var imgv_filter: ImageView? = null
     private var tv_header: TextView? = null
+    private var tv_listCount: TextView?          = null
     private var txtReset: TextView? = null
     private var txtSearch: TextView? = null
     private var tie_Customer: TextInputEditText? = null
@@ -132,6 +133,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
         tv_header = findViewById<TextView>(R.id.tv_header)
         recyEmiList = findViewById<RecyclerView>(R.id.recyEmiList)
+        tv_listCount = findViewById(R.id.tv_listCount)
 
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
         imgv_filter!!.setOnClickListener(this)
@@ -189,6 +191,8 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                                                 emiListSort.put(jsonObject)
                                             }
 
+                                            tv_listCount!!.setText(""+emiListSort.length())
+
                                             if (filterCount == 1 && onRestartCount == 1){
 
                                                 strCustomer = tie_Customer!!.text.toString().toLowerCase().trim()
@@ -235,7 +239,8 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        builder.setPositiveButton("OK") { dialogInterface, which ->
+                                            finish()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)

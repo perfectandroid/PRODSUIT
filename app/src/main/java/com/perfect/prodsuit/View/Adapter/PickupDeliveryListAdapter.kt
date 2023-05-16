@@ -53,7 +53,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
 
                 if (SubMode.equals("1")){
 
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_pickup))
+                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common1))
                     holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
@@ -70,7 +70,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                     }
                 }
                 if (SubMode.equals("2")){
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_delivery))
+                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common3))
                     holder.tv_DeliveryDateTime.text    =  "Delivery Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
