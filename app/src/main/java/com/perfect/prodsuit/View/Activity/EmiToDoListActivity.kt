@@ -322,7 +322,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                     //  if (textlength <= jsonObject.getString("TicketNo").length) {
                     if ((jsonObject.getString("Customer")!!.toLowerCase().trim().contains(strCustomer!!))
                         && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(strMobile!!))
-                        && (jsonObject.getString("Customer")!!.toLowerCase().trim().contains(strArea!!))
+                        && (jsonObject.getString("Area")!!.toLowerCase().trim().contains(strArea!!))
                         && (jsonObject.getString("DueAmount")!!.toLowerCase().trim().contains(strDueAmount!!))){
                         //   Log.e(TAG,"2161    "+strTicketNumber+"   "+strCustomer)
                         emiListSort!!.put(jsonObject)

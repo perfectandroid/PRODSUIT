@@ -189,7 +189,7 @@
                                         android:drawableTint="@color/textColor"
                                         android:editable="true"
                                         android:maxLines="3"
-                                        android:maxLength="50"
+                                        android:maxLength="100"
                                         android:importantForAutofill="no"
                                         android:focusableInTouchMode="true"
                                         android:fontFamily="@font/myfont"

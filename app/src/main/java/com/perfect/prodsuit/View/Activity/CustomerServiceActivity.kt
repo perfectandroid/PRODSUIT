@@ -6802,7 +6802,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     strLatitude = data.getStringExtra("strLatitude")
                     strLongitue = data.getStringExtra("strLongitue")
 
-                    var strLocationAddress = ""
+                    strLocationAddress = ""
                     if (!locAddress.equals("")) {
                         strLocationAddress = locAddress!!
                     }
