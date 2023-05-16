@@ -55,6 +55,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     lateinit var context: Context
     lateinit var myLeadlistViewModel: MyLeadListViewModel
     private var rv_myLeadlist: RecyclerView?=null
+    private var tv_listCount: TextView?          = null
     lateinit var upcmngtaskArrayList : JSONArray
     private var SubMode:String?=""
     private var UserName:String? = ""
@@ -178,6 +179,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)
         val imgv_sort= findViewById<ImageView>(R.id.imgv_sort)
         fab_Reminder = findViewById(R.id.fab_Reminder);
+        tv_listCount = findViewById(R.id.tv_listCount)
 
         imback!!.setOnClickListener(this)
         imgv_filter!!.setOnClickListener(this)
@@ -218,6 +220,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                         if (jObject.getString("StatusCode") == "0") {
                                             val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                             upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
+
+                                            tv_listCount!!.setText(""+upcmngtaskArrayList.length())
                                             val lLayout = GridLayoutManager(this@MyLeadActivity, 1)
                                             rv_myLeadlist!!.layoutManager =
                                                 lLayout as RecyclerView.LayoutManager?

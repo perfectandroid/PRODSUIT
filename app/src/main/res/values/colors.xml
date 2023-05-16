@@ -377,6 +377,12 @@
 
     <color name="color_mandatory">#FA6464</color>
 
+    <color name="color_common1">#3A6F8E</color>
+    <color name="color_common2">#6C606C</color>
+    <color name="color_common3">#FF667B7C</color>
+    <color name="color_common4">#447B7E</color>
+
+
 <!--    <color name="color_pickup">#4D7878</color>-->
 <!--    <color name="color_delivery">#849675</color>-->
 
