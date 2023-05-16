@@ -1,20 +1,13 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -22,7 +15,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +31,6 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -687,7 +678,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         til_Complaint!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Service!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
-        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+      //  til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
 
         onTextChangedValues()
@@ -1676,19 +1667,19 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             hideViews()
 
         }
-        else if (strDescription.equals("")){
-            til_Description!!.setError("Enter Description");
-            til_Description!!.setErrorIconDrawable(null)
-
-            custDetailMode = "1"
-            complaintMode  = "0"
-            contDetailMode = "1"
-            requestedMode  = "1"
-            attDetailMode  = "1"
-
-            hideViews()
-
-        }
+//        else if (strDescription.equals("")){
+//            til_Description!!.setError("Enter Description");
+//            til_Description!!.setErrorIconDrawable(null)
+//
+//            custDetailMode = "1"
+//            complaintMode  = "0"
+//            contDetailMode = "1"
+//            requestedMode  = "1"
+//            attDetailMode  = "1"
+//
+//            hideViews()
+//
+//        }
         else{
             Log.e(TAG,"Validation   9372"
                     +"\n"+"ID_CompCategory   :  "+ID_CompCategory
@@ -2156,6 +2147,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                 if (dateMode == 0){
                     tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+
+                    checkCurrDate(""+strDay+"-"+strMonth+"-"+strYear)
                 }else if (dateMode == 1){
 
                     tie_FromDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
@@ -2177,15 +2170,87 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         dialog.show()
     }
 
+    private fun futureDateDisable(time_Picker1 : TimePicker) {
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+            val currentTime = Calendar.getInstance()
+            val currentHour = currentTime[Calendar.HOUR_OF_DAY]
+            val currentMinute = currentTime[Calendar.MINUTE]
+           // val currentMinute = currentTime[Calendar.AM_PM]
+
+            time_Picker1.setHour(currentHour);
+            time_Picker1.setMinute(currentMinute);
+
+
+//            val newDate: Date = sdf.parse(currentDate)
+//            Log.e(TAG,"newDate  196  "+newDate)
+//            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+//            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+//            var strDate = tie_Date!!.text.toString()
+//
+//
+//        //    if (sdfDate1.format(newDate).equals(strDate)){
+//                Log.e(TAG,"Change date 2196   "+strDate)
+//                time_Picker1.hour = 3
+//                time_Picker1.minute = 30
+//
+//          //  }
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
+    }
+
+    private fun checkCurrDate(curDate : String) {
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
+            if (sdfDate1.format(newDate).equals(curDate)){
+                Log.e(TAG,"Change date 2196   "+curDate)
+                tie_Time!!.setText(""+sdfTime1.format(newDate))
+            }
+
+
+//            tie_Date!!.setText(""+sdfDate1.format(newDate))
+//            tie_FromDate!!.setText(""+sdfDate1.format(newDate))
+//            //  strVisitDate = sdfDate2.format(newDate)
+//
+//            tie_Time!!.setText(""+sdfTime1.format(newDate))
+//            //  strVisitTime = sdfTime2.format(newDate)
+
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
+    }
+
     private fun openBottomTime() {
 
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottomsheet_timer, null)
 
+        Log.e(TAG,"openBottomTime 2246  ")
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
-        //   time_Picker1!!.currentMinute = System.currentTimeMillis() - 1000
+//        time_Picker1.setHour(17);
+//        time_Picker1!!.currentMinute = (System.currentTimeMillis() - 1000).toInt()
+//        time_Picker1!!.currentHour = (System.currentTimeMillis() - 1000).toInt()
+
 
 
         txtCancel.setOnClickListener {
@@ -2195,6 +2260,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialog.dismiss()
             try {
 
+//                if (timeMode == 2){
+//                  futureDateDisable(time_Picker1)
+//                }
 
                 val hr = time_Picker1!!.hour
                 val min = time_Picker1!!.minute
@@ -2242,6 +2310,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         dialog.show()
     }
+
+
 
     private fun getCustomerSearch() {
 //         var custDet = 0
@@ -6572,7 +6642,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     Log.e(TAG,"283022    ")
                    // til_Description!!.isErrorEnabled = false
                     if (tie_Description!!.text.toString().equals("")){
-                        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                     //   til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                        til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }else{
                         til_Description!!.isErrorEnabled = false
                         til_Description!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)

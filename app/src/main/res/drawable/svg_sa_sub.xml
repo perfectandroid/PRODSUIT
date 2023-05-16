@@ -23,10 +23,15 @@
 <!--        <item android:offset="0.723958" android:color="#457E75"/>-->
 <!--        <item android:offset="1" android:color="#1D4E46"/>-->
 
-        <item android:offset="0" android:color="#667B7C"/>
-        <item android:offset="0.354824" android:color="#879D9E"/>
-        <item android:offset="0.685339" android:color="#879D9E"/>
-        <item android:offset="1" android:color="#667B7C"/>
+<!--        <item android:offset="0" android:color="#667B7C"/>-->
+<!--        <item android:offset="0.354824" android:color="#879D9E"/>-->
+<!--        <item android:offset="0.685339" android:color="#879D9E"/>-->
+<!--        <item android:offset="1" android:color="#667B7C"/>-->
+
+          <item android:offset="0" android:color="#667B7C"/>
+          <item android:offset="0.354824" android:color="#667B7C"/>
+          <item android:offset="0.685339" android:color="#667B7C"/>
+          <item android:offset="1" android:color="#667B7C"/>
 
 <!--        <color name="upcomung_round">#667B7C</color>-->
 <!--        <color name="upcomung_Color">#CE748E8E</color>-->

@@ -617,9 +617,10 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
             R.id.img_location->{
 
-                checkLocationPermission(v)
+           //     checkLocationPermission(v)
 //                val i = Intent(this@EmiCollectionActivity, LocationCollectionActivity::class.java)
 //                startActivity(i)
+                Config.snackBarWarning(context,v,"Work in progress")
             }
             R.id.edtTransDate->{
                 dateMode = 0
