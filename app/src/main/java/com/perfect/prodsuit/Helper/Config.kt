@@ -50,7 +50,7 @@ object Config {
     const val SHARED_PREF17 ="companyCode"
     const val SHARED_PREF18 ="commonApp"
     const val SHARED_PREF19 ="AppIconImageCode"
-    const val SHARED_PREF20 ="CompanyLogoImageCode"
+    const val SHARED_PREF20 ="TechnologyPartnerImage"
     const val SHARED_PREF21 ="ProductName"
     const val SHARED_PREF22 ="PlayStoreLink"
     const val SHARED_PREF23 ="mpinStatus"

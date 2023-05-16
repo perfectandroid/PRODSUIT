@@ -62,25 +62,27 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 holder.tv_Employee.text        = jsonObject!!.getString("Employee")
                 holder.tv_TimeDue.text        = "Time Due : "+jsonObject!!.getString("Due")
 
+                holder.tv_Channel.text        = jsonObject!!.getString("Channel")
                 if (jsonObject!!.getString("Channel").equals("Portal")){
-                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_portal))
+                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_portal1))
                 }
                 if (jsonObject!!.getString("Channel").equals("Direct")){
-                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_direct))
+                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_direct1))
                 }
                 if (jsonObject!!.getString("Channel").equals("Call")){
                     holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_call))
                 }
                 if (jsonObject!!.getString("Channel").equals("Email")){
-                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_email))
+                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_email1))
                 }
                 if (jsonObject!!.getString("Channel").equals("Employee")){
                     holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_employee))
                 }
                 if (jsonObject!!.getString("Channel").equals("Media")){
-                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_media))
+                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_media1))
                 }
 
+                holder.tv_Priority!!.setText(jsonObject!!.getString("Priority"))
                 if (jsonObject!!.getString("PriorityCode").equals("1")){
                     holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
                 }
@@ -164,6 +166,8 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
         internal var im_edit          : ImageView
         internal var im_tracker          : ImageView
 //        internal var txtsino          : TextView
+        internal var tv_Priority          : TextView
+        internal var tv_Channel          : TextView
         internal var ll_employee    : LinearLayout
         internal var ll_status    : LinearLayout
         internal var llServiceList    : LinearLayout
@@ -177,6 +181,8 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
             tv_Area        = v.findViewById<View>(R.id.tv_Area) as TextView
             tv_Employee        = v.findViewById<View>(R.id.tv_Employee) as TextView
             tv_TimeDue        = v.findViewById<View>(R.id.tv_TimeDue) as TextView
+            tv_Priority        = v.findViewById<View>(R.id.tv_Priority) as TextView
+            tv_Channel        = v.findViewById<View>(R.id.tv_Channel) as TextView
 
             im_Channel        = v.findViewById<View>(R.id.im_Channel) as ImageView
             im_Priority        = v.findViewById<View>(R.id.im_Priority) as ImageView

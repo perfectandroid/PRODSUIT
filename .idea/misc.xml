@@ -484,7 +484,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report.xml" value="0.32864583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report_followup.xml" value="0.32864583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_report_service.xml" value="0.67" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.34322916666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bottomsheet_timer.xml" value="0.75" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.4601873536299766" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/call_status_popup.xml" value="0.3302083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/callstatus_popup.xml" value="0.2916666666666667" />
@@ -542,7 +542,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/riskstatus_popup.xml" value="0.2916666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sa_edit_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sa_filter_bottom_sheet.xml" value="0.25" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sal_filter_local.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sal_filter_local.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/send_message_popup.xml" value="0.26875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_assign_confirmation.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_complaint_popup.xml" value="0.2786458333333333" />

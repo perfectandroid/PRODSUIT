@@ -796,7 +796,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Product Name"
+                                                        android:text="Category/Product Name"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 

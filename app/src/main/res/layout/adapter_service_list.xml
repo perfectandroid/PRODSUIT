@@ -52,16 +52,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:layout_marginBottom="2dp"
-                        android:fontFamily="@font/myfont"
-                        android:text="Channel"
-                        android:textColor="@color/white"
-                        android:layout_centerVertical="true" />
+
 
                     <LinearLayout
                         android:layout_width="30dp"
@@ -78,6 +69,18 @@
                             android:visibility="visible" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_Channel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Channel"
+                        android:textColor="@color/white"
+                        android:layout_centerVertical="true" />
 
 
 
@@ -102,7 +105,8 @@
                         android:fontFamily="@font/myfont"
                         android:text="Priority"
                         android:textColor="@color/white"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="30dp"
@@ -119,7 +123,21 @@
                             android:tint="@color/red"
                             android:visibility="visible" />
 
+
+
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_Priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Priority"
+                        android:textColor="@color/white"
+                        android:layout_centerVertical="true" />
 
 
 
@@ -400,7 +418,7 @@
                                 android:gravity="center_vertical"
                                 android:textSize="12dp"
                                 android:fontFamily="@font/myfont"
-                                android:text="Branch"
+                                android:text="Terminal"
                                 android:textColor="@color/list_label"
                                 android:layout_centerVertical="true" />
                         </LinearLayout>

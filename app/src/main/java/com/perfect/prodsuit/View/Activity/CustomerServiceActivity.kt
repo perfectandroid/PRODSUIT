@@ -409,6 +409,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var dialogWarrantySheet : Dialog? = null
     private var dialogAddUserSheet : Dialog? = null
 
+
     private var lnrHead_warranty_main : LinearLayout? = null
     private var lnrHead_warranty_sub : LinearLayout? = null
     private var lnrHead_product_main : LinearLayout? = null
@@ -431,6 +432,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     private var card_customerdue : CardView? = null
 
     private var txtNext : TextView? = null
+    private var txt_Warning : TextView? = null
 
     private var tv_warranty_count : TextView? = null
     private var tv_product_count : TextView? = null
@@ -2146,8 +2148,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 }
 
                 if (dateMode == 0){
-                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
 
+
+                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                     checkCurrDate(""+strDay+"-"+strMonth+"-"+strYear)
                 }else if (dateMode == 1){
 
@@ -2170,34 +2173,51 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         dialog.show()
     }
 
-    private fun futureDateDisable(time_Picker1 : TimePicker) {
-        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
-        val currentDate = sdf.format(Date())
+    private fun futureDateDisable(outTime : String,dialog : BottomSheetDialog) {
 
         try {
 
-            val currentTime = Calendar.getInstance()
-            val currentHour = currentTime[Calendar.HOUR_OF_DAY]
-            val currentMinute = currentTime[Calendar.MINUTE]
-           // val currentMinute = currentTime[Calendar.AM_PM]
 
-            time_Picker1.setHour(currentHour);
-            time_Picker1.setMinute(currentMinute);
+            val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+            val currentDate = sdf.format(Date())
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
+            var curDate = tie_Date!!.text.toString()
+
+            if (sdfDate1.format(newDate).equals(curDate)){
+                Log.e(TAG,"Change date 2195   "+curDate+"  "+outTime)
+                Log.e(TAG,"Change date 2195   "+sdfTime1.format(newDate))
+//                tie_Time!!.setText(""+sdfTime1.format(newDate))
+                val format = SimpleDateFormat("hh:mm a", Locale.US)
+                val date1: Date = format.parse(outTime)
+                val date2: Date = format.parse(sdfTime1.format(newDate))
+
+                if (date1.compareTo(date2) > 0) {
+                    // time1 is greater than or equal to time2
+                    // Handle the logic for this case
+                    Log.e(TAG,"Change date 2195 gdyretyreyre  ")
+                    txt_Warning!!.visibility = View.VISIBLE
+                } else {
+                    // time1 is less than time2
+                    // Handle the logic for this case
+                    txt_Warning!!.visibility = View.GONE
+                    tie_Time!!.setText(outTime)
+                    dialog.dismiss()
+                }
+            }else{
+                txt_Warning!!.visibility = View.GONE
+                tie_Time!!.setText(outTime)
+                dialog.dismiss()
+            }
 
 
-//            val newDate: Date = sdf.parse(currentDate)
-//            Log.e(TAG,"newDate  196  "+newDate)
-//            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
-//            val sdfTime1 = SimpleDateFormat("hh:mm aa")
-//            var strDate = tie_Date!!.text.toString()
-//
-//
-//        //    if (sdfDate1.format(newDate).equals(strDate)){
-//                Log.e(TAG,"Change date 2196   "+strDate)
-//                time_Picker1.hour = 3
-//                time_Picker1.minute = 30
-//
-//          //  }
 
         }catch (e: Exception){
 
@@ -2246,10 +2266,22 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         Log.e(TAG,"openBottomTime 2246  ")
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        txt_Warning = view.findViewById<TextView>(R.id.txt_Warning)
         val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+        txt_Warning!!.visibility = View.GONE
 //        time_Picker1.setHour(17);
 //        time_Picker1!!.currentMinute = (System.currentTimeMillis() - 1000).toInt()
 //        time_Picker1!!.currentHour = (System.currentTimeMillis() - 1000).toInt()
+
+//        val currentTime = Calendar.getInstance()
+//        val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+//        val currentMinute = currentTime.get(Calendar.MINUTE)
+//
+//        time_Picker1.hour = currentHour
+//        time_Picker1.minute = currentMinute
+
+
+//        time_Picker1.setHour(9);
 
 
 
@@ -2257,7 +2289,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
-            dialog.dismiss()
+//            dialog.dismiss()
             try {
 
 //                if (timeMode == 2){
@@ -2274,12 +2306,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                 if (timeMode == 0){
                     tie_FromTime!!.setText(output)
+                    dialog.dismiss()
                 }
                 if (timeMode == 1){
                     tie_ToTime!!.setText(output)
+                    dialog.dismiss()
                 }
                 if (timeMode == 2){
-                    tie_Time!!.setText(output)
+                   // tie_Time!!.setText(output)
+                    futureDateDisable(output,dialog)
                 }
 
 

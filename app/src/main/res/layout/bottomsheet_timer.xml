@@ -37,6 +37,26 @@
             android:layout_above="@+id/ll_btn"
             android:calendarViewShown="false"/>
 
+        <TextView
+            android:id="@+id/txt_Warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/red"
+            android:fontFamily="@font/myfont"
+            android:background="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:text="Time should be lessthan or equal to current time" />
+
+
 
         <LinearLayout
             android:id="@+id/ll_btn"

@@ -130,7 +130,7 @@
                                 android:id="@+id/til_Branch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Branch"
+                                android:hint="Terminal"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"

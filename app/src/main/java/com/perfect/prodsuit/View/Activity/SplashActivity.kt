@@ -496,10 +496,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     AppIconImageCodeEditer.putString("AppIconImageCode", jobj.getString("AppIconImageCode"))
                                     AppIconImageCodeEditer.commit()
 
-                                    val CompanyLogoImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
-                                    val CompanyLogoImageCodeEditer = CompanyLogoImageCodeSP.edit()
-                                    CompanyLogoImageCodeEditer.putString("CompanyLogoImageCode", jobj.getString("CompanyLogoImageCode"))
-                                    CompanyLogoImageCodeEditer.commit()
+                                    val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+                                    val TechnologyPartnerImageEditer = TechnologyPartnerImageSP.edit()
+                                    TechnologyPartnerImageEditer.putString("TechnologyPartnerImage", jobj.getString("TechnologyPartnerImage"))
+                                    TechnologyPartnerImageEditer.commit()
 
                                     val ProductNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF21, 0)
                                     val ProductNameEditer = ProductNameSP.edit()
