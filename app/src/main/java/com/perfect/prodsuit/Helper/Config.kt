@@ -566,7 +566,7 @@ object Config {
             Log.e("TAG","537    "+loginSP.getString("loginsession",""));
 
             val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
-            Log.e("TAG","547    "+ModuleListSP.getString("ModuleList",""));
+          //  Log.e("TAG","547    "+ModuleListSP.getString("ModuleList",""));
             val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
             Log.e("TAG","5471    "+jsonObj!!.getString("LEAD"));
 

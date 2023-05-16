@@ -805,8 +805,8 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:padding="5dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:padding="5dp">
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -815,24 +815,24 @@
                                                 android:text="Info"
                                                 android:textSize="20dp"
                                                 android:textStyle="bold"
-                                                android:visibility="gone"/>
+                                                android:visibility="gone" />
 
                                             <ImageView
                                                 android:id="@+id/imInfoLoading"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="200dp"
-                                                android:textStyle="bold"
                                                 android:textSize="20dp"
-                                                android:visibility="gone"/>
+                                                android:textStyle="bold"
+                                                android:visibility="gone" />
 
 
                                             <androidx.recyclerview.widget.RecyclerView
                                                 android:id="@+id/recySubInfo"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginLeft="5dp"
                                                 android:layout_marginRight="5dp"
-                                                android:visibility="gone"
-                                                android:layout_marginLeft="5dp" />
+                                                android:visibility="gone" />
 
                                             <ScrollView
                                                 android:layout_width="match_parent"
@@ -874,36 +874,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Lead No"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoLeadNo"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -911,7 +905,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -928,10 +922,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_datecolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -942,36 +936,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Lead Date"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoLeadDate"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -979,7 +967,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -996,10 +984,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_sourcecolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1010,36 +998,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Lead Source"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoLeadSource"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -1047,7 +1029,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
 
                                                     <LinearLayout
@@ -1065,10 +1047,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_fromcolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1079,36 +1061,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Lead From"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoLeadFrom"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -1128,10 +1104,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_categorycolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1142,28 +1118,26 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Category"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoCategoryName"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
-
-
 
 
                                                         </LinearLayout>
@@ -1174,7 +1148,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <LinearLayout
                                                         android:id="@+id/ll_productVis"
@@ -1192,10 +1166,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_productcolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1207,34 +1181,29 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Product"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoProduct"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
 
 
                                                     </LinearLayout>
@@ -1242,8 +1211,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
-
+                                                        android:background="@color/grey" />
 
 
                                                     <LinearLayout
@@ -1261,10 +1229,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_actioncolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1275,35 +1243,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Action"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoNextAction"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -1311,10 +1274,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
-
-
-
+                                                        android:background="@color/grey" />
 
 
                                                     <LinearLayout
@@ -1332,10 +1292,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_customercolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1346,43 +1306,37 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Customer"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoName"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
-
-
 
 
                                                         </LinearLayout>
 
 
-
-
-
-
                                                     </LinearLayout>
+
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
-
+                                                        android:background="@color/grey" />
 
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
@@ -1411,10 +1365,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_addresscolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1425,35 +1379,31 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
-                                                                    android:textColor="@color/black"
                                                                     android:text="Address"
+                                                                    android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoAddress"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
                                                         </LinearLayout>
-
-
-
 
 
                                                     </LinearLayout>
@@ -1461,7 +1411,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
                                                     <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -1488,10 +1438,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_mobilecolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1502,35 +1452,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Mobile"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoMobile"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
 
 
                                                     </LinearLayout>
@@ -1538,7 +1483,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1566,10 +1511,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_emailcolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
 
                                                             <LinearLayout
@@ -1581,35 +1526,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Email"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoEmail"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
-
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
                                                         </LinearLayout>
-
-
-
 
 
                                                     </LinearLayout>
@@ -1617,7 +1557,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1629,7 +1569,6 @@
                                                     <!--                        app:cardCornerRadius="3dp"-->
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
-
 
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
@@ -1659,10 +1598,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_collectedbycolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
 
                                                             <LinearLayout
@@ -1674,35 +1613,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Collected By"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoCollectedBy"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
-
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
                                                         </LinearLayout>
-
-
-
 
 
                                                     </LinearLayout>
@@ -1710,7 +1644,8 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
+
                                                     <LinearLayout
                                                         android:id="@+id/ll_projectVis"
                                                         android:layout_width="match_parent"
@@ -1728,10 +1663,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/project_name"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1742,28 +1677,26 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Project"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoProject"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
-
-
 
 
                                                         </LinearLayout>
@@ -1771,12 +1704,11 @@
                                                         <View
                                                             android:layout_width="match_parent"
                                                             android:layout_height="1dp"
-                                                            android:background="@color/grey"/>
+                                                            android:background="@color/grey" />
 
                                                     </LinearLayout>
 
 
-
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
                                                     <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -1789,9 +1721,6 @@
                                                     <!--                        app:cardUseCompatPadding="true">-->
 
 
-
-
-
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
                                                     <!--                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -1802,7 +1731,6 @@
                                                     <!--                        app:cardCornerRadius="3dp"-->
                                                     <!--                        app:cardElevation="2dp"-->
                                                     <!--                        app:cardUseCompatPadding="true">-->
-
 
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
@@ -1832,10 +1760,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_assignedcolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1846,35 +1774,29 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Assigned To"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoAssigned"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -1883,7 +1805,7 @@
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1911,10 +1833,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/lead_targetdatecolor"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -1925,42 +1847,38 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Target Date"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoNextActionDate"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
                                                         </LinearLayout>
 
 
-
-
-
-
                                                     </LinearLayout>
+
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:background="@color/grey" />
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -1989,10 +1907,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/action_type"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -2003,43 +1921,38 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Action Type"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoActionType"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
                                                             </LinearLayout>
-
-
 
 
                                                         </LinearLayout>
 
 
-
-
-
-
                                                     </LinearLayout>
+
                                                     <View
                                                         android:layout_width="match_parent"
                                                         android:layout_height="1dp"
                                                         android:background="@color/grey"
-                                                        android:visibility="gone"/>
+                                                        android:visibility="gone" />
 
                                                     <!--                    </androidx.cardview.widget.CardView>-->
 
@@ -2068,10 +1981,10 @@
                                                             <ImageView
                                                                 android:layout_width="30dp"
                                                                 android:layout_height="30dp"
-                                                                android:textStyle="bold"
-                                                                android:textSize="20dp"
                                                                 android:src="@drawable/assignedto"
-                                                                android:visibility="visible"/>
+                                                                android:textSize="20dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
@@ -2082,36 +1995,30 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text="Assigned To"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
-                                                                    android:textStyle="bold"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textStyle="bold" />
 
                                                                 <TextView
                                                                     android:id="@+id/txtInfoAssigned1"
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
-                                                                    android:textSize="15dp"
-                                                                    android:layout_marginLeft="10dp"
                                                                     android:textColor="@color/greydark"
-                                                                    android:textStyle="normal"
-                                                                    android:fontFamily="@font/myfont" />
+                                                                    android:textSize="15dp"
+                                                                    android:textStyle="normal" />
 
 
                                                             </LinearLayout>
 
 
-
-
                                                         </LinearLayout>
-
-
-
-
 
 
                                                     </LinearLayout>
@@ -2122,9 +2029,6 @@
                                                 </LinearLayout>
 
                                             </ScrollView>
-
-
-
 
 
                                         </LinearLayout>

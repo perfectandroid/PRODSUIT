@@ -202,6 +202,8 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                 filterBottomFilter()
             }
             R.id.ll_todo->{
+                Log.i("response999", "ll_todo clicked==")
+               // Toast.makeText(this, "ll_todo", Toast.LENGTH_SHORT).show()
                 val i = Intent(this@EmiActivity, EmiToDoListActivity::class.java)
                 i.putExtra("SubMode","1")
                 i.putExtra("ID_FinancePlanType",ID_FinancePlanType)
@@ -212,6 +214,7 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                 startActivity(i)
             }
             R.id.ll_overdue->{
+                Log.i("response999", "ll_overdue clicked==")
                 val i = Intent(this@EmiActivity, EmiToDoListActivity::class.java)
                 i.putExtra("SubMode","2")
                 i.putExtra("ID_FinancePlanType",ID_FinancePlanType)

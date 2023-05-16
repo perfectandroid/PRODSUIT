@@ -98,6 +98,7 @@ object EmiCountRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("response999", "requestObject1==" +requestObject1 )
             val call = apiService.getEMICollectionReportCount(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

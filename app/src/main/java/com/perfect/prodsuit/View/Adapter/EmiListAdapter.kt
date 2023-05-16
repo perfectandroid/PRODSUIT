@@ -31,8 +31,10 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
+
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
+                Log.i("responserere","onBindView   ")
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 

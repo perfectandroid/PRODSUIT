@@ -235,7 +235,8 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        builder.setPositiveButton("OK") { dialogInterface, which ->
+                                            finish()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
