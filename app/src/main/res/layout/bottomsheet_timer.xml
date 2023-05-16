@@ -25,7 +25,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="20dp"
             android:textAllCaps="true"
-            android:text="select date" />
+            android:text="select Time" />
 
         <TimePicker
             android:id="@+id/time_Picker1"

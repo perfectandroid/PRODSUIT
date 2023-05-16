@@ -53,31 +53,37 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
 
                 if (SubMode.equals("1")){
 
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_pickup))
+                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common1))
                     holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
+                        holder.tv_Priority!!.setText("Medium")
                     }
                     if (priority.equals("Normal")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
+                        holder.tv_Priority!!.setText("Normal")
                     }
                     if (priority.equals("High")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
+                        holder.tv_Priority!!.setText("High")
                     }
                 }
                 if (SubMode.equals("2")){
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_delivery))
+                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common3))
                     holder.tv_DeliveryDateTime.text    =  "Delivery Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
+                        holder.tv_Priority!!.setText("Medium")
                     }
                     if (priority.equals("Normal")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
+                        holder.tv_Priority!!.setText("Normal")
                     }
                     if (priority.equals("High")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
+                        holder.tv_Priority!!.setText("High")
                     }
                 }
 
@@ -126,6 +132,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var img_call               : ImageView
         internal var img_location           : ImageView
         internal var img_Priority           : ImageView
+        internal var tv_Priority            : TextView
         init {
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
@@ -138,6 +145,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             img_call             = v.findViewById<View>(R.id.img_call) as ImageView
             img_location         = v.findViewById<View>(R.id.img_location) as ImageView
             img_Priority         = v.findViewById<View>(R.id.img_Priority) as ImageView
+            tv_Priority          = v.findViewById<View>(R.id.tv_Priority) as TextView
         }
     }
 

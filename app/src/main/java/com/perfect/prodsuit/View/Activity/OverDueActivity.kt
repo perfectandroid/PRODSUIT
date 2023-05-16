@@ -54,6 +54,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     RadioGroup.OnCheckedChangeListener {
     val TAG : String = "OverDueActivity"
     private var progressDialog: ProgressDialog? = null
+    private var tv_listCount: TextView?          = null
     lateinit var context: Context
     lateinit var overduelistViewModel: OverDueListViewModel
     private var rv_overduelist: RecyclerView?=null
@@ -181,6 +182,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
            val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)
             val imgv_sort= findViewById<ImageView>(R.id.imgv_sort)
             fab_Reminder = findViewById(R.id.fab_Reminder);
+            tv_listCount = findViewById(R.id.tv_listCount)
 
            imback!!.setOnClickListener(this)
             imgv_filter!!.setOnClickListener(this)
@@ -225,6 +227,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             //   var jobj = jObject.getJSONObject("UserLoginDetails")
                                             val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                             overdueArrayList = jobjt.getJSONArray("LeadManagementDetails")
+
+                                            tv_listCount!!.setText(""+overdueArrayList.length())
                                             Log.e("OverDueActivity","overdueArrayList 69  "+overdueArrayList)
                                             val lLayout = GridLayoutManager(this@OverDueActivity, 1)
                                             rv_overduelist!!.layoutManager =

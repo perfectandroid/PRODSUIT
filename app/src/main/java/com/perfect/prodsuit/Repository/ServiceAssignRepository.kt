@@ -78,6 +78,8 @@ object ServiceAssignRepository {
 //                    "EntrBy":"APP","FK_Branch":"3",Assignees{["FK_Employee":"1","EmployeeType":"3"]}
 
 
+
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(ID_CustomerServiceRegister))

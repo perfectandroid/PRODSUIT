@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
@@ -50,7 +51,6 @@ import com.perfect.prodsuit.Model.ServiceFollowUpListModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceFollowUpListAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceFollowUpListAdapter1
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceFollowUpListViewModel
@@ -62,7 +62,6 @@ import java.util.*
 
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     View.OnClickListener,OnMapReadyCallback {
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
@@ -104,19 +103,18 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        setContentView(R.layout.activity_service_follow_up_list2)
         context = this@ServiceFollowUpListActivity
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+
         val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-        setContentView(R.layout.activity_service_follow_up_list2)
+
         setId()
-        //loadData()
+        loadData()
         getServiceFollowUpList()
         setListners()
         Log.v("fssdfdsfdd", "" + ProdsuitApplication.encryptStart("22"));
@@ -126,16 +124,16 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         lin_map.setOnClickListener(this)
         tv_cancel.setOnClickListener(this)
         imageView.setOnClickListener(this)
-        swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            serviceFollowUpDet = 0
-            getServiceFollowUpList()
-//            val handler = Handler()
-//            handler.postDelayed(object : Runnable {
-//                override fun run() {
-//                    swipeRefreshLayout.isRefreshing = false
-//                }
-//            }, 2000)
-        })
+//        swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+//            serviceFollowUpDet = 0
+//            getServiceFollowUpList()
+////            val handler = Handler()
+////            handler.postDelayed(object : Runnable {
+////                override fun run() {
+////                    swipeRefreshLayout.isRefreshing = false
+////                }
+////            }, 2000)
+//        })
         img_search.setOnClickListener(this)
         imback.setOnClickListener(this)
     }
@@ -253,7 +251,6 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
-                            Log.i("response121212", "msg="+msg)
                             if (msg!!.length > 0) {
                                 Log.v("fsfsfds", "msg")
                                 if (serviceFollowUpDet == 0) {
@@ -296,9 +293,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                             } else {
                                 swipeRefreshLayout.isRefreshing = false
                             }
-                        }
-                        catch (e: Exception)
-                        {
+                        } catch (e: Exception) {
                             swipeRefreshLayout.visibility = View.GONE
                             swipeRefreshLayout.isRefreshing = false
                             tv_nodata.visibility = View.VISIBLE
@@ -335,8 +330,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         adapter.addItemClickListener(this)
     }
 
-    override fun onClick(position: Int, data: String, jsonObject: JSONObject)
-    {
+    override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
         if (data.equals("followUp")) {
 //            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
 //            val intent = Intent(this, ServiceFollowUpActivity::class.java)
@@ -367,12 +361,17 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             performCall(mobile)
         }
         if (data.equals("location")) {
-//            val jsonObject = jsonArray.getJSONObject(position)
-//            longitude = jsonObject.getString("longitude")
-//            latitude = jsonObject.getString("latitude")
-            longitude="76.94756468242483"
-            latitude="8.591705686530284"
-            loadLocation()
+            val jsonObject = serviceFollowUpArrayList.getJSONObject(position)
+            longitude = jsonObject.getString("LocLongitude")
+            latitude = jsonObject.getString("LocLattitude")
+//            longitude="76.94756468242483"
+//            latitude="8.591705686530284"
+            if (longitude.equals("") || latitude.equals("")){
+                showSnackBar("Location Not Found", this)
+            }else{
+                loadLocation()
+            }
+
         }
         if (data.equals("start")) {
             journeyType = 0
@@ -396,6 +395,15 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             val i = Intent(this, TrackerActivity::class.java)
             startActivity(i)
         }
+    }
+
+    private fun showSnackBar(message: String, activity: ServiceFollowUpListActivity) {
+
+        if (null != activity && null != message) {
+            Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT
+            ).show()
+        }
+
     }
 
     private fun loadInfo(customerServiceRegister: String) {
@@ -596,6 +604,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
             supportMapFragment!!.getMapAsync(this)
         }
+
+
     }
 
     override fun onClick(view: View?) {
@@ -956,11 +966,22 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     }
 
     private fun openAlertDialogForMoreInfo(jobjt: JSONObject) {
-        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val inflater = this.layoutInflater
-        val dialogView: View = inflater.inflate(R.layout.alert_more_info, null)
-        dialogBuilder.setView(dialogView)
-        val alertDialog = dialogBuilder.create()
+//        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+//        val inflater = this.layoutInflater
+//        val dialogView: View = inflater.inflate(R.layout.alert_more_info, null)
+//        dialogBuilder.setView(dialogView)
+//        val alertDialog = dialogBuilder.create()
+
+        var dialogView = Dialog(this)
+        dialogView!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogView!! .setContentView(R.layout.alert_more_info)
+        dialogView!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+
+        val window: Window? = dialogView.getWindow()
+        window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
         var tv_cancel: TextView = dialogView.findViewById<TextView>(R.id.tv_cancel)
         var tv_ticket: TextView = dialogView.findViewById<TextView>(R.id.tv_ticket)
         var tv_prod_regOn: TextView = dialogView.findViewById<TextView>(R.id.tv_prod_regOn)
@@ -973,9 +994,9 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         var tv_category: TextView = dialogView.findViewById<TextView>(R.id.tv_category)
         var tv_service: TextView = dialogView.findViewById<TextView>(R.id.tv_service)
         var tv_description: TextView = dialogView.findViewById<TextView>(R.id.tv_description)
-        tv_description.setMovementMethod(ScrollingMovementMethod())
+     //   tv_description.setMovementMethod(ScrollingMovementMethod())
         tv_cancel.setOnClickListener(View.OnClickListener {
-            alertDialog.dismiss()
+            dialogView.dismiss()
         })
         tv_ticket.text=jobjt.getString("Ticket")
         tv_prod_regOn.text=jobjt.getString("RegisterdOn")
@@ -987,8 +1008,10 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         tv_category.text=jobjt.getString("Category")
         tv_service.text=jobjt.getString("Service")
         tv_description.text=jobjt.getString("Description")
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        alertDialog.show()
+
+
+       // alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialogView.show()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

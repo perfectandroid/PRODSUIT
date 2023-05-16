@@ -58,18 +58,18 @@ class ServiceFollowUpListAdapter(
                 holder.tv_priority.text=jsonObject!!.getString("Priority")
                 if(jsonObject!!.getString("Priority").toString().equals("High"))
                 {
-                    Glide.with(context)
-                        .load(R.drawable.rounded_profile_bg)
-                        .into(holder.imgPriority);
+                   // Glide.with(context).load(R.drawable.rounded_profile_bg).into(holder.imgPriority);
+                    Glide.with(context).load(R.drawable.svg_hml_high).into(holder.imgPriority);
                 }
                 else if(jsonObject!!.getString("Priority").toString().equals("Medium"))
                 {
-                    Glide.with(context)
-                        .load(R.drawable.priority_medium)
-                        .into(holder.imgPriority);
+                  //  Glide.with(context).load(R.drawable.priority_medium).into(holder.imgPriority);
+                    Glide.with(context).load(R.drawable.svg_hml_medium).into(holder.imgPriority);
                 }
                 else
                 {
+                  //  Glide.with(context).load(R.drawable.priority_medium).into(holder.imgPriority);
+                    Glide.with(context).load(R.drawable.svg_hml_low).into(holder.imgPriority);
 
                 }
                 holder.tv_status.text=""+jsonObject!!.getString("CurrentStatus")

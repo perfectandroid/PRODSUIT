@@ -196,7 +196,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -380,6 +380,7 @@
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
                                                 android:editable="false"
+                                                android:enabled="false"
                                                 android:inputType="number"
                                                 android:maxLength="15"
                                                 android:focusableInTouchMode="true"
@@ -456,6 +457,7 @@
                                                 android:textSize="14dp"
                                                 android:editable="true"
                                                 android:maxLines="3"
+                                                android:maxLength="50"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"
@@ -639,7 +641,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:visibility="visible">
+                                    android:visibility="gone">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -880,7 +882,7 @@
                                             android:id="@+id/til_Description"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:hint="Description *"
+                                            android:hint="Description"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginRight="15dp"

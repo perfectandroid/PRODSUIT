@@ -99,6 +99,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList : JSONArray
     lateinit var branchSort : JSONArray
+    private var tv_listCount: TextView?          = null
     private var dialogBranch : Dialog? = null
     var recyBranch: RecyclerView? = null
     var branch = 0
@@ -181,6 +182,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)
         val imgv_sort= findViewById<ImageView>(R.id.imgv_sort)
         fab_Reminder = findViewById(R.id.fab_Reminder);
+        tv_listCount = findViewById(R.id.tv_listCount)
 
         imback!!.setOnClickListener(this)
         imgv_filter!!.setOnClickListener(this)
@@ -221,6 +223,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                         if (jObject.getString("StatusCode") == "0") {
                                             val jobjt = jObject.getJSONObject("LeadManagementDetailsList")
                                             upcmngtaskArrayList = jobjt.getJSONArray("LeadManagementDetails")
+
+                                            tv_listCount!!.setText(""+upcmngtaskArrayList.length())
                                             val lLayout = GridLayoutManager(this@UpcomingtaskActivity, 1)
                                             rv_upcmngtasklist!!.layoutManager =
                                                 lLayout as RecyclerView.LayoutManager?
