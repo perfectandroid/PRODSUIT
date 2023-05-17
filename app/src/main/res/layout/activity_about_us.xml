@@ -17,12 +17,15 @@
             android:layout_height="match_parent"
             android:background="@drawable/loginbgmain"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:background="@drawable/loginbg"
                 android:layout_weight="1.7">
+
                <ImageView
                     android:id="@+id/imback"
                     android:layout_width="60dp"
@@ -35,46 +38,58 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvLicense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:fontFamily="@font/myfont"
+                            android:text="Licenced By"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/imgAttendance"
+                            android:layout_width="225dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            app:tint="@color/white"/>
+                        <!--                    android:src="@drawable/whiteapplogo"-->
+                    </LinearLayout>
+
                     <TextView
-                        android:id="@+id/tvLicense"
+                        android:id="@+id/tvVersionid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:layout_margin="0dp"
+                        android:lineSpacingMultiplier="1.5"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:gravity="left"
                         android:fontFamily="@font/myfont"
-                        android:text="Licenced By"
-                        android:visibility="gone"/>
-                    <ImageView
-                        android:id="@+id/imv_2"
-                        android:layout_width="200dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/whiteapplogo"
-                        android:layout_gravity="center"/>
+                        android:justificationMode="inter_word"
+                        android:text="Version : "
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
                 </LinearLayout>
 
 
 
-                <TextView
-                    android:id="@+id/tvVersionid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:lineSpacingMultiplier="1.5"
-                    android:layout_gravity="center"
-                    android:gravity="left"
-                    android:fontFamily="@font/myfont"
-                    android:justificationMode="inter_word"
-                    android:text="Version : "
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
+
             </LinearLayout>
 
 
@@ -116,31 +131,33 @@
                     android:id="@+id/ll_partner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_alignParentBottom="true"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tvtechpartner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_marginTop="5dp"
-                        android:textStyle="bold"
                         android:fontFamily="@font/myfont"
+                        android:text="Technology Partner"
+                        android:textColor="@color/black"
                         android:textSize="18dp"
-                        android:text="Technology Partner"/>
+                        android:textStyle="bold" />
 
                     <ImageView
+                        android:id="@+id/img_technology"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_gravity="bottom|center_horizontal"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
                         android:background="@color/white"
-                        android:src="@drawable/companylogo" />
+                        android:src="@drawable/svg_trans" />
 
-               </LinearLayout>
+                </LinearLayout>
 
 
             </RelativeLayout>

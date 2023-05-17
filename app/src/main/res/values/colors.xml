@@ -63,6 +63,10 @@
     <color name="leadstatus_color5">#987b73</color>
 
 
+<!--    Company Color-->
+    <color name="company_background">#C9C9C9</color>
+
+
     // work
 
 <!--    <color name="leadstages_color1">#F68484</color>-->

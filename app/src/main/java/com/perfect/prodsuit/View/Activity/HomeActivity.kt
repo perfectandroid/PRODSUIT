@@ -39,10 +39,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -152,6 +152,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var notificationCount : String = "0"
     lateinit var adapterHome : HomeGridAdapter
 
+    private var img_techpartner: ImageView? = null
+    private var img_logo: ImageView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,6 +171,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
+
+        setTechnologyPartner()
+
+    }
+
+    private fun setTechnologyPartner() {
+
+        try {
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+            val AppIconImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF19, 0)
+            var IMAGEURL = IMAGE_URLSP.getString("IMAGE_URL","")
+
+            val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
+            PicassoTrustAll.getInstance(this@HomeActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_techpartner)
+
+            val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+            Log.e(TAG,"AppIconImageCode   191  "+AppIconImageCode)
+            PicassoTrustAll.getInstance(this@HomeActivity)!!.load(AppIconImageCode).error(R.drawable.svg_trans).into(img_logo)
+        }catch (e : Exception){
+
+        }
+
+
 
     }
 
@@ -317,6 +344,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
+
+        img_techpartner= findViewById(R.id.img_techpartner)
+        img_logo= findViewById(R.id.img_logo)
 
         val headerView: View = nav_view!!.getHeaderView(0)
         tv_navName = headerView!!.findViewById(R.id.tv_navName)

@@ -37,8 +37,7 @@
                 android:layout_height="25dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:tint="@color/white"
-                android:src="@drawable/companylogo" />
+                android:tint="@color/white" />
         </LinearLayout>
     </com.rom4ek.arcnavigationview.ArcNavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

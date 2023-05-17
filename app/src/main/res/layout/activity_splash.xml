@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/splashbg">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="80dp"
-                    android:src="@drawable/whiteapplogo"
+                    app:tint="@color/white"
+                    android:src="@drawable/applogo"
                     android:visibility="visible" />
             </LinearLayout>
         </ScrollView>
@@ -40,8 +42,8 @@
             android:padding="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/companylogo"
             android:tint="@color/white"
             android:visibility="visible" />
+<!--        android:src="@drawable/companylogo"-->
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
