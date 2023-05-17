@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -20,6 +21,7 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
     var pos = 0
+//    private var mItemClickListener: ItemClickListenerData? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -36,7 +38,8 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
 
-
+                Log.i("responsereport","name="+jsonObject!!.getString("ReportName").toString())
+                Log.i("responsereport","mode="+jsonObject!!.getString("ReportMode").toString())
                 if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5") && report.equals("Lead")){
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   10512   ")
@@ -65,6 +68,13 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
                 holder.llReportName!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "reportname")
                 })
+//                holder.llReportName!!.setOnClickListener(View.OnClickListener {
+//                 //   clickListener!!.onClick(position, "reportname")
+//
+//                    if (mItemClickListener != null) {
+//                        mItemClickListener!!.onClick(position, "report", jsonObject!!);
+//                    }
+//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -98,5 +108,9 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
+//    fun addItemClickListener(listener: ItemClickListenerData) {
+//        mItemClickListener = listener
+//    }
 
 }

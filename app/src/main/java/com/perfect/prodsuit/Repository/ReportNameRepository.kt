@@ -85,6 +85,7 @@ object ReportNameRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("responserrr","body=="+requestObject1.toString())
             val call = apiService.getReportNameDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

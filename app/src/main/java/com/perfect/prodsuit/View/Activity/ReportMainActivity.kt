@@ -49,6 +49,7 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
         llServiceReport = findViewById<LinearLayout>(R.id.llServiceReport)
         llLeadReport!!.setOnClickListener(this)
         llServiceReport!!.setOnClickListener(this)
+        card_collection!!.setOnClickListener(this)
 
         setLicence()
     }
@@ -91,6 +92,12 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
                // Toast.makeText(this@ReportMainActivity, "Work in progess", Toast.LENGTH_SHORT).show()
                 val i = Intent(this@ReportMainActivity, ServiceReportActivity::class.java)
                 startActivity(i)
+            }
+            R.id.card_collection->
+            {
+               Toast.makeText(this@ReportMainActivity, "Work in progess", Toast.LENGTH_SHORT).show()
+//                val i = Intent(this@ReportMainActivity, CollectionReportActivity::class.java)
+//                startActivity(i)
             }
         }
     }
