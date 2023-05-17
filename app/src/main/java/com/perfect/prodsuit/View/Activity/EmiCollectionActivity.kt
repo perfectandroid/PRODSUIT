@@ -85,6 +85,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var edtTransDate: EditText? = null
     private var edtCollectionDate: EditText? = null
     private var edtCollectedBy: EditText? = null
+    private var edtLocation: EditText? = null
 
     private var edtInsAmount: EditText? = null
     private var edtFine: EditText? = null
@@ -178,6 +179,17 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     lateinit var updateEMICollectionViewModel: UpdateEMICollectionViewModel
     var saveEmiCount = 0
 
+    private var SELECT_LOCATION: Int? = 103
+    var locAddress: String? = ""
+    var locCity: String? = ""
+    var locState: String? = ""
+    var locCountry: String? = ""
+    var locpostalCode: String? = ""
+    var locKnownName: String? = ""
+    var strLatitude: String? = ""
+    var strLongitue: String? = ""
+    var strLocationAddress: String? = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -250,6 +262,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         edtTransDate = findViewById<EditText>(R.id.edtTransDate)
         edtCollectionDate = findViewById<EditText>(R.id.edtCollectionDate)
         edtCollectedBy = findViewById<EditText>(R.id.edtCollectedBy)
+        edtLocation = findViewById<EditText>(R.id.edtLocation)
 
 
 //        edtTotalAmount = findViewById<EditText>(R.id.edtTotalAmount)
@@ -271,6 +284,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         edtTransDate!!.setOnClickListener(this)
         edtCollectionDate!!.setOnClickListener(this)
         edtCollectedBy!!.setOnClickListener(this)
+        edtLocation!!.setOnClickListener(this)
         img_payment!!.setOnClickListener(this)
         tie_Payment_Method!!.setOnClickListener(this)
         img_call!!.setOnClickListener(this)
@@ -633,6 +647,10 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             R.id.edtCollectedBy->{
                 empMediaDet = 0
                 getChannelEmp()
+            }
+            R.id.edtLocation->{
+                val intent = Intent(this@EmiCollectionActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!);
             }
 
             R.id.chkClosing->{
@@ -1507,6 +1525,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     }
 
     private fun updateEmiCollection() {
+        Log.e(TAG,"strLocationAddress  1525   "+strLocationAddress)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1516,7 +1535,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 updateEMICollectionViewModel.setUpdateEMICollection(this,strSaveTrnsDate,ID_CustomerWiseEMI!!,strSaveCollectDate,strSaveTotalAmount,strSaveFineAmount,
-                    strSaveNetAmount,ID_CollectedBy!!,saveEmiDetailsArray,savePaymentDetailArray)!!.observe(
+                    strSaveNetAmount,ID_CollectedBy!!,saveEmiDetailsArray,savePaymentDetailArray,strLongitue!!,strLatitude!!,strLocationAddress!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1605,6 +1624,52 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                     .show()
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("TAG", "onActivityResult  256   " + requestCode + "   " + resultCode + "  " + data)
+
+
+        if (requestCode == SELECT_LOCATION) {
+            if (data != null) {
+
+                try {
+                    locAddress = data.getStringExtra("address")
+                    locCity = data.getStringExtra("city")
+                    locState = data.getStringExtra("state")
+                    locCountry = data.getStringExtra("country")
+                    locpostalCode = data.getStringExtra("postalCode")
+                    locKnownName = data.getStringExtra("knownName")
+                    strLatitude = data.getStringExtra("strLatitude")
+                    strLongitue = data.getStringExtra("strLongitue")
+
+                    strLocationAddress = ""
+                    if (!locAddress.equals("")) {
+                        strLocationAddress = locAddress!!
+                    }
+                    if (!locCity.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locCity!!
+                    }
+                    if (!locState.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locState!!
+                    }
+                    if (!locCountry.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locCountry!!
+                    }
+                    if (!locpostalCode.equals("")) {
+                        strLocationAddress = strLocationAddress + "," + locpostalCode!!
+                    }
+
+                    edtLocation!!.setText(strLocationAddress)
+                } catch (e: Exception) {
+
+                }
+
+            }
+
+        }
+
     }
 
 

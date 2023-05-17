@@ -172,6 +172,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //    var str: String? = ""
 
     var serUpdateCount = 0
+    private var txt_Warning : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -828,7 +829,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
         if (dateMode == 0){
-            date_Picker1.minDate = System.currentTimeMillis()
+            date_Picker1.maxDate = System.currentTimeMillis()
         }
 
         txtCancel.setOnClickListener {
@@ -876,7 +877,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        txt_Warning = view.findViewById<TextView>(R.id.txt_Warning)
         val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+        txt_Warning!!.visibility = View.GONE
         //   time_Picker1!!.currentMinute = System.currentTimeMillis() - 1000
 
 
@@ -884,7 +887,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
-            dialog.dismiss()
+          //  dialog.dismiss()
             try {
 
 
@@ -896,41 +899,12 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 val date: Date = inputDateFormat.parse(input)
                 val output = outputDateFormat.format(date)
 
-                tie_VisitTime!!.setText(output)
-                val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
-                strVisitTime = inputDateFormat.format(date)
-//                strVisitTime = input
+//                tie_VisitTime!!.setText(output)
+//                val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+//                strVisitTime = inputDateFormat.format(date)
 
-//                val sdfTime = SimpleDateFormat("h:mm a")
-//                val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
-//                var fromT: Date? = null
-//                fromT = sdfTime.parse(output)
-//                strVisitTime = outputTimeFormat.format(fromT)
+                futureDateDisable(output,dialog,date)
 
-
-//                if (timeMode == 0){
-//                    tie_VisitTime!!.setText(output)
-//                }
-//                if (timeMode == 1){
-//                    tie_ToTime!!.setText(output)
-//                }
-
-
-//                if (fromToTime == 0){
-//                    tie_Comp_FromTime!!.setText(output)
-//                }
-//                if (fromToTime == 1){
-//                    tie_Comp_ToTime!!.setText(output)
-//                }
-
-
-
-//                val strTime = String.format(
-//                    "%02d:%02d %s", if (hr == 0) 12 else hr,
-//                    min, if (hr < 12) "AM" else "PM"
-//                )
-//
-//                ettime!!.setText(strTime)
 
 
             }
@@ -942,6 +916,61 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         dialog!!.setContentView(view)
 
         dialog.show()
+    }
+
+    private fun futureDateDisable(outTime: String, dialog: BottomSheetDialog,date : Date) {
+        try {
+
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+            val currentDate = sdf.format(Date())
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
+            var curDate = tie_VisitDate!!.text.toString()
+
+            if (sdfDate1.format(newDate).equals(curDate)){
+                Log.e(TAG,"Change date 2195   "+curDate+"  "+outTime)
+                Log.e(TAG,"Change date 2195   "+sdfTime1.format(newDate))
+//                tie_Time!!.setText(""+sdfTime1.format(newDate))
+                val format = SimpleDateFormat("hh:mm a", Locale.US)
+                val date1: Date = format.parse(outTime)
+                val date2: Date = format.parse(sdfTime1.format(newDate))
+
+                if (date1.compareTo(date2) > 0) {
+                    // time1 is greater than or equal to time2
+                    // Handle the logic for this case
+                    Log.e(TAG,"Change date 2195 gdyretyreyre  ")
+                    txt_Warning!!.visibility = View.VISIBLE
+                } else {
+                    // time1 is less than time2
+                    // Handle the logic for this case
+                    txt_Warning!!.visibility = View.GONE
+                    tie_VisitTime!!.setText(outTime)
+                    val inputDateFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.US)
+                    strVisitTime = inputDateFormat.format(date)
+                    dialog.dismiss()
+                }
+            }else{
+                txt_Warning!!.visibility = View.GONE
+                tie_VisitTime!!.setText(outTime)
+                val inputDateFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.US)
+                strVisitTime = inputDateFormat.format(date)
+                dialog.dismiss()
+            }
+
+
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
     private fun getServicePriority() {

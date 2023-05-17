@@ -457,7 +457,7 @@
                                                 android:textSize="14dp"
                                                 android:editable="true"
                                                 android:maxLines="3"
-                                                android:maxLength="50"
+                                                android:maxLength="100"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
                                                 android:textColor="@color/greydarks"

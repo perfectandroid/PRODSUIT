@@ -1773,6 +1773,62 @@
                                                 </LinearLayout>
 
 
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    android:orientation="horizontal">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginRight="5dp"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical">
+
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:background="@color/white"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:text="Location"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold"
+                                                            android:visibility="visible" />
+
+                                                        <EditText
+                                                            android:id="@+id/edtLocation"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="0dp"
+                                                            android:layout_marginRight="0dp"
+                                                            android:layout_marginBottom="0dp"
+                                                            android:layout_toLeftOf="@+id/img_search"
+                                                            android:background="@drawable/shape_bg"
+                                                            android:drawableLeft="@drawable/icon_svg_location"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:focusableInTouchMode="false"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:hint="Location"
+                                                            android:padding="7dp"
+                                                            android:paddingLeft="0dp"
+                                                            android:paddingRight="5dp"
+                                                            android:singleLine="false"
+                                                            android:maxLines="2"
+                                                            android:text=""
+                                                            android:textSize="15dp"
+                                                            android:visibility="visible" />
+
+
+                                                    </LinearLayout>
+
+
+                                                </LinearLayout>
+
+
                                             </LinearLayout>
 
                                         </ScrollView>

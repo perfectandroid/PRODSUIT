@@ -29,15 +29,16 @@ object UpdateEMICollectionRepository {
     private var progressDialog: ProgressDialog? = null
 
     fun getServicesApiCall(context: Context,strSaveTrnsDate : String, ID_CustomerWiseEMI : String, strSaveCollectDate : String, strSaveTotalAmount : String, strSaveFineAmount : String,
-                           strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray: JSONArray
-    ): MutableLiveData<UpdateEMICollectionModel> {
+                           strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray: JSONArray,
+                           strLongitue : String,strLatitude : String,strLocationAddress : String): MutableLiveData<UpdateEMICollectionModel> {
         UpdateEMICollectionData(context,strSaveTrnsDate,ID_CustomerWiseEMI,strSaveCollectDate,strSaveTotalAmount,strSaveFineAmount,
-            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray)
+            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray,strLongitue,strLatitude,strLocationAddress)
         return updateEMICollectionSetterGetter
     }
 
     private fun UpdateEMICollectionData(context: Context,strSaveTrnsDate : String, ID_CustomerWiseEMI : String, strSaveCollectDate : String, strSaveTotalAmount : String, strSaveFineAmount : String,
-                                        strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray:JSONArray) {
+                                        strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray:JSONArray,
+                                        strLongitue : String,strLatitude : String,strLocationAddress : String) {
 
         Log.e(TAG,"VALUES  1411"
                 +"\n  TrnsDate      "+strSaveTrnsDate
@@ -106,6 +107,9 @@ object UpdateEMICollectionRepository {
 //                {"BankKey":"-500","Token":"F2E50452-6F21-44A4-B81D-733A59DEE381","TrnsDate":"2023-05-08","FK_Company":"1","FK_BranchCodeUser":"3","EntrBy":"Sree","AccountMode":"2",
 //                    "ID_CustomerWiseEMI":"33","CollectDate":"2023-05-08","TotalAmount":"3960","FineAmount":"140","NetAmount":"4100","FK_Employee":"9","EMIDetails":[{"FK_CustomerWiseEMI":"33",
 //                        "CusTrDetPayAmount":"3960","CusTrDetFineAmount":"140","Total":"4100","Balance":"0","FK_Closed":"1"}],"PaymentDetail":[{"PaymentMethod":"17","Refno":"5789879","PAmount":"4100"}]}
+//                1-LocLatitude
+//                2-LocLongitude
+//                3-Address
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -122,6 +126,9 @@ object UpdateEMICollectionRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_CollectedBy))
                 requestObject1.put("EMIDetails", saveEmiDetailsArray)
                 requestObject1.put("PaymentDetail", savePaymentDetailArray)
+                requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
+                requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitue))
+                requestObject1.put("Address", ProdsuitApplication.encryptStart(strLocationAddress))
 
 
                Log.e(TAG,"114  SAVE   "+requestObject1)
