@@ -246,6 +246,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             rv_todolist!!.adapter = adapter
                                             adapter.setClickListener(this@TodoListActivity)
                                         } else {
+                                            tv_listCount!!.setText("")
                                             val builder = AlertDialog.Builder(
                                                 this@TodoListActivity,
                                                 R.style.MyDialogTheme

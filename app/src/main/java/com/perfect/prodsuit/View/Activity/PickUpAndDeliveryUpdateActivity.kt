@@ -1,17 +1,25 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,10 +33,12 @@ import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.locCountry
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -72,6 +82,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var tv_tvCategory: TextView? = null
     private var edtPayMethod: EditText? = null
     private var til_Selectstatus: TextInputLayout? = null
+    private var lllocationpickup: LinearLayout? = null
+    private var til_location: TextInputLayout? = null
+    lateinit var tie_location: AutoCompleteTextView
     private var edtPayRefNo: EditText? = null
     private var edtPayAmount: EditText? = null
     private var txtPayBalAmount: TextView? = null
@@ -88,6 +101,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var status_check: String? = null
     private var billtype: String? = null
     private var status_id = ""
+    private var SELECT_LOCATION: Int? = 103
     private var llTicketDetails: LinearLayout? = null
     private var llCustomerDetails: LinearLayout? = null
     private var llProductDetails: LinearLayout? = null
@@ -166,6 +180,18 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var productdetailsmode: String? = "1" // GONE
     var productinformationmode: String? = "1" // GONE
     var productinformationmode1: String? = "1" // GONE
+
+
+    var locAddress: String? = ""
+    var locCity: String? = ""
+    var locState: String? = ""
+    var locCountry: String? = ""
+    var locpostalCode: String? = ""
+    var locKnownName: String? = ""
+    var strLatitude: String? = ""
+    var strLongitue: String? = ""
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -448,6 +474,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                getProductInformationDetails(v)
 //                ProductInformationBottom(v)
                 ProductInformationBottom()
+//                val intent = Intent(this@PickUpAndDeliveryUpdateActivity, LocationPickerActivity::class.java)
+//                startActivityForResult(intent, SELECT_LOCATION!!)
 //                IsSelected = "0"
                 Log.e(TAG, "IsSelected196  " + IsSelected)
 
@@ -779,6 +807,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 dialogProdInformation!!.findViewById(R.id.llsubmit) as LinearLayout
             til_Selectstatus =
                 dialogProdInformation!!.findViewById(R.id.til_Selectstatus) as TextInputLayout
+            tie_location =
+                dialogProdInformation!!.findViewById(R.id.tie_location) as AutoCompleteTextView
+
 
             imback.setOnClickListener {
                 dialogProdInformation!!.dismiss()
@@ -807,6 +838,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tie_Selectbilltype!!.setOnClickListener {
                 billTypecount = 0
                 getBillType()
+            }
+
+            tie_location!!.setOnClickListener {
+
+                val intent = Intent(this@PickUpAndDeliveryUpdateActivity, LocationPickerActivity::class.java)
+                startActivityForResult(intent, SELECT_LOCATION!!)
+
             }
 
             llsubmit!!.setOnClickListener {
@@ -1766,7 +1804,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this,ID_ProductDelivery!!,PickDeliveryTime,PickDeliveryDate,remark!!,FK_BillType!!,Productdetails,arrayPaymentmethod!!,StandByAmount!!,status_id!!)!!.observe(
+                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this,ID_ProductDelivery!!,PickDeliveryTime,PickDeliveryDate,remark!!,FK_BillType!!,Productdetails,arrayPaymentmethod!!,StandByAmount!!,status_id!!,strLongitue!!,strLatitude!!,locAddress!!)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
@@ -1840,7 +1878,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
 
     }
-
 
 
     override fun onClick(position: Int, data: String) {
@@ -2352,6 +2389,62 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            Log.e(TAG, "110   Valid   : Enter Amount")
 //            Config.snackBarWarning(context, view, "Enter Amount")
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("TAG", "onActivityResult  256   " + requestCode + "   " + resultCode + "  " + data)
+
+        if (requestCode == SELECT_LOCATION) {
+            if (data != null) {
+                //    txtcustomer!!.text = data!!.getStringExtra("Name")
+
+
+//                if (data.getStringExtra("address").equals("")){
+//                    txtLocation!!.setText(data.getStringExtra("address"))
+//                }else{
+//                    txtLocation!!.setText(data.getStringExtra("city"))
+//                }
+
+                try {
+                    locAddress = data.getStringExtra("address")
+                    locCity = data.getStringExtra("city")
+                    locState = data.getStringExtra("state")
+                    locCountry = data.getStringExtra("country")
+                    locpostalCode = data.getStringExtra("postalCode")
+                    locKnownName = data.getStringExtra("knownName")
+                    strLatitude = data.getStringExtra("strLatitude")
+                    strLongitue = data.getStringExtra("strLongitue")
+
+                    var locAddres = ""
+
+                    if (!locAddress.equals("")) {
+                        locAddres = locAddress!!
+                    }
+                    if (!locCity.equals("")) {
+                        locAddres = locAddres + "," + locCity!!
+                    }
+                    if (!locState.equals("")) {
+                        locAddres = locAddres + "," + locState!!
+                    }
+                    if (!locCountry.equals("")) {
+                        locAddres = locAddres + "," + locCountry!!
+                    }
+                    if (!locpostalCode.equals("")) {
+                        locAddres = locAddres + "," + locpostalCode!!
+                    }
+
+                    tie_location!!.setText(locAddres)
+                    Log.e("TAG", "address  1155522   " +locAddres)
+
+                } catch (e: Exception) {
+
+                }
+
+            }
+
+        }
 
     }
 

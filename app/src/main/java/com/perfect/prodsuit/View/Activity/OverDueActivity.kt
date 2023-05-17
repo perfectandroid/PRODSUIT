@@ -238,6 +238,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             rv_overduelist!!.adapter = adapter
                                             adapter.setClickListener(this@OverDueActivity)
                                         } else {
+                                            tv_listCount!!.setText("")
                                             val builder = AlertDialog.Builder(
                                                 this@OverDueActivity,
                                                 R.style.MyDialogTheme
