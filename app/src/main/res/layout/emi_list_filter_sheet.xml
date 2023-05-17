@@ -178,7 +178,7 @@
                                 app:startIconDrawable="@drawable/icon_svg_ticketno"
                                 app:startIconTint="@color/colorPrimaryDark"
                                 style="@style/Widget.App.TextInputLayout"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_Area"

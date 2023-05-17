@@ -42,7 +42,7 @@
                     android:enabled="false"
                     android:fontFamily="@font/myfont"
                     android:gravity="left|center_vertical"
-                    android:hint="Search Location"
+                    android:hint="Location"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions|textMultiLine"
                     android:padding="10dp"

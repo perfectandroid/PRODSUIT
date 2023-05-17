@@ -13,8 +13,8 @@ class UpdatePickUpAndDeliveryViewModel : ViewModel() {
 
     var updatePickUpAndDeliveryData: MutableLiveData<UpdatePickUpAndDeliveryModel>? = null
 
-    fun getUpdatePickUpAndDelivery(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount :String,Status :String) : MutableLiveData<UpdatePickUpAndDeliveryModel>? {
-        updatePickUpAndDeliveryData = UpdatePickUpAndDeliveryRespository.getServicesApiCall(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status)
+    fun getUpdatePickUpAndDelivery(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount :String,Status :String,strLongitue : String, strLatitude: String, locAddress :String) : MutableLiveData<UpdatePickUpAndDeliveryModel>? {
+        updatePickUpAndDeliveryData = UpdatePickUpAndDeliveryRespository.getServicesApiCall(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status,strLongitue,strLatitude,locAddress)
         return updatePickUpAndDeliveryData
     }
 }

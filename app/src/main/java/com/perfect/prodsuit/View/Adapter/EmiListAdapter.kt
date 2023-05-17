@@ -56,6 +56,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
                 holder.tv_Due_Date.text        = jsonObject!!.getString("DueDate")
                 holder.tv_DueAmount.text        = jsonObject!!.getString("DueAmount")
                 holder.tv_Balance.text        = jsonObject!!.getString("Balance")
+                holder.tv_Area.text        = jsonObject!!.getString("Area")
 
 
                 holder.llEmiList!!.setTag(position)

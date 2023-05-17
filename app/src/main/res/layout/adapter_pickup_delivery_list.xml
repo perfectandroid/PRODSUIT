@@ -69,7 +69,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:background="@drawable/svg_trans50"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:paddingLeft="10dp"

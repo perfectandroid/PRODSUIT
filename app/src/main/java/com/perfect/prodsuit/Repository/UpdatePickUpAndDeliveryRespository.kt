@@ -27,12 +27,12 @@ object UpdatePickUpAndDeliveryRespository {
     val updatePickUpAndDeliverySetterGetter = MutableLiveData<UpdatePickUpAndDeliveryModel>()
     val TAG: String = "UpdatePickUpAndDeliveryRespository"
 
-    fun getServicesApiCall(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String, remark : String, FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount:String,Status: String): MutableLiveData<UpdatePickUpAndDeliveryModel> {
-        getViewDocument(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status)
+    fun getServicesApiCall(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String, remark : String, FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount:String,Status: String,strLongitue : String, strLatitude: String, locAddress :String): MutableLiveData<UpdatePickUpAndDeliveryModel> {
+        getViewDocument(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status,strLongitue,strLatitude,locAddress)
         return updatePickUpAndDeliverySetterGetter
     }
 
-    private fun getViewDocument(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String,Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount: String,Status: String) {
+    private fun getViewDocument(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String,Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount: String,Status: String,strLongitue : String, strLatitude: String, locAddress :String) {
 
         try {
             updatePickUpAndDeliverySetterGetter.value = UpdatePickUpAndDeliveryModel("")
@@ -80,6 +80,11 @@ object UpdatePickUpAndDeliveryRespository {
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(remark))
                 requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(FK_BillType))
                 requestObject1.put("Status", (Status))
+
+                requestObject1.put("LocLatitude", (strLatitude))
+                requestObject1.put("LocLongitude", (strLongitue))
+                requestObject1.put("Address", (locAddress))
+
                 requestObject1.put("Productdetails", (Productdetails))
                 requestObject1.put("PaymentDetail", (PaymentDetail))
 

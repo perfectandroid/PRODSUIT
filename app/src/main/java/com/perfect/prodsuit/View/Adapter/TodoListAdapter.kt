@@ -67,8 +67,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                     holder.tv_leadno!!.getBackground().setTint(context.getColor(R.color.upcomung_light_Color));
                 }
                 if (SubMode.equals("4")){
-                    holder.ll_leadNo!!.setBackgroundColor(context.getColor(R.color.mylead_Color));
-                    holder.tv_leadno!!.getBackground().setTint(context.getColor(R.color.mylead_light_Color));
+                    holder.ll_leadNo!!.setBackgroundColor(context.getColor(R.color.color_lite_common4));
+                    holder.tv_leadno!!.getBackground().setTint(context.getColor(R.color.mylead_light_Color1));
                     holder.immessage.visibility=View.GONE
                 }
 
