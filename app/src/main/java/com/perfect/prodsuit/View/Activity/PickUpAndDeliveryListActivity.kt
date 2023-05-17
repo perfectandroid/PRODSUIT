@@ -224,7 +224,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 recyPickUpDelivery!!.adapter = adapter
                 adapter.setClickListener(this@PickUpAndDeliveryListActivity)
 
-
+                tv_listCount!!.setText(""+pickup_and_deliverysort.length())
             }
 
 

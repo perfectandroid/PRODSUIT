@@ -117,6 +117,7 @@ object TodoListRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("response2","body lead="+requestObject1.toString())
             val call = apiService.getLeadManagementDetailsList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(

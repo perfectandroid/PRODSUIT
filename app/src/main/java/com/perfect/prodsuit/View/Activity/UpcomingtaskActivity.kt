@@ -234,6 +234,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             adapter.setClickListener(this@UpcomingtaskActivity)
 
                                         } else {
+                                            tv_listCount!!.setText("")
                                             val builder = AlertDialog.Builder(
                                                 this@UpcomingtaskActivity,
                                                 R.style.MyDialogTheme

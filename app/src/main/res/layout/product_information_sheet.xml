@@ -97,6 +97,22 @@
                     android:orientation="vertical">
 
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/statusproduct"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyProdInformation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:nestedScrollingEnabled="false"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:id="@+id/statusproduct"
@@ -115,6 +131,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:hint="Status *"
+                            android:textColorHint="@color/red"
                             app:endIconMode="custom"
                             app:startIconDrawable="@drawable/icon_svg_status"
                             app:startIconTint="@color/colorPrimary">
@@ -143,7 +160,7 @@
                         android:id="@id/llbilltype"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/ll_product_btn"
+                        android:layout_above="@+id/lllocationpickup"
                         android:visibility="gone"
                         android:orientation="horizontal">
 
@@ -226,20 +243,46 @@
 
 
                     <LinearLayout
+                        android:id="@+id/lllocationpickup"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_above="@+id/statusproduct"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_above="@+id/ll_product_btn"
                         android:orientation="vertical">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyProdInformation"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_location"
+                            style="@style/Widget.App.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="0dp"
-                            android:nestedScrollingEnabled="false"
-                            android:visibility="visible" />
+                            android:drawableTint="@color/textColor"
+                            android:fontFamily="@font/myfont"
+                            android:hint="Location"
+                            app:endIconMode="custom"
+                            app:startIconDrawable="@drawable/icon_svg_location"
+                            app:startIconTint="@color/colorPrimary">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/tie_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="5dp"
+                                android:drawableTint="@color/textColor"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:textColor="@color/greydarks"
+                                android:textSize="14dp"
+                                android:textStyle="normal" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:id="@+id/ll_product_btn"

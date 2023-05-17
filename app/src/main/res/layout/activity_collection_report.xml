@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.Activity.CollectionReportActivity"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
+            android:background="@color/color_background"
+            android:orientation="vertical">
+            <!--            android:background="@drawable/loginbgmain"-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_header">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imback"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:padding="10dp"
+                        android:src="@drawable/back_arro"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="Collection Report"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:tint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_ReportName"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                android:hint="Report Name"
+                                android:textColorHint="@color/greydarks">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_ReportName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/greydark"
+                                    android:drawableLeft="@drawable/svg_report"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:drawablePadding="5dp"
+                                    android:drawableTint="@color/textColor"
+                                    android:focusableInTouchMode="false"
+                                    android:editable="false"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:textColor="@color/greydarks"
+                                    android:textSize="14dp"
+                                    android:textStyle="normal" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="25dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+
+                                <Button
+                                    android:id="@+id/btnReset"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/btn_resetbg"
+                                    android:fontFamily="@font/myfont"
+                                    android:padding="2dp"
+                                    android:text="Reset"
+                                    android:textAllCaps="false"
+                                    android:textSize="15dp" />
+
+
+                                <Button
+                                    android:id="@+id/btnSubmit"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/btn_bgcolour"
+                                    android:fontFamily="@font/myfont"
+                                    android:padding="2dp"
+                                    android:text="Submit"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

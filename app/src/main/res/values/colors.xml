@@ -250,6 +250,9 @@
     <color name="mylead_Color">#4C754E</color>
     <color name="mylead_light_Color">#659567</color>
 
+    <color name="mylead_light_Color1">#79ADAF</color>
+    <color name="color_lite_common4">#548E91</color>
+
 
 
 
@@ -385,6 +388,9 @@
     <color name="color_common2">#6C606C</color>
     <color name="color_common3">#FF667B7C</color>
     <color name="color_common4">#447B7E</color>
+
+
+    <color name="color_lite_common1">#4D82A1</color>
 
 
 <!--    <color name="color_pickup">#4D7878</color>-->
