@@ -21,6 +21,8 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.text.HtmlCompat
+import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -62,6 +64,7 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
     private var txt_mobile: TextView? = null
     private var txt_email: TextView? = null
     private var txt_address: TextView? = null
+    private var tvtechpartner: TextView? = null
 
     private var img_CompanyLogo: ImageView? = null
     private var img_technology: ImageView? = null
@@ -92,6 +95,7 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         txt_mobile = findViewById(R.id.txt_mobile)
         txt_email = findViewById(R.id.txt_email)
         txt_address = findViewById(R.id.txt_address)
+        tvtechpartner = findViewById(R.id.tvtechpartner)
 
         img_CompanyLogo = findViewById(R.id.img_CompanyLogo)
         img_technology = findViewById(R.id.img_technology)
@@ -113,6 +117,12 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
 
         val ContactAddressSP = applicationContext.getSharedPreferences(Config.SHARED_PREF35, 0)
         txt_address!!.text =  ContactAddressSP.getString("ContactAddress", "")
+
+
+//        val htmlCode = "Customer : Chendayad Granits</br> Address : Industrial Grouth Center, </br>Mobile : 9605080960</br>Category/Product : Mini solar panel/100 Ah Bat</br>Complaint : Server Issue</br>Remarks : Urgent"
+//        val formattedText = HtmlCompat.fromHtml(htmlCode, HtmlCompat.FROM_HTML_MODE_LEGACY)
+//        tvtechpartner!!.text = formattedText
+//        TextViewCompat.setTextAppearance(tvtechpartner!!, android.R.style.TextAppearance_Material_Small)
 
     }
 

@@ -5,22 +5,30 @@ import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Model.ModelServiceAttendedTemp
+import com.perfect.prodsuit.Model.ModelTracker
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TrackerAdapter
+import com.perfect.prodsuit.View.Adapter.TrackerAdapter1
+
 import com.perfect.prodsuit.Viewmodel.CommonViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.ArrayList
 
 class TrackerActivity : AppCompatActivity() , View.OnClickListener{
     var TAG  ="TrackerActivity"
@@ -35,6 +43,11 @@ class TrackerActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var compCategoryArrayList : JSONArray
     lateinit var compCategorySort: JSONArray
     var recyTracker: RecyclerView? = null
+    var ll_parent: LinearLayout? = null
+
+    val handler = Handler()
+    val delayMillis = 2500L // 10 seconds
+    val modelTracker = ArrayList<ModelTracker>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +70,7 @@ class TrackerActivity : AppCompatActivity() , View.OnClickListener{
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        ll_parent = findViewById<LinearLayout>(R.id.ll_parent)
         recyTracker = findViewById<RecyclerView>(R.id.recyTracker)
         recyTracker!!.adapter = null
     }
@@ -101,10 +115,41 @@ class TrackerActivity : AppCompatActivity() , View.OnClickListener{
                                                 compCategorySort.put(jsonObject)
                                             }
 
+//                                            val lLayout = GridLayoutManager(this@TrackerActivity, 1)
+//                                            recyTracker!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            val adapter = TrackerAdapter(this@TrackerActivity, compCategorySort)
+//                                            recyTracker!!.adapter = adapter
+//
+////
+//                                            val itemAnimator = SlideInItemAnimator()
+//                                            recyTracker!!.itemAnimator = itemAnimator
+//                                            val inflater = LayoutInflater.from(context)
+//                                            val childLayout = inflater.inflate(R.layout.adapter_tracker, null) as LinearLayout
+
                                             val lLayout = GridLayoutManager(this@TrackerActivity, 1)
                                             recyTracker!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = TrackerAdapter(this@TrackerActivity, compCategorySort)
+                                            val adapter = TrackerAdapter1(this@TrackerActivity, modelTracker!!,compCategorySort.length())
                                             recyTracker!!.adapter = adapter
+
+
+                                            for (i in 0 until compCategoryArrayList.length()) {
+
+                                                handler.postDelayed({
+                                                    // Code to execute after the delay
+                                                    // This block will be executed every 10 seconds
+                                                    var jsonObject = compCategoryArrayList.getJSONObject(i)
+                                                    modelTracker.add(i, ModelTracker(jsonObject.getString("Code"),jsonObject.getString("Description")))
+                                                    adapter.notifyItemInserted(i)
+
+                                                    // Perform your desired actions here
+                                                    Log.e(TAG, "Iteration $i")
+                                                  //  ll_parent!!.addView(childLayout)
+                                                    Log.e(TAG, "235   SIZE ${modelTracker.size}  "+modelTracker[i].Description)
+
+                                                }, i * delayMillis)
+
+
+                                            }
 
 
                                         }
