@@ -119,7 +119,7 @@
                                     android:textSize="12dp"
                                     android:paddingLeft="4dp"
                                     android:fontFamily="@font/myfont"
-                                    android:text="Ticket"
+                                    android:text="Ticket Number"
                                     android:textColor="@color/greydarks"
                                     android:layout_centerVertical="true" />
 
@@ -282,7 +282,7 @@
                                         android:textSize="12dp"
                                         android:paddingLeft="4dp"
                                         android:fontFamily="@font/myfont"
-                                        android:text="Name"
+                                        android:text="Category/Product Name"
                                         android:textColor="@color/greydarks"
                                         android:layout_centerVertical="true" />
 

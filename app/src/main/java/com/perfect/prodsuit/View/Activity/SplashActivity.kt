@@ -95,7 +95,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val CERT_NAME = "spectrumlive.pem"
 //    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
-//    val BANK_KEY = "-101"
+//    val BANK_KEY = "-500"
 
     // Demo 17-03-2023
 //    val CERT_NAME = "supportdemo.pem"

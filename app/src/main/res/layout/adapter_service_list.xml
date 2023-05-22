@@ -229,6 +229,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.8"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -243,7 +244,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:textSize="12dp"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
                                 android:fontFamily="@font/myfont"
                                 android:text="Ticket No"
                                 android:textColor="@color/list_label"
@@ -271,11 +273,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:textSize="12dp"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
                                 android:paddingLeft="2dp"
                                 android:fontFamily="@font/myfont"
                                 android:text=""
-                                android:textStyle="normal"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
 
@@ -912,61 +914,73 @@
                         android:layout_marginRight="5dp"/>
 
                     <LinearLayout
-                        android:id="@+id/ll_tracker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:layout_marginRight="3dp"
-                        android:orientation="vertical"
-                        android:visibility="visible">
+                        android:layout_weight="2.5"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:id="@+id/ll_tracker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:layout_marginRight="3dp"
+                            android:orientation="vertical"
+                            android:visibility="visible">
 
-                            <ImageView
-                                android:id="@+id/im_tracker"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_track_changes"
-                                android:scaleType="fitXY"
-                                android:padding="4dp"
-                                android:visibility="visible"
-                                app:tint="@color/colorPrimary" />
+                            <LinearLayout
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:gravity="center"
+                                android:layout_marginRight="5dp"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/im_tracker"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:src="@drawable/ic_track_changes"
+                                    android:scaleType="fitXY"
+                                    android:padding="4dp"
+                                    android:visibility="visible"
+                                    app:tint="@color/colorPrimary" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:layout_marginLeft="3dp"
-                        android:orientation="vertical">
-
                         <LinearLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:gravity="center"
+                            android:layout_marginLeft="3dp"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:id="@+id/im_edit"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_edit"
-                                android:scaleType="fitXY"
-                                android:visibility="visible"
-                                app:tint="@color/colorPrimary" />
+                            <LinearLayout
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/im_edit"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:src="@drawable/ic_edit"
+                                    android:scaleType="fitXY"
+                                    android:visibility="visible"
+                                    app:tint="@color/colorPrimary" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
+
                     </LinearLayout>
+
+
 
 
                 </LinearLayout>
