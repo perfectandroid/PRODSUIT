@@ -205,9 +205,11 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 filterTicketNumber = tie_pTicketNumber!!.text!!.toString().toLowerCase().trim()
 
                 pickup_and_deliverysort = JSONArray()
-
                 for (k in 0 until pickUpDeliveryArrayList.length()) {
                     val jsonObject = pickUpDeliveryArrayList.getJSONObject(k)
+
+                    Log.e(TAG,"7788899999    "+jsonObject.getString("PickUpTime"))
+
                     if ((jsonObject.getString("ReferenceNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
                         && (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(filterCustomer!!))
                         && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
