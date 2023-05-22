@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/splashbg"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgAttendance"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/svg_lock_mpin"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/myfont"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Enter Old &amp; New Mpin to reset your Mpin"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_text1"
+                android:textStyle="normal" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_margin="25dp"
+                android:padding="5dp"
+                android:orientation="vertical">
+
+<!--                android:background="@drawable/round_border_trans"-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_old_mpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Old Mpin"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    app:hintTextColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/myfont"
+                    app:endIconMode="custom"
+                    app:boxStrokeColor="@drawable/text_input_layout_selector"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/white"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_old_mpin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:textSize="14dp"
+                        android:singleLine="true"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/white"
+                        android:drawablePadding="-10dp"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_mpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="New Mpin"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    app:hintTextColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/myfont"
+                    app:endIconMode="custom"
+                    app:boxStrokeColor="@drawable/text_input_layout_selector"
+                    app:startIconDrawable="@drawable/ic__lock"
+                    app:startIconTint="@color/white"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_new_mpin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/white"
+                        android:drawablePadding="-10dp"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_confirm_mpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Mpin"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/textColor"
+                    app:hintTextColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/myfont"
+                    app:endIconMode="custom"
+                    app:boxStrokeColor="@drawable/text_input_layout_selector"
+                    app:startIconDrawable="@drawable/icclock"
+                    app:startIconTint="@color/white"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_confirm_mpin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/white"
+                        android:drawablePadding="-10dp"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_mpin_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/svg_bg_cancel"
+                        android:fontFamily="@font/myfont"
+                        android:layout_weight="1.5"
+                        android:layout_margin="1dp"
+                        android:gravity="center"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:alpha="0.5"
+                        android:textSize="@dimen/header_text"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+                    <Button
+                        android:id="@+id/btn_mpin_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/svg_bg_submit"
+                        android:fontFamily="@font/myfont"
+                        android:layout_weight="1"
+                        android:layout_margin="1dp"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:alpha="0.5"
+                        android:textSize="@dimen/header_text"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

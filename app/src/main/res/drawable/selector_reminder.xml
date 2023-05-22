@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true"
-        android:drawable="@drawable/svg_bell_remove" /> <!-- checked -->
+        android:drawable="@drawable/ic_svg_bell_add" /> <!-- checked -->
     <item android:state_checked="false"
-        android:drawable="@drawable/svg_bell_add" /> <!-- unchecked-->
+        android:drawable="@drawable/ic_svg_bell_remove" /> <!-- unchecked-->
 </selector>
+
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item android:state_checked="true"-->
+<!--        android:drawable="@drawable/svg_bell_remove" /> &lt;!&ndash; checked &ndash;&gt;-->
+<!--    <item android:state_checked="false"-->
+<!--        android:drawable="@drawable/svg_bell_add" /> &lt;!&ndash; unchecked&ndash;&gt;-->
+<!--</selector>-->

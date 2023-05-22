@@ -179,7 +179,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Ticket"
+                                                        android:text="Ticket Number"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 
@@ -655,7 +655,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Requested Date "
+                                                        android:text="Registered Date"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 
@@ -723,7 +723,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="4dp"
-                                                            android:text="Requested Time"
+                                                            android:text="Registered Time"
                                                             android:textColor="@color/greydarks"
                                                             android:textSize="12dp" />
 

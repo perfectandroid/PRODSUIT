@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -59,10 +60,11 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     lateinit var espenseViewModel: ExpenseViewModel
     private var rv_expenselist: RecyclerView?=null
     private var txtv_totexp: TextView?=null
-    private var imv_2: ImageView?=null
+    private var imgAttendance: ImageView?=null
     private var imexpense: ImageView?=null
     lateinit var expenseArrayList : JSONArray
     var txtfromDate : TextView? = null
+    var img_technology : ImageView? = null
     lateinit var companyLogoViewModel: CompanyLogoViewModel
     var tie_FromDate : TextInputEditText? = null
     var tie_ToDate : TextInputEditText? = null
@@ -77,18 +79,43 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         getCalendarId(context)
         getCompanyLogo()
 
+        setTechnologyPartner()
+
     }
 
     private fun setRegViews() {
         val tvAboutus = findViewById<TextView>(R.id.tvAboutus)
         val tvVersionid = findViewById<TextView>(R.id.tvVersionid)
         val imback = findViewById<ImageView>(R.id.imback)
-         imv_2= findViewById<ImageView>(R.id.imv_2)
+         img_technology = findViewById<ImageView>(R.id.img_technology)
+        imgAttendance= findViewById<ImageView>(R.id.imgAttendance)
         imback!!.setOnClickListener(this)
+
         tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
         val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
         tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
         tvAboutus.setMovementMethod(ScrollingMovementMethod())
+    }
+
+    private fun setTechnologyPartner() {
+
+        try {
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+            val AppIconImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF19, 0)
+            var IMAGEURL = IMAGE_URLSP.getString("IMAGE_URL","")
+
+            val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
+            PicassoTrustAll.getInstance(this@AboutUsActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_technology)
+
+//            val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+//            PicassoTrustAll.getInstance(this@HomeActivity)!!.load(AppIconImageCode).error(R.drawable.svg_trans).into(img_logo)
+        }catch (e : Exception){
+
+        }
+
+
+
     }
 
     override fun onClick(v: View) {
@@ -113,12 +140,12 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+//                progressDialog = ProgressDialog(this, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
                 companyLogoViewModel.getCompanylogoType(this)!!.observe(
                     this,
                     Observer { expenseSetterGetter ->
@@ -137,53 +164,51 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 var companyname =jobjt.getString("CompanyName")
 
                                 logo = jobjt!!.getString("CompanyLogo")
-                                Log.i("DIL", count)
+                                Log.e("DIL 731 ", count)
 
                                 if(type.equals("0"))
                                 {
                                    // tv_Status!!.visibility=View.GONE;
                                     if(!logo.equals(""))
                                     {
-
                                         val decodedString = Base64.decode(logo, Base64.DEFAULT)
                                         ByteArrayToBitmap(decodedString)
                                         val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
                                         val stream = ByteArrayOutputStream()
                                         decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                                  //      Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
-
+                                        Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
 
                                     }
                                 }
-                                else
-                                {
-                                    if(!logo.equals(""))
-                                    {
-
-                                        val decodedString = Base64.decode(logo, Base64.DEFAULT)
-                                        ByteArrayToBitmap(decodedString)
-                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                                        val stream = ByteArrayOutputStream()
-                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                                        Glide.with(this) .load(stream.toByteArray()).into(imv_2!!)
-
-
-                                    }
-                                  // tv_Status!!.visibility=View.VISIBLE;
-                                   // tv_Status!!.text=companyname
-                                }
+//                                else
+//                                {
+//                                    if(!logo.equals(""))
+//                                    {
+//
+//                                        val decodedString = Base64.decode(logo, Base64.DEFAULT)
+//                                        ByteArrayToBitmap(decodedString)
+//                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//                                        val stream = ByteArrayOutputStream()
+//                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//                                        Glide.with(this) .load(stream.toByteArray()).into(imv_2!!)
+//
+//
+//                                    }
+//                                  // tv_Status!!.visibility=View.VISIBLE;
+//                                   // tv_Status!!.text=companyname
+//                                }
 
 
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+               // progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -191,6 +216,7 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             }
         }
     }
+
     override fun onClick(position: Int, data: String) {
         /* if (data.equals("todolist")){
              val jsonObject = todoArrayList.getJSONObject(position)

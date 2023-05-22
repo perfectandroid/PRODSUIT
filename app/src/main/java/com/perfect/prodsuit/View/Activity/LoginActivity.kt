@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
@@ -46,6 +47,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         var strEPhone = ""
     }
     var countLogin=0
+    var img_logo: ImageView? = null
+    var img_technology: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +59,11 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         var btlogin = findViewById<Button>(R.id.btlogin)
         etxt_mob = findViewById<EditText>(R.id.etxt_mob)
         progress = findViewById(R.id.progress)
+        img_logo = findViewById(R.id.img_logo)
+        img_technology = findViewById(R.id.img_technology)
+        setTechnologyPartner()
         checkLocationPermission()
+
 
         btlogin.setOnClickListener {
             Config.disableClick(it)
@@ -86,6 +93,27 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(intent, RC_SIGN_IN)
         }
+    }
+
+    private fun setTechnologyPartner() {
+
+        try {
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+            val AppIconImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF19, 0)
+            var IMAGEURL = IMAGE_URLSP.getString("IMAGE_URL","")
+
+            val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
+            PicassoTrustAll.getInstance(this@LoginActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_technology)
+
+            val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+            PicassoTrustAll.getInstance(this@LoginActivity)!!.load(AppIconImageCode).error(R.drawable.svg_trans).into(img_logo)
+        }catch (e : Exception){
+
+        }
+
+
+
     }
 
     private fun CheckTestingMobile() {

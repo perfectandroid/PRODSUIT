@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/lin_follow"
@@ -421,6 +422,7 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginRight="13dp"
+                            android:layout_marginLeft="10dp"
                             android:backgroundTint="@color/grey"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
@@ -434,6 +436,7 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginRight="13dp"
+                            android:layout_marginLeft="10dp"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:padding="3dp"
@@ -442,10 +445,11 @@
 
                         <ImageView
                             android:id="@+id/im_tracker"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_marginRight="13dp"
                             android:padding="1dp"
+                            android:layout_marginLeft="10dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/ic_track_changes"
                             android:visibility="visible"
@@ -453,8 +457,9 @@
 
                         <LinearLayout
                             android:id="@+id/lin_time"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
                             android:backgroundTint="@color/colorPrimary">
 
                             <ImageView
