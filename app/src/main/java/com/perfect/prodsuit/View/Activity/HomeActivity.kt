@@ -41,6 +41,8 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
@@ -48,6 +50,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
+import com.perfect.prodsuit.View.Service.LocationService
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
@@ -589,7 +592,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.nav_changempin -> {
-                changeMpin()
+               // changeMpin()
+                changeMpin1()
             }
             R.id.nav_about -> {
                 val i = Intent(this@HomeActivity, AboutUsActivity::class.java)
@@ -748,6 +752,77 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
     }
 
+    private fun changeMpin1() {
+
+        val dialogMpinSheet = Dialog(this)
+        dialogMpinSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogMpinSheet!! .setContentView(R.layout.changepin_dialog)
+        dialogMpinSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+        dialogMpinSheet!!.setCancelable(false)
+
+        val window: Window? = dialogMpinSheet!!.getWindow()
+        window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        val til_old_mpin = dialogMpinSheet .findViewById(R.id.til_old_mpin) as TextInputLayout
+        val tie_old_mpin = dialogMpinSheet .findViewById(R.id.tie_old_mpin) as TextInputEditText
+        val tie_new_mpin = dialogMpinSheet .findViewById(R.id.tie_new_mpin) as TextInputEditText
+        val tie_confirm_mpin = dialogMpinSheet .findViewById(R.id.tie_confirm_mpin) as TextInputEditText
+
+        val btn_mpin_cancel = dialogMpinSheet .findViewById(R.id.btn_mpin_cancel) as Button
+        val btn_mpin_submit = dialogMpinSheet .findViewById(R.id.btn_mpin_submit) as Button
+
+        btn_mpin_cancel.setOnClickListener {
+            dialogMpinSheet!!.dismiss()
+        }
+
+        btn_mpin_submit.setOnClickListener {
+
+            if (tie_old_mpin!!.text.toString() == null || tie_old_mpin!!.text.toString().isEmpty()) {
+//                tie_old_mpin!!.setError("Please Enter Your Old mPin.")
+                Config.snackBarWarning(context,it,"Please Enter Your Old mPin.")
+            }
+            else if (tie_old_mpin!!.text.toString().isNotEmpty() && tie_old_mpin!!.text.toString().length!=6) {
+//                tie_old_mpin.setError("Please Enter 6 digit mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit Old mPin")
+            }
+            else if (tie_new_mpin!!.text.toString() == null || tie_new_mpin!!.text.toString().isEmpty()) {
+               // tie_new_mpin!!.setError("Please Enter Your New mPin.")
+                Config.snackBarWarning(context,it,"Please Enter Your New mPin.")
+            }
+            else if (tie_new_mpin!!.text.toString().isNotEmpty() && tie_new_mpin!!.text.toString().length!=6) {
+//                tie_new_mpin.setError("Please Enter 6 digit mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit New mPin")
+            }
+            else if (tie_confirm_mpin!!.text.toString() == null || tie_confirm_mpin!!.text.toString().isEmpty()) {
+               // tie_confirm_mpin!!.setError("Please Confirm Your New mPin.")
+                Config.snackBarWarning(context,it,"Please Confirm Your New mPin.")
+            }
+            else if (tie_confirm_mpin!!.text.toString().isNotEmpty() && tie_confirm_mpin!!.text.toString().length!=6) {
+                //  tie_confirm_mpin.setError("Please Enter 6 digit mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit Confirm mPin")
+            }
+            else if (tie_new_mpin!!.text.toString() != tie_confirm_mpin!!.text.toString()) {
+                Config.snackBarWarning(context,it,"New & Confirm mPin doesn't match")
+//                val dialog: AlertDialog.Builder = AlertDialog.Builder(this)
+//                dialog.setMessage("New & Confirm mPin doesn't match")
+//                dialog.setPositiveButton("Ok",
+//                    DialogInterface.OnClickListener { dialog, which ->
+//                    })
+//                val alertDialog: AlertDialog = dialog.create()
+//                alertDialog.show()
+            }
+
+            else{
+                dialogMpinSheet!!.dismiss()
+                changempinverficationcode(tie_old_mpin!!.text.toString(), tie_new_mpin!!.text.toString())
+            }
+        }
+
+        dialogMpinSheet!!.show()
+
+    }
+
     private fun changeMpin() {
         try {
             val dialog1 = Dialog(this)
@@ -836,6 +911,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     )
                                     builder.setMessage(jobj.getString("ResponseMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        val i = Intent(this@HomeActivity, MpinActivity::class.java)
+                                        startActivity(i)
+                                        finish()
                                     }
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
@@ -1707,6 +1786,20 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
         }
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//        Log.e(TAG,"3666  11   ")
+//        val serviceIntent = Intent(this, LocationService::class.java)
+//        startService(serviceIntent)
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        Log.e(TAG,"3666  22   ")
+//        val serviceIntent = Intent(this, LocationService::class.java)
+//        stopService(serviceIntent)
+//    }
 }
 
 

@@ -781,7 +781,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
               // detailBottomSheet()
 
                 var custname=tie_CustomerName!!.text.toString()
-                detailPopupSheet(custname)
+                if (ID_Customer!!.equals("")){
+
+                }else{
+                    detailPopupSheet(custname)
+                }
+
             }
             R.id.tv_customerClick->{
 
@@ -1146,7 +1151,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 Config.disableClick(v)
               //  detailBottomSheet()
                 var custname=tie_CustomerName!!.text.toString()
-                detailPopupSheet(custname)
+                if (ID_Customer!!.equals("")){
+
+                    Config.snackBarWarning(context,v,"Select Customer")
+
+                }else{
+                    detailPopupSheet(custname)
+                }
             }
 
         }

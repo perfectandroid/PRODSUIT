@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -8,24 +9,29 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
@@ -191,6 +197,16 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     var strLocationAddress: String? = ""
 
 
+    // Location
+    val PERMISSION_ID = 42
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    var handler: Handler = Handler()
+    var runnable: Runnable? = null
+    var delay = 5000
+    var geocoder: Geocoder? = null
+    var addresses: List<Address>? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -215,13 +231,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         setRegViews()
         getCurrentDate()
         hideViews()
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         emiCollectnDet = 0
         getEmiCollectionDetails()
 
-
     }
-
-
 
 
     private fun setRegViews() {
@@ -675,7 +689,22 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             R.id.btnSubmit->{
 
+                Config.disableClick(v)
                 saveValidation(v)
+//                if (checkPermissions()) {
+//                    if (isLocationEnabled()) {
+//
+//                    } else {
+//                        Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+//                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                        startActivity(intent)
+//                    }
+//                } else {
+//                    requestPermissions()
+//                }
+
+
+
 //                if (applyMode == 1){
 //
 //                }else{
@@ -1670,6 +1699,176 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         }
 
+    }
+
+//    Location Start
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if (location == null) {
+                        requestNewLocationData()
+                    } else {
+
+                        try {
+                            geocoder = Geocoder(this, Locale.getDefault())
+                            addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1)
+                            var address = addresses!!.get(0).getAddressLine(0)
+                            var city = addresses!!.get(0).locality
+                            var state = addresses!!.get(0).adminArea
+                            var country = addresses!!.get(0).countryName
+                            var postalCode = addresses!!.get(0).postalCode
+                            var knownName = addresses!!.get(0).featureName
+                            strLongitue = location.longitude.toString()
+                            strLatitude = location.latitude.toString()
+
+                            strLocationAddress = ""
+                            if (!address.equals("")) {
+                                strLocationAddress = address!!
+                            }
+                            if (!city.equals("")) {
+                                strLocationAddress = strLocationAddress + "," + city!!
+                            }
+                            if (!state.equals("")) {
+                                strLocationAddress = strLocationAddress + "," + state!!
+                            }
+                            if (!country.equals("")) {
+                                strLocationAddress = strLocationAddress + "," + country!!
+                            }
+                            if (!postalCode.equals("")) {
+                                strLocationAddress = strLocationAddress + "," + postalCode!!
+                            }
+
+
+                        }catch (e: Exception){
+                            Log.e("TAG","SSSS   170113   "+e.toString())
+                        }
+
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
+        }
+    }
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        var mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 0
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var mLastLocation: Location = locationResult.lastLocation
+
+            try {
+                geocoder = Geocoder(this@EmiCollectionActivity, Locale.getDefault())
+                addresses = geocoder!!.getFromLocation(mLastLocation.latitude, mLastLocation.longitude, 1)
+                var address = addresses!!.get(0).getAddressLine(0)
+                var city = addresses!!.get(0).locality
+                var state = addresses!!.get(0).adminArea
+                var country = addresses!!.get(0).countryName
+                var postalCode = addresses!!.get(0).postalCode
+                var knownName = addresses!!.get(0).featureName
+                strLongitue = mLastLocation.longitude.toString()
+                strLatitude = mLastLocation.latitude.toString()
+
+                strLocationAddress = ""
+                if (!address.equals("")) {
+                    strLocationAddress = address!!
+                }
+                if (!city.equals("")) {
+                    strLocationAddress = strLocationAddress + "," + city!!
+                }
+                if (!state.equals("")) {
+                    strLocationAddress = strLocationAddress + "," + state!!
+                }
+                if (!country.equals("")) {
+                    strLocationAddress = strLocationAddress + "," + country!!
+                }
+                if (!postalCode.equals("")) {
+                    strLocationAddress = strLocationAddress + "," + postalCode!!
+                }
+
+
+
+            }catch (e: Exception){
+                Log.e("TAG","SSSS   170122   "+e.toString())
+            }
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+//    Location S
+
+    override fun onResume() {
+        handler.postDelayed(Runnable {
+            handler.postDelayed(runnable!!, delay!!.toLong())
+//            Toast.makeText(
+//                this@EmiCollectionActivity, "This method is run every 10 seconds",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            getLastLocation()
+        }.also { runnable = it }, delay!!.toLong())
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable!!) //stop handler when activity not visible super.onPause();
     }
 
 
