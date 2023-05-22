@@ -92,9 +92,10 @@ object ServiceFollowUpRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            Log.i("response1234567", "body="+requestObject1)
+            Log.i("response2erer", "body="+requestObject1)
             val call = apiService.getServiceFollowUpDetailsList(body)
-            call.enqueue(object : retrofit2.Callback<String> {
+            call.enqueue(object : retrofit2.Callback<String>
+            {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>

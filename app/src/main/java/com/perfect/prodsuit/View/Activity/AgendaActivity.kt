@@ -29,7 +29,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.mikephil.charting.data.PieEntry
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,6 +39,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -72,6 +72,36 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     ItemClickListenerData,
     OnMapReadyCallback,
     RadioGroup.OnCheckedChangeListener {
+    var textid: TextView? = null
+    var coun: TextView? = null
+    var lcoun: LinearLayout? = null
+
+
+    var servicesecond: LinearLayout? = null
+    var leadfirst: LinearLayout? = null
+    var emithird: LinearLayout? = null
+
+    //...............
+    var mainpage: LinearLayout? = null
+    var firstpage: LinearLayout? = null
+    var secondpage: LinearLayout? = null
+    var thirdpage: LinearLayout? = null
+
+    private var lead_count_agenda: TextView? = null
+    private var service_count_agenda: TextView? = null
+    private var emi_count_agenda: TextView? = null
+
+    private var lead_count: TextView? = null
+    private var service_count: TextView? = null
+    private var emi_count: TextView? = null
+
+    lateinit var leadArrayList: JSONArray
+    lateinit var serviceArrayList: JSONArray
+    lateinit var emiArrayList: JSONArray
+    var agendaAllListCount = 0
+    var count_LEAD: String? = "0"
+    var count_SERVICE: String? = "0"
+    var count_EMI: String? = "0"
 
     var leadClick: String? = "1"
     var serviceClick: String? = "1"
@@ -80,16 +110,14 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //    var serviceClick = 0
 //    var emiClick = 0
 
-    private var lead_count: TextView? = null
-    private var service_count: TextView? = null
-    private var emi_count: TextView? = null
+
     var relativeTab: RelativeLayout? = null
     var ll_tab_lead: LinearLayout? = null
     var ll_tab_service: LinearLayout? = null
     var ll_tab_emi: LinearLayout? = null
-    var countLead: TextView? = null
-    var countService: TextView? = null
-    var countEmi: TextView? = null
+    //  var countLead: TextView? = null
+//    var countService: TextView? = null
+//    var countEmi: TextView? = null
 
     var strCustomer = ""
     var strMobile = ""
@@ -189,7 +217,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     var tv_actionType: TextView? = null
     var agendaTypeClick: String? = "0"
     var ID_ActionType: String? = ""
-    var SubMode: String? = "1"
+    var SubMode: String? = "0"
     internal var sortFilter: Int = 0
     var selectedPos: Int = 0
 
@@ -207,7 +235,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     var recyActionType: RecyclerView? = null
     var recyAgendaDetail: RecyclerView? = null
     var recyAgendaType: RecyclerView? = null
-    var submode = "1";
+    var submode = "0";
 
     var imgv_filter1: ImageView? = null
     var imgv_filter: ImageView? = null
@@ -243,7 +271,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     private var strLeadValue = "";
     var statusposition = 0
     var toDoDet = 0
-    private var fromfilter= ""
+    private var fromfilter = ""
     lateinit var todolistViewModel: TodoListViewModel
     lateinit var serviceFollowUpListViewModel: ServiceFollowUpListViewModel
     private var rv_todolist: RecyclerView? = null
@@ -283,6 +311,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     var iService = ""
     var iCollection = ""
 
+    lateinit var agendalistViewModel: AgendaListViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -302,6 +333,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
         leadDetailViewModel = ViewModelProvider(this).get(LeadDetailViewModel::class.java)
 
+        agendalistViewModel = ViewModelProvider(this).get(AgendaListViewModel::class.java)
+
         sharedPreferences = context!!.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
 
 
@@ -312,21 +345,26 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 ////        registerReceiver(myReceiver, intentFilter)
 
         setRegViews()
-     //   apiCall()
-        addTabItem()
+
+
         SubMode = "1"
         name = ""
         date = ""
         criteria = ""
         ID_LeadGenerate = ""
+
+        getAgendaList()
+
+
         // getAgendaCounts()
 
         //    getAgendatypes()
         //    getActionTypes()
 
     }
-    private fun apiCall()
-    {
+
+
+    private fun apiCall() {
         toDoDet = 0
         emiCount = 0
         getTodoList()
@@ -334,7 +372,12 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         getEmiAgenda()
 
     }
+
     private fun addTabItem() {
+
+
+
+
         val DashBordMenu = context.getSharedPreferences(Config.SHARED_PREF54, 0)
         val jsonObj = JSONObject(DashBordMenu.getString("ModuleList", ""))
         iLead = jsonObj!!.getString("LEAD")
@@ -352,73 +395,26 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         ID_Lead_Details = ""
         strLeadValue = ""
 
-        Log.i("rtretr", "Service check=" + iService)
-        Log.i("rtretr", "Lead check=" + iLead)
-        Log.i("rtretr", "emi=" + iCollection)
-
-
-
-//        ll_tab_emi!!.setBackgroundResource(R.drawable.shape_rectangle_border)
-//        ll_tab_lead!!.setBackgroundResource(R.drawable.shape_rectangle_border)
-//        ll_tab_service!!.setBackgroundResource(R.drawable.shape_rectangle_border)
-
 
 
 
         if (iLead.equals("true")) {
             Log.i("rtretr", "iLead only=")
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
-            ll_tab_lead!!.visibility=View.VISIBLE
-//            llMainDetail!!.visibility = View.VISIBLE
-//            fab_Reminder!!.visibility=View.VISIBLE
-//            rv_todolist!!.visibility = View.VISIBLE
-//            rv_todolist1!!.visibility = View.GONE
-//            imgv_filter1!!.visibility=View.GONE
-            //         imgv_filter!!.visibility=View.VISIBLE
-//            rv_todolist!!.adapter = null
-//            toDoDet = 0
-//            getTodoList()
 
-
-
+            leadfirst!!.visibility = View.VISIBLE
 
 
         }
         if (iService.equals("true")) {
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
-            ll_tab_service!!.visibility=View.VISIBLE
+
+            servicesecond!!.visibility = View.VISIBLE
 
             Log.i("rtretr", "Service only=")
-            //      imgv_filter1!!.visibility=View.VISIBLE
 
-//            rv_todolist!!.visibility  =View.GONE
-//            imgv_filter!!.visibility=View.GONE
-//            //  fab_Reminder!!.visibility=View.GONE
-//
-//
-//            tabLayout!!.getTabAt(0)!!.text
-//            Log.i("rtretrerwerwrer","Service only="+ tabLayout!!.getTabAt(0)!!.text)
-//
-//            val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-//            val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-//            val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-//            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-//
-//            ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-//            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-//            ID_Lead_Details = ""
-//            strLeadValue = ""
-//
-//            rv_todolist1!!.visibility  =View.VISIBLE
-//
-//            rv_todolist1!!.adapter = null
-//            toDoDet = 0
-//            getTodoList1()
         }
         if (iCollection.equals("true")) {
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Emi"))
-            ll_tab_emi!!.visibility=View.VISIBLE
-            //    imgv_filterEmi!!.visibility=View.VISIBLE
+
+            emithird!!.visibility = View.VISIBLE
         }
 
         //........................
@@ -443,281 +439,155 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         } else {
 
 
-            if(iLead.equals("true")) {
+            if (iLead.equals("true")) {
                 Log.i("responseCheckApi", "leadsAPi")
+                leadfirst!!.visibility = View.VISIBLE
+                getLeadList(leadArrayList)
+                //............................
 
 
 
-//                var a = tabLayout!!.getTabAt(0)!!.text
-//                var b= "34"
-//                val concatString = "$a $b"
-//
-//                tabLayout!!.getTabAt(0)!!.setText(concatString.toString())
-
-
-                rv_todolist1!!.visibility = View.GONE
-                imgv_filter1!!.visibility = View.GONE
-                imgv_filterEmi!!.visibility = View.GONE
-                countService!!.visibility = View.GONE
-                countEmi!!.visibility = View.GONE
-                ll_tab_lead!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg1)
-
-                llMainDetail!!.visibility = View.VISIBLE
-                fab_Reminder!!.visibility = View.VISIBLE
-                rv_todolist!!.visibility = View.VISIBLE
-                imgv_filter!!.visibility = View.VISIBLE
-                countLead!!.visibility = View.VISIBLE
-
-                rv_todolist!!.adapter = null
-                toDoDet = 0
-                getTodoList()
-            }
-            else if(iService.equals("true")) {
+            } else if (iService.equals("true")) {
                 Log.i("responseCheckApi", "ServicesAPi")
-             //  tabLayout1!!.addTab(tabLayout1!!.newTab().setText("31"))
-                rv_todolist!!.visibility = View.GONE
-                imgv_filter!!.visibility = View.GONE
-                imgv_filterEmi!!.visibility = View.GONE
-                countEmi!!.visibility = View.GONE
-                countLead!!.visibility = View.GONE
-                fab_Reminder!!.visibility = View.GONE
-                ll_tab_service!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg1)
+                servicesecond!!.visibility = View.VISIBLE
+                getServiceList(serviceArrayList)
 
-                tabLayout!!.getTabAt(0)!!.text
-              //  Log.i("rtretrerwerwrer", "Service only=" + tabLayout!!.getTabAt(0)!!.text)
+                //............................
 
-                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 
-                ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-                ID_Lead_Details = ""
-                strLeadValue = ""
 
-                rv_todolist1!!.visibility = View.VISIBLE
-                imgv_filter1!!.visibility = View.VISIBLE
-                countService!!.visibility = View.VISIBLE
-                rv_todolist1!!.adapter = null
-                toDoDet = 0
-                getTodoList1()
-            }
-            else if(iCollection.equals("true")) {
+            } else if (iCollection.equals("true")) {
                 Log.i("responseCheckApi", "EmiApi")
-           //     tabLayout1!!.addTab(tabLayout1!!.newTab().setText("2"))
-                fab_Reminder!!.visibility = View.GONE
-                imgv_filter!!.visibility = View.GONE
-                countLead!!.visibility = View.GONE
-                countService!!.visibility = View.GONE
-                imgv_filter1!!.visibility = View.GONE
-                recyEmiList!!.visibility = View.VISIBLE
-                ll_tab_emi!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg1)
-
-//                rv_todolist!!.visibility = View.GONE
-//                rv_todolist1!!.visibility = View.GONE
-//                recyEmiList!!.visibility = View.VISIBLE
+                emithird!!.visibility = View.VISIBLE
+                getEmi(emiArrayList)
+                //............................
 
 
-                imgv_filterEmi!!.visibility = View.VISIBLE
-
-//
-//            rv_todolist1!!.visibility = View.GONE
-//            imgv_filter1!!.visibility = View.GONE
-//            rv_todolist!!.visibility = View.GONE
-//            imgv_filter!!.visibility = View.GONE
-//
-                recyEmiList!!.adapter = null
-//            //...........
-                emiCount = 0
-                getEmiAgenda()
 
             }
 
         }
 
 
-        //    Log.i("rtretrerwerwrer","Service only="+ tabLayout!!.getTabAt(0)!!.text)
+//...................................
 
 
-//        if (iLead.equals("false") && iService.equals("false") && iCollection.equals("false"))
-//        {
-//          //  agendaEmpty!!.visibility = View.VISIBLE
-//            checkEmptyList!!.visibility=View.VISIBLE
-//
-//           // llMainDetail!!.visibility = View.GONE
-//            fab_Reminder!!.visibility=View.GONE
-//            imgv_filter1!!.visibility=View.GONE
-//            imgv_filter!!.visibility=View.GONE
-//            lltab!!.visibility=View.GONE
-//        }
+//        tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+////        Log.i("rtretrerwerwrer","Service only="+ tabLayout!!.getTabAt(0)!!.text)
+//        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//            override fun onTabSelected(tab: TabLayout.Tab) {
 //
 //
+//                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Leads")) {
+//                    Log.i("responseCheckApi", "lead click")
+
 //
+//                }
+//                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Services")) {
 //
 //
 //
-//        if (iLead.equals("true") && iService.equals("true") && iCollection.equals("true"))
-//        {
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Emi"))
+//                }
+//                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Emi")) {
 //
-//            fab_Reminder!!.visibility=View.VISIBLE
-//            rv_todolist!!.visibility = View.VISIBLE
-//            rv_todolist1!!.visibility = View.GONE
-//            imgv_filter1!!.visibility=View.GONE
-//            imgv_filter!!.visibility=View.VISIBLE
-//            rv_todolist!!.adapter = null
-//            toDoDet = 0
-//            getTodoList()
-//
-//        }
-//        else
-//        {
-//            if(iLead.equals("true")){
-//                Log.i("rtretr","iLead only=")
-//                tabLayout!!.addTab(tabLayout!!.newTab().setText("Leads"))
-//                llMainDetail!!.visibility = View.VISIBLE
-//                fab_Reminder!!.visibility=View.VISIBLE
-//                rv_todolist!!.visibility = View.VISIBLE
-//                rv_todolist1!!.visibility = View.GONE
-//                imgv_filter1!!.visibility=View.GONE
-//                imgv_filter!!.visibility=View.VISIBLE
-//                rv_todolist!!.adapter = null
-//                toDoDet = 0
-//                getTodoList()
-//
+
+////            //...........
+//                    emiCount = 0
+//                    getEmiAgenda()
+//                }
 //
 //            }
-//            else if(iService.equals("true"))
-//            {
-//                tabLayout!!.addTab(tabLayout!!.newTab().setText("Services"))
-//                Log.i("rtretr","Service only=")
 //
-//
-//                rv_todolist!!.visibility  =View.GONE
-//                imgv_filter!!.visibility=View.GONE
-//              //  fab_Reminder!!.visibility=View.GONE
-//
-//
-//
-//
-//                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-//                val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-//                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-//
-//                ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-//                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-//                ID_Lead_Details = ""
-//                strLeadValue = ""
-//
-//                rv_todolist1!!.visibility  =View.VISIBLE
-//                imgv_filter1!!.visibility=View.VISIBLE
-//                rv_todolist1!!.adapter = null
-//                toDoDet = 0
-//                getTodoList1()
+//            override fun onTabUnselected(tab: TabLayout.Tab) {
+//                Log.e(TAG, "onTabUnselected  162  " + tab.position)
 //            }
-//            else if (iCollection.equals("true"))
-//            {
-//                tabLayout!!.addTab(tabLayout!!.newTab().setText("Emi"))
+//
+//            override fun onTabReselected(tab: TabLayout.Tab) {
+//                Log.e(TAG, "onTabReselected  165  " + tab.position)
 //            }
-//        }
+//        })
+
+//.....................................................
+    }
+
+    private fun getEmi(emiArrayList: JSONArray) {
+        if (emiArrayList.length() > 0) {
+            setEmiAgendaRecycler(emiArrayList)
+        } else {
+            val builder = AlertDialog.Builder(
+                this@AgendaActivity,
+                R.style.MyDialogTheme
+            )
+            emi_count!!.setText("0")
 
 
-        tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
-//        Log.i("rtretrerwerwrer","Service only="+ tabLayout!!.getTabAt(0)!!.text)
-        tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
 
-
-                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Leads")) {
-                    Log.i("responseCheckApi", "lead click")
-
-                    rv_todolist1!!.visibility = View.GONE
-                    recyEmiList!!.visibility = View.GONE
-                    imgv_filter1!!.visibility = View.GONE
-                    imgv_filterEmi!!.visibility = View.GONE
-                    countService!!.visibility = View.GONE
-                    countEmi!!.visibility = View.GONE
-
-                    fab_Reminder!!.visibility = View.VISIBLE
-                    rv_todolist!!.visibility = View.VISIBLE
-                    imgv_filter!!.visibility = View.VISIBLE
-                    countLead!!.visibility = View.VISIBLE
-
-
-                    rv_todolist!!.adapter = null
-                    toDoDet = 0
-                    getTodoList()
-
-
-                }
-                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Services")) {
-                    Log.i("responseCheckApi", "service click")
-                    rv_todolist!!.visibility = View.GONE
-                    imgv_filter!!.visibility = View.GONE
-                    recyEmiList!!.visibility = View.GONE
-                    fab_Reminder!!.visibility = View.GONE
-                    imgv_filterEmi!!.visibility = View.GONE
-                    countEmi!!.visibility = View.GONE
-                    countLead!!.visibility = View.GONE
-
-                    val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                    val BranchNameSP =
-                        applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-                    val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                    val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-
-                    ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-                    ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-                    ID_Lead_Details = ""
-                    strLeadValue = ""
-
-                    rv_todolist1!!.visibility = View.VISIBLE
-                    imgv_filter1!!.visibility = View.VISIBLE
-                    countService!!.visibility = View.VISIBLE
-                    rv_todolist1!!.adapter = null
-                    toDoDet = 0
-                    getTodoList1()
-
-
-                }
-                if (tabLayout!!.getTabAt(tab.position)!!.text!!.equals("Emi")) {
-
-                    Log.i("responseCheckApi", "emi click")
-                    imgv_filter!!.visibility = View.GONE
-                    imgv_filter1!!.visibility = View.GONE
-                    fab_Reminder!!.visibility = View.GONE
-                    countLead!!.visibility = View.GONE
-                    countService!!.visibility = View.GONE
-
-                    countEmi!!.visibility=View.VISIBLE
-                    recyEmiList!!.visibility = View.VISIBLE
-                    imgv_filterEmi!!.visibility = View.VISIBLE
-//
-//                    rv_todolist1!!.visibility = View.GONE
-//                    imgv_filter1!!.visibility = View.GONE
-//                    rv_todolist!!.visibility = View.GONE
-//                    imgv_filter!!.visibility = View.GONE
-//
-                    recyEmiList!!.adapter = null
-//            //...........
-                    emiCount = 0
-                    getEmiAgenda()
-                }
-
+            builder.setMessage("No data Found")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+             //   dialogInterface.dismiss()
+                onBackPressed()
+                //                                               finish()
             }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-                Log.e(TAG, "onTabUnselected  162  " + tab.position)
-            }
+    }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
-                Log.e(TAG, "onTabReselected  165  " + tab.position)
+    private fun getServiceList(serviceArrayList: JSONArray) {
+
+        if (serviceArrayList.length() > 0) {
+            setServiceRecyclerAgenda(serviceArrayList)
+        } else {
+            val builder = AlertDialog.Builder(
+                this@AgendaActivity,
+                R.style.MyDialogTheme
+            )
+            service_count!!.setText("0")
+
+
+
+            builder.setMessage("No data Found")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+             //   dialogInterface.dismiss()
+                onBackPressed()
+                //                                               finish()
             }
-        })
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+
+        }
+
+
+    }
+
+
+    private fun getLeadList(leadArrayList: JSONArray) {
+
+        if (leadArrayList.length() > 0) {
+            setLeasdRecyClerviewAdapter(leadArrayList)
+        } else {
+            val builder = AlertDialog.Builder(
+                this@AgendaActivity,
+                R.style.MyDialogTheme
+            )
+          //  lead_count!!.setText("0")
+
+
+
+            builder.setMessage("No data Found")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+              //  dialogInterface.dismiss()
+                onBackPressed()
+                //                                               finish()
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+
+        }
 
 
     }
@@ -725,6 +595,127 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     private fun getEmiAgenda() {
         // Toast.makeText(context,"Emi api",Toast.LENGTH_SHORT).show()
         getEmiList()
+    }
+
+    private fun getAgendaList() {
+        Log.e("responseww", "AsOnDate=  " + AsOnDate)
+        ReqMode = "105"
+        SubMode = "0"
+        context = this@AgendaActivity
+        agendalistViewModel = ViewModelProvider(this).get(AgendaListViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                agendalistViewModel.getAgendalist(
+                    this,
+                    ReqMode!!,
+                    SubMode!!,
+                    ID_FinancePlanType!!,
+                    AsOnDate!!,
+                    ID_Category!!,
+                    ID_Area!!,
+                    Demand!!
+
+                )!!.observe(
+                    this
+
+                ) { todolistSetterGetter ->
+                    try {
+                        val msg = todolistSetterGetter.message
+                        Log.i("weweqweqwe", "msg=" + msg!!.length)
+
+                        if (msg!!.length > 0) {
+                            if (agendaAllListCount == 0) {
+                                agendaAllListCount++
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("AgendaCountDtls")
+
+                                    count_LEAD = jobjt.get("LEAD").toString()
+                                    count_SERVICE = jobjt.get("SERVICE").toString()
+                                    count_EMI = jobjt.get("EMI").toString()
+
+
+
+                                    Log.i("fgdgf", "lead=" + count_LEAD)
+                                    Log.i("fgdgf", "SERVICE=" + count_SERVICE)
+                                    Log.i("fgdgf", "emi=" + count_EMI)
+                                    leadArrayList =
+                                        jobjt.getJSONArray("LeadData")
+                                    serviceArrayList = jobjt.getJSONArray("ServiceData")
+                                    emiArrayList = jobjt.getJSONArray("EMIData")
+
+                                    Log.i("fgdgf1", "lead size=" + leadArrayList.length())
+                                    Log.i("fgdgf1", "service size=" + serviceArrayList.length())
+                                    Log.i("fgdgf1", "emi size=" + emiArrayList.length())
+                                    //    addTabItem()
+
+                                  //add count here
+
+                                    addCount(
+                                        count_LEAD!!,
+                                        count_SERVICE!!,
+                                        count_EMI!!,
+                                        leadArrayList,
+                                        serviceArrayList,
+                                        emiArrayList
+                                    )
+
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AgendaActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    lead_count!!.setText("0")
+
+                                    service_count!!.setText("0")
+                                    emi_count!!.setText("0")
+
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                       // dialogInterface.dismiss()
+                                        onBackPressed()
+                                        //                                               finish()
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+
+                            }
+                        }
+
+
+                    } catch (e: Exception) {
+                        Log.i("responseCatch", "ex=" + e.printStackTrace())
+                    }
+                }
+                progressDialog!!.dismiss()
+            }
+            else -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun addCount(
+        countLead: String, countService: String, countEmi: String,
+        leadArrayList: JSONArray, serviceArrayList: JSONArray, emiArrayList: JSONArray
+    ) {
+
+        lead_count_agenda!!.text = countLead
+        service_count_agenda!!.text = countService
+        emi_count_agenda!!.text = countEmi
+
+        addTabItem()
     }
 
     private fun getEmiList() {
@@ -805,7 +796,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
                                         builder.setPositiveButton("OK") { dialogInterface, which ->
-                                       //     finish()
+                                            //     finish()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
@@ -844,9 +835,25 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
     private fun setRegViews() {
+        lcoun = findViewById<LinearLayout>(R.id.lcoun)
+        textid = findViewById<TextView>(R.id.textid);
+        coun = findViewById<TextView>(R.id.coun);
+
+        emithird = findViewById<LinearLayout>(R.id.emithird)
+        servicesecond = findViewById<LinearLayout>(R.id.servicesecond)
+        leadfirst = findViewById<LinearLayout>(R.id.leadfirst)
 
 
 
+
+        mainpage = findViewById<LinearLayout>(R.id.mainpage)
+        firstpage = findViewById<LinearLayout>(R.id.firstpage)
+        secondpage = findViewById<LinearLayout>(R.id.secondpage)
+        thirdpage = findViewById<LinearLayout>(R.id.thirdpage)
+
+        lead_count_agenda = findViewById<TextView>(R.id.lead_count_agenda)
+        service_count_agenda = findViewById<TextView>(R.id.service_count_agenda)
+        emi_count_agenda = findViewById<TextView>(R.id.emi_count_agenda)
 
         lead_count = findViewById<TextView>(R.id.lead_count);
         service_count = findViewById<TextView>(R.id.service_count);
@@ -861,9 +868,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         if (AsOnDate.equals("")) {
             getCurrentDate()
         }
-        countLead = findViewById(R.id.countLead)
-        countService = findViewById(R.id.countService)
-        countEmi = findViewById(R.id.countEmi)
+//        countLead = findViewById(R.id.countLead)
+//        countService = findViewById(R.id.countService)
+//        countEmi = findViewById(R.id.countEmi)
 
         imgv_filterEmi = findViewById(R.id.imgv_filterEmi)
         recyEmiList = findViewById<RecyclerView>(R.id.recyEmiList)
@@ -890,6 +897,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         ll_tab_lead!!.setOnClickListener(this)
         ll_tab_service!!.setOnClickListener(this)
         ll_tab_emi!!.setOnClickListener(this)
+        leadfirst!!.setOnClickListener(this)
+        servicesecond!!.setOnClickListener(this)
+        emithird!!.setOnClickListener(this)
 
 //        tabLayout = findViewById(R.id.tabLayout);
 //        llMainDetail = findViewById(R.id.llMainDetail);
@@ -1023,7 +1033,77 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
     override fun onClick(v: View) {
+
         when (v.id) {
+            R.id.leadfirst -> {
+
+                mainpage!!.visibility = View.GONE
+//                secondpage!!.visibility = View.GONE
+                recyEmiList!!.visibility = View.GONE
+                rv_todolist1!!.visibility = View.GONE
+                textid!!.text="LEAD"
+                imgv_filterEmi!!.visibility=View.GONE
+                imgv_filter1!!.visibility = View.GONE
+
+                coun!!.visibility = View.VISIBLE
+                coun!!.text=leadArrayList.length().toString()
+                rv_todolist!!.visibility = View.VISIBLE
+                firstpage!!.visibility = View.VISIBLE
+                imgv_filter!!.visibility = View.VISIBLE
+                fab_Reminder!!.visibility = View.VISIBLE
+
+
+
+                rv_todolist!!.adapter = null
+                getLeadList(leadArrayList)
+
+            }
+            R.id.servicesecond -> {
+                mainpage!!.visibility = View.GONE
+                rv_todolist!!.visibility = View.GONE
+                recyEmiList!!.visibility = View.GONE
+//                firstpage!!.visibility = View.GONE
+//                thirdpage!!.visibility = View.GONE
+
+                imgv_filterEmi!!.visibility=View.GONE
+                imgv_filter!!.visibility = View.GONE
+                fab_Reminder!!.visibility = View.GONE
+
+
+                rv_todolist1!!.visibility = View.VISIBLE
+                coun!!.visibility = View.VISIBLE
+                coun!!.text=serviceArrayList.length().toString()
+                textid!!.text="SERVICE"
+                secondpage!!.visibility = View.VISIBLE
+                imgv_filter1!!.visibility = View.VISIBLE
+
+
+                rv_todolist1!!.adapter = null
+                getServiceList(serviceArrayList)
+
+
+            }
+            R.id.emithird -> {
+                mainpage!!.visibility = View.GONE
+//                firstpage!!.visibility = View.GONE
+//                secondpage!!.visibility = View.GONE
+                imgv_filter!!.visibility = View.GONE
+                fab_Reminder!!.visibility = View.GONE
+                imgv_filter1!!.visibility = View.GONE
+                rv_todolist!!.visibility = View.GONE
+                rv_todolist1!!.visibility = View.GONE
+
+                recyEmiList!!.visibility=View.VISIBLE
+                textid!!.text="EMI"
+               coun!!.visibility = View.VISIBLE
+                coun!!.text=emiArrayList.length().toString()
+                thirdpage!!.visibility = View.VISIBLE
+                imgv_filterEmi!!.visibility=View.VISIBLE
+                recyEmiList!!.adapter = null
+                getEmi(emiArrayList)
+
+
+            }
 
 
             R.id.ll_tab_lead -> {
@@ -1034,8 +1114,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                 imgv_filter1!!.visibility = View.GONE
                 imgv_filterEmi!!.visibility = View.GONE
-                countService!!.visibility = View.GONE
-                countEmi!!.visibility = View.GONE
+                //    countService!!.visibility = View.GONE
+                //    countEmi!!.visibility = View.GONE
                 recyEmiList!!.visibility = View.GONE
                 rv_todolist1!!.visibility = View.GONE
 
@@ -1043,11 +1123,17 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 fab_Reminder!!.visibility = View.VISIBLE
                 rv_todolist!!.visibility = View.VISIBLE
                 imgv_filter!!.visibility = View.VISIBLE
-                countLead!!.visibility = View.VISIBLE
+                //   countLead!!.visibility = View.VISIBLE
 
                 rv_todolist!!.adapter = null
-                toDoDet = 0
-                getTodoList()
+//                toDoDet = 0
+//                getTodoList()
+
+                lead_count!!.text = leadArrayList.length().toString()
+                service_count!!.text = serviceArrayList.length().toString()
+                emi_count!!.text = emiArrayList.length().toString()
+
+             //   getLeadList(leadArrayList);
 
             }
             R.id.ll_tab_service -> {
@@ -1058,8 +1144,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 rv_todolist!!.visibility = View.GONE
                 imgv_filter!!.visibility = View.GONE
                 imgv_filterEmi!!.visibility = View.GONE
-                countEmi!!.visibility = View.GONE
-                countLead!!.visibility = View.GONE
+                //  countEmi!!.visibility = View.GONE
+                //  countLead!!.visibility = View.GONE
                 fab_Reminder!!.visibility = View.GONE
                 recyEmiList!!.visibility = View.GONE
 
@@ -1078,10 +1164,14 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                 rv_todolist1!!.visibility = View.VISIBLE
                 imgv_filter1!!.visibility = View.VISIBLE
-                countService!!.visibility = View.VISIBLE
+                //    countService!!.visibility = View.VISIBLE
                 rv_todolist1!!.adapter = null
                 toDoDet = 0
-                getTodoList1()
+                //   getTodoList1()
+                lead_count!!.text = leadArrayList.length().toString()
+                service_count!!.text = serviceArrayList.length().toString()
+                emi_count!!.text = emiArrayList.length().toString()
+                getServiceList(serviceArrayList)
 
             }
             R.id.ll_tab_emi -> {
@@ -1092,8 +1182,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                 fab_Reminder!!.visibility = View.GONE
                 imgv_filter!!.visibility = View.GONE
-                countLead!!.visibility = View.GONE
-                countService!!.visibility = View.GONE
+                //   countLead!!.visibility = View.GONE
+                //  countService!!.visibility = View.GONE
                 imgv_filter1!!.visibility = View.GONE
                 rv_todolist!!.visibility = View.GONE
                 rv_todolist1!!.visibility = View.GONE
@@ -1107,35 +1197,25 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 recyEmiList!!.adapter = null
 //            //...........
                 emiCount = 0
-                getEmiAgenda()
+                //         getEmiAgenda()
+                lead_count!!.text = leadArrayList.length().toString()
+                service_count!!.text = serviceArrayList.length().toString()
+                emi_count!!.text = emiArrayList.length().toString()
+                getEmi(emiArrayList)
 
             }
 
             R.id.imback -> {
-                finish()
+
+
+                onBackPressed()
+
             }
             R.id.imgv_filter -> {
                 // filterData()
                 Config.disableClick(v)
                 filterBottomData()
-                //       Toast.makeText(context,"Lead filter",Toast.LENGTH_SHORT).show()
-//                if (Id_Agenda.equals("1")){
-//                    filterBottomData()
-//                }
-//                if(iLead.equals("true"))
-//                {
-//                    filterBottomData()
-//                }
-//                if(iService.equals("true"))
-//                {
-//                    showFilterAlertService()
-//                    Toast.makeText(context,"Service filter",Toast.LENGTH_SHORT).show()
-//                }
-//                if(iCollection.equals("true"))
-//                {
-//
-//                    Toast.makeText(context,"Emi filter",Toast.LENGTH_SHORT).show()
-//                }
+
 
             }
             R.id.imgv_filter1 -> {
@@ -1201,6 +1281,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 var ii: Int = 0
                 val gson = Gson()
                 val json = sharedPreferences!!.getString("Set", "")
+                Log.i("responseShared", "from=" + json)
                 var lstChkArray = ArrayList<String>()
                 if (json!!.isNotEmpty()) {
                     val collectionType: Type = object : TypeToken<List<String?>?>() {}.getType()
@@ -1232,6 +1313,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             }
         }
     }
+
 
     private fun filterBottomSheetEmi() {
         try {
@@ -1280,8 +1362,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                 emiListSort = JSONArray()
 
-                for (k in 0 until emiListArrayList.length()) {
-                    val jsonObject = emiListArrayList.getJSONObject(k)
+                for (k in 0 until emiArrayList.length()) {
+                    val jsonObject = emiArrayList.getJSONObject(k)
                     //  if (textlength <= jsonObject.getString("TicketNo").length) {
                     if ((jsonObject.getString("Customer")!!.toLowerCase().trim()
                             .contains(strCustomer!!))
@@ -1480,7 +1562,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     private fun filterBottomData() {
 
         try {
-            fromfilter=""
+            fromfilter = ""
             val dialog = BottomSheetDialog(this)
             val layout1 = layoutInflater.inflate(R.layout.filter_popup, null)
 
@@ -1509,7 +1591,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             tie_LeadValue!!.setText("")
             til_LeadValue!!.setHint("")
 
-
+            tie_Employee?.isClickable = false
 
             tie_Branch!!.setOnClickListener(this)
             tie_Employee!!.setOnClickListener(this)
@@ -1523,11 +1605,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             if (isAdmin.equals("1")) {
                 ll_admin_staff!!.visibility = View.VISIBLE
                 tie_Branch!!.isEnabled = true
-                tie_Employee!!.isEnabled = true
+                //     tie_Employee!!.isEnabled = true
             } else {
                 ll_admin_staff!!.visibility = View.GONE
                 tie_Branch!!.isEnabled = false
-                tie_Employee!!.isEnabled = false
+                //     tie_Employee!!.isEnabled = false
             }
 
 
@@ -1541,17 +1623,17 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 getBranch()
             })
 
-            tie_Employee!!.setOnClickListener(View.OnClickListener {
-                Config.disableClick(it)
-                Log.e(TAG, " 796   tie_Employee")
-                if (ID_Branch.equals("")) {
-                    Config.snackBars(context, it, "Select Branch")
-                } else {
-                    empUseBranch = 0
-                    getEmpByBranch()
-                }
-
-            })
+//            tie_Employee!!.setOnClickListener(View.OnClickListener {
+//                Config.disableClick(it)
+//                Log.e(TAG, " 796   tie_Employee")
+//                if (ID_Branch.equals("")) {
+//                    Config.snackBars(context, it, "Select Branch")
+//                } else {
+//                    empUseBranch = 0
+//                    getEmpByBranch()
+//                }
+//
+//            })
 
             tie_LeadDetails!!.setOnClickListener(View.OnClickListener {
 
@@ -1576,23 +1658,20 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                     Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
                     // Config.snackBars(context,it,"Select Employee")
                 }
-//                else if (ID_Lead_Details.equals("")){
-//                    Toast.makeText(applicationContext, "Select Lead Details", Toast.LENGTH_SHORT).show()
-//                    // Config.snackBars(context,it,"Select Lead Details")
-//                }
+
                 else {
                     Log.e(TAG, "927  ")
 
                     Log.i("response1212", "927  ")
                     dialog.dismiss()
+              //      getLeadList(leadArrayList)
 
+                   toDoDet = 0
+//
+                   getTodoList()
+//.................
 
-
-
-                    toDoDet = 0
-                  //  fromfilter="leadFilter"
-                    getTodoList()
-               //     getTodoList2()
+                    //..............
 
 
                 }
@@ -1672,8 +1751,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                 var x = 0
 
-                for (i in 0 until todoArrayList1.length()) {
-                    val item = todoArrayList1.getJSONObject(i)
+                for (i in 0 until serviceArrayList.length()) {
+                    val item = serviceArrayList.getJSONObject(i)
                     Log.v("fdfddefe", "i" + i)
                     if (item.getString("Ticket").toLowerCase()
                             .contains(ticketNumber.toLowerCase()) &&
@@ -1938,18 +2017,19 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //        val concatString = "$a $b"
 //
 //        tabLayout!!.getTabAt(tabLayout!!.selectedTabPosition)!!.setText(concatString.toString())
-      //  todoArrayList1
+        //  todoArrayList1
         recyEmiList!!.visibility = View.GONE
-        countService!!.setText(todoArray.length().toString())
-        service_count!!.setText(todoArray.length().toString())
-        tabLayout2!!.addTab(tabLayout2!!.newTab().setText(todoArray.length().toString()))
+        //    countService!!.setText(todoArray.length().toString())
+      //  coun!!.text=emiArrayList.length().toString()
+        coun!!.setText(todoArray.length().toString())
+        //  tabLayout2!!.addTab(tabLayout2!!.newTab().setText(todoArray.length().toString()))
         rv_todolist1!!.layoutManager = LinearLayoutManager(
             this@AgendaActivity, LinearLayoutManager.VERTICAL,
             false
         )
         rv_todolist1!!.setHasFixedSize(true)
 
-        var adapter = ServiceFollowUpListAdapter1(this, todoArray)
+        var adapter = ServiceFollowUpListAdapter(this, todoArray)
         rv_todolist1!!.adapter = adapter
 
 
@@ -1963,17 +2043,20 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                     // checkEmptyList!!.visibility=View.VISIBLE
                     //  Toast.makeText(this@AgendaActivity,"Not empty",Toast.LENGTH_SHORT).show()
                 } else {
+                    coun!!.text="0"
                     Log.i("eertret", "inside else")
                     // checkEmptyList!!.visibility=View.VISIBLE
                     val builder = AlertDialog.Builder(
                         this@AgendaActivity,
                         R.style.MyDialogTheme
                     )
-                    builder.setMessage("No Data")
+                    builder.setMessage("No Data Found")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         toDoDet = 0
-                        getTodoList1()
+                        //  getTodoList1()
+
+                        getServiceList(serviceArrayList)
 
                     }
                     val alertDialog: AlertDialog = builder.create()
@@ -2000,10 +2083,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //        tabLayout!!.getTabAt(tabLayout!!.selectedTabPosition)!!.setText(concatString.toString())
 
 
-        countEmi!!.setText(emiListArrayList.length().toString())
-        emi_count!!.setText(emiListArrayList.length().toString())
+        //  countEmi!!.setText(emiListArrayList.length().toString())
 
-     //   tabLayout3!!.addTab(tabLayout3!!.newTab().setText(emiListArrayList.length().toString()))
+        coun!!.setText(emiListArrayList.length().toString())
+
+        //   tabLayout3!!.addTab(tabLayout3!!.newTab().setText(emiListArrayList.length().toString()))
         rv_todolist!!.visibility = View.GONE
         rv_todolist1!!.visibility = View.GONE
         recyEmiList!!.visibility = View.VISIBLE
@@ -2029,11 +2113,13 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         this@AgendaActivity,
                         R.style.MyDialogTheme
                     )
-                    builder.setMessage("No Data")
+                    coun!!.text="0"
+                    builder.setMessage("No Data Found")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         emiCount = 0
-                        getEmiAgenda()
+                        //      getEmiAgenda()
+                        getEmi(emiArrayList)
 
                     }
                     val alertDialog: AlertDialog = builder.create()
@@ -2053,27 +2139,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
     private fun setLeasdRecyClerviewAdapter(leadListArrayList: JSONArray) {
 
-
-//        if (tabLayout!!.selectedTabPosition.equals(0))
-//        {
-//            var a = tabLayout!!.getTabAt(0)!!.text
-//            var b= leadListArrayList.length()
-//            val concatString = "$a $b"
-//
-//            tabLayout!!.getTabAt(0)!!.setText(concatString.toString())
-//        }
-//        else
-//        {
-//            var a = tabLayout!!.getTabAt(tabLayout!!.selectedTabPosition)!!.text
-//            var b= leadListArrayList.length()
-//            val concatString = "$a $b"
-
-        //    tabLayout!!.getTabAt(tabLayout!!.selectedTabPosition)!!.setText(concatString.toString())
-
-
-        countLead!!.setText(leadListArrayList.length().toString())
-    //    lead_count!!.setText(leadListArrayList.length().toString())
-      //  tabLayout1!!.addTab(tabLayout1!!.newTab().setText(leadListArrayList.length().toString()))
+    //    coun!!.text=emiArrayList.length().toString()
+        coun!!.setText(leadListArrayList.length().toString())
+        //    countLead!!.setText(leadListArrayList.length().toString())
+        //    lead_count!!.setText(leadListArrayList.length().toString())
+        //  tabLayout1!!.addTab(tabLayout1!!.newTab().setText(leadListArrayList.length().toString()))
         val lLayout = GridLayoutManager(this@AgendaActivity, 1)
         rv_todolist!!.layoutManager =
             lLayout as RecyclerView.LayoutManager?
@@ -2084,6 +2154,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             SubMode!!
         )
         rv_todolist!!.adapter = adapter
+        adapter.setClickListener(this@AgendaActivity)
 
 
 //        adapter.registerAdapterDataObserver(object :
@@ -2120,7 +2191,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //        rv_todolist!!.setFocusable(false)
 //        adapter.notifyDataSetChanged()
 
-        adapter.setClickListener(this@AgendaActivity)
+
     }
 
     private fun setServiceFollowRecycler(jsonArray2: JSONArray) {
@@ -2140,8 +2211,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
     }
+
     private fun getTodoList2() {
-        Log.i("response2","getTodoList2")
+        Log.i("response2", "getTodoList2")
 //        var toDoDet = 0
         // rv_todolist!!.adapter = null
         rv_todolist1!!.visibility = View.GONE
@@ -2187,10 +2259,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                         val jobjt =
                                             jObject.getJSONObject("LeadManagementDetailsList")
                                         todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
-                                        Log.i("response2","lead size="+todoArrayList.length())
+                                        Log.i("response2", "lead size=" + todoArrayList.length())
                                         lead_count!!.setText(todoArrayList.length().toString())
-                                        if (todoArrayList.length()>0)
-                                        {
+                                        if (todoArrayList.length() > 0) {
                                             setLeasdRecyClerviewAdapter(todoArrayList);
 
 //                                        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
@@ -2248,9 +2319,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //                                            )
 //                                            recyAgendaType!!.adapter = adapter1
 //                                            adapter1.setClickListener(this@AgendaActivity)
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             val builder = AlertDialog.Builder(
                                                 this@AgendaActivity,
                                                 R.style.MyDialogTheme
@@ -2267,12 +2336,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                         }
 
 
-
-
-
-
-                                    }
-                                    else {
+                                    } else {
                                         rv_todolist!!.adapter = null
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
@@ -2319,162 +2383,6 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         }
     }
 
-    private fun getTodoList() {
-        Log.i("response2","getTodoList")
-//        var toDoDet = 0
-         rv_todolist!!.adapter = null
-        rv_todolist1!!.visibility = View.GONE
-        context = this@AgendaActivity
-        todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                todolistViewModel.getTodolist(
-                    this,
-                    submode!!,
-                    name!!,
-                    criteria!!,
-                    date!!,
-                    ID_Branch!!,
-                    ID_Employee!!,
-                    ID_Lead_Details,
-                    strLeadValue
-                )!!.observe(
-                    this,
-                    Observer { todolistSetterGetter ->
-                        try {
-                            val msg = todolistSetterGetter.message
-                            Log.i("response121212", "msg=" + msg)
-                            if (msg!!.length > 0) {
-
-                                Log.e(TAG, "getTodoList   52412   " + msg)
-                                Log.e(TAG, "getTodoList   524   " + toDoDet)
-                                if (toDoDet == 0) {
-                                    toDoDet++
-
-                                    val editor = sharedPreferences!!.edit()
-                                    editor.clear()
-                                    editor.commit()
-
-                                    val jObject = JSONObject(msg)
-
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt =
-                                            jObject.getJSONObject("LeadManagementDetailsList")
-                                        todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
-
-
-
-
-                                        Log.i("responseLeadSize","lead size="+todoArrayList.length())
-                                        lead_count!!.setText(todoArrayList.length().toString())
-                                        setLeasdRecyClerviewAdapter(todoArrayList);
-
-//                                        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
-//                                        rv_todolist!!.layoutManager =
-//                                            lLayout as RecyclerView.LayoutManager?
-//                                        rv_todolist!!.setHasFixedSize(true)
-//                                        val adapter = TodoListAdapter(
-//                                            applicationContext,
-//                                            todoArrayList,
-//                                            SubMode!!
-//                                        )
-//                                        rv_todolist!!.adapter = adapter
-//                                        adapter.setClickListener(this@AgendaActivity)
-
-
-                                        Log.e(
-                                            TAG,
-                                            "agendaTypeArrayList   5521   " + agendaTypeArrayList
-                                        )
-                                        Log.e(
-                                            TAG,
-                                            "agendaTypeArrayList   552   " + agendaTypeArrayList.length()
-                                        )
-
-                                        var jsonObject = agendaTypeArrayList.getJSONObject(0)
-
-
-                                        Log.i(
-                                            "responsepppppppppppppppppppp",
-                                            "jsonObject before=" + jsonObject
-                                        )
-                                        Log.i(
-                                            "responsepppppppppppppppppppp",
-                                            "list before=" + agendaTypeArrayList
-                                        )
-
-
-                                        jsonObject.put("Count", todoArrayList.length())
-
-                                        Log.i(
-                                            "responsepppppppppppppppppppp",
-                                            "jsonObject after=" + jsonObject
-                                        )
-                                        Log.i(
-                                            "responsepppppppppppppppppppp",
-                                            "list after=" + agendaTypeArrayList
-                                        )
-
-
-                                        //  Log.e(TAG,"agendaTypeArrayList   553   "+agendaTypeArrayList)
-                                        val adapter1 = AgendaTypeAdapter(
-                                            this@AgendaActivity,
-                                            agendaTypeArrayList,
-                                            selectedPos
-                                        )
-                                        recyAgendaType!!.adapter = adapter1
-                                        adapter1.setClickListener(this@AgendaActivity)
-
-
-                                    } else {
-                                        rv_todolist!!.adapter = null
-                                        val builder = AlertDialog.Builder(
-                                            this@AgendaActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        lead_count!!.setText("0")
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                            dialogInterface.dismiss()
-                                            //                                               finish()
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
-                                    }
-
-                                }
-
-                            } else {
-//                                    Toast.makeText(
-//                                        applicationContext,
-//                                        "Some Technical Issues.",
-//                                        Toast.LENGTH_LONG
-//                                    ).show()
-                            }
-                        } catch (e: Exception) {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "yyy"+Config.SOME_TECHNICAL_ISSUES,
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                        }
-
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
 
 //    private fun getAgendaCounts() {
 //        var countAgenda = 0
@@ -2707,7 +2615,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         if (data.equals("EmiList")) {
 
             Log.e(TAG, "EmiList  148")
-            val jsonObject = emiListArrayList.getJSONObject(position)
+            val jsonObject = emiArrayList.getJSONObject(position)
 //            val ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
             val ID_CustomerWiseEMI = jsonObject.getString("ID_CustomerWiseEMI")
             val i = Intent(this@AgendaActivity, EmiCollectionActivity::class.java)
@@ -2717,7 +2625,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         }
 
         if (data.equals("todolist")) {
-            val jsonObject = todoArrayList.getJSONObject(position)
+            
+            val jsonObject = leadArrayList.getJSONObject(position)
             val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject", jsonObject.toString())
             i.putExtra("SubMode", submode)
@@ -3005,7 +2914,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             ) {
                 ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
             } else {
-                val jsonObject = todoArrayList.getJSONObject(position)
+                val jsonObject = leadArrayList.getJSONObject(position)
                 Log.e("TODO", " 289     jsonObject    " + jsonObject)
                 val mobileno = jsonObject.getString("LgCusMobile")
                 val BroadCallSP = applicationContext.getSharedPreferences(Config.SHARED_PREF16, 0)
@@ -3038,7 +2947,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         }
 
         if (data.equals("todoMessage")) {
-            val jsonObject = todoArrayList.getJSONObject(position)
+            val jsonObject = leadArrayList.getJSONObject(position)
+            Log.e("TAG", "31323  position   :  " + position)
             Log.e("TAG", "313  ID_LeadGenerate   :  " + jsonObject.getString("ID_LeadGenerate"))
             messagePopup()
         }
@@ -4586,16 +4496,39 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             performCall(mobile)
         }
         if (data.equals("location")) {
-//            val jsonObject = jsonArray.getJSONObject(position)
-//            longitude = jsonObject.getString("longitude")
-//            latitude = jsonObject.getString("latitude")
-            longitude = "76.94756468242483"
-            latitude = "8.591705686530284"
-            loadLocation()
+            val jsonObject = serviceArrayList.getJSONObject(position)
+            //   val jsonObject = jsonArray.getJSONObject(position)
+            longitude = jsonObject.getString("LocLongitude")
+            latitude = jsonObject.getString("LocLattitude")
+//            longitude = "76.94756468242483"
+//            latitude = "8.591705686530284"
+
+            Log.i("jhjjkj", "longitude==" + longitude)
+            Log.i("jhjjkj", "latitude==" + latitude)
+
+
+
+
+            if (longitude.equals("") || latitude.equals("")) {
+                showSnackBar("Location Not Found", this@AgendaActivity)
+            } else {
+                loadLocation()
+            }
+            //  loadLocation()
         }
         if (data.equals("tracking")) {
             val i = Intent(this, TrackerActivity::class.java)
             startActivity(i)
+        }
+
+    }
+
+    private fun showSnackBar(message: String, activity: AgendaActivity) {
+
+        if (null != activity && null != message) {
+            Snackbar.make(
+                activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT
+            ).show()
         }
 
     }
@@ -4837,5 +4770,206 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             )
         }
     }
+
+    private fun getTodoList() {
+        Log.i("response2", "getTodoList")
+//        var toDoDet = 0
+        rv_todolist!!.adapter = null
+        submode="1"
+        context = this@AgendaActivity
+        todolistViewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                //  progressDialog!!.show()
+                todolistViewModel.getTodolist(
+                    this,
+                    submode!!,
+                    name!!,
+                    criteria!!,
+                    date!!,
+                    ID_Branch!!,
+                    ID_Employee!!,
+                    ID_Lead_Details,
+                    strLeadValue
+                )!!.observe(
+                    this,
+                    Observer { todolistSetterGetter ->
+                        try {
+                            val msg = todolistSetterGetter.message
+                            Log.i("response121212", "msg=" + msg)
+                            if (msg!!.length > 0) {
+
+                                Log.e(TAG, "getTodoList   52412   " + msg)
+                                Log.e(TAG, "getTodoList   524   " + toDoDet)
+                                if (toDoDet == 0) {
+                                    toDoDet++
+
+                                    val editor = sharedPreferences!!.edit()
+                                    editor.clear()
+                                    editor.commit()
+
+                                    val jObject = JSONObject(msg)
+
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("LeadManagementDetailsList")
+                                        todoArrayList = jobjt.getJSONArray("LeadManagementDetails")
+
+
+
+
+                                        Log.i(
+                                            "responseLeadSize",
+                                            "lead size=" + todoArrayList.length()
+                                        )
+                                        lead_count!!.setText(todoArrayList.length().toString())
+                                        setLeasdRecyClerviewAdapter(todoArrayList);
+
+//                                        val lLayout = GridLayoutManager(this@AgendaActivity, 1)
+//                                        rv_todolist!!.layoutManager =
+//                                            lLayout as RecyclerView.LayoutManager?
+//                                        rv_todolist!!.setHasFixedSize(true)
+//                                        val adapter = TodoListAdapter(
+//                                            applicationContext,
+//                                            todoArrayList,
+//                                            SubMode!!
+//                                        )
+//                                        rv_todolist!!.adapter = adapter
+//                                        adapter.setClickListener(this@AgendaActivity)
+//
+//
+//                                        Log.e(
+//                                            TAG,
+//                                            "agendaTypeArrayList   5521   " + agendaTypeArrayList
+//                                        )
+//                                        Log.e(
+//                                            TAG,
+//                                            "agendaTypeArrayList   552   " + agendaTypeArrayList.length()
+//                                        )
+//
+//                                        var jsonObject = agendaTypeArrayList.getJSONObject(0)
+//
+//
+//                                        Log.i(
+//                                            "responsepppppppppppppppppppp",
+//                                            "jsonObject before=" + jsonObject
+//                                        )
+//                                        Log.i(
+//                                            "responsepppppppppppppppppppp",
+//                                            "list before=" + agendaTypeArrayList
+//                                        )
+//
+//
+//                                        jsonObject.put("Count", todoArrayList.length())
+//
+//                                        Log.i(
+//                                            "responsepppppppppppppppppppp",
+//                                            "jsonObject after=" + jsonObject
+//                                        )
+//                                        Log.i(
+//                                            "responsepppppppppppppppppppp",
+//                                            "list after=" + agendaTypeArrayList
+//                                        )
+//
+//
+//                                        //  Log.e(TAG,"agendaTypeArrayList   553   "+agendaTypeArrayList)
+//                                        val adapter1 = AgendaTypeAdapter(
+//                                            this@AgendaActivity,
+//                                            agendaTypeArrayList,
+//                                            selectedPos
+//                                        )
+//                                        recyAgendaType!!.adapter = adapter1
+//                                        adapter1.setClickListener(this@AgendaActivity)
+
+
+                                    } else {
+                                        rv_todolist!!.adapter = null
+                                        val builder = AlertDialog.Builder(
+                                            this@AgendaActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        lead_count!!.setText("0")
+                                        coun!!.text="0"
+                                        fab_Reminder!!.visibility = View.GONE
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            dialogInterface.dismiss()
+                                            getLeadList(leadArrayList)
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+                            } else {
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+                            }
+                        } catch (e: Exception) {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "yyy"+Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+    override fun onBackPressed() {
+
+
+        if ((mainpage!!.getVisibility() == View.GONE)) {
+
+            mainpage!!.visibility = View.VISIBLE
+            textid!!.text="AGENDA"
+          //  lcoun!!.visibility = View.GONE
+            coun!!.visibility=View.GONE
+
+            firstpage!!.visibility = View.GONE
+            secondpage!!.visibility = View.GONE
+            thirdpage!!.visibility = View.GONE
+            imgv_filter!!.visibility = View.GONE
+            imgv_filter1!!.visibility = View.GONE
+            fab_Reminder!!.visibility = View.GONE
+            imgv_filterEmi!!.visibility=View.GONE
+        }
+        else {
+            super.onBackPressed()
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

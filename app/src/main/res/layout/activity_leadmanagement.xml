@@ -754,22 +754,22 @@
                                 android:id="@+id/card_lead"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="0dp"
-                                app:cardElevation="0dp"
-                                android:padding="1dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_marginLeft="25dp"
-                                android:layout_marginRight="25dp">
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="25dp"
+                                android:padding="1dp"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="0dp">
 
                                 <LinearLayout
                                     android:id="@+id/lltodolist"
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:padding="1dp"
                                     android:background="@drawable/border_1"
-                                    android:orientation="horizontal">
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="1dp">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -788,6 +788,7 @@
                                                 android:layout_height="match_parent"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
+
                                                 <LinearLayout
                                                     android:layout_width="40dp"
                                                     android:layout_height="40dp"
@@ -808,8 +809,6 @@
                                         </LinearLayout>
 
 
-
-
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -823,12 +822,13 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
-                                            android:text="To-Do List"
-                                            android:textStyle="bold"
                                             android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:text="To-Do List"
                                             android:textColor="@color/color_common1"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
+
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
@@ -840,12 +840,12 @@
                                                 android:id="@+id/tv_todo_count"
                                                 android:layout_width="40dp"
                                                 android:layout_height="40dp"
-                                                android:text=""
-                                                android:gravity="center"
                                                 android:background="@drawable/counts_color1"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:text=""
                                                 android:textColor="@color/white"
-                                                android:textSize="20dp"
-                                                android:fontFamily="@font/myfont" />
+                                                android:textSize="20dp" />
                                         </LinearLayout>
 
 
@@ -860,11 +860,11 @@
                                 android:id="@+id/card_service"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="0dp"
-                                app:cardElevation="0dp"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginLeft="25dp"
-                                android:layout_marginRight="25dp">
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="0dp">
 
                                 <!--                            android:backgroundTint="@color/service2"-->
 
@@ -873,10 +873,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:padding="1dp"
                                     android:background="@drawable/border_2"
-                                    android:orientation="horizontal">
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="1dp">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -895,6 +895,7 @@
                                                 android:layout_height="match_parent"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
+
                                                 <LinearLayout
                                                     android:layout_width="40dp"
                                                     android:layout_height="40dp"
@@ -915,8 +916,6 @@
                                         </LinearLayout>
 
 
-
-
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -933,11 +932,11 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
                                             android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
                                             android:text="Over Due"
-                                            android:textStyle="bold"
                                             android:textColor="@color/color_common2"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -950,18 +949,16 @@
                                                 android:id="@+id/tv_overdue_count"
                                                 android:layout_width="40dp"
                                                 android:layout_height="40dp"
-                                                android:text=""
-                                                android:gravity="center"
                                                 android:background="@drawable/counts_color2"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:text=""
                                                 android:textColor="@color/white"
-                                                android:textSize="20dp"
-                                                android:fontFamily="@font/myfont" />
+                                                android:textSize="20dp" />
                                         </LinearLayout>
 
 
-
                                     </LinearLayout>
-
 
 
                                 </LinearLayout>
@@ -972,11 +969,11 @@
                                 android:id="@+id/card_collection"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="0dp"
-                                app:cardElevation="0dp"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginLeft="25dp"
-                                android:layout_marginRight="25dp">
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="0dp">
                                 <!--                        app:cardUseCompatPadding="true"-->
                                 <!--                            android:backgroundTint="@color/service3"-->
 
@@ -986,10 +983,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:padding="1dp"
                                     android:background="@drawable/border_3"
-                                    android:orientation="horizontal">
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="1dp">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -1008,6 +1005,7 @@
                                                 android:layout_height="match_parent"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
+
                                                 <LinearLayout
                                                     android:layout_width="40dp"
                                                     android:layout_height="40dp"
@@ -1028,8 +1026,6 @@
                                         </LinearLayout>
 
 
-
-
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1043,13 +1039,13 @@
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Upcoming Tasks"
                                             android:layout_marginLeft="20dp"
-                                            android:textStyle="bold"
                                             android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:text="Upcoming Tasks"
                                             android:textColor="@color/color_common3"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -1062,12 +1058,12 @@
                                                 android:id="@+id/tv_upcoming_count"
                                                 android:layout_width="40dp"
                                                 android:layout_height="40dp"
-                                                android:text=""
-                                                android:gravity="center"
                                                 android:background="@drawable/count_color3"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:text=""
                                                 android:textColor="@color/white"
-                                                android:textSize="20dp"
-                                                android:fontFamily="@font/myfont" />
+                                                android:textSize="20dp" />
                                         </LinearLayout>
 
 
@@ -1082,11 +1078,11 @@
                                 android:id="@+id/card_pickup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="0dp"
-                                app:cardElevation="0dp"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginLeft="25dp"
-                                android:layout_marginRight="25dp">
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="0dp">
                                 <!--                        app:cardUseCompatPadding="true"-->
                                 <!--                            android:backgroundTint="@color/service3"-->
 
@@ -1096,10 +1092,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:padding="1dp"
                                     android:background="@drawable/border_4"
-                                    android:orientation="horizontal">
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="1dp">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -1118,6 +1114,7 @@
                                                 android:layout_height="match_parent"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
+
                                                 <LinearLayout
                                                     android:layout_width="40dp"
                                                     android:layout_height="40dp"
@@ -1138,8 +1135,6 @@
                                         </LinearLayout>
 
 
-
-
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1153,13 +1148,13 @@
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="My Leads"
                                             android:layout_marginLeft="20dp"
-                                            android:textStyle="bold"
                                             android:layout_weight="1"
+                                            android:fontFamily="@font/myfont"
+                                            android:text="My Leads"
                                             android:textColor="@color/color_common4"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -1172,17 +1167,15 @@
                                                 android:id="@+id/tv_my_leadCount"
                                                 android:layout_width="40dp"
                                                 android:layout_height="40dp"
-                                                android:text=""
-                                                android:gravity="center"
                                                 android:background="@drawable/count_colors4"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:text=""
                                                 android:textColor="@color/white"
-                                                android:textSize="20dp"
-                                                android:fontFamily="@font/myfont" />
+                                                android:textSize="20dp" />
                                         </LinearLayout>
 
                                     </LinearLayout>
-
-
 
 
                                 </LinearLayout>
@@ -1193,28 +1186,28 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="15dp"
-                                app:cardElevation="5dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_marginLeft="25dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_marginRight="25dp"
-                                android:visibility="gone">
+                                android:visibility="gone"
+                                app:cardCornerRadius="15dp"
+                                app:cardElevation="5dp">
 
                                 <LinearLayout
                                     android:id="@+id/llCustomerService1"
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
                                     android:background="@drawable/svg_cs_main"
+                                    android:gravity="center"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
-                                        android:padding="15dp"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:padding="15dp">
 
                                         <ImageView
                                             android:layout_width="match_parent"
@@ -1229,30 +1222,27 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:background="@drawable/svg_cs_sub"
                                         android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/svg_cs_sub"
+                                        android:gravity="center"
                                         android:orientation="vertical">
 
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
-                                            android:gravity="left"
                                             android:layout_marginTop="10dp"
                                             android:layout_marginBottom="10dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
                                             android:text="Customer Service"
-                                            android:textStyle="bold"
                                             android:textColor="@color/service11"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
 
                                     </LinearLayout>
-
-
-
 
 
                                 </LinearLayout>
@@ -1262,12 +1252,12 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="15dp"
-                                app:cardElevation="5dp"
-                                android:layout_marginTop="20dp"
                                 android:layout_marginLeft="25dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginRight="25dp"
-                                android:visibility="gone">
+                                android:visibility="gone"
+                                app:cardCornerRadius="15dp"
+                                app:cardElevation="5dp">
 
                                 <!--                            android:backgroundTint="@color/service2"-->
 
@@ -1276,16 +1266,16 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
                                     android:background="@drawable/svg_csa_main"
+                                    android:gravity="center"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
-                                        android:padding="15dp"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:padding="15dp">
 
                                         <ImageView
                                             android:layout_width="match_parent"
@@ -1300,10 +1290,10 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:background="@drawable/svg_csa_sub"
                                         android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/svg_csa_sub"
+                                        android:gravity="center"
                                         android:orientation="vertical">
                                         <!--                                    android:background="@drawable/svg_service_assign"-->
 
@@ -1312,18 +1302,17 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
-                                            android:gravity="left"
                                             android:layout_marginTop="10dp"
                                             android:layout_marginBottom="10dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
                                             android:text="Service Assign"
-                                            android:textStyle="bold"
                                             android:textColor="@color/service21"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
 
                                     </LinearLayout>
-
 
 
                                 </LinearLayout>
@@ -1334,12 +1323,12 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="15dp"
-                                app:cardElevation="5dp"
-                                android:layout_marginTop="20dp"
                                 android:layout_marginLeft="25dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginRight="25dp"
-                                android:visibility="gone">
+                                android:visibility="gone"
+                                app:cardCornerRadius="15dp"
+                                app:cardElevation="5dp">
                                 <!--                        app:cardUseCompatPadding="true"-->
                                 <!--                            android:backgroundTint="@color/service3"-->
 
@@ -1349,23 +1338,23 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
                                     android:layout_gravity="center"
-                                    android:gravity="center"
                                     android:background="@drawable/svg_csf_main"
+                                    android:gravity="center"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="4"
-                                        android:padding="15dp"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:padding="15dp">
 
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:src="@drawable/svg_icon_service_follow"
                                             android:tint="@color/white"
-                                            tools:ignore="UseAppTint"/>
+                                            tools:ignore="UseAppTint" />
 
 
                                     </LinearLayout>
@@ -1373,10 +1362,10 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:background="@drawable/svg_csf_sub"
                                         android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/svg_csf_sub"
+                                        android:gravity="center"
                                         android:orientation="vertical">
                                         <!--                                    android:background="@drawable/svg_service_followup"-->
 
@@ -1384,14 +1373,14 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
-                                            android:gravity="left"
                                             android:layout_marginTop="10dp"
                                             android:layout_marginBottom="10dp"
+                                            android:fontFamily="@font/myfont"
+                                            android:gravity="left"
                                             android:text="Service Follow up"
-                                            android:textStyle="bold"
                                             android:textColor="@color/service31"
                                             android:textSize="20dp"
-                                            android:fontFamily="@font/myfont" />
+                                            android:textStyle="bold" />
 
                                     </LinearLayout>
 
