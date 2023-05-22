@@ -48,6 +48,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
                     holder.llEmiLeft.setBackgroundColor(context.getColor(R.color.color_common3));
                 }
 
+                holder.tv_EmiNo.text        = jsonObject!!.getString("EMINo")
                 holder.tv_Customer.text        = jsonObject!!.getString("Customer")
                 holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
                 holder.tv_Product.text        = jsonObject!!.getString("Product")
@@ -83,6 +84,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        internal var tv_EmiNo          : TextView
         internal var tv_Customer          : TextView
         internal var tv_Mobile          : TextView
         internal var tv_Product          : TextView
@@ -102,6 +104,7 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
         internal var llEmiLeft    : LinearLayout
         internal var llEmiList    : LinearLayout
         init {
+            tv_EmiNo        = v.findViewById<View>(R.id.tv_EmiNo) as TextView
             tv_Customer        = v.findViewById<View>(R.id.tv_Customer) as TextView
             tv_Mobile        = v.findViewById<View>(R.id.tv_Mobile) as TextView
             tv_Product        = v.findViewById<View>(R.id.tv_Product) as TextView

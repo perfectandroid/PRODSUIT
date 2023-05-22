@@ -14,6 +14,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class FollowupTicketReportAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+
+
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     internal val TAG : String = "FollowupTicketReportAdapter"

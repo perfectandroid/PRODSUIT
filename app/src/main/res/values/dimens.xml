@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="header_text1">18dp</dimen>
     <dimen name="header_text">15dp</dimen>
     <dimen name="head_sub_text">13dp</dimen>
     <dimen name="head_sub_count">9dp</dimen>

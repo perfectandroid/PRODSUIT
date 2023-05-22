@@ -150,7 +150,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/tv_product"
@@ -200,10 +201,11 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@color/grey"/>
+                    android:background="@color/grey"
+                    android:visibility="visible"/>
                 <TextView
                     android:id="@+id/txtv_collectedby"
                     android:fontFamily="@font/myfont"
@@ -216,6 +218,59 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/imcall"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="13dp"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:src="@drawable/call_svg"
+                        app:tint="@color/colorPrimary" />
+
+                    <ImageView
+                        android:id="@+id/immessage"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="13dp"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="@color/grey"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_svg_messages"
+                        app:tint="@color/colorPrimary" />
+
+                    <CheckBox
+                        android:id="@+id/cb_Meeting"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:button="@drawable/selector_reminder"
+                        android:visibility="visible"/>
+
+
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/llside_bar"
@@ -225,10 +280,11 @@
                 android:background="@color/right_Color"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imcall"
+                    android:id="@+id/imcall1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginBottom="15dp"
@@ -237,7 +293,7 @@
                     android:src="@drawable/phonecallicon" />
 
                 <ImageView
-                    android:id="@+id/immessage"
+                    android:id="@+id/immessage1"
                     android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -246,7 +302,7 @@
                     android:gravity="center"/>
 
                 <CheckBox
-                    android:id="@+id/cb_Meeting"
+                    android:id="@+id/cb_Meeting1"
                     android:fontFamily="@font/myfont"
                     android:layout_width="30dp"
                     android:layout_height="30dp"

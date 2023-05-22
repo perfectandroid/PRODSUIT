@@ -62,6 +62,14 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.CollectionReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+
+
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -474,8 +482,10 @@
 
         <activity
             android:name="com.perfect.prodsuit.View.Activity.SplashActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -492,6 +502,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <service
+            android:name=".View.Service.LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

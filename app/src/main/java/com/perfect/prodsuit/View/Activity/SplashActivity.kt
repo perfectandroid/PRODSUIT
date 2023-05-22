@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -38,7 +39,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
     val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY = "-500"
 
   ////   Unisoft` 26.04.2023
@@ -46,6 +47,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
 //    val BANK_KEY = "-512"
+
+    ////   Sunitha` 17.05.2023
+//    val CERT_NAME = "sunitha.pem"
+//    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
+//    val BANK_KEY = "-511"
 
 
     ////    DEMO 15.02.2023
@@ -88,7 +95,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val CERT_NAME = "spectrumlive.pem"
 //    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
-//    val BANK_KEY = "-101"
+//    val BANK_KEY = "-500"
 
     // Demo 17-03-2023
 //    val CERT_NAME = "supportdemo.pem"
@@ -109,6 +116,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
 
@@ -317,7 +326,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog1.setCanceledOnTouchOutside(false);
             dialog1.setCancelable(false);
-            dialog1 .setContentView(R.layout.dialog_company)
+//            dialog1 .setContentView(R.layout.dialog_company)
+            dialog1 .setContentView(R.layout.company_test1)
             val window: Window? = dialog1.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -363,6 +373,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
         }catch (e: Exception){
 
+            Log.e(TAG,"373   "+e.toString())
         }
 
     }
@@ -483,6 +494,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
 
+                                Log.e(TAG,"493   ")
                                 try {
                                     var jobj = jObject.getJSONObject("ResellerDetails")
 

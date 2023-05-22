@@ -1549,7 +1549,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/color_background"
+            android:gravity="center"
+            android:background="@drawable/btn_shape_submit"
             android:layout_alignParentBottom="true">
 
 
@@ -1557,23 +1558,27 @@
                 android:id="@+id/btnReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_shape_reset"
+                android:background="@drawable/btn_shape_submit"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="Reset"
                 android:textStyle="bold"
-                android:textColor="@color/greydark"
+                android:textColor="@color/white"
                 android:textAllCaps="true"
                 android:textSize="15dp"
                 android:visibility="visible"/>
+<!--            android:background="@drawable/btn_shape_reset"-->
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@color/white"/>
 
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -1585,18 +1590,22 @@
                 android:text="Submit"
                 android:visibility="visible"/>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@color/white"/>
+
             <Button
                 android:id="@+id/btnMore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_shape_reset"
+                android:background="@drawable/btn_shape_submit"
                 android:fontFamily="@font/myfont"
                 android:padding="2dp"
                 android:text="More"
                 android:textStyle="bold"
-                android:textColor="@color/greydark"
+                android:textColor="@color/white"
                 android:textAllCaps="true"
                 android:textSize="15dp"
                 android:visibility="visible"/>

@@ -1,18 +1,19 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Base64
 import android.util.Log
+import androidx.lifecycle.Observer
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +21,18 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.text.HtmlCompat
+import androidx.core.widget.TextViewCompat
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.CompanyLogoViewModel
+import org.json.JSONObject
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,6 +64,12 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
     private var txt_mobile: TextView? = null
     private var txt_email: TextView? = null
     private var txt_address: TextView? = null
+    private var tvtechpartner: TextView? = null
+
+    private var img_CompanyLogo: ImageView? = null
+    private var img_technology: ImageView? = null
+    lateinit var companyLogoViewModel: CompanyLogoViewModel
+    var logo: String?=""
 
     lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +79,11 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         context = this@ContactUsActivity
         bottombarnav()
         getCalendarId(context)
+
+        setTechnologyPartner()
+        getCompanyLogo()
+
+
     }
 
     private fun setRegViews() {
@@ -74,6 +95,10 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         txt_mobile = findViewById(R.id.txt_mobile)
         txt_email = findViewById(R.id.txt_email)
         txt_address = findViewById(R.id.txt_address)
+        tvtechpartner = findViewById(R.id.tvtechpartner)
+
+        img_CompanyLogo = findViewById(R.id.img_CompanyLogo)
+        img_technology = findViewById(R.id.img_technology)
 
 
         imback = findViewById(R.id.imback)
@@ -93,6 +118,115 @@ class ContactUsActivity : AppCompatActivity() , View.OnClickListener {
         val ContactAddressSP = applicationContext.getSharedPreferences(Config.SHARED_PREF35, 0)
         txt_address!!.text =  ContactAddressSP.getString("ContactAddress", "")
 
+
+//        val htmlCode = "Customer : Chendayad Granits</br> Address : Industrial Grouth Center, </br>Mobile : 9605080960</br>Category/Product : Mini solar panel/100 Ah Bat</br>Complaint : Server Issue</br>Remarks : Urgent"
+//        val formattedText = HtmlCompat.fromHtml(htmlCode, HtmlCompat.FROM_HTML_MODE_LEGACY)
+//        tvtechpartner!!.text = formattedText
+//        TextViewCompat.setTextAppearance(tvtechpartner!!, android.R.style.TextAppearance_Material_Small)
+
+    }
+
+    private fun setTechnologyPartner() {
+
+        try {
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+            val AppIconImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF19, 0)
+            var IMAGEURL = IMAGE_URLSP.getString("IMAGE_URL","")
+
+            val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
+            PicassoTrustAll.getInstance(this@ContactUsActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_technology)
+
+//            val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+//            PicassoTrustAll.getInstance(this@HomeActivity)!!.load(AppIconImageCode).error(R.drawable.svg_trans).into(img_logo)
+        }catch (e : Exception){
+
+        }
+
+
+
+    }
+
+    private fun getCompanyLogo() {
+
+        var bannerDetail = 0
+        context = this@ContactUsActivity
+        companyLogoViewModel = ViewModelProvider(this).get(CompanyLogoViewModel::class.java)
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+
+                companyLogoViewModel.getCompanylogoType(this)!!.observe(
+                    this,
+                    Observer { expenseSetterGetter ->
+                        val msg = expenseSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            //  val jobjt = jObject.getJSONObject("DateWiseExpenseDetails")
+                            Log.e("TAG","msg  303   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("CompanyLogDetails")
+
+
+                                var count =jobjt.getString("CompanyLogo")
+                                var type =jobjt.getString("DisplayType")
+                                var companyname =jobjt.getString("CompanyName")
+
+                                logo = jobjt!!.getString("CompanyLogo")
+                                Log.e("DIL 731 ", count)
+
+                                if(type.equals("0"))
+                                {
+                                    // tv_Status!!.visibility=View.GONE;
+                                    if(!logo.equals(""))
+                                    {
+                                        val decodedString = Base64.decode(logo, Base64.DEFAULT)
+                                        ByteArrayToBitmap(decodedString)
+                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                        val stream = ByteArrayOutputStream()
+                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                        Glide.with(this) .load(stream.toByteArray()).into(img_CompanyLogo!!)
+
+                                    }
+                                }
+//                                else
+//                                {
+//                                    if(!logo.equals(""))
+//                                    {
+//
+//                                        val decodedString = Base64.decode(logo, Base64.DEFAULT)
+//                                        ByteArrayToBitmap(decodedString)
+//                                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//                                        val stream = ByteArrayOutputStream()
+//                                        decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//                                        Glide.with(this) .load(stream.toByteArray()).into(imv_2!!)
+//
+//
+//                                    }
+//                                  // tv_Status!!.visibility=View.VISIBLE;
+//                                   // tv_Status!!.text=companyname
+//                                }
+
+
+                            }
+                        } else {
+
+                        }
+                    })
+
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
+        val arrayInputStream = ByteArrayInputStream(byteArray)
+        return BitmapFactory.decodeStream(arrayInputStream)
     }
 
     override fun onClick(v: View) {

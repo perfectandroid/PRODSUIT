@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:background="@drawable/shape_bg_gr"
+        android:layout_margin="1dp"
+        android:background="@drawable/round_border_trans"
         android:orientation="vertical">
 
 

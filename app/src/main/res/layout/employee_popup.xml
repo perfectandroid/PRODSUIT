@@ -15,7 +15,7 @@
         android:background="@drawable/shape_gradient_pop"
         android:fontFamily="@font/myfont"
         android:padding="10dp"
-        android:text="Employee"/>
+        android:text="Employee List"/>
 
     <LinearLayout
         android:id="@+id/llsearch"

@@ -29,7 +29,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+//import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -63,7 +63,7 @@ import java.util.*
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     View.OnClickListener,OnMapReadyCallback {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+//    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
     private lateinit var img_search: ImageView
     private lateinit var imback: ImageView
@@ -114,7 +114,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
 
         setId()
-        loadData()
+      //  loadData()
         getServiceFollowUpList()
         setListners()
         Log.v("fssdfdsfdd", "" + ProdsuitApplication.encryptStart("22"));
@@ -149,7 +149,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         imback = findViewById<ImageView>(R.id.imback)
         imageView = findViewById<ImageView>(R.id.img_filter)
         recyclerView = findViewById(R.id.recycler)
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+       // swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
     }
 
     private fun loadData() {
@@ -259,7 +259,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                     val jObject = JSONObject(msg)
                                     Log.v("fsfsfds", "st code " + jObject.getString("StatusCode"))
                                     if (jObject.getString("StatusCode") == "0") {
-                                        swipeRefreshLayout.visibility = View.VISIBLE
+                                      //  swipeRefreshLayout.visibility = View.VISIBLE
                                         tv_nodata.visibility = View.GONE
                                         val jobjt =
                                             jObject.getJSONObject("ServiceFollowUpdetails")
@@ -271,8 +271,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                         )
                                         setServiceFollowRecycler(serviceFollowUpArrayList)
                                     } else {
-                                        swipeRefreshLayout.visibility = View.GONE
-                                        swipeRefreshLayout.isRefreshing = false
+//                                        swipeRefreshLayout.visibility = View.GONE
+//                                        swipeRefreshLayout.isRefreshing = false
                                         tv_nodata.visibility = View.VISIBLE
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUpListActivity,
@@ -291,11 +291,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
                             } else {
-                                swipeRefreshLayout.isRefreshing = false
+                             ///   swipeRefreshLayout.isRefreshing = false
                             }
                         } catch (e: Exception) {
-                            swipeRefreshLayout.visibility = View.GONE
-                            swipeRefreshLayout.isRefreshing = false
+//                            swipeRefreshLayout.visibility = View.GONE
+//                            swipeRefreshLayout.isRefreshing = false
                             tv_nodata.visibility = View.VISIBLE
                             Log.v("fsfsfds", "ex3 " + e)
                             Toast.makeText(
@@ -316,7 +316,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     }
 
     private fun setServiceFollowRecycler(jsonArray2: JSONArray) {
-        swipeRefreshLayout.isRefreshing = false
+//        swipeRefreshLayout.isRefreshing = false
         recyclerView.visibility = View.VISIBLE
         recyclerView!!.setLayoutManager(
             LinearLayoutManager(
@@ -435,15 +435,15 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                     val jObject = JSONObject(msg)
                                     Log.v("dfsfrffff", "st code " + jObject.getString("StatusCode"))
                                     if (jObject.getString("StatusCode") == "0") {
-                                        swipeRefreshLayout.visibility = View.VISIBLE
+                                     //   swipeRefreshLayout.visibility = View.VISIBLE
                                         tv_nodata.visibility = View.GONE
                                         val jobjt =
                                             jObject.getJSONObject("EmployeeWiseTicketSelect")
                                         openAlertDialogForMoreInfo(jobjt)
                                        // setServiceFollowRecycler(overdueArrayList)
                                     } else {
-                                        swipeRefreshLayout.visibility = View.GONE
-                                        swipeRefreshLayout.isRefreshing = false
+//                                        swipeRefreshLayout.visibility = View.GONE
+//                                        swipeRefreshLayout.isRefreshing = false
                                         tv_nodata.visibility = View.VISIBLE
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUpListActivity,
@@ -462,11 +462,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
                             } else {
-                                swipeRefreshLayout.isRefreshing = false
+                              //  swipeRefreshLayout.isRefreshing = false
                             }
                         } catch (e: Exception) {
-                            swipeRefreshLayout.visibility = View.GONE
-                            swipeRefreshLayout.isRefreshing = false
+//                            swipeRefreshLayout.visibility = View.GONE
+//                            swipeRefreshLayout.isRefreshing = false
                             tv_nodata.visibility = View.VISIBLE
                             Log.v("fsfsfds", "ex3 " + e)
                             Toast.makeText(

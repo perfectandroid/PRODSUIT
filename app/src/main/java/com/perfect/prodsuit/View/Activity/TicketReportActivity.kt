@@ -849,6 +849,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             Log.e(TAG, "reportNamesort               7101    " + reportNamesort)
             Log.e(TAG, "reportNameArrayList      7102    " + reportNameArrayList)
+            Log.i("responsewewe", "7102    " + reportNameArrayList)
 
 
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)

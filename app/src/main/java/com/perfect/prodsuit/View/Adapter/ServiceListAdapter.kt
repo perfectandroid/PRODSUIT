@@ -125,12 +125,12 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     clickListener!!.onClick(position, "ServiceList")
                 })
 
-                val colorAnim: ValueAnimator = ObjectAnimator.ofInt(holder.tv_TimeDue!!, "textColor", Color.RED, Color.BLUE)
-                colorAnim.setDuration(5000)
-                colorAnim.setEvaluator(ArgbEvaluator())
-                colorAnim.setRepeatCount(ValueAnimator.INFINITE)
-                colorAnim.setRepeatMode(ValueAnimator.REVERSE)
-                colorAnim.start()
+//                val colorAnim: ValueAnimator = ObjectAnimator.ofInt(holder.tv_TimeDue!!, "textColor", Color.RED, Color.BLUE)
+//                colorAnim.setDuration(5000)
+//                colorAnim.setEvaluator(ArgbEvaluator())
+//                colorAnim.setRepeatCount(ValueAnimator.INFINITE)
+//                colorAnim.setRepeatMode(ValueAnimator.REVERSE)
+//                colorAnim.start()
 
             }
         } catch (e: Exception) {

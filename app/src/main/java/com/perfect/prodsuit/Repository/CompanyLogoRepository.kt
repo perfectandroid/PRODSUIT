@@ -28,6 +28,7 @@ import java.util.ArrayList
 
 object CompanyLogoRepository {
 
+    var TAG = "CompanyLogoRepository"
     val addcompanylogoSetterGetter = MutableLiveData<CompanyLogomodel>()
     private var progressDialog: ProgressDialog? = null
     private var fileimg: File? = null
@@ -67,7 +68,9 @@ object CompanyLogoRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
-                Log.e(CompanyCodeRepository.TAG,"requestObject companycode   "+requestObject1)
+
+
+                Log.e(TAG,"requestObject companycode  731   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

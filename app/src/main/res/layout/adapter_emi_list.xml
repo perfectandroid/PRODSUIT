@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:orientation="vertical">
 
                 <!--        android:background="@drawable/shape_service_list"-->
@@ -53,12 +53,38 @@
                     android:orientation="vertical">
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/svg_trans_rect"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_EmiNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="13dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingTop="1dp"
+                            android:paddingBottom="1dp"
+                            android:fontFamily="@font/myfont"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:layout_centerVertical="true" />
+
+
+                    </LinearLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/svg_sa_transparent">
 
                         <ImageView
@@ -68,6 +94,32 @@
                             android:src="@drawable/communication_color"
                             android:layout_alignParentLeft="true"
                             android:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/svg_trans_rect"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_Next_EMI1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="13dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingTop="1dp"
+                            android:paddingBottom="1dp"
+                            android:fontFamily="@font/myfont"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:layout_centerVertical="true" />
+
 
                     </LinearLayout>
 
@@ -108,6 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -119,6 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.8"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -147,6 +201,7 @@
                             android:textSize="12dp"
                             android:fontFamily="@font/myfont"
                             android:text=":"
+                            android:visibility="gone"
                             android:textColor="@color/black"
                             android:layout_centerVertical="true" />
 
@@ -161,11 +216,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:textSize="12dp"
-                                android:paddingLeft="2dp"
+                                android:textSize="16dp"
+                                android:paddingLeft="0dp"
                                 android:fontFamily="@font/myfont"
                                 android:text=""
-                                android:textStyle="normal"
+                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
 
@@ -690,6 +745,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="visible"
                     android:orientation="vertical">
 
                     <LinearLayout

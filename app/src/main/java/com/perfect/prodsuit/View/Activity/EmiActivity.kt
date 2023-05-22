@@ -742,7 +742,8 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
             val window: Window? = dialog.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            dialog!!.setCanceledOnTouchOutside(false)
+            dialog!!.setCanceledOnTouchOutside(true)
+
 
             txtReset = view.findViewById<TextView>(R.id.txtReset)
             txtSearch = view.findViewById<TextView>(R.id.txtSearch)
@@ -871,7 +872,7 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 
 
 
-            dialog.setCancelable(false)
+            dialog.setCancelable(true)
             dialog!!.setContentView(view)
             dialog.show()
 
@@ -1109,6 +1110,7 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
     }
 
     private fun getEmiCounts() {
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)

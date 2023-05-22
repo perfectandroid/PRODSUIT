@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#43706B" /> <!-- Replace with your desired fill color -->
+    <corners android:radius="0dp" /> <!-- No rounded corners -->
+    <size android:width="100dp" android:height="100dp" /> <!-- Replace with your desired size -->
+    <stroke
+        android:width="2dp"
+        android:color="#000000" /> <!-- Replace with your desired stroke color and width -->
+    <item>
+        <rotate
+            android:fromDegrees="18"
+            android:toDegrees="18"
+            android:pivotX="50%"
+            android:pivotY="50%" />
+        <path
+            android:pathData="M50,0 L64,36 L100,40 L73,66 L79,100 L50,82 L21,100 L27,66 L0,40 L36,36 Z" />
+    </item>
+</shape>

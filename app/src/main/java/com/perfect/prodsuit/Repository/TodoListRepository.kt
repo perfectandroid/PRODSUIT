@@ -24,7 +24,9 @@ object TodoListRepository {
 
     val todolistSetterGetter = MutableLiveData<TodoListModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,submode : String, name  : String, criteria  : String,date : String,ID_Branch : String , ID_Employee : String, ID_Lead_Details : String,strLeadValue :String): MutableLiveData<TodoListModel> {
+    fun getServicesApiCall(context: Context,submode : String, name  : String, criteria  : String,date : String,
+                           ID_Branch : String , ID_Employee : String, ID_Lead_Details : String,strLeadValue :String)
+    : MutableLiveData<TodoListModel> {
         getTodolist(context,submode,name,criteria,date,ID_Branch,ID_Employee,ID_Lead_Details,strLeadValue)
         return todolistSetterGetter
     }
@@ -117,6 +119,7 @@ object TodoListRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
+            Log.i("response2erer","body lead="+requestObject1.toString())
             val call = apiService.getLeadManagementDetailsList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
