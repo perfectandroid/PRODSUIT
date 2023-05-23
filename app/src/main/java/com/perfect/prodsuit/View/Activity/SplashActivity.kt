@@ -36,24 +36,6 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
 
-////    DEVELOPMENT 30.11.2022
-    val CERT_NAME = "development.pem"
-    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY = "-500"
-
-  ////   Unisoft` 26.04.2023
-//    val CERT_NAME = "unicef.pem"
-//    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
-//    val BANK_KEY = "-512"
-
-    ////   Sunitha` 17.05.2023
-//    val CERT_NAME = "sunitha.pem"
-//    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
-//    val BANK_KEY = "-511"
-
 
     ////    DEMO 15.02.2023
 //    val CERT_NAME = "democert.pem"
@@ -91,17 +73,35 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://103.50.212.195/PerfectWebERPAPI/"
 //    val BANK_KEY = "-101"
 
-    ////    Spectum Live 20.01.2023
-//    val CERT_NAME = "spectrumlive.pem"
-//    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
-//    val BANK_KEY = "-500"
-
     // Demo 17-03-2023
 //    val CERT_NAME = "supportdemo.pem"
 //    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/"
 //    val BANK_KEY = "-510"
+
+    ////   Unisoft` 26.04.2023
+//    val CERT_NAME = "unicef.pem"
+//    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
+//    val BANK_KEY = "-512"
+
+    ////   Sunitha` 17.05.2023
+//    val CERT_NAME = "sunitha.pem"
+//    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
+//    val BANK_KEY = "-511"
+
+    ////    Spectum Live 23.05.2023
+//    val CERT_NAME = "spectrumlive.pem"
+//    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
+//    val BANK_KEY = "-500"
+
+    ////    DEVELOPMENT 30.11.2022
+    val CERT_NAME = "development.pem"
+    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY = "-500"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
