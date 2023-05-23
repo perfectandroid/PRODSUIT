@@ -611,7 +611,7 @@
                                         <ImageView
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
-                                            android:src="@drawable/svg_delivery_bike"
+                                            android:src="@drawable/delivaryman_01"
                                             tools:ignore="UseAppTint" />
                                         </LinearLayout>
 

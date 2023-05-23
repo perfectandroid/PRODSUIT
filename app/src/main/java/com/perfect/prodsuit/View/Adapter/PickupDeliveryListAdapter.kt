@@ -50,6 +50,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 holder.tv_Mobile.text              =  "Mobile : "+jsonObject!!.getString("Mobile")
                 holder.tv_AssignedDate.text        =  "Assigned On : "+jsonObject!!.getString("AssignedOn")
                 holder.tv_Employee.text            =  "Employee : "+jsonObject!!.getString("EMPName")
+                holder.tv_assigned_date.text       =  jsonObject!!.getString("AssignedDate")
+                holder.tv_Area.text                =  "Area : "+jsonObject!!.getString("Area")
 
                 if (SubMode.equals("1")){
 
@@ -133,6 +135,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var img_location           : ImageView
         internal var img_Priority           : ImageView
         internal var tv_Priority            : TextView
+        internal var tv_assigned_date       : TextView
+        internal var tv_Area                : TextView
         init {
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
@@ -146,6 +150,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             img_location         = v.findViewById<View>(R.id.img_location) as ImageView
             img_Priority         = v.findViewById<View>(R.id.img_Priority) as ImageView
             tv_Priority          = v.findViewById<View>(R.id.tv_Priority) as TextView
+            tv_assigned_date     = v.findViewById<View>(R.id.tv_assigned_date) as TextView
+            tv_Area              = v.findViewById<View>(R.id.tv_Area) as TextView
         }
     }
 
