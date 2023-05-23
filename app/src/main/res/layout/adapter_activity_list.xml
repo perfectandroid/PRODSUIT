@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="3dp"
-    android:backgroundTint="@color/white"
-    android:layout_margin="2dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="0dp"
+    android:backgroundTint="@color/homebgcolor"
+    android:layout_margin="0dp"
+    app:cardElevation="0dp"
     tools:ignore="MissingConstraints">
     <!--    app:cardUseCompatPadding="true"-->
 
@@ -15,11 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/shape_shadow"
+        android:background="@color/white"
         android:gravity="center_vertical">
 
 
         <LinearLayout
+            android:padding="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -33,17 +34,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Enquiry About"
+                    android:layout_weight="2"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
-                    android:justificationMode="inter_word"
+
+                    android:gravity="start"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:singleLine="true"
+
+                    android:text="Enquiry About"
+                    android:textColor="@color/black1"
+
+                    android:textSize="12dp"
                     android:textStyle="bold"
-                    android:gravity="start"/>
+
+
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,24 +59,27 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
 
                 <TextView
+
+
                     android:id="@+id/txtEnquiryAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
                     android:fontFamily="@font/myfont"
-                    android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+
+                    android:singleLine="false"
+                    android:text=""
+                    android:textColor="@color/greydark"
+
+                    android:textSize="12dp"
                     android:textStyle="normal" />
 
 
@@ -84,18 +92,19 @@
 
 
                 <TextView
+                    android:text="Action"
+                    android:textColor="@color/black1"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Action"
+                    android:layout_weight="2"
+
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
                     android:gravity="start"/>
 
                 <TextView
@@ -107,7 +116,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -118,14 +127,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont"
+
+                    />
 
 
             </LinearLayout>
@@ -139,17 +151,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Action Type"
+                    android:layout_weight="2"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
-                    android:justificationMode="inter_word"
+
+                    android:gravity="start"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
-                    android:gravity="start"/>
+                    android:singleLine="true"
+
+                    android:text="Action Type"
+                    android:textColor="@color/black"
+
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,7 +173,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -171,14 +184,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="14dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont" />
 
 
             </LinearLayout>
@@ -190,18 +204,19 @@
 
 
                 <TextView
+                    android:text="Action Date"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Action Date"
+                    android:layout_weight="2"
+
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
                     android:gravity="start"/>
 
                 <TextView
@@ -213,7 +228,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -224,14 +239,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont" />
 
 
             </LinearLayout>
@@ -243,18 +259,19 @@
 
 
                 <TextView
+                    android:text="Status"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Status"
+                    android:layout_weight="2"
+
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
                     android:gravity="start"/>
 
                 <TextView
@@ -266,7 +283,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -277,14 +294,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont" />
 
 
             </LinearLayout>
@@ -296,18 +314,19 @@
 
 
                 <TextView
+                    android:text="Agent Remarks"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Agent Remarks"
+                    android:layout_weight="2"
+
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
                     android:gravity="start"/>
 
                 <TextView
@@ -319,7 +338,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -330,14 +349,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont" />
 
 
             </LinearLayout>
@@ -349,18 +369,19 @@
 
 
                 <TextView
+                    android:text="Followed By"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
-                    android:text="Followed By"
+                    android:layout_weight="2"
+
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold"
                     android:gravity="start"/>
 
                 <TextView
@@ -372,7 +393,7 @@
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:drawableTint="@color/black"
                     android:textStyle="normal"
                     android:gravity="start"/>
@@ -383,14 +404,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:fontFamily="@font/myfont"
+
                     android:singleLine="false"
-                    android:justificationMode="inter_word"
+
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="normal" />
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
+                    android:textStyle="normal"
+                    android:fontFamily="@font/myfont" />
 
 
             </LinearLayout>
@@ -399,15 +421,24 @@
         </LinearLayout>
 
 
-
+<!--
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="2dp"
             android:background="@color/white"/>
 
+            -->
+        <View
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
 

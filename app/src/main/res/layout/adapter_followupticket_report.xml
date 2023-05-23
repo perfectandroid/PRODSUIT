@@ -3,23 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="3dp"
-    android:backgroundTint="@color/white"
-    android:layout_margin="2dp"
-    app:cardElevation="3dp"
-    tools:ignore="MissingConstraints">
+    android:layout_margin="0dp"
+    android:backgroundTint="@color/homebgcolor"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+   >
 
     <LinearLayout
         android:id="@+id/ll_followList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/shape_shadow"
+        android:background="@color/white"
         android:gravity="center_vertical">
 
 
         <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -32,17 +34,19 @@
 
 
                 <TextView
+                    android:text="Lead No ( Date )"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Lead No ( Date )"
+                    android:layout_weight="1.6"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
+
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:singleLine="true"
+
+
+                    android:textColor="@color/black1"
+                    android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -62,13 +66,13 @@
                     android:id="@+id/txtLead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
+                    android:layout_weight="2.4"
                     android:fontFamily="@font/myfont"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
                     android:textStyle="normal" />
 
 
@@ -82,17 +86,19 @@
 
 
                 <TextView
+                    android:text="Customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Customer"
+                    android:layout_weight="1.6"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
+
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:singleLine="true"
+
+
+                    android:textColor="@color/black1"
+                    android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -112,13 +118,13 @@
                     android:id="@+id/txtCustomer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
+                    android:layout_weight="2.4"
                     android:fontFamily="@font/myfont"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
                     android:textStyle="normal" />
 
 
@@ -132,18 +138,20 @@
 
 
                 <TextView
+                    android:text="Category/Product"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Category/Product"
+                    android:layout_weight="1.6"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
+
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
-                    android:textStyle="bold" />
+                    android:singleLine="true"
+
+
+                    android:textColor="@color/black1"
+                    android:textSize="12dp"
+                    android:textStyle="bold"  />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,13 +170,13 @@
                     android:id="@+id/txtProduct"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
+                    android:layout_weight="2.4"
                     android:fontFamily="@font/myfont"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
                     android:textStyle="normal" />
 
 
@@ -182,17 +190,19 @@
 
 
                 <TextView
+                    android:text="Collected By"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Collected By"
+                    android:layout_weight="1.6"
                     android:fontFamily="@font/myfont"
-                    android:singleLine="true"
+
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:singleLine="true"
+
+
+                    android:textColor="@color/black1"
+                    android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -212,13 +222,13 @@
                     android:id="@+id/txtCollectedBy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
+                    android:layout_weight="2.4"
                     android:fontFamily="@font/myfont"
                     android:justificationMode="inter_word"
                     android:paddingLeft="2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13dp"
-                    android:drawableTint="@color/black"
+                    android:textColor="@color/greydark"
+                    android:textSize="12dp"
+
                     android:textStyle="normal" />
 
 
@@ -233,9 +243,11 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="2dp"
-            android:background="@color/white"/>
+            android:layout_height="1dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="3dp"
+            android:background="@color/grey" />
 
 
     </LinearLayout>
