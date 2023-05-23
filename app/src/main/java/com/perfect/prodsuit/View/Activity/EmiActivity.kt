@@ -1110,6 +1110,7 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
     }
 
     private fun getEmiCounts() {
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)

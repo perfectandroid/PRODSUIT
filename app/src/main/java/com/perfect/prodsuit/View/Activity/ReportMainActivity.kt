@@ -50,6 +50,7 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
         llLeadReport!!.setOnClickListener(this)
         llServiceReport!!.setOnClickListener(this)
         card_collection!!.setOnClickListener(this)
+        card_pickup!!.setOnClickListener(this)
 
         setLicence()
     }
@@ -70,13 +71,13 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
             card_service!!.visibility = View.GONE
         }
 
-        if(!iCollection.equals("true")){
-            card_collection!!.visibility = View.GONE
-        }
-
-        if(!iPickUp.equals("true")){
-            card_pickup!!.visibility = View.GONE
-        }
+//        if(!iCollection.equals("true")){
+//            card_collection!!.visibility = View.GONE
+//        }
+//
+//        if(!iPickUp.equals("true")){
+//            card_pickup!!.visibility = View.GONE
+//        }
     }
 
     override fun onClick(v: View) {
@@ -96,6 +97,12 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.card_collection->
             {
                Toast.makeText(this@ReportMainActivity, "Work in progess", Toast.LENGTH_SHORT).show()
+//                val i = Intent(this@ReportMainActivity, CollectionReportActivity::class.java)
+//                startActivity(i)
+            }
+            R.id.card_pickup->
+            {
+                Toast.makeText(this@ReportMainActivity, "Work in progess", Toast.LENGTH_SHORT).show()
 //                val i = Intent(this@ReportMainActivity, CollectionReportActivity::class.java)
 //                startActivity(i)
             }

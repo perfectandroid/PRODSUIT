@@ -135,7 +135,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.cb_Meeting.setTag(position)
                     holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
-                        if (isChecked) {
+                        if (isChecked)
+                        {
 
                             val jsonObject1 = jsonArray.getJSONObject(position)
 
@@ -156,12 +157,15 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                             val gson = Gson()
                             val json = gson.toJson(lstChk)
                             val editor = sharedPreferences!!.edit()
+                            Log.i("responseShared","check to="+lstChk)
+                            Log.i("responseShared","check to="+json)
                             editor.putString("Set", json);
                             editor.commit();
                             Log.e(TAG, "lstChk_size  " + lstChk.size)
                             Log.e(TAG, "desc  3413  " + desc)
 
-                        } else {
+                        } else
+                        {
                             val jsonObject1 = jsonArray.getJSONObject(position)
 //                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
 //                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
@@ -182,6 +186,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                             val gson = Gson()
                             val json = gson.toJson(lstChk)
                             val editor = sharedPreferences!!.edit()
+                            Log.i("responseShared","uncheck to="+lstChk)
+                            Log.i("responseShared","uncheck to="+json)
                             editor.putString("Set", json);
                             editor.commit();
                             Log.e(TAG, "lstChk_size  " + lstChk.size)

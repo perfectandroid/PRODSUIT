@@ -63,6 +63,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var billTypecount = 0
 
     private var tv_TicketDetailsClick: TextView? = null
+    private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
     lateinit var tie_Selectbilltype: AutoCompleteTextView
     private var tv_CustomerDetailsClick: TextView? = null
     private var til_llbilltype: TextInputLayout? = null
@@ -88,6 +89,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var edtPayRefNo: EditText? = null
     private var edtPayAmount: EditText? = null
     private var txtPayBalAmount: TextView? = null
+    private var tv_header1: TextView? = null
     private var txt_pay_Amount: TextView? = null
     private var txt_pay_method: TextView? = null
     private var txt_bal_Amount: TextView? = null
@@ -228,6 +230,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         Log.e(TAG, "000111222255  " + ID_ProductDelivery)
         setRegViews()
         getUpdateStstusDetails()
+//        checkAndRequestPermissions()
+
+//        locAddress = getStringExtra("address")
+//        locCity = getStringExtra("city")
+//        locState = getStringExtra("state")
+//        locCountry = getStringExtra("country")
+//        locpostalCode = getStringExtra("postalCode")
+//        locKnownName = getStringExtra("knownName")
+//        strLatitude = getStringExtra("strLatitude")
+//        strLongitue = getStringExtra("strLongitue")
     }
 
     private fun setRegViews() {
@@ -281,6 +293,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //        getDetailList()
 
     }
+
 
     private fun getUpdateStstusDetails() {
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -400,6 +413,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tv_PickDeliveryInformationClick!!.text = "Pickup Information"
             til_PickDeliveryDate!!.hint = "Pick Up Date *"
             til_PickDeliveryTime!!.hint = "Pick up Time *"
+            tv_ProductInformationClick!!.text = "PickUp Note"
 
         }
         if (SubMode.equals("2")) {
@@ -407,6 +421,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tv_PickDeliveryInformationClick!!.text = "Delivery Information"
             til_PickDeliveryDate!!.hint = "Delivery Date *"
             til_PickDeliveryTime!!.hint = "Delivery Time *"
+            tv_ProductInformationClick!!.text = "Delivery Note"
         }
     }
 
@@ -809,6 +824,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 dialogProdInformation!!.findViewById(R.id.til_Selectstatus) as TextInputLayout
             tie_location =
                 dialogProdInformation!!.findViewById(R.id.tie_location) as AutoCompleteTextView
+            tv_header1 = dialogProdInformation!!.findViewById(R.id.tv_header) as TextView
+
+            if (SubMode!!.equals("1")){
+                tv_header1!!.text = "Pickup Note"
+            }
+            if (SubMode!!.equals("2")){
+                tv_header1!!.text = "Delivery Note"
+            }
 
 
             imback.setOnClickListener {
@@ -917,6 +940,54 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             e.printStackTrace()
         }
     }
+
+    private fun checkAndRequestPermissions(): Boolean {
+
+        var result = false
+        val locationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val coarsePermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        val commandPermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
+
+
+
+        val backgroundPermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        val listPermissionsNeeded: MutableList<String> = ArrayList()
+        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        if (commandPermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
+        }
+        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        }
+
+
+//        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//        }
+
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(),
+                REQUEST_ID_MULTIPLE_PERMISSIONS
+            )
+            result  = true
+        }
+        return result
+    }
+
+
 
     private fun payMethodbottomsheet() {
         try {

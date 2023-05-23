@@ -75,8 +75,24 @@
                     android:paddingRight="10dp"
                     android:text=""
                     android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="12dp"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_assigned_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
                     android:textStyle="bold" />
 
 
@@ -159,6 +175,18 @@
                     android:textColor="@color/black"
                     android:textSize="10dp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+
+                </LinearLayout>
+
+
+
                 <!--                android:drawableLeft="@drawable/trolley"-->
 
                 <TextView
@@ -174,6 +202,33 @@
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
                     android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+
+                        android:src="@drawable/icon_svg_area"
+                        app:tint="@color/black" />
+                    <!--                            app:tint="@color/list_icon"-->
+
+                    <TextView
+                        android:id="@+id/tv_Area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="10dp"
+                        android:paddingStart="3dp"
+                        android:fontFamily="@font/myfont"
+                        android:text=""
+                        android:textColor="@color/list_label"
+                        android:layout_centerVertical="true" />
+                </LinearLayout>
+
                 <!--                android:drawableLeft="@drawable/deadline"-->
 
                 <View
@@ -188,15 +243,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:gravity="left|center"
+                    android:gravity="right|center"
                     android:textSize="10dp"
                     android:layout_marginTop="2dp"
-                    android:drawableLeft="@drawable/ic_person_24"
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
                 <!--                android:drawableLeft="@drawable/deadline"-->
+<!--                android:drawableRight="@drawable/ic_person_24"-->
 
 
                 <View

@@ -296,6 +296,10 @@ class TicketReportDetailActivity : AppCompatActivity() , View.OnClickListener, I
                                         report_date!!.visibility=View.VISIBLE
                                         var arrayFrom=strFromdate!!.split("-")
                                         var arrayTo=strTodate!!.split("-")
+
+                                        Log.i("fgfdjkgh","date 2="+strFromdate)
+                                        Log.i("fgfdjkgh","date 1="+arrayFrom[1])
+                                        Log.i("fgfdjkgh","date 0="+arrayFrom[0])
                                         var fromDate=arrayFrom[2]+"-"+arrayFrom[1]+"-"+arrayFrom[0]
                                         var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
                                         report_date!!.text="Report between "+fromDate+" and "+toDate
