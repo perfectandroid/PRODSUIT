@@ -36,6 +36,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
             R.layout.adapter_todolist, parent, false
         )
         sharedPreferences =context.getSharedPreferences("AgendaReminder", Context.MODE_PRIVATE)
+        lstChk.clear()
         vh = MainViewHolder(v)
         return vh
     }
@@ -153,11 +154,13 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 //                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
                             val desc =
                                 "Customer : " + Customer + ", Product : " + ProdName + " , Next Action Date : " + NextActionDate
+                            Log.i("response2323","msg="+desc)
+
                             lstChk.add(desc)
                             val gson = Gson()
                             val json = gson.toJson(lstChk)
                             val editor = sharedPreferences!!.edit()
-                            Log.i("responseShared","check to="+lstChk)
+
                             Log.i("responseShared","check to="+json)
                             editor.putString("Set", json);
                             editor.commit();
@@ -186,7 +189,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                             val gson = Gson()
                             val json = gson.toJson(lstChk)
                             val editor = sharedPreferences!!.edit()
-                            Log.i("responseShared","uncheck to="+lstChk)
+
                             Log.i("responseShared","uncheck to="+json)
                             editor.putString("Set", json);
                             editor.commit();
@@ -251,6 +254,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
            immessage           = v.findViewById<View>(R.id.immessage) as ImageView
            impreference           = v.findViewById<View>(R.id.impreference) as ImageView
            cb_Meeting            = v.findViewById<View>(R.id.cb_Meeting) as CheckBox
+
+           lstChk.clear()
         }
     }
 

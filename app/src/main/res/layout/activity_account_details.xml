@@ -886,6 +886,7 @@
                                                                     android:layout_width="match_parent"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_marginLeft="10dp"
+
                                                                     android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
                                                                     android:text=""
@@ -2042,7 +2043,7 @@
                                     <LinearLayout
                                         android:id="@+id/ll_location"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_height="wrap_content"
                                         android:orientation="vertical"
                                         android:visibility="gone">
                                         <!--   <LinearLayout

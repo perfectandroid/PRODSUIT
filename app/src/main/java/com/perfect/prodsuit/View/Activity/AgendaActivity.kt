@@ -13,6 +13,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.CalendarContract
 import android.provider.CallLog
 import android.text.Editable
@@ -47,6 +48,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.PhoneStatReceiver
 import com.perfect.prodsuit.View.Adapter.*
@@ -66,12 +68,12 @@ import kotlin.String
 import kotlin.arrayOf
 import kotlin.toString
 
-import com.perfect.prodsuit.Helper.ItemClickListenerData
-
 class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,
     ItemClickListenerData,
     OnMapReadyCallback,
     RadioGroup.OnCheckedChangeListener {
+
+    var lstChkArray = ArrayList<String>()
     var textid: TextView? = null
     var coun: TextView? = null
     var lcoun: LinearLayout? = null
@@ -442,7 +444,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             if (iLead.equals("true")) {
                 Log.i("responseCheckApi", "leadsAPi")
                 leadfirst!!.visibility = View.VISIBLE
-                getLeadList(leadArrayList)
+            //    getLeadList(leadArrayList)
                 //............................
 
 
@@ -450,7 +452,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             } else if (iService.equals("true")) {
                 Log.i("responseCheckApi", "ServicesAPi")
                 servicesecond!!.visibility = View.VISIBLE
-                getServiceList(serviceArrayList)
+             //   getServiceList(serviceArrayList)
 
                 //............................
 
@@ -459,7 +461,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             } else if (iCollection.equals("true")) {
                 Log.i("responseCheckApi", "EmiApi")
                 emithird!!.visibility = View.VISIBLE
-                getEmi(emiArrayList)
+            //    getEmi(emiArrayList)
                 //............................
 
 
@@ -632,6 +634,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         if (msg!!.length > 0) {
                             if (agendaAllListCount == 0) {
                                 agendaAllListCount++
+
+                                val editor = sharedPreferences!!.edit()
+                                editor.clear()
+                                editor.commit()
+
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
@@ -677,7 +684,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                                     service_count!!.setText("0")
                                     emi_count!!.setText("0")
-
+                                    Log.i("fgdgf1", "EXMessage=" + jObject.getString("EXMessage"))
                                     builder.setMessage(jObject.getString("EXMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
                                        // dialogInterface.dismiss()
@@ -1033,9 +1040,12 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
     override fun onClick(v: View) {
-
+      //  var TIME: kotlin.Long = (1 * 1000).toLong()
         when (v.id) {
+
             R.id.leadfirst -> {
+          //      leadfirst!!.setEnabled(false)
+//                Handler().postDelayed(Runnable { v.isEnabled = true }, TIME)
 
                 mainpage!!.visibility = View.GONE
 //                secondpage!!.visibility = View.GONE
@@ -1073,7 +1083,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 rv_todolist1!!.visibility = View.VISIBLE
                 coun!!.visibility = View.VISIBLE
                 coun!!.text=serviceArrayList.length().toString()
-                textid!!.text="SERVICE"
+                textid!!.text="SERVICES"
                 secondpage!!.visibility = View.VISIBLE
                 imgv_filter1!!.visibility = View.VISIBLE
 
@@ -1287,6 +1297,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                     val collectionType: Type = object : TypeToken<List<String?>?>() {}.getType()
                     val arrPackageData: List<String> = gson.fromJson(json, collectionType)
                     for (reminderText in arrPackageData) {
+                        Log.i("lstChk_size   ", "lstChk_size   " + reminderText)
                         Log.e("lstChk_size   ", "lstChk_size   " + reminderText)
                         if (ii == 0) {
                             ii++
@@ -2625,6 +2636,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         }
 
         if (data.equals("todolist")) {
+          //  Config.disableClick(View)
             
             val jsonObject = leadArrayList.getJSONObject(position)
             val i = Intent(this@AgendaActivity, AccountDetailsActivity::class.java)
@@ -4939,6 +4951,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
             mainpage!!.visibility = View.VISIBLE
             textid!!.text="AGENDA"
+         //   lstChkArray.clear()
+
+            val editor = sharedPreferences!!.edit()
+            editor.clear()
+            editor.commit()
           //  lcoun!!.visibility = View.GONE
             coun!!.visibility=View.GONE
 
@@ -4951,6 +4968,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             imgv_filterEmi!!.visibility=View.GONE
         }
         else {
+            lstChkArray.clear()
             super.onBackPressed()
         }
 
