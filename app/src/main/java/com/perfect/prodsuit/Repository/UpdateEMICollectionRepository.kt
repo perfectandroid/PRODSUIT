@@ -30,15 +30,15 @@ object UpdateEMICollectionRepository {
 
     fun getServicesApiCall(context: Context,strSaveTrnsDate : String, ID_CustomerWiseEMI : String, strSaveCollectDate : String, strSaveTotalAmount : String, strSaveFineAmount : String,
                            strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray: JSONArray,
-                           strLongitue : String,strLatitude : String,strLocationAddress : String): MutableLiveData<UpdateEMICollectionModel> {
+                           strLongitue : String,strLatitude : String,strLocationAddress : String,strAgentDate : String,strAgentTime : String): MutableLiveData<UpdateEMICollectionModel> {
         UpdateEMICollectionData(context,strSaveTrnsDate,ID_CustomerWiseEMI,strSaveCollectDate,strSaveTotalAmount,strSaveFineAmount,
-            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray,strLongitue,strLatitude,strLocationAddress)
+            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray,strLongitue,strLatitude,strLocationAddress,strAgentDate,strAgentTime)
         return updateEMICollectionSetterGetter
     }
 
     private fun UpdateEMICollectionData(context: Context,strSaveTrnsDate : String, ID_CustomerWiseEMI : String, strSaveCollectDate : String, strSaveTotalAmount : String, strSaveFineAmount : String,
                                         strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray:JSONArray,
-                                        strLongitue : String,strLatitude : String,strLocationAddress : String) {
+                                        strLongitue : String,strLatitude : String,strLocationAddress : String,strAgentDate : String,strAgentTime : String) {
 
         Log.e(TAG,"VALUES  1411"
                 +"\n  TrnsDate      "+strSaveTrnsDate
@@ -129,6 +129,8 @@ object UpdateEMICollectionRepository {
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("Address", ProdsuitApplication.encryptStart(strLocationAddress))
+                requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strAgentDate))
+                requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(strAgentTime))
 
 
                Log.e(TAG,"114  SAVE   "+requestObject1)

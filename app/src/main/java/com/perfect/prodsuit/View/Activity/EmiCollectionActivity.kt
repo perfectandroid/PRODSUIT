@@ -34,9 +34,8 @@ import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimelFormatters
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
+import com.perfect.prodsuit.Helper.DecimalToWordsConverter.convertNumberToWords
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.PayMethodAdapter
@@ -76,6 +75,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private var tv_Total: TextView? = null
     private var tv_NetAmount: TextView? = null
+    private var tv_NetAmountWord: TextView? = null
     private var tv_Balance: TextView? = null
 
 
@@ -206,6 +206,9 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     var geocoder: Geocoder? = null
     var addresses: List<Address>? = null
 
+    private var strAgentDate:String?=""
+    private var strAgentTime:String?=""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,7 +236,12 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         hideViews()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         emiCollectnDet = 0
-        getEmiCollectionDetails()
+        getEmiCollectionDetails()   // 25-05-2023  setValues [Line : 322 ]
+
+
+
+
+
 
     }
 
@@ -258,6 +266,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         tv_Total = findViewById<TextView>(R.id.tv_Total)
         tv_NetAmount = findViewById<TextView>(R.id.tv_NetAmount)
+        tv_NetAmountWord = findViewById<TextView>(R.id.tv_NetAmountWord)
         tv_Balance = findViewById<TextView>(R.id.tv_Balance)
 
         tv_tab_information = findViewById<TextView>(R.id.tv_tab_information)
@@ -310,8 +319,9 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         changeListner()
         setValues()
-     //   addTabItem()
         getDefaultValueSettings()
+
+
 
     }
 
@@ -458,6 +468,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         DecimelFormatters.setDecimelPlace(edtFine!!)
         edtInsAmount!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -466,6 +477,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                edtInsAmount!!.removeTextChangedListener(this)
                 if (edtInsAmount!!.text.toString().equals(".")){
                     strInsAmount = "0.00"
                 }
@@ -473,31 +486,29 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                     strInsAmount = "0.00"
                 }
                 else{
-                    strInsAmount =  edtInsAmount!!.text.toString()
+                    strInsAmount =  DecimalToWordsConverter.commaRemover(edtInsAmount!!.text.toString())
                 }
-
-
-
 
                 Log.e(TAG,"41900     "+strBalance+"   :   "+strInsAmount)
                 if ((strInsAmount!!.toFloat()) <= (strBalance!!.toFloat())){
                     val bal = DecimelFormatters.set2DecimelPlace(((strBalance!!.toFloat()) - (strInsAmount!!.toFloat())))
 //                    tv_Balance!!.text = ((strBalance!!.toFloat()) - (strInsAmount!!.toFloat())).toString()
-                    tv_Balance!!.text = bal
+                    if (!edtInsAmount!!.text.toString().equals("")){
+                        //  edtInsAmount!!.setText(strInsAmount)
+                        edtInsAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(strInsAmount!!))
+                    }
+                    //tv_Balance!!.text = bal
+                    tv_Balance!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(bal))
                 }
                 else{
-                    edtInsAmount!!.setText(strInsAmountTemp)
-                   // snackBarWarnings()
-//                    val snackbar = Snackbar.make(this@EmiCollectionActivity, "", Snackbar.LENGTH_SHORT)
-//                    val sbView = snackbar.view
-//                    sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-//                    val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
-//                    textView.setTextColor(Color.WHITE)
-//                    val typeface = ResourcesCompat.getFont(context, R.font.myfont)
-//                    textView.setTypeface(typeface)
-//                    textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
-//                    textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-//                    snackbar.show()
+
+                   edtInsAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(strInsAmountTemp!!))
+                    val bal = DecimelFormatters.set2DecimelPlace(((strBalanceTemp!!.toFloat()) - (strInsAmountTemp!!.toFloat())))
+                   // tv_Balance!!.text = bal
+                      tv_Balance!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(bal))
+                   // edtInsAmount!!.setText(strInsAmountTemp)
+                    chkClosing!!.isChecked = false
+                    strSaveClosing = "0"
 
                 }
 
@@ -508,15 +519,21 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 tv_Total!!.text = tot
 
                 val totAmnt = DecimelFormatters.set2DecimelPlace(strInsAmount!!.toFloat())
-              //  edtTotalAmount!!.setText(totAmnt)
-                tv_NetAmount!!.setText(tot)
+              //  tv_NetAmount!!.setText(tot)
+                tv_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(tot))
+                tv_NetAmountWord!!.setText("("+ DecimalToWordsConverter.convertAmountToWords(tot!!)+" )")
              //   edtNetAmount!!.setText(tot)
 
+
+                edtInsAmount!!.setSelection(edtInsAmount!!.length())
+                edtInsAmount!!.addTextChangedListener(this)
             }
 
         })
 
         edtFine!!.addTextChangedListener(object : TextWatcher {
+
+
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -526,7 +543,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                edtFine!!.removeTextChangedListener(this)
                 if (edtFine!!.text.toString().equals(".")){
                     strFine = "0.00"
                 }
@@ -534,7 +551,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                     strFine = "0.00"
                 }
                 else{
-                    strFine =  edtFine!!.text.toString()
+                    //strFine =  edtFine!!.text.toString()
+                    strFine =  DecimalToWordsConverter.commaRemover(edtFine!!.text.toString())
                 }
                 Log.e(TAG,"tv_Total  "+((strInsAmount!!.toFloat())+(strFine!!.toFloat())).toString())
               //  tv_Total!!.text = ((strInsAmount!!.toFloat())+(strFine!!.toFloat())).toString()
@@ -545,7 +563,17 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 val totFine = DecimelFormatters.set2DecimelPlace(strFine!!.toFloat())
              //   edtTotalFineAmount!!.setText(totFine)
               //  edtNetAmount!!.setText(tot)
-                tv_NetAmount!!.setText(tot)
+              //  tv_NetAmount!!.setText(tot)
+                tv_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(tot))
+                tv_NetAmountWord!!.setText("("+DecimalToWordsConverter.convertAmountToWords(tot!!)+")")
+
+
+                if (!edtFine!!.text.toString().equals("")){
+                    //  edtInsAmount!!.setText(strInsAmount)
+                    edtFine!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(strFine!!))
+                }
+                edtFine!!.setSelection(edtFine!!.length())
+                edtFine!!.addTextChangedListener(this)
             }
 
         })
@@ -913,17 +941,24 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 for (i in 0 until arrPayment.length()) {
                     //apply your logic
                     val jsonObject = arrPayment.getJSONObject(i)
+                    Log.e(TAG,"9451  ")
                     payAmnt = (payAmnt + (jsonObject.getString("Amount")).toFloat())
                 }
-               val pay = DecimelFormatters.set2DecimelPlace(payAmnt.toFloat())
-              //  payAmnt = (DecimelFormatters.set2DecimelPlace(payAmnt.toFloat()))
+                Log.e(TAG,"9452  ")
+                val pay = DecimelFormatters.set2DecimelPlace(payAmnt.toFloat())
+                //  payAmnt = (DecimelFormatters.set2DecimelPlace(payAmnt.toFloat()))
+                Log.e(TAG,"9453  ")
                 Log.e(TAG,"payAmnt         475    "+payAmnt)
                 Log.e(TAG,"tv_NetAmount    475    "+tv_NetAmount!!.text.toString())
                 txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))
+                Log.e(TAG,"9454  ")
             }else{
+                Log.e(TAG,"9455  ")
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
+                Log.e(TAG,"94551  "+tv_NetAmount!!.text.toString())
                 txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+                Log.e(TAG,"9456  ")
             }
 
             edtPayMethod!!.setOnClickListener {
@@ -973,12 +1008,12 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             dialogPaymentSheet!!.show()
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG,"801 Exception  "+e.toString())
+            Log.e(TAG,"1012 Exception  "+e.toString())
         }
     }
 
     private fun validateAddPayment(view: View) {
-        var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+        var balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
         var payAmount = edtPayAmount!!.text.toString()
 
         Log.e(TAG,"110   balAmount   : "+balAmount)
@@ -1396,22 +1431,39 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                         txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
                     }
 
+
+
                 }
 
                 editable === edtPayAmount!!.editableText -> {
-                    Log.e(TAG,"283021    ")
-                    if (edtPayAmount!!.text.toString().equals("")){
+
+                    try {
+                        Log.e(TAG,"283021    "+edtPayAmount!!.text.toString())
+                        edtPayAmount!!.removeTextChangedListener(this)
+                        var txt = edtPayAmount!!.text.toString()
+                        // Log.e(TAG,"2830213    "+  DecimalToWordsConverter.getDecimelFormateForEditText(txt))
+
+                      //  edtPayAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(txt))
+                        if (edtPayAmount!!.text.toString().equals("")){
 //                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
-                    }else{
-                        //   til_DeliveryDate!!.isErrorEnabled = false
-                        txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+                        }else{
+                            //   til_DeliveryDate!!.isErrorEnabled = false
+                            txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
+                        }
+                        edtPayAmount!!.setSelection(edtPayAmount!!.length())
+                        edtPayAmount!!.addTextChangedListener(this)
+                    }catch (e : Exception){
+                        Log.e(TAG,"283021 dtrg   "+e.toString())
                     }
+
+
+
 
                 }
 
                 editable === txtPayBalAmount!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    val payAmnt = DecimelFormatters.set2DecimelPlace(txtPayBalAmount!!.text.toString().toFloat())
+                    val payAmnt = DecimelFormatters.set2DecimelPlace(DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString()).toFloat())
                     if ((payAmnt.toFloat()).equals("0.00".toFloat())){
                         Log.e(TAG,"801 payAmnt  0.00  "+payAmnt.toFloat())
                         txt_bal_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
@@ -1447,11 +1499,18 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 //        strID_CustomerWiseEMI = ID_CustomerWiseEMI
         strSaveCollectDate = edtCollectionDate!!.text.toString()
 
-        strSaveInstllAmount = Config.changeTwoDecimel(edtInsAmount!!.text.toString())
-        strSaveTotalAmount = Config.changeTwoDecimel(edtInsAmount!!.text.toString())
-        strSaveBalance = Config.changeTwoDecimel(tv_Balance!!.text.toString())
-        strSaveFineAmount = Config.changeTwoDecimel(edtFine!!.text.toString())
-        strSaveNetAmount = Config.changeTwoDecimel(tv_NetAmount!!.text.toString())
+//        strSaveInstllAmount = Config.changeTwoDecimel(edtInsAmount!!.text.toString())
+//        strSaveTotalAmount = Config.changeTwoDecimel(edtInsAmount!!.text.toString())
+//        strSaveBalance = Config.changeTwoDecimel(tv_Balance!!.text.toString())
+//        strSaveFineAmount = Config.changeTwoDecimel(edtFine!!.text.toString())
+//        strSaveNetAmount = Config.changeTwoDecimel(tv_NetAmount!!.text.toString())
+
+        strSaveInstllAmount = Config.changeTwoDecimel(DecimalToWordsConverter.commaRemover(edtInsAmount!!.text.toString()))
+        strSaveTotalAmount = Config.changeTwoDecimel(DecimalToWordsConverter.commaRemover(edtInsAmount!!.text.toString()))
+        strSaveBalance = Config.changeTwoDecimel(DecimalToWordsConverter.commaRemover(tv_Balance!!.text.toString()))
+        strSaveFineAmount = Config.changeTwoDecimel(DecimalToWordsConverter.commaRemover(edtFine!!.text.toString()))
+        strSaveNetAmount = Config.changeTwoDecimel(DecimalToWordsConverter.commaRemover(tv_NetAmount!!.text.toString()))
+
         Log.e(TAG,"VALUES  1411    "+strSaveFineAmount)
 
         if (strSaveNetAmount!!.toFloat() > 0){
@@ -1543,7 +1602,30 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                     +"\n  savePaymentDetailArray    "+savePaymentDetailArray
             )
 
-            updateEmiCollection()
+
+
+
+            try {
+
+
+                val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+                val currentDate = sdf.format(Date())
+                Log.e(TAG,"DATE TIME  196  "+currentDate)
+                val newDate: Date = sdf.parse(currentDate)
+                Log.e(TAG,"newDate  196  "+newDate)
+                val sdfDate1 = SimpleDateFormat("yyyy-MM-dd")
+                val sdfTime1 = SimpleDateFormat("hh:mm:ss")
+                strAgentDate = sdfDate1.format(newDate)
+                strAgentTime = sdfTime1.format(newDate)
+
+                updateEmiCollection()
+
+            }catch (e: Exception){
+
+                Log.e(TAG,"Exception 196  "+e.toString())
+            }
+
+
 
         }else{
             Config.snackBars(context,v,"In Payment Method Balance Amt. Should be Zero")
@@ -1564,7 +1646,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 updateEMICollectionViewModel.setUpdateEMICollection(this,strSaveTrnsDate,ID_CustomerWiseEMI!!,strSaveCollectDate,strSaveTotalAmount,strSaveFineAmount,
-                    strSaveNetAmount,ID_CollectedBy!!,saveEmiDetailsArray,savePaymentDetailArray,strLongitue!!,strLatitude!!,strLocationAddress!!)!!.observe(
+                    strSaveNetAmount,ID_CollectedBy!!,saveEmiDetailsArray,savePaymentDetailArray,strLongitue!!,strLatitude!!,strLocationAddress!!,strAgentDate!!,strAgentTime!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

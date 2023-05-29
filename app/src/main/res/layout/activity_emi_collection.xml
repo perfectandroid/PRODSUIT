@@ -1403,150 +1403,250 @@
 
                                                 </LinearLayout>
 
+
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginTop="10dp"
-                                                    android:orientation="horizontal">
+                                                    android:background="@drawable/shape_bg"
+                                                    android:orientation="vertical"
+                                                    android:padding="10dp">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
-                                                        android:orientation="vertical"
-                                                        android:visibility="gone">
+                                                        android:layout_marginTop="5dp"
+                                                        android:orientation="horizontal">
 
-                                                        <TextView
+                                                        <LinearLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:text="Total"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="13dp"
-                                                            android:textStyle="bold"
-                                                            android:visibility="visible" />
+                                                            android:layout_weight="1"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+                                                            <TextView
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:text="Total"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="13dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
 
-                                                        <TextView
-                                                            android:id="@+id/tv_Total"
+                                                            <TextView
+                                                                android:id="@+id/tv_Total"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center"
+                                                                android:layout_marginTop="-3dp"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:maxLength="20"
+                                                                android:text="0.00"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="13dp"
+                                                                android:textStyle="normal" />
+
+
+                                                        </LinearLayout>
+
+                                                        <LinearLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:layout_marginTop="-3dp"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:maxLength="20"
-                                                            android:text="0.00"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="13dp"
-                                                            android:textStyle="normal" />
+                                                            android:layout_weight="1"
+                                                            android:orientation="horizontal">
+
+                                                            <TextView
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="end"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="start"
+                                                                android:text="Balance"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="15dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+
+                                                            <TextView
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="end"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="start"
+                                                                android:text="  :  "
+                                                                android:textColor="@color/black"
+                                                                android:textSize="15dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+
+
+                                                            <TextView
+                                                                android:id="@+id/tv_Balance"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="end"
+                                                                android:layout_marginTop="-3dp"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="start"
+                                                                android:text="0.00"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="15dp"
+                                                                android:textStyle="normal" />
+
+
+                                                        </LinearLayout>
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_weight="1.5"
+                                                            android:gravity="center_vertical"
+                                                            android:orientation="horizontal">
+
+                                                            <CheckBox
+                                                                android:id="@+id/chkClosing"
+                                                                android:layout_width="30dp"
+                                                                android:layout_height="30dp"
+                                                                android:layout_marginRight="0dp"
+                                                                android:text="Closing"
+                                                                android:theme="@style/checkBoxStyle"
+                                                                android:visibility="visible" />
+
+
+                                                            <TextView
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="match_parent"
+                                                                android:layout_gravity="center_vertical"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="center_vertical"
+                                                                android:text=" Closing"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="15dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+                                                        </LinearLayout>
 
 
                                                     </LinearLayout>
 
-                                                    <LinearLayout
+                                                    <View
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
-                                                        android:orientation="vertical">
-
-                                                        <TextView
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="end"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="start"
-                                                            android:text="Balance"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="18dp"
-                                                            android:textStyle="bold"
-                                                            android:visibility="visible" />
-
-
-                                                        <TextView
-                                                            android:id="@+id/tv_Balance"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="end"
-                                                            android:layout_marginTop="-3dp"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="start"
-                                                            android:text="0.00"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="18dp"
-                                                            android:textStyle="normal" />
-
-
-                                                    </LinearLayout>
+                                                        android:layout_height="1dp"
+                                                        android:layout_marginLeft="10dp"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_marginRight="10dp"
+                                                        android:background="@color/greylight" />
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_marginRight="5dp"
-                                                        android:layout_weight="1"
-                                                        android:orientation="vertical">
+                                                        android:layout_marginTop="5dp"
+                                                        android:orientation="horizontal">
 
-                                                        <TextView
+
+                                                        <LinearLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:text="Net Amount *"
-                                                            android:gravity="end"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="18dp"
-                                                            android:textStyle="bold"
-                                                            android:visibility="visible" />
+                                                            android:layout_marginRight="5dp"
+                                                            android:layout_weight="1"
+                                                            android:orientation="vertical">
 
-                                                        <TextView
-                                                            android:id="@+id/tv_NetAmount"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:layout_marginTop="-3dp"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:maxLength="20"
-                                                            android:text="0.00"
-                                                            android:gravity="end"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="18dp"
-                                                            android:textStyle="normal" />
+                                                            <TextView
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center"
+                                                                android:background="@color/white"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="left"
+                                                                android:text="Net Amount *"
+                                                                android:textColor="@color/black"
+                                                                android:textSize="18dp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
-                                                        <EditText
-                                                            android:id="@+id/edtNetAmount"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_marginTop="0dp"
-                                                            android:layout_marginRight="0dp"
-                                                            android:layout_marginBottom="0dp"
-                                                            android:layout_toLeftOf="@+id/img_search"
-                                                            android:background="@drawable/shape_bg"
-                                                            android:drawableLeft="@drawable/svg_netamount"
-                                                            android:drawableTint="@color/greydark"
-                                                            android:editable="false"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:hint=""
-                                                            android:inputType="numberDecimal"
-                                                            android:maxLength="12"
-                                                            android:padding="7dp"
-                                                            android:paddingLeft="0dp"
-                                                            android:paddingRight="5dp"
-                                                            android:singleLine="true"
-                                                            android:text=""
-                                                            android:textSize="15dp"
-                                                            android:visibility="gone" />
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="left"
+                                                                android:orientation="horizontal">
+
+                                                                <TextView
+                                                                    android:id="@+id/tv_NetAmount"
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_gravity="center"
+                                                                    android:layout_marginTop="-3dp"
+                                                                    android:background="@color/white"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:gravity="left"
+                                                                    android:maxLength="20"
+                                                                    android:text="0.00"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="18dp"
+                                                                    android:textStyle="normal" />
+
+                                                                <TextView
+                                                                    android:id="@+id/tv_NetAmountWord"
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_gravity="center"
+                                                                    android:layout_marginLeft="5dp"
+                                                                    android:layout_marginTop="-3dp"
+                                                                    android:background="@color/white"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:gravity="left"
+                                                                    android:text=""
+                                                                    android:textColor="@color/redDark"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="normal" />
+
+
+                                                            </LinearLayout>
+
+
+                                                            <EditText
+                                                                android:id="@+id/edtNetAmount"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginTop="0dp"
+                                                                android:layout_marginRight="0dp"
+                                                                android:layout_marginBottom="0dp"
+                                                                android:layout_toLeftOf="@+id/img_search"
+                                                                android:background="@drawable/shape_bg"
+                                                                android:drawableLeft="@drawable/svg_netamount"
+                                                                android:drawableTint="@color/greydark"
+                                                                android:editable="false"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:hint=""
+                                                                android:inputType="numberDecimal"
+                                                                android:maxLength="12"
+                                                                android:padding="7dp"
+                                                                android:paddingLeft="0dp"
+                                                                android:paddingRight="5dp"
+                                                                android:singleLine="true"
+                                                                android:text=""
+                                                                android:textSize="15dp"
+                                                                android:visibility="gone" />
+
+
+                                                        </LinearLayout>
 
 
                                                     </LinearLayout>
 
 
                                                 </LinearLayout>
+
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -1663,28 +1763,7 @@
                                                         android:gravity="center_vertical"
                                                         android:orientation="horizontal">
 
-                                                        <CheckBox
-                                                            android:id="@+id/chkClosing"
-                                                            android:layout_width="30dp"
-                                                            android:layout_height="30dp"
-                                                            android:visibility="visible"
-                                                            android:layout_marginRight="0dp"
-                                                            android:text="Closing"
-                                                            android:theme="@style/checkBoxStyle" />
 
-
-                                                        <TextView
-                                                            android:layout_width="wrap_content"
-                                                            android:layout_height="match_parent"
-                                                            android:layout_gravity="center_vertical"
-                                                            android:gravity="center_vertical"
-                                                            android:background="@color/white"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:text=" Closing"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="15dp"
-                                                            android:textStyle="bold"
-                                                            android:visibility="visible" />
                                                     </LinearLayout>
 
 
@@ -1700,12 +1779,12 @@
                                                             android:layout_width="0dp"
                                                             android:layout_height="wrap_content"
                                                             android:layout_weight="1"
-                                                            app:hintTextColor="@color/white"
-                                                            android:textColorHint="@color/white"
                                                             android:backgroundTint="@color/colorPrimary"
                                                             android:drawableTint="@color/white"
                                                             android:fontFamily="@font/myfont"
-                                                            android:hint="Payment Method">
+                                                            android:hint="Payment Method"
+                                                            android:textColorHint="@color/white"
+                                                            app:hintTextColor="@color/white">
 
                                                             <com.google.android.material.textfield.TextInputEditText
                                                                 android:id="@+id/tie_Payment_Method"
@@ -1732,7 +1811,6 @@
                                                     </LinearLayout>
 
 
-
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1740,8 +1818,8 @@
                                                         android:layout_marginLeft="5dp"
                                                         android:layout_weight="1"
                                                         android:gravity="end"
-                                                        android:visibility="gone"
-                                                        android:orientation="horizontal">
+                                                        android:orientation="horizontal"
+                                                        android:visibility="gone">
 
                                                         <TextView
                                                             android:layout_width="match_parent"
@@ -1766,8 +1844,6 @@
                                                             app:tint="@color/colorPrimary" />
 
 
-
-
                                                     </LinearLayout>
 
                                                 </LinearLayout>
@@ -1777,8 +1853,8 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginTop="5dp"
-                                                    android:visibility="gone"
-                                                    android:orientation="horizontal">
+                                                    android:orientation="horizontal"
+                                                    android:visibility="gone">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -1814,11 +1890,11 @@
                                                             android:focusableInTouchMode="false"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint="Location"
+                                                            android:maxLines="2"
                                                             android:padding="7dp"
                                                             android:paddingLeft="0dp"
                                                             android:paddingRight="5dp"
                                                             android:singleLine="false"
-                                                            android:maxLines="2"
                                                             android:text=""
                                                             android:textSize="15dp"
                                                             android:visibility="visible" />

@@ -413,7 +413,7 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 
     private fun getCategory() {
 //         var prodcategory = 0
-        var ReqMode = "105"
+        var ReqMode = "13"
         var SubMode = "0"
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -786,6 +786,8 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
             ID_Area = temp_ID_Area
 
 
+
+
             if (tie_As_On_Date!!.text.toString().equals("")){
                 try {
                     val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
@@ -822,9 +824,14 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                 temp_Area = tie_Area!!.text.toString()
                 temp_Demand = tie_Demand!!.text.toString()
 
+                Demand = tie_Demand!!.text.toString()
+
+
                 temp_ID_Finance_PlanType = ID_FinancePlanType
                 temp_ID_Category = ID_Category
                 temp_ID_Area  =ID_Area
+
+          //      ID_FinancePlanType,AsOnDate,ID_Category,ID_Area,Demand
 
                 dialog.dismiss()
                 emiCount = 0
@@ -861,7 +868,9 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                         val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
 
                         tie_As_On_Date!!.setText(""+sdfDate1.format(newDate))
-
+                        temp_As_On_Date = sdfDate1.format(newDate);
+                        val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+                        AsOnDate = sdfDate2.format(newDate)
 
                     }catch (e: Exception){
 

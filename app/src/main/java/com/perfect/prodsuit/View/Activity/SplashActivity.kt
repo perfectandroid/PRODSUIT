@@ -2,8 +2,12 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,7 +16,10 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -130,66 +137,6 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
         Log.e(TAG,"HEIGHT_WIDTH   777   "+height)
 
-
-//        val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
-//        val TestingMobileNopref = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
-//        val TestingBankKeypref = applicationContext.getSharedPreferences(Config.SHARED_PREF12, 0)
-//        val Testingsslcertificatepref = applicationContext.getSharedPreferences(Config.SHARED_PREF13, 0)
-//        val Loginmobilenumberpref = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
-//
-//        if(Loginmobilenumberpref.getString("Loginmobilenumber", null)!=null
-//            && TestingURLpref.getString("TestingURL", null)!=null
-//            && Testingsslcertificatepref.getString("CertificateStatus", null)!=null
-//            && TestingBankKeypref.getString("BankKey", null)!=null
-//            && TestingMobileNopref.getString("TestingMobileNo", null).equals(Loginmobilenumberpref.getString("Loginmobilenumber", null)))
-//            {
-//            val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            val BASE_URLEditer = BASE_URLSP.edit()
-//            BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
-//            BASE_URLEditer.commit()
-//
-//            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
-//            val IMAGE_URLEditer = IMAGE_URLSP.edit()
-//            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URLSP.getString("TestingImageURL", null))
-//            IMAGE_URLEditer.commit()
-//
-//            val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-//            val CERT_NAMEEditer = CERT_NAMESP.edit()
-//            CERT_NAMEEditer.putString("CERT_NAME", Testingsslcertificatepref.getString("CertificateStatus", null))
-//            CERT_NAMEEditer.commit()
-//
-//            val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-//            val BANK_KEYEditer = BANK_KEYESP.edit()
-//            BANK_KEYEditer.putString("BANK_KEY", TestingBankKeypref.getString("BankKey", null))
-//            BANK_KEYEditer.commit()
-//
-//        }
-//        else{
-//            val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            val BASE_URLEditer = BASE_URLSP.edit()
-//            BASE_URLEditer.putString("BASE_URL", BASE_URL)
-//            BASE_URLEditer.commit()
-//
-//            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
-//            val IMAGE_URLEditer = IMAGE_URLSP.edit()
-//            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
-//            IMAGE_URLEditer.commit()
-//
-//
-//            val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-//            val CERT_NAMEEditer = CERT_NAMESP.edit()
-//            CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
-//            CERT_NAMEEditer.commit()
-//
-//            val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-//            val BANK_KEYEditer = BANK_KEYESP.edit()
-//            BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
-//            BANK_KEYEditer.commit()
-//
-//
-//        }
-//        showMaintanace()
-
         var im_app_logo = findViewById<ImageView>(R.id.im_app_logo)
         animBlink = AnimationUtils.loadAnimation(this, R.anim.blink);
         animBlink!!.setAnimationListener(this);
@@ -215,6 +162,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     }
+
 
     private fun commonAppChecking() {
         try {

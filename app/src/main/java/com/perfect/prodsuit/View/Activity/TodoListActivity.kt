@@ -168,6 +168,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         date = ""
         criteria = ""
 
+        Log.e(TAG,"SubMode  17144   "+SubMode)
+
         val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
         val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)

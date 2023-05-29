@@ -14,9 +14,9 @@ class UpdateEMICollectionViewModel: ViewModel() {
 
     fun setUpdateEMICollection(context: Context,strSaveTrnsDate : String, ID_CustomerWiseEMI : String, strSaveCollectDate : String, strSaveTotalAmount : String, strSaveFineAmount : String,
                                strSaveNetAmount : String, ID_CollectedBy : String, saveEmiDetailsArray : JSONArray, savePaymentDetailArray:JSONArray,
-                               strLongitue : String,strLatitude : String,strLocationAddress : String) : LiveData<UpdateEMICollectionModel>? {
+                               strLongitue : String,strLatitude : String,strLocationAddress : String,strAgentDate : String,strAgentTime : String) : LiveData<UpdateEMICollectionModel>? {
         updateEMICollectionLiveData = UpdateEMICollectionRepository.getServicesApiCall(context,strSaveTrnsDate,ID_CustomerWiseEMI,strSaveCollectDate,strSaveTotalAmount,strSaveFineAmount,
-            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray,strLongitue,strLatitude,strLocationAddress)
+            strSaveNetAmount,ID_CollectedBy,saveEmiDetailsArray,savePaymentDetailArray,strLongitue,strLatitude,strLocationAddress,strAgentDate,strAgentTime)
         return updateEMICollectionLiveData
     }
 }
