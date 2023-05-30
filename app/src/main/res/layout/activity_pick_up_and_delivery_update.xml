@@ -100,6 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/llHeader"
+                        android:background="@color/leadbg_color"
                         android:orientation="vertical">
                         <ScrollView
                             android:layout_width="match_parent"
@@ -168,7 +169,15 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:padding="10dp"
+                                                    android:background="@color/leadbg_color"
                                                     android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/border_show"
+                                                        android:orientation="vertical">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -176,25 +185,41 @@
                                                         android:layout_weight="1"
                                                         android:orientation="vertical">
 
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="19dp"
+                                                                android:layout_height="19dp"
+                                                                android:paddingStart="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:src="@drawable/icon_svg_ticketno"
+                                                                app:tint="@color/black" />
+
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
+                                                            android:paddingStart="5dp"
+                                                            android:padding="2dp"
                                                             android:textStyle="bold"
                                                             android:fontFamily="@font/myfont"
                                                             android:text="Ticket Number"
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
 
+                                                        </LinearLayout>
 
                                                         <TextView
                                                             android:id="@+id/tv_TicketNumber"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
+                                                            android:paddingStart="25dp"
+                                                            android:paddingBottom="2dp"
                                                             android:textSize="13dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
@@ -204,39 +229,56 @@
 
 
                                                     </LinearLayout>
+                                                    </LinearLayout>
 
                                                     <View
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="0.5dp"
-                                                        android:background="@color/grey"
+                                                        android:layout_height="5dp"
+                                                        android:background="@color/leadbg_color"
                                                         android:visibility="visible"/>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
+                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="19dp"
+                                                                android:layout_height="19dp"
+                                                                android:paddingStart="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:src="@drawable/register_on_copy"
+                                                                app:tint="@color/black" />
 
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
+                                                            android:padding="2dp"
+                                                            android:paddingStart="5dp"
                                                             android:textStyle="bold"
                                                             android:fontFamily="@font/myfont"
                                                             android:text="Registered On"
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
-
+                                                        </LinearLayout>
 
                                                         <TextView
                                                             android:id="@+id/tv_RegisteredOn"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
+                                                            android:paddingBottom="2dp"
+                                                            android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
@@ -321,26 +363,42 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:padding="10dp"
+                                                    android:background="@color/leadbg_color"
                                                     android:orientation="vertical">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
+                                                        android:background="@drawable/border_show"
                                                         android:layout_weight="1"
+
                                                         android:orientation="vertical">
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="20dp"
+                                                                android:layout_height="20dp"
+                                                                android:layout_gravity="center"
+                                                                android:paddingStart="2dp"
+                                                                android:src="@drawable/icon_svg_customer"
+                                                                app:tint="@color/black" />
 
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
+                                                            android:paddingStart="5dp"
+                                                            android:padding="2dp"
                                                             android:textStyle="bold"
-                                                            android:drawableLeft="@drawable/icon_svg_customer"
                                                             android:fontFamily="@font/myfont"
                                                             android:text="Customer Name"
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
+                                                        </LinearLayout>
 
 
                                                         <TextView
@@ -348,9 +406,9 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:paddingStart="25dp"
                                                             android:textSize="13dp"
+                                                            android:paddingBottom="2dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
@@ -362,28 +420,43 @@
 
                                                     <View
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="0.5dp"
-                                                        android:background="@color/grey"
+                                                        android:layout_height="5dp"
+                                                        android:background="@color/leadbg_color"
                                                         android:visibility="visible"/>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
+                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="20dp"
+                                                                android:layout_height="20dp"
+                                                                android:paddingStart="5dp"
+                                                                android:layout_gravity="center"
+                                                                android:src="@drawable/icon_svg_address"
+                                                                app:tint="@color/black" />
 
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:textStyle="bold"
+                                                            android:padding="2dp"
                                                             android:fontFamily="@font/myfont"
                                                             android:text="Address"
-                                                            android:drawableLeft="@drawable/icon_svg_address"
+                                                            android:paddingStart="5dp"
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
+                                                        </LinearLayout>
 
 
                                                         <TextView
@@ -391,7 +464,6 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
@@ -405,7 +477,6 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:paddingStart="25dp"
                                                             android:textSize="13dp"
                                                             android:layout_marginTop="-3dp"
@@ -420,7 +491,6 @@
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
                                                             android:paddingStart="25dp"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
@@ -433,7 +503,6 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
@@ -447,7 +516,6 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
@@ -461,13 +529,13 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
                                                             android:fontFamily="@font/myfont"
                                                             android:text=""
+                                                            android:paddingBottom="2dp"
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
 
@@ -536,6 +604,7 @@
                                                 android:id="@+id/llProductDetails"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:background="@color/leadbg_color"
                                                 android:orientation="vertical"
                                                 android:visibility="gone">
 
@@ -555,14 +624,24 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
+                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <ImageView
+                                                                android:layout_width="20dp"
+                                                                android:layout_height="20dp"
+                                                                android:paddingStart="5dp"
+                                                                android:src="@drawable/lead_productss"
+                                                                app:tint="@color/black" />
 
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
-                                                            android:drawableLeft="@drawable/lead_productss"
                                                             android:drawableTint="@color/greydark"
                                                             android:textSize="13dp"
                                                             android:textStyle="bold"
@@ -571,13 +650,13 @@
                                                             android:textColor="@color/black"
                                                             android:visibility="visible"/>
 
+                                                        </LinearLayout>
 
                                                         <TextView
                                                             android:id="@+id/tv_tvProduct"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:paddingStart="25dp"
                                                             android:layout_marginTop="-3dp"
@@ -591,21 +670,20 @@
 
                                                     <View
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="0.5dp"
-                                                        android:background="@color/grey"
+                                                        android:layout_height="5dp"
                                                         android:visibility="visible"/>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
+                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
 
                                                         <TextView
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:drawableLeft="@drawable/lead_categorys"
                                                             android:drawableTint="@color/greydark"
@@ -621,7 +699,6 @@
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:layout_gravity="center"
-                                                            android:background="@color/white"
                                                             android:textSize="13dp"
                                                             android:layout_marginTop="-3dp"
                                                             android:textStyle="normal"
@@ -700,8 +777,8 @@
 
                                                 <View
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="0.5dp"
-                                                    android:background="@color/grey"
+                                                    android:layout_height="5dp"
+                                                    android:background="@color/leadbg_color"
                                                     android:visibility="visible"/>
 
                                                 <LinearLayout

@@ -52,6 +52,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 holder.tv_Employee.text            =  "Employee : "+jsonObject!!.getString("EMPName")
                 holder.tv_assigned_date.text       =  jsonObject!!.getString("AssignedDate")
                 holder.tv_Area.text                =  "Area : "+jsonObject!!.getString("Area")
+                holder.tv_ProductName.text         =  "Product Name : "+jsonObject!!.getString("ProductName")
 
                 if (SubMode.equals("1")){
 
@@ -137,6 +138,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var tv_Priority            : TextView
         internal var tv_assigned_date       : TextView
         internal var tv_Area                : TextView
+        internal var tv_ProductName         : TextView
         init {
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
@@ -152,6 +154,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             tv_Priority          = v.findViewById<View>(R.id.tv_Priority) as TextView
             tv_assigned_date     = v.findViewById<View>(R.id.tv_assigned_date) as TextView
             tv_Area              = v.findViewById<View>(R.id.tv_Area) as TextView
+            tv_ProductName       = v.findViewById<View>(R.id.tv_ProductName) as TextView
         }
     }
 

@@ -203,6 +203,20 @@
                     android:drawablePadding="5dp"
                     android:textColor="@color/black"/>
 
+                <TextView
+                    android:id="@+id/tv_ProductName"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="10dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/product_svglist"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/black"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -211,7 +225,6 @@
                     <ImageView
                         android:layout_width="19dp"
                         android:layout_height="19dp"
-
                         android:src="@drawable/icon_svg_area"
                         app:tint="@color/black" />
                     <!--                            app:tint="@color/list_icon"-->

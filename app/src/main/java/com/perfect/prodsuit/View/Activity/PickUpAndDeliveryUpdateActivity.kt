@@ -1,18 +1,27 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -25,6 +34,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -44,7 +66,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListener,
-    ItemClickListener {
+    ItemClickListener,  LocationListener{
 
     var TAG = "PickUpAndDeliveryUpdateActivity"
     lateinit var context: Context
@@ -86,6 +108,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var lllocationpickup: LinearLayout? = null
     private var til_location: TextInputLayout? = null
     lateinit var tie_location: AutoCompleteTextView
+//    private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var locationRequest: LocationRequest? = null
+    private var mLocationCallback: LocationCallback? = null
+    private var mMap: GoogleMap? = null
+    var lat: Double? = null
+    var longi: Double? = null
     private var edtPayRefNo: EditText? = null
     private var edtPayAmount: EditText? = null
     private var txtPayBalAmount: TextView? = null
@@ -104,10 +132,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var billtype: String? = null
     private var status_id = ""
     private var SELECT_LOCATION: Int? = 103
+    private var SECTION: Int? = 101
     private var llTicketDetails: LinearLayout? = null
     private var llCustomerDetails: LinearLayout? = null
     private var llProductDetails: LinearLayout? = null
-    private var llsubmit : LinearLayout? = null
+    private var llsubmit: LinearLayout? = null
     private var llPickDeliveryInformation: LinearLayout? = null
 
     var TicketDetailsMode: String? = "1"
@@ -121,9 +150,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var ID_ProductDelivery: String? = ""
     var PickDeliveryDate = ""
     var PickDeliveryTime = ""
-    private var remark : String? = ""
-    private var StandByAmount : String? = ""
-    private var FK_BillType : String? = ""
+    var geocoder: Geocoder? = null
+    var addresses: List<Address>? = null
+    var strName: String? = null
+    private var remark: String? = ""
+    private var StandByAmount: String? = ""
+    private var FK_BillType: String? = ""
     private var tempremark = ""
 
 
@@ -143,9 +175,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var IsSelected = ""
     var pickupdeliStatusCount = 0
     lateinit var ProdInformationViewModel: PaymentMethodViewModel
-     var prodInformationArrayList: JSONArray=JSONArray()
-     var prodInformationArrayList2: JSONArray=JSONArray()
-     var prodDetailArrayList: JSONArray=JSONArray()
+    var prodInformationArrayList: JSONArray = JSONArray()
+    var prodInformationArrayList2: JSONArray = JSONArray()
+    var prodDetailArrayList: JSONArray = JSONArray()
     var arrPayment = JSONArray()
     var arrayPaymentmethod = JSONArray()
     var Productdetails = JSONArray()
@@ -174,7 +206,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var lladdProduct: LinearLayout? = null
     var llbilltype: LinearLayout? = null
     var arrPosition: Int? = 0
-    var updatepickupanddeliveryCount  = 0
+    var updatepickupanddeliveryCount = 0
     var FK_EmployeeStock = ""
 
     var tickrtmode: String? = "1"  // GONE
@@ -193,7 +225,27 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var strLatitude: String? = ""
     var strLongitue: String? = ""
 
+    var lm: LocationManager? = null
+    var gps_enabled = false
+    var network_enabled = false
 
+    var mGoogleApiClient: GoogleApiClient? = null
+    var mLocationRequest: LocationRequest? = null
+    var mLastLocation: Location? = null
+    private val REQUEST_TURN_ON_LOCATION_SETTINGS = 100
+    private val OPEN_SETTINGS = 200
+
+    var address: String = ""
+    var city: String = ""
+    var state: String = ""
+    var country: String = ""
+    var postalCode: String = ""
+    var knownName: String = ""
+
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val permissionId = 2
+    private var mLocationPermissionGranted = false
+    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -228,6 +280,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
         ID_ProductDelivery = intent.getStringExtra("ID_ProductDelivery")
         Log.e(TAG, "000111222255  " + ID_ProductDelivery)
+
+//        lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+//        if (checkLocationEnabled()){
+//            buildAlertMessageNoGps();
+//        }
+//        checkAndRequestPermissions()
+
         setRegViews()
         getUpdateStstusDetails()
 //        checkAndRequestPermissions()
@@ -293,6 +354,100 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //        getDetailList()
 
     }
+
+
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    private fun getLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient!!.lastLocation.addOnCompleteListener(this) { task ->
+                    val location: Location? = task.result
+                    if (location != null) {
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val list: List<Address> =
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+                        strLongitue = list[0].longitude.toString()
+                        strLatitude = list[0].latitude.toString()
+                        locAddress  = list[0].getAddressLine(0)
+                        Log.i("response121212","latitude="+list[0].latitude)
+                        Log.i("response121212","longitude="+list[0].longitude)
+                        Log.i("response121212","country="+list[0].countryName)
+                        Log.i("response121212","address="+list[0].getAddressLine(0))
+
+                        Log.e(TAG,"address="+list[0].getAddressLine(0))
+
+                    }
+                }
+            } else {
+//                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
+//                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                startActivity(intent)
+                buildAlertMessageNoGps()
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            permissionId
+        )
+    }
+    @SuppressLint("MissingSuperCall")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == permissionId) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            }
+        }
+    }
+
+//    private fun getLocationPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            )
+//            == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            mLocationPermissionGranted = true
+//        } else {
+//            ActivityCompat.requestPermissions(
+//                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+//            )
+//        }
+//    }
 
 
     private fun getUpdateStstusDetails() {
@@ -433,36 +588,36 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             }
 
             R.id.tv_TicketDetailsClick -> {
-                    llTicketDetails!!.visibility = View.VISIBLE
-                    TicketDetailsMode = "0"
-                    CustomerDetailsMode = "1"
-                    tickrtmode = "1"
-                    ProductDetailsMode = "1"
-                    PickDeliveryInformationMode = "1"
-                    ProductInformationMode = "1"
-                    hideViews()
+                llTicketDetails!!.visibility = View.VISIBLE
+                TicketDetailsMode = "0"
+                CustomerDetailsMode = "1"
+                tickrtmode = "1"
+                ProductDetailsMode = "1"
+                PickDeliveryInformationMode = "1"
+                ProductInformationMode = "1"
+                hideViews()
 
             }
             R.id.tv_CustomerDetailsClick -> {
-                    llCustomerDetails!!.visibility = View.VISIBLE
-                    TicketDetailsMode = "1"
-                    CustomerDetailsMode = "0"
-                    customermode = "1"
-                    ProductDetailsMode = "1"
-                    PickDeliveryInformationMode = "1"
-                    ProductInformationMode = "1"
-                    hideViews()
+                llCustomerDetails!!.visibility = View.VISIBLE
+                TicketDetailsMode = "1"
+                CustomerDetailsMode = "0"
+                customermode = "1"
+                ProductDetailsMode = "1"
+                PickDeliveryInformationMode = "1"
+                ProductInformationMode = "1"
+                hideViews()
 
             }
             R.id.tv_ProductDetailsClick -> {
-                    llProductDetails!!.visibility = View.VISIBLE
-                    TicketDetailsMode = "1"
-                    CustomerDetailsMode = "1"
-                    productdetailsmode = "1"
-                    ProductDetailsMode = "0"
-                    PickDeliveryInformationMode = "1"
-                    ProductInformationMode = "1"
-                    hideViews()
+                llProductDetails!!.visibility = View.VISIBLE
+                TicketDetailsMode = "1"
+                CustomerDetailsMode = "1"
+                productdetailsmode = "1"
+                ProductDetailsMode = "0"
+                PickDeliveryInformationMode = "1"
+                ProductInformationMode = "1"
+                hideViews()
 
             }
             R.id.tv_PickDeliveryInformationClick -> {
@@ -510,6 +665,45 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
     }
 
+    private fun checkLocationEnabled(): Boolean {
+
+        var result = false
+
+
+        try {
+            gps_enabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            network_enabled = lm!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            if (!gps_enabled && !network_enabled) {
+                result = true
+            }
+
+        } catch (ex: Exception) {
+            result = false
+        }
+
+        return result
+
+    }
+
+    private fun buildAlertMessageNoGps() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, id: Int) {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+            .setNegativeButton(
+                "No"
+            ) { dialog, id ->
+                dialog.cancel()
+                finish()
+            }
+        val alert: AlertDialog = builder.create()
+        alert.show()
+    }
+
 
     private fun hideViews() {
         if (TicketDetailsMode.equals("1")) {
@@ -549,7 +743,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             PickDeliveryTime = "" + sdfTime1.format(newDate)
             PickDeliveryDate = "" + sdfDate1.format(newDate)
 
-            Log.e(TAG, "Exception 196  " +PickDeliveryTime + PickDeliveryDate )
+            Log.e(TAG, "Exception 196  " + PickDeliveryTime + PickDeliveryDate)
 
         } catch (e: Exception) {
 
@@ -658,7 +852,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 tie_PickDeliveryTime!!.setText(output)
 
                 PickDeliveryTime = tie_PickDeliveryTime.toString()
-                Log.e(TAG,"PickDeliveryTime   "+output)
+                Log.e(TAG, "PickDeliveryTime   " + output)
             } catch (e: Exception) {
                 //   Log.e(TAG,"Exception   428   "+e.toString())
             }
@@ -695,25 +889,49 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   2353   " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
-                                    val jobjt = jObject.getJSONObject("PickUPProductInformationDetails")
-                                    prodInformationArrayList = jobjt.getJSONArray("PickUPProductInformationDetailsList")
+                                    val jobjt =
+                                        jObject.getJSONObject("PickUPProductInformationDetails")
+                                    prodInformationArrayList =
+                                        jobjt.getJSONArray("PickUPProductInformationDetailsList")
                                     if (prodInformationArrayList.length() > 0) {
 
 //                                                ProductInformationBottom(prodInformationArrayList)
-                                        Log.e(TAG, "prodInformationArrayList   396   " + prodInformationArrayList)
+                                        Log.e(
+                                            TAG,
+                                            "prodInformationArrayList   396   " + prodInformationArrayList
+                                        )
 
 
                                         for (i in 0 until prodInformationArrayList.length()) {
-                                            var jsonObject = prodInformationArrayList.getJSONObject(i)
+                                            var jsonObject =
+                                                prodInformationArrayList.getJSONObject(i)
                                             val jObject = JSONObject()
 
-                                            jObject.put("ID_Product", jsonObject.getString("ID_Product"))
-                                            jObject.put("ProdName", jsonObject.getString("ProdName"))
-                                            jObject.put("ProvideStandBy", jsonObject.getString("ProvideStandBy"))
-                                            jObject.put("Quantity", jsonObject.getString("Quantity"))
+                                            jObject.put(
+                                                "ID_Product",
+                                                jsonObject.getString("ID_Product")
+                                            )
+                                            jObject.put(
+                                                "ProdName",
+                                                jsonObject.getString("ProdName")
+                                            )
+                                            jObject.put(
+                                                "ProvideStandBy",
+                                                jsonObject.getString("ProvideStandBy")
+                                            )
+                                            jObject.put(
+                                                "Quantity",
+                                                jsonObject.getString("Quantity")
+                                            )
                                             jObject.put("Product", jsonObject.getString("Product"))
-                                            jObject.put("SPQuantity", jsonObject.getString("SPQuantity"))
-                                            jObject.put("SPAmount", jsonObject.getString("SPAmount"))
+                                            jObject.put(
+                                                "SPQuantity",
+                                                jsonObject.getString("SPQuantity")
+                                            )
+                                            jObject.put(
+                                                "SPAmount",
+                                                jsonObject.getString("SPAmount")
+                                            )
                                             jObject.put("Remarks", jsonObject.getString("Remarks"))
                                             jObject.put("isSelected", ("0"))
                                             jObject.put("isEnable", ("0"))
@@ -723,16 +941,26 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             prodInformationArrayList2.put(jObject)
 
 
-                                            }
+                                        }
                                         Log.e(TAG, "hhhhhhhhhhhhhhh " + prodInformationArrayList2)
 
-                                        val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
-                                        recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+                                        val lLayout = GridLayoutManager(
+                                            this@PickUpAndDeliveryUpdateActivity,
+                                            1
+                                        )
+                                        recyProdInformation!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        val adapterHome = ProdInformationAdapter(
+                                            this@PickUpAndDeliveryUpdateActivity,
+                                            prodInformationArrayList2
+                                        )
                                         recyProdInformation!!.adapter = adapterHome
                                         adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
-                                        Log.e(TAG, "dddddddddddddddddddd  " + prodInformationArrayList)
+                                        Log.e(
+                                            TAG,
+                                            "dddddddddddddddddddd  " + prodInformationArrayList
+                                        )
 
 
 //                                        if (prodInformationArrayList.length() > 0) {
@@ -826,10 +1054,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 dialogProdInformation!!.findViewById(R.id.tie_location) as AutoCompleteTextView
             tv_header1 = dialogProdInformation!!.findViewById(R.id.tv_header) as TextView
 
-            if (SubMode!!.equals("1")){
+            if (SubMode!!.equals("1")) {
                 tv_header1!!.text = "Pickup Note"
             }
-            if (SubMode!!.equals("2")){
+            if (SubMode!!.equals("2")) {
                 tv_header1!!.text = "Delivery Note"
             }
 
@@ -865,13 +1093,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             tie_location!!.setOnClickListener {
 
-                val intent = Intent(this@PickUpAndDeliveryUpdateActivity, LocationPickerActivity::class.java)
-                startActivityForResult(intent, SELECT_LOCATION!!)
+//                val intent = Intent(this@PickUpAndDeliveryUpdateActivity, LocationPickerActivity::class.java)
+//                startActivityForResult(intent, SELECT_LOCATION!!)
 
             }
 
             llsubmit!!.setOnClickListener {
-
+                Config.disableClick(it)
+                getLocation()
                 if (status_id!!.equals("")) {
 
                     Log.e(TAG, "rrrrrr  " + status_id)
@@ -912,11 +1141,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 //            }
 
-            if (prodInformationArrayList2.length() == 0){
+            if (prodInformationArrayList2.length() == 0) {
                 productinfodetailscount = 0
                 getProductInformationDetails()
 
-            }else{
+            } else {
 
                 if (StandByAmount.equals("0.00")) {
                     llbilltype!!.visibility = View.GONE
@@ -936,55 +1165,34 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             dialogProdInformation!!.show()
         } catch (e: Exception) {
-            Log.e(TAG, "ProductInformationBottom               3")
+            Log.e(TAG, "ProductInformationBottom           3")
             e.printStackTrace()
         }
     }
 
-    private fun checkAndRequestPermissions(): Boolean {
-
-        var result = false
-        val locationPermission =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        val coarsePermision =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-
-        val commandPermision =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
 
 
 
-        val backgroundPermision =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+    override fun onLocationChanged(location: Location) {
 
-        val listPermissionsNeeded: MutableList<String> = ArrayList()
-        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        geocoder = Geocoder(this, Locale.getDefault())
+        addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
+        address = addresses!!.get(0).getAddressLine(0)
+        city = addresses!!.get(0).locality
+        state = addresses!!.get(0).adminArea
+        country = addresses!!.get(0).countryName
+        postalCode = addresses!!.get(0).postalCode
+        knownName = addresses!!.get(0).featureName
+        strLongitue = location.longitude.toString()
+        strLatitude = location.latitude.toString()
+        val latLng = LatLng(location.latitude, location.longitude)
+
+
+        Log.e("Dbg", "address111122222    " + latLng)
+
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
         }
-        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-        if (commandPermision != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
-        }
-        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        }
-
-
-//        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
-//            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-//        }
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                listPermissionsNeeded.toTypedArray(),
-                REQUEST_ID_MULTIPLE_PERMISSIONS
-            )
-            result  = true
-        }
-        return result
     }
 
 
@@ -1141,12 +1349,22 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
         } else if (hasId == false && arrAddUpdate.equals("0")) {
-            txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context, R.color.color_mandatory))
+            txt_pay_method!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
             Config.snackBarWarning(context, view, "PaymentMethod Already exits")
 
 
         } else if (edtPayAmount!!.text.toString().equals("")) {
-            txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context, R.color.color_mandatory))
+            txt_pay_Amount!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
             Log.e(TAG, "110   Valid   : Enter Amount")
             Config.snackBarWarning(context, view, "Enter Amount")
 
@@ -1371,7 +1589,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                     Log.e(TAG, "msg   1224   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("FollowUpPaymentMethod")
-                                        paymentMethodeArrayList = jobjt.getJSONArray("FollowUpPaymentMethodList")
+                                        paymentMethodeArrayList =
+                                            jobjt.getJSONArray("FollowUpPaymentMethodList")
                                         if (paymentMethodeArrayList.length() > 0) {
 
                                             payMethodPopup(paymentMethodeArrayList)
@@ -1430,7 +1649,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             recyPaymentMethod!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
-            val adapter = PayMethodAdapter(this@PickUpAndDeliveryUpdateActivity, paymentMethodeArrayList)
+            val adapter =
+                PayMethodAdapter(this@PickUpAndDeliveryUpdateActivity, paymentMethodeArrayList)
             recyPaymentMethod!!.adapter = adapter
             adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
@@ -1544,7 +1764,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailArrayList)
-            val adapter = PickupDeliveryProductAdapter(this@PickUpAndDeliveryUpdateActivity, addproductDetailArrayList)
+            val adapter = PickupDeliveryProductAdapter(
+                this@PickUpAndDeliveryUpdateActivity,
+                addproductDetailArrayList
+            )
             recyProdDetail!!.adapter = adapter
             adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
@@ -1711,94 +1934,94 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     }
 
 
-        private fun getPickupDeliStandByProductDetails() {
+    private fun getPickupDeliStandByProductDetails() {
 //         var proddetail = 0
-            when (Config.ConnectivityUtils.isConnected(this)) {
-                true -> {
-                    progressDialog = ProgressDialog(context, R.style.Progress)
-                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                    progressDialog!!.setCancelable(false)
-                    progressDialog!!.setIndeterminate(true)
-                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                    progressDialog!!.show()
-                    pickupdelistandbyproductviewmodel.getPickupDeliStandByProduct(this)!!.observe(
-                        this,
-                        Observer { serviceSetterGetter ->
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                pickupdelistandbyproductviewmodel.getPickupDeliStandByProduct(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
 
-                            try {
-                                val msg = serviceSetterGetter.message
-                                if (msg!!.length > 0) {
-                                    if (proddetail == 0) {
-                                        proddetail++
-                                        val jObject = JSONObject(msg)
-                                        Log.e(TAG, "msg   227   " + msg)
-                                        if (jObject.getString("StatusCode") == "0") {
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (proddetail == 0) {
+                                    proddetail++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   227   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                            val jobjt =
-                                                jObject.getJSONObject("StandByProductDetails")
-                                            prodDetailArrayList =
-                                                jobjt.getJSONArray("StandByProductDetailsList")
-                                            if (prodDetailArrayList.length() > 0) {
+                                        val jobjt =
+                                            jObject.getJSONObject("StandByProductDetails")
+                                        prodDetailArrayList =
+                                            jobjt.getJSONArray("StandByProductDetailsList")
+                                        if (prodDetailArrayList.length() > 0) {
 //                                             if (proddetail == 0){
 //                                                 proddetail++
-                                                PickupDeliStandByproductDetailPopup(
-                                                    prodDetailArrayList
-                                                )
+                                            PickupDeliStandByproductDetailPopup(
+                                                prodDetailArrayList
+                                            )
 //                                             }
 
-                                            }
-
-                                        } else {
-                                            val builder = AlertDialog.Builder(
-                                                this@PickUpAndDeliveryUpdateActivity,
-                                                R.style.MyDialogTheme
-                                            )
-                                            builder.setMessage(jObject.getString("EXMessage"))
-                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                            }
-                                            val alertDialog: AlertDialog = builder.create()
-                                            alertDialog.setCancelable(false)
-                                            alertDialog.show()
                                         }
-                                    }
 
-                                } else {
-                                    progressDialog!!.dismiss()
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@PickUpAndDeliveryUpdateActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+                                progressDialog!!.dismiss()
 //                                 Toast.makeText(
 //                                     applicationContext,
 //                                     "Some Technical Issues.",
 //                                     Toast.LENGTH_LONG
 //                                 ).show()
-                                }
-                            } catch (e: Exception) {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "" + Config.SOME_TECHNICAL_ISSUES,
-                                    Toast.LENGTH_LONG
-                                ).show()
                             }
-                            progressDialog!!.dismiss()
-                        })
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        progressDialog!!.dismiss()
+                    })
 
-                }
-                false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
-                }
             }
-
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
 
-        private fun PickupDeliStandByproductDetailPopup(prodDetailArrayList: JSONArray) {
+    }
 
-            try {
+    private fun PickupDeliStandByproductDetailPopup(prodDetailArrayList: JSONArray) {
 
-                dialogProdDet = Dialog(this)
-                dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialogProdDet!!.setContentView(R.layout.product_detail_popup)
-                dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-                recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
-                val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!!.setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
+            val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
 
 //            prodDetailSort = JSONArray()
 //            for (k in 0 until prodDetailArrayList.length()) {
@@ -1807,62 +2030,62 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                prodDetailSort.put(jsonObject)
 //            }
 
-                val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
-                recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailArrayList)
-                val adapter = PickupDeliStandByproductAdapter(
-                    this@PickUpAndDeliveryUpdateActivity,
-                    prodDetailArrayList
-                )
-                recyProdDetail!!.adapter = adapter
-                adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+            val adapter = PickupDeliStandByproductAdapter(
+                this@PickUpAndDeliveryUpdateActivity,
+                prodDetailArrayList
+            )
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
-                etsearch!!.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(p0: Editable?) {
-                    }
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
 
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    }
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
 
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                        //  list_view!!.setVisibility(View.VISIBLE)
-                        val textlength = etsearch!!.text.length
-                        prodDetailSort = JSONArray()
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodDetailSort = JSONArray()
 
-                        for (k in 0 until prodDetailArrayList.length()) {
-                            val jsonObject = prodDetailArrayList.getJSONObject(k)
-                            if (textlength <= jsonObject.getString("ProductName").length) {
-                                if (jsonObject.getString("ProductName")!!.toLowerCase().trim()
-                                        .contains(etsearch!!.text.toString().toLowerCase().trim())
-                                ) {
-                                    prodDetailSort.put(jsonObject)
-                                }
-
+                    for (k in 0 until prodDetailArrayList.length()) {
+                        val jsonObject = prodDetailArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ProductName").length) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                prodDetailSort.put(jsonObject)
                             }
+
                         }
-
-                        Log.e(TAG, "prodDetailSort               7103" + prodDetailSort)
-                        val adapter = PickupDeliStandByproductAdapter(
-                            this@PickUpAndDeliveryUpdateActivity,
-                            prodDetailSort
-                        )
-                        recyProdDetail!!.adapter = adapter
-                        adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
                     }
-                })
 
-                dialogProdDet!!.show()
-                dialogProdDet!!.getWindow()!!.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                );
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                    Log.e(TAG, "prodDetailSort               7103" + prodDetailSort)
+                    val adapter = PickupDeliStandByproductAdapter(
+                        this@PickUpAndDeliveryUpdateActivity,
+                        prodDetailSort
+                    )
+                    recyProdDetail!!.adapter = adapter
+                    adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+                }
+            })
 
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
+    }
 
 
     private fun saveUpdatePickUpAndDelivery() {
@@ -1875,15 +2098,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this,ID_ProductDelivery!!,PickDeliveryTime,PickDeliveryDate,remark!!,FK_BillType!!,Productdetails,arrayPaymentmethod!!,StandByAmount!!,status_id!!,strLongitue!!,strLatitude!!,locAddress!!)!!.observe(
+                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this, ID_ProductDelivery!!, PickDeliveryTime, PickDeliveryDate, remark!!, FK_BillType!!, Productdetails, arrayPaymentmethod!!, StandByAmount!!, status_id!!, strLongitue!!, strLatitude!!, locAddress!!)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
                         try {
                             if (msg!!.length > 0) {
-                                Log.e(TAG,"msg  1126     "+msg)
+                                Log.e(TAG, "msg  1126     " + msg)
                                 val jObject = JSONObject(msg)
-                                if (updatepickupanddeliveryCount == 0){
+                                if (updatepickupanddeliveryCount == 0) {
                                     updatepickupanddeliveryCount++
                                     if (jObject.getString("StatusCode") == "0") {
 
@@ -1893,13 +2116,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             val suceessDialog = Dialog(this)
                                             suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                                             suceessDialog!!.setCancelable(false)
-                                            suceessDialog!! .setContentView(R.layout.pickup_deli_update_success)
-                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
 
-                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
 //                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
 //                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
                                             //LeadNumber
                                             tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
 //                                            tv_label!!.setText("Lead No : ")
@@ -1915,7 +2141,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             }
 
                                             suceessDialog!!.show()
-                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            );
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
@@ -1935,8 +2164,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                             }
 
-                        }catch (e : Exception){
-                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                     })
@@ -1952,9 +2185,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
     override fun onClick(position: Int, data: String) {
-        Log.e(TAG,"123456  "+data)
-        if (data.equals("changeAmount")){
-            Log.e(TAG,"545463465464  "+position)
+        Log.e(TAG, "123456  " + data)
+        if (data.equals("changeAmount")) {
+            Log.e(TAG, "545463465464  " + position)
             jsonObject5 = prodInformationArrayList2.getJSONObject(position)
 //            IsSelected = jsonObject5.getString("isSelected")
 //            Log.e(TAG,"343434  "+IsSelected)
@@ -2000,7 +2233,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jObject.put("SubMode", SubMode)
 
 //            prodInformationArrayList.remove(pos)
-            prodInformationArrayList2!!.put(pos,jObject)
+            prodInformationArrayList2!!.put(pos, jObject)
             Log.e(TAG, "prodInformationArrayList size3        " + prodInformationArrayList2.toString())
 
             Log.e(TAG, "errrrrrrrrrrrr        " + position)
@@ -2017,8 +2250,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            adapterHome
             val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
             recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapterHome = ProdInformationAdapter(
-                this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+            val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
             recyProdInformation!!.adapter = adapterHome
             adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
@@ -2058,7 +2290,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             setAmount()
 
 
-
         }
 
         if (data.equals("PickupDeliveryProduct")) {
@@ -2076,13 +2307,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.e(TAG, "prodInformationArrayList size2        " + addproductDetailArrayList.toString())
             Log.e(TAG, "prodInformationArrayList size00        " + prodInformationArrayList2.toString())
 
-            if (prodInformationArrayList2.length() == 0){
+            if (prodInformationArrayList2.length() == 0) {
 
-                jObject.put("ID_Product",jsonObject4.getString("ID_Product"))
-                jObject.put("ProdName",  jsonObject4.getString("ProductName"))
+                jObject.put("ID_Product", jsonObject4.getString("ID_Product"))
+                jObject.put("ProdName", jsonObject4.getString("ProductName"))
                 jObject.put("ProvideStandBy", ("0"))
                 jObject.put("Quantity", ("1.00"))
-                jObject.put("Product","")
+                jObject.put("Product", "")
                 jObject.put("SPQuantity", (""))
                 jObject.put("SPAmount", (""))
                 jObject.put("Remarks", (""))
@@ -2093,15 +2324,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 prodInformationArrayList2!!.put(jObject)
 
-            }else{
+            } else {
 
                 val jsonObject2 = prodInformationArrayList2.getJSONObject(pos)
 
-                jObject.put("ID_Product",jsonObject2.getString("ID_Product"))
-                jObject.put("ProdName",  jsonObject4.getString("ProductName"))
+                jObject.put("ID_Product", jsonObject2.getString("ID_Product"))
+                jObject.put("ProdName", jsonObject4.getString("ProductName"))
                 jObject.put("ProvideStandBy", ("0"))
                 jObject.put("Quantity", jsonObject2.getString("Quantity"))
-                jObject.put("Product","")
+                jObject.put("Product", "")
                 jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
                 jObject.put("SPAmount", (""))
                 jObject.put("Remarks", (""))
@@ -2204,53 +2435,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
     }
 
-    private fun passvalue(){
+    private fun passvalue() {
 
 
         for (i in 0 until prodInformationArrayList2.length()) {
             var jsonObject = prodInformationArrayList2.getJSONObject(i)
             val jObject = JSONObject()
-
-//            if (jsonObject.getString("ProvideStandBy").equals("")){
-//
-//                jObject.put("ID_Product", (""))
-//                jObject.put("ProvideStandBy", (""))
-//                jObject.put("Quantity", (""))
-//                jObject.put("FK_StandByProduct", (""))
-//                jObject.put("StandByQuantity", (""))
-//                jObject.put("StandByAmount", (""))
-//                for (i in 0 until prodDetailArrayList.length()) {
-//                    var jsonObject1 = prodDetailArrayList.getJSONObject(i)
-//
-////                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
-////                    Log.e(TAG, "vhevk2  " + )
-//
-//                    if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
-//
-//                        jObject.put("FK_EmployeeStock", (""))
-//                    } else {
-//                        jObject.put("FK_EmployeeStock", (""))
-//                    }
-//
-//                }
-//                Productdetails.put(jObject)
-//
-//                Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
-//
-//                for (i in 0 until arrPayment.length()) {
-//                    var jsonObject = arrPayment.getJSONObject(i)
-//                    val jObject = JSONObject()
-//                    jObject.put("PaymentMethod", (""))
-//                    jObject.put("PAmount", (""))
-//                    jObject.put("Refno", (""))
-//
-//                    arrayPaymentmethod.put(jObject)
-//
-//                    Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
-//                }
-//                saveUpdatePickUpAndDelivery()
-//
-//            }
 
             Log.e(TAG, "mnmnmmnmnn  " + Productdetails)
 
@@ -2297,18 +2487,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             saveUpdatePickUpAndDelivery()
 
 
-
         }
     }
 
-    private fun Validation(view: View){
+    private fun Validation(view: View) {
 
-         Productdetails = JSONArray()
+        Productdetails = JSONArray()
 //        prodInformationArrayList2 = JSONArray()
 
 //        val jsonObject3 = prodInformationArrayList2.getJSONObject(pos)
-
-        if(prodInformationArrayList2.length() > 0) {
+        if (prodInformationArrayList2.length() > 0) {
 
 //            Log.e(TAG, "kkkkkkkkkkkkkkk  " + jsonObject3.getString("isSelected"))
 
@@ -2317,7 +2505,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            val jObject = JSONObject()
                 Log.e(TAG, "assasasassaa  " + prodInformationArrayList2)
 
-                if (jsonObject.getString("SubMode").equals("1") ) {
+                if (jsonObject.getString("SubMode").equals("1")) {
 
                     Log.e(TAG, "fdfdffd  " + jsonObject.getString("SubMode"))
 
@@ -2363,25 +2551,25 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 if (jsonObject.getString("SubMode").equals("2")) {
 
-                    if(prodInformationArrayList2.length() > 0) {
+                    if (prodInformationArrayList2.length() > 0) {
 
-                    if (jsonObject.getString("isSelected").equals("1")) {
+                        if (jsonObject.getString("isSelected").equals("1")) {
 
 //                        Log.e(TAG, "nnnnnnnnn  " + jsonObject3.getString("isSelected"))
-                        if (status_id!!.equals("")) {
+                            if (status_id!!.equals("")) {
 
-                            Log.e(TAG, "ssssssssss  " + status_id)
-                            Config.snackBarWarning(context, view, "Please Select Status")
-                        } else {
-                            Log.e(TAG, "bfbbfbbffb  " + status_id)
-                            passvalue()
+                                Log.e(TAG, "ssssssssss  " + status_id)
+                                Config.snackBarWarning(context, view, "Please Select Status")
+                            } else {
+                                Log.e(TAG, "bfbbfbbffb  " + status_id)
+                                passvalue()
 
+                            }
                         }
-                    }
-                }else{
+                    } else {
                         validatestatus(view)
                     }
-            }
+                }
 
 //                if (jsonObject.getString("isSelected").equals("1")) {
 //                    validatestatus(view)
@@ -2393,7 +2581,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                }
 
 
-        } else{
+        } else {
             validatestatus(view)
         }
 
@@ -2462,63 +2650,5 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.e("TAG", "onActivityResult  256   " + requestCode + "   " + resultCode + "  " + data)
-
-        if (requestCode == SELECT_LOCATION) {
-            if (data != null) {
-                //    txtcustomer!!.text = data!!.getStringExtra("Name")
-
-
-//                if (data.getStringExtra("address").equals("")){
-//                    txtLocation!!.setText(data.getStringExtra("address"))
-//                }else{
-//                    txtLocation!!.setText(data.getStringExtra("city"))
-//                }
-
-                try {
-                    locAddress = data.getStringExtra("address")
-                    locCity = data.getStringExtra("city")
-                    locState = data.getStringExtra("state")
-                    locCountry = data.getStringExtra("country")
-                    locpostalCode = data.getStringExtra("postalCode")
-                    locKnownName = data.getStringExtra("knownName")
-                    strLatitude = data.getStringExtra("strLatitude")
-                    strLongitue = data.getStringExtra("strLongitue")
-
-                    var locAddres = ""
-
-                    if (!locAddress.equals("")) {
-                        locAddres = locAddress!!
-                    }
-                    if (!locCity.equals("")) {
-                        locAddres = locAddres + "," + locCity!!
-                    }
-                    if (!locState.equals("")) {
-                        locAddres = locAddres + "," + locState!!
-                    }
-                    if (!locCountry.equals("")) {
-                        locAddres = locAddres + "," + locCountry!!
-                    }
-                    if (!locpostalCode.equals("")) {
-                        locAddres = locAddres + "," + locpostalCode!!
-                    }
-
-                    tie_location!!.setText(locAddres)
-                    Log.e("TAG", "address  1155522   " +locAddres)
-
-                } catch (e: Exception) {
-
-                }
-
-            }
-
-        }
-
-    }
-
-
 
 }
