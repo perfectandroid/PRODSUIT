@@ -217,6 +217,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                                 Log.e(TAG, "msg   167   " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("PickupandDeliveryCount")
+
+                                    Log.e(TAG, "dddddd   185467   " )
                                     pick_up_count!!.setText(jobjt.getString("PickUp"))
                                     delivery_count!!.setText(jobjt.getString("Delivery"))
 

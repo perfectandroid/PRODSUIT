@@ -2,6 +2,7 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -10,10 +11,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +29,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
+import com.perfect.prodsuit.Viewmodel.LocationUpdationPckupViewModel
 import com.perfect.prodsuit.Viewmodel.PickDeliveryListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -69,7 +68,9 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var ID_ProductDelivery : String? = ""
 
     var          pickDeliveryCount        = 0
+    var          loctionupdationcount     = 0
     lateinit var pickUpDeliveryViewModel : PickDeliveryListViewModel
+    lateinit var locationupdationpckupviewmodel : LocationUpdationPckupViewModel
     lateinit var pickUpDeliveryArrayList : JSONArray
     var          recyPickUpDelivery      : RecyclerView? = null
 
@@ -77,6 +78,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var filterCustomer     : String? = ""
     var filterMobile       : String? = ""
     var filterDate         : String? = ""
+    var strlatitude        : String? = ""
+    var strlongitude       : String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +90,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         context = this@PickUpAndDeliveryListActivity
 
         pickUpDeliveryViewModel = ViewModelProvider(this).get(PickDeliveryListViewModel::class.java)
+        locationupdationpckupviewmodel = ViewModelProvider(this).get(LocationUpdationPckupViewModel::class.java)
 
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
@@ -258,7 +262,6 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
     }
 
-
     private fun openBottomSheet(){
 
         val dialog = BottomSheetDialog(this)
@@ -303,11 +306,6 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         dialog!!.setContentView(view)
 
         dialog.show()
-
-    }
-
-    private fun validatedata(dialog1: BottomSheetDialog){
-
 
     }
 
@@ -387,6 +385,103 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+
+    private fun saveUpdatePickUpAndDelivery() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationupdationpckupviewmodel.getLocationUpdation(this)!!.observe(
+                    this,
+                    Observer { deleteleadSetterGetter ->
+                        val msg = deleteleadSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                Log.e(TAG, "msg  1126     " + msg)
+                                val jObject = JSONObject(msg)
+                                if (loctionupdationcount == 0) {
+                                    loctionupdationcount++
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("UpdatePickUpAndDelivery")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+//                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+//                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+//                                            tv_label!!.setText("Lead No : ")
+//                                            tv_leadid!!.setText(jobjt.getString("LeadNo"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val intent = Intent()
+                                                intent.putExtra("MESSAGE", android.R.id.message)
+                                                setResult(2, intent)
+                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            );
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@PickUpAndDeliveryListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            }
+
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
     override fun onClick(position: Int, data: String, view: View) {
 
 //        Log.e(TAG, "caall   11104   " + position)
@@ -417,7 +512,15 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         if (data.equals("pickDelLocation")){
             Config.disableClick(view)
+//            var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
+
+//            strlatitude  = jsonObject!!.getString("LocLattitude")
+//            strlongitude = jsonObject!!.getString("LocLongitude")
+
             checkLocationPermission(view)
+
+//            Log.e(TAG, "location1122   " + strlatitude + "    " +strlongitude)
+
         }
 
 
