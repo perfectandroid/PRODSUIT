@@ -51,9 +51,7 @@ import com.perfect.prodsuit.Model.ServiceFollowUpListModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceFollowUpListAdapter
-import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpListViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
@@ -62,6 +60,8 @@ import java.util.*
 
 class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     View.OnClickListener,OnMapReadyCallback {
+
+    var TAG = "ServiceFollowUpListActivity"
     private lateinit var recyclerView: RecyclerView
 //    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
@@ -100,13 +100,30 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     var serviceFollowUpDet = 0
     var serviceFollowUpInfo = 0
     lateinit var serviceFollowUpArrayList: JSONArray
+    var mapLatitude: String?= ""
+    var mapLongitude: String?= ""
+
+    var updateLatitude: String?= ""
+    var updateLongitude: String?= ""
+    var updateAddress: String?= ""
+    var TransMode: String?= ""
+
+    private var SELECT_LOCATION: Int? = 103
+    var ID_ImageLocation: String?= ""
+    var FK_Master: String?= ""
+    var updateLocCount = 0
+
+    lateinit var locationUpdateViewModel: LocationUpdateViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_service_follow_up_list2)
+        setContentView(R.layout.activity_service_follow_up_list)
+
         context = this@ServiceFollowUpListActivity
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        locationUpdateViewModel = ViewModelProvider(this).get(LocationUpdateViewModel::class.java)
 
         val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -364,13 +381,44 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             val jsonObject = serviceFollowUpArrayList.getJSONObject(position)
             longitude = jsonObject.getString("LocLongitude")
             latitude = jsonObject.getString("LocLattitude")
+
+            ID_ImageLocation = jsonObject.getString("FK_ImageLocation")
+            FK_Master = jsonObject.getString("ID_Customerserviceregister")
+            mapLatitude = jsonObject.getString("LocLattitude")
+            mapLongitude = jsonObject.getString("LocLongitude")
+
+            Log.e("TAG","37511   "+mapLatitude+"   :  "+mapLongitude)
+
 //            longitude="76.94756468242483"
 //            latitude="8.591705686530284"
-            if (longitude.equals("") || latitude.equals("")){
+
+//            mapLongitude="75.3704"
+//            mapLatitude="11.8745"
+
+//            if (longitude.equals("") || latitude.equals("")){
+//                showSnackBar("Location Not Found", this)
+//            }else{
+//                loadLocation()
+//            }
+
+            if (mapLongitude.equals("") || mapLatitude.equals("")){
                 showSnackBar("Location Not Found", this)
+                val i = Intent(this@ServiceFollowUpListActivity, LocationViewActivity::class.java)
+                i.putExtra("mode","0")
+                i.putExtra("longitude",mapLongitude)
+                i.putExtra("latitude",mapLatitude)
+                startActivityForResult(i, SELECT_LOCATION!!)
+//                startActivity(i)
             }else{
-                loadLocation()
+                //loadLocation()
+                val i = Intent(this@ServiceFollowUpListActivity, LocationViewActivity::class.java)
+                i.putExtra("mode","1")
+                i.putExtra("longitude",mapLongitude)
+                i.putExtra("latitude",mapLatitude)
+                startActivityForResult(i, SELECT_LOCATION!!)
+//                startActivity(i)
             }
+
 
         }
         if (data.equals("start")) {
@@ -1129,6 +1177,24 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 startStopWork(latitude, longitude, address)
             }
         }
+
+        if (requestCode == SELECT_LOCATION) {
+
+            if (data != null) {
+
+                try {
+                    Log.e(TAG,"address  1174   "+data.getStringExtra("address"))
+                    updateLatitude = data.getStringExtra("mapLatitude")
+                    updateLongitude = data.getStringExtra("mapLongitude")
+                    updateAddress = data.getStringExtra("address")
+                    updateLocCount = 0
+
+                    updateLocation()
+                }catch (e: Exception){
+
+                }
+            }
+        }
     }
 
     private fun startStopWork(latitude: Double, longitude: Double, address: String?) {
@@ -1136,5 +1202,71 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         val current = LocalDateTime.now().format(formatter)
         Log.v("dfsdfds34343f", "current " + current)
 
+    }
+
+    private fun updateLocation() {
+        TransMode = "CUSV"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationUpdateViewModel.getLocationUpdate(this,TransMode!!, ID_ImageLocation!!, FK_Master!!,updateLatitude!!,updateLongitude!!,updateAddress!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (updateLocCount == 0) {
+                                    updateLocCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   105   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+//                                        val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                        customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                        if (customerArrayList.length() > 0) {
+//                                            Log.e(TAG, "msg   1052   " + msg)
+//
+//                                            customerSearchPopup(customerArrayList)
+//
+//
+//                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUpListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 }

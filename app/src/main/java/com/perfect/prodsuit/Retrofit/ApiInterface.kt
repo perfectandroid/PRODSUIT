@@ -442,6 +442,9 @@ interface ApiInterface {
     @POST("EMICollection/UpdateEMICollection")
     fun saveUpdateEMICollection(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/LocationUpdate")
+    fun UpdateLocationUpdate(@Body body: RequestBody): Call<String>
+
 
 
 
