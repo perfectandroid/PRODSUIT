@@ -50,7 +50,7 @@ import java.util.*
 class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,
     RadioGroup.OnCheckedChangeListener {
 
-    val TAG : String = "UpcomingtaskActivity"
+    val TAG : String = "MyLeadActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     lateinit var myLeadlistViewModel: MyLeadListViewModel
@@ -596,6 +596,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 BroadCallEditer.putString("ID_LeadGenerateProduct", jsonObject.getString("ID_LeadGenerateProduct"))
                 BroadCallEditer.putString("FK_Employee", jsonObject.getString("FK_Employee"))
                 BroadCallEditer.putString("AssignedTo", jsonObject.getString("AssignedTo"))
+                BroadCallEditer.putString("CallRedirection", "Yes")
                 BroadCallEditer.commit()
 
 

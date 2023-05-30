@@ -86,6 +86,8 @@ object PincodeSearchRepository {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+
+            Log.i("resoinsepincode","pin body="+requestObject1.toString())
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()

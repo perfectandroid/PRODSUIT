@@ -2,8 +2,12 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,7 +16,10 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,24 +42,6 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
-
-////    DEVELOPMENT 30.11.2022
-    val CERT_NAME = "development.pem"
-    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY = "-500"
-
-  ////   Unisoft` 26.04.2023
-//    val CERT_NAME = "unicef.pem"
-//    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
-//    val BANK_KEY = "-512"
-
-    ////   Sunitha` 17.05.2023
-//    val CERT_NAME = "sunitha.pem"
-//    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
-//    val BANK_KEY = "-511"
 
 
     ////    DEMO 15.02.2023
@@ -91,17 +80,35 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://103.50.212.195/PerfectWebERPAPI/"
 //    val BANK_KEY = "-101"
 
-    ////    Spectum Live 20.01.2023
-//    val CERT_NAME = "spectrumlive.pem"
-//    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
-//    val BANK_KEY = "-500"
-
     // Demo 17-03-2023
 //    val CERT_NAME = "supportdemo.pem"
 //    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/"
 //    val BANK_KEY = "-510"
+
+    ////   Unisoft` 26.04.2023
+//    val CERT_NAME = "unicef.pem"
+//    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
+//    val BANK_KEY = "-512"
+
+    ////   Sunitha` 17.05.2023
+//    val CERT_NAME = "sunitha.pem"
+//    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
+//    val BANK_KEY = "-511"
+
+    ////    Spectum Live 23.05.2023
+//    val CERT_NAME = "spectrumlive.pem"
+//    val BASE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
+//    val BANK_KEY = "-500"
+
+    ////    DEVELOPMENT 30.11.2022
+    val CERT_NAME = "development.pem"
+    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY = "-500"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
@@ -130,66 +137,6 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
         Log.e(TAG,"HEIGHT_WIDTH   777   "+height)
 
-
-//        val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)
-//        val TestingMobileNopref = applicationContext.getSharedPreferences(Config.SHARED_PREF11, 0)
-//        val TestingBankKeypref = applicationContext.getSharedPreferences(Config.SHARED_PREF12, 0)
-//        val Testingsslcertificatepref = applicationContext.getSharedPreferences(Config.SHARED_PREF13, 0)
-//        val Loginmobilenumberpref = applicationContext.getSharedPreferences(Config.SHARED_PREF14, 0)
-//
-//        if(Loginmobilenumberpref.getString("Loginmobilenumber", null)!=null
-//            && TestingURLpref.getString("TestingURL", null)!=null
-//            && Testingsslcertificatepref.getString("CertificateStatus", null)!=null
-//            && TestingBankKeypref.getString("BankKey", null)!=null
-//            && TestingMobileNopref.getString("TestingMobileNo", null).equals(Loginmobilenumberpref.getString("Loginmobilenumber", null)))
-//            {
-//            val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            val BASE_URLEditer = BASE_URLSP.edit()
-//            BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
-//            BASE_URLEditer.commit()
-//
-//            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
-//            val IMAGE_URLEditer = IMAGE_URLSP.edit()
-//            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URLSP.getString("TestingImageURL", null))
-//            IMAGE_URLEditer.commit()
-//
-//            val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-//            val CERT_NAMEEditer = CERT_NAMESP.edit()
-//            CERT_NAMEEditer.putString("CERT_NAME", Testingsslcertificatepref.getString("CertificateStatus", null))
-//            CERT_NAMEEditer.commit()
-//
-//            val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-//            val BANK_KEYEditer = BANK_KEYESP.edit()
-//            BANK_KEYEditer.putString("BANK_KEY", TestingBankKeypref.getString("BankKey", null))
-//            BANK_KEYEditer.commit()
-//
-//        }
-//        else{
-//            val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            val BASE_URLEditer = BASE_URLSP.edit()
-//            BASE_URLEditer.putString("BASE_URL", BASE_URL)
-//            BASE_URLEditer.commit()
-//
-//            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
-//            val IMAGE_URLEditer = IMAGE_URLSP.edit()
-//            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
-//            IMAGE_URLEditer.commit()
-//
-//
-//            val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
-//            val CERT_NAMEEditer = CERT_NAMESP.edit()
-//            CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
-//            CERT_NAMEEditer.commit()
-//
-//            val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
-//            val BANK_KEYEditer = BANK_KEYESP.edit()
-//            BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
-//            BANK_KEYEditer.commit()
-//
-//
-//        }
-//        showMaintanace()
-
         var im_app_logo = findViewById<ImageView>(R.id.im_app_logo)
         animBlink = AnimationUtils.loadAnimation(this, R.anim.blink);
         animBlink!!.setAnimationListener(this);
@@ -215,6 +162,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     }
+
 
     private fun commonAppChecking() {
         try {

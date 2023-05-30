@@ -36,7 +36,7 @@ class PhoneStatReceiver : BroadcastReceiver() {
              //  Log.e(TAG,"onTabSelected  251332  EXTRA_STATE_OFFHOOK")
            }
            if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)){
-               Log.e(TAG,"onTabSelected  25122212  EXTRA_STATE_IDLE")
+               Log.e(TAG,"onTabSelected  2512221222  EXTRA_STATE_IDLE")
 
                val BroadCallSP = context!!.getSharedPreferences(Config.SHARED_PREF16, 0)
                Log.e("MyReceiver", "   2512221   "+BroadCallSP.getString("BroadCall",""));
@@ -49,7 +49,7 @@ class PhoneStatReceiver : BroadcastReceiver() {
                    var AssignedTo = BroadCallSP.getString("AssignedTo","")
                    var CallRedirection = BroadCallSP.getString("CallRedirection","")
 
-//                   Log.e(TAG,"4871     "+ID_LeadGenerate)
+                   Log.e(TAG,"2512221222  CAll     "+CallRedirection)
 //                   Log.e(TAG,"4872     "+ID_LeadGenerateProduct)
 
                    val BroadCallSP = context.getSharedPreferences(Config.SHARED_PREF16, 0)

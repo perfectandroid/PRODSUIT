@@ -1230,7 +1230,7 @@
                                                                         android:layout_marginLeft="20dp"
                                                                         android:layout_weight="1"
                                                                         android:fontFamily="@font/myfont"
-                                                                        android:text="SERVICE"
+                                                                        android:text="SERVICES"
                                                                         android:textColor="@color/color_common2"
                                                                         android:textSize="20dp"
                                                                         android:textStyle="bold" />
