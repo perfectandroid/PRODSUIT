@@ -1739,6 +1739,27 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                    snackbar.show()
                     Config.snackBars(applicationContext, v, "Select Category")
 
+                    llProdDetail!!.visibility = View.VISIBLE
+                    // custProdlMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "0"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
+
+
+
                 } else {
                     Config.disableClick(v)
                     proddetail = 0
@@ -6544,8 +6565,45 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             //  Config.snackBars(context,v,"Search OR Add Customer ")
             if (CusNameTitle.equals("")) {
                 Config.snackBars(context, v, "Select Customer Name Title")
+
+                llCustomerDetail!!.visibility = View.VISIBLE
+                //custDetailMode = "0"
+
+                custDetailMode = "0"
+                moreCommInfoMode = "1"
+                companyNameMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
+
             } else if (Customer_Name.equals("")) {
                 Config.snackBars(context, v, "Enter Customer Name")
+
+                llCustomerDetail!!.visibility = View.VISIBLE
+                //custDetailMode = "0"
+
+                custDetailMode = "0"
+                moreCommInfoMode = "1"
+                companyNameMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
             }
 //            else if (Customer_Mobile.equals("")){
 //                Config.snackBars(context,v,"Enter Customer Mobile")
@@ -6584,8 +6642,46 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //            }
             if (CusNameTitle.equals("")) {
                 Config.snackBars(context, v, "Select Customer Name Title")
+
+                    llCustomerDetail!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
+                    custDetailMode = "0"
+                    moreCommInfoMode = "1"
+                    companyNameMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
             } else if (Customer_Name.equals("")) {
                 Config.snackBars(context, v, "Enter Customer Name")
+
+                    llCustomerDetail!!.visibility = View.VISIBLE
+                    //custDetailMode = "0"
+
+                    custDetailMode = "0"
+                    moreCommInfoMode = "1"
+                    companyNameMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
             }
 //            else if (FK_Area.equals("")){
 //                Config.snackBars(context,v,"Select Address 3")
@@ -6676,6 +6772,27 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         if (ID_Category.equals("")) {
             Config.snackBars(context, v, "Select Category")
+
+            llProdDetail!!.visibility = View.VISIBLE
+            // custProdlMode = "0"
+
+            custDetailMode = "1"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "0"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
+
+            hideViews()
+
+
+
         }
 //        else if (ID_Product.equals("")){
 //            Config.snackBars(context,v,"Select Product")
@@ -6688,23 +6805,165 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
         else if (ID_Priority.equals("")) {
             Config.snackBars(context, v, "Select Priority")
+            llProdDetail!!.visibility = View.VISIBLE
+            // custProdlMode = "0"
+
+            custDetailMode = "1"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "0"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
+
+            hideViews()
         }
         else if (ID_Priority.equals("")) {
             Config.snackBars(context, v, "Select Priority")
+
+            llProdDetail!!.visibility = View.VISIBLE
+            // custProdlMode = "0"
+
+            custDetailMode = "1"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "0"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
+
+            hideViews()
         } else if (strFeedback.equals("")) {
             Config.snackBars(context, v, "Enter Enquiry Note ")
+
+            llProdDetail!!.visibility = View.VISIBLE
+            // custProdlMode = "0"
+
+            custDetailMode = "1"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "0"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
+
+            hideViews()
+
         } else if (ID_Status.equals("")) {
-            Config.snackBars(context, v, "Select Status")
+            Config.snackBars(context, v, "Select Action")
+
+            llProdDetail!!.visibility = View.VISIBLE
+            // custProdlMode = "0"
+
+            custDetailMode = "1"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "0"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
+
+            hideViews()
         } else if (ID_Status.equals("1")) {
             Log.e(TAG, "ProductValidations  373221   " + ID_Status)
             if (ID_NextAction.equals("")) {
                 Config.snackBars(context, v, "Select Followup Action")
+                llProdDetail!!.visibility = View.VISIBLE
+                // custProdlMode = "0"
+
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "0"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
             } else if (ID_ActionType.equals("")) {
-                Config.snackBars(context, v, "Select Followup Action type")
+                Config.snackBars(context, v, "Select Action type")
+                llProdDetail!!.visibility = View.VISIBLE
+                // custProdlMode = "0"
+
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "0"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
             } else if (strFollowupdate.equals("")) {
                 Config.snackBars(context, v, "Select Followup Date")
+
+                llProdDetail!!.visibility = View.VISIBLE
+                // custProdlMode = "0"
+
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "0"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
+
             } else if (ID_Employee.equals("")) {
                 Config.snackBars(context, v, "Select Assigned To")
+                llProdDetail!!.visibility = View.VISIBLE
+                // custProdlMode = "0"
+
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "0"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
             } else {
 //               if (strNeedCheck.equals("1")){
 //                   if (ID_Branch.equals("")){

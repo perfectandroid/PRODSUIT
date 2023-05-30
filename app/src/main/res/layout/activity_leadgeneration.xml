@@ -1582,7 +1582,9 @@
                                                     android:hint="Enquiry Note"
                                                     android:fontFamily="@font/myfont"
                                                     android:padding="7dp"
-                                                    android:singleLine="true"
+                                                    android:singleLine="false"
+                                                    android:maxLines="3"
+                                                    android:maxLength="200"
                                                     android:text=""
                                                     android:textSize="15dp" />
 
