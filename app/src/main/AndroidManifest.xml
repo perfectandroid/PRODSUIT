@@ -48,6 +48,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:name=".View.lifes.MyApp"
         android:allowBackup="true"
         android:exported="true"
         android:foregroundServiceType="location"
@@ -517,6 +518,20 @@
             android:name="com.perfect.prodsuit.View.Service.LocationService"
             android:enabled="true"
             android:exported="true" />
+
+        <service
+            android:name=".View.Service.LocationUpdateService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".View.Service.LocationStateReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

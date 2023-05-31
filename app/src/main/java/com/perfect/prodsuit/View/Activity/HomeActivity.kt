@@ -51,6 +51,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Service.LocationService
+import com.perfect.prodsuit.View.Service.LocationUpdateService
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
@@ -176,7 +177,26 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         AddAttendanceApi(strLatitude,strLongitue,address)
 
         setTechnologyPartner()
+        val isMyServiceRunning = isServiceRunning(context, LocationUpdateService::class.java)
+        if (!isMyServiceRunning){
+            val serviceIntent = Intent(this, LocationUpdateService::class.java)
+            startService(serviceIntent)
+        }
 
+
+    }
+
+    fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == serviceInfo.service.className) {
+                // Service is running
+                return true
+            }
+        }
+        // Service is not running
+        return false
     }
 
     private fun setTechnologyPartner() {
