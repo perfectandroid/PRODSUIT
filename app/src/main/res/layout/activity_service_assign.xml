@@ -96,7 +96,6 @@
                         android:id="@+id/rltv_allViews"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/leadbg_color"
                         android:orientation="vertical"
                         android:visibility="visible">
 
@@ -121,6 +120,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
+                                    android:backgroundTint="@color/white"
                                     android:visibility="visible"
                                     app:cardCornerRadius="5dp"
                                     app:cardElevation="0dp">
@@ -128,7 +128,7 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/bgshape_shape"
+                                        android:background="@drawable/shape_bottom_rounded1"
                                         android:orientation="vertical"
                                         android:padding="1dp">
 
@@ -136,7 +136,7 @@
                                             android:id="@+id/tv_TicketClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/white"
+                                            android:background="@color/service_head"
                                             android:drawableLeft="@drawable/xml_date_time"
                                             android:drawableRight="@drawable/down_arrows"
                                             android:drawablePadding="5dp"
@@ -158,7 +158,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="15dp"
                                             android:orientation="vertical"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -170,7 +170,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:orientation="vertical">
 
                                                     <TextView
@@ -180,7 +179,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Ticket Number"
+                                                        android:text="Ticket"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 
@@ -225,13 +224,12 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:gravity="center"
                                                     android:orientation="horizontal">
 
@@ -299,7 +297,7 @@
                                             <View
                                                 android:layout_width="match_parent"
                                                 android:layout_height="1dp"
-                                                android:background="@color/leadbg_color" />
+                                                android:background="@color/color_background1" />
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -311,7 +309,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:orientation="vertical">
 
                                                     <TextView
@@ -366,7 +363,7 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -380,7 +377,6 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
-                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
 
                                                         <TextView
@@ -440,7 +436,7 @@
                                             <View
                                                 android:layout_width="match_parent"
                                                 android:layout_height="1dp"
-                                                android:background="@color/leadbg_color" />
+                                                android:background="@color/color_background1" />
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -452,7 +448,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:orientation="vertical">
 
                                                     <TextView
@@ -507,7 +502,7 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -521,7 +516,6 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
-                                                        android:background="@drawable/border_show"
                                                         android:orientation="vertical">
 
                                                         <TextView
@@ -578,7 +572,7 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/grey" />
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -613,7 +607,7 @@
                                             android:id="@+id/tv_ServiceClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/white"
+                                            android:background="@color/service_head"
                                             android:drawableLeft="@drawable/xml_service_information"
                                             android:drawableRight="@drawable/down_arrows"
                                             android:drawablePadding="5dp"
@@ -636,7 +630,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
-                                            android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
                                             android:visibility="gone">
 
@@ -653,7 +646,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:orientation="vertical">
 
                                                     <TextView
@@ -663,7 +655,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Registered Date"
+                                                        android:text="Requested Date "
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 
@@ -708,13 +700,12 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:gravity="center"
                                                     android:orientation="horizontal">
 
@@ -732,7 +723,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="4dp"
-                                                            android:text="Registered Time"
+                                                            android:text="Requested Time"
                                                             android:textColor="@color/greydarks"
                                                             android:textSize="12dp" />
 
@@ -779,7 +770,7 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -796,7 +787,6 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:orientation="vertical">
 
                                                     <TextView
@@ -806,7 +796,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="4dp"
-                                                        android:text="Category/Product Name"
+                                                        android:text="Product Name"
                                                         android:textColor="@color/greydarks"
                                                         android:textSize="12dp" />
 
@@ -851,13 +841,12 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
-                                                    android:background="@drawable/border_show"
                                                     android:gravity="center"
                                                     android:orientation="horizontal">
 
@@ -922,7 +911,7 @@
                                                 <View
                                                     android:layout_width="match_parent"
                                                     android:layout_height="1dp"
-                                                    android:background="@color/leadbg_color" />
+                                                    android:background="@color/color_background1" />
 
 
                                             </LinearLayout>
@@ -933,7 +922,6 @@
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginRight="15dp"
                                                 android:layout_weight="1"
-                                                android:background="@drawable/border_show"
                                                 android:orientation="vertical">
 
                                                 <TextView
@@ -990,7 +978,7 @@
                                                 android:layout_height="1dp"
                                                 android:layout_marginLeft="15dp"
                                                 android:layout_marginRight="15dp"
-                                                android:background="@color/leadbg_color" />
+                                                android:background="@color/color_background1" />
 
 
                                         </LinearLayout>
@@ -1022,7 +1010,7 @@
                                             android:id="@+id/tv_ProductClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/white"
+                                            android:background="@color/service_head"
                                             android:drawableLeft="@drawable/xml_product_details"
                                             android:drawableRight="@drawable/down_arrows"
                                             android:drawablePadding="5dp"
@@ -1042,7 +1030,6 @@
                                             android:id="@+id/lnrHead_Product"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/leadbg_color"
                                             android:orientation="vertical"
                                             android:paddingBottom="10dp"
                                             android:visibility="gone">
@@ -1067,7 +1054,6 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginLeft="15dp"
                                                     android:layout_marginTop="10dp"
-                                                    android:background="@color/white"
                                                     android:layout_marginRight="15dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
@@ -1107,7 +1093,6 @@
                                                     android:layout_marginLeft="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginRight="15dp"
-                                                    android:background="@color/white"
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Visit Time"
@@ -1146,7 +1131,6 @@
                                                     android:layout_marginLeft="15dp"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginRight="15dp"
-                                                    android:background="@color/white"
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Priority"
@@ -1187,7 +1171,6 @@
                                                     android:layout_marginRight="15dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
-                                                    android:background="@color/white"
                                                     android:hint="Remarks  "
                                                     app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_remark"
@@ -1224,7 +1207,6 @@
                                                     android:layout_marginRight="15dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
-                                                    android:background="@color/white"
                                                     android:hint="Department"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom"
@@ -1264,7 +1246,6 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Employee"
-                                                    android:background="@color/white"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_customer"
@@ -1303,7 +1284,6 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Role"
-                                                    android:background="@color/white"
                                                     app:endIconDrawable="@drawable/arrow_down"
                                                     app:endIconMode="custom"
                                                     app:startIconDrawable="@drawable/icon_svg_role"
@@ -1409,7 +1389,7 @@
                                             android:id="@+id/tv_ListClick"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/white"
+                                            android:background="@color/service_head"
                                             android:drawableLeft="@drawable/xml_assigned_list"
                                             android:drawableRight="@drawable/down_arrows"
                                             android:drawablePadding="5dp"

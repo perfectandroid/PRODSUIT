@@ -2,7 +2,6 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.app.AlertDialog
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -23,18 +22,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
+import com.perfect.prodsuit.Viewmodel.LocationUpdateViewModel
 //import com.perfect.prodsuit.Viewmodel.LocationUpdationPckupViewModel
 import com.perfect.prodsuit.Viewmodel.PickDeliveryListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener, ClickListener {
@@ -70,7 +72,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var          pickDeliveryCount        = 0
     var          loctionupdationcount     = 0
     lateinit var pickUpDeliveryViewModel : PickDeliveryListViewModel
-//    lateinit var locationupdationpckupviewmodel : LocationUpdationPckupViewModel
+    lateinit var locationUpdateViewModel : LocationUpdateViewModel
     lateinit var pickUpDeliveryArrayList : JSONArray
     var          recyPickUpDelivery      : RecyclerView? = null
 
@@ -80,6 +82,17 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var filterDate         : String? = ""
     var strlatitude        : String? = ""
     var strlongitude       : String? = ""
+    private var SELECT_LOCATION: Int? = 103
+    private val START_LOCATION = 100
+    var ID_ImageLocation: String?= ""
+    var FK_Master: String?= ""
+    var mapLatitude: String?= ""
+    var mapLongitude: String?= ""
+    var TransMode: String?= ""
+    var updateLatitude: String?= ""
+    var updateLongitude: String?= ""
+    var updateAddress: String?= ""
+    var updateLocCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +103,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         context = this@PickUpAndDeliveryListActivity
 
         pickUpDeliveryViewModel = ViewModelProvider(this).get(PickDeliveryListViewModel::class.java)
-//        locationupdationpckupviewmodel = ViewModelProvider(this).get(LocationUpdationPckupViewModel::class.java)
+        locationUpdateViewModel = ViewModelProvider(this).get(LocationUpdateViewModel::class.java)
 
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
@@ -386,102 +399,6 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     }
 
 
-//    private fun saveUpdatePickUpAndDelivery() {
-//
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(this, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                locationupdationpckupviewmodel.getLocationUpdation(this)!!.observe(
-//                    this,
-//                    Observer { deleteleadSetterGetter ->
-//                        val msg = deleteleadSetterGetter.message
-//                        try {
-//                            if (msg!!.length > 0) {
-//                                Log.e(TAG, "msg  1126     " + msg)
-//                                val jObject = JSONObject(msg)
-//                                if (loctionupdationcount == 0) {
-//                                    loctionupdationcount++
-//                                    if (jObject.getString("StatusCode") == "0") {
-//
-//                                        val jobjt = jObject.getJSONObject("UpdatePickUpAndDelivery")
-//                                        try {
-//
-//                                            val suceessDialog = Dialog(this)
-//                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//                                            suceessDialog!!.setCancelable(false)
-//                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
-//                                            suceessDialog!!.window!!.attributes.gravity =
-//                                                Gravity.CENTER_VERTICAL;
-//
-//                                            val tv_succesmsg =
-//                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
-////                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
-////                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-//                                            val tv_succesok =
-//                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
-//                                            //LeadNumber
-//                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-////                                            tv_label!!.setText("Lead No : ")
-////                                            tv_leadid!!.setText(jobjt.getString("LeadNo"))
-//
-//                                            tv_succesok!!.setOnClickListener {
-//                                                suceessDialog!!.dismiss()
-//                                                val intent = Intent()
-//                                                intent.putExtra("MESSAGE", android.R.id.message)
-//                                                setResult(2, intent)
-//                                                onBackPressed()
-//
-//                                            }
-//
-//                                            suceessDialog!!.show()
-//                                            suceessDialog!!.getWindow()!!.setLayout(
-//                                                ViewGroup.LayoutParams.MATCH_PARENT,
-//                                                ViewGroup.LayoutParams.WRAP_CONTENT
-//                                            );
-//                                        } catch (e: Exception) {
-//                                            e.printStackTrace()
-//                                        }
-//                                    } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this@PickUpAndDeliveryListActivity,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
-//                                    }
-//                                }
-//
-//                            }
-//
-//                        } catch (e: Exception) {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "" + e.toString(),
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//
-//    }
-
-
     override fun onClick(position: Int, data: String, view: View) {
 
 //        Log.e(TAG, "caall   11104   " + position)
@@ -512,19 +429,165 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 
         if (data.equals("pickDelLocation")){
             Config.disableClick(view)
-//            var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
+            var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
 
 //            strlatitude  = jsonObject!!.getString("LocLattitude")
 //            strlongitude = jsonObject!!.getString("LocLongitude")
 
-            checkLocationPermission(view)
+            ID_ImageLocation = jsonObject!!.getString("FK_ImageLocation")
+            FK_Master = jsonObject!!.getString("FK_Master")
+//            mapLatitude = jsonObject!!.getString("LocLattitude")
+//            mapLongitude = jsonObject!!.getString("LocLongitude")
+            strlatitude  = jsonObject!!.getString("LocLattitude")
+            strlongitude = jsonObject!!.getString("LocLongitude")
 
-//            Log.e(TAG, "location1122   " + strlatitude + "    " +strlongitude)
+//            checkLocationPermission(view)
+
+            Log.e(TAG, "location1122   " + strlatitude + "    " +strlongitude)
+
+            if (strlatitude.equals("") || strlongitude.equals("")){
+                showSnackBar("Location Not Found", this)
+                val i = Intent(this@PickUpAndDeliveryListActivity, LocationViewActivity::class.java)
+                i.putExtra("mode","0")
+                i.putExtra("longitude",strlongitude)
+                i.putExtra("latitude",strlatitude)
+                startActivityForResult(i, SELECT_LOCATION!!)
+//                startActivity(i)
+            }else{
+                //loadLocation()
+                val i = Intent(this@PickUpAndDeliveryListActivity, LocationViewActivity::class.java)
+                i.putExtra("mode","1")
+                i.putExtra("longitude",strlongitude)
+                i.putExtra("latitude",strlatitude)
+                startActivityForResult(i, SELECT_LOCATION!!)
+//                startActivity(i)
+            }
+
 
         }
 
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == START_LOCATION) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                val bundle = data!!.extras ?: return
+                val latitude = bundle.getDouble("LATITUDE")
+                val longitude = bundle.getDouble("LONGITUDE")
+                val address = bundle.getString("ADDRESS")
+                Log.v("dfsdfds34343f", "lat " + latitude)
+                Log.v("dfsdfds34343f", "longitude " + longitude)
+                Log.v("dfsdfds34343f", "address " + address)
+                startStopWork(latitude, longitude, address)
+            }
+        }
+
+        if (requestCode == SELECT_LOCATION) {
+
+            if (data != null) {
+
+                try {
+                    Log.e(TAG,"address  1174   "+data.getStringExtra("address"))
+                    updateLatitude = data.getStringExtra("mapLatitude")
+                    updateLongitude = data.getStringExtra("mapLongitude")
+                    updateAddress = data.getStringExtra("address")
+                    updateLocCount = 0
+
+                    Log.v("dfsdfds34343f", "kkdkkdkd " + updateLatitude)
+                    Log.v("dfsdfds34343f", "wyeyeyye " + updateLongitude)
+
+                    updateLocation()
+                }catch (e: Exception){
+
+                }
+            }
+        }
+    }
+
+    private fun startStopWork(latitude: Double, longitude: Double, address: String?) {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")
+        val current = LocalDateTime.now().format(formatter)
+        Log.v("dfsdfds34343f", "current " + current)
+
+    }
+
+    private fun showSnackBar(message: String, activity: PickUpAndDeliveryListActivity) {
+
+        if (null != activity && null != message) {
+            Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT
+            ).show()
+        }
+
+    }
+
+    private fun updateLocation() {
+        TransMode = "CUSA"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationUpdateViewModel.getLocationUpdate(this,TransMode!!, ID_ImageLocation!!, FK_Master!!,updateLatitude!!,updateLongitude!!,updateAddress!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (updateLocCount == 0) {
+                                    updateLocCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg 118855669944   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+//                                        val jobjt = jObject.getJSONObject("CustomerDetailsList")
+//                                        customerArrayList = jobjt.getJSONArray("CustomerDetails")
+//
+//                                        if (customerArrayList.length() > 0) {
+//                                            Log.e(TAG, "msg   1052   " + msg)
+//
+//                                            customerSearchPopup(customerArrayList)
+//
+//
+//                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@PickUpAndDeliveryListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            progressDialog!!.dismiss()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG).show()
+                progressDialog!!.dismiss()
+            }
+        }
+    }
+
 
     private fun callFunction(mobileno: String) {
         val ALL_PERMISSIONS = 101
