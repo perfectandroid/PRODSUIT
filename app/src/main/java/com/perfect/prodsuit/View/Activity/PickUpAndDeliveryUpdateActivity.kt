@@ -182,6 +182,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var arrayPaymentmethod = JSONArray()
     var Productdetails = JSONArray()
     var jsonObject5 = JSONObject()
+    var providesatndby : String = ""
     lateinit var addproductDetailArrayList: JSONArray
     lateinit var prodaddingArraylist: JSONArray
     lateinit var pickupdeliveryupdatedetailsviewmodel: PickUpDeliveryUpdateDetailsViewModel
@@ -1147,7 +1148,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             } else {
 
-                if (StandByAmount.equals("0.00")) {
+                if (StandByAmount.equals("0.00") && providesatndby!!.equals("0")) {
                     llbilltype!!.visibility = View.GONE
                 } else {
                     llbilltype!!.visibility = View.VISIBLE
@@ -2215,8 +2216,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             Log.e(TAG, "prodInformationArrayList size2        " + prodInformationArrayList2.toString())
             val jsonObject2 = prodInformationArrayList2.getJSONObject(pos)
-
-            //{"ID_Product":"340","ProdName":"Current","ProvideStandBy":"1","Quantity":"1.000","Product":"","SPQuantity":"","SPAmount":"0.00","Remarks":"","isSelected":"1"}
+                    //{"ID_Product":"340","ProdName":"Current","ProvideStandBy":"1","Quantity":"1.000","Product":"","SPQuantity":"","SPAmount":"0.00","Remarks":"","isSelected":"1"}
 
 
 //            jObject.put("ProductName",jsonObject.getString("ProductName"))
@@ -2296,7 +2296,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.e(TAG, "idhssss " + position)
             dialogProdDet!!.dismiss()
             val jsonObject4 = addproductDetailArrayList.getJSONObject(position)
-//
 
 
             Log.e(TAG, "pppppppppppppppp   " + jsonObject4)
