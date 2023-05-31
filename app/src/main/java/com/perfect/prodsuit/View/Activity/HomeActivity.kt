@@ -522,6 +522,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //
 //                   attendancConfirmPopup(v)
 //               }
+
+                val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
+                startActivity(i)
             }
 
             R.id.ll_leads -> {
