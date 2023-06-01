@@ -150,22 +150,69 @@ class ServiceFollowUpListAdapter(
                         .into(holder.img_running);
                 }
                 */
-                holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
-                Glide.with(context)
-                    .load(R.drawable.clock)
-                    .into(holder.img_running);
-                val rotate = RotateAnimation(
-                    0F,
-                    360F,
-                    Animation.RELATIVE_TO_SELF,
-                    0.5f,
-                    Animation.RELATIVE_TO_SELF,
-                    0.5f
-                )
-                rotate.setDuration(5000)
-                rotate.repeatCount=-1
-                rotate.setInterpolator(LinearInterpolator())
-                holder.img_running.startAnimation(rotate)
+
+                if(jsonObject!!.getString("FK_Status").equals("") ||jsonObject!!.getString("FK_Status").equals("0") || jsonObject!!.getString("FK_Status").equals("4")){
+//                    start
+                    holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
+                }
+                else if (jsonObject!!.getString("FK_Status").equals("1")){
+                    // Hold And stop
+                    holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
+                    Glide.with(context)
+                        .load(R.drawable.clock)
+                        .into(holder.img_running);
+                    val rotate = RotateAnimation(
+                        0F,
+                        360F,
+                        Animation.RELATIVE_TO_SELF,
+                        0.5f,
+                        Animation.RELATIVE_TO_SELF,
+                        0.5f
+                    )
+                    rotate.setDuration(5000)
+                    rotate.repeatCount=-1
+                    rotate.setInterpolator(LinearInterpolator())
+                    holder.img_running.startAnimation(rotate)
+                }
+                else if (jsonObject!!.getString("FK_Status").equals("2")){
+                    // Resume And stop
+                    holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.resume)
+                }
+                else if (jsonObject!!.getString("FK_Status").equals("3")){
+                    // Hold And stop
+                    holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
+                    Glide.with(context)
+                        .load(R.drawable.clock)
+                        .into(holder.img_running);
+                    val rotate = RotateAnimation(
+                        0F,
+                        360F,
+                        Animation.RELATIVE_TO_SELF,
+                        0.5f,
+                        Animation.RELATIVE_TO_SELF,
+                        0.5f
+                    )
+                    rotate.setDuration(5000)
+                    rotate.repeatCount=-1
+                    rotate.setInterpolator(LinearInterpolator())
+                    holder.img_running.startAnimation(rotate)
+                }
+//                holder.lin_time.background=ContextCompat.getDrawable(context,R.drawable.clock)
+//                Glide.with(context)
+//                    .load(R.drawable.clock)
+//                    .into(holder.img_running);
+//                val rotate = RotateAnimation(
+//                    0F,
+//                    360F,
+//                    Animation.RELATIVE_TO_SELF,
+//                    0.5f,
+//                    Animation.RELATIVE_TO_SELF,
+//                    0.5f
+//                )
+//                rotate.setDuration(5000)
+//                rotate.repeatCount=-1
+//                rotate.setInterpolator(LinearInterpolator())
+//                holder.img_running.startAnimation(rotate)
 
 
             }
@@ -184,7 +231,7 @@ class ServiceFollowUpListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {

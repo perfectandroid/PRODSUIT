@@ -179,8 +179,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setTechnologyPartner()
         val isMyServiceRunning = isServiceRunning(context, LocationUpdateService::class.java)
         if (!isMyServiceRunning){
-            val serviceIntent = Intent(this, LocationUpdateService::class.java)
-            startService(serviceIntent)
+//            val serviceIntent = Intent(this, LocationUpdateService::class.java)
+//            startService(serviceIntent)
         }
 
 

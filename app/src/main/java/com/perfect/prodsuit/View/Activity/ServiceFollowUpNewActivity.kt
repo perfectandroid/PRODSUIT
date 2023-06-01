@@ -9,7 +9,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -53,6 +55,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     var SubMode: String? = ""
 
     private var card_start: CardView? = null
+    private var card_hold: CardView? = null
     private var card_stop: CardView? = null
     private var card_restart: CardView? = null
 
@@ -76,11 +79,12 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     var actionTakenMode: String? = "1"
 
 
-    var journeyType: Int = 0
+
     private val START_LOCATION = 100
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
 
     var runningStatus: String? = ""
+    var journeyType:  String? = "0"
     var customer_service_register: String = ""
 
     private var ID_Branch = "";
@@ -277,9 +281,14 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     var strFollowUpDate: String? = ""
     var strReplacementAmount: String? = ""
     var strTotalAmount: String? = ""
+    internal var jsonObjectList: JSONObject? = null
+    val PERMISSION_ID = 42
 
     lateinit var saveServiceFollowUpViewModel: SaveServiceFollowUpViewModel
     var saveCount = 0
+
+    lateinit var followupStatusUpdateViewModel: FollowupStatusUpdateViewModel
+    var statusCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -303,12 +312,19 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         serviceBillTypeViewModel = ViewModelProvider(this).get(ServiceBillTypeViewModel::class.java)
         saveServiceFollowUpViewModel = ViewModelProvider(this).get(SaveServiceFollowUpViewModel::class.java)
+        followupStatusUpdateViewModel = ViewModelProvider(this).get(FollowupStatusUpdateViewModel::class.java)
 
 
         setRegViews()
         getSharedPrefValues()
-        runningStatus = intent.getStringExtra("runningStatus")
-        customer_service_register = intent.getStringExtra("customer_service_register").toString()
+
+        try {
+            runningStatus = intent.getStringExtra("runningStatus")
+            customer_service_register = intent.getStringExtra("customer_service_register").toString()
+            jsonObjectList = JSONObject(intent.getStringExtra("jsonObject").toString());
+        }catch (e : Exception){
+
+        }
 
         setRunningStatus()
 
@@ -332,6 +348,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         imback!!.setOnClickListener(this)
 
         card_start = findViewById<CardView>(R.id.card_start)
+        card_hold = findViewById<CardView>(R.id.card_hold)
         card_stop = findViewById<CardView>(R.id.card_stop)
         card_restart = findViewById<CardView>(R.id.card_restart)
 
@@ -417,6 +434,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         tie_Bill_Type!!.setOnClickListener(this)
 
         card_start!!.setOnClickListener(this)
+        card_hold!!.setOnClickListener(this)
         card_stop!!.setOnClickListener(this)
         card_restart!!.setOnClickListener(this)
 
@@ -487,18 +505,29 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun setRunningStatus() {
-        if (runningStatus.equals("0")) {
+        if (runningStatus.equals("") || runningStatus.equals("0") || runningStatus.equals("4")) {
             card_start?.visibility = View.VISIBLE
+            card_hold?.visibility = View.GONE
             card_stop?.visibility = View.GONE
             card_restart?.visibility = View.GONE
-        } else if (runningStatus.equals("1")) {
+        }
+        else if (runningStatus.equals("1")) {
             card_start?.visibility = View.GONE
+            card_hold?.visibility = View.VISIBLE
             card_stop?.visibility = View.VISIBLE
             card_restart?.visibility = View.GONE
-        } else {
+        }
+        else if (runningStatus.equals("2")) {
             card_start?.visibility = View.GONE
-            card_stop?.visibility = View.GONE
+            card_hold?.visibility = View.GONE
+            card_stop?.visibility = View.VISIBLE
             card_restart?.visibility = View.VISIBLE
+        }
+        else if (runningStatus.equals("3")) {
+            card_start?.visibility = View.GONE
+            card_hold?.visibility = View.VISIBLE
+            card_stop?.visibility = View.VISIBLE
+            card_restart?.visibility = View.GONE
         }
     }
 
@@ -509,23 +538,31 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             R.id.card_start -> {
-                journeyType = 0
+                journeyType = "1"
                 if (checkLocationPermission()) {
-                    confirmBottomSheet(0)
+                    confirmBottomSheet(journeyType)
+                }
+            }
+            R.id.card_hold -> {
+                journeyType = "2"
+                if (checkLocationPermission()) {
+                    confirmBottomSheet(journeyType)
+                }
+            }
+
+            R.id.card_restart -> {
+                journeyType = "3"
+                if (checkLocationPermission()) {
+                    confirmBottomSheet(journeyType)
                 }
             }
             R.id.card_stop -> {
-                journeyType = 1
+                journeyType = "4"
                 if (checkLocationPermission()) {
-                    confirmBottomSheet(1)
+                    confirmBottomSheet(journeyType)
                 }
             }
-            R.id.card_restart -> {
-                journeyType = 2
-                if (checkLocationPermission()) {
-                    confirmBottomSheet(2)
-                }
-            }
+
 
             R.id.lin_add_service -> {
                 Config.disableClick(v)
@@ -737,7 +774,23 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 //                }
 
               //  validatReplacedProduct(v)
-                validatServiceAttended(v)
+
+                Log.e(TAG,"validatServiceAttended   778")
+
+                if (runningStatus.equals("") || runningStatus.equals("0") || runningStatus.equals("4")){
+                    journeyType = "1"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
+                }else if (runningStatus.equals("2")){
+                    journeyType = "3"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
+                }else{
+                    validatServiceAttended(v)
+                }
+
 
 
             }
@@ -948,9 +1001,21 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             Config.snackBars(context,v,"Select Visited Date")
         }
         else if (ID_Action.equals("")){
-        //    Config.snackBars(context,v,"Select Action")
+            Config.snackBars(context,v,"Select Action")
             til_Action!!.setError("Select Action")
             til_Action!!.setErrorIconDrawable(null);
+            if (actionTakenMode.equals("0")){
+                serviceAttendedMode = "1"
+                replacedProductMode = "1"
+                attendanceMode = "1"
+                actionTakenMode = "1"
+            }else{
+                serviceAttendedMode = "1"
+                replacedProductMode = "1"
+                attendanceMode = "1"
+                actionTakenMode = "0"
+            }
+            hideShowViews()
         }
         else if (!ID_Action_Status.equals("9")){
             validatePaymentMethod(v)
@@ -1338,12 +1403,17 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (journeyType == 0) {
-                confirmBottomSheet(0)
-            } else if (journeyType == 1) {
-                confirmBottomSheet(1)
-            } else {
-                confirmBottomSheet(2)
+            if (journeyType.equals("1")) {
+                confirmBottomSheet(journeyType)
+            }
+            else if (journeyType.equals("2")) {
+                confirmBottomSheet(journeyType)
+            }
+            else if (journeyType.equals("3")) {
+                confirmBottomSheet(journeyType)
+            }
+            else if (journeyType.equals("4")) {
+                confirmBottomSheet(journeyType)
             }
         }
 
@@ -1366,7 +1436,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
 
-    private fun confirmBottomSheet(type: Int) {
+    private fun confirmBottomSheet(type: String?) {
         // BottomSheet
 
         val dialog = BottomSheetDialog(this)
@@ -1376,13 +1446,21 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         val btnYes = view.findViewById<TextView>(R.id.btnYes)
         val tv_text = view.findViewById<TextView>(R.id.tv_text)
 
-        if (type == 0) {
+        if (type.equals("1")) {
             tv_text.setText("do you really want to start your day?")
-        } else if (type == 1) {
-            tv_text.setText("do you really want to stop your day?")
-        } else {
-            tv_text.setText("do you really want to restart your day?")
         }
+        else if (type.equals("2")) {
+            tv_text.setText("do you really want to hold your day?")
+        }
+        else if (type.equals("3")) {
+            tv_text.setText("do you really want to resume your day?")
+        }
+        else if (type.equals("4")) {
+            tv_text.setText("do you really want to stop your day?")
+        }
+//        else {
+//            tv_text.setText("do you really want to restart your day?")
+//        }
 
         btnNo.setOnClickListener {
             dialog.dismiss()
@@ -1390,13 +1468,29 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         btnYes.setOnClickListener {
             dialog.dismiss()
 
-            if (type == 0) {
-                fetchLocation()
-            } else if (type == 1) {
-                fetchLocation()
-            } else {
-                fetchLocation()
+            if (checkPermissions()) {
+                if (isLocationEnabled()) {
+                    fetchLocation()
+                }
+                else{
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
             }
+            else{
+                requestPermissions()
+            }
+
+
+
+
+//            if (type == 0) {
+//                fetchLocation()
+//            } else if (type == 1) {
+//                fetchLocation()
+//            } else {
+//                fetchLocation()
+//            }
         }
         dialog.setCancelable(false)
         dialog!!.setContentView(view)
@@ -1404,11 +1498,202 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         dialog.show()
     }
 
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
     private fun startStopWork(latitude: Double, longitude: Double, address: String?) {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")
         val current = LocalDateTime.now().format(formatter)
-        Log.v("dfsdfds34343f", "current " + current)
+        Log.e("dfsdfds34343f", "current " + current)
 
+//        runningStatus
+//        Default =0
+//        Start = 1
+//        Hold = 2
+//        Resume = 3
+//        Stop = 4
+
+//        if (runningStatus.equals("0")){
+//            runningStatus = "1"
+//        }
+//        else if (runningStatus.equals("1")){
+//            runningStatus = "2"
+//        }else{
+//            runningStatus = "0"
+//        }
+
+
+
+//        "TransMode":"CUSA",
+//        "FK_Master":"351",
+//        "LocLatitude":"11.247589511",
+//        "LocLongitude":"75.834220611",
+//        "Address":"HiLITE Business Park, 5th floor Hilite Business Park, Poovangal, Pantheeramkavu, Kerala 673014, India,Pantheeramkavu,Kerala,India,673014",
+//        "LocationEnteredDate":"2023-05-31",
+//        "LocationEnteredTime":"10:43:00",
+//        "Status":"1"
+
+
+
+        var curDate = ""
+        var curTime = ""
+
+        try {
+            val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+            val currentDate = sdf.format(Date())
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm:ss")
+
+            curDate = sdfDate1.format(newDate)
+            curTime = sdfTime1.format(newDate)
+
+            statusCount = 0
+            updateFollowUpStatus(latitude.toString(),longitude.toString(),address.toString(),curDate,curTime,journeyType!!)
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
+
+    //
+
+//        if (journeyType.equals("1")){
+//            runningStatus = "1"
+//        }
+//        else if (journeyType.equals("2")){
+//            runningStatus = "2"
+//        }
+//        else if (journeyType.equals("3")){
+//            runningStatus = "3"
+//        }
+//        else if (journeyType.equals("4")){
+//            runningStatus = "4"
+//        }
+//
+//
+//        setRunningStatus()
+
+//        0106
+
+    }
+
+    private fun updateFollowUpStatus(latitude : String,longitude : String,address : String,curDate : String,curTime : String,journeyType : String) {
+//        customer_service_register
+        var  TransMode = "CUSV"
+       // customer_service_register
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                try {
+                    Log.e(TAG,"1027  ")
+                    followupStatusUpdateViewModel.getFollowupStatusUpdate(
+                        this, TransMode,customer_service_register,latitude!!,longitude!!,address!!,curDate!!, curTime!!,journeyType!!)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            try {
+                                val msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
+                                    if (statusCount == 0) {
+                                        statusCount++
+                                        Log.e(TAG,"1041  "+msg)
+                                        val jObject = JSONObject(msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            try {
+                                                val jobjt = jObject.getJSONObject("UpdateFollowupStatusDetails")
+
+                                                successAlert(jobjt)
+
+
+                                            }catch (e: Exception){
+                                                val builder = AlertDialog.Builder(
+                                                    this@ServiceFollowUpNewActivity,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage(e.toString())
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
+                                            }
+
+                                        }
+                                    }
+                                } else {
+                                }
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "" + Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+                }catch (e : Exception){
+                    Log.e(TAG,"1027 Exception "+e.toString())
+                }
+
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun successAlert(jobjt: JSONObject) {
+
+        val suceessDialog = Dialog(this)
+        suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        suceessDialog!!.setCancelable(false)
+        suceessDialog!! .setContentView(R.layout.success_service_popup)
+        suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+        suceessDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        suceessDialog!!.setCancelable(false)
+
+        val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+        val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+
+        tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+
+        tv_succesok!!.setOnClickListener {
+            suceessDialog!!.dismiss()
+            runningStatus = jobjt.getString("FK_Status")
+            setRunningStatus()
+        }
+
+        suceessDialog!!.show()
+        suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     private fun loadMappedeServiceAttended() {

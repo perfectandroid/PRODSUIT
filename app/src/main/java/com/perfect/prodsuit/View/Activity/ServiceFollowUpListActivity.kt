@@ -132,6 +132,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
         setId()
       //  loadData()
+        serviceFollowUpDet = 0
         getServiceFollowUpList()
         setListners()
         Log.v("fssdfdsfdd", "" + ProdsuitApplication.encryptStart("22"));
@@ -349,6 +350,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
         if (data.equals("followUp")) {
+
 //            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
 //            val intent = Intent(this, ServiceFollowUpActivity::class.java)
 //            val runningStatus = 0
@@ -358,8 +360,9 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
             val intent = Intent(this, ServiceFollowUpNewActivity::class.java)
-            val runningStatus = 0
-            intent.putExtra("runningStatus", runningStatus)
+            intent.putExtra("jsonObject", jsonObject!!.toString())
+//            val runningStatus = 0
+            intent.putExtra("runningStatus", jsonObject!!.getString("FK_Status"))
             intent.putExtra("customer_service_register", customer_service_register)
             startActivity(intent)
         }
@@ -1268,5 +1271,14 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                     .show()
             }
         }
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+
+        serviceFollowUpDet = 0
+        getServiceFollowUpList()
+        setListners()
     }
 }

@@ -227,7 +227,10 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationActivity2"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationPickersActivity"
             android:screenOrientation="portrait"

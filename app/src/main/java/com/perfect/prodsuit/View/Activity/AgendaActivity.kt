@@ -4491,8 +4491,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
             val intent = Intent(this, ServiceFollowUpNewActivity::class.java)
-            val runningStatus = 0
-            intent.putExtra("runningStatus", runningStatus)
+            intent.putExtra("jsonObject", jsonObject!!.toString())
+            intent.putExtra("runningStatus", jsonObject!!.getString("FK_Status"))
             intent.putExtra("customer_service_register", customer_service_register)
             startActivity(intent)
         }
