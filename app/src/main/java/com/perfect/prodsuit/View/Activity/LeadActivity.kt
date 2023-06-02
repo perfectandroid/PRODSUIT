@@ -14,25 +14,28 @@ import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
+import androidx.lifecycle.Observer
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.GetGenralSettingsViewModel
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class
-LeadActivity : AppCompatActivity() , View.OnClickListener {
+class LeadActivity : AppCompatActivity() , View.OnClickListener {
 
+    var TAG ="LeadActivity"
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
+    internal var view_height: View? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -43,28 +46,39 @@ LeadActivity : AppCompatActivity() , View.OnClickListener {
     private var mDay:Int = 0
     private var mHour:Int = 0
     private var mMinute:Int = 0
+    private var cardwalking: CardView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llleadgeneration: LinearLayout? = null
     private var llleadmanagement: LinearLayout? = null
+    private var llwalking: LinearLayout? = null
     lateinit var context: Context
+
+    lateinit var getGenralSettingsViewModel: GetGenralSettingsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_leads)
-        setRegViews()
         context = this@LeadActivity
+        getGenralSettingsViewModel = ViewModelProvider(this).get(GetGenralSettingsViewModel::class.java)
+        setRegViews()
         getCalendarId(context)
         bottombarnav()
+        getLeadRequestLicences()
     }
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        view_height = findViewById<View>(R.id.view_height)
+        cardwalking = findViewById<CardView>(R.id.cardwalking)
         llleadgeneration = findViewById<LinearLayout>(R.id.llleadgeneration)
         llleadgeneration!!.setOnClickListener(this)
         llleadmanagement = findViewById<LinearLayout>(R.id.llleadmanagement)
         llleadmanagement!!.setOnClickListener(this)
+        llwalking = findViewById<LinearLayout>(R.id.llwalking)
+        llwalking!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -83,6 +97,12 @@ LeadActivity : AppCompatActivity() , View.OnClickListener {
                 val i = Intent(this@LeadActivity, LeadManagemnetActivity::class.java)
                 startActivity(i)
             }
+
+            R.id.llwalking->{
+                val i = Intent(this@LeadActivity, WalkingCustomerActivity::class.java)
+                startActivity(i)
+            }
+
         }
     }
 
@@ -383,4 +403,55 @@ LeadActivity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+
+    private fun getLeadRequestLicences() {
+
+        var nameKey = "LFLR"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                getGenralSettingsViewModel.getRequestLicence(this,nameKey)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+
+                            Log.e(TAG, "msg   5291   " + msg)
+                            if (jObject.getString("StatusCode") == "0") {
+                                val jobjt = jObject.getJSONObject("GenralSettingsDetails")
+                                var strGsValue = jobjt.getString("GsValue")
+                                Log.e(TAG, "strGsValue   5292   " + strGsValue)
+                                if (strGsValue.equals("true")){
+                                    Log.e(TAG, "strGsValue   52921   " + strGsValue)
+                                    cardwalking!!.visibility = View.VISIBLE
+                                    view_height!!.visibility = View.GONE
+                                }else{
+                                    Log.e(TAG, "strGsValue   52922   " + strGsValue)
+                                    cardwalking!!.visibility = View.GONE
+                                    view_height!!.visibility = View.VISIBLE
+                                }
+
+                            } else {
+
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+
+            }
+            false -> {
+
+            }
+
+        }
+    }
+
+
 }

@@ -63,6 +63,12 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.WalkingCustomerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -230,7 +236,7 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationPickersActivity"
             android:screenOrientation="portrait"
@@ -521,14 +527,13 @@
             android:name="com.perfect.prodsuit.View.Service.LocationService"
             android:enabled="true"
             android:exported="true" />
-
         <service
-            android:name=".View.Service.LocationUpdateService"
+            android:name="com.perfect.prodsuit.View.Service.LocationUpdateService"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name=".View.Service.LocationStateReceiver"
+            android:name="com.perfect.prodsuit.View.Service.LocationStateReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
