@@ -43,6 +43,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
     lateinit var emiListArrayList: JSONArray
     lateinit var emiListSort: JSONArray
     var recyEmiList: RecyclerView? = null
+    var ll_nodata: LinearLayout? = null
 
     private var imgv_filter: ImageView? = null
     private var tv_header: TextView? = null
@@ -133,6 +134,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
         tv_header = findViewById<TextView>(R.id.tv_header)
         recyEmiList = findViewById<RecyclerView>(R.id.recyEmiList)
+        ll_nodata = findViewById<LinearLayout>(R.id.ll_nodata)
         tv_listCount = findViewById(R.id.tv_listCount)
 
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
@@ -225,12 +227,24 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
                                             ///
 
+                                            if (emiListSort.length() == 0){
+                                                ll_nodata!!.visibility  =View.VISIBLE
+                                                recyEmiList!!.visibility  =View.GONE
 
-                                            val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
-                                            recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!,SubMode!!)
-                                            recyEmiList!!.adapter = adapter
-                                            adapter.setClickListener(this@EmiToDoListActivity)
+                                                Log.e(TAG,"3542  ")
+
+                                            }else{
+                                                ll_nodata!!.visibility  =View.GONE
+                                                recyEmiList!!.visibility  =View.VISIBLE
+                                                val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
+                                                recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!,SubMode!!)
+                                                recyEmiList!!.adapter = adapter
+                                                adapter.setClickListener(this@EmiToDoListActivity)
+                                            }
+
+
+
 
                                         }
                                     } else {
@@ -335,11 +349,21 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
                 dialog1.dismiss()
 
-                val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
-                recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!,SubMode!!)
-                recyEmiList!!.adapter = adapter
-                adapter.setClickListener(this@EmiToDoListActivity)
+                if (emiListSort.length() == 0){
+                    ll_nodata!!.visibility  =View.VISIBLE
+                    recyEmiList!!.visibility  =View.GONE
+
+                    Log.e(TAG,"3541  ")
+
+                }else{
+                    ll_nodata!!.visibility  =View.GONE
+                    recyEmiList!!.visibility  =View.VISIBLE
+                    val lLayout = GridLayoutManager(this@EmiToDoListActivity, 1)
+                    recyEmiList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    val adapter = EmiListAdapter(this@EmiToDoListActivity, emiListSort!!,SubMode!!)
+                    recyEmiList!!.adapter = adapter
+                    adapter.setClickListener(this@EmiToDoListActivity)
+                }
 
 
             }

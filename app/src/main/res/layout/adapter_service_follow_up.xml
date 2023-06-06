@@ -469,8 +469,8 @@
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/myfont"
                                 android:gravity="center"
-                                android:src="@drawable/clock"
                                 app:tint="@color/colorPrimary" />
+<!--                            android:src="@drawable/clock"-->
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
