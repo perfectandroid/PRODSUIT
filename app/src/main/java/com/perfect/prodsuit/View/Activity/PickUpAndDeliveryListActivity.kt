@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+//import com.perfect.prodsuit.Viewmodel.LocationUpdationPckupViewModel
 import android.Manifest
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -7,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,6 +15,7 @@ import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -29,7 +30,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
 import com.perfect.prodsuit.Viewmodel.LocationUpdateViewModel
-//import com.perfect.prodsuit.Viewmodel.LocationUpdationPckupViewModel
 import com.perfect.prodsuit.Viewmodel.PickDeliveryListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -221,22 +221,34 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 filterDate         = tie_pDate!!.text!!.toString().toLowerCase().trim()
                 filterTicketNumber = tie_pTicketNumber!!.text!!.toString().toLowerCase().trim()
 
+
                 pickup_and_deliverysort = JSONArray()
                 for (k in 0 until pickUpDeliveryArrayList.length()) {
                     val jsonObject = pickUpDeliveryArrayList.getJSONObject(k)
 
-                    Log.e(TAG,"7788899999    "+jsonObject.getString("PickUpTime"))
+                    Log.e(TAG,"7788899999 @   "+jsonObject.getString("PickUpTime"))
+//                    Log.e(TAG,"7788899999 #    "+filterDate)
+
+                    val filterDate2 = jsonObject.getString("PickUpTime")
+                    val inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy  KK:mma")
+
+                    Log.e(TAG,"778888888888 #    "+inputFormat)
+
+                    val outputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+                    val date = outputFormat.format(inputFormat.parse(filterDate2))
 
                     if ((jsonObject.getString("ReferenceNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
                         && (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(filterCustomer!!))
                         && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
-                        && (jsonObject.getString("PickUpTime")!!.toLowerCase().trim().contains(filterDate!!))){
-                           Log.e(TAG,"8569745    "+filterDate)
+                        && date.toLowerCase().trim().contains(filterDate!!)){
+
                            pickup_and_deliverysort.put(jsonObject)
+
                     }else{
                         //  Log.e(TAG,"2162    "+strTicketNumber+"   "+strCustomer)
                     }
-
+                    Log.e(TAG,"444444555555 #    "+date)
+                    Log.e(TAG,"444444555555 *    "+filterDate)
                 }
                 dialog1.dismiss()
                 val adapter = PickupDeliveryListAdapter(this@PickUpAndDeliveryListActivity, pickup_and_deliverysort,SubMode!!)
@@ -307,8 +319,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 if (strMonth.length == 1){
                     strMonth ="0"+strMonth
                 }
-                tie_pDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                Log.e(TAG,"tie_pDate   "+strDay+"-"+strMonth+"-"+strYear)
+                tie_pDate!!.setText(""+strDay+"/"+strMonth+"/"+strYear)
+                Log.e(TAG,"tie_pDate   "+strDay+"/"+strMonth+"/"+strYear)
 
             }
             catch (e: Exception){

@@ -119,7 +119,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 if (jsonObject!!.getString("ProvideStandBy").equals("0")){
                     Log.e(TAG,"standByAmount  68111    "+position)
                     holder.swOnOff.isChecked = false
-//                    holder.tie_StandByAmount.isEnabled = false
+                    holder.tie_StandByAmount.isEnabled = false
 //                    holder.tie_Quantity.isEnabled = false
                     holder.tie_StandByProduct.isEnabled = false
                     holder.tie_StandByQuantity.isEnabled = false
@@ -131,7 +131,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                     Log.e(TAG,"standByAmount  68112    "+position)
                     holder.swOnOff.isChecked = true
                     holder.checkbox.isChecked = true
-//                    holder.tie_StandByAmount.isEnabled = true
+                    holder.tie_StandByAmount.isEnabled = true
                     holder.tie_Quantity.isEnabled = true
                     holder.tie_StandByProduct.isEnabled = true
                     holder.tie_StandByQuantity.isEnabled = true
@@ -326,7 +326,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                         Log.e(TAG,"82 swOnOff   off")
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("ProvideStandBy","0")
-//                        holder.tie_StandByAmount.isEnabled = false
+                        holder.tie_StandByAmount.isEnabled = false
 //                        holder.tie_Quantity.isEnabled = false
                         holder.tie_StandByProduct.isEnabled = false
                         holder.tie_StandByQuantity.isEnabled = false
