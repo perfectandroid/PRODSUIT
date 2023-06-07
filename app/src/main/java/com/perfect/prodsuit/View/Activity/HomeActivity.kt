@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -50,7 +51,6 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
-import com.perfect.prodsuit.View.Service.LocationService
 import com.perfect.prodsuit.View.Service.LocationUpdateService
 import com.perfect.prodsuit.Viewmodel.*
 import me.relex.circleindicator.CircleIndicator
@@ -324,6 +324,17 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING")
+        if (boolAttendance.equals("true")){
+            chipNavigationBar!!.get(2).visibility = View.VISIBLE
+            chipNavigationBar!!.get(1).visibility = View.GONE
+        }else{
+            chipNavigationBar!!.get(2).visibility = View.GONE
+            chipNavigationBar!!.get(1).visibility = View.VISIBLE
+        }
+
         chipNavigationBar!!.setItemSelected(R.id.home, true)
         chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(i: Int) {
@@ -340,6 +351,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     R.id.logout -> {
                        // doLogout()
                         LogoutBottomSheet()
+                    }
+                    R.id.pucnhing -> {
+                        chipNavigationBar!!.setItemSelected(R.id.home, true)
+                        val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
+                        startActivity(i)
                     }
                     R.id.quit -> {
                        // quit()
@@ -599,8 +615,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.rlnotification -> {
-                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+//                startActivity(i)
             }
         }
     }
@@ -1608,7 +1624,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
 //                progressDialog!!.show()
 //
-//                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
+//                attendanceAddViewModel.AddAttendanceAddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
 //                    this,
 //                    Observer { serviceSetterGetter ->
 //                        val msg = serviceSetterGetter.message
@@ -1823,6 +1839,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        val serviceIntent = Intent(this, LocationService::class.java)
 //        stopService(serviceIntent)
 //    }
+
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        getMenuInflater().inflate(R.menu.navbottom_item, menu)
+//        return true
+//    }
+//
+//    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+//        val reminder = menu.findItem(R.id.reminder)
+//        val logout1 = menu.findItem(R.id.logout1)
+//        val logout = menu.findItem(R.id.logout)
+//        val quit = menu.findItem(R.id.quit)
+//        reminder.setIcon(R.drawable.calendar_icon)
+//        logout1.isVisible = false
+//        logout.isVisible = false
+//        quit.isVisible = false
+//        return true
+//    }
+
 }
+
+
+
 
 

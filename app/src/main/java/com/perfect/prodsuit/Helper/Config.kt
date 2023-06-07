@@ -102,6 +102,14 @@ object Config {
     const val SHARED_PREF55 = "FK_Department"
     const val SHARED_PREF56 = "Department"
 
+    const val SHARED_PREF57 = "UtilityList"
+    const val SHARED_PREF58 = "LocLongitude"
+    const val SHARED_PREF59 = "LocLattitude"
+    const val SHARED_PREF60 = "LocLocationName"
+    const val SHARED_PREF61 = "EnteredDate"
+    const val SHARED_PREF62 = "EnteredTime"
+    const val SHARED_PREF63 = "Status"  // String False / True
+
     var width = 0
     var height = 0
 
@@ -518,6 +526,10 @@ object Config {
         FK_BranchCodeUserEditer.putString("FK_BranchCodeUser", "")
         FK_BranchCodeUserEditer.commit()
 
+
+
+
+
         val FK_UserRoleSP = context.getSharedPreferences(SHARED_PREF41, 0)
         val FK_UserRoleEditer = FK_UserRoleSP.edit()
         FK_UserRoleEditer.putString("FK_UserRole", "")
@@ -553,6 +565,53 @@ object Config {
         val ModuleListEditer = ModuleListSP.edit()
         ModuleListEditer.putString("ModuleList", "")
         ModuleListEditer.commit()
+
+
+        val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+        val FK_DepartmentEditer = FK_DepartmentSP.edit()
+        FK_DepartmentEditer.putString("FK_Department", "")
+        FK_DepartmentEditer.commit()
+
+        val DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF56, 0)
+        val DepartmentEditer = DepartmentSP.edit()
+        DepartmentEditer.putString("Department", "")
+        DepartmentEditer.commit()
+
+        val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val UtilityListEditer = UtilityListSP.edit()
+        UtilityListEditer.putString("UtilityList", "")
+        UtilityListEditer.commit()
+
+        val LocLongitudeSP = context.getSharedPreferences(Config.SHARED_PREF58, 0)
+        val LocLongitudeEditer = LocLongitudeSP.edit()
+        LocLongitudeEditer.putString("LocLongitude", "")
+        LocLongitudeEditer.commit()
+
+        val LocLattitudeSP = context.getSharedPreferences(Config.SHARED_PREF59, 0)
+        val LocLattitudeEditer = LocLattitudeSP.edit()
+        LocLattitudeEditer.putString("LocLattitude", "")
+        LocLattitudeEditer.commit()
+
+
+        val LocLocationNameSP = context.getSharedPreferences(Config.SHARED_PREF60, 0)
+        val LocLocationNameEditer = LocLocationNameSP.edit()
+        LocLocationNameEditer.putString("LocLocationName", "")
+        LocLocationNameEditer.commit()
+
+        val EnteredDateSP = context.getSharedPreferences(Config.SHARED_PREF61, 0)
+        val EnteredDateEditer = EnteredDateSP.edit()
+        EnteredDateEditer.putString("EnteredDate", "")
+        EnteredDateEditer.commit()
+
+        val EnteredTimeSP = context.getSharedPreferences(Config.SHARED_PREF62, 0)
+        val EnteredTimeEditer = EnteredTimeSP.edit()
+        EnteredTimeEditer.putString("EnteredTime", "")
+        EnteredTimeEditer.commit()
+
+        val StatusSP = context.getSharedPreferences(Config.SHARED_PREF63, 0)
+        val StatusEditer = StatusSP.edit()
+        StatusEditer.putString("Status", "")
+        StatusEditer.commit()
 
     }
 

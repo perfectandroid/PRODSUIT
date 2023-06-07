@@ -54,15 +54,29 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_user"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="25dp"
+                                android:layout_marginTop="15dp"
                                 android:fontFamily="@font/myfont"
                                 android:gravity="center"
-                                android:text="JITHIN"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_userrole"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="-10dp"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/textColor1"
+                                android:textSize="13dp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -85,6 +99,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/tv_date"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -119,6 +134,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/tv_time"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -153,6 +169,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/tv_locaddress"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -187,6 +204,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/tv_status"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -223,6 +241,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_Cancel"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
@@ -243,12 +262,13 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_Punch"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/myfont"
                                 android:gravity="center"
-                                android:text="Update"
+                                android:text="Punch In"
                                 android:textColor="@color/white"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />
@@ -268,8 +288,8 @@
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/profile"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/red"
+                    app:civ_border_width="1dp"
                     app:civ_circle_background_color="@color/white" />
 
 

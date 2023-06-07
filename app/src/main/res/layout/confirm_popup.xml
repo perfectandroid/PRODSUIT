@@ -12,6 +12,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
         <ImageView
+            android:id="@+id/img_confirm"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic__687831_adventure_journey_location_map_icon"

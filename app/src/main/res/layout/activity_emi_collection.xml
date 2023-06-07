@@ -1341,6 +1341,7 @@
                                                             android:drawableTint="@color/greydark"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint=""
+                                                            android:textColorHint="@color/black"
                                                             android:inputType="numberDecimal"
                                                             android:maxLength="12"
                                                             android:padding="7dp"
