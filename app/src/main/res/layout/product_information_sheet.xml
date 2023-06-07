@@ -368,7 +368,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="5.5"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="visible">
 
                             <View
                                 android:layout_width="match_parent"
@@ -377,6 +378,7 @@
                                 android:visibility="gone"/>
 
                             <TextView
+                                android:id="@+id/addProduct"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"

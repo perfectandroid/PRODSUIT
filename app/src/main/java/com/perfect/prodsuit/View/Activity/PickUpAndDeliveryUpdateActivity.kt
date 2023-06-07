@@ -173,6 +173,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var productposition = ""
     var ID_Category = "0"
     var IsSelected = ""
+//    var standbyTotal = "0.00"
     var pickupdeliStatusCount = 0
     lateinit var ProdInformationViewModel: PaymentMethodViewModel
     var prodInformationArrayList: JSONArray = JSONArray()
@@ -207,6 +208,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var lladdProduct: LinearLayout? = null
     var llbilltype: LinearLayout? = null
     var arrPosition: Int? = 0
+    var standbytotal1 :String = ""
     var updatepickupanddeliveryCount = 0
     var FK_EmployeeStock = ""
 
@@ -1060,6 +1062,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             }
             if (SubMode!!.equals("2")) {
                 tv_header1!!.text = "Delivery Note"
+                llbilltype!!.visibility = View.GONE
+                lladdProduct!!.visibility = View.GONE
             }
 
 
@@ -1148,17 +1152,33 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             } else {
 
-                if (StandByAmount.equals("0.00") && providesatndby!!.equals("0")) {
+//                    if (StandByAmount.equals("0.00") || StandByAmount!!.equals("")) {
+//                        llbilltype!!.visibility = View.VISIBLE
+//
+//                    } else {
+//
+//                        llbilltype!!.visibility = View.VISIBLE
+//                        setAmount()
+////                    Log.e(TAG, "standbytotal1           3"+standbytotal1)
+//                    }
+
+                if (standbytotal1.equals("0.00")){
                     llbilltype!!.visibility = View.GONE
-                } else {
+                }else{
                     llbilltype!!.visibility = View.VISIBLE
+                    setAmount()
                 }
+
 
                 val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
                 recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                 val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
                 recyProdInformation!!.adapter = adapterHome
                 adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+//                standbyTotal = (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
+//                standbyTotal = ""
+
             }
 //            productinfodetailscount = 0
 //            getProductInformationDetails()
@@ -1268,10 +1288,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                         (tv_Pop_StandByTotal!!.text.toString().toFloat()) - pay.toFloat()
                     )
                 )
+
+                Log.e(TAG, "txtPayBalAmount    114    " + txtPayBalAmount)
             } else {
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
                 txtPayBalAmount!!.setText("" + tv_Pop_StandByTotal!!.text.toString())
+
+                Log.e(TAG, "txtPayBalAmount    115    " + txtPayBalAmount)
             }
 
             edtPayMethod!!.setOnClickListener {
@@ -1303,8 +1327,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                             (tv_Pop_StandByTotal!!.text.toString().toFloat()) - payAmnt.toFloat()
                         )
                     )
+                    Log.e(TAG, "txtPayBalAmount    116    " + txtPayBalAmount)
                 } else {
                     txtPayBalAmount!!.setText("" + tv_Pop_StandByTotal!!.text.toString())
+                    Log.e(TAG, "txtPayBalAmount    117    " + txtPayBalAmount)
                 }
             }
 
@@ -2403,6 +2429,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                     )
                 )
 
+                Log.e(TAG, "txtPayBalAmount    117    " + txtPayBalAmount)
 
 //                Log.e(TAG,"605   "+txtPayBalAmount!!.text.toString().toFloat())
 //                var payAmnt = ((txtPayBalAmount!!.text.toString().toFloat()) + (jsonObject!!.getString("Amount").toFloat()))
@@ -2621,22 +2648,53 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                     StandByAmount = jsonObject.getString("SPAmount")
                 }
 
-                if (StandByAmount.equals("0.00")) {
-                    llbilltype!!.visibility = View.GONE
-                } else {
-                    llbilltype!!.visibility = View.VISIBLE
-                }
+//                if (StandByAmount.equals("0.00") || StandByAmount.equals("")) {
+//                    llbilltype!!.visibility = View.GONE
+//                } else {
+//                    llbilltype!!.visibility = View.VISIBLE
+//                }
+
+//                if (standbytotal1 > 0.toString()){
+//                    llbilltype!!.visibility = View.GONE
+//                }else{
+//                    llbilltype!!.visibility = View.VISIBLE
+//                }
+
 //                    Log.e(TAG,"standbyTotal  42102   "+standbyTotal+"   :   "+standbyAmount +"  :  "+jsonObject.getString("prodName"))
 //                    Log.e(TAG,"standbyTotal  42103   "+DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat())+"   :   "+DecimelFormatters.set2DecimelPlace(standbyAmount.toFloat()))
                 standbyTotal =
                     (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
 
-                tv_Pop_StandByTotal!!.text = standbyTotal
+                standbytotal1 = standbyTotal
+
+                tv_Pop_StandByTotal!!.text = standbytotal1
+
+                if (standbytotal1.equals("0.00")){
+                    llbilltype!!.visibility = View.GONE
+                }else{
+                    llbilltype!!.visibility = View.VISIBLE
+                }
+
+//                standbytotal1 = ""
+
+            }
+            if (jsonObject.getString("ProvideStandBy").equals("0")) {
+
+                standbytotal1 = standbyTotal
+                tv_Pop_StandByTotal!!.text = standbytotal1
+
+                if (standbytotal1.equals("0.00")){
+                    llbilltype!!.visibility = View.GONE
+                }else{
+                    llbilltype!!.visibility = View.VISIBLE
+//                    tv_Pop_StandByTotal!!.text = "0.00"
+//                    standbytotal1 = ""
+                }
 
             }
 
         }
-        Log.e(TAG, "standbyTotal  4313   " + standbyTotal)
+        Log.e(TAG, "standbyTotal  4313 11  " + standbytotal1)
 
 
 //            txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))

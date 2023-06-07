@@ -249,6 +249,7 @@
                         android:textSize="14dp"
                         android:focusableInTouchMode="true"
                         android:editable="true"
+                        android:maxLength="12"
                         android:inputType="number"
                         android:fontFamily="@font/myfont"
                         android:textColor="@color/greydarks"
@@ -263,10 +264,10 @@
                     android:layout_weight="1"
                     android:hint="StandBy Amount"
                     android:layout_marginLeft="5dp"
-                    android:visibility="gone"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
-                    style="@style/Widget.App.TextInputLayout">
+                    style="@style/Widget.App.TextInputLayout"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tie_StandByAmount"
@@ -275,6 +276,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
+                        android:maxLength="13"
                         android:paddingBottom="8dp"
                         android:drawableLeft="@drawable/svg_fd_actiontype"
                         android:drawablePadding="5dp"
@@ -323,6 +325,7 @@
                         android:drawableLeft="@drawable/svg_fd_actiontype"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
+                        android:maxLength="150"
                         android:textSize="14dp"
                         android:focusableInTouchMode="true"
                         android:editable="true"
