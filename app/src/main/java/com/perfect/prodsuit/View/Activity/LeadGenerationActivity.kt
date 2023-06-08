@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -442,6 +443,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var saveLead = 0
     var saveLeadGenDet = 0
     var CompanyCategory = ""
+    var boolAttendance =""
+
+    var saveAttendanceMark = false
 
 
 
@@ -492,7 +496,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         searchNameTitle =
             arrayOf("Mr. ", "Mrs. ", "Miss. ", "M/s. ", "Dr. ", "Ms. ", "Fr. ", "Sr. ")
         // getCalendarId(context)
-
+        checkAttendance()
         clearData()
         getLeadRequestLicences()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
@@ -517,9 +521,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             getDefaultValueSettings()
         }
         // getDefaultValueSettings()
-
-
-
         edtPincode!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
@@ -539,6 +540,29 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             }
         })
+
+    }
+
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
     }
 
     private fun getLeadRequestLicences() {
@@ -1862,9 +1886,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             R.id.btnSubmit -> {
-                saveLeadGenDet = 0
-                Config.disableClick(v)
-                LeadValidations(v)
+
+                checkAttendance()
+                if (saveAttendanceMark){
+                    saveLeadGenDet = 0
+                    Config.disableClick(v)
+                    LeadValidations(v)
+                }
+
+//
+
+//rrr
+//
+//                 val i = Intent(this@LeadGenerationActivity, AttendanceMarkingActivity::class.java)
+//                startActivity(i)
 
 
 //                if(image1.equals(""))

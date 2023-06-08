@@ -38,6 +38,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -219,7 +220,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private var tabLayout : TabLayout? = null
     private var card_followup : CardView? = null
     private var card_nextaction : CardView? = null
-
+    var saveAttendanceMark = false
 
 
 
@@ -264,8 +265,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         getDefaultValueSettings()
         getCurrentDateNTime()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
+        checkAttendance()
         addTabItem()
+
 
 
     }
@@ -557,14 +559,41 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
 
             R.id.btnSubmit->{
-                saveFollowupDet = 0
-                Config.disableClick(v)
-                ValidateData(v)
+
+                checkAttendance()
+                if (saveAttendanceMark){
+                    saveFollowupDet = 0
+                    Config.disableClick(v)
+                    ValidateData(v)
+                }
+
+
             }
 
 
 
 
+        }
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
         }
     }
 

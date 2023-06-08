@@ -46,6 +46,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -177,7 +178,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
-
+        checkAttendance()
         setTechnologyPartner()
 
 
@@ -257,6 +258,26 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         super.onPause()
         updateWidgetHandler.removeCallbacks(updateWidgetRunnable);
     }
+
+    override fun onRestart() {
+        super.onRestart()
+
+    }
+
+    private fun checkAttendance() {
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+
+        }
+    }
+
 
     private fun getNotfCount() {
 
