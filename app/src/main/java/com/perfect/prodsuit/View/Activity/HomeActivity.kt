@@ -53,6 +53,7 @@ import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Service.LocationUpdateService
 import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
 import org.json.JSONObject
@@ -64,7 +65,7 @@ import java.util.*
 
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    ItemClickListener {
+    ItemClickListener, MyCallback {
 
     var TAG = "HomeActivity"
     lateinit var context: Context
@@ -171,32 +172,44 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
         getBannerlist()
         getCompanyLogo()
+        getLocationTracker()
 //        getNotfCount()
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
 
         setTechnologyPartner()
-        val isMyServiceRunning = isServiceRunning(context, LocationUpdateService::class.java)
-        if (!isMyServiceRunning){
-//            val serviceIntent = Intent(this, LocationUpdateService::class.java)
-//            startService(serviceIntent)
-        }
+
+
 
 
     }
 
-    fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == serviceInfo.service.className) {
-                // Service is running
-                return true
+    private fun getLocationTracker() {
+        try {
+            val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+            val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+            var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
+            Log.e(TAG,"191110   "+bTracker)
+            if (bTracker){
+                Log.e(TAG,"191111   "+bTracker)
+                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+                if (!isMyServiceRunning){
+                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+                    startService(serviceIntent)
+                }
+            }else{
+                Log.e(TAG,"191112   "+bTracker)
+                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+                if (isMyServiceRunning){
+                    Log.e(TAG,"1911123   "+bTracker)
+                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+                    stopService(serviceIntent)
+                }
             }
+        }catch (e : Exception){
+
         }
-        // Service is not running
-        return false
     }
 
     private fun setTechnologyPartner() {
@@ -225,6 +238,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         run {
             //Update UI
             // Re-run it after the update interval
+
             getNotfCount()
             updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
         }
@@ -1824,6 +1838,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onServiceCallback(data: String) {
+
+        Log.e(TAG,"1838     "+data)
     }
 
 //    override fun onStart() {

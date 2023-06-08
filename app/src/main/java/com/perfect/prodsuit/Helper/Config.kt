@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.Helper
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Color
 import android.net.ConnectivityManager
@@ -801,5 +802,38 @@ object Config {
 
 
 
+    fun getMilliSeconds(context : Context): Int {
+        var result =30000
+        try {
+            val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+            val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+            var iSecond = jsonObj!!.getString("LOCATION_INTERVAL")
+            result = (iSecond.toLong() * 1000).toInt()
+        }catch (e : Exception){
 
+        }
+        return result
+    }
+
+    fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == serviceInfo.service.className) {
+                // Service is running
+                return true
+            }
+        }
+        // Service is not running
+        return false
+    }
+
+    fun isAppInForeground(context: Context): Boolean {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
+        val packageName = context.packageName
+
+        val foregroundTaskInfo = activityManager?.getRunningTasks(1)?.firstOrNull()
+
+        return foregroundTaskInfo?.topActivity?.packageName == packageName
+    }
 }

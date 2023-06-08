@@ -457,6 +457,9 @@ interface ApiInterface {
     @POST("UserValidations/AttanceMarkingUpdate")
     fun UpdateAttanceMarkingUpdate(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/EmployeeLocationUpdate")
+    fun UpdateEmployeeLocationUpdate(@Body body: RequestBody): Call<String>
+
 
 
 
