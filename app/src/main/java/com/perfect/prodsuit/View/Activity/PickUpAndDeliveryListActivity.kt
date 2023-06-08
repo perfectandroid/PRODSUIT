@@ -22,12 +22,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
 import com.perfect.prodsuit.Viewmodel.LocationUpdateViewModel
 import com.perfect.prodsuit.Viewmodel.PickDeliveryListViewModel
@@ -93,6 +95,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var updateLongitude: String?= ""
     var updateAddress: String?= ""
     var updateLocCount = 0
+    var swipe: SwipeRefreshLayout?=null
+    var adapter: NotificationAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,9 +127,16 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         strTicketNo = intent.getStringExtra("strTicketNo")
         status_id   = intent.getStringExtra("status_id")
         setRegViews()
+
+        swipe?.setOnRefreshListener {
+            getPickUpDeliveryList()
+            adapter?.notifyDataSetChanged()
+            swipe?.isRefreshing=false
+        }
     }
 
     private fun setRegViews() {
+        swipe=findViewById(R.id.swipeRefreshLayout)
         val imback = findViewById<ImageView>(R.id.imback)
         imgv_filter = findViewById(R.id.imgv_filter)
         imback!!.setOnClickListener(this)
