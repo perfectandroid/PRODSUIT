@@ -19,10 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
-import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -173,6 +170,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     var serUpdateCount = 0
     private var txt_Warning : TextView? = null
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -194,7 +192,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister)
 //        ticketMode = "0"
 //        hideViews()
-
+        checkAttendance()
         getCurrentdateTime()
         getServiceAssignDetails()
 
@@ -623,7 +621,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
             R.id.btnSave->{
                 Config.disableClick(v)
-                saveValidation(v)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    saveValidation(v)
+                }
+
             }
 
 
@@ -631,6 +633,26 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     }
 
 
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
+    }
 
     private fun resetData(mode : String) {
 

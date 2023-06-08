@@ -25,6 +25,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -71,6 +72,8 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var attanceMarkingUpdateViewModel: AttanceMarkingUpdateViewModel
     var updateCount = 0
 
+    private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -97,7 +100,8 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
             }
         } else {
-            requestPermissions()
+           // requestPermissions()
+            checkPermissions()
         }
     }
 
@@ -261,18 +265,61 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true
+//        if (ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED &&
+//            ActivityCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            return true
+//        }
+//        return false
+
+        var result = false
+        val locationPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val coarsePermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        val commandPermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
+
+
+
+        val backgroundPermision =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        val listPermissionsNeeded: MutableList<String> = ArrayList()
+        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-        return false
+        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        if (commandPermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS)
+        }
+        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        }
+
+
+//        if (backgroundPermision != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//        }
+
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(),
+                REQUEST_ID_MULTIPLE_PERMISSIONS
+            )
+            result  = true
+        }
+        return result
     }
 
     private fun requestPermissions() {

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
@@ -121,7 +122,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     lateinit var serviceEditUpdateViewModel: ServiceEditUpdateViewModel
     var serUpdateCount = 0
     var strVisitDate : String?= ""
-
+    var saveAttendanceMark = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -389,10 +390,15 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 //            startActivity(i)
 
            // serviceEditBottom()
-            val jsonObject = serviceListArrayList.getJSONObject(position)
-            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
-            serAssignCount = 0
-            getServiceAssignDetails()
+            checkAttendance()
+            if (saveAttendanceMark){
+                val jsonObject = serviceListArrayList.getJSONObject(position)
+                ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+                serAssignCount = 0
+                getServiceAssignDetails()
+            }
+
+
         }
         if (data.equals("followupaction")){
             dialogFollowupAction!!.dismiss()
@@ -415,6 +421,27 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
     }
 
     private fun getServiceAssignDetails() {

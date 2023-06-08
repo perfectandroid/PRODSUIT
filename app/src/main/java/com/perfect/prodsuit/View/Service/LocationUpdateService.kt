@@ -275,6 +275,8 @@ class LocationUpdateService : Service() {
                             }else{
                                 openLocationSettings(context)
                             }
+                        }else{
+
                         }
 
                     }
@@ -313,12 +315,21 @@ class LocationUpdateService : Service() {
             ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             return true
         }
 
         return false
+
     }
 
 

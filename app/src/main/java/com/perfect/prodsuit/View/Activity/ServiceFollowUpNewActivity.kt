@@ -289,7 +289,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
     lateinit var followupStatusUpdateViewModel: FollowupStatusUpdateViewModel
     var statusCount = 0
-
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -317,7 +317,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         setRegViews()
         getSharedPrefValues()
-
+        checkAttendance()
         try {
             runningStatus = intent.getStringExtra("runningStatus")
             customer_service_register = intent.getStringExtra("customer_service_register").toString()
@@ -538,29 +538,45 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             R.id.card_start -> {
-                journeyType = "1"
-                if (checkLocationPermission()) {
-                    confirmBottomSheet(journeyType)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    journeyType = "1"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
                 }
+
             }
             R.id.card_hold -> {
-                journeyType = "2"
-                if (checkLocationPermission()) {
-                    confirmBottomSheet(journeyType)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    journeyType = "2"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
                 }
+
             }
 
             R.id.card_restart -> {
-                journeyType = "3"
-                if (checkLocationPermission()) {
-                    confirmBottomSheet(journeyType)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    journeyType = "3"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
                 }
+
             }
             R.id.card_stop -> {
-                journeyType = "4"
-                if (checkLocationPermission()) {
-                    confirmBottomSheet(journeyType)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    journeyType = "4"
+                    if (checkLocationPermission()) {
+                        confirmBottomSheet(journeyType)
+                    }
                 }
+
             }
 
 
@@ -777,20 +793,22 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
                 Log.e(TAG,"validatServiceAttended   778")
 
-                if (runningStatus.equals("") || runningStatus.equals("0") || runningStatus.equals("4")){
-                    journeyType = "1"
-                    if (checkLocationPermission()) {
-                        confirmBottomSheet(journeyType)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    if (runningStatus.equals("") || runningStatus.equals("0") || runningStatus.equals("4")){
+                        journeyType = "1"
+                        if (checkLocationPermission()) {
+                            confirmBottomSheet(journeyType)
+                        }
+                    }else if (runningStatus.equals("2")){
+                        journeyType = "3"
+                        if (checkLocationPermission()) {
+                            confirmBottomSheet(journeyType)
+                        }
+                    }else{
+                        validatServiceAttended(v)
                     }
-                }else if (runningStatus.equals("2")){
-                    journeyType = "3"
-                    if (checkLocationPermission()) {
-                        confirmBottomSheet(journeyType)
-                    }
-                }else{
-                    validatServiceAttended(v)
                 }
-
 
 
             }
@@ -804,6 +822,26 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
 
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
+    }
 
     private fun validatServiceAttended(v: View) {
 

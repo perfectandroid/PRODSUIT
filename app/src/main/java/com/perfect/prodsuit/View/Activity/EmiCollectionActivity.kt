@@ -208,7 +208,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private var strAgentDate:String?=""
     private var strAgentTime:String?=""
-
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -720,8 +720,15 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             R.id.btnSubmit->{
 
+
                 Config.disableClick(v)
-                saveValidation(v)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    saveValidation(v)
+                }
+
+
+
 //                if (checkPermissions()) {
 //                    if (isLocationEnabled()) {
 //
@@ -759,6 +766,27 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             }
 
+        }
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
         }
     }
 
