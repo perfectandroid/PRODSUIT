@@ -30,7 +30,18 @@
         app:cnb_backgroundColor="@color/white"
         app:iconTint="@color/white"
         app:cnb_iconColor="@color/colorPrimary"
-        app:cnb_textColor="@color/colorPrimaryExtraDark" />
+        app:cnb_textColor="@color/colorPrimaryExtraDark"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/pucnhing"
+        android:icon="@drawable/ic_punch"
+        android:title="Punching"
+        app:cnb_backgroundColor="@color/white"
+        app:iconTint="@color/white"
+        app:cnb_iconColor="@color/colorPrimary"
+        app:cnb_textColor="@color/colorPrimaryExtraDark"
+        android:visible="false"/>
 
     <item
         android:id="@+id/quit"

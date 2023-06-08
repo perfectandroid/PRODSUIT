@@ -208,7 +208,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private var strAgentDate:String?=""
     private var strAgentTime:String?=""
-
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -509,6 +509,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                       tv_Balance!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(bal))
                    // edtInsAmount!!.setText(strInsAmountTemp)
                     chkClosing!!.isChecked = false
+                    edtInsAmount!!.isEnabled =false
                     strSaveClosing = "0"
 
                 }
@@ -700,9 +701,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                if (chkClosing!!.isChecked){
                    strSaveClosing = "1"
                    edtInsAmount!!.setText(strBalanceTemp)
+                   edtInsAmount!!.isEnabled =false
                }else{
                    edtInsAmount!!.setText(strInsAmountTemp)
                    strSaveClosing = "0"
+                   edtInsAmount!!.isEnabled =true
                }
             }
 
@@ -718,8 +721,15 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             R.id.btnSubmit->{
 
+
                 Config.disableClick(v)
-                saveValidation(v)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    saveValidation(v)
+                }
+
+
+
 //                if (checkPermissions()) {
 //                    if (isLocationEnabled()) {
 //
@@ -757,6 +767,27 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             }
 
+        }
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
         }
     }
 
@@ -951,7 +982,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 Log.e(TAG,"9453  ")
                 Log.e(TAG,"payAmnt         475    "+payAmnt)
                 Log.e(TAG,"tv_NetAmount    475    "+tv_NetAmount!!.text.toString())
-                txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))
+              //  txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))
+                txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((DecimalToWordsConverter.commaRemover(tv_NetAmount!!.text.toString()).toFloat()) - pay.toFloat()))
                 Log.e(TAG,"9454  ")
             }else{
                 Log.e(TAG,"9455  ")
@@ -1015,7 +1047,9 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private fun validateAddPayment(view: View) {
         var balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
-        var payAmount = edtPayAmount!!.text.toString()
+      //  var payAmount = edtPayAmount!!.text.toString()
+        var payAmount = DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
+
 
         Log.e(TAG,"110   balAmount   : "+balAmount)
         Log.e(TAG,"110   payAmount   : "+payAmount)
@@ -1031,7 +1065,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
             Config.snackBarWarning(context,view,"PaymentMethod Already exits")
         }
-        else if (edtPayAmount!!.text.toString().equals("")){
+        else if (payAmount.equals("")){
+//            else if (edtPayAmount!!.text.toString().equals("")){
             txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
             Log.e(TAG,"110   Valid   : Enter Amount")
             Config.snackBarWarning(context,view,"Enter Amount")
@@ -1051,7 +1086,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 jObject.put("MethodID",ID_PaymentMethod)
                 jObject.put("Method",edtPayMethod!!.text.toString())
                 jObject.put("RefNo",edtPayRefNo!!.text.toString())
-                jObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+               // jObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+                jObject.put("Amount",DecimelFormatters.set2DecimelPlace((payAmount).toFloat()))
                 arrPayment!!.put(jObject)
             }
             if (arrAddUpdate.equals("1")){
@@ -1064,7 +1100,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 jsonObject.put("MethodID",ID_PaymentMethod)
                 jsonObject.put("Method",edtPayMethod!!.text.toString())
                 jsonObject.put("RefNo",edtPayRefNo!!.text.toString())
-                jsonObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+             //   jsonObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+                jsonObject.put("Amount",DecimelFormatters.set2DecimelPlace((payAmount).toFloat()))
 
                 arrAddUpdate = "0"
 
@@ -1439,8 +1476,19 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 editable === edtPayAmount!!.editableText -> {
 
                     try {
+                        var strAmnt = ""
                         Log.e(TAG,"283021    "+edtPayAmount!!.text.toString())
                         edtPayAmount!!.removeTextChangedListener(this)
+                        if (edtPayAmount!!.text.toString().equals(".")){
+                            strAmnt = "0.00"
+                        }else if(edtPayAmount!!.text.toString().equals("")){
+                            strAmnt = "0.00"
+                        }
+                        else{
+                            strAmnt =  DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
+                        }
+
+                        val edtAmt = DecimelFormatters.set2DecimelPlace(strAmnt!!.toFloat())
                         var txt = edtPayAmount!!.text.toString()
                         // Log.e(TAG,"2830213    "+  DecimalToWordsConverter.getDecimelFormateForEditText(txt))
 
@@ -1449,6 +1497,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 //                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
                         }else{
                             //   til_DeliveryDate!!.isErrorEnabled = false
+                            edtPayAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(strAmnt!!))
                             txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.black))
                         }
                         edtPayAmount!!.setSelection(edtPayAmount!!.length())

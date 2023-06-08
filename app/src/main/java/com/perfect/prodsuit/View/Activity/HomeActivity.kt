@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -45,14 +46,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
-import com.perfect.prodsuit.View.Service.LocationService
 import com.perfect.prodsuit.View.Service.LocationUpdateService
 import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
 import org.json.JSONObject
@@ -64,7 +66,7 @@ import java.util.*
 
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-    ItemClickListener {
+    ItemClickListener, MyCallback {
 
     var TAG = "HomeActivity"
     lateinit var context: Context
@@ -171,32 +173,44 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
         getBannerlist()
         getCompanyLogo()
+        getLocationTracker()
 //        getNotfCount()
         getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
-
+        checkAttendance()
         setTechnologyPartner()
-        val isMyServiceRunning = isServiceRunning(context, LocationUpdateService::class.java)
-        if (!isMyServiceRunning){
-//            val serviceIntent = Intent(this, LocationUpdateService::class.java)
-//            startService(serviceIntent)
-        }
+
+
 
 
     }
 
-    fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        for (serviceInfo in activityManager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == serviceInfo.service.className) {
-                // Service is running
-                return true
+    private fun getLocationTracker() {
+        try {
+            val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+            val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+            var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
+            Log.e(TAG,"191110   "+bTracker)
+            if (bTracker){
+                Log.e(TAG,"191111   "+bTracker)
+                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+                if (!isMyServiceRunning){
+                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+                    startService(serviceIntent)
+                }
+            }else{
+                Log.e(TAG,"191112   "+bTracker)
+                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+                if (isMyServiceRunning){
+                    Log.e(TAG,"1911123   "+bTracker)
+                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+                    stopService(serviceIntent)
+                }
             }
+        }catch (e : Exception){
+
         }
-        // Service is not running
-        return false
     }
 
     private fun setTechnologyPartner() {
@@ -225,6 +239,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         run {
             //Update UI
             // Re-run it after the update interval
+
             getNotfCount()
             updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
         }
@@ -243,6 +258,26 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         super.onPause()
         updateWidgetHandler.removeCallbacks(updateWidgetRunnable);
     }
+
+    override fun onRestart() {
+        super.onRestart()
+
+    }
+
+    private fun checkAttendance() {
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+
+        }
+    }
+
 
     private fun getNotfCount() {
 
@@ -324,6 +359,17 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING")
+        if (boolAttendance.equals("true")){
+            chipNavigationBar!!.get(2).visibility = View.VISIBLE
+            chipNavigationBar!!.get(1).visibility = View.GONE
+        }else{
+            chipNavigationBar!!.get(2).visibility = View.GONE
+            chipNavigationBar!!.get(1).visibility = View.VISIBLE
+        }
+
         chipNavigationBar!!.setItemSelected(R.id.home, true)
         chipNavigationBar!!.setOnItemSelectedListener(object : ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(i: Int) {
@@ -340,6 +386,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     R.id.logout -> {
                        // doLogout()
                         LogoutBottomSheet()
+                    }
+                    R.id.pucnhing -> {
+                        chipNavigationBar!!.setItemSelected(R.id.home, true)
+                        val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
+                        startActivity(i)
                     }
                     R.id.quit -> {
                        // quit()
@@ -599,8 +650,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.rlnotification -> {
-                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+//                startActivity(i)
             }
         }
     }
@@ -1608,7 +1659,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
 //                progressDialog!!.show()
 //
-//                attendanceAddViewModel.AddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
+//                attendanceAddViewModel.AddAttendanceAddAttendance(this,IsOnline!!,strLatitude!!,strLongitue!!,address!!,SubMode)!!.observe(
 //                    this,
 //                    Observer { serviceSetterGetter ->
 //                        val msg = serviceSetterGetter.message
@@ -1810,6 +1861,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
     }
 
+    override fun onServiceCallback(data: String) {
+
+        Log.e(TAG,"1838     "+data)
+    }
+
 //    override fun onStart() {
 //        super.onStart()
 //        Log.e(TAG,"3666  11   ")
@@ -1823,6 +1879,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        val serviceIntent = Intent(this, LocationService::class.java)
 //        stopService(serviceIntent)
 //    }
+
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        getMenuInflater().inflate(R.menu.navbottom_item, menu)
+//        return true
+//    }
+//
+//    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+//        val reminder = menu.findItem(R.id.reminder)
+//        val logout1 = menu.findItem(R.id.logout1)
+//        val logout = menu.findItem(R.id.logout)
+//        val quit = menu.findItem(R.id.quit)
+//        reminder.setIcon(R.drawable.calendar_icon)
+//        logout1.isVisible = false
+//        logout.isVisible = false
+//        quit.isVisible = false
+//        return true
+//    }
+
 }
+
+
+
 
 

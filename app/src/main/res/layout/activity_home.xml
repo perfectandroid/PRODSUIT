@@ -84,6 +84,7 @@
                             android:layout_height="60dp"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="right"
+                            android:layout_marginRight="10dp"
                             android:src="@drawable/ic_notifications"
                             android:visibility="invisible">
 
@@ -94,8 +95,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_notifications"
-                                app:tint="@color/white" />
+                                android:src="@drawable/ic_finger"
+                                app:tint="@color/green" />
 
                             <TextView
                                 android:id="@+id/txtv_notfcount"
@@ -111,7 +112,8 @@
                                 android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="7dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone"/>
                         </RelativeLayout>
 
 

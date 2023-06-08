@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.DecimalToWordsConverter
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -37,7 +38,8 @@ class PaymentListAdapter  (internal var context: Context, internal var jsonArray
 
                 holder.tv_method.text  = jsonObject!!.getString("Method")
                 holder.tv_RefreneceNo.text      = jsonObject!!.getString("RefNo") // Role
-                holder.tv_Amount.text      = jsonObject!!.getString("Amount") // Role
+             //   holder.tv_Amount.text      = jsonObject!!.getString("Amount") // Role
+                holder.tv_Amount.text      = DecimalToWordsConverter.getDecimelFormateForEditText(jsonObject!!.getString("Amount")) // Role
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {

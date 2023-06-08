@@ -88,9 +88,9 @@ class AboutUs3Activity : AppCompatActivity() , View.OnClickListener {
                     R.id.reminder -> {
                         setReminder()
                     }
-                    R.id.logout -> {
-                        doLogout()
-                    }
+//                    R.id.logout -> {
+//                        doLogout()
+//                    }
                     R.id.quit -> {
                         quit()
                     }

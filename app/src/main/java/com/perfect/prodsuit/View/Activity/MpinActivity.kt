@@ -718,6 +718,42 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 DepartmentEditer.putString("Department", jobj.getString("Department"))
                                 DepartmentEditer.commit()
 
+                                val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+                                val UtilityListEditer = UtilityListSP.edit()
+                                UtilityListEditer.putString("UtilityList", jobj.getString("UtilityList"))
+                                UtilityListEditer.commit()
+
+                                val LocLongitudeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF58, 0)
+                                val LocLongitudeEditer = LocLongitudeSP.edit()
+                                LocLongitudeEditer.putString("LocLongitude", jobj.getString("LocLongitude"))
+                                LocLongitudeEditer.commit()
+
+                                val LocLattitudeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF59, 0)
+                                val LocLattitudeEditer = LocLattitudeSP.edit()
+                                LocLattitudeEditer.putString("LocLattitude", jobj.getString("LocLattitude"))
+                                LocLattitudeEditer.commit()
+
+
+                                val LocLocationNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF60, 0)
+                                val LocLocationNameEditer = LocLocationNameSP.edit()
+                                LocLocationNameEditer.putString("LocLocationName", jobj.getString("LocLocationName"))
+                                LocLocationNameEditer.commit()
+
+                                val EnteredDateSP = applicationContext.getSharedPreferences(Config.SHARED_PREF61, 0)
+                                val EnteredDateEditer = EnteredDateSP.edit()
+                                EnteredDateEditer.putString("EnteredDate", jobj.getString("EnteredDate"))
+                                EnteredDateEditer.commit()
+
+                                val EnteredTimeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF62, 0)
+                                val EnteredTimeEditer = EnteredTimeSP.edit()
+                                EnteredTimeEditer.putString("EnteredTime", jobj.getString("EnteredTime"))
+                                EnteredTimeEditer.commit()
+
+                                val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+                                val StatusEditer = StatusSP.edit()
+                                StatusEditer.putString("Status", jobj.getString("Status"))
+                                StatusEditer.commit()
+
 
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)
                                 startActivity(i)

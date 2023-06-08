@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import com.perfect.prodsuit.View.lifes.MyApp
 
 class LocationStateReceiver: BroadcastReceiver() {
 
+    var TAG = "LocationStateReceiver"
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
@@ -20,10 +22,12 @@ class LocationStateReceiver: BroadcastReceiver() {
             // Handle the location state change
             if (isLocationEnabled) {
                 // Location is enabled
+                    Log.e(TAG,"Location is enabled")
                 Toast.makeText(context, "Location is enabled", Toast.LENGTH_SHORT).show()
             } else {
                 // Location is disabled
-                Toast.makeText(context, "Location is disabled", Toast.LENGTH_SHORT).show()
+                Log.e(TAG,"Location is enabled  ")
+                Toast.makeText(context, "Location is enabled", Toast.LENGTH_SHORT).show()
               //  openLocationSettings(context)
             }
         }

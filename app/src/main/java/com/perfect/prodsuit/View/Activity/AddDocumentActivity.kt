@@ -28,6 +28,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.Helper.UriUtil.getDataColumn
@@ -93,7 +94,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
 
 
     lateinit var saveDocumentViewModel: SaveDocumentViewModel
-
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +107,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         saveDocumentViewModel = ViewModelProvider(this).get(SaveDocumentViewModel::class.java)
 
         setRegViews()
+        checkAttendance()
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")!!
         Log.e(TAG,"ID_LeadGenerateProduct  89    "+ID_LeadGenerateProduct)
 
@@ -214,10 +216,35 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnSubmit->{
                 Config.Utils.hideSoftKeyBoard(context,v)
                 Config.disableClick(v)
-                Validations(v)
+                checkAttendance()
+                if (saveAttendanceMark){
+                    Validations(v)
+                }
+
             }
         }
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
     }
 
 
