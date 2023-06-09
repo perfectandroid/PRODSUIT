@@ -50,10 +50,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimelFormatters
-import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.locCountry
 import com.perfect.prodsuit.View.Adapter.*
@@ -244,11 +241,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var country: String = ""
     var postalCode: String = ""
     var knownName: String = ""
+    var locate = "0"
 
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
     private var mLocationPermissionGranted = false
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
+    var saveAttendanceMark = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -293,6 +292,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //        checkAndRequestPermissions()
 
         setRegViews()
+        checkAttendance()
         getUpdateStstusDetails()
 //        checkAndRequestPermissions()
 
@@ -1105,16 +1105,20 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             llsubmit!!.setOnClickListener {
                 Config.disableClick(it)
-                getLocation()
-                if (status_id!!.equals("")) {
 
-                    Log.e(TAG, "rrrrrr  " + status_id)
-                    Config.snackBarWarning(context, it, "Please Select Status")
-                } else {
-                    Log.e(TAG, "uuuuuuu  " + status_id)
+                if (isLocationEnabled().equals(false)) {
+                    Log.e(TAG,"isLocationEnabled.......  ")
+                    getLocation()
+                    if (status_id.equals("")) {
+                        Config.snackBarWarning(context, it, "Please Select Status")
+                        Log.e(TAG,"status_id.......1  ")
+                    }
+                }else{
+                    Log.e(TAG,"Validation.......1  ")
+                    getLocation()
+                    checkAttendance()
                     Validation(it)
                 }
-
             }
 
 
@@ -2518,99 +2522,111 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
     private fun Validation(view: View) {
 
-        Productdetails = JSONArray()
+        try {
+            Productdetails = JSONArray()
 //        prodInformationArrayList2 = JSONArray()
 
 //        val jsonObject3 = prodInformationArrayList2.getJSONObject(pos)
-        if (prodInformationArrayList2.length() > 0) {
+            if (prodInformationArrayList2.length() > 0) {
 
 //            Log.e(TAG, "kkkkkkkkkkkkkkk  " + jsonObject3.getString("isSelected"))
 
-            for (i in 0 until prodInformationArrayList2.length()) {
-                var jsonObject = prodInformationArrayList2.getJSONObject(i)
+                for (i in 0 until prodInformationArrayList2.length()) {
+                    var jsonObject = prodInformationArrayList2.getJSONObject(i)
 //            val jObject = JSONObject()
-                Log.e(TAG, "assasasassaa  " + prodInformationArrayList2)
-
-                if (jsonObject.getString("SubMode").equals("1")) {
-
-                    Log.e(TAG, "fdfdffd  " + jsonObject.getString("SubMode"))
-
-                    if (jsonObject.getString("isSelected").equals("1")) {
+                    Log.e(TAG, "assasasassaa  " + prodInformationArrayList2)
+                    Log.e(TAG, "adadadddada submode  " + SubMode)
 
 
-                        if (jsonObject.getString("ProvideStandBy").equals("1")) {
+                    if (jsonObject.getString("SubMode").equals("1")) {
 
-                            if (status_id.equals("")) {
-                                Config.snackBarWarning(context, view, "Please Select Status")
-
-                            } else if (jsonObject.getString("SPQuantity").equals("")) {
-
-                                Config.snackBarWarning(context, view, "StandByQuantity is emplty")
-
-                            } else if (jsonObject.getString("Product").equals("")) {
-                                Config.snackBarWarning(context, view, "StandByProduct is emplty")
-
-                            } else if (jsonObject.getString("SPAmount").equals("0.00")) {
-                                Config.snackBarWarning(context, view, "StandByAmount is emplty")
-
-                            } else if (FK_BillType!!.equals("")) {
-                                Config.snackBarWarning(context, view, "Please Select Bill Type")
-
-                            } else if (llpaymentmethodCount!!.equals("")) {
-                                Config.snackBarWarning(
-                                    context,
-                                    view,
-                                    "Please Select Payment Method"
-                                )
-
-                            } else {
-                                passvalue()
-                                Log.e(TAG, "yyyyyyyyyyyyy  ")
-                            }
-                        }
-
-                    }
-
-                }
-
-
-
-                if (jsonObject.getString("SubMode").equals("2")) {
-
-                    if (prodInformationArrayList2.length() > 0) {
+                        Log.e(TAG, "fdfdffd  " + jsonObject.getString("SubMode"))
+                        Log.e(TAG, "rrttt  " + jsonObject.getString("isSelected"))
 
                         if (jsonObject.getString("isSelected").equals("1")) {
 
-//                        Log.e(TAG, "nnnnnnnnn  " + jsonObject3.getString("isSelected"))
-                            if (status_id!!.equals("")) {
 
-                                Log.e(TAG, "ssssssssss  " + status_id)
-                                Config.snackBarWarning(context, view, "Please Select Status")
-                            } else {
-                                Log.e(TAG, "bfbbfbbffb  " + status_id)
-                                passvalue()
+                            if (jsonObject.getString("ProvideStandBy").equals("1")) {
 
+                                if (status_id.equals("")) {
+                                    Config.snackBarWarning(context, view, "Please Select Status")
+
+                                } else if (jsonObject.getString("SPQuantity").equals("")) {
+
+                                    Config.snackBarWarning(
+                                        context,
+                                        view,
+                                        "StandByQuantity is emplty"
+                                    )
+
+                                } else if (jsonObject.getString("Product").equals("")) {
+                                    Config.snackBarWarning(
+                                        context,
+                                        view,
+                                        "StandByProduct is emplty"
+                                    )
+
+                                } else if (jsonObject.getString("SPAmount").equals("0.00")) {
+                                    Config.snackBarWarning(context, view, "StandByAmount is emplty")
+
+                                } else if (FK_BillType!!.equals("")) {
+                                    Config.snackBarWarning(context, view, "Please Select Bill Type")
+
+                                } else if (llpaymentmethodCount!!.equals("")) {
+                                    Config.snackBarWarning(context, view, "Please Select Payment Method")
+
+                                } else {
+                                    passvalue()
+                                    Log.e(TAG, "yyyyyyyyyyyyy  ")
+                                }
+
+                            }else{
+                                validatestatus(view)
                             }
+
                         }
-                    } else {
-                        validatestatus(view)
                     }
-                }
+
+
+
+                    if (jsonObject.getString("SubMode").equals("2")) {
+
+                        if (prodInformationArrayList2.length() > 0) {
+
+                            if (jsonObject.getString("isSelected").equals("1")) {
+
+                                Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelected"))
+                                if (status_id!!.equals("")) {
+
+                                    Log.e(TAG, "ssssssssss  " + status_id)
+                                    Config.snackBarWarning(context, view, "Please Select Status")
+                                } else {
+                                    Log.e(TAG, "bfbbfbbffb  " + status_id)
+                                    passvalue()
+
+                                }
+                            }else {
+                                validatestatus(view)
+                        }
+                      }
+                    }
 
 //                if (jsonObject.getString("isSelected").equals("1")) {
 //                    validatestatus(view)
 //                }
 
-            }
+                }
 //            if (jsonObject3.getString("isSelected").equals("1")) {
 //                    validatestatus(view)
 //                }
 
 
-        } else {
-            validatestatus(view)
+            } else {
+                validatestatus(view)
+            }
+        }catch (e: Exception) {
+            Log.e(TAG, "uuuuuuu  " + e.toString())
         }
-
 //            Log.e(TAG, "5555555555555  " + jsonObject5.getString("ProvideStandBy"))
 //           Log.e(TAG, "4444444444444  " + jsonObject5.getString("isSelected"))
 
@@ -2631,6 +2647,28 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
 
     }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance){
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status","")
+            if (status.equals("0") || status.equals("")){
+                Common.punchingRedirectionConfirm(this,"","")
+            }
+            else if (status.equals("1")){
+                saveAttendanceMark = true
+            }
+
+        }else{
+            saveAttendanceMark = true
+        }
+    }
+
 
 
     private fun setAmount() {
