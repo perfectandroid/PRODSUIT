@@ -476,6 +476,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             }
 
+            @SuppressLint("SuspiciousIndentation")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 edtInsAmount!!.removeTextChangedListener(this)

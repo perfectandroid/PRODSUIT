@@ -173,9 +173,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
         getBannerlist()
         getCompanyLogo()
+        getCalendarId(context)
+        checkAndRequestPermissions()
         getLocationTracker()
 //        getNotfCount()
-        getCalendarId(context)
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
         checkAttendance()

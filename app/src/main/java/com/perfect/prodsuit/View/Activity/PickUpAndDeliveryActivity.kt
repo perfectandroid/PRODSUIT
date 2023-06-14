@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -249,6 +250,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun filterBottomData() {
 
         try {

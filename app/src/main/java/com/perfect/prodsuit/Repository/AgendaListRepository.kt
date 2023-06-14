@@ -25,6 +25,7 @@ object AgendaListRepository {
     //  context = this
     val agendaListSetterGetter = MutableLiveData<AgendaListModel>()
     private var progressDialog: ProgressDialog? = null
+    val TAG: String = "AgendaListRepository"
     fun getAgendaApiCall(
         context: Context,
         ReqMode: String,
@@ -116,7 +117,7 @@ object AgendaListRepository {
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(ID_Area))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
 
-
+                Log.e(TAG,"requestObject1   ...... "+requestObject1)
 
 
             }

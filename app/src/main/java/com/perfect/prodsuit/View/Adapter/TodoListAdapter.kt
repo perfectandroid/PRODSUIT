@@ -70,7 +70,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 if (SubMode.equals("4")){
                     holder.ll_leadNo!!.setBackgroundColor(context.getColor(R.color.color_lite_common4));
                     holder.tv_leadno!!.getBackground().setTint(context.getColor(R.color.mylead_light_Color1));
-                    holder.immessage.visibility=View.GONE
+//                    holder.immessage.visibility=View.GONE
                 }
 
              //   internal var impreference    : ImageView
@@ -129,9 +129,10 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.immessage!!.setTag(position)
                 holder.immessage!!.setOnClickListener(View.OnClickListener {
-                    if (!SubMode.equals("4")) {
+//                    if (SubMode.equals("4")) {
                         clickListener!!.onClick(position, "todoMessage")
-                    }
+                        Log.e("ggggfffffffffff","todoMessage ")
+//                    }
                 })
 
                 holder.cb_Meeting.setTag(position)
