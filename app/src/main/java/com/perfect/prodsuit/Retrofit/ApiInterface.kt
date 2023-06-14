@@ -460,6 +460,18 @@ interface ApiInterface {
     @POST("UserValidations/EmployeeLocationUpdate")
     fun UpdateEmployeeLocationUpdate(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/DesignationDetails")
+    fun getDesignationDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/EmployeeDetails")
+    fun getEmployeeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/EmployeeLocationList")
+    fun getEmployeeLocationList(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/EmployeeWiseLocationList")
+    fun getEmployeeWiseLocationList(@Body body: RequestBody): Call<String>
+
 
 
 

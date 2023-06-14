@@ -23,6 +23,7 @@ import java.util.*
 
 object OTPActivityRepository {
 
+    var TAG = "OTPActivityRepository"
     private var progressDialog: ProgressDialog? = null
     val otpSetterGetter = MutableLiveData<OTPModel>()
 
@@ -66,7 +67,7 @@ object OTPActivityRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("OTP", ProdsuitApplication.encryptStart(strMOTP))
 
-                Log.e("TAG","requestObject1  69   "+requestObject1)
+                Log.e(TAG,"requestObject1  69   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -81,6 +82,7 @@ object OTPActivityRepository {
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"requestObject1  69   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val users = ArrayList<OTPModel>()

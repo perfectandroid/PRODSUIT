@@ -213,8 +213,6 @@ object Config {
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackbar.show()
 
-
-
     }
 
     fun snackBarWarning(context: Context, view: View, message: String) {
@@ -281,6 +279,128 @@ object Config {
 
         return result
 
+    }
+
+    fun createLocation(): String{
+
+        var result =""
+        try {
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+
+            var obj = JSONObject()
+            obj.put("User", "Ranjith")
+            obj.put("LocLattitude", "11.2590")
+            obj.put("LocLongitude", "75.7863")
+            obj.put("LocLocationName", "CALICUT ")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("User", "Aneesh")
+            obj.put("LocLattitude", "11.887509")
+            obj.put("LocLongitude", "75.371029")
+            obj.put("LocLocationName", "KANNUR")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("User", "Aswathi")
+            obj.put("LocLattitude", "15.2993")
+            obj.put("LocLongitude", "74.1240")
+            obj.put("LocLocationName", "GOA")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("User", "Akshay")
+            obj.put("LocLattitude", "19.9975")
+            obj.put("LocLongitude", "73.7898")
+            obj.put("LocLocationName", "NASIK")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("User", "Jithin")
+            obj.put("LocLattitude", "17.3850")
+            obj.put("LocLongitude", "78.4867")
+            obj.put("LocLocationName", "Hyderabad")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("User", "Salil")
+            obj.put("LocLattitude", "28.7041")
+            obj.put("LocLongitude", "77.1025")
+            obj.put("LocLocationName", "Delhi")
+            array.put(obj)
+
+//            obj = JSONObject()
+//            obj.put("User", "Anvin")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Dilsha")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//
+//            obj = JSONObject()
+//            obj.put("User", "Nihal")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Bhaghyesh")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Riyas")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Sona")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Shilpa")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+//
+//            obj = JSONObject()
+//            obj.put("User", "Levi")
+//            obj.put("LocLattitude", "11.887509")
+//            obj.put("LocLongitude", "75.371029")
+//            obj.put("LocLocationName", "KANNUR MOFUSIAL BUS STAND")
+//            array.put(obj)
+
+            jsonObject.put("LocationDetails", array)
+            jsonObject1.put("LocationType", jsonObject)
+            Log.e("JsonObject 311   ", jsonObject.toString())
+            result = jsonObject1.toString()
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+            result= ""
+        }
+
+        return result
     }
 
     fun disableClick(v : View) {
@@ -621,9 +741,13 @@ object Config {
         var result =""
         try {
 
+            val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+            val jsonObj1 = JSONObject(UtilityListSP.getString("UtilityList", ""))
+            var bTracker = jsonObj1!!.getString("LOCATION_TRACKING").toBoolean()
             val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
 
             Log.e("TAG","537    "+loginSP.getString("loginsession",""));
+
 
             val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
           //  Log.e("TAG","547    "+ModuleListSP.getString("ModuleList",""));
@@ -708,14 +832,16 @@ object Config {
                 obj.put("count","0")
                 array.put(obj)
             }
+            if(bTracker){
+                obj = JSONObject()
+                obj.put("grid_id", "8")
+                obj.put("grid_name", "Location Detail")
+                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+                obj.put("image","home_location")
+                obj.put("count","0")
+                array.put(obj)
+            }
 
-            obj = JSONObject()
-            obj.put("grid_id", "8")
-            obj.put("grid_name", "Reminder")
-            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_reminder")
-            obj.put("count","0")
-            array.put(obj)
 
             obj = JSONObject()
             obj.put("grid_id", "9")
@@ -727,6 +853,14 @@ object Config {
 
             obj = JSONObject()
             obj.put("grid_id", "10")
+            obj.put("grid_name", "Reminder")
+            //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+            obj.put("image","home_reminder")
+            obj.put("count","0")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("grid_id", "11")
             obj.put("grid_name", "Profile")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
             obj.put("image","home_profile")
@@ -742,7 +876,7 @@ object Config {
 //            array.put(obj)
 
             obj = JSONObject()
-            obj.put("grid_id", "11")
+            obj.put("grid_id", "12")
             obj.put("grid_name", "Contact Us")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
             obj.put("image","home_contactus")
@@ -750,7 +884,7 @@ object Config {
             array.put(obj)
 
             obj = JSONObject()
-            obj.put("grid_id", "12")
+            obj.put("grid_id", "13")
             obj.put("grid_name", "About Us")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
             obj.put("image","home_aboutus")
